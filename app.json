@@ -3,6 +3,7 @@
     "name": "mofid-trip",
     "slug": "mofid-trip",
     "version": "1.0.0",
+    "scheme": "com.mofidtrip",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,7 +16,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mofidtrip"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,6 +33,5 @@
     "plugins": [
       "expo-router"
     ]
-  },
-  "scheme": "mofid-trip"
+  }
 }
