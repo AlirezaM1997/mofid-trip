@@ -1,9 +1,10 @@
 import { Drawer } from "expo-router/drawer";
 import { Feather } from "@expo/vector-icons";
+import { getDrawerContent } from "@src/helper/layout";
 
 export default function Layout() {
   return (
-    <Drawer>
+    <Drawer drawerContent={getDrawerContent}>
       <Drawer.Screen
         name="home"
         options={{
@@ -44,14 +45,18 @@ export default function Layout() {
         name="reports"
         options={{
           title: "Reports",
-          drawerIcon: () => <Feather name="pie-chart" size={24} color="black" />,
+          drawerIcon: () => (
+            <Feather name="pie-chart" size={24} color="black" />
+          ),
         }}
       />
       <Drawer.Screen
         name="help"
         options={{
           title: "Help",
-          drawerIcon: () => <Feather name="help-circle" size={24} color="black" />,
+          drawerIcon: () => (
+            <Feather name="help-circle" size={24} color="black" />
+          ),
         }}
       />
       <Drawer.Screen
@@ -66,6 +71,17 @@ export default function Layout() {
         options={{
           title: "Privacy Policy",
           drawerIcon: () => <Feather name="shield" size={24} color="black" />,
+        }}
+      />
+
+      {/* SHOW ONLY IF __DEV__ === true */}
+      <Drawer.Screen
+        name="docs"
+        options={{
+          title: "Docs",
+          drawerIcon: () => (
+            <Feather name="book-open" size={24} color="black" />
+          ),
         }}
       />
     </Drawer>
