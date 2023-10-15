@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -6,6 +7,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -15,644 +17,287 @@ export type Scalars = {
   Float: { input: number; output: number; }
   Date: { input: any; output: any; }
   DateTime: { input: any; output: any; }
-  Decimal: { input: any; output: any; }
   GenericScalar: { input: any; output: any; }
+  UUID: { input: any; output: any; }
 };
 
-export type AddresListsType = {
-  __typename?: 'AddresListsType';
-  customer?: Maybe<Array<Maybe<AddressType>>>;
-  vendor?: Maybe<Array<Maybe<AddressType>>>;
-};
-
-/** An enumeration. */
-export enum AddressAddressType {
-  /** Business */
-  Business = 'BUSINESS',
-  /** Home */
-  Home = 'HOME'
-}
-
-export type AddressInputType = {
+export type AccommodationAddInputType = {
   address?: InputMaybe<Scalars['String']['input']>;
-  phone?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  postalCode?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type AddressType = {
-  __typename?: 'AddressType';
-  address?: Maybe<Scalars['String']['output']>;
-  addressType?: Maybe<AddressAddressType>;
-  archived: Scalars['Boolean']['output'];
-  deleted: Scalars['Boolean']['output'];
-  draft: Scalars['Boolean']['output'];
-  id: Scalars['ID']['output'];
-  objectId?: Maybe<Scalars['Int']['output']>;
-  postalCode?: Maybe<Scalars['String']['output']>;
-};
-
-export type BaseExceptionType = {
-  __typename?: 'BaseExceptionType';
-  message?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  statusCode?: Maybe<Scalars['Int']['output']>;
-};
-
-/** An enumeration. */
-export enum BusinessSettingCurrency {
-  /** cad */
-  Cad = 'CAD',
-  /** eur */
-  Eur = 'EUR',
-  /** usd */
-  Usd = 'USD'
-}
-
-/** An enumeration. */
-export enum BusinessSettingDateFormat {
-  /** dd_mm_yyyy */
-  DdMmYyyy = 'DD_MM_YYYY',
-  /** mm_dd_yyyy */
-  MmDdYyyy = 'MM_DD_YYYY'
-}
-
-export type BusinessSettingType = {
-  __typename?: 'BusinessSettingType';
-  archived: Scalars['Boolean']['output'];
-  bankAccountEnabled: Scalars['Boolean']['output'];
-  bankAccountFinancialInstNo?: Maybe<Scalars['String']['output']>;
-  bankAccountNo?: Maybe<Scalars['String']['output']>;
-  bankAccountOwner?: Maybe<Scalars['String']['output']>;
-  bankAccountTransitNo?: Maybe<Scalars['String']['output']>;
-  business?: Maybe<BusinessType>;
-  cashEnabled: Scalars['Boolean']['output'];
-  currency?: Maybe<BusinessSettingCurrency>;
-  dateFormat?: Maybe<BusinessSettingDateFormat>;
-  deleted: Scalars['Boolean']['output'];
-  draft: Scalars['Boolean']['output'];
-  emailPhone?: Maybe<Scalars['String']['output']>;
-  emailPhoneEnabled: Scalars['Boolean']['output'];
-  greetingText?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  includingGreeting?: Maybe<Scalars['Boolean']['output']>;
-  includingPaymentInformation: Scalars['Boolean']['output'];
-  includingSignature: Scalars['Boolean']['output'];
-  logo?: Maybe<Scalars['String']['output']>;
-  paymentInformation?: Maybe<Scalars['String']['output']>;
-  paypalEnabled: Scalars['Boolean']['output'];
-  paypalValue?: Maybe<Scalars['String']['output']>;
-  template?: Maybe<InvoiceTemplateType>;
-  web3Address?: Maybe<Scalars['String']['output']>;
-  web3CryptocurrencyType?: Maybe<BusinessSettingWeb3CryptocurrencyType>;
-  web3EmailPhone?: Maybe<Scalars['String']['output']>;
-  web3Enabled: Scalars['Boolean']['output'];
-  /** Enable or disable web push only in this device */
-  webPushNotification: Scalars['Boolean']['output'];
-};
-
-/** An enumeration. */
-export enum BusinessSettingWeb3CryptocurrencyType {
-  /** Not Selected */
-  A = 'A_',
-  /** Bitcoin (BTC) */
-  BitcoinBtc = 'BITCOIN_BTC_',
-  /** BNB (BNB) */
-  BnbBnb = 'BNB_BNB_',
-  /** CRONOS (CRO) */
-  CronosCro = 'CRONOS_CRO_',
-  /** Dogecoin (DOGE) */
-  DogecoinDoge = 'DOGECOIN_DOGE_',
-  /** Ethereum (Eth) */
-  EthereumEth = 'ETHEREUM_ETH_',
-  /** Solana (Sol) */
-  SolanaSol = 'SOLANA_SOL_',
-  /** Tether (USDT)-ERC20 */
-  TetherUsdtErc20 = 'TETHER_USDT_ERC20',
-  /** Tether (USDT)-POLYGON */
-  TetherUsdtPolygon = 'TETHER_USDT_POLYGON',
-  /** USD Coin (USDC)-ERC-20 */
-  UsdCoinUsdcErc_20 = 'USD_COIN_USDC_ERC_20',
-  /** USD Coin (USDC)-POLYGON */
-  UsdCoinUsdcPolygon = 'USD_COIN_USDC_POLYGON'
-}
-
-export type BusinessSettingsInputType = {
-  archived?: InputMaybe<Scalars['Boolean']['input']>;
-  bankAccountEnabled?: InputMaybe<Scalars['Boolean']['input']>;
-  bankAccountFinancialInstNo?: InputMaybe<Scalars['String']['input']>;
-  bankAccountNo?: InputMaybe<Scalars['String']['input']>;
-  bankAccountOwner?: InputMaybe<Scalars['String']['input']>;
-  bankAccountTransitNo?: InputMaybe<Scalars['String']['input']>;
-  cashEnabled?: InputMaybe<Scalars['Boolean']['input']>;
-  currency?: InputMaybe<CurrencyEnum>;
-  dateFormat?: InputMaybe<DateFormatEnum>;
-  deleted?: InputMaybe<Scalars['Boolean']['input']>;
-  emailPhone?: InputMaybe<Scalars['String']['input']>;
-  emailPhoneEnabled?: InputMaybe<Scalars['Boolean']['input']>;
-  greetingText?: InputMaybe<Scalars['String']['input']>;
-  includingGreeting?: InputMaybe<Scalars['Boolean']['input']>;
-  includingPaymentInformation?: InputMaybe<Scalars['Boolean']['input']>;
-  includingSignature?: InputMaybe<Scalars['Boolean']['input']>;
-  logo?: InputMaybe<Scalars['String']['input']>;
-  paymentInformation?: InputMaybe<Scalars['String']['input']>;
-  paypalEnabled?: InputMaybe<Scalars['Boolean']['input']>;
-  paypalValue?: InputMaybe<Scalars['String']['input']>;
-  template?: InputMaybe<Scalars['ID']['input']>;
-  web3Address?: InputMaybe<Scalars['String']['input']>;
-  web3CryptocurrencyType?: InputMaybe<Scalars['String']['input']>;
-  web3EmailPhone?: InputMaybe<Scalars['String']['input']>;
-  web3Enabled?: InputMaybe<Scalars['Boolean']['input']>;
-  webPushNotification?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type BusinessType = {
-  __typename?: 'BusinessType';
-  accountantEmail: Scalars['String']['output'];
-  address?: Maybe<Scalars['String']['output']>;
-  archived: Scalars['Boolean']['output'];
-  businesssetting?: Maybe<BusinessSettingType>;
-  city: Scalars['String']['output'];
-  costSet: Array<CostType>;
-  country: Scalars['String']['output'];
-  deleted: Scalars['Boolean']['output'];
-  draft: Scalars['Boolean']['output'];
-  email: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  mobilePhone: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-  owner?: Maybe<ClientType>;
-  ownerName: Scalars['String']['output'];
-  phone: Scalars['String']['output'];
-  postalCode?: Maybe<Scalars['String']['output']>;
-  state: Scalars['String']['output'];
-};
-
-export type CashflowReportType = {
-  __typename?: 'CashflowReportType';
-  endOfPeriod?: Maybe<Scalars['Date']['output']>;
-  id: Scalars['ID']['output'];
-  periodType?: Maybe<ReportPeriodType>;
-  report?: Maybe<Scalars['GenericScalar']['output']>;
-  startOfPeriod?: Maybe<Scalars['Date']['output']>;
-  title?: Maybe<Scalars['GenericScalar']['output']>;
-};
-
-export type ClientInputType = {
-  address?: InputMaybe<Scalars['String']['input']>;
-  firstName?: InputMaybe<Scalars['String']['input']>;
-  lastName?: InputMaybe<Scalars['String']['input']>;
-  phone?: InputMaybe<Scalars['String']['input']>;
-  pk?: InputMaybe<Scalars['ID']['input']>;
-  postalCode?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ClientType = {
-  __typename?: 'ClientType';
-  address?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  email: Scalars['String']['output'];
-  firstName: Scalars['String']['output'];
-  fullName?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  lastName: Scalars['String']['output'];
-  phone?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  preferredName?: Maybe<Scalars['String']['output']>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
-  username: Scalars['String']['output'];
-};
-
-export type CompanyProfileInputType = {
-  accountantEmail?: InputMaybe<Scalars['String']['input']>;
-  address?: InputMaybe<Scalars['String']['input']>;
-  city?: InputMaybe<Scalars['String']['input']>;
-  country?: InputMaybe<Scalars['String']['input']>;
-  email?: InputMaybe<Scalars['String']['input']>;
-  mobilePhone?: InputMaybe<Scalars['String']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  neighbourhood?: InputMaybe<Scalars['String']['input']>;
-  ownerName?: InputMaybe<Scalars['String']['input']>;
-  phone?: InputMaybe<Scalars['String']['input']>;
-  postalCode?: InputMaybe<Scalars['String']['input']>;
-  state?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type CostInputType = {
-  cost?: InputMaybe<Scalars['String']['input']>;
-  date?: InputMaybe<Scalars['String']['input']>;
+  base64Images?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   description?: InputMaybe<Scalars['String']['input']>;
-  draft?: InputMaybe<Scalars['Boolean']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  quantity?: InputMaybe<Scalars['String']['input']>;
-  taxList?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  unit?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type CostType = {
-  __typename?: 'CostType';
-  archived: Scalars['Boolean']['output'];
-  business?: Maybe<BusinessType>;
-  cost?: Maybe<Scalars['Float']['output']>;
-  date?: Maybe<Scalars['Date']['output']>;
-  deleted: Scalars['Boolean']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  draft: Scalars['Boolean']['output'];
-  id: Scalars['ID']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  quantity: Scalars['Float']['output'];
-  tax: Array<TaxType>;
-  unit?: Maybe<Scalars['String']['output']>;
-};
-
-/** An enumeration. */
-export enum CurrencyEnum {
-  Cad = 'cad',
-  Eur = 'eur',
-  Usd = 'usd'
-}
-
-export type CustomerInputType = {
-  address?: InputMaybe<Array<InputMaybe<AddressInputType>>>;
-  firstName?: InputMaybe<Scalars['String']['input']>;
-  lastName?: InputMaybe<Scalars['String']['input']>;
-  phone?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  pk?: InputMaybe<Scalars['ID']['input']>;
-  relatedEnduser?: InputMaybe<Scalars['ID']['input']>;
-};
-
-/** An enumeration. */
-export enum DateFormatEnum {
-  DdMmYyyy = 'dd_mm_yyyy',
-  MmDdYyyy = 'mm_dd_yyyy'
-}
-
-export type EventFilterType = {
-  dateFrom: Scalars['String']['input'];
-  dateTo: Scalars['String']['input'];
-};
-
-export type EventInputType = {
-  datetime?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
+  lat: Scalars['Float']['input'];
+  lng: Scalars['Float']['input'];
   name: Scalars['String']['input'];
 };
 
-export type EventType = {
-  __typename?: 'EventType';
-  archived: Scalars['Boolean']['output'];
-  datetime?: Maybe<Scalars['DateTime']['output']>;
-  deleted: Scalars['Boolean']['output'];
-  description: Scalars['String']['output'];
-  draft: Scalars['Boolean']['output'];
-  id: Scalars['ID']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  owner?: Maybe<ClientType>;
-};
-
-export type FilterFieldInputType = {
-  fieldName?: InputMaybe<Scalars['String']['input']>;
-  fieldValues?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type FilterType = {
-  endDate?: InputMaybe<Scalars['String']['input']>;
-  filterFields?: InputMaybe<Array<InputMaybe<FilterFieldInputType>>>;
-  ordering?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  startDate?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type InstallmentInputType = {
-  amount?: InputMaybe<Scalars['Float']['input']>;
-  date?: InputMaybe<Scalars['Date']['input']>;
-  isPaid?: InputMaybe<Scalars['Boolean']['input']>;
-  paymentType?: InputMaybe<PaymentTypeEnum>;
-};
-
-/** An enumeration. */
-export enum InstallmentPaymentType {
-  /** bank_account */
-  BankAccount = 'BANK_ACCOUNT',
-  /** cash */
-  Cash = 'CASH',
-  /** paypal */
-  Paypal = 'PAYPAL',
-  /** web3 */
-  Web3 = 'WEB3'
-}
-
-export type InstallmentType = {
-  __typename?: 'InstallmentType';
-  amount?: Maybe<Scalars['Decimal']['output']>;
-  date?: Maybe<Scalars['Date']['output']>;
-  id: Scalars['ID']['output'];
-  invoice?: Maybe<InvoiceType>;
-  isPaid: Scalars['Boolean']['output'];
-  paymentType: InstallmentPaymentType;
-};
-
-export type InvoiceAndCostType = {
-  __typename?: 'InvoiceAndCostType';
-  Id?: Maybe<Scalars['String']['output']>;
-  client?: Maybe<ClientType>;
-  cost?: Maybe<Scalars['String']['output']>;
-  date?: Maybe<Scalars['String']['output']>;
-  draft?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['String']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  quantity?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  totalPrice?: Maybe<Scalars['Float']['output']>;
-  type?: Maybe<Scalars['String']['output']>;
-  unit?: Maybe<Scalars['String']['output']>;
-};
-
-/** An enumeration. */
-export enum InvoiceDiscountType {
-  /** amount */
-  Amount = 'AMOUNT',
-  /** percent */
-  Percent = 'PERCENT'
-}
-
-/** Enums for Invoice `discount_type` based on `Invoice.DISCOUNT_TYPE` choices */
-export enum InvoiceDiscountTypeEnum {
-  Amount = 'AMOUNT',
-  Percent = 'PERCENT'
-}
-
-export type InvoiceFilterType = {
-  clientList?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  dueDateFrom?: InputMaybe<Scalars['String']['input']>;
-  dueDateTo?: InputMaybe<Scalars['String']['input']>;
-  isPaid?: InputMaybe<Scalars['Boolean']['input']>;
-  kind?: InputMaybe<InvoiceKindEnum>;
-  status?: InputMaybe<InvoiceStatusEnum>;
-};
-
-export type InvoiceInputType = {
-  client?: InputMaybe<Scalars['ID']['input']>;
-  date?: InputMaybe<Scalars['Date']['input']>;
-  discount?: InputMaybe<Scalars['Int']['input']>;
-  discountType?: InputMaybe<InvoiceDiscountTypeEnum>;
-  draft?: InputMaybe<Scalars['Boolean']['input']>;
-  dueDate?: InputMaybe<Scalars['Date']['input']>;
-  installmentSet: Array<InputMaybe<InstallmentInputType>>;
-  kind?: InputMaybe<InvoiceKindEnum>;
-  lineItems: Array<InputMaybe<LineItemInputType>>;
-  taxList?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  transactionType?: InputMaybe<TransactionTypeEnum>;
-};
-
-/** An enumeration. */
-export enum InvoiceKind {
-  /** invoice */
-  Invoice = 'INVOICE',
-  /** quotation */
-  Quotation = 'QUOTATION'
-}
-
-/** Enums for Invoice `kind` based on `Invoice.INVOICE_TYPES` choices */
-export enum InvoiceKindEnum {
-  Invoice = 'INVOICE',
-  Quotation = 'QUOTATION'
-}
-
-export enum InvoiceStatusEnum {
-  Overdue = 'OVERDUE',
-  Paid = 'PAID',
-  Upcoming = 'UPCOMING'
-}
-
-export type InvoiceTemplateType = {
-  __typename?: 'InvoiceTemplateType';
-  archived: Scalars['Boolean']['output'];
-  deleted: Scalars['Boolean']['output'];
-  draft: Scalars['Boolean']['output'];
-  id: Scalars['ID']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  template?: Maybe<Scalars['String']['output']>;
-};
-
-/** An enumeration. */
-export enum InvoiceTransactionType {
-  /** buy */
-  Buy = 'BUY',
-  /** sell */
-  Sell = 'SELL'
-}
-
-export type InvoiceType = {
-  __typename?: 'InvoiceType';
-  client?: Maybe<ClientType>;
-  date?: Maybe<Scalars['Date']['output']>;
-  discount: Scalars['Float']['output'];
-  discountType?: Maybe<InvoiceDiscountType>;
-  draft: Scalars['Boolean']['output'];
-  dueDate?: Maybe<Scalars['Date']['output']>;
-  enduser?: Maybe<ClientType>;
-  id: Scalars['ID']['output'];
-  installmentSet: Array<InstallmentType>;
-  isPaid: Scalars['Boolean']['output'];
-  kind: InvoiceKind;
-  lineitemSet: Array<LineItemType>;
-  paidAmount?: Maybe<Scalars['Float']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  taxList: Array<TaxType>;
-  title?: Maybe<Scalars['String']['output']>;
-  totalPrice?: Maybe<Scalars['Float']['output']>;
-  transactionType?: Maybe<InvoiceTransactionType>;
-};
-
-export type LineItemInputType = {
+export type AccommodationEditInputType = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  base64Images?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   description?: InputMaybe<Scalars['String']['input']>;
-  productService: Scalars['ID']['input'];
-  quantity: Scalars['Int']['input'];
-  taxable?: InputMaybe<Scalars['Boolean']['input']>;
-  unitPrice: Scalars['Float']['input'];
+  lat?: InputMaybe<Scalars['Float']['input']>;
+  lng?: InputMaybe<Scalars['Float']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  pk: Scalars['ID']['input'];
 };
 
-export type LineItemType = {
-  __typename?: 'LineItemType';
-  archived: Scalars['Boolean']['output'];
-  deleted: Scalars['Boolean']['output'];
+export type AccommodationFilterType = {
+  mine?: InputMaybe<Triple_Choice>;
+};
+
+export type AccommodationImageType = {
+  __typename?: 'AccommodationImageType';
+  large?: Maybe<Scalars['String']['output']>;
+  medium?: Maybe<Scalars['String']['output']>;
+  small?: Maybe<Scalars['String']['output']>;
+};
+
+export type AccommodationListType = {
+  __typename?: 'AccommodationListType';
+  address?: Maybe<Scalars['String']['output']>;
+  avatarS3?: Maybe<Array<Maybe<AccommodationImageType>>>;
   description?: Maybe<Scalars['String']['output']>;
-  draft: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
-  invoice?: Maybe<InvoiceType>;
-  kind?: Maybe<Scalars['String']['output']>;
+  lat?: Maybe<Scalars['Float']['output']>;
+  lng?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
-  productService?: Maybe<ProductServiceType>;
-  quantity: Scalars['Float']['output'];
-  taxable: Scalars['Boolean']['output'];
-  unit?: Maybe<Scalars['String']['output']>;
-  unitPrice?: Maybe<Scalars['Float']['output']>;
+  user?: Maybe<UserListType>;
+};
+
+export type AccommodationType = {
+  __typename?: 'AccommodationType';
+  address?: Maybe<Scalars['String']['output']>;
+  avatarS3?: Maybe<Array<Maybe<ImageType>>>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  lat?: Maybe<Scalars['Float']['output']>;
+  lng?: Maybe<Scalars['Float']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<UserListType>;
+};
+
+export type BBoxRangeType = {
+  latHigh?: InputMaybe<Scalars['Float']['input']>;
+  latLow?: InputMaybe<Scalars['Float']['input']>;
+  lngHigh?: InputMaybe<Scalars['Float']['input']>;
+  lngLow?: InputMaybe<Scalars['Float']['input']>;
+};
+
+export type BackendVersion = {
+  __typename?: 'BackendVersion';
+  buildNumber?: Maybe<Scalars['String']['output']>;
+  currentVersion?: Maybe<Scalars['String']['output']>;
+  features?: Maybe<Scalars['GenericScalar']['output']>;
+};
+
+export type BannerImageType = {
+  __typename?: 'BannerImageType';
+  large?: Maybe<Scalars['String']['output']>;
+  medium?: Maybe<Scalars['String']['output']>;
+  small?: Maybe<Scalars['String']['output']>;
+};
+
+export type BannerListType = {
+  __typename?: 'BannerListType';
+  avatarS3?: Maybe<BannerImageType>;
+  id: Scalars['ID']['output'];
+  title: Scalars['String']['output'];
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export type CapacityReserveType = {
+  __typename?: 'CapacityReserveType';
+  child?: Maybe<Scalars['Int']['output']>;
+  female?: Maybe<Scalars['Int']['output']>;
+  male?: Maybe<Scalars['Int']['output']>;
+};
+
+export type CapacityType = {
+  __typename?: 'CapacityType';
+  child: Scalars['Int']['output'];
+  female: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  male: Scalars['Int']['output'];
+};
+
+export type CategoryImageType = {
+  __typename?: 'CategoryImageType';
+  large?: Maybe<Scalars['String']['output']>;
+  medium?: Maybe<Scalars['String']['output']>;
+  small?: Maybe<Scalars['String']['output']>;
+};
+
+export type CategoryListType = {
+  __typename?: 'CategoryListType';
+  avatarS3?: Maybe<CategoryImageType>;
+  displayName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  projectSet: Array<ProjectQueryType>;
+};
+
+export type CategoryType = {
+  __typename?: 'CategoryType';
+  id: Scalars['ID']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+export type DateRangeType = {
+  end?: InputMaybe<Scalars['String']['input']>;
+  start?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FacilityType = {
+  __typename?: 'FacilityType';
+  arName?: Maybe<Scalars['String']['output']>;
+  enName?: Maybe<Scalars['String']['output']>;
+  faName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  projectSet: Array<ProjectQueryType>;
+};
+
+export type FrontendVersion = {
+  __typename?: 'FrontendVersion';
+  buildNumber?: Maybe<Scalars['String']['output']>;
+  currentVersion?: Maybe<Scalars['String']['output']>;
+  features?: Maybe<Scalars['GenericScalar']['output']>;
+};
+
+/** An enumeration. */
+export enum GuestGender {
+  /** CHILD */
+  Child = 'CHILD',
+  /** FEMALE */
+  Female = 'FEMALE',
+  /** MALE */
+  Male = 'MALE'
+}
+
+export type GuestImageType = {
+  __typename?: 'GuestImageType';
+  large?: Maybe<Scalars['String']['output']>;
+  medium?: Maybe<Scalars['String']['output']>;
+  small?: Maybe<Scalars['String']['output']>;
+};
+
+export type GuestInputType = {
+  birthday: Scalars['String']['input'];
+  gender: Gender;
+  identifyNumber: Scalars['String']['input'];
+  identifyPicture?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type GuestType = {
+  __typename?: 'GuestType';
+  avatarS3?: Maybe<GuestImageType>;
+  birthday?: Maybe<Scalars['Date']['output']>;
+  gender: GuestGender;
+  identifyNumber?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+export type ImageType = {
+  __typename?: 'ImageType';
+  large?: Maybe<Scalars['String']['output']>;
+  medium?: Maybe<Scalars['String']['output']>;
+  small?: Maybe<Scalars['String']['output']>;
+};
+
+export type IntRangeType = {
+  high?: InputMaybe<Scalars['Int']['input']>;
+  low?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  businessProfile?: Maybe<ResponseType>;
-  businessSettings?: Maybe<ResponseType>;
-  client?: Maybe<ResponseType>;
-  cost?: Maybe<ResponseType>;
-  /**
-   * Add customer mutation:
-   *
-   * :param customers: customers you want to delete
-   * :returns: Http 201
-   */
-  customer?: Maybe<ResponseType>;
-  delete?: Maybe<ResponseType>;
-  eventAdd?: Maybe<ResponseType>;
-  eventDelete?: Maybe<ResponseType>;
-  eventEdit?: Maybe<ResponseType>;
-  invoice?: Maybe<ResponseType>;
-  passwordReset?: Maybe<ResponseType>;
-  productService?: Maybe<ProductServiceResponseSuccessType>;
+  NGOEdit?: Maybe<ResponseType>;
+  login?: Maybe<ResponseType>;
+  projectAdd?: Maybe<ResponseType>;
+  projectEdit?: Maybe<ResponseType>;
   refreshToken?: Maybe<Refresh>;
-  revokeToken?: Maybe<Revoke>;
-  sendPasswordResetCode?: Maybe<ResponseType>;
-  smsLogin?: Maybe<ResponseType>;
-  smsLoginVerification?: Maybe<SmsLoginVerification>;
-  tax?: Maybe<ResponseType>;
-  /** Obtain JSON Web Token mutation */
-  tokenAuth?: Maybe<ObtainJsonWebToken>;
-  transaction?: Maybe<ResponseType>;
-  userProfile?: Maybe<ResponseType>;
-  /**
-   * Add vendor mutation:
-   *
-   * :param customers: vendors you want to delete
-   * :returns: Http 201
-   */
-  vendor?: Maybe<ResponseType>;
+  settingEdit?: Maybe<ResponseType>;
+  userAccommodationAdd?: Maybe<ResponseType>;
+  userAccommodationEdit?: Maybe<ResponseType>;
+  userCheckSmsVerificationCode?: Maybe<ResponseType>;
+  userEdit?: Maybe<ResponseType>;
+  userLogout?: Maybe<ResponseType>;
+  userTourTransactionAdd?: Maybe<ResponseType>;
+  userTourTransactionEdit?: Maybe<ResponseType>;
+  userTransactionAdd?: Maybe<ResponseType>;
+  userTransactionEdit?: Maybe<ResponseType>;
   verifyToken?: Maybe<Verify>;
 };
 
 
-export type MutationBusinessProfileArgs = {
-  input: CompanyProfileInputType;
+export type MutationNgoEditArgs = {
+  data?: InputMaybe<NgoEditInputType>;
 };
 
 
-export type MutationBusinessSettingsArgs = {
-  businessSettings?: InputMaybe<BusinessSettingsInputType>;
+export type MutationLoginArgs = {
+  dataNgo?: InputMaybe<NgoInputType>;
+  dataUser?: InputMaybe<UserInputType>;
 };
 
 
-export type MutationClientArgs = {
-  input?: InputMaybe<ClientInputType>;
+export type MutationProjectAddArgs = {
+  data: ProjectAddInputType;
 };
 
 
-export type MutationCostArgs = {
-  input: CostInputType;
-  pk?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type MutationCustomerArgs = {
-  customers?: InputMaybe<Array<InputMaybe<CustomerInputType>>>;
-};
-
-
-export type MutationDeleteArgs = {
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  objectType?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type MutationEventAddArgs = {
-  input?: InputMaybe<EventInputType>;
-};
-
-
-export type MutationEventDeleteArgs = {
-  pk?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type MutationEventEditArgs = {
-  input?: InputMaybe<EventInputType>;
-  pk?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type MutationInvoiceArgs = {
-  input: InvoiceInputType;
-  pk?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type MutationPasswordResetArgs = {
-  password?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type MutationProductServiceArgs = {
-  amount?: InputMaybe<Scalars['String']['input']>;
-  draft?: InputMaybe<Scalars['Boolean']['input']>;
-  kind?: InputMaybe<ProductServiceKindEnum>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  pk?: InputMaybe<Scalars['ID']['input']>;
-  priceLast?: InputMaybe<Scalars['String']['input']>;
-  priceTotalBuy?: InputMaybe<Scalars['String']['input']>;
-  priceTotalSell?: InputMaybe<Scalars['String']['input']>;
-  unit?: InputMaybe<Scalars['String']['input']>;
+export type MutationProjectEditArgs = {
+  data: ProjectEditInputType;
 };
 
 
 export type MutationRefreshTokenArgs = {
-  refreshToken?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type MutationRevokeTokenArgs = {
-  refreshToken?: InputMaybe<Scalars['String']['input']>;
+export type MutationSettingEditArgs = {
+  data?: InputMaybe<SettingEditInputType>;
 };
 
 
-export type MutationSendPasswordResetCodeArgs = {
-  phone?: InputMaybe<Scalars['String']['input']>;
+export type MutationUserAccommodationAddArgs = {
+  data?: InputMaybe<AccommodationAddInputType>;
 };
 
 
-export type MutationSmsLoginArgs = {
-  phone?: InputMaybe<Scalars['String']['input']>;
+export type MutationUserAccommodationEditArgs = {
+  data: AccommodationEditInputType;
 };
 
 
-export type MutationSmsLoginVerificationArgs = {
-  activeCode?: InputMaybe<Scalars['String']['input']>;
-  phone?: InputMaybe<Scalars['String']['input']>;
+export type MutationUserCheckSmsVerificationCodeArgs = {
+  code: Scalars['Int']['input'];
+  phoneNumber: Scalars['String']['input'];
 };
 
 
-export type MutationTaxArgs = {
-  input: TaxInputType;
-  pk?: InputMaybe<Scalars['ID']['input']>;
+export type MutationUserEditArgs = {
+  data?: InputMaybe<UserEditInputType>;
 };
 
 
-export type MutationTokenAuthArgs = {
-  password: Scalars['String']['input'];
-  username: Scalars['String']['input'];
+export type MutationUserTourTransactionAddArgs = {
+  data: TourTransactionAddInputType;
 };
 
 
-export type MutationTransactionArgs = {
-  deleted?: InputMaybe<Scalars['Boolean']['input']>;
-  input: TransactionInputType;
-  pk?: InputMaybe<Scalars['ID']['input']>;
+export type MutationUserTourTransactionEditArgs = {
+  data: TourTransactionEditInputType;
 };
 
 
-export type MutationUserProfileArgs = {
-  input: UserProfileInputType;
+export type MutationUserTransactionAddArgs = {
+  data: TransactionAddInputType;
 };
 
 
-export type MutationVendorArgs = {
-  vendors?: InputMaybe<Array<InputMaybe<VendorInputType>>>;
+export type MutationUserTransactionEditArgs = {
+  data: TransactionEditInputType;
 };
 
 
@@ -660,426 +305,1710 @@ export type MutationVerifyTokenArgs = {
   token?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type NotificationType = {
-  __typename?: 'NotificationType';
-  createdAt: Scalars['DateTime']['output'];
-  description: Scalars['String']['output'];
+export type NgoDetailType = {
+  __typename?: 'NGODetailType';
+  address?: Maybe<Scalars['String']['output']>;
+  avatarS3?: Maybe<NgoImageType>;
+  description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  seen: Scalars['Boolean']['output'];
-  title?: Maybe<Scalars['String']['output']>;
+  lat?: Maybe<Scalars['Float']['output']>;
+  lng?: Maybe<Scalars['Float']['output']>;
+  name: Scalars['String']['output'];
+  tours: Array<TourTypes>;
+  user?: Maybe<UserListType>;
 };
 
-/** Obtain JSON Web Token mutation */
-export type ObtainJsonWebToken = {
-  __typename?: 'ObtainJSONWebToken';
-  payload: Scalars['GenericScalar']['output'];
-  refreshExpiresIn: Scalars['Int']['output'];
-  refreshToken: Scalars['String']['output'];
-  token: Scalars['String']['output'];
+export type NgoEditInputType = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  base64Image?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  lat: Scalars['Float']['input'];
+  lng: Scalars['Float']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
-export enum PaymentTypeEnum {
-  BankAccount = 'BANK_ACCOUNT',
-  Cash = 'CASH',
-  Paypal = 'PAYPAL',
-  Web3 = 'WEB3'
-}
+export type NgoImageType = {
+  __typename?: 'NGOImageType';
+  large?: Maybe<Scalars['String']['output']>;
+  medium?: Maybe<Scalars['String']['output']>;
+  small?: Maybe<Scalars['String']['output']>;
+};
 
-export enum PeriadicallyCashflowTypeEnum {
-  Daily = 'DAILY',
-  Monthly = 'MONTHLY',
-  Quarterly = 'QUARTERLY',
-  Weekly = 'WEEKLY',
-  Yearly = 'YEARLY'
-}
+export type NgoInputType = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  lat?: InputMaybe<Scalars['Float']['input']>;
+  lng?: InputMaybe<Scalars['Float']['input']>;
+  name: Scalars['String']['input'];
+  phoneNumber: Scalars['String']['input'];
+};
 
-export type PeriodicallyCashflowReportFilterType = {
-  includeOutstanding: Scalars['Boolean']['input'];
-  periodType?: InputMaybe<PeriadicallyCashflowTypeEnum>;
+export type NgoListType = {
+  __typename?: 'NGOListType';
+  address?: Maybe<Scalars['String']['output']>;
+  avatarBase64?: Maybe<NgoImageType>;
+  avatarS3?: Maybe<NgoImageType>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  lat?: Maybe<Scalars['Float']['output']>;
+  lng?: Maybe<Scalars['Float']['output']>;
+  name: Scalars['String']['output'];
+  projectSet?: Maybe<Array<Maybe<NgoProjectType>>>;
+  tours: Array<TourTypes>;
+  user?: Maybe<UserListType>;
+};
+
+export type NgoProjectAccommodationType = {
+  __typename?: 'NGOProjectAccommodationType';
+  address?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  lat?: Maybe<Scalars['Float']['output']>;
+  lng?: Maybe<Scalars['Float']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<UserListType>;
+};
+
+export type NgoProjectFacilityType = {
+  __typename?: 'NGOProjectFacilityType';
+  arName?: Maybe<Scalars['String']['output']>;
+  enName?: Maybe<Scalars['String']['output']>;
+  faName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  projectSet: Array<ProjectQueryType>;
+};
+
+export type NgoProjectType = {
+  __typename?: 'NGOProjectType';
+  accommodation?: Maybe<Array<Maybe<NgoProjectAccommodationType>>>;
+  capacity?: Maybe<CapacityType>;
+  capacityReserved?: Maybe<Scalars['Int']['output']>;
+  categories: Array<CategoryType>;
+  createdTime?: Maybe<Scalars['DateTime']['output']>;
+  creator?: Maybe<UserListType>;
+  dateEnd?: Maybe<Scalars['DateTime']['output']>;
+  dateStart?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  facilities?: Maybe<Array<Maybe<NgoProjectFacilityType>>>;
+  gender: ProjectGender;
+  id: Scalars['ID']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  objectId?: Maybe<Scalars['Int']['output']>;
+  price?: Maybe<Scalars['Int']['output']>;
+  requestFrom: ProjectRequestFrom;
+  status: ProjectStatus;
+  tags: Array<TagType>;
+  tax?: Maybe<Scalars['Int']['output']>;
+  tours: Array<TourTypes>;
+  transactionSet: Array<UserTransactionQueryType>;
+};
+
+export type NgoTransactionFilterType = {
+  statusStep?: InputMaybe<Transaction_Status>;
+};
+
+export type NgoTransactionQueryType = {
+  __typename?: 'NgoTransactionQueryType';
+  createdDate?: Maybe<Scalars['DateTime']['output']>;
+  dateEnd?: Maybe<Scalars['DateTime']['output']>;
+  dateStart?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  guestSet: Array<GuestType>;
+  id: Scalars['ID']['output'];
+  invoiceNumber?: Maybe<Scalars['UUID']['output']>;
+  modifiedDate?: Maybe<Scalars['DateTime']['output']>;
+  owner?: Maybe<UserListType>;
+  project?: Maybe<ProjectQueryType>;
+  statusActivation: Scalars['Boolean']['output'];
+  statusStep?: Maybe<TransactionStatusStep>;
+};
+
+export type PageType = {
+  pageNumber?: InputMaybe<Scalars['Int']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ProjectAddInputType = {
+  base64Image?: InputMaybe<Scalars['String']['input']>;
+  capacity: Scalars['Int']['input'];
+  dateEnd: Scalars['String']['input'];
+  dateStart: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  facilities?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  gender: Project_Gender;
+  name: Scalars['String']['input'];
+  objectId: Scalars['ID']['input'];
+  objectType: Object_Type;
+  price: Scalars['Int']['input'];
+  requestFrom: Request_From;
+};
+
+export type ProjectAvatarDimensions = {
+  height?: InputMaybe<Scalars['Int']['input']>;
+  width?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ProjectEditInputType = {
+  base64Image?: InputMaybe<Scalars['String']['input']>;
+  capacity?: InputMaybe<Scalars['Int']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  facilities?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  gender?: InputMaybe<Project_Gender>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  pk: Scalars['ID']['input'];
+  price?: InputMaybe<Scalars['Int']['input']>;
+  requestFrom?: InputMaybe<Request_From>;
+  status?: InputMaybe<Project_Status>;
+};
+
+export type ProjectFilterType = {
+  bbox?: InputMaybe<BBoxRangeType>;
+  capacity?: InputMaybe<IntRangeType>;
+  categories?: InputMaybe<Array<InputMaybe<Project_Category>>>;
+  creator?: InputMaybe<Array<InputMaybe<Creator>>>;
+  dateRange?: InputMaybe<DateRangeType>;
+  gender?: InputMaybe<Array<InputMaybe<Project_Gender>>>;
+  objectId?: InputMaybe<Scalars['ID']['input']>;
+  objectType?: InputMaybe<Object_Type>;
+  price?: InputMaybe<IntRangeType>;
+  status?: InputMaybe<Array<InputMaybe<Project_Status>>>;
+  tags?: InputMaybe<Array<InputMaybe<Tag>>>;
 };
 
 /** An enumeration. */
-export enum ProductServiceKind {
-  /** product */
-  Product = 'PRODUCT',
-  /** service */
-  Service = 'SERVICE'
+export enum ProjectGender {
+  /** BOTH */
+  Both = 'BOTH',
+  /** FEMALE */
+  Female = 'FEMALE',
+  /** MALE */
+  Male = 'MALE'
 }
 
-export enum ProductServiceKindEnum {
-  Product = 'PRODUCT',
-  Service = 'SERVICE'
-}
-
-export type ProductServiceResponseSuccessType = {
-  __typename?: 'ProductServiceResponseSuccessType';
-  message?: Maybe<Scalars['String']['output']>;
-  object?: Maybe<ProductServiceType>;
-  status?: Maybe<Scalars['String']['output']>;
-  statusCode?: Maybe<Scalars['Int']['output']>;
-};
-
-export type ProductServiceType = {
-  __typename?: 'ProductServiceType';
-  /**
-   *
-   *         Product: Number of units</br>
-   *         Services: How many times the service was rendered
-   *
-   */
-  amount?: Maybe<Scalars['Float']['output']>;
-  archived: Scalars['Boolean']['output'];
-  available?: Maybe<Scalars['Boolean']['output']>;
-  canEdit?: Maybe<Scalars['Boolean']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  deleted: Scalars['Boolean']['output'];
-  draft: Scalars['Boolean']['output'];
+export type ProjectQueryType = {
+  __typename?: 'ProjectQueryType';
+  accommodation?: Maybe<AccommodationType>;
+  capacity?: Maybe<CapacityType>;
+  capacityReserved?: Maybe<CapacityReserveType>;
+  categories?: Maybe<Array<Maybe<CategoryType>>>;
+  createdTime?: Maybe<Scalars['DateTime']['output']>;
+  creator?: Maybe<UserListType>;
+  dateEnd?: Maybe<Scalars['DateTime']['output']>;
+  dateStart?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  facilities?: Maybe<Array<Maybe<FacilityType>>>;
+  freeCapacity?: Maybe<CapacityReserveType>;
+  gender: ProjectGender;
   id: Scalars['ID']['output'];
-  kind: ProductServiceKind;
-  lineitemSet: Array<LineItemType>;
   name?: Maybe<Scalars['String']['output']>;
-  /**
-   *
-   *         Product: Last Unit Price</br>
-   *         Service: Last Total Price
-   */
-  priceLast?: Maybe<Scalars['Float']['output']>;
-  /** Total money paid */
-  priceTotalBuy?: Maybe<Scalars['Float']['output']>;
-  /** Total money received */
-  priceTotalSell?: Maybe<Scalars['Float']['output']>;
-  topImage?: Maybe<Scalars['String']['output']>;
-  unit?: Maybe<Scalars['String']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  objectId?: Maybe<Scalars['Int']['output']>;
+  price?: Maybe<Scalars['Int']['output']>;
+  requestFrom: ProjectRequestFrom;
+  status: ProjectStatus;
+  tags: Array<TagType>;
+  tax?: Maybe<Scalars['Int']['output']>;
+  tours?: Maybe<Array<Maybe<TourTypes>>>;
+  transactionSet: Array<UserTransactionQueryType>;
+  type?: Maybe<Scalars['String']['output']>;
 };
 
-export type ProfitAndLossReportFilterType = {
-  dateEnd: Scalars['String']['input'];
-  dateStart: Scalars['String']['input'];
-  includeOutstanding: Scalars['Boolean']['input'];
-  type?: InputMaybe<ProfitAndLossTypeEnum>;
+/** An enumeration. */
+export enum ProjectRequestFrom {
+  /** BOTH */
+  Both = 'BOTH',
+  /** NGO */
+  Ngo = 'NGO',
+  /** USER */
+  User = 'USER'
+}
+
+export type ProjectSetType = {
+  __typename?: 'ProjectSetType';
+  count?: Maybe<Scalars['Int']['output']>;
+  data?: Maybe<Array<Maybe<ProjectQueryType>>>;
+  pageCount?: Maybe<Scalars['Int']['output']>;
 };
 
-export enum ProfitAndLossTypeEnum {
-  Daily = 'DAILY',
-  Monthly = 'MONTHLY',
-  Quarterly = 'QUARTERLY',
-  Weekly = 'WEEKLY',
-  Yearly = 'YEARLY'
+/** An enumeration. */
+export enum ProjectStatus {
+  /** ACTIVE */
+  Active = 'ACTIVE',
+  /** COMPLETED */
+  Completed = 'COMPLETED',
+  /** END */
+  End = 'END',
+  /** INITIAL */
+  Initial = 'INITIAL',
+  /** PENDING */
+  Pending = 'PENDING',
+  /** REJECTED */
+  Rejected = 'REJECTED'
 }
 
 export type Query = {
   __typename?: 'Query';
-  addressList?: Maybe<AddresListsType>;
-  business?: Maybe<BusinessType>;
-  businessSetting?: Maybe<BusinessSettingType>;
-  cost?: Maybe<CostType>;
-  costList?: Maybe<Array<Maybe<CostType>>>;
-  currencyList?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  customer?: Maybe<UserType>;
-  customerList?: Maybe<Array<Maybe<UserType>>>;
-  daysWithEvent?: Maybe<Scalars['GenericScalar']['output']>;
-  event?: Maybe<EventType>;
-  eventList?: Maybe<Scalars['GenericScalar']['output']>;
-  installment?: Maybe<InstallmentType>;
-  invoice?: Maybe<InvoiceType>;
-  invoiceAndCostList?: Maybe<Array<Maybe<InvoiceAndCostType>>>;
-  invoiceList?: Maybe<Array<Maybe<InvoiceType>>>;
-  invoiceRecommendedId?: Maybe<Scalars['ID']['output']>;
-  invoiceTemplateList?: Maybe<Array<Maybe<InvoiceTemplateType>>>;
-  notificationList?: Maybe<Array<Maybe<NotificationType>>>;
-  productServic?: Maybe<ProductServiceType>;
-  productServiceDelete?: Maybe<ResponseType>;
-  productServiceList?: Maybe<Array<Maybe<ProductServiceType>>>;
-  reportCashflow?: Maybe<CashflowReportType>;
-  reportProfitAndLoss?: Maybe<Scalars['GenericScalar']['output']>;
-  tax?: Maybe<TaxType>;
-  taxList?: Maybe<Array<Maybe<TaxType>>>;
-  transaction?: Maybe<TransactionType>;
-  transactionList?: Maybe<Array<Maybe<TransactionType>>>;
-  userList?: Maybe<Array<Maybe<UserType>>>;
-  userProfile?: Maybe<UserProfileType>;
-  vendor?: Maybe<UserType>;
-  vendorList?: Maybe<Array<Maybe<UserType>>>;
+  NGODetail?: Maybe<NgoDetailType>;
+  NGOList?: Maybe<Array<Maybe<NgoListType>>>;
+  accommodationDetail?: Maybe<AccommodationListType>;
+  accommodationSet?: Maybe<Array<Maybe<AccommodationListType>>>;
+  bannerDetail?: Maybe<BannerListType>;
+  bannerList?: Maybe<Array<Maybe<BannerListType>>>;
+  categoryList?: Maybe<Array<Maybe<CategoryListType>>>;
+  facilityList?: Maybe<Array<Maybe<FacilityType>>>;
+  ngoTransactionDetail?: Maybe<NgoTransactionQueryType>;
+  ngoTransactionList?: Maybe<Array<Maybe<NgoTransactionQueryType>>>;
+  projectDetail?: Maybe<ProjectQueryType>;
+  projectSet?: Maybe<ProjectSetType>;
+  settingDetail?: Maybe<SettingDetailType>;
+  tagList?: Maybe<Array<Maybe<TagListType>>>;
+  tourDetail?: Maybe<TourTypes>;
+  tourList?: Maybe<TourListType>;
+  userDetail?: Maybe<UserListType>;
+  userList?: Maybe<Array<Maybe<UserListType>>>;
+  userTourTransactionDetail?: Maybe<UserTourTransactionQueryType>;
+  userTourTransactionList?: Maybe<Array<Maybe<UserTourTransactionQueryType>>>;
+  userTransactionDetail?: Maybe<UserTransactionQueryType>;
+  userTransactionList?: Maybe<Array<Maybe<UserTransactionQueryType>>>;
+  version?: Maybe<VersionType>;
 };
 
 
-export type QueryAddressListArgs = {
-  ownerType?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  q?: InputMaybe<Scalars['String']['input']>;
-  relatedEnduser?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryCostArgs = {
+export type QueryNgoDetailArgs = {
   pk?: InputMaybe<Scalars['ID']['input']>;
 };
 
 
-export type QueryCostListArgs = {
+export type QueryNgoListArgs = {
   search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type QueryCustomerArgs = {
-  pk?: InputMaybe<Scalars['ID']['input']>;
-  relatedEnduser?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryCustomerListArgs = {
-  pk?: InputMaybe<Scalars['ID']['input']>;
-  relatedEnduser?: InputMaybe<Scalars['ID']['input']>;
-  search?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryEventArgs = {
-  pk?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryEventListArgs = {
-  filter: EventFilterType;
-};
-
-
-export type QueryInstallmentArgs = {
+export type QueryAccommodationDetailArgs = {
   pk: Scalars['ID']['input'];
 };
 
 
-export type QueryInvoiceArgs = {
-  pk?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryInvoiceAndCostListArgs = {
-  filter?: InputMaybe<FilterType>;
-  page?: InputMaybe<Scalars['Int']['input']>;
-  pageSize?: InputMaybe<Scalars['Int']['input']>;
-  resetCache?: InputMaybe<Scalars['Boolean']['input']>;
+export type QueryAccommodationSetArgs = {
+  filter?: InputMaybe<AccommodationFilterType>;
   search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type QueryInvoiceListArgs = {
-  filter?: InputMaybe<InvoiceFilterType>;
+export type QueryBannerDetailArgs = {
+  pk: Scalars['ID']['input'];
+};
+
+
+export type QueryBannerListArgs = {
   search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type QueryProductServicArgs = {
-  pk?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryProductServiceDeleteArgs = {
-  pk?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryProductServiceListArgs = {
-  filter?: InputMaybe<FilterType>;
+export type QueryCategoryListArgs = {
   search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type QueryReportCashflowArgs = {
-  filter?: InputMaybe<PeriodicallyCashflowReportFilterType>;
-};
-
-
-export type QueryReportProfitAndLossArgs = {
-  filter?: InputMaybe<ProfitAndLossReportFilterType>;
-};
-
-
-export type QueryTaxArgs = {
-  enduserId?: InputMaybe<Scalars['ID']['input']>;
-  pk?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryTaxListArgs = {
-  enduserId?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryTransactionArgs = {
-  pk?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryUserListArgs = {
-  filter?: InputMaybe<FilterType>;
+export type QueryFacilityListArgs = {
   search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type QueryVendorArgs = {
-  pk?: InputMaybe<Scalars['ID']['input']>;
-  relatedEnduser?: InputMaybe<Scalars['ID']['input']>;
+export type QueryNgoTransactionDetailArgs = {
+  pk: Scalars['ID']['input'];
 };
 
 
-export type QueryVendorListArgs = {
-  pk?: InputMaybe<Scalars['ID']['input']>;
-  relatedEnduser?: InputMaybe<Scalars['ID']['input']>;
+export type QueryNgoTransactionListArgs = {
+  filter?: InputMaybe<NgoTransactionFilterType>;
+};
+
+
+export type QueryProjectDetailArgs = {
+  dimension?: InputMaybe<ProjectAvatarDimensions>;
+  pk: Scalars['ID']['input'];
+};
+
+
+export type QueryProjectSetArgs = {
+  filter?: InputMaybe<ProjectFilterType>;
+  page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QuerySettingDetailArgs = {
+  userId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryTagListArgs = {
+  search?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryTourDetailArgs = {
+  pk: Scalars['ID']['input'];
+};
+
+
+export type QueryTourListArgs = {
+  filter?: InputMaybe<TourFilterType>;
+  page?: InputMaybe<PageType>;
+  search?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryUserDetailArgs = {
+  pk?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryUserTourTransactionDetailArgs = {
+  pk: Scalars['ID']['input'];
+};
+
+
+export type QueryUserTourTransactionListArgs = {
+  filter?: InputMaybe<UserTourTransactionFilterType>;
+};
+
+
+export type QueryUserTransactionDetailArgs = {
+  pk: Scalars['ID']['input'];
+};
+
+
+export type QueryUserTransactionListArgs = {
+  filter?: InputMaybe<UserTransactionFilterType>;
 };
 
 export type Refresh = {
   __typename?: 'Refresh';
   payload: Scalars['GenericScalar']['output'];
   refreshExpiresIn: Scalars['Int']['output'];
-  refreshToken: Scalars['String']['output'];
   token: Scalars['String']['output'];
 };
 
-/** An enumeration. */
-export enum ReportPeriodType {
-  /** Daily */
-  Daily = 'DAILY',
-  /** Monthly */
-  Monthly = 'MONTHLY',
-  /** Quarterly */
-  Quarterly = 'QUARTERLY',
-  /** Weekly */
-  Weekly = 'WEEKLY',
-  /** Yearly */
-  Yearly = 'YEARLY'
-}
-
-export type ResponseSuccessType = {
-  __typename?: 'ResponseSuccessType';
+export type ResponseBase = {
+  __typename?: 'ResponseBase';
   message?: Maybe<Scalars['String']['output']>;
-  object?: Maybe<Scalars['GenericScalar']['output']>;
+  metadata?: Maybe<Scalars['GenericScalar']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   statusCode?: Maybe<Scalars['Int']['output']>;
 };
 
-export type ResponseType = BaseExceptionType | ResponseSuccessType;
+/** use for dynamic outputs in mutations. */
+export type ResponseType = ResponseBase | ResponseWithToken;
 
-export type Revoke = {
-  __typename?: 'Revoke';
-  revoked: Scalars['Int']['output'];
+export type ResponseWithToken = {
+  __typename?: 'ResponseWithToken';
+  message?: Maybe<Scalars['String']['output']>;
+  metadata?: Maybe<Scalars['GenericScalar']['output']>;
+  refreshToken?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  statusCode?: Maybe<Scalars['Int']['output']>;
+  token?: Maybe<Scalars['String']['output']>;
 };
 
-export type SmsLoginVerification = {
-  __typename?: 'SMSLoginVerification';
-  payload: Scalars['GenericScalar']['output'];
-  refreshExpiresIn: Scalars['Int']['output'];
-  refreshToken: Scalars['String']['output'];
-  token: Scalars['String']['output'];
+export type SettingDetailType = {
+  __typename?: 'SettingDetailType';
+  language: SettingLanguage;
 };
 
-export type TaxInputType = {
-  amount?: InputMaybe<Scalars['Float']['input']>;
-  draft?: InputMaybe<Scalars['Boolean']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
+export type SettingEditInputType = {
+  language?: InputMaybe<Language_Choice>;
 };
 
-export type TaxType = {
-  __typename?: 'TaxType';
-  amount: Scalars['Float']['output'];
-  archived: Scalars['Boolean']['output'];
-  costSet: Array<CostType>;
-  deleted: Scalars['Boolean']['output'];
-  draft: Scalars['Boolean']['output'];
+/** An enumeration. */
+export enum SettingLanguage {
+  /** AR */
+  Ar = 'AR',
+  /** EN_US */
+  EnUs = 'EN_US',
+  /** FA_IR */
+  FaIr = 'FA_IR'
+}
+
+export type StatusInputType = {
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  step?: InputMaybe<Transaction_Status>;
+};
+
+export type StatusQueryType = {
+  __typename?: 'StatusQueryType';
+  isActive?: Maybe<Scalars['Boolean']['output']>;
+  step?: Maybe<Scalars['String']['output']>;
+};
+
+export type TagListType = {
+  __typename?: 'TagListType';
+  displayName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  projectSet: Array<ProjectQueryType>;
+};
+
+export type TagType = {
+  __typename?: 'TagType';
   id: Scalars['ID']['output'];
   name?: Maybe<Scalars['String']['output']>;
 };
 
-export type TransactionInputType = {
-  amount?: InputMaybe<Scalars['Int']['input']>;
-  invoice?: InputMaybe<Scalars['ID']['input']>;
-};
-
-export type TransactionType = {
-  __typename?: 'TransactionType';
-  amount?: Maybe<Scalars['Int']['output']>;
-  archived: Scalars['Boolean']['output'];
-  datetime?: Maybe<Scalars['Date']['output']>;
-  deleted: Scalars['Boolean']['output'];
-  draft: Scalars['Boolean']['output'];
+export type TourCapacityType = {
+  __typename?: 'TourCapacityType';
+  child: Scalars['Int']['output'];
+  female: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
-  invoice: InvoiceType;
+  male: Scalars['Int']['output'];
 };
 
-export enum TransactionTypeEnum {
-  Buy = 'BUY',
-  Sell = 'SELL'
+export type TourFacilitType = {
+  __typename?: 'TourFacilitType';
+  arName?: Maybe<Scalars['String']['output']>;
+  enName?: Maybe<Scalars['String']['output']>;
+  faName?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+};
+
+export type TourFilterType = {
+  dateRange?: InputMaybe<DateRangeType>;
+  price?: InputMaybe<IntRangeType>;
+};
+
+/** An enumeration. */
+export enum TourGuestGender {
+  /** CHILD */
+  Child = 'CHILD',
+  /** FEMALE */
+  Female = 'FEMALE',
+  /** MALE */
+  Male = 'MALE'
 }
 
-export type UserProfileInputType = {
-  address?: InputMaybe<Scalars['String']['input']>;
-  avatar?: InputMaybe<Scalars['String']['input']>;
+export type TourGuestImageType = {
+  __typename?: 'TourGuestImageType';
+  large?: Maybe<Scalars['String']['output']>;
+  medium?: Maybe<Scalars['String']['output']>;
+  small?: Maybe<Scalars['String']['output']>;
+};
+
+export type TourGuestInputType = {
+  birthday: Scalars['String']['input'];
+  gender: Gender;
+  identifyNumber: Scalars['String']['input'];
+  identifyPicture?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+};
+
+export type TourGuestType = {
+  __typename?: 'TourGuestType';
+  avatarS3?: Maybe<TourGuestImageType>;
+  birthday?: Maybe<Scalars['Date']['output']>;
+  gender: TourGuestGender;
+  identifyNumber?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+export type TourImageType = {
+  __typename?: 'TourImageType';
+  large?: Maybe<Scalars['String']['output']>;
+  medium?: Maybe<Scalars['String']['output']>;
+  small?: Maybe<Scalars['String']['output']>;
+};
+
+export type TourListType = {
+  __typename?: 'TourListType';
+  count?: Maybe<Scalars['Int']['output']>;
+  data?: Maybe<Array<Maybe<TourTypes>>>;
+  pageCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type TourPriceType = {
+  __typename?: 'TourPriceType';
+  id: Scalars['ID']['output'];
+  price: Scalars['Float']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type TourStatusInputType = {
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  step?: InputMaybe<Transaction_Status>;
+};
+
+export type TourStatusQueryType = {
+  __typename?: 'TourStatusQueryType';
+  isActive?: Maybe<Scalars['Boolean']['output']>;
+  step?: Maybe<Scalars['String']['output']>;
+};
+
+export type TourTransactionAddInputType = {
+  dateEnd: Scalars['String']['input'];
+  dateStart: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  guests?: InputMaybe<Array<InputMaybe<TourGuestInputType>>>;
+  tourId: Scalars['ID']['input'];
+};
+
+export type TourTransactionEditInputType = {
+  status?: InputMaybe<TourStatusInputType>;
+  transactionId: Scalars['ID']['input'];
+};
+
+export type TourTypes = {
+  __typename?: 'TourTypes';
+  NGO: NgoDetailType;
+  avatarS3?: Maybe<Array<Maybe<TourImageType>>>;
+  capacity?: Maybe<TourCapacityType>;
+  endTime: Scalars['DateTime']['output'];
+  facilities?: Maybe<Array<Maybe<TourFacilitType>>>;
+  id: Scalars['ID']['output'];
+  longDescription: Scalars['String']['output'];
+  price?: Maybe<Array<Maybe<TourPriceType>>>;
+  prices: Array<TourPriceType>;
+  projects: Array<ProjectQueryType>;
+  shortDescription: Scalars['String']['output'];
+  startTime: Scalars['DateTime']['output'];
+  termsRules: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  tourtransactionSet: Array<UserTourTransactionQueryType>;
+};
+
+export type TransactionAddInputType = {
+  dateEnd: Scalars['String']['input'];
+  dateStart: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  guests?: InputMaybe<Array<InputMaybe<GuestInputType>>>;
+  projectId: Scalars['ID']['input'];
+};
+
+export type TransactionEditInputType = {
+  status?: InputMaybe<StatusInputType>;
+  transactionId: Scalars['ID']['input'];
+};
+
+/** An enumeration. */
+export enum TransactionStatusStep {
+  /** ACCEPT */
+  Accept = 'ACCEPT',
+  /** PAYMENT */
+  Payment = 'PAYMENT',
+  /** REQUEST */
+  Request = 'REQUEST',
+  /** SUCCESSFUL */
+  Successful = 'SUCCESSFUL'
+}
+
+export type UserEditInputType = {
+  base64Image?: InputMaybe<Scalars['String']['input']>;
+  bio?: InputMaybe<Scalars['String']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
-  phone?: InputMaybe<Scalars['String']['input']>;
-  preferredName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type UserProfileType = {
-  __typename?: 'UserProfileType';
-  address?: Maybe<Scalars['String']['output']>;
-  avatar?: Maybe<Scalars['String']['output']>;
-  avatarBase64?: Maybe<Scalars['String']['output']>;
-  firstName: Scalars['String']['output'];
-  lastName: Scalars['String']['output'];
-  phone?: Maybe<Scalars['String']['output']>;
-  preferredName?: Maybe<Scalars['String']['output']>;
+export type UserImageType = {
+  __typename?: 'UserImageType';
+  large?: Maybe<Scalars['String']['output']>;
+  medium?: Maybe<Scalars['String']['output']>;
+  small?: Maybe<Scalars['String']['output']>;
 };
 
-/**
- * Customized implemented fields:
- * - ``full_name``
- * - ``is_customer``
- * - ``is_vendor``
- *
- * Native fields from model:
- *
- * - ``id``
- * - ``deleted``
- * - ``archived``
- * - ``username``
- * - ``first_name``
- * - ``last_name``
- * - ``email``
- * - ``avatar``
- * - ``fullName``
- * - ``is_customer``
- * - ``is_vendor``
- */
-export type UserType = {
-  __typename?: 'UserType';
-  address?: Maybe<Scalars['String']['output']>;
-  archived: Scalars['Boolean']['output'];
-  avatar?: Maybe<Scalars['String']['output']>;
-  deleted: Scalars['Boolean']['output'];
+export type UserInputType = {
+  bio?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+  phoneNumber: Scalars['String']['input'];
+};
+
+export type UserListType = {
+  __typename?: 'UserListType';
+  accommodationSet: Array<AccommodationType>;
+  avatarS3?: Maybe<UserImageType>;
+  bio?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
-  fullName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  isCustomer?: Maybe<Scalars['Boolean']['output']>;
-  isVendor?: Maybe<Scalars['Boolean']['output']>;
+  isNgo?: Maybe<Scalars['Boolean']['output']>;
   lastName: Scalars['String']['output'];
-  phone?: Maybe<Scalars['String']['output']>;
+  ngo?: Maybe<NgoDetailType>;
+  phoneNumber?: Maybe<Scalars['String']['output']>;
+  projectSet: Array<ProjectQueryType>;
+  setting?: Maybe<SettingDetailType>;
+  smsActivationCode?: Maybe<Scalars['Int']['output']>;
+  tourtransactionSet: Array<UserTourTransactionQueryType>;
+  transactionSet: Array<UserTransactionQueryType>;
   /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: Scalars['String']['output'];
 };
 
-export type VendorInputType = {
-  address?: InputMaybe<Array<InputMaybe<AddressInputType>>>;
-  firstName?: InputMaybe<Scalars['String']['input']>;
-  lastName?: InputMaybe<Scalars['String']['input']>;
-  phone?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  pk?: InputMaybe<Scalars['ID']['input']>;
-  relatedEnduser?: InputMaybe<Scalars['ID']['input']>;
+export type UserTourTransactionFilterType = {
+  statusStep?: InputMaybe<Transaction_Status>;
+};
+
+export type UserTourTransactionQueryType = {
+  __typename?: 'UserTourTransactionQueryType';
+  createdDate?: Maybe<Scalars['DateTime']['output']>;
+  dateEnd?: Maybe<Scalars['DateTime']['output']>;
+  dateStart?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  invoiceNumber?: Maybe<Scalars['UUID']['output']>;
+  modifiedDate?: Maybe<Scalars['DateTime']['output']>;
+  owner?: Maybe<UserListType>;
+  status?: Maybe<TourStatusQueryType>;
+  tour?: Maybe<TourTypes>;
+  tourguestSet: Array<TourGuestType>;
+};
+
+export type UserTransactionFilterType = {
+  statusStep?: InputMaybe<Transaction_Status>;
+};
+
+export type UserTransactionQueryType = {
+  __typename?: 'UserTransactionQueryType';
+  createdDate?: Maybe<Scalars['DateTime']['output']>;
+  dateEnd?: Maybe<Scalars['DateTime']['output']>;
+  dateStart?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  guestSet: Array<GuestType>;
+  id: Scalars['ID']['output'];
+  invoiceNumber?: Maybe<Scalars['UUID']['output']>;
+  modifiedDate?: Maybe<Scalars['DateTime']['output']>;
+  owner?: Maybe<UserListType>;
+  project?: Maybe<ProjectQueryType>;
+  status?: Maybe<StatusQueryType>;
 };
 
 export type Verify = {
   __typename?: 'Verify';
   payload: Scalars['GenericScalar']['output'];
 };
+
+/** use for dynamic outputs in mutations. */
+export type VersionType = BackendVersion | FrontendVersion;
+
+/** An enumeration. */
+export enum Creator {
+  Me = 'ME',
+  Others = 'OTHERS'
+}
+
+/** An enumeration. */
+export enum Gender {
+  Child = 'CHILD',
+  Female = 'FEMALE',
+  Male = 'MALE'
+}
+
+/** An enumeration. */
+export enum Language_Choice {
+  Ar = 'AR',
+  EnUs = 'EN_US',
+  FaIr = 'FA_IR'
+}
+
+/** An enumeration. */
+export enum Object_Type {
+  Accommodation = 'ACCOMMODATION',
+  Project = 'PROJECT'
+}
+
+/** An enumeration. */
+export enum Project_Category {
+  Apartment = 'Apartment',
+  Beachfront = 'Beachfront',
+  Hussainiyah = 'Hussainiyah',
+  Moukeb = 'Moukeb',
+  Room = 'Room'
+}
+
+/** An enumeration. */
+export enum Project_Gender {
+  Both = 'BOTH',
+  Female = 'FEMALE',
+  Male = 'MALE'
+}
+
+/** An enumeration. */
+export enum Project_Status {
+  Active = 'ACTIVE',
+  Completed = 'COMPLETED',
+  End = 'END',
+  Initial = 'INITIAL',
+  Pending = 'PENDING',
+  Rejected = 'REJECTED'
+}
+
+/** An enumeration. */
+export enum Request_From {
+  Both = 'BOTH',
+  Ngo = 'NGO',
+  User = 'USER'
+}
+
+/** An enumeration. */
+export enum Tag {
+  Discount = 'DISCOUNT',
+  Economy = 'ECONOMY',
+  Free = 'FREE',
+  Luxe = 'LUXE',
+  New = 'NEW',
+  Trend = 'TREND'
+}
+
+/** An enumeration. */
+export enum Transaction_Status {
+  Accept = 'ACCEPT',
+  Payment = 'PAYMENT',
+  Request = 'REQUEST',
+  Successful = 'SUCCESSFUL'
+}
+
+/** An enumeration. */
+export enum Triple_Choice {
+  False = 'FALSE',
+  None = 'NONE',
+  True = 'TRUE'
+}
+
+export type LoginMutationVariables = Exact<{
+  dataUser?: InputMaybe<UserInputType>;
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login?: { __typename: 'ResponseBase', status?: string | null, message?: string | null, statusCode?: number | null, metadata?: any | null } | { __typename: 'ResponseWithToken', status?: string | null, statusCode?: number | null, message?: string | null, token?: string | null, refreshToken?: string | null, metadata?: any | null } | null };
+
+export type SettingEditMutationVariables = Exact<{
+  data?: InputMaybe<SettingEditInputType>;
+}>;
+
+
+export type SettingEditMutation = { __typename?: 'Mutation', settingEdit?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | { __typename: 'ResponseWithToken' } | null };
+
+export type UserTransactionEditMutationVariables = Exact<{
+  data: TransactionEditInputType;
+}>;
+
+
+export type UserTransactionEditMutation = { __typename?: 'Mutation', userTransactionEdit?: { __typename?: 'ResponseBase', message?: string | null, status?: string | null, statusCode?: number | null } | { __typename?: 'ResponseWithToken' } | null };
+
+export type UserTransactionAddMutationVariables = Exact<{
+  data: TransactionAddInputType;
+}>;
+
+
+export type UserTransactionAddMutation = { __typename?: 'Mutation', userTransactionAdd?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | { __typename: 'ResponseWithToken', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
+export type UserCheckSmsVerificationCodeMutationVariables = Exact<{
+  code: Scalars['Int']['input'];
+  phoneNumber: Scalars['String']['input'];
+}>;
+
+
+export type UserCheckSmsVerificationCodeMutation = { __typename?: 'Mutation', userCheckSmsVerificationCode?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | { __typename: 'ResponseWithToken', status?: string | null, statusCode?: number | null, message?: string | null, token?: string | null, refreshToken?: string | null, metadata?: any | null } | null };
+
+export type UserEditMutationVariables = Exact<{
+  data?: InputMaybe<UserEditInputType>;
+}>;
+
+
+export type UserEditMutation = { __typename?: 'Mutation', userEdit?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null } | { __typename?: 'ResponseWithToken', status?: string | null, statusCode?: number | null, message?: string | null } | null };
+
+export type BannerListQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type BannerListQuery = { __typename?: 'Query', bannerList?: Array<{ __typename?: 'BannerListType', id: string, url?: string | null, title: string, avatarS3?: { __typename?: 'BannerImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null };
+
+export type CategoryListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CategoryListQuery = { __typename?: 'Query', categoryList?: Array<{ __typename?: 'CategoryListType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null };
+
+export type ProjectDetailQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+}>;
+
+
+export type ProjectDetailQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, gender: ProjectGender, description?: string | null, tags: Array<{ __typename?: 'TagType', id: string, name?: string | null }>, capacity?: { __typename?: 'CapacityType', id: string, male: number, child: number, female: number } | null, facilities?: Array<{ __typename?: 'FacilityType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, creator?: { __typename?: 'UserListType', id: string, lastName: string, firstName: string, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, projectSet: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationType', id: string, name?: string | null, address?: string | null, avatarS3?: Array<{ __typename?: 'ImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null }> } | null, accommodation?: { __typename?: 'AccommodationType', id: string, lat?: number | null, lng?: number | null, name?: string | null, address?: string | null, description?: string | null, avatarS3?: Array<{ __typename?: 'ImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null };
+
+export type ProjectSetQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<ProjectFilterType>;
+  page: PageType;
+}>;
+
+
+export type ProjectSetQuery = { __typename?: 'Query', projectSet?: { __typename?: 'ProjectSetType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'ImageType', small?: string | null } | null> | null } | null } | null> | null } | null };
+
+export type SettingDetailQueryVariables = Exact<{
+  userId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type SettingDetailQuery = { __typename?: 'Query', settingDetail?: { __typename?: 'SettingDetailType', language: SettingLanguage } | null };
+
+export type TagListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TagListQuery = { __typename?: 'Query', tagList?: Array<{ __typename?: 'TagListType', id: string, name?: string | null, displayName?: string | null } | null> | null };
+
+export type TourListQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<TourFilterType>;
+  page: PageType;
+}>;
+
+
+export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', data?: Array<{ __typename?: 'TourTypes', id: string, title: string, shortDescription: string, startTime: any, endTime: any, facilities?: Array<{ __typename?: 'TourFacilitType', id: string, enName?: string | null } | null> | null, price?: Array<{ __typename?: 'TourPriceType', title: string, price: number } | null> | null, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
+
+export type UserTransactionDetailQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+}>;
+
+
+export type UserTransactionDetailQuery = { __typename?: 'Query', userTransactionDetail?: { __typename?: 'UserTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, owner?: { __typename?: 'UserListType', id: string, lastName: string, firstName: string } | null, guestSet: Array<{ __typename?: 'GuestType', name?: string | null }>, project?: { __typename?: 'ProjectQueryType', id: string, tax?: number | null, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationType', id: string, address?: string | null } | null } | null } | null };
+
+export type UserTransactionListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserTransactionListQuery = { __typename?: 'Query', userTransactionList?: Array<{ __typename?: 'UserTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, description?: string | null, invoiceNumber?: any | null, createdDate?: any | null, owner?: { __typename?: 'UserListType', id: string, lastName: string, firstName: string } | null, status?: { __typename?: 'StatusQueryType', step?: string | null, isActive?: boolean | null } | null, guestSet: Array<{ __typename?: 'GuestType', name?: string | null }>, project?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, tax?: number | null, price?: number | null, description?: string | null, facilities?: Array<{ __typename?: 'FacilityType', id: string, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'ImageType', small?: string | null } | null> | null } | null } | null } | null> | null };
+
+export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserListType', id: string, username: string, firstName: string, lastName: string, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: SettingLanguage } | null, ngo?: { __typename?: 'NGODetailType', id: string } | null } | null };
+
+export type VersionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type VersionQuery = { __typename?: 'Query', version?: { __typename?: 'BackendVersion', currentVersion?: string | null } | { __typename?: 'FrontendVersion' } | null };
+
+
+export const LoginDocument = gql`
+    mutation login($dataUser: UserInputType) {
+  login(dataUser: $dataUser) {
+    __typename
+    ... on ResponseBase {
+      status
+      message
+      statusCode
+      metadata
+      __typename
+    }
+    ... on ResponseWithToken {
+      status
+      statusCode
+      message
+      token
+      refreshToken
+      metadata
+      __typename
+    }
+  }
+}
+    `;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      dataUser: // value for 'dataUser'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const SettingEditDocument = gql`
+    mutation settingEdit($data: SettingEditInputType) {
+  settingEdit(data: $data) {
+    ... on ResponseBase {
+      status
+      statusCode
+      message
+      metadata
+    }
+    __typename
+  }
+}
+    `;
+export type SettingEditMutationFn = Apollo.MutationFunction<SettingEditMutation, SettingEditMutationVariables>;
+
+/**
+ * __useSettingEditMutation__
+ *
+ * To run a mutation, you first call `useSettingEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSettingEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [settingEditMutation, { data, loading, error }] = useSettingEditMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSettingEditMutation(baseOptions?: Apollo.MutationHookOptions<SettingEditMutation, SettingEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SettingEditMutation, SettingEditMutationVariables>(SettingEditDocument, options);
+      }
+export type SettingEditMutationHookResult = ReturnType<typeof useSettingEditMutation>;
+export type SettingEditMutationResult = Apollo.MutationResult<SettingEditMutation>;
+export type SettingEditMutationOptions = Apollo.BaseMutationOptions<SettingEditMutation, SettingEditMutationVariables>;
+export const UserTransactionEditDocument = gql`
+    mutation userTransactionEdit($data: TransactionEditInputType!) {
+  userTransactionEdit(data: $data) {
+    ... on ResponseBase {
+      message
+      status
+      statusCode
+    }
+  }
+}
+    `;
+export type UserTransactionEditMutationFn = Apollo.MutationFunction<UserTransactionEditMutation, UserTransactionEditMutationVariables>;
+
+/**
+ * __useUserTransactionEditMutation__
+ *
+ * To run a mutation, you first call `useUserTransactionEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserTransactionEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userTransactionEditMutation, { data, loading, error }] = useUserTransactionEditMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUserTransactionEditMutation(baseOptions?: Apollo.MutationHookOptions<UserTransactionEditMutation, UserTransactionEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserTransactionEditMutation, UserTransactionEditMutationVariables>(UserTransactionEditDocument, options);
+      }
+export type UserTransactionEditMutationHookResult = ReturnType<typeof useUserTransactionEditMutation>;
+export type UserTransactionEditMutationResult = Apollo.MutationResult<UserTransactionEditMutation>;
+export type UserTransactionEditMutationOptions = Apollo.BaseMutationOptions<UserTransactionEditMutation, UserTransactionEditMutationVariables>;
+export const UserTransactionAddDocument = gql`
+    mutation userTransactionAdd($data: TransactionAddInputType!) {
+  userTransactionAdd(data: $data) {
+    __typename
+    ... on ResponseWithToken {
+      status
+      statusCode
+      message
+      metadata
+    }
+    ... on ResponseBase {
+      status
+      statusCode
+      message
+      metadata
+    }
+  }
+}
+    `;
+export type UserTransactionAddMutationFn = Apollo.MutationFunction<UserTransactionAddMutation, UserTransactionAddMutationVariables>;
+
+/**
+ * __useUserTransactionAddMutation__
+ *
+ * To run a mutation, you first call `useUserTransactionAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserTransactionAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userTransactionAddMutation, { data, loading, error }] = useUserTransactionAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUserTransactionAddMutation(baseOptions?: Apollo.MutationHookOptions<UserTransactionAddMutation, UserTransactionAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserTransactionAddMutation, UserTransactionAddMutationVariables>(UserTransactionAddDocument, options);
+      }
+export type UserTransactionAddMutationHookResult = ReturnType<typeof useUserTransactionAddMutation>;
+export type UserTransactionAddMutationResult = Apollo.MutationResult<UserTransactionAddMutation>;
+export type UserTransactionAddMutationOptions = Apollo.BaseMutationOptions<UserTransactionAddMutation, UserTransactionAddMutationVariables>;
+export const UserCheckSmsVerificationCodeDocument = gql`
+    mutation userCheckSmsVerificationCode($code: Int!, $phoneNumber: String!) {
+  userCheckSmsVerificationCode(code: $code, phoneNumber: $phoneNumber) {
+    __typename
+    ... on ResponseWithToken {
+      status
+      statusCode
+      message
+      token
+      refreshToken
+      metadata
+    }
+    ... on ResponseBase {
+      status
+      statusCode
+      message
+      metadata
+    }
+  }
+}
+    `;
+export type UserCheckSmsVerificationCodeMutationFn = Apollo.MutationFunction<UserCheckSmsVerificationCodeMutation, UserCheckSmsVerificationCodeMutationVariables>;
+
+/**
+ * __useUserCheckSmsVerificationCodeMutation__
+ *
+ * To run a mutation, you first call `useUserCheckSmsVerificationCodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserCheckSmsVerificationCodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userCheckSmsVerificationCodeMutation, { data, loading, error }] = useUserCheckSmsVerificationCodeMutation({
+ *   variables: {
+ *      code: // value for 'code'
+ *      phoneNumber: // value for 'phoneNumber'
+ *   },
+ * });
+ */
+export function useUserCheckSmsVerificationCodeMutation(baseOptions?: Apollo.MutationHookOptions<UserCheckSmsVerificationCodeMutation, UserCheckSmsVerificationCodeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserCheckSmsVerificationCodeMutation, UserCheckSmsVerificationCodeMutationVariables>(UserCheckSmsVerificationCodeDocument, options);
+      }
+export type UserCheckSmsVerificationCodeMutationHookResult = ReturnType<typeof useUserCheckSmsVerificationCodeMutation>;
+export type UserCheckSmsVerificationCodeMutationResult = Apollo.MutationResult<UserCheckSmsVerificationCodeMutation>;
+export type UserCheckSmsVerificationCodeMutationOptions = Apollo.BaseMutationOptions<UserCheckSmsVerificationCodeMutation, UserCheckSmsVerificationCodeMutationVariables>;
+export const UserEditDocument = gql`
+    mutation userEdit($data: UserEditInputType) {
+  userEdit(data: $data) {
+    ... on ResponseWithToken {
+      status
+      statusCode
+      message
+    }
+    ... on ResponseBase {
+      status
+      statusCode
+      message
+    }
+  }
+}
+    `;
+export type UserEditMutationFn = Apollo.MutationFunction<UserEditMutation, UserEditMutationVariables>;
+
+/**
+ * __useUserEditMutation__
+ *
+ * To run a mutation, you first call `useUserEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userEditMutation, { data, loading, error }] = useUserEditMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUserEditMutation(baseOptions?: Apollo.MutationHookOptions<UserEditMutation, UserEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserEditMutation, UserEditMutationVariables>(UserEditDocument, options);
+      }
+export type UserEditMutationHookResult = ReturnType<typeof useUserEditMutation>;
+export type UserEditMutationResult = Apollo.MutationResult<UserEditMutation>;
+export type UserEditMutationOptions = Apollo.BaseMutationOptions<UserEditMutation, UserEditMutationVariables>;
+export const BannerListDocument = gql`
+    query bannerList($search: String) {
+  bannerList(search: $search) {
+    id
+    url
+    title
+    avatarS3 {
+      large
+      medium
+      small
+    }
+  }
+}
+    `;
+
+/**
+ * __useBannerListQuery__
+ *
+ * To run a query within a React component, call `useBannerListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBannerListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBannerListQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useBannerListQuery(baseOptions?: Apollo.QueryHookOptions<BannerListQuery, BannerListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BannerListQuery, BannerListQueryVariables>(BannerListDocument, options);
+      }
+export function useBannerListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BannerListQuery, BannerListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BannerListQuery, BannerListQueryVariables>(BannerListDocument, options);
+        }
+export type BannerListQueryHookResult = ReturnType<typeof useBannerListQuery>;
+export type BannerListLazyQueryHookResult = ReturnType<typeof useBannerListLazyQuery>;
+export type BannerListQueryResult = Apollo.QueryResult<BannerListQuery, BannerListQueryVariables>;
+export const CategoryListDocument = gql`
+    query categoryList {
+  categoryList {
+    id
+    name
+    displayName
+    avatarS3 {
+      large
+      medium
+      small
+    }
+  }
+}
+    `;
+
+/**
+ * __useCategoryListQuery__
+ *
+ * To run a query within a React component, call `useCategoryListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoryListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoryListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCategoryListQuery(baseOptions?: Apollo.QueryHookOptions<CategoryListQuery, CategoryListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoryListQuery, CategoryListQueryVariables>(CategoryListDocument, options);
+      }
+export function useCategoryListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoryListQuery, CategoryListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoryListQuery, CategoryListQueryVariables>(CategoryListDocument, options);
+        }
+export type CategoryListQueryHookResult = ReturnType<typeof useCategoryListQuery>;
+export type CategoryListLazyQueryHookResult = ReturnType<typeof useCategoryListLazyQuery>;
+export type CategoryListQueryResult = Apollo.QueryResult<CategoryListQuery, CategoryListQueryVariables>;
+export const ProjectDetailDocument = gql`
+    query projectDetail($pk: ID!) {
+  projectDetail(pk: $pk) {
+    id
+    name
+    price
+    gender
+    description
+    tags {
+      id
+      name
+    }
+    capacity {
+      id
+      male
+      child
+      female
+    }
+    facilities {
+      id
+      enName
+      faName
+      arName
+    }
+    creator {
+      id
+      lastName
+      firstName
+      phoneNumber
+      avatarS3 {
+        small
+      }
+      projectSet {
+        id
+        name
+        price
+        accommodation {
+          id
+          name
+          address
+          avatarS3 {
+            large
+            medium
+            small
+          }
+        }
+      }
+    }
+    accommodation {
+      id
+      lat
+      lng
+      name
+      address
+      description
+      avatarS3 {
+        large
+        medium
+        small
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProjectDetailQuery__
+ *
+ * To run a query within a React component, call `useProjectDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProjectDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProjectDetailQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useProjectDetailQuery(baseOptions: Apollo.QueryHookOptions<ProjectDetailQuery, ProjectDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProjectDetailQuery, ProjectDetailQueryVariables>(ProjectDetailDocument, options);
+      }
+export function useProjectDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProjectDetailQuery, ProjectDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProjectDetailQuery, ProjectDetailQueryVariables>(ProjectDetailDocument, options);
+        }
+export type ProjectDetailQueryHookResult = ReturnType<typeof useProjectDetailQuery>;
+export type ProjectDetailLazyQueryHookResult = ReturnType<typeof useProjectDetailLazyQuery>;
+export type ProjectDetailQueryResult = Apollo.QueryResult<ProjectDetailQuery, ProjectDetailQueryVariables>;
+export const ProjectSetDocument = gql`
+    query projectSet($search: String, $filter: ProjectFilterType, $page: PageType!) {
+  projectSet(search: $search, filter: $filter, page: $page) {
+    pageCount
+    count
+    data {
+      id
+      name
+      price
+      accommodation {
+        id
+        address
+        avatarS3 {
+          small
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProjectSetQuery__
+ *
+ * To run a query within a React component, call `useProjectSetQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProjectSetQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProjectSetQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useProjectSetQuery(baseOptions: Apollo.QueryHookOptions<ProjectSetQuery, ProjectSetQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProjectSetQuery, ProjectSetQueryVariables>(ProjectSetDocument, options);
+      }
+export function useProjectSetLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProjectSetQuery, ProjectSetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProjectSetQuery, ProjectSetQueryVariables>(ProjectSetDocument, options);
+        }
+export type ProjectSetQueryHookResult = ReturnType<typeof useProjectSetQuery>;
+export type ProjectSetLazyQueryHookResult = ReturnType<typeof useProjectSetLazyQuery>;
+export type ProjectSetQueryResult = Apollo.QueryResult<ProjectSetQuery, ProjectSetQueryVariables>;
+export const SettingDetailDocument = gql`
+    query settingDetail($userId: ID) {
+  settingDetail(userId: $userId) {
+    language
+  }
+}
+    `;
+
+/**
+ * __useSettingDetailQuery__
+ *
+ * To run a query within a React component, call `useSettingDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSettingDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSettingDetailQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useSettingDetailQuery(baseOptions?: Apollo.QueryHookOptions<SettingDetailQuery, SettingDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SettingDetailQuery, SettingDetailQueryVariables>(SettingDetailDocument, options);
+      }
+export function useSettingDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SettingDetailQuery, SettingDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SettingDetailQuery, SettingDetailQueryVariables>(SettingDetailDocument, options);
+        }
+export type SettingDetailQueryHookResult = ReturnType<typeof useSettingDetailQuery>;
+export type SettingDetailLazyQueryHookResult = ReturnType<typeof useSettingDetailLazyQuery>;
+export type SettingDetailQueryResult = Apollo.QueryResult<SettingDetailQuery, SettingDetailQueryVariables>;
+export const TagListDocument = gql`
+    query tagList {
+  tagList {
+    id
+    name
+    displayName
+  }
+}
+    `;
+
+/**
+ * __useTagListQuery__
+ *
+ * To run a query within a React component, call `useTagListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTagListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTagListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTagListQuery(baseOptions?: Apollo.QueryHookOptions<TagListQuery, TagListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TagListQuery, TagListQueryVariables>(TagListDocument, options);
+      }
+export function useTagListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TagListQuery, TagListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TagListQuery, TagListQueryVariables>(TagListDocument, options);
+        }
+export type TagListQueryHookResult = ReturnType<typeof useTagListQuery>;
+export type TagListLazyQueryHookResult = ReturnType<typeof useTagListLazyQuery>;
+export type TagListQueryResult = Apollo.QueryResult<TagListQuery, TagListQueryVariables>;
+export const TourListDocument = gql`
+    query tourList($search: String, $filter: TourFilterType, $page: PageType!) {
+  tourList(search: $search, filter: $filter, page: $page) {
+    data {
+      id
+      title
+      shortDescription
+      startTime
+      endTime
+      facilities {
+        id
+        enName
+      }
+      price {
+        title
+        price
+      }
+      avatarS3 {
+        medium
+        large
+        small
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useTourListQuery__
+ *
+ * To run a query within a React component, call `useTourListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTourListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTourListQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useTourListQuery(baseOptions: Apollo.QueryHookOptions<TourListQuery, TourListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TourListQuery, TourListQueryVariables>(TourListDocument, options);
+      }
+export function useTourListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TourListQuery, TourListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TourListQuery, TourListQueryVariables>(TourListDocument, options);
+        }
+export type TourListQueryHookResult = ReturnType<typeof useTourListQuery>;
+export type TourListLazyQueryHookResult = ReturnType<typeof useTourListLazyQuery>;
+export type TourListQueryResult = Apollo.QueryResult<TourListQuery, TourListQueryVariables>;
+export const UserTransactionDetailDocument = gql`
+    query userTransactionDetail($pk: ID!) {
+  userTransactionDetail(pk: $pk) {
+    id
+    dateEnd
+    dateStart
+    owner {
+      id
+      lastName
+      firstName
+    }
+    guestSet {
+      name
+    }
+    project {
+      id
+      tax
+      name
+      price
+      accommodation {
+        id
+        address
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useUserTransactionDetailQuery__
+ *
+ * To run a query within a React component, call `useUserTransactionDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserTransactionDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserTransactionDetailQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useUserTransactionDetailQuery(baseOptions: Apollo.QueryHookOptions<UserTransactionDetailQuery, UserTransactionDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserTransactionDetailQuery, UserTransactionDetailQueryVariables>(UserTransactionDetailDocument, options);
+      }
+export function useUserTransactionDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserTransactionDetailQuery, UserTransactionDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserTransactionDetailQuery, UserTransactionDetailQueryVariables>(UserTransactionDetailDocument, options);
+        }
+export type UserTransactionDetailQueryHookResult = ReturnType<typeof useUserTransactionDetailQuery>;
+export type UserTransactionDetailLazyQueryHookResult = ReturnType<typeof useUserTransactionDetailLazyQuery>;
+export type UserTransactionDetailQueryResult = Apollo.QueryResult<UserTransactionDetailQuery, UserTransactionDetailQueryVariables>;
+export const UserTransactionListDocument = gql`
+    query userTransactionList {
+  userTransactionList {
+    id
+    dateEnd
+    dateStart
+    description
+    invoiceNumber
+    createdDate
+    owner {
+      id
+      lastName
+      firstName
+    }
+    status {
+      step
+      isActive
+    }
+    guestSet {
+      name
+    }
+    project {
+      id
+      name
+      tax
+      price
+      description
+      facilities {
+        id
+        enName
+      }
+      accommodation {
+        id
+        address
+        lat
+        lng
+        avatarS3 {
+          small
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useUserTransactionListQuery__
+ *
+ * To run a query within a React component, call `useUserTransactionListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserTransactionListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserTransactionListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserTransactionListQuery(baseOptions?: Apollo.QueryHookOptions<UserTransactionListQuery, UserTransactionListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserTransactionListQuery, UserTransactionListQueryVariables>(UserTransactionListDocument, options);
+      }
+export function useUserTransactionListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserTransactionListQuery, UserTransactionListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserTransactionListQuery, UserTransactionListQueryVariables>(UserTransactionListDocument, options);
+        }
+export type UserTransactionListQueryHookResult = ReturnType<typeof useUserTransactionListQuery>;
+export type UserTransactionListLazyQueryHookResult = ReturnType<typeof useUserTransactionListLazyQuery>;
+export type UserTransactionListQueryResult = Apollo.QueryResult<UserTransactionListQuery, UserTransactionListQueryVariables>;
+export const UserDetailDocument = gql`
+    query userDetail {
+  userDetail {
+    id
+    username
+    firstName
+    lastName
+    email
+    bio
+    phoneNumber
+    avatarS3 {
+      large
+      medium
+      small
+    }
+    setting {
+      language
+    }
+    isNgo
+    ngo {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useUserDetailQuery__
+ *
+ * To run a query within a React component, call `useUserDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserDetailQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserDetailQuery(baseOptions?: Apollo.QueryHookOptions<UserDetailQuery, UserDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserDetailQuery, UserDetailQueryVariables>(UserDetailDocument, options);
+      }
+export function useUserDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserDetailQuery, UserDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserDetailQuery, UserDetailQueryVariables>(UserDetailDocument, options);
+        }
+export type UserDetailQueryHookResult = ReturnType<typeof useUserDetailQuery>;
+export type UserDetailLazyQueryHookResult = ReturnType<typeof useUserDetailLazyQuery>;
+export type UserDetailQueryResult = Apollo.QueryResult<UserDetailQuery, UserDetailQueryVariables>;
+export const VersionDocument = gql`
+    query version {
+  version {
+    ... on BackendVersion {
+      currentVersion
+    }
+  }
+}
+    `;
+
+/**
+ * __useVersionQuery__
+ *
+ * To run a query within a React component, call `useVersionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useVersionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useVersionQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useVersionQuery(baseOptions?: Apollo.QueryHookOptions<VersionQuery, VersionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<VersionQuery, VersionQueryVariables>(VersionDocument, options);
+      }
+export function useVersionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<VersionQuery, VersionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<VersionQuery, VersionQueryVariables>(VersionDocument, options);
+        }
+export type VersionQueryHookResult = ReturnType<typeof useVersionQuery>;
+export type VersionLazyQueryHookResult = ReturnType<typeof useVersionLazyQuery>;
+export type VersionQueryResult = Apollo.QueryResult<VersionQuery, VersionQueryVariables>;
