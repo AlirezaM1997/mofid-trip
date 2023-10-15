@@ -33,7 +33,7 @@ export default MyButtonMeta;
 
 export const Basic = {
   args: {
-    title: "Basicdd",
+    title: "Basic",
     type: "solid",
     color: ["success"],
   },

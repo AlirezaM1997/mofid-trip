@@ -7,7 +7,7 @@ import useIsRtl from "./hooks/localization"
 export const PRIMARY_COLOR = "#FF4332"
 export const SECONDARY_COLOR = "#101010"
 
-export const appTheme = (isRtl) =>
+export const theme = (isRtl) =>
   createTheme({
     lightColors: {
       primary: PRIMARY_COLOR,
