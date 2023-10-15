@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import { useFonts } from "expo-font";
-import { appTheme } from "@src/theme";
+import { theme } from "@src/theme";
 import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "@rneui/themed";
 import useIsRtl from "@src/hooks/localization";
@@ -57,7 +57,7 @@ export function AppContent({ children }) {
 
 const MainContent = () => {
   const isRtl = useIsRtl();
-  const Theme = appTheme(isRtl);
+  const Theme = theme(isRtl);
 
   const { data } = useSettingDetailQuery();
   const { syncTable } = useSettingDetail();
