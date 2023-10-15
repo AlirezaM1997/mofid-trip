@@ -1,0 +1,22 @@
+query projectSet(
+  $search: String
+  $filter: ProjectFilterType
+  $page: PageType!
+) {
+  projectSet(search: $search, filter: $filter, page: $page) {
+    pageCount
+    count
+    data {
+      id
+      name
+      price
+      accommodation {
+        id
+        address
+        avatarS3 {
+          small
+        }
+      }
+    }
+  }
+}

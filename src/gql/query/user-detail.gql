@@ -1,0 +1,23 @@
+query userDetail {
+  userDetail {
+    id
+    username
+    firstName
+    lastName
+    email
+    bio
+    phoneNumber
+    avatarS3 {
+      large
+      medium
+      small
+    }
+    setting {
+      language
+    }
+    isNgo
+    ngo {
+      id
+    }
+  }
+}

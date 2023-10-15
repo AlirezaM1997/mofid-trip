@@ -1,0 +1,62 @@
+query projectDetail($pk: ID!) {
+  projectDetail(pk: $pk) {
+    id
+    name
+    price
+    gender
+    description
+    tags {
+      id
+      name
+    }
+    capacity {
+      id
+      male
+      child
+      female
+    }
+    facilities {
+      id
+      enName
+      faName
+      arName
+    }
+    creator {
+      id
+      lastName
+      firstName
+      phoneNumber
+      avatarS3 {
+        small
+      }
+      projectSet {
+        id
+        name
+        price
+        accommodation {
+          id
+          name
+          address
+          avatarS3 {
+            large
+            medium
+            small
+          }
+        }
+      }
+    }
+    accommodation {
+      id
+      lat
+      lng
+      name
+      address
+      description
+      avatarS3 {
+        large
+        medium
+        small
+      }
+    }
+  }
+}

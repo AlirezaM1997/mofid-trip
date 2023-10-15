@@ -1,0 +1,24 @@
+query tourList($search: String, $filter: TourFilterType, $page: PageType!) {
+  tourList(search: $search, filter: $filter, page: $page) {
+    data {
+      id
+      title
+      shortDescription
+      startTime
+      endTime
+      facilities {
+        id
+        enName
+      }
+      price {
+        title
+        price
+      }
+      avatarS3 {
+        medium
+        large
+        small
+      }
+    }
+  }
+}

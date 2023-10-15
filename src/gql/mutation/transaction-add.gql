@@ -1,0 +1,17 @@
+mutation userTransactionAdd($data: TransactionAddInputType!) {
+  userTransactionAdd(data: $data) {
+    __typename
+    ... on ResponseWithToken {
+      status
+      statusCode
+      message
+      metadata
+    }
+    ... on ResponseBase {
+      status
+      statusCode
+      message
+      metadata
+    }
+  }
+}

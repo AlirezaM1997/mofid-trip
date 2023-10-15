@@ -1,0 +1,12 @@
+query categoryList {
+  categoryList {
+    id
+    name
+    displayName
+    avatarS3 {
+      large
+      medium
+      small
+    }
+  }
+}

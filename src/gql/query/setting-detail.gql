@@ -1,0 +1,5 @@
+query settingDetail($userId: ID) {
+  settingDetail(userId: $userId) {
+    language
+  }
+}

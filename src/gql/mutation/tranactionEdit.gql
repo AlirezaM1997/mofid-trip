@@ -1,0 +1,9 @@
+mutation userTransactionEdit($data: TransactionEditInputType!) {
+  userTransactionEdit(data: $data) {
+    ... on ResponseBase {
+      message
+      status
+      statusCode
+    }
+  }
+}
