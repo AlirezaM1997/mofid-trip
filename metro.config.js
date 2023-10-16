@@ -1,12 +1,9 @@
-/**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
- *
- * @format
- */
-const { getDefaultConfig } = require("metro-config");
-const { resolver: defaultResolver } = getDefaultConfig.getDefaultValues();
-module.exports.resolver = {
-  ...defaultResolver,
-  sourceExts: [...defaultResolver.sourceExts, "cjs", "mjs"],
-};
+const { getDefaultConfig } = require("expo/metro-config");
+
+const defaultConfig = getDefaultConfig(__dirname);
+
+defaultConfig.resolver.resolverMainFields.unshift("sbmodern");
+defaultConfig.resolver.sourceExts.push("cjs");
+defaultConfig.resolver.sourceExts.push("mjs");
+
+module.exports = defaultConfig;
