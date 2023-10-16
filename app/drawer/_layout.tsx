@@ -45,18 +45,14 @@ export default function Layout() {
         name="reports"
         options={{
           title: "Reports",
-          drawerIcon: () => (
-            <Feather name="pie-chart" size={24} color="black" />
-          ),
+          drawerIcon: () => <Feather name="pie-chart" size={24} color="black" />,
         }}
       />
       <Drawer.Screen
         name="help"
         options={{
           title: "Help",
-          drawerIcon: () => (
-            <Feather name="help-circle" size={24} color="black" />
-          ),
+          drawerIcon: () => <Feather name="help-circle" size={24} color="black" />,
         }}
       />
       <Drawer.Screen
@@ -79,9 +75,7 @@ export default function Layout() {
         name="docs"
         options={{
           title: "Docs",
-          drawerIcon: () => (
-            <Feather name="book-open" size={24} color="black" />
-          ),
+          drawerIcon: () => <Feather name="book-open" size={24} color="black" />,
         }}
       />
     </Drawer>
