@@ -27,6 +27,7 @@ export default function AppLayout() {
       <Tabs.Screen
         name="index"
         options={{
+          title: "Home",
           tabBarLabel: "Home",
           tabBarIcon: () => <Feather name="home" size={24} />,
         }}
