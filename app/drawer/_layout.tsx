@@ -1,10 +1,9 @@
 import { Drawer } from "expo-router/drawer";
 import { Feather } from "@expo/vector-icons";
-import { getDrawerContent } from "@src/helper/layout";
 
 export default function Layout() {
   return (
-    <Drawer drawerContent={getDrawerContent}>
+    <Drawer screenOptions={{ headerShown: true }}>
       <Drawer.Screen
         name="home"
         options={{
@@ -74,6 +73,7 @@ export default function Layout() {
         name="docs"
         options={{
           title: "Docs",
+          // drawerItemStyle: {display: __DEV__ ? 'flex' : 'none'},
           drawerIcon: () => <Feather name="book-open" size={24} color="black" />,
         }}
       />
@@ -81,7 +81,8 @@ export default function Layout() {
         name="kit"
         options={{
           title: "Kit",
-          drawerIcon: () => <Feather name="book-open" size={24} color="black" />,
+          // drawerItemStyle: {display: __DEV__ ? 'flex' : 'none'},
+          drawerIcon: () => <Feather name="figma" size={24} color="black" />,
         }}
       />
     </Drawer>
