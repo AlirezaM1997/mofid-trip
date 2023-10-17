@@ -70,11 +70,17 @@ export default function Layout() {
         }}
       />
 
-      {/* SHOW ONLY IF __DEV__ === true */}
       <Drawer.Screen
         name="docs"
         options={{
           title: "Docs",
+          drawerIcon: () => <Feather name="book-open" size={24} color="black" />,
+        }}
+      />
+      <Drawer.Screen
+        name="kit"
+        options={{
+          title: "Kit",
           drawerIcon: () => <Feather name="book-open" size={24} color="black" />,
         }}
       />
