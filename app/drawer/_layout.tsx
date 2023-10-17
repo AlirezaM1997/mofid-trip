@@ -4,7 +4,10 @@ import { getDrawerContent } from "@src/helper/layout";
 
 export default function Layout() {
   return (
-    <Drawer drawerContent={getDrawerContent}>
+    <Drawer
+      drawerContent={getDrawerContent}
+      screenOptions={{ headerShown: true }}
+    >
       <Drawer.Screen
         name="home"
         options={{
@@ -82,6 +85,13 @@ export default function Layout() {
           drawerIcon: () => (
             <Feather name="book-open" size={24} color="black" />
           ),
+        }}
+      />
+      <Drawer.Screen
+        name="kit"
+        options={{
+          title: "Kit",
+          drawerIcon: () => <Feather name="figma" size={24} color="black" />,
         }}
       />
     </Drawer>

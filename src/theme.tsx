@@ -78,7 +78,6 @@ export const theme = (isRtl) =>
 
         let buttonStyle: any = {
           borderRadius: 12,
-          overflew: "hidden",
           fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
           fontWeight: "400",
         }

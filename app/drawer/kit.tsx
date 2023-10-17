@@ -1,9 +1,40 @@
-import { Button, Icon, Input, Overlay, Text } from "@rneui/themed";
+import { Button, Icon, Image, Input, Overlay, Text } from "@rneui/themed";
 import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
+import * as ImagePicker from "expo-image-picker";
 
 export default function Index() {
   const [isVisible, setIsVisible] = useState(false);
+  const [image, setImage] = useState(null);
+  const [cameraImage, setCameraImage] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  const pickImageFromCamera = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setCameraImage(result.assets[0].uri);
+    }
+  };
 
   return (
     <ScrollView>
@@ -84,6 +115,49 @@ export default function Index() {
           </View>
         </View>
 
+        <View style={styles.section}>
+          <Text h4>Expo Image Picker</Text>
+          <View style={styles.row}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                title="Pick an image from image library"
+                onPress={pickImage}
+              />
+              {image && (
+                <Image
+                  source={{ uri: image }}
+                  style={{ width: 200, height: 200 }}
+                />
+              )}
+            </View>
+          </View>
+          <View style={styles.row}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                title="Pick an image from camera"
+                onPress={pickImageFromCamera}
+              />
+              {cameraImage && (
+                <Image
+                  source={{ uri: cameraImage }}
+                  style={{ width: 200, height: 200 }}
+                />
+              )}
+            </View>
+          </View>
+        </View>
       </View>
     </ScrollView>
   );
