@@ -29,7 +29,9 @@
     "expo-leaflet": "^1.0.3",
     "expo-linear-gradient": "~12.3.0",
     "expo-linking": "~5.0.2",
+    "expo-print": "~12.4.2",
     "expo-router": "^2.0.0",
+    "expo-sharing": "~11.5.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "expo-system-ui": "~2.4.0",
@@ -69,6 +71,7 @@
     "@storybook/react-native": "^6.5.6",
     "@types/react": "~18.2.14",
     "babel-loader": "^8.3.0",
+    "sharp-cli": "^4.1.1",
     "typescript": "^5.1.3"
   },
   "private": true
