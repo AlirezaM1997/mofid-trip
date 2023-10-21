@@ -1,4 +1,7 @@
-import { Text } from "@rneui/themed";
+import React from "react";
+import Registration from "@src/components/organisms/registration";
 
-const Index = () => <Text>login</Text>;
-export default Index;
+const LoginScreen = () => {
+  return <Registration title="Login" />;
+};
+export default LoginScreen;
