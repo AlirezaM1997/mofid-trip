@@ -18,7 +18,7 @@ const SearchBar = ({ onFocus, onChange, onChangeText, value }) => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (pathName === "/drawer/home/search") {
+    if (pathName === "/search") {
       inputRef.current.focus();
     }
   }, [isFocused]);
@@ -38,7 +38,7 @@ const SearchBar = ({ onFocus, onChange, onChangeText, value }) => {
 
   return (
     <View>
-      {pathName !== "/drawer/home/search" && <Pressable onPress={() => router.push("search")} style={styles.pressHandler}></Pressable>}
+      {pathName !== "/search" && <Pressable onPress={() => router.push("/search")} style={styles.pressHandler}></Pressable>}
       <Button
         type="clear"
         containerStyle={[styles.filterContainerStyle, isRtl ? left : right]}
@@ -58,7 +58,7 @@ const SearchBar = ({ onFocus, onChange, onChangeText, value }) => {
         onChangeText={onChangeText}
         value={value}
       />
-      <FilterBottomDrawer isVisible={pathName === "/drawer/home/search" && isVisible} setIsVisible={setIsVisible} />
+      <FilterBottomDrawer isVisible={pathName === "/search" && isVisible} setIsVisible={setIsVisible} />
     </View>
   );
 };

@@ -16,7 +16,7 @@ import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import OtpInput from "@src/components/modules/otp-input";
 import { router, useLocalSearchParams } from "expo-router";
 
-const SMSVerificationScreen = ({ route }) => {
+const SMSVerificationScreen = () => {
   const dispatch = useDispatch();
   const countDownTimerRef = useRef();
   const { phone } = useLocalSearchParams();
