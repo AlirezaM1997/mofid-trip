@@ -18,9 +18,9 @@ const SearchBar = ({ onFocus, onChange, onChangeText, value }) => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (pathName === "/search") {
-      inputRef.current.focus();
-    }
+    // if (pathName === "/search") {
+    //   inputRef.current.focus();
+    // }
   }, [isFocused]);
 
   const right = { right: 35 };
@@ -52,6 +52,7 @@ const SearchBar = ({ onFocus, onChange, onChangeText, value }) => {
         searchIcon={<Feather name="search" size={24} color="#ADAFAE" />}
         clearIcon={<></>}
         showCancel={false}
+        containerStyle={{ borderTopWidth: 0 }}
         inputStyle={{ direction: isRtl ? "rtl" : "ltr" }}
         onChange={onChange}
         onFocus={onFocus}

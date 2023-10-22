@@ -15,7 +15,6 @@ export default function AppLayout() {
       initialRouteName="index"
       sceneContainerStyle={{ backgroundColor: "#fff" }}
       screenOptions={{
-        headerShown: false,
         tabBarStyle: style.tabBarStyle,
         tabBarActiveTintColor: theme.colors.primary,
         tabBarLabelStyle: style.tabBarLabelStyle(isRtl),
@@ -25,6 +24,7 @@ export default function AppLayout() {
         name="index"
         options={{
           title: tr("Home"),
+          headerShown: false,
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
         }}
