@@ -2,11 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["./src/*"],
-      "@atoms/*": ["./src/components/atoms*"],
-      "@modules/*": ["./src/components/modules*"],
-      "@organisms/*": ["./src/components/organisms*"],
-      "@components/*": ["./src/components/*"]
+      "@atoms/*": ["./src/components/atoms/*"],
+      "@modules/*": ["./src/components/modules/*"],
+      "@organisms/*": ["./src/components/organisms/*"],
+      "@components/*": ["./src/components/*"],
+      "@src/*": ["./src/*"]
     }
   },
   "extends": "expo/tsconfig.base"

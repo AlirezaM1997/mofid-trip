@@ -1,26 +1,28 @@
 import { Tabs } from "expo-router/tabs";
+import { useTheme } from "@rneui/themed";
+import { StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import useIsRtl from "@src/hooks/localization";
 
 export default function AppLayout() {
+  const isRtl = useIsRtl();
+  const { theme } = useTheme();
   return (
     <Tabs
       initialRouteName="index"
+      sceneContainerStyle={{ backgroundColor: "#fff" }}
       screenOptions={{
         headerShown: false,
-      }}
-    >
+        tabBarStyle: style.tabBarStyle,
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarLabelStyle: style.tabBarLabelStyle(isRtl),
+        headerTitleStyle: style.headerTitleStyle(isRtl),
+      }}>
       <Tabs.Screen
         name="search"
         options={{
           tabBarLabel: "Search",
-          tabBarIcon: () => <Feather name="file" size={24} color="black" />,
-        }}
-      />
-      <Tabs.Screen
-        name="receivables"
-        options={{
-          tabBarLabel: "Receivables",
-          tabBarIcon: () => <Feather name="inbox" size={24} color="black" />,
+          tabBarIcon: ({ color, size }) => <Feather name="search" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
@@ -28,23 +30,24 @@ export default function AppLayout() {
         options={{
           title: "Home",
           tabBarLabel: "Home",
-          tabBarIcon: () => <Feather name="home" size={24} />,
-        }}
-      />
-      <Tabs.Screen
-        name="vendors"
-        options={{
-          tabBarLabel: "Vendors",
-          tabBarIcon: () => <Feather name="users" size={24} color="black" />,
-        }}
-      />
-      <Tabs.Screen
-        name="inventory"
-        options={{
-          tabBarLabel: "Inventory",
-          tabBarIcon: () => <Feather name="package" size={24} color="black" />,
+          tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
         }}
       />
     </Tabs>
   );
 }
+
+const style = StyleSheet.create({
+  tabBarStyle: {
+    paddingBottom: 5,
+    height: 55,
+  },
+  tabBarLabelStyle: (isRtl) => ({
+    fontWeight: "400",
+    fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+  }),
+  headerTitleStyle: (isRtl) => ({
+    fontWeight: "400",
+    fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+  }),
+});

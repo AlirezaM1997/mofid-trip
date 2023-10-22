@@ -1,20 +1,19 @@
-import Text from "@atoms/text"
-import { Button } from "@rneui/themed"
-import Container from "@atoms/container"
-import WhiteSpace from "@atoms/white-space"
-import React, { useEffect, useState } from "react"
-import { useLoginMutation } from "@src/gql/generated"
-import { useNavigation } from "@react-navigation/native"
-import { Pressable, StyleSheet, View } from "react-native"
-import CountryPicker from "@src/components/modules/country-picker"
-import useTranslation from "@src/hooks/translation"
+import Text from "@atoms/text";
+import { Button } from "@rneui/themed";
+import Container from "@atoms/container";
+import WhiteSpace from "@atoms/white-space";
+import React, { useEffect, useState } from "react";
+import { useLoginMutation } from "@src/gql/generated";
+import { Pressable, StyleSheet, View } from "react-native";
+import CountryPicker from "@src/components/modules/country-picker";
+import useTranslation from "@src/hooks/translation";
+import { router } from "expo-router";
 
 const Registration = ({ title }: { title: string }) => {
-  const { tr } = useTranslation()
-  const navigation = useNavigation()
-  const [phone, setPhone] = useState("")
-  const [callingCode, setCallingCode] = useState("+964")
-  const [login, { loading, data, error }] = useLoginMutation()
+  const { tr } = useTranslation();
+  const [phone, setPhone] = useState("");
+  const [callingCode, setCallingCode] = useState("+964");
+  const [login, { loading, data, error }] = useLoginMutation();
 
   const handlePress = () => {
     login({
@@ -23,19 +22,19 @@ const Registration = ({ title }: { title: string }) => {
           phoneNumber: callingCode + phone,
         },
       },
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     if (!loading && data && data.login.statusCode === 200) {
-      navigation.navigate({
-        name: "SMSVerificationScreen",
+      router.push({
+        pathname: "/SMSVerification",
         params: {
           phone: callingCode + phone,
         },
-      })
+      });
     }
-  }, [loading, data])
+  }, [loading, data]);
 
   return (
     <>
@@ -50,7 +49,7 @@ const Registration = ({ title }: { title: string }) => {
       </View>
       <Container>
         {title === "Login" ? (
-          <Pressable style={style.bottomTextContainer} onPress={() => navigation.push("RegisterScreen")}>
+          <Pressable style={style.bottomTextContainer} onPress={() => router.push("RegisterScreen")}>
             <Text>Haven't registered yet? </Text>
             <Text style={style.registerText}>Register</Text>
           </Pressable>
@@ -62,12 +61,11 @@ const Registration = ({ title }: { title: string }) => {
                   textAlign: "center",
                   height: "auto",
                   overflow: "hidden",
-                }}
-              >
+                }}>
                 By clicking the create account button, you agree to the privacy policy of the software
               </Text>
             </View>
-            <Pressable onPress={() => navigation.push("TermsOfServices")}>
+            <Pressable onPress={() => router.push("TermsOfServices")}>
               <Text style={style.registerText}>privacy policy</Text>
             </Pressable>
           </>
@@ -79,8 +77,8 @@ const Registration = ({ title }: { title: string }) => {
         <WhiteSpace size={10} />
       </Container>
     </>
-  )
-}
+  );
+};
 
 const style = StyleSheet.create({
   container: { flex: 1 },
@@ -100,6 +98,6 @@ const style = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: "grey",
   },
-})
+});
 
-export default Registration
+export default Registration;

@@ -1,29 +1,29 @@
-import React, { useEffect, useRef, useState } from "react"
-import { Button, SearchBar as ReactNativeElementsSearchBar } from "@rneui/themed"
-import { Feather } from "@expo/vector-icons"
-import { Pressable, StyleSheet, View } from "react-native"
-import FilterBottomDrawer from "../filter-bottom-drawer"
-import { useIsFocused, useNavigation, useRoute } from "@react-navigation/native"
-import useTranslation from "@src/hooks/translation"
-import useIsRtl from "@src/hooks/localization"
-import { Platform } from "react-native"
+import React, { useEffect, useRef, useState } from "react";
+import { Button, SearchBar as ReactNativeElementsSearchBar } from "@rneui/themed";
+import { Feather } from "@expo/vector-icons";
+import { Pressable, StyleSheet, View } from "react-native";
+import FilterBottomDrawer from "../filter-bottom-drawer";
+import { useIsFocused } from "@react-navigation/native";
+import useTranslation from "@src/hooks/translation";
+import useIsRtl from "@src/hooks/localization";
+import { Platform } from "react-native";
+import { router, usePathname } from "expo-router";
 
-const SearchBar = ({ showCancel, onFocus, onChange, onChangeText, value }) => {
-  const route = useRoute()
-  const { tr } = useTranslation()
-  const isRtl = useIsRtl()
-  const [isVisible, setIsVisible] = useState(false)
-  const navigation = useNavigation()
-  const isFocused = useIsFocused()
-  const inputRef = useRef()
+const SearchBar = ({ onFocus, onChange, onChangeText, value }) => {
+  const pathName = usePathname();
+  const { tr } = useTranslation();
+  const isRtl = useIsRtl();
+  const [isVisible, setIsVisible] = useState(false);
+  const isFocused = useIsFocused();
+  const inputRef = useRef(null);
 
   useEffect(() => {
-    if (route.name === "SearchScreen") {
-      inputRef.current.focus()
+    if (pathName === "/drawer/home/search") {
+      inputRef.current.focus();
     }
-  }, [isFocused])
+  }, [isFocused]);
 
-  const right = { right: 35 }
+  const right = { right: 35 };
   const left = Platform.select({
     web: {
       left: 35,
@@ -34,17 +34,16 @@ const SearchBar = ({ showCancel, onFocus, onChange, onChangeText, value }) => {
     ios: {
       right: 35,
     },
-  })
+  });
 
   return (
     <View>
-      {route.name !== "SearchScreen" && <Pressable onPress={() => navigation.navigate("SearchScreen")} style={styles.pressHandler}></Pressable>}
+      {pathName !== "/drawer/home/search" && <Pressable onPress={() => router.push("search")} style={styles.pressHandler}></Pressable>}
       <Button
         type="clear"
         containerStyle={[styles.filterContainerStyle, isRtl ? left : right]}
         buttonStyle={styles.filterButtonStyle}
-        onPress={() => setIsVisible(true)}
-      >
+        onPress={() => setIsVisible(true)}>
         <Feather name="filter" size={19} color="#ADAFAE" />
       </Button>
       <ReactNativeElementsSearchBar
@@ -59,17 +58,17 @@ const SearchBar = ({ showCancel, onFocus, onChange, onChangeText, value }) => {
         onChangeText={onChangeText}
         value={value}
       />
-      <FilterBottomDrawer isVisible={route.name === "SearchScreen" && isVisible} setIsVisible={setIsVisible} />
+      <FilterBottomDrawer isVisible={pathName === "/drawer/home/search" && isVisible} setIsVisible={setIsVisible} />
     </View>
-  )
-}
+  );
+};
 
 SearchBar.defaultProps = {
   showCancel: false,
   onFocus: () => {},
   onChange: () => {},
   onChangeText: () => {},
-}
+};
 
 const styles = StyleSheet.create({
   pressHandler: {
@@ -98,6 +97,6 @@ const styles = StyleSheet.create({
     elevation: 0,
     borderRadius: 50,
   },
-})
+});
 
-export default SearchBar
+export default SearchBar;
