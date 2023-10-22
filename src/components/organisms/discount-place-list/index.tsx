@@ -1,8 +1,8 @@
-import { ScrollView, View, StyleSheet } from "react-native"
-import React, { useEffect } from "react"
-import PlaceCard from "@src/components/modules/place-card"
-import { Tag, useProjectSetLazyQuery } from "@src/gql/generated"
-import PlaceCardSkeleton from "@src/components/modules/place-card-skeleton"
+import React, { useEffect } from "react";
+import PlaceCard from "@src/components/modules/place-card";
+import { ScrollView, View, StyleSheet } from "react-native";
+import { Tag, useProjectSetLazyQuery } from "@src/gql/generated";
+import PlaceCardSkeleton from "@src/components/modules/place-card-skeleton";
 
 function DiscountPlaceList() {
   const [search, { loading, data }] = useProjectSetLazyQuery({
@@ -14,11 +14,11 @@ function DiscountPlaceList() {
         pageSize: 10,
       },
     },
-  })
+  });
 
   useEffect(() => {
-    search()
-  }, [search, data])
+    search();
+  }, [search, data]);
 
   if (loading || !data) {
     return (
@@ -31,7 +31,7 @@ function DiscountPlaceList() {
         ))}
         <View style={style.freeSpace}></View>
       </ScrollView>
-    )
+    );
   }
 
   return (
@@ -44,7 +44,7 @@ function DiscountPlaceList() {
       ))}
       <View style={style.freeSpace}></View>
     </ScrollView>
-  )
+  );
 }
 
 const style = StyleSheet.create({
@@ -59,6 +59,6 @@ const style = StyleSheet.create({
     width: 15,
     height: 15,
   },
-})
+});
 
-export default DiscountPlaceList
+export default DiscountPlaceList;
