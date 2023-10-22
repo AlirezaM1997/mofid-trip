@@ -4,7 +4,7 @@ import { View } from "react-native";
 export default function Index() {
   return (
     <View>
-      <Text>Invoices</Text>
+      <Text>Search</Text>
     </View>
   );
 }

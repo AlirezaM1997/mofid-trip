@@ -1,4 +1,3 @@
-import { Icon } from "@rneui/themed";
 import { Tabs } from "expo-router/tabs";
 import { Feather } from "@expo/vector-icons";
 
@@ -11,9 +10,9 @@ export default function AppLayout() {
       }}
     >
       <Tabs.Screen
-        name="invoices"
+        name="search"
         options={{
-          tabBarLabel: "Invoices",
+          tabBarLabel: "Search",
           tabBarIcon: () => <Feather name="file" size={24} color="black" />,
         }}
       />
