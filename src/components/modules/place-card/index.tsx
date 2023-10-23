@@ -1,35 +1,34 @@
-import Text from "@src/components/atoms/text"
-import { ProjectQueryType } from "@src/gql/generated"
-import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons"
-import React from "react"
-import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native"
-import { Divider } from "@rneui/themed"
-import { useNavigation } from "@react-navigation/native"
-import TruncatedText from "@src/components/atoms/text/truncatedText"
-import useTranslation from "@src/hooks/translation"
-import useIsRtl from "@src/hooks/localization"
+import Text from "@src/components/atoms/text";
+import { ProjectQueryType } from "@src/gql/generated";
+import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
+import React from "react";
+import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native";
+import { Divider } from "@rneui/themed";
+import TruncatedText from "@src/components/atoms/text/truncatedText";
+import useTranslation from "@src/hooks/translation";
+import useIsRtl from "@src/hooks/localization";
+import { router } from "expo-router";
 
 type PropsType = {
-  project: ProjectQueryType
-}
+  project: ProjectQueryType;
+};
 
 function PlaceCard({ project }: PropsType) {
-  const isRtl = useIsRtl()
-  const { tr } = useTranslation()
-  const navigation = useNavigation()
+  const isRtl = useIsRtl();
+  const { tr } = useTranslation();
   // const handleClick = () => navigate("/accommodation/" + project.id);
 
   const handlePress = () => {
-    navigation.navigate({
-      name: "ProjectScreen",
+    router.push({
+      pathname: `/project/${project.id}`,
       params: {
         id: project.id,
         name: project.name,
       },
-    })
-  }
+    });
+  };
 
-  const avatar = project?.accommodation?.avatarS3.length > 0 ? project?.accommodation?.avatarS3[0].small : ""
+  const avatar = project?.accommodation?.avatarS3.length > 0 ? project?.accommodation?.avatarS3[0].small : "";
 
   return (
     <Pressable style={style.container} onPress={handlePress}>
@@ -69,7 +68,7 @@ function PlaceCard({ project }: PropsType) {
         </View>
       </View>
     </Pressable>
-  )
+  );
 }
 
 const style = StyleSheet.create({
@@ -146,6 +145,6 @@ const style = StyleSheet.create({
     gap: 2,
     flexDirection: "row",
   },
-})
+});
 
-export default PlaceCard
+export default PlaceCard;
