@@ -5,10 +5,12 @@ import { capitalizeFLetter } from "@src/helper/extra"
 import { setProjectSetArguments } from "@src/slice/project-slice"
 import { RootState } from "@src/store"
 import { PRIMARY_COLOR } from "@src/theme"
+import { useRouter } from "expo-router"
 import { Pressable, StyleSheet, View } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 
 const Tag = ({ name }) => {
+  const router = useRouter()
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const { projectSetArguments } = useSelector((state: RootState) => state.projectSlice)
@@ -25,7 +27,7 @@ const Tag = ({ name }) => {
         },
       })
     )
-    navigation.navigate("SearchScreen")
+    router.push('/search')
   }
 
   return (

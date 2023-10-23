@@ -3,11 +3,11 @@ import { RootState } from "src/store"
 import { Skeleton } from "@rneui/themed"
 import { useTagListQuery } from "@src/gql/generated"
 import { useSelector, useDispatch } from "react-redux"
-import { useNavigation } from "@react-navigation/native"
 import { setProjectSetArguments } from "@src/slice/project-slice"
 import { View, TouchableOpacity, StyleSheet } from "react-native"
 import { FontAwesome5, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons"
 import Text from "@src/components/atoms/text"
+import { useRouter } from "expo-router"
 
 const TagIcon = ({ tag }) => {
   const obj = {
@@ -25,9 +25,8 @@ const TagIcon = ({ tag }) => {
 const Tags = () => {
   const { data, loading } = useTagListQuery()
   const dispatch = useDispatch()
-  const navigation = useNavigation()
+  const router = useRouter()
   const { projectSetArguments } = useSelector((state: RootState) => state.projectSlice)
-  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail)
 
   const handleClick = (tagName) => {
     const tags = [...projectSetArguments.filter.tags, tagName]
@@ -41,7 +40,7 @@ const Tags = () => {
         },
       })
     )
-    navigation.navigate("SearchScreen")
+    router.push('/search')
   }
 
   if (!data || loading) {
