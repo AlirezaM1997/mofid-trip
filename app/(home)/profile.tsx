@@ -17,12 +17,15 @@ import { I18nManager } from "react-native";
 import { getFullName } from "@src/helper/extra";
 import useIsRtl from "@src/hooks/localization";
 import { router } from "expo-router";
+import { useIsAuthenticated } from "@src/hooks/user";
+import Authentication from "app/(stack)/authentication";
 
 const Profile: React.FC = () => {
   const isRtl = useIsRtl();
   const { theme } = useTheme();
   const dispatch = useDispatch();
   const { tr } = useTranslation();
+  const isAuthenticated = useIsAuthenticated();
   const [isVisible, setIsVisible] = useState(false);
   const { userDetail } = useSelector((state: RootState) => state.userSlice);
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
@@ -34,6 +37,8 @@ const Profile: React.FC = () => {
   const [isVisibleLogout, setIsVisibleLogout] = useState(false);
 
   I18nManager.allowRTL(true);
+
+  if (!isAuthenticated) return router.push({ pathname: "/authentication", params: { protectedScreen: "/profile" } });
 
   const handleLogout = () => {
     dispatch(logout());

@@ -1,60 +1,61 @@
-import React, { useEffect, useState } from "react"
-import { StyleSheet, View } from "react-native"
-import { Button, Divider, ListItem } from "@rneui/themed"
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "@src/store"
-import WhiteSpace from "@src/components/atoms/white-space"
-import { Feather } from "@expo/vector-icons"
-import { useNavigation, useRoute } from "@react-navigation/native"
-import useTranslation from "@src/hooks/translation"
-import { deepCopy } from "@src/helper/extra"
-import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice"
-import { useIsAuthenticated } from "@src/hooks/user"
-import { useUserTransactionAddMutation } from "@src/gql/generated"
-import Toast from "react-native-toast-message"
-import Text from "@src/components/atoms/text"
-import Container from "@src/components/atoms/container"
+import React from "react";
+import { View } from "react-native";
+import { Button, Divider, ListItem } from "@rneui/themed";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@src/store";
+import { Feather } from "@expo/vector-icons";
+import useTranslation from "@src/hooks/translation";
+import { deepCopy } from "@src/helper/extra";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
+import { useIsAuthenticated } from "@src/hooks/user";
+import { useUserTransactionAddMutation } from "@src/gql/generated";
+import Toast from "react-native-toast-message";
+import { router, useLocalSearchParams } from "expo-router";
+import { TransactionState } from "@src/slice/transaction-list-slice";
 
 const preparingDataBeforeSubmit = (transactionData: TransactionState) => {
-  const guests = deepCopy(transactionData.guests)
+  const guests = deepCopy(transactionData.guests);
   const newGuests = guests.map((guest) => {
-    delete guest["id"]
-    return guest
-  })
-  return { ...transactionData, guests: newGuests }
-}
+    delete guest["id"];
+    return guest;
+  });
+  return { ...transactionData, guests: newGuests };
+};
 
 type BookFormStep3Props = {
-  step: number
-  setStep: (step: number) => {}
-}
+  step: number;
+  setStep: (step: number) => {};
+};
 
 const BookFormStep3 = ({ step, setStep }: BookFormStep3Props) => {
-  const { tr } = useTranslation()
-  const dispatch = useDispatch()
-  const navigation = useNavigation()
-  const { data } = useSelector((state: RootState) => state.transactionSlice)
-  const { id, name } = useSelector((state: RootState) => state.projectSlice.projectDetail)
-  const isAuthenticated = useIsAuthenticated()
-  const [submit, {}] = useUserTransactionAddMutation()
+  const { tr } = useTranslation();
+  const { projectId } = useLocalSearchParams();
+  const dispatch = useDispatch();
+  const { data } = useSelector((state: RootState) => state.transactionSlice);
+  const { id, name } = useSelector((state: RootState) => state.projectSlice.projectDetail);
+  const isAuthenticated = useIsAuthenticated();
+  const [submit, {}] = useUserTransactionAddMutation();
   const transactionData = useSelector((state: RootState) => {
-    const { dateEnd, dateStart, description, guests } = state.transactionSlice.data
-    return { dateEnd, dateStart, description, guests }
-  })
+    const { dateEnd, dateStart, description, guests } = state.transactionSlice.data;
+    return { dateEnd, dateStart, description, guests };
+  });
 
   const handleEditAccommodation = () => {
-    navigation.navigate("ProjectScreen", {
-      id: id,
-      name: name,
-    })
-  }
+    router.push({
+      pathname: `project/${projectId}`,
+      params: {
+        id: id,
+        name: name,
+      },
+    });
+  };
 
   const handleSubmit = () => {
-    const newData = preparingDataBeforeSubmit(transactionData)
+    const newData = preparingDataBeforeSubmit(transactionData);
     if (!isAuthenticated) {
-      dispatch(setRedirectToScreenAfterLogin("BookAccommodationScreenStep3"))
-      navigation.navigate("LoginScreen")
-      return
+      dispatch(setRedirectToScreenAfterLogin("BookAccommodationScreenStep3"));
+      router.push("/login");
+      return;
     }
     submit({
       variables: {
@@ -62,15 +63,15 @@ const BookFormStep3 = ({ step, setStep }: BookFormStep3Props) => {
       },
     }).then(({ data }) => {
       if (data?.userTransactionAdd) {
-        navigation.navigate("ReservationScreen")
+        router.push("/reservation");
         Toast.show({
           type: "success",
           text1: tr("Successful"),
           text2: data.userTransactionAdd.message,
-        })
+        });
       }
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -83,10 +84,7 @@ const BookFormStep3 = ({ step, setStep }: BookFormStep3Props) => {
               {data.dateStart} - {data.dateEnd}
             </ListItem.Title>
           </ListItem.Content>
-          <Button
-            type="clear"
-            onPress={() => setStep(1)}
-          >
+          <Button type="clear" onPress={() => setStep(1)}>
             {tr("Edit")}
           </Button>
         </ListItem>
@@ -98,10 +96,7 @@ const BookFormStep3 = ({ step, setStep }: BookFormStep3Props) => {
               {data.guests.length} {data.guests.length === 1 ? tr("Person") : tr("Persons")}
             </ListItem.Title>
           </ListItem.Content>
-          <Button
-            type="clear"
-            onPress={() => setStep(2)}
-          >
+          <Button type="clear" onPress={() => setStep(2)}>
             {tr("Edit")}
           </Button>
         </ListItem>
@@ -118,7 +113,7 @@ const BookFormStep3 = ({ step, setStep }: BookFormStep3Props) => {
       </View>
       <Divider />
     </>
-  )
-}
+  );
+};
 
-export default BookFormStep3
+export default BookFormStep3;

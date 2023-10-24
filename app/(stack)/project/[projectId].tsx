@@ -47,7 +47,7 @@ const Page: React.FC = ({ ...props }) => {
       });
       return;
     }
-    router.push(`/bookAccommodation/${id}`);
+    router.push(`/book-accommodation/${id}`);
   };
 
   useEffect(() => {
