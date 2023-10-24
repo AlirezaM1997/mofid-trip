@@ -77,7 +77,7 @@ const BookAccommodation = () => {
         await submit({
           variables: {
             data: {
-              projectId: values.projectId,
+              projectId: data.projectId,
               dateEnd: values.dateEnd,
               dateStart: values.dateStart,
               description: values.description,

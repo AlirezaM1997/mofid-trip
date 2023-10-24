@@ -14,21 +14,26 @@ const BookFormStep2 = () => {
   const { tr } = useTranslation();
   const dispatch = useDispatch();
   const { data } = useSelector((state: RootState) => state.transactionSlice);
-  const { values, errors } = useFormikContext();
+  const { values, errors, setValues } = useFormikContext();
 
   const handleAddGuest = () => {
-    dispatch(
-      setData({
-        ...data,
-        guests: [...data.guests, { id: data.guests.length + 1, ...defaultGuest }],
-      })
-    );
+    console.log('--0')
+    setValues({
+      ...values,
+      guests: [...values.guests, { id: values.guests.length + 1, ...defaultGuest }],
+    })
+    // dispatch(
+    //   setData({
+    //     ...data,
+    //     guests: [...data.guests, { id: data.guests.length + 1, ...defaultGuest }],
+    //   })
+    // );
   };
 
   return (
     <View style={style.container}>
       {data.guests.map((g, index) => (
-        <GuestFormItem key={index + +g.name} guest={g} index={index} />
+        <GuestFormItem key={index + g.identifyNumber} guest={g} index={index} />
       ))}
       <WhiteSpace size={10} />
       <Container>

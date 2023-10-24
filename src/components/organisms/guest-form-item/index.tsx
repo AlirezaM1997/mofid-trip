@@ -30,7 +30,7 @@ const GuestFormItem = ({ guest, index }) => {
   //   dispatch(
   //     setData({
   //       ...data,
-  //       guests: newItems, 
+  //       guests: newItems,
   //     })
   //   );
   // };
@@ -62,6 +62,7 @@ const GuestFormItem = ({ guest, index }) => {
       }
     }
   };
+
 
   return (
     <>
