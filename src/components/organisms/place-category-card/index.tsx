@@ -11,14 +11,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@src/store"
 import { setProjectSetArguments } from "@src/slice/project-slice"
 import { capitalizeFLetter } from "@src/helper/extra"
-import { useNavigation } from "@react-navigation/native"
 import { Image } from "@rneui/themed"
 import useIsRtl from "@src/hooks/localization"
+import { useRouter } from "expo-router"
 
 function PlaceCategoryCard() {
-  const isRtl = useIsRtl()
   const dispatch = useDispatch()
-  const navigation = useNavigation()
+  const router = useRouter()
   const { data, loading } = useCategoryListQuery()
   const { projectSetArguments } = useSelector((state: RootState) => state.projectSlice)
 
@@ -40,7 +39,7 @@ function PlaceCategoryCard() {
         },
       })
     )
-    navigation.navigate("SearchScreen")
+    router.push('/search')
   }
 
   if (!data || loading) return <CategoryPlaceSkeleton />

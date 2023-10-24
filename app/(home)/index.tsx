@@ -1,4 +1,4 @@
-import { Divider, Text } from "@rneui/themed";
+import { Divider } from "@rneui/themed";
 import Banner from "@src/components/atoms/banner/banner";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
@@ -15,7 +15,6 @@ import useTranslation from "@src/hooks/translation";
 import { setProjectSetArguments } from "@src/slice/project-slice";
 import { RootState } from "@src/store";
 import { useRouter } from "expo-router/src/hooks";
-import { useNavigation } from "expo-router/src/useNavigation";
 import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,7 +43,7 @@ export default function Index() {
         },
       })
     );
-    router.push("/drawer/home/search");
+    router.push("/search");
   };
 
   const handlePressByTag = (tag: Tag) => {
@@ -56,7 +55,7 @@ export default function Index() {
         },
       })
     );
-    navigation.navigate("SearchScreen");
+    router.push('/search')
   };
 
   return (
