@@ -12,12 +12,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { setProjectSetArguments } from "@src/slice/project-slice"
 import { RootState } from "@src/store"
 import useTranslation from "@src/hooks/translation"
+import { useRouter } from "expo-router"
 
 function FreePlacesCards() {
   const { tr } = useTranslation()
   const { theme } = useTheme()
   const dispatch = useDispatch()
-  const navigation = useNavigation()
+  const router = useRouter()
   const { projectSetArguments } = useSelector((state: RootState) => state.projectSlice)
   const [search, { loading, data }] = useProjectSetLazyQuery({
     variables: {
@@ -39,7 +40,7 @@ function FreePlacesCards() {
         },
       })
     )
-    navigation.navigate("SearchScreen")
+    router.push('/search')
   }
 
   useEffect(() => {

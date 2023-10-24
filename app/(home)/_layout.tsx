@@ -3,34 +3,53 @@ import { useTheme } from "@rneui/themed";
 import { StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
+import useTranslation from "@src/hooks/translation";
 
 export default function AppLayout() {
   const isRtl = useIsRtl();
   const { theme } = useTheme();
+  const { tr } = useTranslation();
+
   return (
     <Tabs
       initialRouteName="index"
       sceneContainerStyle={{ backgroundColor: "#fff" }}
       screenOptions={{
-        headerShown: false,
         tabBarStyle: style.tabBarStyle,
         tabBarActiveTintColor: theme.colors.primary,
         tabBarLabelStyle: style.tabBarLabelStyle(isRtl),
         headerTitleStyle: style.headerTitleStyle(isRtl),
       }}>
       <Tabs.Screen
+        name="index"
+        options={{
+          title: tr("Home"),
+          headerShown: false,
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="search"
         options={{
-          tabBarLabel: "Search",
+          title: tr("Search"),
           tabBarIcon: ({ color, size }) => <Feather name="search" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="index"
+        name="reservation"
+        getId={() => Date.now().toString()}
         options={{
-          title: "Home",
-          tabBarLabel: "Home",
-          tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
+          title: tr("Reservation"),
+          tabBarIcon: ({ color, size }) => <Feather name="bookmark" size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        getId={() => Date.now().toString()}
+        options={{
+          title: tr("Profile"),
+          tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
         }}
       />
     </Tabs>

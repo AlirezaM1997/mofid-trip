@@ -6,7 +6,8 @@
       "@modules/*": ["./src/components/modules/*"],
       "@organisms/*": ["./src/components/organisms/*"],
       "@components/*": ["./src/components/*"],
-      "@src/*": ["./src/*"]
+      "@src/*": ["./src/*"],
+      "@assets/*": ["./assets/*"]
     }
   },
   "extends": "expo/tsconfig.base"

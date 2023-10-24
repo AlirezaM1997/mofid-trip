@@ -5,12 +5,13 @@ import { View, Pressable, StyleSheet } from "react-native"
 import { useTheme } from "@rneui/themed"
 import Text from "@src/components/atoms/text"
 import useTranslation from "@src/hooks/translation"
+import { useRouter } from "expo-router"
 
 const ScrollTitle = ({ titleText }: { titleText?: string }) => {
   const { tr } = useTranslation()
-  const navigation = useNavigation()
+  const router = useRouter()
   const theme = useTheme()
-  const handleSeeAll = () => navigation.navigate("SearchScreen")
+  const handleSeeAll = () => router.push('/search')
 
   const style = StyleSheet.create({
     container: {

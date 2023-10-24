@@ -49,7 +49,7 @@ const Registration = ({ title }: { title: string }) => {
       </View>
       <Container>
         {title === "Login" ? (
-          <Pressable style={style.bottomTextContainer} onPress={() => router.push("RegisterScreen")}>
+          <Pressable style={style.bottomTextContainer} onPress={() => router.push("/register")}>
             <Text>Haven't registered yet? </Text>
             <Text style={style.registerText}>Register</Text>
           </Pressable>
@@ -65,7 +65,7 @@ const Registration = ({ title }: { title: string }) => {
                 By clicking the create account button, you agree to the privacy policy of the software
               </Text>
             </View>
-            <Pressable onPress={() => router.push("TermsOfServices")}>
+            <Pressable onPress={() => router.push("/termsOfServices")}>
               <Text style={style.registerText}>privacy policy</Text>
             </Pressable>
           </>

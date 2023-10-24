@@ -18,9 +18,9 @@ const SearchBar = ({ onFocus, onChange, onChangeText, value }) => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (pathName === "/drawer/home/search") {
-      inputRef.current.focus();
-    }
+    // if (pathName === "/search") {
+    //   inputRef.current.focus();
+    // }
   }, [isFocused]);
 
   const right = { right: 35 };
@@ -38,7 +38,7 @@ const SearchBar = ({ onFocus, onChange, onChangeText, value }) => {
 
   return (
     <View>
-      {pathName !== "/drawer/home/search" && <Pressable onPress={() => router.push("search")} style={styles.pressHandler}></Pressable>}
+      {pathName !== "/search" && <Pressable onPress={() => router.push("/search")} style={styles.pressHandler}></Pressable>}
       <Button
         type="clear"
         containerStyle={[styles.filterContainerStyle, isRtl ? left : right]}
@@ -52,13 +52,14 @@ const SearchBar = ({ onFocus, onChange, onChangeText, value }) => {
         searchIcon={<Feather name="search" size={24} color="#ADAFAE" />}
         clearIcon={<></>}
         showCancel={false}
+        containerStyle={{ borderTopWidth: 0 }}
         inputStyle={{ direction: isRtl ? "rtl" : "ltr" }}
         onChange={onChange}
         onFocus={onFocus}
         onChangeText={onChangeText}
         value={value}
       />
-      <FilterBottomDrawer isVisible={pathName === "/drawer/home/search" && isVisible} setIsVisible={setIsVisible} />
+      <FilterBottomDrawer isVisible={pathName === "/search" && isVisible} setIsVisible={setIsVisible} />
     </View>
   );
 };
