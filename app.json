@@ -17,7 +17,9 @@
         "backgroundColor": "#000000"
       }
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mofidtrip"
@@ -33,6 +35,16 @@
       "favicon": "./assets/image/adaptive-icon.png",
       "bundler": "metro"
     },
-    "plugins": ["expo-router"]
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "e7a0d71a-f8b1-4da4-b820-549b93828ec1"
+      }
+    }
   }
 }
