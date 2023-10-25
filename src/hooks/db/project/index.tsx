@@ -1,10 +1,23 @@
 import { RootState } from "@src/store";
 import { NetworkStatus } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import NetInfo from "@react-native-community/netinfo";
 import { useDispatch, useSelector } from "react-redux";
 import { setProjectSet } from "@src/slice/project-slice";
-import { Exact, ProjectSetQueryVariables, useProjectSetLazyQuery } from "@src/gql/generated";
+import {
+  Exact,
+  ProjectFilterType,
+  ProjectSetQueryVariables,
+  useProjectSetLazyQuery,
+} from "@src/gql/generated";
+import { string } from "yup";
+
+type SearchType = {
+  searchText?: string;
+  filter?: ProjectFilterType;
+};
+
+const hasIntersection = (a: any[], b: any[]) => a.some(item => b.includes(item));
 
 const useProjectTable = () => {
   const dispatch = useDispatch();
@@ -14,7 +27,7 @@ const useProjectTable = () => {
 
   const [fetchProjectSet, { networkStatus: queryNetworkStatus }] = useProjectSetLazyQuery({
     notifyOnNetworkStatusChange: false,
-    onCompleted: (data) => setData(data),
+    onCompleted: data => setData(data),
   });
 
   useEffect(() => {
@@ -35,8 +48,22 @@ const useProjectTable = () => {
     }
   }, [networkStatus, data]);
 
-  const search = (searchText: string) => {
-    let result = projectSet.filter((p) => p.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
+  const search = ({ searchText, filter }: SearchType) => {
+    if (!projectSet.data) return [];
+    let result = projectSet.data;
+    if (searchText) {
+      result = result.filter(p =>
+        p.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
+      );
+    }
+    if (filter) {
+      if (filter?.tags) {
+        result = result.filter(p => {
+          const tagNames = p.tags.map(t => t.name);
+          return hasIntersection(tagNames ?? [], filter.tags);
+        });
+      }
+    }
     return result;
   };
 

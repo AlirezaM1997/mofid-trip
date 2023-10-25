@@ -10,6 +10,10 @@ query projectSet(
       id
       name
       price
+      tags {
+        id
+        name
+      }
       accommodation {
         id
         address

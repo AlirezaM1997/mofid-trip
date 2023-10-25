@@ -4,11 +4,23 @@ import { StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import useTranslation from "@src/hooks/translation";
+import { useEffect } from "react";
+import useProjectTable from "@src/hooks/db/project";
 
 export default function AppLayout() {
   const isRtl = useIsRtl();
   const { theme } = useTheme();
   const { tr } = useTranslation();
+  const { syncTable } = useProjectTable();
+
+  useEffect(() => {
+    syncTable({
+      page: {
+        pageNumber: 1,
+        pageSize: 99999998,
+      },
+    });
+  }, []);
 
   return (
     <Tabs
@@ -20,20 +32,25 @@ export default function AppLayout() {
         tabBarLabelStyle: style.tabBarLabelStyle(isRtl),
         headerTitleStyle: style.headerTitleStyle(isRtl),
         headerShown: false,
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: tr("Home"),
           tabBarLabel: "Home",
-          tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="home" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="search"
         options={{
           title: tr("Search"),
-          tabBarIcon: ({ color, size }) => <Feather name="search" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="search" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -41,7 +58,9 @@ export default function AppLayout() {
         getId={() => Date.now().toString()}
         options={{
           title: tr("Reservation"),
-          tabBarIcon: ({ color, size }) => <Feather name="bookmark" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="bookmark" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -49,7 +68,9 @@ export default function AppLayout() {
         getId={() => Date.now().toString()}
         options={{
           title: tr("Profile"),
-          tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="user" size={size} color={color} />
+          ),
         }}
       />
     </Tabs>
@@ -63,10 +84,14 @@ const style = StyleSheet.create({
   },
   tabBarLabelStyle: (isRtl) => ({
     fontWeight: "400",
-    fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+    fontFamily: isRtl
+      ? "DanaNoEn"
+      : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
   }),
   headerTitleStyle: (isRtl) => ({
     fontWeight: "400",
-    fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+    fontFamily: isRtl
+      ? "DanaNoEn"
+      : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
   }),
 });

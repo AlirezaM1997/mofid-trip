@@ -1,43 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PlaceCard from "@src/components/modules/place-card";
 import { ScrollView, View, StyleSheet } from "react-native";
-import { Tag, useProjectSetLazyQuery } from "@src/gql/generated";
-import PlaceCardSkeleton from "@src/components/modules/place-card-skeleton";
+import { ProjectQueryType, Tag } from "@src/gql/generated";
+import useProjectTable from "@src/hooks/db/project";
 
 function DiscountPlaceList() {
-  const [search, { loading, data }] = useProjectSetLazyQuery({
-    variables: {
-      search: "",
-      filter: { tags: [Tag.Discount] },
-      page: {
-        pageNumber: 1,
-        pageSize: 10,
-      },
-    },
-  });
+  const [list, setList] = useState<ProjectQueryType[]>();
+  const { search } = useProjectTable();
 
   useEffect(() => {
-    search();
-  }, [search, data]);
-
-  if (loading || !data) {
-    return (
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10 }}>
-        <View style={style.freeSpace}></View>
-        {[1, 2, 3, 4, 5].map((a, index) => (
-          <View key={index}>
-            <PlaceCardSkeleton key={index} />
-          </View>
-        ))}
-        <View style={style.freeSpace}></View>
-      </ScrollView>
-    );
-  }
+    const res = search({ filter: { tags: [Tag.Discount] } });
+    setList(res);
+  }, [search]);
 
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10 }} style={style.container}>
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{ gap: 10 }}
+      style={style.container}>
       <View style={style.freeSpace}></View>
-      {data.projectSet?.data.map((project, index) => (
+      {list?.map((project, index) => (
         <View key={index}>
           <PlaceCard key={index} project={project} />
         </View>

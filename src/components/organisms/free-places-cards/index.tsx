@@ -1,35 +1,29 @@
-import { useNavigation } from "@react-navigation/native"
-import PlaceCardSkeleton from "@src/components/modules/place-card-skeleton"
-import { Tag, useProjectSetLazyQuery } from "@src/gql/generated"
-import { View, StyleSheet, Pressable } from "react-native"
-import { useEffect } from "react"
-import Text from "@src/components/atoms/text"
-import PlaceCard from "@src/components/modules/place-card"
-import { useTheme } from "@rneui/themed"
-import { ScrollView } from "react-native-gesture-handler"
-import { PRIMARY_COLOR } from "@src/theme"
-import { useDispatch, useSelector } from "react-redux"
-import { setProjectSetArguments } from "@src/slice/project-slice"
-import { RootState } from "@src/store"
-import useTranslation from "@src/hooks/translation"
-import { useRouter } from "expo-router"
+import { useNavigation } from "@react-navigation/native";
+import PlaceCardSkeleton from "@src/components/modules/place-card-skeleton";
+import { ProjectQueryType, Tag, useProjectSetLazyQuery } from "@src/gql/generated";
+import { View, StyleSheet, Pressable } from "react-native";
+import { useEffect, useState } from "react";
+import Text from "@src/components/atoms/text";
+import PlaceCard from "@src/components/modules/place-card";
+import { useTheme } from "@rneui/themed";
+import { ScrollView } from "react-native-gesture-handler";
+import { PRIMARY_COLOR } from "@src/theme";
+import { useDispatch, useSelector } from "react-redux";
+import { setProjectSetArguments } from "@src/slice/project-slice";
+import { RootState } from "@src/store";
+import useTranslation from "@src/hooks/translation";
+import { useRouter } from "expo-router";
+import useProjectTable from "@src/hooks/db/project";
 
 function FreePlacesCards() {
-  const { tr } = useTranslation()
-  const { theme } = useTheme()
-  const dispatch = useDispatch()
-  const router = useRouter()
-  const { projectSetArguments } = useSelector((state: RootState) => state.projectSlice)
-  const [search, { loading, data }] = useProjectSetLazyQuery({
-    variables: {
-      search: "",
-      filter: { tags: [Tag.Free] },
-      page: {
-        pageNumber: 1,
-        pageSize: 10,
-      },
-    },
-  })
+  const { tr } = useTranslation();
+  const { theme } = useTheme();
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { projectSetArguments } = useSelector((state: RootState) => state.projectSlice);
+  const [list, setList] = useState<ProjectQueryType[]>();
+
+  const { search } = useProjectTable();
 
   const handleSeeAll = () => {
     dispatch(
@@ -39,13 +33,14 @@ function FreePlacesCards() {
           tags: [Tag.Free],
         },
       })
-    )
-    router.push('/search')
-  }
+    );
+    router.push("/search");
+  };
 
   useEffect(() => {
-    search()
-  }, [search, data])
+    const res = search({ filter: { tags: [Tag.Free] } });
+    setList(res);
+  }, [search]);
 
   return (
     <>
@@ -67,29 +62,16 @@ function FreePlacesCards() {
       <ScrollView horizontal contentContainerStyle={{ gap: 10 }} style={style.container}>
         <View style={style.cardsContainer}>
           <View style={style.freeSpace}></View>
-          {loading && (
-            <>
-              {[1, 2, 3, 4, 5].map((a, index) => (
-                <View key={index}>
-                  <PlaceCardSkeleton key={index} />
-                </View>
-              ))}
-            </>
-          )}
-          {data && (
-            <>
-              {data?.projectSet?.data.map((project, index) => (
-                <View key={index}>
-                  <PlaceCard key={index} project={project} />
-                </View>
-              ))}
-            </>
-          )}
+          {list?.map((project, index) => (
+            <View key={index}>
+              <PlaceCard key={index} project={project} />
+            </View>
+          ))}
           <View style={style.freeSpace}></View>
         </View>
       </ScrollView>
     </>
-  )
+  );
 }
 
 const style = StyleSheet.create({
@@ -117,6 +99,6 @@ const style = StyleSheet.create({
     width: 15,
     height: 15,
   },
-})
+});
 
-export default FreePlacesCards
+export default FreePlacesCards;
