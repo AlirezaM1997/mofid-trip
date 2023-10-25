@@ -19,12 +19,12 @@ export default function AppLayout() {
         tabBarActiveTintColor: theme.colors.primary,
         tabBarLabelStyle: style.tabBarLabelStyle(isRtl),
         headerTitleStyle: style.headerTitleStyle(isRtl),
+        headerShown: false,
       }}>
       <Tabs.Screen
         name="index"
         options={{
           title: tr("Home"),
-          headerShown: false,
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
         }}

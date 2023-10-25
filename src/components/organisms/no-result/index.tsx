@@ -11,9 +11,8 @@ const NoResult = () => {
       {Platform.OS === "android" ? (
         <Image source={require("../../../../assets/image/no-result.jpg")} />
       ) : (
-        <img src={require("../../../../assets/image/no-result.jpg")} />
+        <Image source={require("../../../../assets/image/no-result.jpg")} />
       )}
-      {/* <Image source={require("../../../../assets/image/no-result.jpg")} /> */}
       <WhiteSpace size={10} />
       <Text variant="heading1" style={{ textAlign: "center" }}>
         {tr("No Result")}

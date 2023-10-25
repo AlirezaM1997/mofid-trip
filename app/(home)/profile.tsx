@@ -16,7 +16,7 @@ import useTranslation from "@src/hooks/translation";
 import { I18nManager } from "react-native";
 import { getFullName } from "@src/helper/extra";
 import useIsRtl from "@src/hooks/localization";
-import { router } from "expo-router";
+import { router, useRootNavigationState } from "expo-router";
 import { useIsAuthenticated } from "@src/hooks/user";
 import Authentication from "app/(stack)/authentication";
 
@@ -27,9 +27,14 @@ const Profile: React.FC = () => {
   const { tr } = useTranslation();
   const isAuthenticated = useIsAuthenticated();
   const [isVisible, setIsVisible] = useState(false);
+  const rootNavigationState = useRootNavigationState();
   const { userDetail } = useSelector((state: RootState) => state.userSlice);
-  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
-  const userId = useSelector((state: RootState) => state.userSlice?.loginData?.metadata?.id);
+  const { language } = useSelector(
+    (state: RootState) => state.settingDetailSlice.settingDetail
+  );
+  const userId = useSelector(
+    (state: RootState) => state.userSlice?.loginData?.metadata?.id
+  );
   const [settingEdit] = useSettingEditMutation({
     notifyOnNetworkStatusChange: true,
   });
@@ -38,7 +43,16 @@ const Profile: React.FC = () => {
 
   I18nManager.allowRTL(true);
 
-  if (!isAuthenticated) return router.push({ pathname: "/authentication", params: { protectedScreen: "/profile" } });
+  // if you open new tab and enter page url in addressbar and try to open, you see an error. the error described in
+  // https://stackoverflow.com/questions/76828511/expo-router-error-attempted-to-navigate-before-mounting-the-root-layout-compone
+  // we should use this line of code to render page if navigation was ready
+  if (!rootNavigationState?.key) return null;
+
+  if (!isAuthenticated)
+    return router.push({
+      pathname: "/authentication",
+      params: { protectedScreen: "/profile" },
+    });
 
   const handleLogout = () => {
     dispatch(logout());
@@ -78,9 +92,15 @@ const Profile: React.FC = () => {
       <WhiteSpace size={10} />
       <ScrollView>
         <Container size={15}>
-          <Pressable style={style.userInfo} onPress={handleNavigateToEditProfile}>
+          <Pressable
+            style={style.userInfo}
+            onPress={handleNavigateToEditProfile}
+          >
             {userDetail?.avatarS3?.small ? (
-              <Image style={style.userAvatar} source={{ uri: userDetail.avatarS3.small }} />
+              <Image
+                style={style.userAvatar}
+                source={{ uri: userDetail.avatarS3.small }}
+              />
             ) : (
               <View style={style.userAvatar}>
                 <Feather name="user" size={24} color="black" />
@@ -88,7 +108,9 @@ const Profile: React.FC = () => {
             )}
 
             <View>
-              <Text variant="heading2">{getFullName(userDetail) || tr("No Name")}</Text>
+              <Text variant="heading2">
+                {getFullName(userDetail) || tr("No Name")}
+              </Text>
               <Text>{userDetail?.username}</Text>
             </View>
           </Pressable>
@@ -98,49 +120,83 @@ const Profile: React.FC = () => {
         <ListItem bottomDivider onPress={handleNavigateToEditProfile}>
           <Feather name="user" size={24} color="black" />
           <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("Account Detail")}</ListItem.Title>
+            <ListItem.Title style={style.label(isRtl)}>
+              {tr("Account Detail")}
+            </ListItem.Title>
           </ListItem.Content>
-          <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.grey3} />
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
         </ListItem>
         <ListItem bottomDivider onPress={openLanguageSetting}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("Language Settings")}</ListItem.Title>
+            <ListItem.Title style={style.label(isRtl)}>
+              {tr("Language Settings")}
+            </ListItem.Title>
           </ListItem.Content>
           <Text color={theme.colors.primary}>{tr(language)}</Text>
         </ListItem>
         <ListItem bottomDivider onPress={handleNavigateToComingSoon}>
           <Feather name="user-plus" size={24} color="black" />
           <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("Invite Friends")}</ListItem.Title>
+            <ListItem.Title style={style.label(isRtl)}>
+              {tr("Invite Friends")}
+            </ListItem.Title>
           </ListItem.Content>
-          <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.grey3} />
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
         </ListItem>
         <ListItem bottomDivider onPress={handleNavigateToComingSoon}>
           <Feather name="headphones" size={24} color="black" />
           <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("Support")}</ListItem.Title>
+            <ListItem.Title style={style.label(isRtl)}>
+              {tr("Support")}
+            </ListItem.Title>
           </ListItem.Content>
-          <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.grey3} />
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
         </ListItem>
         <ListItem bottomDivider onPress={handleNavigateToComingSoon}>
           <Feather name="info" size={24} color="black" />
           <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("About MofidTrip")}</ListItem.Title>
+            <ListItem.Title style={style.label(isRtl)}>
+              {tr("About MofidTrip")}
+            </ListItem.Title>
           </ListItem.Content>
-          <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.grey3} />
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
         </ListItem>
         <ListItem bottomDivider onPress={() => router.push("/termsOfServices")}>
           <Feather name="shield" size={24} color="black" />
           <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("Terms of services")}</ListItem.Title>
+            <ListItem.Title style={style.label(isRtl)}>
+              {tr("Terms of services")}
+            </ListItem.Title>
           </ListItem.Content>
-          <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.grey3} />
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
         </ListItem>
         <ListItem onPress={() => setIsVisibleLogout(true)}>
           <Feather name="log-out" size={24} color={PRIMARY_COLOR} />
           <ListItem.Content>
-            <ListItem.Title style={style.logoutStyle(isRtl)}>{tr("Logout")}</ListItem.Title>
+            <ListItem.Title style={style.logoutStyle(isRtl)}>
+              {tr("Logout")}
+            </ListItem.Title>
           </ListItem.Content>
         </ListItem>
       </ScrollView>
@@ -148,9 +204,16 @@ const Profile: React.FC = () => {
         {tr("version")} {APP_VERSION}
       </Text>
       <WhiteSpace size={10} />
-      <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
+      <BottomSheet
+        isVisible={isVisible}
+        onBackdropPress={() => setIsVisible(false)}
+      >
         {Object.values(Language_Choice).map((lang) => (
-          <ListItem key={lang} bottomDivider onPress={() => handleChangeLang(lang)}>
+          <ListItem
+            key={lang}
+            bottomDivider
+            onPress={() => handleChangeLang(lang)}
+          >
             <ListItem.CheckBox
               checkedIcon={<Feather name="check-circle" size={24} />}
               uncheckedIcon={<Feather name="circle" size={24} />}
@@ -158,20 +221,31 @@ const Profile: React.FC = () => {
               onPress={() => handleChangeLang(lang)}
             />
             <ListItem.Content>
-              <ListItem.Title style={style.label(isRtl)}>{tr(lang)}</ListItem.Title>
+              <ListItem.Title style={style.label(isRtl)}>
+                {tr(lang)}
+              </ListItem.Title>
             </ListItem.Content>
           </ListItem>
         ))}
       </BottomSheet>
-      <BottomSheet isVisible={isVisibleLogout} onBackdropPress={() => setIsVisibleLogout(false)}>
+      <BottomSheet
+        isVisible={isVisibleLogout}
+        onBackdropPress={() => setIsVisibleLogout(false)}
+      >
         <ListItem>
           <ListItem.Content style={style.logoutContent}>
-            <ListItem.Title>{tr("Are you sure you want to logout?")}</ListItem.Title>
+            <ListItem.Title>
+              {tr("Are you sure you want to logout?")}
+            </ListItem.Title>
             <View style={style.buttonContainer}>
               <Button containerStyle={style.logoutBtn} onPress={handleLogout}>
                 {tr("Yes, Logout")}
               </Button>
-              <Button containerStyle={style.logoutBtn} color="secondary" onPress={() => setIsVisibleLogout(false)}>
+              <Button
+                containerStyle={style.logoutBtn}
+                color="secondary"
+                onPress={() => setIsVisibleLogout(false)}
+              >
                 {tr("No, Cancle")}
               </Button>
             </View>
@@ -199,7 +273,9 @@ const style = StyleSheet.create({
   logoutStyle: (isRtl) => ({
     color: PRIMARY_COLOR,
     fontWeight: "400",
-    fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+    fontFamily: isRtl
+      ? "DanaNoEn"
+      : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
   }),
   container: {
     flex: 1,
@@ -240,12 +316,16 @@ const style = StyleSheet.create({
   },
   label: (isRtl) => ({
     fontWeight: "400",
-    fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+    fontFamily: isRtl
+      ? "DanaNoEn"
+      : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
   }),
   version: (isRtl) => ({
     textAlign: "center",
     fontWeight: "400",
-    fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+    fontFamily: isRtl
+      ? "DanaNoEn"
+      : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
   }),
   logoutContent: { display: "flex", alignItems: "center", gap: 12 },
   buttonContainer: { display: "flex", flexDirection: "row", gap: 12 },

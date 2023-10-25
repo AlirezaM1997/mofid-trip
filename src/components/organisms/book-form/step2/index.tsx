@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@src/store";
@@ -12,35 +12,30 @@ import { useFormikContext } from "formik";
 
 const BookFormStep2 = () => {
   const { tr } = useTranslation();
-  const dispatch = useDispatch();
-  const { data } = useSelector((state: RootState) => state.transactionSlice);
-  const { values, errors, setValues } = useFormikContext();
+  // TODO: remove this line and all dependencies
+  // const { data } = useSelector((state: RootState) => state.transactionSlice);
+  const { values, setValues } = useFormikContext();
+  const lastGuestId = useRef(2);
 
   const handleAddGuest = () => {
-    console.log('--0')
     setValues({
       ...values,
-      guests: [...values.guests, { id: values.guests.length + 1, ...defaultGuest }],
-    })
-    // dispatch(
-    //   setData({
-    //     ...data,
-    //     guests: [...data.guests, { id: data.guests.length + 1, ...defaultGuest }],
-    //   })
-    // );
+      guests: [...values.guests, { id: lastGuestId.current, ...defaultGuest }],
+    });
+    lastGuestId.current = lastGuestId.current + 1;
   };
 
   return (
     <View style={style.container}>
-      {data.guests.map((g, index) => (
-        <GuestFormItem key={index + g.identifyNumber} guest={g} index={index} />
+      {values?.guests.map((g, index) => (
+        <GuestFormItem key={index + "g"} index={index} />
       ))}
-      <WhiteSpace size={10} />
       <Container>
         <Button color="secondary" size="lg" onPress={handleAddGuest}>
           {tr("Add Guest")}
         </Button>
       </Container>
+      <WhiteSpace size={80} />
     </View>
   );
 };

@@ -8,31 +8,27 @@ import BookFormStep1 from "@src/components/organisms/book-form/step1";
 import Container from "@src/components/atoms/container";
 import useTranslation from "@src/hooks/translation";
 import WhiteSpace from "@src/components/atoms/white-space";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@src/store";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import moment from "moment";
-import { Project_Gender, useUserTransactionAddMutation } from "@src/gql/generated";
-import { router } from "expo-router";
+import { useUserTransactionAddMutation } from "@src/gql/generated";
+import { router, useLocalSearchParams } from "expo-router";
 import { Platform } from "react-native";
 import { useIsAuthenticated } from "@src/hooks/user";
-import { setData } from "@src/slice/transaction-slice";
-import Authentication from "../authentication";
 
 const BookAccommodation = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const [step, setStep] = useState(1);
   const isAuthenticated = useIsAuthenticated();
-  const { price, id, description, tax } = useSelector((state: RootState) => state.projectSlice.projectDetail);
+  const { projectId } = useLocalSearchParams();
+  const { price, id } = useSelector(
+    (state: RootState) => state.projectSlice.projectDetail
+  );
   const { data } = useSelector((state: RootState) => state.transactionSlice);
   const [submit, {}] = useUserTransactionAddMutation();
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(setData({ projectId: id, description }));
-  // }, []);
 
   useEffect(() => {
     const handler = BackHandler.addEventListener("hardwareBackPress", () => {
@@ -50,15 +46,23 @@ const BookAccommodation = () => {
       handler.remove();
     };
   }, [step]);
-  console.log("data", data);
 
   return (
     <Formik
       initialValues={data}
       validationSchema={Yup.object({
-        dateStart: Yup.date().min(moment().format("YYYY-MM-DD"), "Date start can't be before today").required("Check-in is required").typeError("Invalid Date"),
+        dateStart: Yup.date()
+          .min(
+            moment().format("YYYY-MM-DD"),
+            "Date start can't be before today"
+          )
+          .required("Check-in is required")
+          .typeError("Invalid Date"),
         dateEnd: Yup.date()
-          .min(Yup.ref("dateStart"), "Departure date can't be before arrival date")
+          .min(
+            Yup.ref("dateStart"),
+            "Departure date can't be before arrival date"
+          )
           .required("Check-out is required")
           .typeError("Invalid Date"),
         guests: Yup.array().of(
@@ -72,12 +76,16 @@ const BookAccommodation = () => {
         ),
       })}
       onSubmit={async (values, { setSubmitting }) => {
-        if (!isAuthenticated) return router.push({ pathname: "/authentication", params: { protectedScreen: `/book-accommodation/${id}` } });
+        if (!isAuthenticated)
+          return router.push({
+            pathname: "/authentication",
+            params: { protectedScreen: `/book-accommodation/${id}` },
+          });
         setSubmitting(true);
         await submit({
           variables: {
             data: {
-              projectId: data.projectId,
+              projectId: projectId,
               dateEnd: values.dateEnd,
               dateStart: values.dateStart,
               description: values.description,
@@ -93,34 +101,63 @@ const BookAccommodation = () => {
             router.push("/reservation");
           }
         });
-      }}>
+      }}
+    >
       {({ handleSubmit, errors, values, isValid }) => (
         <>
-          {step === 1 ? <BookFormStep1 /> : step === 2 ? <BookFormStep2 /> : step === 3 ? <BookFormStep3 step={step} setStep={setStep} /> : null}
+          {step === 1 ? (
+            <BookFormStep1 />
+          ) : step === 2 ? (
+            <BookFormStep2 />
+          ) : step === 3 ? (
+            <BookFormStep3 step={step} setStep={setStep} />
+          ) : null}
 
           <View style={style.container(theme)}>
             <Divider />
             <Container>
               <WhiteSpace size={10} />
               {step === 3 ? (
-                <View style={{ height: 60, display: "flex", flexDirection: "row", gap: 12 }}>
+                <View
+                  style={{
+                    height: 60,
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: 12,
+                  }}
+                >
                   <View style={style.priceContainer}>
                     <Text>{tr("Total Price")}</Text>
                     <Text variant="heading2" style={style.priceText}>
                       ${price}
                     </Text>
                   </View>
-                  <Button containerStyle={style.btnItem2} size="lg" onPress={handleSubmit} disabled={!isValid}>
+                  <Button
+                    containerStyle={style.btnItem2}
+                    size="lg"
+                    onPress={handleSubmit}
+                    disabled={!isValid}
+                  >
                     {tr("Send Request")}
                   </Button>
                 </View>
               ) : (
                 <>
                   <View style={style.row}>
-                    <Button size="lg" containerStyle={style.btn} onPress={() => setStep(step - 1)} color="secondary" disabled={step === 1}>
+                    <Button
+                      size="lg"
+                      containerStyle={style.btn}
+                      onPress={() => setStep(step - 1)}
+                      color="secondary"
+                      disabled={step === 1}
+                    >
                       {tr("Back")}
                     </Button>
-                    <Button size="lg" containerStyle={style.btn} onPress={() => setStep(step + 1)}>
+                    <Button
+                      size="lg"
+                      containerStyle={style.btn}
+                      onPress={() => setStep(step + 1)}
+                    >
                       {tr("Next")}
                     </Button>
                   </View>

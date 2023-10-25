@@ -15,34 +15,21 @@ import useTranslation from "@src/hooks/translation";
 import { useFormikContext } from "formik";
 import { GuestGender } from "@src/gql/generated";
 
-const GuestFormItem = ({ guest, index }) => {
+const GuestFormItem = ({ index }) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
-  const dispatch = useDispatch();
   const { data } = useSelector((state: RootState) => state.transactionSlice);
-  const { handleChange, values, errors } = useFormikContext();
-
-  // const handleChangeR = (value: string, k: string) => {
-  //   const guestCopy = deepCopy(guest);
-  //   guestCopy[k] = value;
-
-  //   const newItems = data.guests.map((i) => (i.id === guestCopy.id ? guestCopy : i));
-  //   dispatch(
-  //     setData({
-  //       ...data,
-  //       guests: newItems,
-  //     })
-  //   );
-  // };
+  const { handleChange, values, errors, setValues } = useFormikContext();
 
   const handleDelete = () => {
-    const newItems = data.guests.filter((i) => i.id !== guest.id);
-    dispatch(
-      setData({
-        ...data,
-        guests: newItems,
-      })
+    console.log(index, values.guests, values.guests[index].id);
+    const newItems = values.guests.filter(
+      (i) => i.id !== values.guests[index].id
     );
+    setValues({
+      ...data,
+      guests: newItems,
+    });
   };
 
   const handleUploadImage = async () => {
@@ -56,13 +43,14 @@ const GuestFormItem = ({ guest, index }) => {
 
     if (!result.canceled) {
       if (result.assets[0].base64.length < 2047892) {
-        handleChange(`guests[${index}].identifyPicture`)(`data:image/jpg;base64,${result.assets[0].base64}`);
+        handleChange(`guests[${index}].identifyPicture`)(
+          `data:image/jpg;base64,${result.assets[0].base64}`
+        );
       } else {
         alert("invalid file size");
       }
     }
   };
-
 
   return (
     <>
@@ -70,9 +58,11 @@ const GuestFormItem = ({ guest, index }) => {
         style={[
           style.container,
           {
-            backgroundColor: index % 2 ? theme.colors.white : theme.colors.grey0,
+            backgroundColor:
+              index % 2 ? theme.colors.white : theme.colors.grey0,
           },
-        ]}>
+        ]}
+      >
         <Container>
           <WhiteSpace size={10} />
           <Text variant="body1">
@@ -88,8 +78,13 @@ const GuestFormItem = ({ guest, index }) => {
               }
             }}
             value={values.guests[index]?.name || ""}
-            errorMessage={errors.guests && errors.guests[index] && errors.guests[index].name}
+            errorMessage={
+              errors.guests &&
+              errors.guests[index] &&
+              errors.guests[index]?.name
+            }
           />
+
           <Input
             placeholder={tr("Passport Number")}
             onChangeText={(text) => {
@@ -98,7 +93,12 @@ const GuestFormItem = ({ guest, index }) => {
               }
             }}
             value={values.guests[index]?.identifyNumber || ""}
-            errorMessage={data.guests[index].identifyNumber && !isValidPassportNo(data.guests[index].identifyNumber) ? tr("Invalid Passport Number") : ""}
+            errorMessage={
+              data.guests[index]?.identifyNumber &&
+              !isValidPassportNo(data.guests[index]?.identifyNumber)
+                ? tr("Invalid Passport Number")
+                : ""
+            }
           />
 
           <View style={style.checkboxContainer}>
@@ -107,20 +107,27 @@ const GuestFormItem = ({ guest, index }) => {
               textStyle={style.textStyle}
               title={tr("Male")}
               checked={values.guests[index]?.gender === GuestGender.Male}
-              onPress={() => handleChange(`guests.${index}.gender`)(GuestGender.Male)}
+              onPress={() =>
+                handleChange(`guests.${index}.gender`)(GuestGender.Male)
+              }
             />
             <CheckBox
               containerStyle={style.checkboxContainerStyle}
               textStyle={style.textStyle}
               title={tr("Female")}
               checked={values.guests[index]?.gender === GuestGender.Female}
-              onPress={() => handleChange(`guests.${index}.gender`)(GuestGender.Female)}
+              onPress={() =>
+                handleChange(`guests.${index}.gender`)(GuestGender.Female)
+              }
             />
           </View>
 
           <Pressable style={style.imagePicker} onPress={handleUploadImage}>
             {values.guests[index]?.identifyPicture ? (
-              <Image style={style.imageStyle} source={{ uri: values.guests[index]?.identifyPicture }} />
+              <Image
+                style={style.imageStyle}
+                source={{ uri: values.guests[index]?.identifyPicture }}
+              />
             ) : (
               <>
                 <Feather name="image" size={45} color="#ccc" />
