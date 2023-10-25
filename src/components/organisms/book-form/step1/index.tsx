@@ -6,6 +6,7 @@ import Container from "@src/components/atoms/container"
 import useTranslation from "@src/hooks/translation"
 import { Field, useFormikContext } from "formik"
 import FieldDate from "@src/components/modules/formik/fields/date"
+import WhiteSpace from "@atoms/white-space"
 
 const BookFormStep1 = () => {
   const { tr } = useTranslation()
@@ -57,6 +58,7 @@ const BookFormStep1 = () => {
 
   return (
     <View style={style.root}>
+      <WhiteSpace size={10} />
       <Container>
         <Field component={FieldDate} name="dateStart" label={tr('check-in')} errorMessage={errors.dateStart} />
         <Field component={FieldDate} name="dateEnd" label={tr('check-out')} errorMessage={errors.dateEnd} />

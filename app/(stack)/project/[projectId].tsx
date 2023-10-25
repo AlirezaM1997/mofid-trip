@@ -47,7 +47,7 @@ const Page: React.FC = ({ ...props }) => {
       });
       return;
     }
-    router.push(`/bookAccommodation/${id}`);
+    router.push(`/book-accommodation/${id}`);
   };
 
   useEffect(() => {
@@ -91,6 +91,7 @@ const Page: React.FC = ({ ...props }) => {
 
           <SimilarProjects currentProjectId={id} projects={creator?.projectSet} />
         </Container>
+        <WhiteSpace size={10} />
       </ScrollView>
 
       <Divider />

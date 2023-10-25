@@ -1,17 +1,17 @@
-import { useNavigation } from "@react-navigation/native"
-import Text from "@src/components/atoms/text"
-import { ProjectQueryType } from "@src/gql/generated"
-import React from "react"
-import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View } from "react-native"
+import Text from "@src/components/atoms/text";
+import { ProjectQueryType } from "@src/gql/generated";
+import { router } from "expo-router";
+import React from "react";
+import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 type PropsType = {
-  projects: ProjectQueryType[]
-  currentProjectId: string
-}
+  projects: ProjectQueryType[];
+  currentProjectId: string;
+};
 
 type ItemPropsType = {
-  project: ProjectQueryType
-}
+  project: ProjectQueryType;
+};
 
 const Item = ({ project }: ItemPropsType) => {
   return (
@@ -33,16 +33,11 @@ const Item = ({ project }: ItemPropsType) => {
         <Text style={style.price}>${project.price.toString()}</Text>
       </View>
     </View>
-  )
-}
+  );
+};
 
 const SimilarProjects = ({ projects, currentProjectId }: PropsType) => {
-  const navigation = useNavigation()
-  const handlePress = (project: ProjectQueryType) =>
-    navigation.push("ProjectScreen", {
-      name: project.name,
-      id: project.id,
-    })
+  const handlePress = (project: ProjectQueryType) => router.push(`/project/${project.id}`);
 
   return (
     <ScrollView horizontal style={style.container}>
@@ -56,14 +51,13 @@ const SimilarProjects = ({ projects, currentProjectId }: PropsType) => {
               paddingVertical: 5,
               paddingLeft: index === 0 ? 0 : 10,
               paddingRight: index === projects.length - 1 ? 0 : 10,
-            }}
-          >
+            }}>
             <Item project={p} />
           </Pressable>
         ))}
     </ScrollView>
-  )
-}
+  );
+};
 
 const style = StyleSheet.create({
   container: {
@@ -111,6 +105,6 @@ const style = StyleSheet.create({
   price: {
     fontWeight: "bold",
   },
-})
+});
 
-export default SimilarProjects
+export default SimilarProjects;

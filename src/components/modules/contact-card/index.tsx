@@ -9,13 +9,12 @@ import useTranslation from "@src/hooks/translation"
 import { getFullName } from "@src/helper/extra"
 import TruncatedText from "@src/components/atoms/text/truncatedText"
 import { useIsAuthenticated } from "@src/hooks/user"
-import { useNavigation } from "@react-navigation/native"
 import { BottomSheet, useTheme } from "@rneui/themed"
 import { Ionicons } from "@expo/vector-icons"
 import WhiteSpace from "@src/components/atoms/white-space"
+import { router } from "expo-router"
 
 const ContactCard = (props) => {
-  const navigation = useNavigation()
   const isAuthenticated = useIsAuthenticated()
 
   return (
@@ -23,7 +22,7 @@ const ContactCard = (props) => {
       {isAuthenticated ? (
         <AuthenticatedContactCard {...props} />
       ) : (
-        <Pressable onPress={() => navigation.navigate("LoginScreen")}>
+        <Pressable onPress={() => router.push("/login")}>
           <View style={styles.mask}></View>
           <AuthenticatedContactCard {...props} />
         </Pressable>

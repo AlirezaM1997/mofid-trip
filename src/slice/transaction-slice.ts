@@ -9,7 +9,7 @@ export interface TransactionState {
 
 export const defaultGuest = {
   name: "",
-  gender: GuestGender.Male,
+  gender: "",
   birthday: dayjs().format("YYYY-MM-DD"),
   identifyNumber: "",
   identifyPicture: "",
