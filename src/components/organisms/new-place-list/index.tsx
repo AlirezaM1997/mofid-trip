@@ -12,7 +12,7 @@ function NewPlaceList() {
   useEffect(() => {
     const res = search({ filter: { tags: [Tag.New] } });
     setList(res);
-  }, [search]);
+  }, []);
 
   return (
     <View style={style.container}>

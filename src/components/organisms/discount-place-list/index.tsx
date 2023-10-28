@@ -11,7 +11,7 @@ function DiscountPlaceList() {
   useEffect(() => {
     const res = search({ filter: { tags: [Tag.Discount] } });
     setList(res);
-  }, [search]);
+  }, []);
 
   return (
     <ScrollView

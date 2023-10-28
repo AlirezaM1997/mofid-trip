@@ -40,7 +40,7 @@ function FreePlacesCards() {
   useEffect(() => {
     const res = search({ filter: { tags: [Tag.Free] } });
     setList(res);
-  }, [search]);
+  }, []);
 
   return (
     <>
