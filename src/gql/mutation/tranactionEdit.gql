@@ -1,9 +1,8 @@
 mutation projectTransactionEdit($data: ProjectTransactionEditInputType!!) {
   projectTransactionEdit(data: $data) {
-    ... on ResponseBase {
-      message
-      status
-      statusCode
-    }
+    message
+    status
+    statusCode
+    __typename
   }
 }
