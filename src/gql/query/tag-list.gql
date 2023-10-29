@@ -1,5 +1,5 @@
-query tagList {
-  tagList {
+query TagList($search: String) {
+  tagList(search: $search) {
     id
     name
     displayName

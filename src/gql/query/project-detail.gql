@@ -29,7 +29,7 @@ query projectDetail($pk: ID!) {
       avatarS3 {
         small
       }
-      projectSet {
+      projectList {
         id
         name
         price
