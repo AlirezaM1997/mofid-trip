@@ -1,11 +1,9 @@
 mutation settingEdit($data: SettingEditInputType) {
   settingEdit(data: $data) {
-    ... on ResponseBase {
-      status
-      statusCode
-      message
-      metadata
-    }
+    status
+    statusCode
+    message
+    metadata
     __typename
   }
 }

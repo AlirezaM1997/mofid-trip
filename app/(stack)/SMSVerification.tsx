@@ -23,7 +23,7 @@ const SMSVerificationScreen = () => {
   const [canRequestCode, setCanRequestCode] = useState(false);
   const { redirectToScreenAfterLogin } = useSelector((state: RootState) => state.navigationSlice);
   const { loginData } = useSelector((state: RootState) => state.userSlice);
-  const [login, { loading, data, error }] = useLoginMutation();
+  const [login, { loading, data, error }] = useCreate();
   const [userCheckSmsVerificationCode, { loading: loadingChecking, data: dataChecking, error: errorChecking }] = useUserCheckSmsVerificationCodeMutation();
   const [_, { loading: loadingUserDetail, data: dataUserDetail, error: errorUserDetail, refetch, networkStatus }] = useUserDetailLazyQuery({
     notifyOnNetworkStatusChange: true,
