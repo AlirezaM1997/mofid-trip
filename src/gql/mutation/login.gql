@@ -1,21 +1,9 @@
-mutation login($dataUser: UserInputType) {
-  login(dataUser: $dataUser) {
+mutation createLogin($dataUser: UserInputType) {
+  createLogin(dataUser: $dataUser) {
     __typename
-    ... on ResponseBase {
-      status
-      message
-      statusCode
-      metadata
-      __typename
-    }
-    ... on ResponseWithToken {
-      status
-      statusCode
-      message
-      token
-      refreshToken
-      metadata
-      __typename
-    }
+    status
+    statusCode
+    message
+    metadata
   }
 }

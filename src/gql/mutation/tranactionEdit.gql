@@ -1,5 +1,5 @@
-mutation userTransactionEdit($data: TransactionEditInputType!) {
-  userTransactionEdit(data: $data) {
+mutation projectTransactionEdit($data: ProjectTransactionEditInputType!!) {
+  projectTransactionEdit(data: $data) {
     ... on ResponseBase {
       message
       status
