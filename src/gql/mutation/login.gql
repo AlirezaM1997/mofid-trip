@@ -1,5 +1,5 @@
-mutation createLogin($dataUser: UserInputType) {
-  createLogin(dataUser: $dataUser) {
+mutation createLogin($dataUser: UserInputType, $dataNgo: NGOInputType) {
+  createLogin(dataUser: $dataUser, dataNgo: $dataNgo) {
     __typename
     status
     statusCode

@@ -7,8 +7,8 @@ import { setProjectSet } from "@src/slice/project-slice";
 import {
   Exact,
   ProjectFilterType,
-  ProjectSetQueryVariables,
-  useProjectSetLazyQuery,
+  ProjectQueryType,
+  useProjectListLazyQuery,
 } from "@src/gql/generated";
 import { string } from "yup";
 
@@ -23,9 +23,9 @@ const useProjectTable = () => {
   const dispatch = useDispatch();
   const { projectSet } = useSelector((state: RootState) => state.projectSlice);
   const [networkStatus, setNetworkStatus] = useState<NetworkStatus | undefined>();
-  const [data, setData] = useState<Exact<{ projectSet: ProjectType[] }> | undefined>();
+  const [data, setData] = useState<ProjectQueryType[] | undefined>();
 
-  const [fetchProjectSet, { networkStatus: queryNetworkStatus }] = useProjectSetLazyQuery({
+  const [fetchProjectSet, { networkStatus: queryNetworkStatus }] = useProjectListLazyQuery({
     notifyOnNetworkStatusChange: false,
     onCompleted: data => setData(data),
   });
@@ -34,7 +34,7 @@ const useProjectTable = () => {
     setNetworkStatus(queryNetworkStatus);
   }, [queryNetworkStatus]);
 
-  const syncTable = (variables: ProjectSetQueryVariables) => {
+  const syncTable = (variables: ProjectQueryType) => {
     NetInfo.fetch().then(({ isConnected }) => {
       if (isConnected && "page" in variables) {
         fetchProjectSet({ variables });

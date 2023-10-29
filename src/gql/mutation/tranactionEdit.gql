@@ -1,4 +1,4 @@
-mutation projectTransactionEdit($data: ProjectTransactionEditInputType!!) {
+mutation projectTransactionEdit($data: ProjectTransactionEditInputType!) {
   projectTransactionEdit(data: $data) {
     message
     status

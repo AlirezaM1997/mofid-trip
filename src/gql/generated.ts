@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -6,6 +7,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -13,6 +15,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  Date: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   GenericScalar: { input: any; output: any; }
   UUID: { input: any; output: any; }
@@ -57,6 +60,16 @@ export type AccommodationFilterType = {
   /** Filter by 'mine' value. */
   mine?: InputMaybe<TripleChoiceEnum>;
 };
+
+/** An enumeration. */
+export enum AccommodationGuestGenderChoices {
+  /** CHILD */
+  Child = 'CHILD',
+  /** FEMALE */
+  Female = 'FEMALE',
+  /** MALE */
+  Male = 'MALE'
+}
 
 /** Type representing an accommodation image with different sizes. */
 export type AccommodationImageType = {
@@ -116,7 +129,7 @@ export type AccommodationQueryType = {
   lat?: Maybe<Scalars['Float']['output']>;
   lng?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
-  projectSet: Array<NgoProjectType>;
+  projectSet: Array<ProjectQueryType>;
   user?: Maybe<UserListType>;
 };
 
@@ -199,7 +212,7 @@ export type CategoryQueryType = {
   id: Scalars['ID']['output'];
   /** Name of the category. */
   name?: Maybe<Scalars['String']['output']>;
-  projectSet: Array<NgoProjectType>;
+  projectSet: Array<ProjectQueryType>;
 };
 
 export type DateRangeType = {
@@ -214,7 +227,7 @@ export type FacilityQueryType = {
   enName?: Maybe<Scalars['String']['output']>;
   faName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  projectSet: Array<NgoProjectType>;
+  projectSet: Array<ProjectQueryType>;
 };
 
 export enum GuestGenderEnum {
@@ -235,6 +248,16 @@ export type GuestInputType = {
   identifyPicture?: InputMaybe<Scalars['String']['input']>;
   /** Name of the guest. */
   name: Scalars['String']['input'];
+};
+
+export type GuestQueryType = {
+  __typename?: 'GuestQueryType';
+  birthday?: Maybe<Scalars['Date']['output']>;
+  gender: AccommodationGuestGenderChoices;
+  id: Scalars['ID']['output'];
+  identifyNumber?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  transaction?: Maybe<ProjectTransactionQueryType>;
 };
 
 export type IntRangeType = {
@@ -444,49 +467,9 @@ export type NgoListType = {
   lng?: Maybe<Scalars['Float']['output']>;
   name: Scalars['String']['output'];
   /** List of projects associated with the NGO. */
-  projectSet?: Maybe<Array<Maybe<NgoProjectType>>>;
+  projectSet?: Maybe<Array<Maybe<ProjectQueryType>>>;
   tours: Array<TourQueryType>;
   user?: Maybe<UserListType>;
-};
-
-/** Type representing an accommodation associated with an NGO project. */
-export type NgoProjectAccommodationType = {
-  __typename?: 'NGOProjectAccommodationType';
-  address?: Maybe<Scalars['String']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  lat?: Maybe<Scalars['Float']['output']>;
-  lng?: Maybe<Scalars['Float']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  projectSet: Array<NgoProjectType>;
-  user?: Maybe<UserListType>;
-};
-
-/** Type representing an NGO project with additional fields. */
-export type NgoProjectType = {
-  __typename?: 'NGOProjectType';
-  /** List of accommodations associated with the project. */
-  accommodation?: Maybe<Array<Maybe<NgoProjectAccommodationType>>>;
-  capacity?: Maybe<CapacityQueryType>;
-  /** Reserved capacity for the project. */
-  capacityReserved?: Maybe<Scalars['Int']['output']>;
-  categories: Array<CategoryQueryType>;
-  createdTime?: Maybe<Scalars['DateTime']['output']>;
-  creator?: Maybe<UserListType>;
-  dateEnd?: Maybe<Scalars['DateTime']['output']>;
-  dateStart?: Maybe<Scalars['DateTime']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  facilities: Array<FacilityQueryType>;
-  gender: AccommodationProjectGenderChoices;
-  id: Scalars['ID']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  price?: Maybe<Scalars['Int']['output']>;
-  requestFrom: AccommodationProjectRequestFromChoices;
-  status: AccommodationProjectStatusChoices;
-  tags: Array<TagType>;
-  tax?: Maybe<Scalars['Int']['output']>;
-  tours: Array<TourQueryType>;
-  transactionSet: Array<ProjectTransactionQueryType>;
 };
 
 /**
@@ -684,11 +667,13 @@ export type ProjectTransactionQueryType = {
   dateEnd?: Maybe<Scalars['DateTime']['output']>;
   dateStart?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  /** List of guests associated with the transaction. */
+  guestSet?: Maybe<Array<Maybe<GuestQueryType>>>;
   id: Scalars['ID']['output'];
   invoiceNumber?: Maybe<Scalars['UUID']['output']>;
   modifiedDate?: Maybe<Scalars['DateTime']['output']>;
   owner?: Maybe<UserListType>;
-  project?: Maybe<NgoProjectType>;
+  project?: Maybe<ProjectQueryType>;
   /** Transaction status information. */
   status?: Maybe<StatusQueryType>;
 };
@@ -922,7 +907,7 @@ export type TagListType = {
   id: Scalars['ID']['output'];
   /** Name of the tag. */
   name?: Maybe<Scalars['String']['output']>;
-  projectSet: Array<NgoProjectType>;
+  projectSet: Array<ProjectQueryType>;
 };
 
 /** Type representing a single tag. */
@@ -1019,7 +1004,7 @@ export type TourQueryType = {
   /** List of tour prices. */
   price?: Maybe<Array<Maybe<TourPriceType>>>;
   prices: Array<TourPriceType>;
-  projects: Array<NgoProjectType>;
+  projects: Array<ProjectQueryType>;
   shortDescription: Scalars['String']['output'];
   startTime: Scalars['DateTime']['output'];
   termsRules: Scalars['String']['output'];
@@ -1139,7 +1124,7 @@ export type UserInputType = {
 /** Type representing a list of users with additional fields. */
 export type UserListType = {
   __typename?: 'UserListType';
-  accommodationSet: Array<NgoProjectAccommodationType>;
+  accommodationSet: Array<AccommodationQueryType>;
   /** User avatar image in different sizes. */
   avatarS3?: Maybe<UserImageType>;
   bio?: Maybe<Scalars['String']['output']>;
@@ -1150,7 +1135,8 @@ export type UserListType = {
   lastName: Scalars['String']['output'];
   ngo?: Maybe<NgoListType>;
   phoneNumber?: Maybe<Scalars['String']['output']>;
-  projectSet: Array<NgoProjectType>;
+  /** List of projects associated with the User. */
+  projectSet?: Maybe<Array<Maybe<ProjectQueryType>>>;
   setting?: Maybe<SettingDetailType>;
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
@@ -1163,3 +1149,890 @@ export type Verify = {
   __typename?: 'Verify';
   payload: Scalars['GenericScalar']['output'];
 };
+
+export type CreateLoginMutationVariables = Exact<{
+  dataUser?: InputMaybe<UserInputType>;
+  dataNgo?: InputMaybe<NgoInputType>;
+}>;
+
+
+export type CreateLoginMutation = { __typename?: 'Mutation', createLogin?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
+export type SettingEditMutationVariables = Exact<{
+  data?: InputMaybe<SettingEditInputType>;
+}>;
+
+
+export type SettingEditMutation = { __typename?: 'Mutation', settingEdit?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
+export type ProjectTransactionEditMutationVariables = Exact<{
+  data: ProjectTransactionEditInputType;
+}>;
+
+
+export type ProjectTransactionEditMutation = { __typename?: 'Mutation', projectTransactionEdit?: { __typename: 'ResponseBase', message?: string | null, status?: string | null, statusCode?: number | null } | null };
+
+export type ProjectTransactionAddMutationVariables = Exact<{
+  data: ProjectTransactionAddInputType;
+}>;
+
+
+export type ProjectTransactionAddMutation = { __typename?: 'Mutation', projectTransactionAdd?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
+export type UserGetTokenMutationVariables = Exact<{
+  code: Scalars['Int']['input'];
+  phoneNumber: Scalars['String']['input'];
+}>;
+
+
+export type UserGetTokenMutation = { __typename?: 'Mutation', userGetToken?: { __typename: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | { __typename: 'ResponseWithToken', message?: string | null, metadata?: any | null, refreshToken?: string | null, status?: string | null, statusCode?: number | null, token?: string | null } | null };
+
+export type UerGetTokenMutationVariables = Exact<{
+  data?: InputMaybe<UserEditInputType>;
+}>;
+
+
+export type UerGetTokenMutation = { __typename?: 'Mutation', userEdit?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null } | null };
+
+export type BannerListQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type BannerListQuery = { __typename?: 'Query', bannerList?: Array<{ __typename?: 'BannerQueryType', id: string, url?: string | null, title: string, avatarS3?: { __typename?: 'BannerImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null };
+
+export type CategoryListQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CategoryListQuery = { __typename?: 'Query', categoryList?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null };
+
+export type ProjectDetailQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+}>;
+
+
+export type ProjectDetailQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, gender: AccommodationProjectGenderChoices, description?: string | null, tags: Array<{ __typename?: 'TagType', id: string, name?: string | null }>, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, child: number, female: number } | null, facilities?: Array<{ __typename?: 'FacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, creator?: { __typename?: 'UserListType', id: string, lastName: string, firstName: string, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, name?: string | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, name?: string | null, address?: string | null, description?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null };
+
+export type ProjectListQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<ProjectFilterType>;
+  page: PageType;
+}>;
+
+
+export type ProjectListQuery = { __typename?: 'Query', projectList?: { __typename?: 'ProjectPageType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, tags: Array<{ __typename?: 'TagType', id: string, name?: string | null }>, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null> | null } | null };
+
+export type ProjectTransactionDetailQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+}>;
+
+
+export type ProjectTransactionDetailQuery = { __typename?: 'Query', projectTransactionDetail?: { __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, owner?: { __typename?: 'UserListType', id: string, lastName: string, firstName: string } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, tax?: number | null, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null } | null } | null } | null };
+
+export type ProjectTransactionListQueryVariables = Exact<{
+  filter?: InputMaybe<ProjectTransactionFilterType>;
+}>;
+
+
+export type ProjectTransactionListQuery = { __typename?: 'Query', projectTransactionList?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, description?: string | null, invoiceNumber?: any | null, createdDate?: any | null, owner?: { __typename?: 'UserListType', id: string, lastName: string, firstName: string } | null, status?: { __typename?: 'StatusQueryType', step?: string | null, isActive?: boolean | null } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, tax?: number | null, price?: number | null, description?: string | null, facilities?: Array<{ __typename?: 'FacilityQueryType', id: string, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null } | null> | null };
+
+export type SettingDetailQueryVariables = Exact<{
+  userId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type SettingDetailQuery = { __typename?: 'Query', settingDetail?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null };
+
+export type TagListQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type TagListQuery = { __typename?: 'Query', tagList?: Array<{ __typename?: 'TagListType', id: string, name?: string | null, displayName?: string | null } | null> | null };
+
+export type TourListQueryVariables = Exact<{
+  search?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<TourFilterType>;
+  page: PageType;
+}>;
+
+
+export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourPageType', data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, shortDescription: string, startTime: any, endTime: any, facilities?: Array<{ __typename?: 'TourFacilityType', id: string, enName?: string | null } | null> | null, price?: Array<{ __typename?: 'TourPriceType', title: string, price: number } | null> | null, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
+
+export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserListType', id: string, username: string, firstName: string, lastName: string, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOListType', id: string } | null } | null };
+
+
+export const CreateLoginDocument = gql`
+    mutation createLogin($dataUser: UserInputType, $dataNgo: NGOInputType) {
+  createLogin(dataUser: $dataUser, dataNgo: $dataNgo) {
+    __typename
+    status
+    statusCode
+    message
+    metadata
+  }
+}
+    `;
+export type CreateLoginMutationFn = Apollo.MutationFunction<CreateLoginMutation, CreateLoginMutationVariables>;
+
+/**
+ * __useCreateLoginMutation__
+ *
+ * To run a mutation, you first call `useCreateLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createLoginMutation, { data, loading, error }] = useCreateLoginMutation({
+ *   variables: {
+ *      dataUser: // value for 'dataUser'
+ *      dataNgo: // value for 'dataNgo'
+ *   },
+ * });
+ */
+export function useCreateLoginMutation(baseOptions?: Apollo.MutationHookOptions<CreateLoginMutation, CreateLoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateLoginMutation, CreateLoginMutationVariables>(CreateLoginDocument, options);
+      }
+export type CreateLoginMutationHookResult = ReturnType<typeof useCreateLoginMutation>;
+export type CreateLoginMutationResult = Apollo.MutationResult<CreateLoginMutation>;
+export type CreateLoginMutationOptions = Apollo.BaseMutationOptions<CreateLoginMutation, CreateLoginMutationVariables>;
+export const SettingEditDocument = gql`
+    mutation settingEdit($data: SettingEditInputType) {
+  settingEdit(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+    __typename
+  }
+}
+    `;
+export type SettingEditMutationFn = Apollo.MutationFunction<SettingEditMutation, SettingEditMutationVariables>;
+
+/**
+ * __useSettingEditMutation__
+ *
+ * To run a mutation, you first call `useSettingEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSettingEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [settingEditMutation, { data, loading, error }] = useSettingEditMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSettingEditMutation(baseOptions?: Apollo.MutationHookOptions<SettingEditMutation, SettingEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SettingEditMutation, SettingEditMutationVariables>(SettingEditDocument, options);
+      }
+export type SettingEditMutationHookResult = ReturnType<typeof useSettingEditMutation>;
+export type SettingEditMutationResult = Apollo.MutationResult<SettingEditMutation>;
+export type SettingEditMutationOptions = Apollo.BaseMutationOptions<SettingEditMutation, SettingEditMutationVariables>;
+export const ProjectTransactionEditDocument = gql`
+    mutation projectTransactionEdit($data: ProjectTransactionEditInputType!) {
+  projectTransactionEdit(data: $data) {
+    message
+    status
+    statusCode
+    __typename
+  }
+}
+    `;
+export type ProjectTransactionEditMutationFn = Apollo.MutationFunction<ProjectTransactionEditMutation, ProjectTransactionEditMutationVariables>;
+
+/**
+ * __useProjectTransactionEditMutation__
+ *
+ * To run a mutation, you first call `useProjectTransactionEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProjectTransactionEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [projectTransactionEditMutation, { data, loading, error }] = useProjectTransactionEditMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useProjectTransactionEditMutation(baseOptions?: Apollo.MutationHookOptions<ProjectTransactionEditMutation, ProjectTransactionEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ProjectTransactionEditMutation, ProjectTransactionEditMutationVariables>(ProjectTransactionEditDocument, options);
+      }
+export type ProjectTransactionEditMutationHookResult = ReturnType<typeof useProjectTransactionEditMutation>;
+export type ProjectTransactionEditMutationResult = Apollo.MutationResult<ProjectTransactionEditMutation>;
+export type ProjectTransactionEditMutationOptions = Apollo.BaseMutationOptions<ProjectTransactionEditMutation, ProjectTransactionEditMutationVariables>;
+export const ProjectTransactionAddDocument = gql`
+    mutation projectTransactionAdd($data: ProjectTransactionAddInputType!) {
+  projectTransactionAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+    __typename
+  }
+}
+    `;
+export type ProjectTransactionAddMutationFn = Apollo.MutationFunction<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>;
+
+/**
+ * __useProjectTransactionAddMutation__
+ *
+ * To run a mutation, you first call `useProjectTransactionAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProjectTransactionAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [projectTransactionAddMutation, { data, loading, error }] = useProjectTransactionAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useProjectTransactionAddMutation(baseOptions?: Apollo.MutationHookOptions<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>(ProjectTransactionAddDocument, options);
+      }
+export type ProjectTransactionAddMutationHookResult = ReturnType<typeof useProjectTransactionAddMutation>;
+export type ProjectTransactionAddMutationResult = Apollo.MutationResult<ProjectTransactionAddMutation>;
+export type ProjectTransactionAddMutationOptions = Apollo.BaseMutationOptions<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>;
+export const UserGetTokenDocument = gql`
+    mutation userGetToken($code: Int!, $phoneNumber: String!) {
+  userGetToken(code: $code, phoneNumber: $phoneNumber) {
+    __typename
+    ... on ResponseWithToken {
+      message
+      metadata
+      refreshToken
+      status
+      statusCode
+      token
+    }
+    ... on ResponseBase {
+      message
+      metadata
+      status
+      statusCode
+    }
+  }
+}
+    `;
+export type UserGetTokenMutationFn = Apollo.MutationFunction<UserGetTokenMutation, UserGetTokenMutationVariables>;
+
+/**
+ * __useUserGetTokenMutation__
+ *
+ * To run a mutation, you first call `useUserGetTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUserGetTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [userGetTokenMutation, { data, loading, error }] = useUserGetTokenMutation({
+ *   variables: {
+ *      code: // value for 'code'
+ *      phoneNumber: // value for 'phoneNumber'
+ *   },
+ * });
+ */
+export function useUserGetTokenMutation(baseOptions?: Apollo.MutationHookOptions<UserGetTokenMutation, UserGetTokenMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UserGetTokenMutation, UserGetTokenMutationVariables>(UserGetTokenDocument, options);
+      }
+export type UserGetTokenMutationHookResult = ReturnType<typeof useUserGetTokenMutation>;
+export type UserGetTokenMutationResult = Apollo.MutationResult<UserGetTokenMutation>;
+export type UserGetTokenMutationOptions = Apollo.BaseMutationOptions<UserGetTokenMutation, UserGetTokenMutationVariables>;
+export const UerGetTokenDocument = gql`
+    mutation uerGetToken($data: UserEditInputType) {
+  userEdit(data: $data) {
+    status
+    statusCode
+    message
+    __typename
+  }
+}
+    `;
+export type UerGetTokenMutationFn = Apollo.MutationFunction<UerGetTokenMutation, UerGetTokenMutationVariables>;
+
+/**
+ * __useUerGetTokenMutation__
+ *
+ * To run a mutation, you first call `useUerGetTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUerGetTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uerGetTokenMutation, { data, loading, error }] = useUerGetTokenMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUerGetTokenMutation(baseOptions?: Apollo.MutationHookOptions<UerGetTokenMutation, UerGetTokenMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UerGetTokenMutation, UerGetTokenMutationVariables>(UerGetTokenDocument, options);
+      }
+export type UerGetTokenMutationHookResult = ReturnType<typeof useUerGetTokenMutation>;
+export type UerGetTokenMutationResult = Apollo.MutationResult<UerGetTokenMutation>;
+export type UerGetTokenMutationOptions = Apollo.BaseMutationOptions<UerGetTokenMutation, UerGetTokenMutationVariables>;
+export const BannerListDocument = gql`
+    query bannerList($search: String) {
+  bannerList(search: $search) {
+    id
+    url
+    title
+    avatarS3 {
+      large
+      medium
+      small
+    }
+  }
+}
+    `;
+
+/**
+ * __useBannerListQuery__
+ *
+ * To run a query within a React component, call `useBannerListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBannerListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBannerListQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useBannerListQuery(baseOptions?: Apollo.QueryHookOptions<BannerListQuery, BannerListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BannerListQuery, BannerListQueryVariables>(BannerListDocument, options);
+      }
+export function useBannerListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BannerListQuery, BannerListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BannerListQuery, BannerListQueryVariables>(BannerListDocument, options);
+        }
+export type BannerListQueryHookResult = ReturnType<typeof useBannerListQuery>;
+export type BannerListLazyQueryHookResult = ReturnType<typeof useBannerListLazyQuery>;
+export type BannerListQueryResult = Apollo.QueryResult<BannerListQuery, BannerListQueryVariables>;
+export const CategoryListDocument = gql`
+    query categoryList($search: String) {
+  categoryList(search: $search) {
+    id
+    name
+    displayName
+    avatarS3 {
+      large
+      medium
+      small
+    }
+  }
+}
+    `;
+
+/**
+ * __useCategoryListQuery__
+ *
+ * To run a query within a React component, call `useCategoryListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoryListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoryListQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useCategoryListQuery(baseOptions?: Apollo.QueryHookOptions<CategoryListQuery, CategoryListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoryListQuery, CategoryListQueryVariables>(CategoryListDocument, options);
+      }
+export function useCategoryListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoryListQuery, CategoryListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoryListQuery, CategoryListQueryVariables>(CategoryListDocument, options);
+        }
+export type CategoryListQueryHookResult = ReturnType<typeof useCategoryListQuery>;
+export type CategoryListLazyQueryHookResult = ReturnType<typeof useCategoryListLazyQuery>;
+export type CategoryListQueryResult = Apollo.QueryResult<CategoryListQuery, CategoryListQueryVariables>;
+export const ProjectDetailDocument = gql`
+    query projectDetail($pk: ID!) {
+  projectDetail(pk: $pk) {
+    id
+    name
+    price
+    gender
+    description
+    tags {
+      id
+      name
+    }
+    capacity {
+      id
+      male
+      child
+      female
+    }
+    facilities {
+      id
+      enName
+      faName
+      arName
+    }
+    creator {
+      id
+      lastName
+      firstName
+      phoneNumber
+      avatarS3 {
+        small
+      }
+      projectSet {
+        id
+        name
+        price
+        accommodation {
+          id
+          name
+          address
+          avatarS3 {
+            large
+            medium
+            small
+          }
+        }
+      }
+    }
+    accommodation {
+      id
+      lat
+      lng
+      name
+      address
+      description
+      avatarS3 {
+        large
+        medium
+        small
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProjectDetailQuery__
+ *
+ * To run a query within a React component, call `useProjectDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProjectDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProjectDetailQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useProjectDetailQuery(baseOptions: Apollo.QueryHookOptions<ProjectDetailQuery, ProjectDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProjectDetailQuery, ProjectDetailQueryVariables>(ProjectDetailDocument, options);
+      }
+export function useProjectDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProjectDetailQuery, ProjectDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProjectDetailQuery, ProjectDetailQueryVariables>(ProjectDetailDocument, options);
+        }
+export type ProjectDetailQueryHookResult = ReturnType<typeof useProjectDetailQuery>;
+export type ProjectDetailLazyQueryHookResult = ReturnType<typeof useProjectDetailLazyQuery>;
+export type ProjectDetailQueryResult = Apollo.QueryResult<ProjectDetailQuery, ProjectDetailQueryVariables>;
+export const ProjectListDocument = gql`
+    query projectList($search: String, $filter: ProjectFilterType, $page: PageType!) {
+  projectList(search: $search, filter: $filter, page: $page) {
+    pageCount
+    count
+    data {
+      id
+      name
+      price
+      tags {
+        id
+        name
+      }
+      accommodation {
+        id
+        address
+        avatarS3 {
+          small
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProjectListQuery__
+ *
+ * To run a query within a React component, call `useProjectListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProjectListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProjectListQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useProjectListQuery(baseOptions: Apollo.QueryHookOptions<ProjectListQuery, ProjectListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProjectListQuery, ProjectListQueryVariables>(ProjectListDocument, options);
+      }
+export function useProjectListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProjectListQuery, ProjectListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProjectListQuery, ProjectListQueryVariables>(ProjectListDocument, options);
+        }
+export type ProjectListQueryHookResult = ReturnType<typeof useProjectListQuery>;
+export type ProjectListLazyQueryHookResult = ReturnType<typeof useProjectListLazyQuery>;
+export type ProjectListQueryResult = Apollo.QueryResult<ProjectListQuery, ProjectListQueryVariables>;
+export const ProjectTransactionDetailDocument = gql`
+    query projectTransactionDetail($pk: ID!) {
+  projectTransactionDetail(pk: $pk) {
+    id
+    dateEnd
+    dateStart
+    owner {
+      id
+      lastName
+      firstName
+    }
+    guestSet {
+      name
+    }
+    project {
+      id
+      tax
+      name
+      price
+      accommodation {
+        id
+        address
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProjectTransactionDetailQuery__
+ *
+ * To run a query within a React component, call `useProjectTransactionDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProjectTransactionDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProjectTransactionDetailQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useProjectTransactionDetailQuery(baseOptions: Apollo.QueryHookOptions<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables>(ProjectTransactionDetailDocument, options);
+      }
+export function useProjectTransactionDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables>(ProjectTransactionDetailDocument, options);
+        }
+export type ProjectTransactionDetailQueryHookResult = ReturnType<typeof useProjectTransactionDetailQuery>;
+export type ProjectTransactionDetailLazyQueryHookResult = ReturnType<typeof useProjectTransactionDetailLazyQuery>;
+export type ProjectTransactionDetailQueryResult = Apollo.QueryResult<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables>;
+export const ProjectTransactionListDocument = gql`
+    query projectTransactionList($filter: ProjectTransactionFilterType) {
+  projectTransactionList(filter: $filter) {
+    id
+    dateEnd
+    dateStart
+    description
+    invoiceNumber
+    createdDate
+    owner {
+      id
+      lastName
+      firstName
+    }
+    status {
+      step
+      isActive
+    }
+    guestSet {
+      name
+    }
+    project {
+      id
+      name
+      tax
+      price
+      description
+      facilities {
+        id
+        enName
+      }
+      accommodation {
+        id
+        address
+        lat
+        lng
+        avatarS3 {
+          small
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProjectTransactionListQuery__
+ *
+ * To run a query within a React component, call `useProjectTransactionListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProjectTransactionListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProjectTransactionListQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useProjectTransactionListQuery(baseOptions?: Apollo.QueryHookOptions<ProjectTransactionListQuery, ProjectTransactionListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProjectTransactionListQuery, ProjectTransactionListQueryVariables>(ProjectTransactionListDocument, options);
+      }
+export function useProjectTransactionListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProjectTransactionListQuery, ProjectTransactionListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProjectTransactionListQuery, ProjectTransactionListQueryVariables>(ProjectTransactionListDocument, options);
+        }
+export type ProjectTransactionListQueryHookResult = ReturnType<typeof useProjectTransactionListQuery>;
+export type ProjectTransactionListLazyQueryHookResult = ReturnType<typeof useProjectTransactionListLazyQuery>;
+export type ProjectTransactionListQueryResult = Apollo.QueryResult<ProjectTransactionListQuery, ProjectTransactionListQueryVariables>;
+export const SettingDetailDocument = gql`
+    query settingDetail($userId: ID) {
+  settingDetail(userId: $userId) {
+    language
+  }
+}
+    `;
+
+/**
+ * __useSettingDetailQuery__
+ *
+ * To run a query within a React component, call `useSettingDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSettingDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSettingDetailQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useSettingDetailQuery(baseOptions?: Apollo.QueryHookOptions<SettingDetailQuery, SettingDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SettingDetailQuery, SettingDetailQueryVariables>(SettingDetailDocument, options);
+      }
+export function useSettingDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SettingDetailQuery, SettingDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SettingDetailQuery, SettingDetailQueryVariables>(SettingDetailDocument, options);
+        }
+export type SettingDetailQueryHookResult = ReturnType<typeof useSettingDetailQuery>;
+export type SettingDetailLazyQueryHookResult = ReturnType<typeof useSettingDetailLazyQuery>;
+export type SettingDetailQueryResult = Apollo.QueryResult<SettingDetailQuery, SettingDetailQueryVariables>;
+export const TagListDocument = gql`
+    query TagList($search: String) {
+  tagList(search: $search) {
+    id
+    name
+    displayName
+  }
+}
+    `;
+
+/**
+ * __useTagListQuery__
+ *
+ * To run a query within a React component, call `useTagListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTagListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTagListQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useTagListQuery(baseOptions?: Apollo.QueryHookOptions<TagListQuery, TagListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TagListQuery, TagListQueryVariables>(TagListDocument, options);
+      }
+export function useTagListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TagListQuery, TagListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TagListQuery, TagListQueryVariables>(TagListDocument, options);
+        }
+export type TagListQueryHookResult = ReturnType<typeof useTagListQuery>;
+export type TagListLazyQueryHookResult = ReturnType<typeof useTagListLazyQuery>;
+export type TagListQueryResult = Apollo.QueryResult<TagListQuery, TagListQueryVariables>;
+export const TourListDocument = gql`
+    query tourList($search: String, $filter: TourFilterType, $page: PageType!) {
+  tourList(search: $search, filter: $filter, page: $page) {
+    data {
+      id
+      title
+      shortDescription
+      startTime
+      endTime
+      facilities {
+        id
+        enName
+      }
+      price {
+        title
+        price
+      }
+      avatarS3 {
+        medium
+        large
+        small
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useTourListQuery__
+ *
+ * To run a query within a React component, call `useTourListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTourListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTourListQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *      filter: // value for 'filter'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useTourListQuery(baseOptions: Apollo.QueryHookOptions<TourListQuery, TourListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TourListQuery, TourListQueryVariables>(TourListDocument, options);
+      }
+export function useTourListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TourListQuery, TourListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TourListQuery, TourListQueryVariables>(TourListDocument, options);
+        }
+export type TourListQueryHookResult = ReturnType<typeof useTourListQuery>;
+export type TourListLazyQueryHookResult = ReturnType<typeof useTourListLazyQuery>;
+export type TourListQueryResult = Apollo.QueryResult<TourListQuery, TourListQueryVariables>;
+export const UserDetailDocument = gql`
+    query userDetail {
+  userDetail {
+    id
+    username
+    firstName
+    lastName
+    email
+    bio
+    phoneNumber
+    avatarS3 {
+      large
+      medium
+      small
+    }
+    setting {
+      language
+    }
+    isNgo
+    ngo {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useUserDetailQuery__
+ *
+ * To run a query within a React component, call `useUserDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserDetailQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserDetailQuery(baseOptions?: Apollo.QueryHookOptions<UserDetailQuery, UserDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserDetailQuery, UserDetailQueryVariables>(UserDetailDocument, options);
+      }
+export function useUserDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserDetailQuery, UserDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserDetailQuery, UserDetailQueryVariables>(UserDetailDocument, options);
+        }
+export type UserDetailQueryHookResult = ReturnType<typeof useUserDetailQuery>;
+export type UserDetailLazyQueryHookResult = ReturnType<typeof useUserDetailLazyQuery>;
+export type UserDetailQueryResult = Apollo.QueryResult<UserDetailQuery, UserDetailQueryVariables>;

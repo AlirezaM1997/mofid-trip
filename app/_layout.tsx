@@ -33,28 +33,6 @@ export function PatchedApolloProvider({ children }) {
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 }
 
-export function AppContent({ children }) {
-  // const isAuthenticated = useIsAuthenticated()
-
-  // const userId = useSelector((state: RootState) => state.userSlice?.loginData?.metadata?.id)
-  // const { syncTable: syncTableProjectTable } = useProjectTable()
-  // const { syncTable: syncTableSettingDetail } = useSettingDetail()
-
-  // useEffect(() => {
-  //   syncTableProjectTable({
-  //     page: {
-  //       pageNumber: 1,
-  //       pageSize: 99999998,
-  //     },
-  //   })
-  //   if (isAuthenticated) {
-  //     syncTableSettingDetail({ userId: userId })
-  //   }
-  // }, [])
-
-  return <>{children}</>;
-}
-
 const MainContent = () => {
   const isRtl = useIsRtl();
   const Theme = theme(isRtl);
@@ -101,16 +79,20 @@ export default function App() {
   }
 
   return (
-    <Provider store={store}>
-      <StatusBar style={isDarkMode ? "light" : "dark"} translucent={false} backgroundColor={isDarkMode ? "black" : "white"} />
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <PersistGate loading={null} persistor={persistor}>
-          <PatchedApolloProvider>
+    <PersistGate loading={null} persistor={persistor}>
+      <PatchedApolloProvider>
+        <Provider store={store}>
+          <StatusBar
+            style={isDarkMode ? "light" : "dark"}
+            translucent={false}
+            backgroundColor={isDarkMode ? "black" : "white"}
+          />
+          <View style={styles.container} onLayout={onLayoutRootView}>
             <MainContent />
-          </PatchedApolloProvider>
-        </PersistGate>
-      </View>
-    </Provider>
+          </View>
+        </Provider>
+      </PatchedApolloProvider>
+    </PersistGate>
   );
 }
 const styles = StyleSheet.create({

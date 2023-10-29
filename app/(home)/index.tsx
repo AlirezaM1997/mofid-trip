@@ -10,12 +10,12 @@ import NewPlaceList from "@src/components/organisms/new-place-list";
 import PlaceCategoryCard from "@src/components/organisms/place-category-card";
 import Tags from "@src/components/organisms/tags";
 import TrendingPlaceList from "@src/components/organisms/trending-place-list";
-import { Project_Category, Tag } from "@src/gql/generated";
+import { ProjectCategoryEnum, ProjectTagEnum } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { setProjectSetArguments } from "@src/slice/project-slice";
 import { RootState } from "@src/store";
 import { useRouter } from "expo-router/src/hooks";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,13 +24,9 @@ export default function Index() {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const [searchText, setSearchText] = useState("");
-  const { projectSetArguments } = useSelector(
-    (state: RootState) => state.projectSlice
-  );
+  const { projectSetArguments } = useSelector((state: RootState) => state.projectSlice);
 
-  const handleChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
+  const handleChange = (e: SetStateAction<string>) => {
     setSearchText(e);
   };
 
@@ -39,14 +35,14 @@ export default function Index() {
       setProjectSetArguments({
         ...projectSetArguments,
         filter: {
-          categories: Object.values(Project_Category),
+          categories: Object.values(ProjectCategoryEnum),
         },
       })
     );
     router.push("/search");
   };
 
-  const handlePressByTag = (tag: Tag) => {
+  const handlePressByTag = (tag: ProjectTagEnum) => {
     dispatch(
       setProjectSetArguments({
         ...projectSetArguments,
@@ -55,7 +51,7 @@ export default function Index() {
         },
       })
     );
-    router.push('/search')
+    router.push("/search");
   };
 
   return (
@@ -87,7 +83,7 @@ export default function Index() {
           <TitleWithAction
             title={tr("Trending Place")}
             actionTitle={tr("See All")}
-            onActionPress={() => handlePressByTag(Tag.Trend)}
+            onActionPress={() => handlePressByTag(ProjectTagEnum.Trend)}
           />
         </Container>
         <TrendingPlaceList />
@@ -100,7 +96,7 @@ export default function Index() {
           <TitleWithAction
             title={tr("New Place")}
             actionTitle={tr("See All")}
-            onActionPress={() => handlePressByTag(Tag.New)}
+            onActionPress={() => handlePressByTag(ProjectTagEnum.New)}
           />
         </Container>
         <NewPlaceList />
@@ -114,7 +110,7 @@ export default function Index() {
           <TitleWithAction
             title={tr("With Discount Place")}
             actionTitle={tr("See All")}
-            onActionPress={() => handlePressByTag(Tag.Discount)}
+            onActionPress={() => handlePressByTag(ProjectTagEnum.Discount)}
           />
         </Container>
         <WhiteSpace size={10} />

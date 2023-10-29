@@ -1,5 +1,5 @@
-mutation userTransactionAdd($data: TransactionAddInputType!) {
-  userTransactionAdd(data: $data) {
+mutation projectTransactionAdd($data: ProjectTransactionAddInputType!) {
+  projectTransactionAdd(data: $data) {
     status
     statusCode
     message
