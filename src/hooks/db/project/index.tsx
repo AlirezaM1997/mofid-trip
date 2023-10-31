@@ -12,6 +12,7 @@ import {
   useProjectListLazyQuery,
 } from "@src/gql/generated";
 import { string } from "yup";
+import { PAGE_SIZE } from "@src/settings";
 
 type SearchType = {
   searchText?: string;
@@ -38,7 +39,9 @@ const useProjectTable = () => {
   const syncTable = (variables: ProjectListQueryVariables) => {
     NetInfo.fetch().then(({ isConnected }) => {
       if (isConnected) {
-        fetchProjectSet({variables: variables}).then(({data}) => dispatch(setProjectSet(data.projectList)))
+        fetchProjectSet({ variables: variables }).then(({ data }) =>
+          dispatch(setProjectSet(data.projectList))
+        );
       }
     });
   };
@@ -49,13 +52,11 @@ const useProjectTable = () => {
     }
   }, [networkStatus, data]);
 
-  const search = ({ searchText, filter }: SearchType) => {
+  const search = ({ search, filter, page }: ProjectListQueryVariables) => {
     if (!projectSet.data) return [];
     let result = projectSet.data;
-    if (searchText) {
-      result = result.filter(p =>
-        p.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
-      );
+    if (search) {
+      result = result.filter(p => p.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
     }
     if (filter) {
       if (filter?.tags) {
@@ -65,7 +66,9 @@ const useProjectTable = () => {
         });
       }
     }
-    return result;
+    const pageSize = page?.pageSize ?? PAGE_SIZE;
+    const pageNumber = page?.pageNumber ?? 1;
+    return result.slice(pageSize * (pageNumber - 1), pageSize * pageNumber);
   };
 
   return { networkStatus, syncTable, search };

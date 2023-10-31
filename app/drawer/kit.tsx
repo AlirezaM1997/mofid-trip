@@ -67,7 +67,6 @@ export default function Index() {
 
   const print = async () => {
     // On iOS/android prints the given html. On web prints the HTML from the current page.
-    console.log('----', html, selectedPrinter)
     await Print.printAsync({
       html,
       printerUrl: selectedPrinter?.url, // iOS only
@@ -77,7 +76,6 @@ export default function Index() {
   const printToFile = async () => {
     // On iOS/android prints the given html. On web prints the HTML from the current page.
     const { uri } = await Print.printToFileAsync({ html });
-    console.log("File has been saved to:", uri);
     await shareAsync(uri, { UTI: ".pdf", mimeType: "application/pdf" });
   };
 
