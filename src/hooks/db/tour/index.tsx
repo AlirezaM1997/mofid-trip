@@ -13,9 +13,9 @@ import { setProjectSet } from "@src/slice/project-slice";
 
 const hasIntersection = (a: any[], b: any[]) => a.some(item => b.includes(item));
 
-const useProjectTable = () => {
+const useTourTable = () => {
   const dispatch = useDispatch();
-  const { projectSet } = useSelector((state: RootState) => state.projectSlice);
+  const { tourList } = useSelector((state: RootState) => state.tourSlice);
   const [networkStatus, setNetworkStatus] = useState<NetworkStatus | undefined>();
   const [data, setData] = useState<ProjectListQuery | undefined>();
 
@@ -39,10 +39,10 @@ const useProjectTable = () => {
   };
 
   const search = ({ search, filter, page }: ProjectListQueryVariables) => {
-    if (!projectSet.data) return [];
-    let result = projectSet.data;
+    if (!tourList.data) return [];
+    let result = tourList.data;
     if (search) {
-      result = result.filter(p => p.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
+      result = result.filter(p => p.title.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
     }
     if (filter) {
       if (filter?.tags) {
@@ -60,4 +60,4 @@ const useProjectTable = () => {
   return { networkStatus, syncTable, search };
 };
 
-export default useProjectTable;
+export default useTourTable;

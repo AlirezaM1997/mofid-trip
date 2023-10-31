@@ -396,6 +396,11 @@ export const messages = {
     fa_ir: "با تخفیف",
     en_us: "With Discount Place",
   },
+  "available hosts": {
+    ar: "الاستضافة المتوفرة",
+    fa_ir: "میزبانی های موجود",
+    en_us: "Available hosts",
+  },
   yes: {
     ar: "نعم",
     fa_ir: "بله",
@@ -747,11 +752,14 @@ export const messages = {
     fa_ir: "بیایید شروع کنیم و برای رزرو اربعین وارد شوید",
     en_us: "Let's Start And Login To Mofidtrip",
   },
-  "to reserve the places and use the application, you must log in or register in the first step, otherwise you will not be able to do any activity.": {
-    ar: "لحجز القصور واستخدام التطبيق يجب عليك تسجيل الدخول أو التسجيل في الخطوة الأولى، وإلا فلن تتمكن من القيام بأي نشاط.",
-    fa_ir: "برای رزرو کاخ ها و استفاده از اپلیکیشن باید در مرحله اول وارد شوید یا ثبت نام کنید در غیر این صورت هیچ فعالیتی نمی توانید انجام دهید.",
-    en_us: "To Reserve The Places And Use The Application, You Must Log In Or Register In The First Step, Otherwise You Will Not Be Able To Do Any Activity.",
-  },
+  "to reserve the places and use the application, you must log in or register in the first step, otherwise you will not be able to do any activity.":
+    {
+      ar: "لحجز القصور واستخدام التطبيق يجب عليك تسجيل الدخول أو التسجيل في الخطوة الأولى، وإلا فلن تتمكن من القيام بأي نشاط.",
+      fa_ir:
+        "برای رزرو کاخ ها و استفاده از اپلیکیشن باید در مرحله اول وارد شوید یا ثبت نام کنید در غیر این صورت هیچ فعالیتی نمی توانید انجام دهید.",
+      en_us:
+        "To Reserve The Places And Use The Application, You Must Log In Or Register In The First Step, Otherwise You Will Not Be Able To Do Any Activity.",
+    },
   Login: {
     ar: "تسجيل الدخول",
     fa_ir: "وارد شدن",
@@ -770,7 +778,8 @@ export const messages = {
   "you can contact the owner of the place through the following social networks or directly": {
     ar: "يمكنكم التواصل مع صاحب القصر عبر شبكات التواصل الاجتماعي التالية أو مباشرة",
     fa_ir: "می توانید از طریق شبکه های اجتماعی زیر و یا مستقیما با صاحب اقامتگاه تماس بگیرید",
-    en_us: "You can contact the owner of the place through the following social networks or directly",
+    en_us:
+      "You can contact the owner of the place through the following social networks or directly",
   },
   whatsapp: {
     ar: "واتس اب",
@@ -817,4 +826,4 @@ export const messages = {
     fa_ir: "مشاهده",
     en_us: "Review",
   },
-}
+};

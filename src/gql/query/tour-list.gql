@@ -10,6 +10,13 @@ query tourList($search: String, $filter: TourFilterType, $page: PageType!) {
         id
         enName
       }
+      # accommodation {
+      #   id
+      #   address
+      #   avatarS3 {
+      #     small
+      #   }
+      # }
       price {
         title
         price

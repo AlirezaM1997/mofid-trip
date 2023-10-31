@@ -1,23 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { TourTypes } from "@src/gql/generated";
+import { TourPageType, TourQueryType } from "@src/gql/generated";
 
 type initialStateType = {
-  tourDetail: TourTypes;
+  tourDetail: TourQueryType;
+  tourList: TourPageType;
 };
 
 const initialState: initialStateType = {
-  tourDetail: {
-    price: [],
-  },
+  tourList: {},
+  tourDetail: {},
 };
 
 export const tourSlice = createSlice({
   name: "tour",
   initialState,
   reducers: {
-    setTourDetail: (state, action: PayloadAction<Partial<TourTypes>>) => {
+    setTourDetail: (state, action: PayloadAction<Partial<TourQueryType>>) => {
       state.tourDetail = action.payload;
+    },
+    setTourList: (state, action: PayloadAction<Partial<TourPageType>>) => {
+      state.tourList = action.payload;
     },
   },
 });
