@@ -1,4 +1,4 @@
-import { ProjectQueryType, ProjectTagEnum,  } from "@src/gql/generated";
+import { ProjectQueryType, ProjectTagEnum } from "@src/gql/generated";
 import { View, StyleSheet, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 import Text from "@src/components/atoms/text";

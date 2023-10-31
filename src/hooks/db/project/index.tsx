@@ -7,6 +7,7 @@ import { setProjectSet } from "@src/slice/project-slice";
 import {
   Exact,
   ProjectFilterType,
+  ProjectListQueryVariables,
   ProjectQueryType,
   useProjectListLazyQuery,
 } from "@src/gql/generated";
@@ -34,17 +35,17 @@ const useProjectTable = () => {
     setNetworkStatus(queryNetworkStatus);
   }, [queryNetworkStatus]);
 
-  const syncTable = (variables: ProjectQueryType) => {
+  const syncTable = (variables: ProjectListQueryVariables) => {
     NetInfo.fetch().then(({ isConnected }) => {
-      if (isConnected && "page" in variables) {
-        fetchProjectSet({ variables });
+      if (isConnected) {
+        fetchProjectSet({variables: variables}).then(({data}) => dispatch(setProjectSet(data.projectList)))
       }
     });
   };
 
   useEffect(() => {
     if (networkStatus === NetworkStatus.ready && data) {
-      dispatch(setProjectSet(data.projectSet));
+      dispatch(setProjectSet(data.projectList));
     }
   }, [networkStatus, data]);
 

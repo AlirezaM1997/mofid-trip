@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import PlaceCard from "@src/components/modules/place-card";
-import { Tag, ProjectQueryType } from "@src/gql/generated";
+import { ProjectTagEnum, ProjectQueryType } from "@src/gql/generated";
 import { ScrollView } from "react-native-gesture-handler";
 import useProjectTable from "@src/hooks/db/project";
 
@@ -10,7 +10,7 @@ function TrendingPlaceList() {
   const [list, setList] = useState<ProjectQueryType[]>();
 
   useEffect(() => {
-    const res = search({ filter: { tags: [Tag.Trend] } });
+    const res = search({ filter: { tags: [ProjectTagEnum.Trend] } });
     setList(res);
   }, []);
 

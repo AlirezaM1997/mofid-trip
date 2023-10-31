@@ -4,7 +4,7 @@ import { NetworkStatus } from "@apollo/client"
 import { I18nManager, Platform } from "react-native"
 import NetInfo from "@react-native-community/netinfo"
 import { setSettingDetail } from "@src/slice/setting-detail-slice"
-import { Exact, Language_Choice, useSettingDetailLazyQuery } from "@src/gql/generated"
+import { Exact, LanguageChoiceEnum, useSettingDetailLazyQuery } from "@src/gql/generated"
 
 const useSettingDetail = () => {
   const dispatch = useDispatch()
@@ -16,7 +16,7 @@ const useSettingDetail = () => {
         refetch(variables).then(({ networkStatus, data }) => {
           if (networkStatus === NetworkStatus.ready && data) {
             dispatch(setSettingDetail(data.settingDetail))
-            const shouldBeRtl = [Language_Choice.FaIr, Language_Choice.Ar].includes(data.settingDetail.language)
+            const shouldBeRtl = [LanguageChoiceEnum.FaIr, LanguageChoiceEnum.Ar].includes(data.settingDetail.language)
             if (Platform.OS === "web") {
               window.location.href = ""
             } else {

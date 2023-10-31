@@ -6,17 +6,17 @@ import { API_URL } from "@src/settings";
 import { useSelector } from "react-redux";
 import Toast from "react-native-toast-message";
 import { RootState } from "@src/store";
-import { Language_Choice } from "@src/gql/generated";
+import { LanguageChoiceEnum } from "@src/gql/generated";
 
 const languageCodes = {
-  [Language_Choice.FaIr]: "fa",
-  [Language_Choice.EnUs]: "en-US",
-  [Language_Choice.Ar]: "ar",
+  [LanguageChoiceEnum.FaIr]: "fa",
+  [LanguageChoiceEnum.EnUs]: "en-US",
+  [LanguageChoiceEnum.Ar]: "ar",
 };
 
 const customUseApolloClient = () => {
   const { token } = useSelector((state: RootState) => state.userSlice.loginData);
-  const lang = useSelector((state: RootState) => state.settingDetailSlice.settingDetail.language || Language_Choice.EnUs);
+  const lang = useSelector((state: RootState) => state.settingDetailSlice.settingDetail.language || LanguageChoiceEnum.EnUs);
 
   const authLink = setContext((_, { headers }) => {
     return {

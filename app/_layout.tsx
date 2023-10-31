@@ -51,10 +51,7 @@ const MainContent = () => {
   return (
     <View style={styles.container} dir={isRtl ? "rtl" : "ltr"}>
       <ThemeProvider theme={Theme}>
-        {/* <NetworkState /> */}
-        <AppContent>
-          <Slot />
-        </AppContent>
+        <Slot />
         <Toast config={toastConfig} />
       </ThemeProvider>
     </View>
@@ -62,6 +59,7 @@ const MainContent = () => {
 };
 
 export default function App() {
+
   const colorScheme = Appearance.getColorScheme();
   const isDarkMode = colorScheme === "dark";
   const [fontsLoaded] = useFonts({
@@ -80,8 +78,8 @@ export default function App() {
 
   return (
     <PersistGate loading={null} persistor={persistor}>
-      <PatchedApolloProvider>
-        <Provider store={store}>
+      <Provider store={store}>
+        <PatchedApolloProvider>
           <StatusBar
             style={isDarkMode ? "light" : "dark"}
             translucent={false}
@@ -90,8 +88,8 @@ export default function App() {
           <View style={styles.container} onLayout={onLayoutRootView}>
             <MainContent />
           </View>
-        </Provider>
-      </PatchedApolloProvider>
+        </PatchedApolloProvider>
+      </Provider>
     </PersistGate>
   );
 }

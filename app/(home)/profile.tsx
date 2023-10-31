@@ -10,7 +10,7 @@ import { logout } from "@src/slice/user-slice";
 import { APP_VERSION } from "@src/settings";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@src/store";
-import { Language_Choice, useSettingEditMutation } from "@src/gql/generated";
+import { LanguageChoiceEnum, useSettingEditMutation } from "@src/gql/generated";
 import useSettingDetail from "@src/hooks/db/setting-detail";
 import useTranslation from "@src/hooks/translation";
 import { I18nManager } from "react-native";
@@ -71,7 +71,7 @@ const Profile: React.FC = () => {
     setIsVisible(true);
   };
 
-  const handleChangeLang = (lang: Language_Choice) => {
+  const handleChangeLang = (lang: LanguageChoiceEnum) => {
     settingEdit({
       variables: {
         data: {
@@ -208,7 +208,7 @@ const Profile: React.FC = () => {
         isVisible={isVisible}
         onBackdropPress={() => setIsVisible(false)}
       >
-        {Object.values(Language_Choice).map((lang) => (
+        {Object.values(LanguageChoiceEnum).map((lang) => (
           <ListItem
             key={lang}
             bottomDivider

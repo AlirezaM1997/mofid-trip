@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PlaceCard from "@src/components/modules/place-card";
 import { ScrollView, View, StyleSheet } from "react-native";
-import { ProjectQueryType, Tag } from "@src/gql/generated";
+import { ProjectQueryType, ProjectTagEnum } from "@src/gql/generated";
 import useProjectTable from "@src/hooks/db/project";
 
 function DiscountPlaceList() {
@@ -9,7 +9,7 @@ function DiscountPlaceList() {
   const { search } = useProjectTable();
 
   useEffect(() => {
-    const res = search({ filter: { tags: [Tag.Discount] } });
+    const res = search({ filter: { tags: [ProjectTagEnum.Discount] } });
     setList(res);
   }, []);
 
