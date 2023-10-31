@@ -1,7 +1,7 @@
-query version {
-  version {
-    ... on BackendVersion {
-      currentVersion
-    }
-  }
-}
+# query version {
+#   version {
+#     ... on BackendVersion {
+#       currentVersion
+#     }
+#   }
+# }

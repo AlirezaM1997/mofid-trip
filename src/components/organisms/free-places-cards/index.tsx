@@ -1,6 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
-import PlaceCardSkeleton from "@src/components/modules/place-card-skeleton";
-import { ProjectQueryType, Tag, useProjectSetLazyQuery } from "@src/gql/generated";
+import { ProjectQueryType, ProjectTagEnum } from "@src/gql/generated";
 import { View, StyleSheet, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 import Text from "@src/components/atoms/text";
@@ -30,7 +28,7 @@ function FreePlacesCards() {
       setProjectSetArguments({
         ...projectSetArguments,
         filter: {
-          tags: [Tag.Free],
+          tags: [ProjectTagEnum.Free],
         },
       })
     );
@@ -38,7 +36,7 @@ function FreePlacesCards() {
   };
 
   useEffect(() => {
-    const res = search({ filter: { tags: [Tag.Free] } });
+    const res = search({ filter: { tags: [ProjectTagEnum.Free] } });
     setList(res);
   }, []);
 

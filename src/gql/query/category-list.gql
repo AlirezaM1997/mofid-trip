@@ -1,5 +1,5 @@
-query categoryList {
-  categoryList {
+query categoryList($search: String) {
+  categoryList(search: $search) {
     id
     name
     displayName

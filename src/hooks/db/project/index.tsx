@@ -7,8 +7,9 @@ import { setProjectSet } from "@src/slice/project-slice";
 import {
   Exact,
   ProjectFilterType,
-  ProjectSetQueryVariables,
-  useProjectSetLazyQuery,
+  ProjectListQueryVariables,
+  ProjectQueryType,
+  useProjectListLazyQuery,
 } from "@src/gql/generated";
 import { string } from "yup";
 
@@ -23,9 +24,9 @@ const useProjectTable = () => {
   const dispatch = useDispatch();
   const { projectSet } = useSelector((state: RootState) => state.projectSlice);
   const [networkStatus, setNetworkStatus] = useState<NetworkStatus | undefined>();
-  const [data, setData] = useState<Exact<{ projectSet: ProjectType[] }> | undefined>();
+  const [data, setData] = useState<ProjectQueryType[] | undefined>();
 
-  const [fetchProjectSet, { networkStatus: queryNetworkStatus }] = useProjectSetLazyQuery({
+  const [fetchProjectSet, { networkStatus: queryNetworkStatus }] = useProjectListLazyQuery({
     notifyOnNetworkStatusChange: false,
     onCompleted: data => setData(data),
   });
@@ -34,17 +35,17 @@ const useProjectTable = () => {
     setNetworkStatus(queryNetworkStatus);
   }, [queryNetworkStatus]);
 
-  const syncTable = (variables: ProjectSetQueryVariables) => {
+  const syncTable = (variables: ProjectListQueryVariables) => {
     NetInfo.fetch().then(({ isConnected }) => {
-      if (isConnected && "page" in variables) {
-        fetchProjectSet({ variables });
+      if (isConnected) {
+        fetchProjectSet({variables: variables}).then(({data}) => dispatch(setProjectSet(data.projectList)))
       }
     });
   };
 
   useEffect(() => {
     if (networkStatus === NetworkStatus.ready && data) {
-      dispatch(setProjectSet(data.projectSet));
+      dispatch(setProjectSet(data.projectList));
     }
   }, [networkStatus, data]);
 

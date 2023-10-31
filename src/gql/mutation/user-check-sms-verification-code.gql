@@ -1,19 +1,19 @@
-mutation userCheckSmsVerificationCode($code: Int!, $phoneNumber: String!) {
-  userCheckSmsVerificationCode(code: $code, phoneNumber: $phoneNumber) {
+mutation userGetToken($code: Int!, $phoneNumber: String!) {
+  userGetToken(code: $code, phoneNumber: $phoneNumber) {
     __typename
     ... on ResponseWithToken {
+      message
+      metadata
+      refreshToken
       status
       statusCode
-      message
       token
-      refreshToken
-      metadata
     }
     ... on ResponseBase {
-      status
-      statusCode
       message
       metadata
+      status
+      statusCode
     }
   }
 }

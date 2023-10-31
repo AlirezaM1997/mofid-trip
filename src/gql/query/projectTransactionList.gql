@@ -1,5 +1,5 @@
-query userTransactionList {
-  userTransactionList {
+query projectTransactionList($filter: ProjectTransactionFilterType) {
+  projectTransactionList(filter: $filter) {
     id
     dateEnd
     dateStart

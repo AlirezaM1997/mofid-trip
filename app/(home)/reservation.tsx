@@ -10,14 +10,16 @@ import { RefreshControl } from "react-native-gesture-handler";
 import { setTransactionList } from "@src/slice/transaction-list-slice";
 import ReservationCard from "@src/components/modules/reservation-card";
 import ReservationSkeleton from "@src/components/modules/reservation-skeleton";
-import { UserTransactionQueryType, useUserTransactionListQuery } from "@src/gql/generated";
+import { ProjectTransactionQueryType, useProjectTransactionListQuery } from "@src/gql/generated";
 import { router } from "expo-router";
 
 const Page = () => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const isAuthenticated = useIsAuthenticated();
-  const { data, refetch, networkStatus } = useUserTransactionListQuery({ notifyOnNetworkStatusChange: true });
+  const { data, refetch, networkStatus } = useProjectTransactionListQuery({
+    notifyOnNetworkStatusChange: true,
+  });
 
   const onRefresh = useCallback(() => {
     try {
@@ -33,7 +35,11 @@ const Page = () => {
     }
   }, [isFocused]);
 
-  if (!isAuthenticated) return router.push({ pathname: '/authentication', params: { protectedScreen:'/reservation'}});
+  if (!isAuthenticated)
+    return router.push({
+      pathname: "/authentication",
+      params: { protectedScreen: "/reservation" },
+    });
 
   if (networkStatus === NetworkStatus.loading)
     return (
@@ -51,17 +57,19 @@ const Page = () => {
   return (
     <ScrollView
       contentContainerStyle={
-        data?.userTransactionList?.length === 0
+        data?.projectTransactionList?.length === 0
           ? {
               flex: 1,
             }
           : {}
       }
-      refreshControl={<RefreshControl refreshing={networkStatus !== NetworkStatus.ready} onRefresh={onRefresh} />}>
-      {data?.userTransactionList?.length === 0 && <NoResult />}
-      {data?.userTransactionList?.map((transaction, index) => (
+      refreshControl={
+        <RefreshControl refreshing={networkStatus !== NetworkStatus.ready} onRefresh={onRefresh} />
+      }>
+      {data?.projectTransactionList?.length === 0 && <NoResult />}
+      {data?.projectTransactionList?.map((transaction, index) => (
         <Container key={transaction.id}>
-          <ReservationCard transaction={transaction as UserTransactionQueryType} index={index} />
+          <ReservationCard transaction={transaction as ProjectTransactionQueryType} index={index} />
         </Container>
       ))}
     </ScrollView>

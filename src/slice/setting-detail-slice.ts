@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { SettingDetailQuery, SettingLanguage } from "@src/gql/generated"
+import { SettingDetailQuery, AccountSettingLanguageChoices } from "@src/gql/generated"
 
 type initialStateType = {
   settingDetail: SettingDetailQuery["settingDetail"]
@@ -8,7 +8,7 @@ type initialStateType = {
 
 const initialState: initialStateType = {
   settingDetail: {
-    language: SettingLanguage.EnUs,
+    language: AccountSettingLanguageChoices.EnUs,
   },
 }
 

@@ -33,28 +33,6 @@ export function PatchedApolloProvider({ children }) {
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 }
 
-export function AppContent({ children }) {
-  // const isAuthenticated = useIsAuthenticated()
-
-  // const userId = useSelector((state: RootState) => state.userSlice?.loginData?.metadata?.id)
-  // const { syncTable: syncTableProjectTable } = useProjectTable()
-  // const { syncTable: syncTableSettingDetail } = useSettingDetail()
-
-  // useEffect(() => {
-  //   syncTableProjectTable({
-  //     page: {
-  //       pageNumber: 1,
-  //       pageSize: 99999998,
-  //     },
-  //   })
-  //   if (isAuthenticated) {
-  //     syncTableSettingDetail({ userId: userId })
-  //   }
-  // }, [])
-
-  return <>{children}</>;
-}
-
 const MainContent = () => {
   const isRtl = useIsRtl();
   const Theme = theme(isRtl);
@@ -73,10 +51,7 @@ const MainContent = () => {
   return (
     <View style={styles.container} dir={isRtl ? "rtl" : "ltr"}>
       <ThemeProvider theme={Theme}>
-        {/* <NetworkState /> */}
-        <AppContent>
-          <Slot />
-        </AppContent>
+        <Slot />
         <Toast config={toastConfig} />
       </ThemeProvider>
     </View>
@@ -84,6 +59,7 @@ const MainContent = () => {
 };
 
 export default function App() {
+
   const colorScheme = Appearance.getColorScheme();
   const isDarkMode = colorScheme === "dark";
   const [fontsLoaded] = useFonts({
@@ -101,16 +77,20 @@ export default function App() {
   }
 
   return (
-    <Provider store={store}>
-      <StatusBar style={isDarkMode ? "light" : "dark"} translucent={false} backgroundColor={isDarkMode ? "black" : "white"} />
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <PersistGate loading={null} persistor={persistor}>
-          <PatchedApolloProvider>
+    <PersistGate loading={null} persistor={persistor}>
+      <Provider store={store}>
+        <PatchedApolloProvider>
+          <StatusBar
+            style={isDarkMode ? "light" : "dark"}
+            translucent={false}
+            backgroundColor={isDarkMode ? "black" : "white"}
+          />
+          <View style={styles.container} onLayout={onLayoutRootView}>
             <MainContent />
-          </PatchedApolloProvider>
-        </PersistGate>
-      </View>
-    </Provider>
+          </View>
+        </PatchedApolloProvider>
+      </Provider>
+    </PersistGate>
   );
 }
 const styles = StyleSheet.create({

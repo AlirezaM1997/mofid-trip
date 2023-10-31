@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import PlaceCard from "@src/components/modules/place-card";
 import { ScrollView } from "react-native-gesture-handler";
-import { ProjectQueryType, Tag } from "@src/gql/generated";
+import { ProjectQueryType, ProjectTagEnum } from "@src/gql/generated";
 import useProjectTable from "@src/hooks/db/project";
 
 function NewPlaceList() {
@@ -10,7 +10,7 @@ function NewPlaceList() {
   const { search } = useProjectTable();
 
   useEffect(() => {
-    const res = search({ filter: { tags: [Tag.New] } });
+    const res = search({ filter: { tags: [ProjectTagEnum.New] } });
     setList(res);
   }, []);
 

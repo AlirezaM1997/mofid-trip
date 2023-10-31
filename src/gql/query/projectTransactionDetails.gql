@@ -1,5 +1,5 @@
-query userTransactionDetail($pk: ID!) {
-  userTransactionDetail(pk: $pk) {
+query projectTransactionDetail($pk: ID!) {
+  projectTransactionDetail(pk: $pk) {
     id
     dateEnd
     dateStart

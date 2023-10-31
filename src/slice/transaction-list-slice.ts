@@ -1,10 +1,10 @@
 import dayjs from "dayjs"
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { UserTransactionListQuery } from "@src/gql/generated"
+import { ProjectTransactionListQuery } from "@src/gql/generated"
 
 export interface TransactionState {
-  data: UserTransactionListQuery["userTransactionList"]
+  data: ProjectTransactionListQuery["projectTransactionList"]
 }
 
 const initialState: TransactionState = {

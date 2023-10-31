@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "@src/components/modules/search-bar";
-import { useProjectSetLazyQuery } from "@src/gql/generated";
 import PlaceCard from "@src/components/modules/place-card";
 import Container from "@src/components/atoms/container";
 import { ScrollView } from "react-native-gesture-handler";
@@ -25,7 +24,7 @@ const SearchScreen: React.FC = () => {
   const { projectSetArguments } = useSelector(
     (state: RootState) => state.projectSlice
   );
-  // const [search, { loading, data, networkStatus, fetchMore }] = useProjectSetLazyQuery({
+  // const [search, { loading, data, networkStatus, fetchMore }] = useProjectListLazyQuery({
   //   notifyOnNetworkStatusChange: true,
   // })
   const { data } = useSelector(

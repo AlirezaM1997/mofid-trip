@@ -1,14 +1,8 @@
-mutation userEdit($data: UserEditInputType) {
+mutation uerGetToken($data: UserEditInputType) {
   userEdit(data: $data) {
-    ... on ResponseWithToken {
-      status
-      statusCode
-      message
-    }
-    ... on ResponseBase {
-      status
-      statusCode
-      message
-    }
+    status
+    statusCode
+    message
+    __typename
   }
 }
