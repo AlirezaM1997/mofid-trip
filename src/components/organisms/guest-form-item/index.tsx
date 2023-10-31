@@ -22,7 +22,6 @@ const GuestFormItem = ({ index }) => {
   const { handleChange, values, errors, setValues } = useFormikContext();
 
   const handleDelete = () => {
-    console.log(index, values.guests, values.guests[index].id);
     const newItems = values.guests.filter(
       (i) => i.id !== values.guests[index].id
     );
