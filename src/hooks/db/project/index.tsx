@@ -11,7 +11,6 @@ import {
   ProjectQueryType,
   useProjectListLazyQuery,
 } from "@src/gql/generated";
-import { string } from "yup";
 import { PAGE_SIZE } from "@src/settings";
 
 type SearchType = {
@@ -45,12 +44,6 @@ const useProjectTable = () => {
       }
     });
   };
-
-  useEffect(() => {
-    if (networkStatus === NetworkStatus.ready && data) {
-      dispatch(setProjectSet(data.projectList));
-    }
-  }, [networkStatus, data]);
 
   const search = ({ search, filter, page }: ProjectListQueryVariables) => {
     if (!projectSet.data) return [];

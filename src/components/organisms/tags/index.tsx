@@ -55,10 +55,11 @@ const Tags = () => {
     )
   }
 
+
   return (
     <View style={style.container}>
       <View style={style.rowContainer}>
-        {data?.tagList?.map((tag, i) => (
+        {data?.tagList.data?.map((tag, i) => (
           <TouchableOpacity key={i} onPress={() => handleClick(tag?.name)} style={style.badgeStyle}>
             <TagIcon tag={tag} />
             <Text>{tag?.displayName}</Text>

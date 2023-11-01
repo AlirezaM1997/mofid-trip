@@ -47,7 +47,7 @@ function PlaceCategoryCard() {
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={style.container}>
       <View style={style.freeSpace}></View>
-      {data.categoryList.map((category, index) => (
+      {data.categoryList.data.map((category, index) => (
         <Pressable key={index} style={style.card} onPress={() => handleChange(category)}>
           <View style={style.images}>
             {category.avatarS3.medium ? (

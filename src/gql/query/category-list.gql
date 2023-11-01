@@ -1,12 +1,16 @@
 query categoryList($search: String) {
   categoryList(search: $search) {
-    id
-    name
-    displayName
-    avatarS3 {
-      large
-      medium
-      small
+    pageCount
+    count
+    data {
+      id
+      name
+      displayName
+      avatarS3 {
+        large
+        medium
+        small
+      }
     }
   }
 }

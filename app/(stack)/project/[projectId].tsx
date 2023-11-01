@@ -12,7 +12,7 @@ import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
 import { ScrollView } from "react-native-gesture-handler";
 import { useProjectDetailQuery } from "@src/gql/generated";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { setProjectDetail } from "@src/slice/project-slice";
 import Slider from "@src/components/modules/slider-project";
@@ -30,7 +30,9 @@ const Page: React.FC = ({ ...props }) => {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const { projectId } = useLocalSearchParams();
-  const { id, name, accommodation, creator, price, capacity } = useSelector((state: RootState) => state.projectSlice?.projectDetail);
+  const { id, name, accommodation, creator, price, capacity } = useSelector(
+    (state: RootState) => state.projectSlice?.projectDetail
+  );
 
   const { loading, data } = useProjectDetailQuery({
     variables: {

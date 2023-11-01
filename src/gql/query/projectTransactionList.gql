@@ -1,40 +1,45 @@
 query projectTransactionList($filter: ProjectTransactionFilterType) {
   projectTransactionList(filter: $filter) {
-    id
-    dateEnd
-    dateStart
-    description
-    invoiceNumber
-    createdDate
-    owner {
+    pageCount
+    count
+    data {
       id
-      lastName
-      firstName
-    }
-    status {
-      step
-      isActive
-    }
-    guestSet {
-      name
-    }
-    project {
       id
-      name
-      tax
-      price
+      dateEnd
+      dateStart
       description
-      facilities {
+      invoiceNumber
+      createdDate
+      owner {
         id
-        enName
+        lastName
+        firstName
       }
-      accommodation {
+      status {
+        step
+        isActive
+      }
+      guestSet {
+        name
+      }
+      project {
         id
-        address
-        lat
-        lng
-        avatarS3 {
-          small
+        name
+        tax
+        price
+        description
+        facilities {
+          id
+          enName
+        }
+        accommodation {
+          id
+          address
+          lat
+          lng
+          avatarS3 {
+            small
+          }
         }
       }
     }

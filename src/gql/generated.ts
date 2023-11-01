@@ -82,6 +82,17 @@ export type AccommodationImageType = {
   small?: Maybe<Scalars['String']['output']>;
 };
 
+/** Type representing a page of AccommodationQueryType objects. */
+export type AccommodationListType = {
+  __typename?: 'AccommodationListType';
+  /** Total count of accommodations. */
+  count?: Maybe<Scalars['Int']['output']>;
+  /** List of accommodation data. */
+  data?: Maybe<Array<Maybe<AccommodationQueryType>>>;
+  /** Number of pages. */
+  pageCount?: Maybe<Scalars['Int']['output']>;
+};
+
 /** An enumeration. */
 export enum AccommodationProjectGenderChoices {
   /** BOTH */
@@ -130,7 +141,7 @@ export type AccommodationQueryType = {
   lng?: Maybe<Scalars['Float']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   projectSet: Array<ProjectQueryType>;
-  user?: Maybe<UserListType>;
+  user?: Maybe<UserQueryType>;
 };
 
 /** An enumeration. */
@@ -143,6 +154,17 @@ export enum AccountSettingLanguageChoices {
   FaIr = 'FA_IR'
 }
 
+/** Represents the backend version information. */
+export type BackendVersion = {
+  __typename?: 'BackendVersion';
+  /** The build number of the backend. */
+  buildNumber?: Maybe<Scalars['String']['output']>;
+  /** The current version of the backend. */
+  currentVersion?: Maybe<Scalars['String']['output']>;
+  /** A generic scalar field to store additional features. */
+  features?: Maybe<Scalars['GenericScalar']['output']>;
+};
+
 /** Type representing banner images in different sizes. */
 export type BannerImageType = {
   __typename?: 'BannerImageType';
@@ -152,6 +174,17 @@ export type BannerImageType = {
   medium?: Maybe<Scalars['String']['output']>;
   /** URL of the small image. */
   small?: Maybe<Scalars['String']['output']>;
+};
+
+/** Type representing a page of BannerQueryType objects. */
+export type BannerListType = {
+  __typename?: 'BannerListType';
+  /** Total count of banners. */
+  count?: Maybe<Scalars['Int']['output']>;
+  /** List of banners data. */
+  data?: Maybe<Array<Maybe<BannerQueryType>>>;
+  /** Number of pages. */
+  pageCount?: Maybe<Scalars['Int']['output']>;
 };
 
 /** Type representing a banner with additional fields. */
@@ -202,6 +235,17 @@ export type CategoryImageType = {
   small?: Maybe<Scalars['String']['output']>;
 };
 
+/** Type representing a page of CategoryQueryType objects. */
+export type CategoryListType = {
+  __typename?: 'CategoryListType';
+  /** Total count of categories. */
+  count?: Maybe<Scalars['Int']['output']>;
+  /** List of category data. */
+  data?: Maybe<Array<Maybe<CategoryQueryType>>>;
+  /** Number of pages. */
+  pageCount?: Maybe<Scalars['Int']['output']>;
+};
+
 /** Type representing a Category model with additional fields. */
 export type CategoryQueryType = {
   __typename?: 'CategoryQueryType';
@@ -228,6 +272,28 @@ export type FacilityQueryType = {
   faName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   projectSet: Array<ProjectQueryType>;
+};
+
+/** Type representing a page of FacilityQueryType objects. */
+export type FaciliyListType = {
+  __typename?: 'FaciliyListType';
+  /** Total count of facilities. */
+  count?: Maybe<Scalars['Int']['output']>;
+  /** List of facilities data. */
+  data?: Maybe<Array<Maybe<FacilityQueryType>>>;
+  /** Number of pages. */
+  pageCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Represents the frontend version information. */
+export type FrontendVersion = {
+  __typename?: 'FrontendVersion';
+  /** The build number of the frontend. */
+  buildNumber?: Maybe<Scalars['String']['output']>;
+  /** The current version of the frontend. */
+  currentVersion?: Maybe<Scalars['String']['output']>;
+  /** A generic scalar field to store additional features. */
+  features?: Maybe<Scalars['GenericScalar']['output']>;
 };
 
 export enum GuestGenderEnum {
@@ -455,9 +521,20 @@ export type NgoInputType = {
   phoneNumber: Scalars['String']['input'];
 };
 
-/** Type representing an NGO with additional fields. */
+/** Type representing a page of NGOQueryType objects. */
 export type NgoListType = {
   __typename?: 'NGOListType';
+  /** Total count of NGO. */
+  count?: Maybe<Scalars['Int']['output']>;
+  /** List of NGO data. */
+  data?: Maybe<Array<Maybe<NgoQueryType>>>;
+  /** Number of pages. */
+  pageCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Type representing an NGO with additional fields. */
+export type NgoQueryType = {
+  __typename?: 'NGOQueryType';
   address?: Maybe<Scalars['String']['output']>;
   /** NGO avatar image. */
   avatarS3?: Maybe<NgoImageType>;
@@ -469,7 +546,7 @@ export type NgoListType = {
   /** List of projects associated with the NGO. */
   projectSet?: Maybe<Array<Maybe<ProjectQueryType>>>;
   tours: Array<TourQueryType>;
-  user?: Maybe<UserListType>;
+  user?: Maybe<UserQueryType>;
 };
 
 /**
@@ -564,8 +641,8 @@ export enum ProjectGenderEnum {
 }
 
 /** Type representing a page of ProjectQueryType objects. */
-export type ProjectPageType = {
-  __typename?: 'ProjectPageType';
+export type ProjectListType = {
+  __typename?: 'ProjectListType';
   /** Total number of projects. */
   count?: Maybe<Scalars['Int']['output']>;
   /** List of projects on the page. */
@@ -586,7 +663,7 @@ export type ProjectQueryType = {
   /** List of categories associated with the project. */
   categories?: Maybe<Array<Maybe<CategoryQueryType>>>;
   createdTime?: Maybe<Scalars['DateTime']['output']>;
-  creator?: Maybe<UserListType>;
+  creator?: Maybe<UserQueryType>;
   dateEnd?: Maybe<Scalars['DateTime']['output']>;
   dateStart?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
@@ -600,12 +677,11 @@ export type ProjectQueryType = {
   price?: Maybe<Scalars['Int']['output']>;
   requestFrom: AccommodationProjectRequestFromChoices;
   status: AccommodationProjectStatusChoices;
-  tags: Array<TagType>;
+  tags: Array<TagQueryType>;
   tax?: Maybe<Scalars['Int']['output']>;
   tours: Array<TourQueryType>;
-  transactionSet: Array<ProjectTransactionQueryType>;
-  /** Type of the project. */
-  type?: Maybe<Scalars['String']['output']>;
+  /** List of transactions associated with the project. */
+  transactionSet?: Maybe<Array<Maybe<ProjectTransactionQueryType>>>;
 };
 
 export enum ProjectRequestFromEnum {
@@ -660,6 +736,17 @@ export type ProjectTransactionFilterType = {
   statusStep?: InputMaybe<TransactionStatusEnum>;
 };
 
+/** Type representing a page of ProjectTransactionQueryType objects. */
+export type ProjectTransactionListType = {
+  __typename?: 'ProjectTransactionListType';
+  /** Total count of project transaction. */
+  count?: Maybe<Scalars['Int']['output']>;
+  /** List of project transaction data. */
+  data?: Maybe<Array<Maybe<ProjectTransactionQueryType>>>;
+  /** Number of pages. */
+  pageCount?: Maybe<Scalars['Int']['output']>;
+};
+
 /** Type representing a Project Transaction model with additional fields. */
 export type ProjectTransactionQueryType = {
   __typename?: 'ProjectTransactionQueryType';
@@ -672,7 +759,7 @@ export type ProjectTransactionQueryType = {
   id: Scalars['ID']['output'];
   invoiceNumber?: Maybe<Scalars['UUID']['output']>;
   modifiedDate?: Maybe<Scalars['DateTime']['output']>;
-  owner?: Maybe<UserListType>;
+  owner?: Maybe<UserQueryType>;
   project?: Maybe<ProjectQueryType>;
   /** Transaction status information. */
   status?: Maybe<StatusQueryType>;
@@ -680,26 +767,28 @@ export type ProjectTransactionQueryType = {
 
 export type Query = {
   __typename?: 'Query';
-  NGODetail?: Maybe<NgoListType>;
-  NGOList?: Maybe<Array<Maybe<NgoListType>>>;
+  NGODetail?: Maybe<NgoQueryType>;
+  NGOList?: Maybe<NgoListType>;
   accommodationDetail?: Maybe<AccommodationQueryType>;
-  accommodationList?: Maybe<Array<Maybe<AccommodationQueryType>>>;
+  accommodationList?: Maybe<AccommodationListType>;
   bannerDetail?: Maybe<BannerQueryType>;
-  bannerList?: Maybe<Array<Maybe<BannerQueryType>>>;
-  categoryList?: Maybe<Array<Maybe<CategoryQueryType>>>;
-  facilityList?: Maybe<Array<Maybe<FacilityQueryType>>>;
+  bannerList?: Maybe<BannerListType>;
+  categoryList?: Maybe<CategoryListType>;
+  facilityList?: Maybe<FaciliyListType>;
   projectDetail?: Maybe<ProjectQueryType>;
-  projectList?: Maybe<ProjectPageType>;
+  projectList?: Maybe<ProjectListType>;
   projectTransactionDetail?: Maybe<ProjectTransactionQueryType>;
-  projectTransactionList?: Maybe<Array<Maybe<ProjectTransactionQueryType>>>;
+  projectTransactionList?: Maybe<ProjectTransactionListType>;
   settingDetail?: Maybe<SettingDetailType>;
-  tagList?: Maybe<Array<Maybe<TagListType>>>;
+  tagList?: Maybe<TagListType>;
   tourDetail?: Maybe<TourQueryType>;
-  tourList?: Maybe<TourPageType>;
+  tourList?: Maybe<TourListType>;
   tourTransactionDetail?: Maybe<TourTransactionQueryType>;
   tourTransactionList?: Maybe<Array<Maybe<TourTransactionQueryType>>>;
-  userDetail?: Maybe<UserListType>;
-  userList?: Maybe<Array<Maybe<UserListType>>>;
+  userDetail?: Maybe<UserQueryType>;
+  userList?: Maybe<UserListType>;
+  /** A GraphQL field containing version information. */
+  version?: Maybe<VersionType>;
 };
 
 
@@ -709,6 +798,7 @@ export type QueryNgoDetailArgs = {
 
 
 export type QueryNgoListArgs = {
+  page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -720,6 +810,7 @@ export type QueryAccommodationDetailArgs = {
 
 export type QueryAccommodationListArgs = {
   filter?: InputMaybe<AccommodationFilterType>;
+  page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -730,16 +821,19 @@ export type QueryBannerDetailArgs = {
 
 
 export type QueryBannerListArgs = {
+  page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type QueryCategoryListArgs = {
+  page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type QueryFacilityListArgs = {
+  page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -763,6 +857,7 @@ export type QueryProjectTransactionDetailArgs = {
 
 export type QueryProjectTransactionListArgs = {
   filter?: InputMaybe<ProjectTransactionFilterType>;
+  page?: InputMaybe<PageType>;
 };
 
 
@@ -772,6 +867,7 @@ export type QuerySettingDetailArgs = {
 
 
 export type QueryTagListArgs = {
+  page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -795,12 +891,18 @@ export type QueryTourTransactionDetailArgs = {
 
 export type QueryTourTransactionListArgs = {
   filter?: InputMaybe<TourTransactionFilterType>;
+  page?: InputMaybe<PageType>;
 };
 
 
 export type QueryUserDetailArgs = {
   dimension?: InputMaybe<Scalars['String']['input']>;
   pk?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryUserListArgs = {
+  page?: InputMaybe<PageType>;
 };
 
 export type Refresh = {
@@ -899,23 +1001,26 @@ export type StatusQueryType = {
   step?: Maybe<Scalars['String']['output']>;
 };
 
-/** Type representing a list of tags with additional fields. */
+/** Type representing a page of TagQueryType objects. */
 export type TagListType = {
   __typename?: 'TagListType';
+  /** Total count of tags. */
+  count?: Maybe<Scalars['Int']['output']>;
+  /** List of tags data. */
+  data?: Maybe<Array<Maybe<TagQueryType>>>;
+  /** Number of pages. */
+  pageCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Type representing a list of tags with additional fields. */
+export type TagQueryType = {
+  __typename?: 'TagQueryType';
   /** Display name of the tag. */
   displayName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   /** Name of the tag. */
   name?: Maybe<Scalars['String']['output']>;
   projectSet: Array<ProjectQueryType>;
-};
-
-/** Type representing a single tag. */
-export type TagType = {
-  __typename?: 'TagType';
-  id: Scalars['ID']['output'];
-  /** Name of the tag. */
-  name?: Maybe<Scalars['String']['output']>;
 };
 
 /** Type representing tour capacity with additional fields. */
@@ -970,8 +1075,8 @@ export type TourImageType = {
 };
 
 /** Type representing a page of tour data. */
-export type TourPageType = {
-  __typename?: 'TourPageType';
+export type TourListType = {
+  __typename?: 'TourListType';
   /** Total count of tours. */
   count?: Maybe<Scalars['Int']['output']>;
   /** List of tour data. */
@@ -991,7 +1096,7 @@ export type TourPriceType = {
 /** Type representing a tour with additional fields. */
 export type TourQueryType = {
   __typename?: 'TourQueryType';
-  NGO: NgoListType;
+  NGO: NgoQueryType;
   /** Tour avatar images in different sizes. */
   avatarS3?: Maybe<Array<Maybe<TourImageType>>>;
   /** Tour capacity information. */
@@ -1067,7 +1172,7 @@ export type TourTransactionQueryType = {
   id: Scalars['ID']['output'];
   invoiceNumber?: Maybe<Scalars['UUID']['output']>;
   modifiedDate?: Maybe<Scalars['DateTime']['output']>;
-  owner?: Maybe<UserListType>;
+  owner?: Maybe<UserQueryType>;
   /** Status information for the transaction. */
   status?: Maybe<TourStatusQueryType>;
   tour?: Maybe<TourQueryType>;
@@ -1121,19 +1226,32 @@ export type UserInputType = {
   phoneNumber: Scalars['String']['input'];
 };
 
-/** Type representing a list of users with additional fields. */
+/** Type representing a page of UserQueryType objects. */
 export type UserListType = {
   __typename?: 'UserListType';
+  /** Total count of user. */
+  count?: Maybe<Scalars['Int']['output']>;
+  /** List of user data. */
+  data?: Maybe<Array<Maybe<UserQueryType>>>;
+  /** Number of pages. */
+  pageCount?: Maybe<Scalars['Int']['output']>;
+};
+
+/** Type representing a list of users with additional fields. */
+export type UserQueryType = {
+  __typename?: 'UserQueryType';
   accommodationSet: Array<AccommodationQueryType>;
   /** User avatar image in different sizes. */
   avatarS3?: Maybe<UserImageType>;
   bio?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
+  /** User fullname. */
+  fullname?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isNgo?: Maybe<Scalars['Boolean']['output']>;
   lastName: Scalars['String']['output'];
-  ngo?: Maybe<NgoListType>;
+  ngo?: Maybe<NgoQueryType>;
   phoneNumber?: Maybe<Scalars['String']['output']>;
   /** List of projects associated with the User. */
   projectSet?: Maybe<Array<Maybe<ProjectQueryType>>>;
@@ -1149,6 +1267,12 @@ export type Verify = {
   __typename?: 'Verify';
   payload: Scalars['GenericScalar']['output'];
 };
+
+/**
+ * Represents a union type for dynamic outputs in mutations.
+ * This union type can hold either BackendVersion or FrontendVersion objects.
+ */
+export type VersionType = BackendVersion | FrontendVersion;
 
 export type CreateLoginMutationVariables = Exact<{
   dataUser?: InputMaybe<UserInputType>;
@@ -1199,21 +1323,28 @@ export type BannerListQueryVariables = Exact<{
 }>;
 
 
-export type BannerListQuery = { __typename?: 'Query', bannerList?: Array<{ __typename?: 'BannerQueryType', id: string, url?: string | null, title: string, avatarS3?: { __typename?: 'BannerImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null };
+export type BannerListQuery = { __typename?: 'Query', bannerList?: { __typename?: 'BannerListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'BannerQueryType', id: string, url?: string | null, title: string, avatarS3?: { __typename?: 'BannerImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null } | null };
 
 export type CategoryListQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type CategoryListQuery = { __typename?: 'Query', categoryList?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null };
+export type CategoryListQuery = { __typename?: 'Query', categoryList?: { __typename?: 'CategoryListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null } | null };
+
+export type NgoDetailQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+}>;
+
+
+export type NgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, name: string, avatarS3?: { __typename?: 'NGOImageType', large?: string | null, medium?: string | null, small?: string | null } | null, user?: { __typename?: 'UserQueryType', id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, dateStart?: any | null, dateEnd?: any | null, gender: AccommodationProjectGenderChoices, requestFrom: AccommodationProjectRequestFromChoices, tax?: number | null, description?: string | null, status: AccommodationProjectStatusChoices, createdTime?: any | null, tours: Array<{ __typename?: 'TourQueryType', id: string, title: string }>, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, female: number, child: number } | null, categories?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null, displayName?: string | null }>, facilities?: Array<{ __typename?: 'FacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null };
 
 export type ProjectDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
 }>;
 
 
-export type ProjectDetailQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, gender: AccommodationProjectGenderChoices, description?: string | null, tags: Array<{ __typename?: 'TagType', id: string, name?: string | null }>, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, child: number, female: number } | null, facilities?: Array<{ __typename?: 'FacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, creator?: { __typename?: 'UserListType', id: string, lastName: string, firstName: string, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, name?: string | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, name?: string | null, address?: string | null, description?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null };
+export type ProjectDetailQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, gender: AccommodationProjectGenderChoices, description?: string | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null }>, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, child: number, female: number } | null, facilities?: Array<{ __typename?: 'FacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, creator?: { __typename?: 'UserQueryType', id: string, lastName: string, firstName: string, phoneNumber?: string | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, name?: string | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, name?: string | null, address?: string | null, description?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null };
 
 export type ProjectListQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
@@ -1222,21 +1353,21 @@ export type ProjectListQueryVariables = Exact<{
 }>;
 
 
-export type ProjectListQuery = { __typename?: 'Query', projectList?: { __typename?: 'ProjectPageType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, tags: Array<{ __typename?: 'TagType', id: string, name?: string | null }>, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null> | null } | null };
+export type ProjectListQuery = { __typename?: 'Query', projectList?: { __typename?: 'ProjectListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null }>, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null> | null } | null };
 
 export type ProjectTransactionDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
 }>;
 
 
-export type ProjectTransactionDetailQuery = { __typename?: 'Query', projectTransactionDetail?: { __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, owner?: { __typename?: 'UserListType', id: string, lastName: string, firstName: string } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, tax?: number | null, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null } | null } | null } | null };
+export type ProjectTransactionDetailQuery = { __typename?: 'Query', projectTransactionDetail?: { __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, owner?: { __typename?: 'UserQueryType', id: string, lastName: string, firstName: string } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, tax?: number | null, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null } | null } | null } | null };
 
 export type ProjectTransactionListQueryVariables = Exact<{
   filter?: InputMaybe<ProjectTransactionFilterType>;
 }>;
 
 
-export type ProjectTransactionListQuery = { __typename?: 'Query', projectTransactionList?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, description?: string | null, invoiceNumber?: any | null, createdDate?: any | null, owner?: { __typename?: 'UserListType', id: string, lastName: string, firstName: string } | null, status?: { __typename?: 'StatusQueryType', step?: string | null, isActive?: boolean | null } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, tax?: number | null, price?: number | null, description?: string | null, facilities?: Array<{ __typename?: 'FacilityQueryType', id: string, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null } | null> | null };
+export type ProjectTransactionListQuery = { __typename?: 'Query', projectTransactionList?: { __typename?: 'ProjectTransactionListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, description?: string | null, invoiceNumber?: any | null, createdDate?: any | null, owner?: { __typename?: 'UserQueryType', id: string, lastName: string, firstName: string } | null, status?: { __typename?: 'StatusQueryType', step?: string | null, isActive?: boolean | null } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, tax?: number | null, price?: number | null, description?: string | null, facilities?: Array<{ __typename?: 'FacilityQueryType', id: string, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null } | null> | null } | null };
 
 export type SettingDetailQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -1250,7 +1381,7 @@ export type TagListQueryVariables = Exact<{
 }>;
 
 
-export type TagListQuery = { __typename?: 'Query', tagList?: Array<{ __typename?: 'TagListType', id: string, name?: string | null, displayName?: string | null } | null> | null };
+export type TagListQuery = { __typename?: 'Query', tagList?: { __typename?: 'TagListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null, displayName?: string | null } | null> | null } | null };
 
 export type TourListQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
@@ -1259,12 +1390,12 @@ export type TourListQueryVariables = Exact<{
 }>;
 
 
-export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourPageType', data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, shortDescription: string, startTime: any, endTime: any, facilities?: Array<{ __typename?: 'TourFacilityType', id: string, enName?: string | null } | null> | null, price?: Array<{ __typename?: 'TourPriceType', title: string, price: number } | null> | null, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
+export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, shortDescription: string, startTime: any, endTime: any, facilities?: Array<{ __typename?: 'TourFacilityType', id: string, enName?: string | null } | null> | null, price?: Array<{ __typename?: 'TourPriceType', title: string, price: number } | null> | null, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserListType', id: string, username: string, firstName: string, lastName: string, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOListType', id: string } | null } | null };
+export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, username: string, firstName: string, lastName: string, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null };
 
 
 export const CreateLoginDocument = gql`
@@ -1502,13 +1633,17 @@ export type UerGetTokenMutationOptions = Apollo.BaseMutationOptions<UerGetTokenM
 export const BannerListDocument = gql`
     query bannerList($search: String) {
   bannerList(search: $search) {
-    id
-    url
-    title
-    avatarS3 {
-      large
-      medium
-      small
+    pageCount
+    count
+    data {
+      id
+      url
+      title
+      avatarS3 {
+        large
+        medium
+        small
+      }
     }
   }
 }
@@ -1544,13 +1679,17 @@ export type BannerListQueryResult = Apollo.QueryResult<BannerListQuery, BannerLi
 export const CategoryListDocument = gql`
     query categoryList($search: String) {
   categoryList(search: $search) {
-    id
-    name
-    displayName
-    avatarS3 {
-      large
-      medium
-      small
+    pageCount
+    count
+    data {
+      id
+      name
+      displayName
+      avatarS3 {
+        large
+        medium
+        small
+      }
     }
   }
 }
@@ -1583,6 +1722,107 @@ export function useCategoryListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type CategoryListQueryHookResult = ReturnType<typeof useCategoryListQuery>;
 export type CategoryListLazyQueryHookResult = ReturnType<typeof useCategoryListLazyQuery>;
 export type CategoryListQueryResult = Apollo.QueryResult<CategoryListQuery, CategoryListQueryVariables>;
+export const NgoDetailDocument = gql`
+    query NGODetail($pk: ID!) {
+  NGODetail(pk: $pk) {
+    id
+    name
+    avatarS3 {
+      large
+      medium
+      small
+    }
+    user {
+      id
+      avatarS3 {
+        large
+        medium
+        small
+      }
+    }
+    projectSet {
+      id
+      name
+      price
+      dateStart
+      dateEnd
+      gender
+      requestFrom
+      tax
+      description
+      status
+      createdTime
+      tours {
+        id
+        title
+      }
+      capacity {
+        id
+        male
+        female
+        child
+      }
+      categories {
+        id
+        name
+        displayName
+        avatarS3 {
+          large
+          medium
+          small
+        }
+      }
+      tags {
+        id
+        name
+        displayName
+      }
+      facilities {
+        id
+        faName
+        enName
+        arName
+      }
+      accommodation {
+        id
+        avatarS3 {
+          large
+          medium
+          small
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useNgoDetailQuery__
+ *
+ * To run a query within a React component, call `useNgoDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNgoDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNgoDetailQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useNgoDetailQuery(baseOptions: Apollo.QueryHookOptions<NgoDetailQuery, NgoDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NgoDetailQuery, NgoDetailQueryVariables>(NgoDetailDocument, options);
+      }
+export function useNgoDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NgoDetailQuery, NgoDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NgoDetailQuery, NgoDetailQueryVariables>(NgoDetailDocument, options);
+        }
+export type NgoDetailQueryHookResult = ReturnType<typeof useNgoDetailQuery>;
+export type NgoDetailLazyQueryHookResult = ReturnType<typeof useNgoDetailLazyQuery>;
+export type NgoDetailQueryResult = Apollo.QueryResult<NgoDetailQuery, NgoDetailQueryVariables>;
 export const ProjectDetailDocument = gql`
     query projectDetail($pk: ID!) {
   projectDetail(pk: $pk) {
@@ -1612,6 +1852,9 @@ export const ProjectDetailDocument = gql`
       lastName
       firstName
       phoneNumber
+      ngo {
+        id
+      }
       avatarS3 {
         small
       }
@@ -1787,41 +2030,46 @@ export type ProjectTransactionDetailQueryResult = Apollo.QueryResult<ProjectTran
 export const ProjectTransactionListDocument = gql`
     query projectTransactionList($filter: ProjectTransactionFilterType) {
   projectTransactionList(filter: $filter) {
-    id
-    dateEnd
-    dateStart
-    description
-    invoiceNumber
-    createdDate
-    owner {
+    pageCount
+    count
+    data {
       id
-      lastName
-      firstName
-    }
-    status {
-      step
-      isActive
-    }
-    guestSet {
-      name
-    }
-    project {
       id
-      name
-      tax
-      price
+      dateEnd
+      dateStart
       description
-      facilities {
+      invoiceNumber
+      createdDate
+      owner {
         id
-        enName
+        lastName
+        firstName
       }
-      accommodation {
+      status {
+        step
+        isActive
+      }
+      guestSet {
+        name
+      }
+      project {
         id
-        address
-        lat
-        lng
-        avatarS3 {
-          small
+        name
+        tax
+        price
+        description
+        facilities {
+          id
+          enName
+        }
+        accommodation {
+          id
+          address
+          lat
+          lng
+          avatarS3 {
+            small
+          }
         }
       }
     }
@@ -1894,9 +2142,13 @@ export type SettingDetailQueryResult = Apollo.QueryResult<SettingDetailQuery, Se
 export const TagListDocument = gql`
     query TagList($search: String) {
   tagList(search: $search) {
-    id
-    name
-    displayName
+    pageCount
+    count
+    data {
+      id
+      name
+      displayName
+    }
   }
 }
     `;

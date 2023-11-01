@@ -1,7 +1,11 @@
 query TagList($search: String) {
   tagList(search: $search) {
-    id
-    name
-    displayName
+    pageCount
+    count
+    data {
+      id
+      name
+      displayName
+    }
   }
 }
