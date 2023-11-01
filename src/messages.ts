@@ -817,4 +817,41 @@ export const messages = {
     fa_ir: "مشاهده",
     en_us: "Review",
   },
+  account: {
+    ar: "حساب",
+    fa_ir: "حساب کاربری",
+    en_us: "Account",
+  },
+  'create tour': {
+    ar: "إنشاء جولة",
+    fa_ir: "ایجاد تور",
+    en_us: "Create Tour",
+  },
+  'manage my tours': {
+    ar: "إدارة جولاتي",
+    fa_ir: "مدیریت تور های من",
+    en_us: "Manage My Tours",
+  },
+  'my tours requests': {
+    ar: "طلبات جولاتي",
+    fa_ir: "درخواست به تور های من",
+    en_us: "My Tours Requests",
+  },
+  'my requests': {
+    ar: "طلباتي",
+    fa_ir: "درخواست های من",
+    en_us: "My Requests",
+  },
+  'managements': {
+    ar: "إدارة",
+    fa_ir: "مدیریت ها",
+    en_us: "Managements",
+  },
+  'requests': {
+    ar: "طلبات",
+    fa_ir: "درخواست ها",
+    en_us: "Requests",
+  },
+  
+  
 }
