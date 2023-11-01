@@ -1,75 +1,55 @@
-import React, { useState } from "react"
-import { StyleSheet, View } from "react-native"
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "@src/store"
-import Container from "@src/components/atoms/container"
-import useTranslation from "@src/hooks/translation"
-import { Field, useFormikContext } from "formik"
-import FieldDate from "@src/components/modules/formik/fields/date"
-import WhiteSpace from "@atoms/white-space"
+import React, { useRef } from "react";
+import { StyleSheet, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@src/store";
+import GuestFormItem from "@src/components/organisms/guest-form-item";
+import { Button, Divider } from "@rneui/themed";
+import { defaultGuest, setData } from "@src/slice/transaction-slice";
+import WhiteSpace from "@src/components/atoms/white-space";
+import Container from "@src/components/atoms/container";
+import useTranslation from "@src/hooks/translation";
+import { useFormikContext } from "formik";
 
-const BookFormStep1 = () => {
-  const { tr } = useTranslation()
-  const dispatch = useDispatch()
-  const { data } = useSelector((state: RootState) => state.transactionSlice)
-  const [isDatePickerVisible, setDatePickerVisible] = useState(false)
-  const [activeInput, setActiveInput] = useState(null)
+const BookFormStep2 = () => {
+  const { tr } = useTranslation();
+  // TODO: remove this line and all dependencies
+  // const { data } = useSelector((state: RootState) => state.transactionSlice);
+  const { values, setValues } = useFormikContext();
+  const lastGuestId = useRef(2);
 
-  const { handleChange, errors, values, setFieldTouched, setFieldValue } = useFormikContext()
-
-  // const handleChange = (e, dateTime) => {
-  //   if (e.type === "set") {
-  //     if (activeInput === "checkin") {
-  //       dispatch(
-  //         setData({
-  //           ...data,
-  //           dateStart: dayjs(new Date(dateTime)).format("YYYY-MM-DD"),
-  //         })
-  //       )
-  //     } else {
-  //       dispatch(
-  //         setData({
-  //           ...data,
-  //           dateEnd: dayjs(new Date(dateTime)).format("YYYY-MM-DD"),
-  //         })
-  //       )
-  //     }
-  //   }
-  //   setActiveInput("")
-  // }
-
-  // const handleDateChangeForWeb = (e, type) => {
-  //   if (type === "checkin") {
-  //     dispatch(
-  //       setData({
-  //         ...data,
-  //         dateStart: e.target.value,
-  //       })
-  //     )
-  //   } else {
-  //     dispatch(
-  //       setData({
-  //         ...data,
-  //         dateEnd: e.target.value,
-  //       })
-  //     )
-  //   }
-  // }
+  const handleAddGuest = () => {
+    setValues({
+      ...values,
+      guests: [...values.guests, { id: lastGuestId.current, ...defaultGuest }],
+    });
+    lastGuestId.current = lastGuestId.current + 1;
+  };
 
   return (
-    <View style={style.root}>
-      <WhiteSpace size={10} />
+    <View style={style.container}>
+      {values?.guests.map((g, index) => (
+        <GuestFormItem key={index + "g"} index={index} />
+      ))}
       <Container>
-        <Field component={FieldDate} name="dateStart" label={tr('check-in')} errorMessage={errors.dateStart} />
-        <Field component={FieldDate} name="dateEnd" label={tr('check-out')} errorMessage={errors.dateEnd} />
+        <Button color="secondary" size="lg" onPress={handleAddGuest}>
+          {tr("Add Guest")}
+        </Button>
       </Container>
+      <WhiteSpace size={80} />
     </View>
-  )
-}
+  );
+};
 
 const style = StyleSheet.create({
-  containerStyle: { flex: 1 },
-  root: { flex: 1 },
-})
+  container: { marginBottom: 50, flex: 1 },
+  row: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 12,
+  },
+  btn: {
+    flex: 1,
+  },
+});
 
-export default BookFormStep1
+export default BookFormStep2;

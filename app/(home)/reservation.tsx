@@ -57,7 +57,7 @@ const Page = () => {
   return (
     <ScrollView
       contentContainerStyle={
-        data?.projectTransactionList?.length === 0
+        data?.projectTransactionList?.data?.length === 0
           ? {
               flex: 1,
             }
@@ -66,8 +66,8 @@ const Page = () => {
       refreshControl={
         <RefreshControl refreshing={networkStatus !== NetworkStatus.ready} onRefresh={onRefresh} />
       }>
-      {data?.projectTransactionList?.length === 0 && <NoResult />}
-      {data?.projectTransactionList?.map((transaction, index) => (
+      {data?.projectTransactionList?.data?.length === 0 && <NoResult />}
+      {data?.projectTransactionList?.data?.map((transaction, index) => (
         <Container key={transaction.id}>
           <ReservationCard transaction={transaction as ProjectTransactionQueryType} index={index} />
         </Container>

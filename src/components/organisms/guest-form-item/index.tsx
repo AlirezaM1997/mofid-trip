@@ -12,44 +12,46 @@ import { Feather } from "@expo/vector-icons";
 
 import * as ImagePicker from "expo-image-picker";
 import useTranslation from "@src/hooks/translation";
-import { useFormikContext } from "formik";
-import { GuestGender } from "@src/gql/generated";
+import { useFormikContext, getIn } from "formik";
+import { GuestGenderEnum } from "@src/gql/generated";
 
 const GuestFormItem = ({ index }) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const { data } = useSelector((state: RootState) => state.transactionSlice);
-  const { handleChange, values, errors, setValues } = useFormikContext();
+  const { handleChange, values, errors, setValues, handleBlur, setFieldTouched, touched } = useFormikContext();
 
   const handleDelete = () => {
-    const newItems = values.guests.filter(
-      (i) => i.id !== values.guests[index].id
-    );
+    const newItems = values.guests.filter(i => i.id !== values.guests[index].id);
     setValues({
       ...data,
       guests: newItems,
     });
   };
 
-  const handleUploadImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1,
-      base64: true,
-    });
+  // const handleUploadImage = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 4],
+  //     quality: 1,
+  //     base64: true,
+  //   });
 
-    if (!result.canceled) {
-      if (result.assets[0].base64.length < 2047892) {
-        handleChange(`guests[${index}].identifyPicture`)(
-          `data:image/jpg;base64,${result.assets[0].base64}`
-        );
-      } else {
-        alert("invalid file size");
-      }
-    }
-  };
+  //   if (!result.canceled) {
+  //     if (result.assets[0].base64.length < 2047892) {
+  //       handleChange(`guests[${index}].identifyPicture`)(
+  //         `data:image/jpg;base64,${result.assets[0].base64}`
+  //       );
+  //     } else {
+  //       alert("invalid file size");
+  //     }
+  //   }
+  // };
+
+  useEffect(() => {
+    console.log(values)
+  }, [values])
 
   return (
     <>
@@ -57,11 +59,9 @@ const GuestFormItem = ({ index }) => {
         style={[
           style.container,
           {
-            backgroundColor:
-              index % 2 ? theme.colors.white : theme.colors.grey0,
+            backgroundColor: index % 2 ? theme.colors.grey0 : theme.colors.white,
           },
-        ]}
-      >
+        ]}>
         <Container>
           <WhiteSpace size={10} />
           <Text variant="body1">
@@ -70,58 +70,34 @@ const GuestFormItem = ({ index }) => {
           <WhiteSpace size={10} />
 
           <Input
+            name={`guests[${index}].name`}
             placeholder={tr("Name")}
-            onChangeText={(text) => {
-              if (values.guests[index]) {
-                handleChange(`guests[${index}].name`)(text);
-              }
-            }}
-            value={values.guests[index]?.name || ""}
-            errorMessage={
-              errors.guests &&
-              errors.guests[index] &&
-              errors.guests[index]?.name
-            }
+            onChangeText={handleChange(`guests[${index}].name`)}
+            onBlur={e => handleBlur(`guests[${index}].name`)}
+            value={values?.guests?.[index]?.name || ""}
+            errorMessage={errors?.guests?.[index]?.name}
           />
 
-          <Input
-            placeholder={tr("Passport Number")}
-            onChangeText={(text) => {
-              if (values.guests[index]) {
-                handleChange(`guests[${index}].identifyNumber`)(text);
-              }
-            }}
-            value={values.guests[index]?.identifyNumber || ""}
-            errorMessage={
-              data.guests[index]?.identifyNumber &&
-              !isValidPassportNo(data.guests[index]?.identifyNumber)
-                ? tr("Invalid Passport Number")
-                : ""
-            }
-          />
+          {console.log("pp", index, errors?.guests?.[index]?.name)}
 
           <View style={style.checkboxContainer}>
             <CheckBox
               containerStyle={style.checkboxContainerStyle}
               textStyle={style.textStyle}
               title={tr("Male")}
-              checked={values.guests[index]?.gender === GuestGender.Male}
-              onPress={() =>
-                handleChange(`guests.${index}.gender`)(GuestGender.Male)
-              }
+              checked={values?.guests?.[index]?.gender === GuestGenderEnum.Male}
+              onPress={() => handleChange(`guests.${index}.gender`)(GuestGenderEnum.Male)}
             />
             <CheckBox
               containerStyle={style.checkboxContainerStyle}
               textStyle={style.textStyle}
               title={tr("Female")}
-              checked={values.guests[index]?.gender === GuestGender.Female}
-              onPress={() =>
-                handleChange(`guests.${index}.gender`)(GuestGender.Female)
-              }
+              checked={values?.guests?.[index]?.gender === GuestGenderEnum.Female}
+              onPress={() => handleChange(`guests.${index}.gender`)(GuestGenderEnum.Female)}
             />
           </View>
 
-          <Pressable style={style.imagePicker} onPress={handleUploadImage}>
+          {/* <Pressable style={style.imagePicker} onPress={handleUploadImage}>
             {values.guests[index]?.identifyPicture ? (
               <Image
                 style={style.imageStyle}
@@ -133,7 +109,7 @@ const GuestFormItem = ({ index }) => {
                 <Text style={style.uploadText}>{tr("Upload")}</Text>
               </>
             )}
-          </Pressable>
+          </Pressable> */}
 
           <Button type="clear" color="secondary" onPress={handleDelete}>
             {tr("Delete Guest")}
@@ -164,17 +140,6 @@ const style = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  },
-  uploadText: {
-    color: "#ccc",
-  },
-  imageStyle: {
-    width: "100%",
-    height: 196,
-    resizeMode: "cover",
-    borderWidth: 1,
-    borderColor: "transparent",
-    borderRadius: 12,
   },
 });
 

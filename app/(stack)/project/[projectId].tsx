@@ -49,7 +49,7 @@ const Page: React.FC = ({ ...props }) => {
       });
       return;
     }
-    router.push(`/book-accommodation/${id}`);
+    router.push(`/book-accommodation/${id}/step-1`);
   };
 
   useEffect(() => {

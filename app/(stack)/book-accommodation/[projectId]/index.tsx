@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { BackHandler, View, StyleSheet } from "react-native";
 import { Button, Divider, useTheme } from "@rneui/themed";
 import Text from "@src/components/atoms/text";
-import BookFormStep3 from "@src/components/organisms/book-form/step3";
-import BookFormStep2 from "@src/components/organisms/book-form/step2";
-import BookFormStep1 from "@src/components/organisms/book-form/step1";
+import BookFormStep3 from "@organisms/book-form/step2";
+import BookFormStep1 from "@organisms/book-form/step1";
 import Container from "@src/components/atoms/container";
 import useTranslation from "@src/hooks/translation";
 import WhiteSpace from "@src/components/atoms/white-space";
@@ -13,7 +12,7 @@ import { RootState } from "@src/store";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import moment from "moment";
-import { useUserTransactionAddMutation } from "@src/gql/generated";
+import { useProjectTransactionAddMutation } from "@src/gql/generated";
 import { router, useLocalSearchParams } from "expo-router";
 import { Platform } from "react-native";
 import { useIsAuthenticated } from "@src/hooks/user";
@@ -28,7 +27,7 @@ const BookAccommodation = () => {
     (state: RootState) => state.projectSlice.projectDetail
   );
   const { data } = useSelector((state: RootState) => state.transactionSlice);
-  const [submit, {}] = useUserTransactionAddMutation();
+  const [submit, {}] = useProjectTransactionAddMutation();
 
   useEffect(() => {
     const handler = BackHandler.addEventListener("hardwareBackPress", () => {

@@ -1,10 +1,10 @@
 import dayjs from "dayjs"
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
-import { GuestGender, TransactionAddInputType } from "@src/gql/generated"
+import { TourTransactionAddInputType } from "@src/gql/generated"
 
 export interface TransactionState {
-  data: TransactionAddInputType
+  data: TourTransactionAddInputType
 }
 
 export const defaultGuest = {
@@ -24,7 +24,7 @@ const initialState: TransactionState = {
     dateStart: dayjs().format("YYYY-MM-DD"),
     dateEnd: dayjs().format("YYYY-MM-DD"),
     description: "",
-    guests: [{ ...defaultGuest, id: 1 }],
+    guests: [{ ...defaultGuest, id: 1 }, { ...defaultGuest, id: 2 }],
   },
 }
 

@@ -747,11 +747,14 @@ export const messages = {
     fa_ir: "بیایید شروع کنیم و برای رزرو اربعین وارد شوید",
     en_us: "Let's Start And Login To Mofidtrip",
   },
-  "to reserve the places and use the application, you must log in or register in the first step, otherwise you will not be able to do any activity.": {
-    ar: "لحجز القصور واستخدام التطبيق يجب عليك تسجيل الدخول أو التسجيل في الخطوة الأولى، وإلا فلن تتمكن من القيام بأي نشاط.",
-    fa_ir: "برای رزرو کاخ ها و استفاده از اپلیکیشن باید در مرحله اول وارد شوید یا ثبت نام کنید در غیر این صورت هیچ فعالیتی نمی توانید انجام دهید.",
-    en_us: "To Reserve The Places And Use The Application, You Must Log In Or Register In The First Step, Otherwise You Will Not Be Able To Do Any Activity.",
-  },
+  "to reserve the places and use the application, you must log in or register in the first step, otherwise you will not be able to do any activity.":
+    {
+      ar: "لحجز القصور واستخدام التطبيق يجب عليك تسجيل الدخول أو التسجيل في الخطوة الأولى، وإلا فلن تتمكن من القيام بأي نشاط.",
+      fa_ir:
+        "برای رزرو کاخ ها و استفاده از اپلیکیشن باید در مرحله اول وارد شوید یا ثبت نام کنید در غیر این صورت هیچ فعالیتی نمی توانید انجام دهید.",
+      en_us:
+        "To Reserve The Places And Use The Application, You Must Log In Or Register In The First Step, Otherwise You Will Not Be Able To Do Any Activity.",
+    },
   Login: {
     ar: "تسجيل الدخول",
     fa_ir: "وارد شدن",
@@ -770,7 +773,8 @@ export const messages = {
   "you can contact the owner of the place through the following social networks or directly": {
     ar: "يمكنكم التواصل مع صاحب القصر عبر شبكات التواصل الاجتماعي التالية أو مباشرة",
     fa_ir: "می توانید از طریق شبکه های اجتماعی زیر و یا مستقیما با صاحب اقامتگاه تماس بگیرید",
-    en_us: "You can contact the owner of the place through the following social networks or directly",
+    en_us:
+      "You can contact the owner of the place through the following social networks or directly",
   },
   whatsapp: {
     ar: "واتس اب",
@@ -822,36 +826,50 @@ export const messages = {
     fa_ir: "حساب کاربری",
     en_us: "Account",
   },
-  'create tour': {
+  "create tour": {
     ar: "إنشاء جولة",
     fa_ir: "ایجاد تور",
     en_us: "Create Tour",
   },
-  'manage my tours': {
+  "manage my tours": {
     ar: "إدارة جولاتي",
     fa_ir: "مدیریت تور های من",
     en_us: "Manage My Tours",
   },
-  'my tours requests': {
+  "my tours requests": {
     ar: "طلبات جولاتي",
     fa_ir: "درخواست به تور های من",
     en_us: "My Tours Requests",
   },
-  'my requests': {
+  "my requests": {
     ar: "طلباتي",
     fa_ir: "درخواست های من",
     en_us: "My Requests",
   },
-  'managements': {
+  managements: {
     ar: "إدارة",
     fa_ir: "مدیریت ها",
     en_us: "Managements",
   },
-  'requests': {
+  requests: {
     ar: "طلبات",
     fa_ir: "درخواست ها",
     en_us: "Requests",
   },
+  "tours and my travels": {
+    ar: "جولاتي وأسفاري",
+    fa_ir: "تور ها و سفر های من",
+    en_us: "Tours and my travels",
+  },
+  "passengers info": {
+    ar: "معلومات الركاب",
+    fa_ir: "اطلاعات مسافران",
+    en_us: "Passengers Info",
+  },
+  "to request and reserve the tour, enter your details and those of your accompanying passengers.": {
+    ar: "لطلب الجولة وحجزها، أدخل بياناتك وبيانات الركاب المرافقين لك.",
+    fa_ir: "برای درخواست و رزرو اولیه تور، مشخصات خودتان  و مسافران همراهتان را وارد کنید.",
+    en_us: "To request and reserve the tour, enter your details and those of your accompanying passengers.",
+  },
   
-  
-}
+};
