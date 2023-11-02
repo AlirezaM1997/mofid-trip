@@ -1,7 +1,11 @@
-query TagList($search: String) {
-  tagList(search: $search) {
-    id
-    name
-    displayName
+query TagList($search: String, $page: PageType) {
+  tagList(search: $search, page: $page) {
+    count
+    pageCount
+    data {
+      id
+      name
+      displayName
+    }
   }
 }

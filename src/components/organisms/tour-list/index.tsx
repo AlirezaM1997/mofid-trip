@@ -9,10 +9,11 @@ import { ScrollView, View, StyleSheet } from "react-native";
 
 function TourList() {
   const [list, setList] = useState<TourQueryType[]>();
-  const { search } = useTourTable();
+  const { syncTable, search } = useTourTable();
   const { tr } = useTranslation();
 
   useEffect(() => {
+    syncTable({page:{}})
     const res = search({ page: {} });
     setList(res);
   }, []);

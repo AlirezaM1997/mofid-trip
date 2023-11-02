@@ -9,10 +9,11 @@ import { ScrollView, View, StyleSheet } from "react-native";
 
 function HostList() {
   const [list, setList] = useState<ProjectQueryType[]>();
-  const { search } = useProjectTable();
+  const { search, syncTable } = useProjectTable();
   const { tr } = useTranslation();
 
   useEffect(() => {
+    syncTable({ page: {} })
     const res = search({ page: {} });
     setList(res);
   }, []);
