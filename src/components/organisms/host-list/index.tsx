@@ -13,8 +13,18 @@ function HostList() {
   const { tr } = useTranslation();
 
   useEffect(() => {
-    syncTable({ page: {} })
-    const res = search({ page: {} });
+    syncTable({
+      page: {
+        pageNumber: 1,
+        pageSize: 10,
+      },
+    });
+    const res = search({
+      page: {
+        pageNumber: 1,
+        pageSize: 10,
+      },
+    });
     setList(res);
   }, []);
 
@@ -54,7 +64,7 @@ const style = StyleSheet.create({
     display: "flex",
     marginBottom: 30,
     flexDirection: "row",
-    paddingHorizontal: 3,
+    paddingHorizontal: 24,
   },
 });
 

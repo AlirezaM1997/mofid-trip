@@ -14,7 +14,6 @@ const useTourTable = () => {
   const { tourList } = useSelector((state: RootState) => state.tourSlice);
   const [networkStatus, setNetworkStatus] = useState<NetworkStatus | undefined>();
   const [data, setData] = useState<TourListQuery | undefined>();
-  console.log(tourList);
 
   const [fetchTourSet, { networkStatus: queryNetworkStatus }] = useTourListLazyQuery({
     notifyOnNetworkStatusChange: false,
@@ -28,9 +27,9 @@ const useTourTable = () => {
   const syncTable = (variables: TourListQueryVariables) => {
     NetInfo.fetch().then(({ isConnected }) => {
       if (isConnected) {
-        fetchTourSet({ variables: variables }).then(({ data }) =>
-          dispatch(setTourList(data.tourList))
-        );
+        fetchTourSet({ variables: variables }).then(({ data }) => {
+          if (data) dispatch(setTourList(data.tourList));
+        });
       }
     });
   };

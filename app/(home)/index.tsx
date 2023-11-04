@@ -2,7 +2,7 @@ import { Divider } from "@rneui/themed";
 import TourList from "@organisms/tour-list";
 import HostList from "@organisms/host-list";
 import { SetStateAction, useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import Container from "@src/components/atoms/container";
 import Banner from "@src/components/atoms/banner/banner";
 import SearchBar from "@src/components/modules/search-bar";
@@ -21,10 +21,15 @@ export default function Index() {
       <ScrollView>
         <Container style={style.container}>
           <Banner name="home-1" />
-          <TourList />
-          <Banner name="home-2" />
-          <HostList />
         </Container>
+
+        <TourList />
+
+        <Container style={style.container}>
+          <Banner name="home-2" />
+        </Container>
+
+        <HostList />
       </ScrollView>
     </>
   );

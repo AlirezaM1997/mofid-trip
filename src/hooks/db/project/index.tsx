@@ -31,9 +31,9 @@ const useProjectTable = () => {
   const syncTable = (variables: ProjectListQueryVariables) => {
     NetInfo.fetch().then(({ isConnected }) => {
       if (isConnected) {
-        fetchProjectSet({ variables: variables }).then(({ data }) =>
-          dispatch(setProjectSet(data.projectList))
-        );
+        fetchProjectSet({ variables: variables }).then(({ data }) => {
+          if (data) dispatch(setProjectSet(data.projectList));
+        });
       }
     });
   };

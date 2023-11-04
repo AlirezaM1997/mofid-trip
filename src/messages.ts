@@ -401,6 +401,11 @@ export const messages = {
     fa_ir: "میزبانی های موجود",
     en_us: "Available hosts",
   },
+  "available tours": {
+    ar: "الجولات المتاحة",
+    fa_ir: "تورهای موجود",
+    en_us: "Available tours",
+  },
   yes: {
     ar: "نعم",
     fa_ir: "بله",

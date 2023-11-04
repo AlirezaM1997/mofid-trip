@@ -13,15 +13,25 @@ function TourList() {
   const { tr } = useTranslation();
 
   useEffect(() => {
-    syncTable({page:{}})
-    const res = search({ page: {} });
+    syncTable({
+      page: {
+        pageNumber: 1,
+        pageSize: 10,
+      },
+    });
+    const res = search({
+      page: {
+        pageNumber: 1,
+        pageSize: 10,
+      },
+    });
     setList(res);
   }, []);
 
   return (
     <>
       <TitleWithAction
-        title={tr("Available hosts")}
+        title={tr("available tours")}
         actionTitle={tr("See All")}
         onActionPress={() => router.push("/search")}
       />
@@ -38,8 +48,8 @@ function TourList() {
               id={tour.id}
               name={tour.title}
               price={tour.price[0].price}
-              address={tour.projects.accommodation.address}
-              avatarS3={tour.projects.accommodation.avatarS3}
+              address={tour.projects[0].accommodation.address}
+              avatarS3={tour.projects[0].accommodation.avatarS3}
             />
           </View>
         ))}
@@ -54,7 +64,7 @@ const style = StyleSheet.create({
     display: "flex",
     marginBottom: 30,
     flexDirection: "row",
-    paddingHorizontal: 3,
+    paddingHorizontal: 24,
   },
 });
 
