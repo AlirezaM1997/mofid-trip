@@ -63,7 +63,14 @@ const SearchScreen: React.FC = () => {
         ) : (
           <Container size={25} style={styles.resultContainer}>
             {list?.map((project, index) => (
-              <PlaceCard key={index} project={project} />
+              <PlaceCard
+                key={index}
+                id={project.id}
+                name={project.name}
+                price={project.price}
+                address={project.accommodation.address}
+                avatarS3={project.accommodation.avatarS3}
+              />
             ))}
             {list?.length ? (
               <Button type="outline" onPress={() => setPageNumber(pageNumber + 1)}>
