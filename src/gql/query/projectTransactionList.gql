@@ -1,9 +1,8 @@
-query projectTransactionList($filter: ProjectTransactionFilterType) {
-  projectTransactionList(filter: $filter) {
-    pageCount
+query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterType) {
+  projectTransactionList(page: $page, filter: $filter) {
     count
+    pageCount
     data {
-      id
       id
       dateEnd
       dateStart

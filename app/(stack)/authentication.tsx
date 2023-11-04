@@ -14,7 +14,7 @@ const Authentication = () => {
   const { tr } = useTranslation();
   const dispatch = useDispatch();
   const isAuthenticated = useIsAuthenticated();
-  const { protectedScreen } = useLocalSearchParams()
+  const { protectedScreen } = useLocalSearchParams();
 
   const handleLogin = (address: string) => router.push(address);
 
@@ -23,20 +23,34 @@ const Authentication = () => {
   }
   return (
     <View style={style.container}>
-      <ImageBackground style={style.imageBackground2} source={require("@assets/image/user-with-phone.jpg")} />
+      <ImageBackground
+        style={style.imageBackground2}
+        source={require("@assets/image/user-with-phone.jpg")}
+      />
       <WhiteSpace size={10} />
       <Text variant="heading1" style={{ textAlign: "center" }}>
         {tr("let's start and login to mofid trip")}
       </Text>
       <Text variant="body2" style={{ textAlign: "center" }}>
-        {tr("To reserve the places and use the application, you must log in or register in the first step, otherwise you will not be able to do any activity.")}
+        {tr(
+          "To reserve the places and use the application, you must log in or register in the first step, otherwise you will not be able to do any activity."
+        )}
       </Text>
       <WhiteSpace size={10} />
       <View style={style.buttonContainer}>
-        <Button size="lg" color="secondary" containerStyle={style.buttonItem} onPress={() => handleLogin("login")}>
+        <Button
+          size="lg"
+          color="secondary"
+          containerStyle={style.buttonItem}
+          onPress={() => handleLogin("login")}>
           {tr("Login")}
         </Button>
-        <Button size="lg" color="secondary" type="outline" containerStyle={[style.buttonItem]} onPress={() => handleLogin("register")}>
+        <Button
+          size="lg"
+          color="secondary"
+          type="outline"
+          containerStyle={[style.buttonItem]}
+          onPress={() => handleLogin("login")}>
           {tr("Register")}
         </Button>
       </View>

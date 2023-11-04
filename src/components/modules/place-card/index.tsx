@@ -1,34 +1,38 @@
+import React from "react";
+import { router } from "expo-router";
+import { Divider } from "@rneui/themed";
 import Text from "@src/components/atoms/text";
+import useIsRtl from "@src/hooks/localization";
+import useTranslation from "@src/hooks/translation";
 import { ProjectQueryType } from "@src/gql/generated";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
-import React from "react";
-import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native";
-import { Divider } from "@rneui/themed";
 import TruncatedText from "@src/components/atoms/text/truncatedText";
-import useTranslation from "@src/hooks/translation";
-import useIsRtl from "@src/hooks/localization";
-import { router } from "expo-router";
+import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native";
 
 type PropsType = {
-  project: ProjectQueryType;
+  avatarS3: ProjectQueryType["accommodation"]["avatarS3"];
+  address: ProjectQueryType["accommodation"]["address"];
+  price: ProjectQueryType["price"];
+  name: ProjectQueryType["name"];
+  id: ProjectQueryType["id"];
 };
 
-function PlaceCard({ project }: PropsType) {
+function PlaceCard({ price, id, name, avatarS3, address }: PropsType) {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
   // const handleClick = () => navigate("/accommodation/" + project.id);
 
   const handlePress = () => {
     router.push({
-      pathname: `/project/${project.id}`,
+      pathname: `/project/${id}`,
       params: {
-        id: project.id,
-        name: project.name,
+        id: id,
+        name: name,
       },
     });
   };
 
-  const avatar = project?.accommodation?.avatarS3.length > 0 ? project?.accommodation?.avatarS3[0].small : "";
+  const avatar = avatarS3?.length > 0 ? avatarS3?.[0].small : "";
 
   return (
     <Pressable style={style.container} onPress={handlePress}>
@@ -43,7 +47,7 @@ function PlaceCard({ project }: PropsType) {
       </View>
       <View style={style.top}>
         <View style={style.top2}>
-          <TruncatedText title={project.name} style={style.name} />
+          <TruncatedText title={name} style={style.name} />
 
           <View style={style.rate}>
             <FontAwesome name="star" size={20} color="#FEC30D" />
@@ -52,7 +56,7 @@ function PlaceCard({ project }: PropsType) {
         </View>
         <View style={style.address}>
           <EvilIcons name="location" size={20} color="black" />
-          <TruncatedText title={project.accommodation.address} style={style.addressText} />
+          <TruncatedText title={address} style={style.addressText} />
         </View>
       </View>
       <Divider />
@@ -60,7 +64,7 @@ function PlaceCard({ project }: PropsType) {
         <View style={style.bottom}>
           <View style={style.bottomStyle}>
             <Text variant="subtitle1" style={style.price}>
-              ${project.price.toString()}
+              ${price.toString()}
             </Text>
             <Text>/ {tr("night")}</Text>
           </View>
@@ -82,7 +86,7 @@ const style = StyleSheet.create({
       web: { boxShadow: "0 0 5px #12121233" },
     }),
   },
-  ImageBackground: (isRtl) => ({
+  ImageBackground: isRtl => ({
     marginRight: isRtl ? 0 : 5,
     width: "100%",
     height: 200,

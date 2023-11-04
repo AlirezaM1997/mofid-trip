@@ -2,13 +2,12 @@ import Container from "@atoms/container";
 import Text from "@atoms/text";
 import WhiteSpace from "@atoms/white-space";
 import PlaceCard from "@modules/place-card";
-import PlaceCategoryCard from "@organisms/place-category-card";
 import { Avatar, Image, useTheme } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import { useNgoDetailQuery } from "@src/gql/generated";
 import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
-import { ActivityIndicator, ImageBackground, StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 const height = 220;
@@ -19,7 +18,7 @@ export default () => {
   const { loading, data } = useNgoDetailQuery({ variables: { pk: ngoId as string } });
 
   if (loading) return <ActivityIndicator size="large" color={theme.colors.primary} />;
-  console.log(data, data?.NGODetail?.projectSet?.[0]);
+
   return (
     <ScrollView>
       <Image
@@ -37,7 +36,7 @@ export default () => {
 
       <WhiteSpace size={50} />
       <Container>
-        <Text h4>Park elmo fanavari pardis</Text>
+        <Text variant="heading2">Park elmo fanavari pardis</Text>
         <Text>Park elmo fanavari pardis</Text>
         <WhiteSpace size={10} />
         <Text>
@@ -50,13 +49,27 @@ export default () => {
 
       <WhiteSpace size={20} />
       <Container>
-        <Text h4>Hostings</Text>
+        <Text variant="heading2">Hostings</Text>
         <WhiteSpace size={10} />
         <View style={styles.row}>
           {data?.NGODetail?.projectSet?.map(p => (
             <>
-              <PlaceCard key={p.id} project={p} />
-              <PlaceCard key={p.id} project={p} />
+              <PlaceCard
+                key={p.id}
+                id={p.id}
+                name={p.name}
+                price={p.price}
+                avatarS3={p.accommodation.avatarS3}
+                address={p.accommodation[0].address}
+              />
+              <PlaceCard
+                key={p.id}
+                id={p.id}
+                name={p.name}
+                price={p.price}
+                avatarS3={p.accommodation.avatarS3}
+                address={p.accommodation[0].address}
+              />
             </>
           ))}
         </View>

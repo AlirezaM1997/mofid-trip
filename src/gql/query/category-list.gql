@@ -1,4 +1,4 @@
-query categoryList($search: String) {
+query categoryList($page: PageType, $search: String) {
   categoryList(search: $search) {
     pageCount
     count
@@ -12,5 +12,6 @@ query categoryList($search: String) {
         small
       }
     }
+    pageCount
   }
 }

@@ -1,22 +1,15 @@
+import {
+  ProjectListQuery,
+  ProjectListQueryVariables,
+  useProjectListLazyQuery,
+} from "@src/gql/generated";
 import { RootState } from "@src/store";
-import { NetworkStatus } from "@apollo/client";
+import { PAGE_SIZE } from "@src/settings";
 import { useEffect, useState } from "react";
+import { NetworkStatus } from "@apollo/client";
 import NetInfo from "@react-native-community/netinfo";
 import { useDispatch, useSelector } from "react-redux";
 import { setProjectSet } from "@src/slice/project-slice";
-import {
-  Exact,
-  ProjectFilterType,
-  ProjectListQueryVariables,
-  ProjectQueryType,
-  useProjectListLazyQuery,
-} from "@src/gql/generated";
-import { PAGE_SIZE } from "@src/settings";
-
-type SearchType = {
-  searchText?: string;
-  filter?: ProjectFilterType;
-};
 
 const hasIntersection = (a: any[], b: any[]) => a.some(item => b.includes(item));
 
@@ -24,7 +17,7 @@ const useProjectTable = () => {
   const dispatch = useDispatch();
   const { projectSet } = useSelector((state: RootState) => state.projectSlice);
   const [networkStatus, setNetworkStatus] = useState<NetworkStatus | undefined>();
-  const [data, setData] = useState<ProjectQueryType[] | undefined>();
+  const [data, setData] = useState<ProjectListQuery | undefined>();
 
   const [fetchProjectSet, { networkStatus: queryNetworkStatus }] = useProjectListLazyQuery({
     notifyOnNetworkStatusChange: false,
@@ -38,9 +31,9 @@ const useProjectTable = () => {
   const syncTable = (variables: ProjectListQueryVariables) => {
     NetInfo.fetch().then(({ isConnected }) => {
       if (isConnected) {
-        fetchProjectSet({ variables: variables }).then(({ data }) =>
-          dispatch(setProjectSet(data.projectList))
-        );
+        fetchProjectSet({ variables: variables }).then(({ data }) => {
+          if (data) dispatch(setProjectSet(data.projectList));
+        });
       }
     });
   };

@@ -1,8 +1,7 @@
 import React from "react";
 import Registration from "@src/components/organisms/registration";
 
-const Page = () => {
-  return <Registration title="Register" />;
+const LoginScreen = () => {
+  return <Registration type="dataNgo" />;
 };
-
-export default Page;
+export default LoginScreen;

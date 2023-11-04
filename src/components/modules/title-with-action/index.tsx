@@ -1,37 +1,38 @@
-import { useTheme } from "@rneui/themed"
-import Text from "@src/components/atoms/text"
-import { Pressable, StyleSheet, View } from "react-native"
+import Container from "@atoms/container";
+import { useTheme } from "@rneui/themed";
+import Text from "@src/components/atoms/text";
+import { Pressable, StyleSheet, View } from "react-native";
 
 type TitleWithActionPropsType = {
-  title: string
-  actionTitle: string
-  onActionPress?: () => void
-}
+  title: string;
+  actionTitle: string;
+  onActionPress?: () => void;
+};
 
 const TitleWithAction = ({ title, actionTitle, onActionPress }: TitleWithActionPropsType) => {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
 
   return (
-    <View style={style.container}>
+    <Container style={style.container}>
       <Text variant="heading1">{title}</Text>
       <Pressable onPress={onActionPress}>
         <Text color={theme.colors.primary} variant="caption">
           {actionTitle}
         </Text>
       </Pressable>
-    </View>
-  )
-}
+    </Container>
+  );
+};
 
 const style = StyleSheet.create({
   container: {
+    width: "100%",
     display: "flex",
+    marginBottom: 18,
     flexDirection: "row",
     alignItems: "baseline",
-    width: "100%",
     justifyContent: "space-between",
-    marginBottom: 6,
   },
-})
+});
 
-export default TitleWithAction
+export default TitleWithAction;

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { PageType, ProjectFilterType, ProjectQueryType, ProjectSetType } from "@src/gql/generated";
+import { PageType, ProjectFilterType, ProjectPageType, ProjectQueryType } from "@src/gql/generated";
 import { PAGE_SIZE } from "@src/settings";
 
 type ProjectSetArgumentsTypes = {
@@ -11,7 +11,7 @@ type ProjectSetArgumentsTypes = {
 
 type initialStateType = {
   projectDetail: ProjectQueryType;
-  projectSet: ProjectSetType;
+  projectSet: ProjectPageType;
   projectSetArguments: ProjectSetArgumentsTypes;
 };
 
@@ -41,7 +41,7 @@ export const projectSlice = createSlice({
     setProjectDetail: (state, action: PayloadAction<Partial<ProjectQueryType>>) => {
       state.projectDetail = action.payload;
     },
-    setProjectSet: (state, action: PayloadAction<Partial<ProjectSetType>>) => {
+    setProjectSet: (state, action: PayloadAction<Partial<ProjectPageType>>) => {
       state.projectSet = action.payload;
     },
     setProjectSetArguments: (state, action: PayloadAction<Partial<ProjectSetArgumentsTypes>>) => {

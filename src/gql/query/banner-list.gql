@@ -1,4 +1,4 @@
-query bannerList($search: String) {
+query bannerList($page: PageType, $search: String) {
   bannerList(search: $search) {
     pageCount
     count
@@ -12,5 +12,6 @@ query bannerList($search: String) {
         small
       }
     }
+    pageCount
   }
 }
