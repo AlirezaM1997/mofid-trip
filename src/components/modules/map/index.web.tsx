@@ -7,6 +7,7 @@ type MapPropsType = {
 };
 
 const Map = ({ lat, lng }: MapPropsType) => {
+  if (!lat && !lng) return;
   return (
     <>
       <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="StyleSheet" />
@@ -33,7 +34,8 @@ const Map = ({ lat, lng }: MapPropsType) => {
               baseLayerIsChecked: true,
               baseLayerName: "OpenStreetMap",
               url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-              attribution: '&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+              attribution:
+                '&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             },
             {
               baseLayer: true,
@@ -43,7 +45,7 @@ const Map = ({ lat, lng }: MapPropsType) => {
               url: `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid2hlcmVzbXl3YXZlcyIsImEiOiJjanJ6cGZtd24xYmU0M3lxcmVhMDR2dWlqIn0.QQSWbd-riqn1U5ppmyQjRw`,
             },
           ]}
-          onMessage={(message) => {
+          onMessage={message => {
             switch (message.tag) {
               case "onMapMarkerClicked":
                 Alert.alert(`Map Marker Touched, ID: ${message.mapMarkerId || "unknown"}`);

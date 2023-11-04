@@ -1342,14 +1342,29 @@ export type BannerListQueryVariables = Exact<{
 }>;
 
 
-export type BannerListQuery = { __typename?: 'Query', bannerList?: { __typename?: 'BannerListType', count?: number | null, pageCount?: number | null, data?: Array<{ __typename?: 'BannerQueryType', id: string, title: string, url?: string | null, avatarS3?: { __typename?: 'BannerImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null } | null };
+export type BannerListQuery = { __typename?: 'Query', bannerList?: { __typename?: 'BannerListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'BannerQueryType', id: string, url?: string | null, title: string, avatarS3?: { __typename?: 'BannerImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null } | null };
+
+export type CategoryListQueryVariables = Exact<{
+  page?: InputMaybe<PageType>;
+  search?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CategoryListQuery = { __typename?: 'Query', categoryList?: { __typename?: 'CategoryListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null } | null };
+
+export type NgoDetailQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+}>;
+
+
+export type NgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, name: string, avatarS3?: { __typename?: 'NGOImageType', large?: string | null, medium?: string | null, small?: string | null } | null, user?: { __typename?: 'UserQueryType', id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, dateStart?: any | null, dateEnd?: any | null, gender: AccommodationProjectGenderChoices, requestFrom: AccommodationProjectRequestFromChoices, tax?: number | null, description?: string | null, status: AccommodationProjectStatusChoices, createdTime?: any | null, tours: Array<{ __typename?: 'TourQueryType', id: string, title: string }>, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, female: number, child: number } | null, categories?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null, displayName?: string | null }>, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null };
 
 export type ProjectDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
 }>;
 
 
-export type ProjectDetailQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, gender: AccommodationProjectGenderChoices, description?: string | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null }>, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, child: number, female: number } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, creator?: { __typename?: 'UserQueryType', id: string, lastName: string, firstName: string, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, name?: string | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, name?: string | null, address?: string | null, description?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null };
+export type ProjectDetailQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, gender: AccommodationProjectGenderChoices, description?: string | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null }>, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, child: number, female: number } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, creator?: { __typename?: 'UserQueryType', id: string, lastName: string, firstName: string, phoneNumber?: string | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, name?: string | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, name?: string | null, address?: string | null, description?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null };
 
 export type ProjectListQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
@@ -1638,18 +1653,19 @@ export type UerGetTokenMutationHookResult = ReturnType<typeof useUerGetTokenMuta
 export type UerGetTokenMutationResult = Apollo.MutationResult<UerGetTokenMutation>;
 export type UerGetTokenMutationOptions = Apollo.BaseMutationOptions<UerGetTokenMutation, UerGetTokenMutationVariables>;
 export const BannerListDocument = gql`
-    query BannerList($page: PageType, $search: String) {
-  bannerList(page: $page, search: $search) {
+    query bannerList($page: PageType, $search: String) {
+  bannerList(search: $search) {
+    pageCount
     count
     data {
+      id
+      url
+      title
       avatarS3 {
         large
         medium
         small
       }
-      id
-      title
-      url
     }
     pageCount
   }
@@ -1684,6 +1700,155 @@ export function useBannerListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type BannerListQueryHookResult = ReturnType<typeof useBannerListQuery>;
 export type BannerListLazyQueryHookResult = ReturnType<typeof useBannerListLazyQuery>;
 export type BannerListQueryResult = Apollo.QueryResult<BannerListQuery, BannerListQueryVariables>;
+export const CategoryListDocument = gql`
+    query categoryList($page: PageType, $search: String) {
+  categoryList(search: $search) {
+    pageCount
+    count
+    data {
+      id
+      name
+      displayName
+      avatarS3 {
+        large
+        medium
+        small
+      }
+    }
+    pageCount
+  }
+}
+    `;
+
+/**
+ * __useCategoryListQuery__
+ *
+ * To run a query within a React component, call `useCategoryListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoryListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoryListQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useCategoryListQuery(baseOptions?: Apollo.QueryHookOptions<CategoryListQuery, CategoryListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoryListQuery, CategoryListQueryVariables>(CategoryListDocument, options);
+      }
+export function useCategoryListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoryListQuery, CategoryListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoryListQuery, CategoryListQueryVariables>(CategoryListDocument, options);
+        }
+export type CategoryListQueryHookResult = ReturnType<typeof useCategoryListQuery>;
+export type CategoryListLazyQueryHookResult = ReturnType<typeof useCategoryListLazyQuery>;
+export type CategoryListQueryResult = Apollo.QueryResult<CategoryListQuery, CategoryListQueryVariables>;
+export const NgoDetailDocument = gql`
+    query NGODetail($pk: ID!) {
+  NGODetail(pk: $pk) {
+    id
+    name
+    avatarS3 {
+      large
+      medium
+      small
+    }
+    user {
+      id
+      avatarS3 {
+        large
+        medium
+        small
+      }
+    }
+    projectSet {
+      id
+      name
+      price
+      dateStart
+      dateEnd
+      gender
+      requestFrom
+      tax
+      description
+      status
+      createdTime
+      tours {
+        id
+        title
+      }
+      capacity {
+        id
+        male
+        female
+        child
+      }
+      categories {
+        id
+        name
+        displayName
+        avatarS3 {
+          large
+          medium
+          small
+        }
+      }
+      tags {
+        id
+        name
+        displayName
+      }
+      facilities {
+        id
+        faName
+        enName
+        arName
+      }
+      accommodation {
+        id
+        avatarS3 {
+          large
+          medium
+          small
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useNgoDetailQuery__
+ *
+ * To run a query within a React component, call `useNgoDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNgoDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNgoDetailQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useNgoDetailQuery(baseOptions: Apollo.QueryHookOptions<NgoDetailQuery, NgoDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<NgoDetailQuery, NgoDetailQueryVariables>(NgoDetailDocument, options);
+      }
+export function useNgoDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NgoDetailQuery, NgoDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<NgoDetailQuery, NgoDetailQueryVariables>(NgoDetailDocument, options);
+        }
+export type NgoDetailQueryHookResult = ReturnType<typeof useNgoDetailQuery>;
+export type NgoDetailLazyQueryHookResult = ReturnType<typeof useNgoDetailLazyQuery>;
+export type NgoDetailQueryResult = Apollo.QueryResult<NgoDetailQuery, NgoDetailQueryVariables>;
 export const ProjectDetailDocument = gql`
     query projectDetail($pk: ID!) {
   projectDetail(pk: $pk) {
@@ -1713,6 +1878,9 @@ export const ProjectDetailDocument = gql`
       lastName
       firstName
       phoneNumber
+      ngo {
+        id
+      }
       avatarS3 {
         small
       }

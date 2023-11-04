@@ -1,15 +1,16 @@
-query BannerList($page: PageType, $search: String) {
-  bannerList(page: $page, search: $search) {
+query categoryList($page: PageType, $search: String) {
+  categoryList(search: $search) {
+    pageCount
     count
     data {
+      id
+      name
+      displayName
       avatarS3 {
         large
         medium
         small
       }
-      id
-      title
-      url
     }
     pageCount
   }

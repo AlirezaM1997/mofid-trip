@@ -10,8 +10,8 @@ import { Feather } from "@expo/vector-icons";
 import { PRIMARY_COLOR } from "@src/theme";
 import {
   useCreateLoginMutation,
-  useUerGetTokenMutation,
   useUserDetailLazyQuery,
+  useUserGetTokenMutation,
 } from "@src/gql/generated";
 import { setLoginData, setUserDetail } from "@src/slice/user-slice";
 import { RootState } from "@src/store";
@@ -31,7 +31,7 @@ const SMSVerificationScreen = () => {
   const [
     userCheckSmsVerificationCode,
     { loading: loadingChecking, data: dataChecking, error: errorChecking },
-  ] = useUerGetTokenMutation();
+  ] = useUserGetTokenMutation();
   const [
     _,
     {
@@ -72,8 +72,8 @@ const SMSVerificationScreen = () => {
 
   useEffect(() => {
     if (!loadingChecking && dataChecking) {
-      if (dataChecking.userEdit.statusCode === 200) {
-        dispatch(setLoginData(dataChecking.userEdit));
+      if (dataChecking.userGetToken.statusCode === 200) {
+        dispatch(setLoginData(dataChecking.userGetToken));
       } else {
         // toast.error(dataChecking.userCheckSmsVerificationCode.message);
       }

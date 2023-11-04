@@ -26,6 +26,9 @@ query projectDetail($pk: ID!) {
       lastName
       firstName
       phoneNumber
+      ngo {
+        id
+      }
       avatarS3 {
         small
       }
