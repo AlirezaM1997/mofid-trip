@@ -55,17 +55,11 @@ const Profile: React.FC = () => {
     router.push("/");
   };
 
-  const handleNavigateToEditProfile = () => {
-    router.push("/editProfile");
-  };
+  const handleNavigateToEditProfile = () => router.push("/editProfile");
 
-  const handleNavigateToComingSoon = () => {
-    router.push("/comingSoon");
-  };
+  const handleNavigateToComingSoon = () => router.push("/comingSoon");
 
-  const openLanguageSetting = () => {
-    setIsVisible(true);
-  };
+  const openLanguageSetting = () => setIsVisible(true);
 
   const handleChangeLang = (lang: LanguageChoiceEnum) => {
     settingEdit({
@@ -85,7 +79,7 @@ const Profile: React.FC = () => {
 
   return (
     <>
-      <WhiteSpace size={10} />
+      <WhiteSpace size={30} />
       <ScrollView>
         <Container size={15}>
           <Pressable style={style.userInfo} onPress={handleNavigateToEditProfile}>
@@ -120,33 +114,58 @@ const Profile: React.FC = () => {
           />
         </ListItem>
 
-        <WhiteSpace size={20} />
+        {userDetail.isNgo && (
+          <>
+            <WhiteSpace size={20} />
+            <Container>
+              <Text color={theme.colors.grey3}>{tr("Managements")}</Text>
+            </Container>
+            <ListItem bottomDivider onPress={openLanguageSetting}>
+              <Feather name="aperture" size={24} color="black" />
+              <ListItem.Content>
+                <ListItem.Title style={style.label(isRtl)}>{tr("Create Tour")}</ListItem.Title>
+              </ListItem.Content>
+              <Feather
+                name={isRtl ? "chevron-left" : "chevron-right"}
+                size={24}
+                color={theme.colors.grey3}
+              />
+            </ListItem>
+            <ListItem onPress={openLanguageSetting}>
+              <Feather name="aperture" size={24} color="black" />
+              <ListItem.Content>
+                <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Tours")}</ListItem.Title>
+              </ListItem.Content>
+              <Feather
+                name={isRtl ? "chevron-left" : "chevron-right"}
+                size={24}
+                color={theme.colors.grey3}
+              />
+            </ListItem>
+          </>
+        )}
 
-        <Container>
-          <Text color={theme.colors.grey3}>{tr("Managements")}</Text>
-        </Container>
-        <ListItem bottomDivider onPress={openLanguageSetting}>
-          <Feather name="aperture" size={24} color="black" />
-          <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("Create Tour")}</ListItem.Title>
-          </ListItem.Content>
-          <Feather
-            name={isRtl ? "chevron-left" : "chevron-right"}
-            size={24}
-            color={theme.colors.grey3}
-          />
-        </ListItem>
-        <ListItem onPress={openLanguageSetting}>
-          <Feather name="aperture" size={24} color="black" />
-          <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Tours")}</ListItem.Title>
-          </ListItem.Content>
-          <Feather
-            name={isRtl ? "chevron-left" : "chevron-right"}
-            size={24}
-            color={theme.colors.grey3}
-          />
-        </ListItem>
+        {!userDetail.isNgo && (
+          <>
+            <WhiteSpace size={20} />
+            <Container>
+              <Text color={theme.colors.grey3}>{tr("Managements")}</Text>
+            </Container>
+            <ListItem onPress={openLanguageSetting}>
+              <Feather name="aperture" size={24} color="black" />
+              <ListItem.Content>
+                <ListItem.Title style={style.label(isRtl)}>
+                  {tr("Tours and my travels")}
+                </ListItem.Title>
+              </ListItem.Content>
+              <Feather
+                name={isRtl ? "chevron-left" : "chevron-right"}
+                size={24}
+                color={theme.colors.grey3}
+              />
+            </ListItem>
+          </>
+        )}
 
         <WhiteSpace size={20} />
 

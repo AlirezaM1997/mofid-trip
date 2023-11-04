@@ -2,7 +2,6 @@ import { createTheme } from "@rneui/themed";
 import { DefaultTheme } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Platform } from "react-native";
-import useIsRtl from "./hooks/localization";
 import { WIDTH } from "./constants";
 
 export const PRIMARY_COLOR = "#FF4332";
@@ -61,6 +60,7 @@ export const theme = isRtl =>
         LinearGradientComponent: ({ colors, ...props }) => (
           <LinearGradient {...props} colors={["#e1e8ee", "#d1d8de", "#e1e8ee"]} />
         ),
+<<<<<<< HEAD
       },
       Text: (props, theme) => ({
         style: {
@@ -86,6 +86,35 @@ export const theme = isRtl =>
           fontWeight: "400",
         },
       }),
+=======
+      },
+      Text: (props, theme) => {
+        return {
+          style: {
+            fontSize: 14,
+            fontFamily: isRtl
+              ? "DanaNoEn"
+              : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            fontWeight: props.bold ? "bold" : "400",
+            direction: isRtl ? "rtl" : "ltr",
+          },
+          h1Style: {
+            fontSize: 18,
+            fontFamily: isRtl
+              ? "DanaNoEn"
+              : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            fontWeight: "400",
+          },
+          h2Style: {
+            fontSize: 16,
+            fontFamily: isRtl
+              ? "DanaNoEn"
+              : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            fontWeight: "400",
+          },
+        };
+      },
+>>>>>>> fix/tour-reservation
       Button: (props, theme) => {
         const { type, color, size } = props;
 
@@ -154,6 +183,12 @@ export const theme = isRtl =>
         },
       }),
       Input: {
+        labelStyle: {
+          marginBottom: 5,
+          fontFamily: isRtl
+            ? "DanaNoEn"
+            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+        },
         inputStyle: {
           borderWidth: 1,
           borderRadius: 12,

@@ -6,6 +6,8 @@ declare module "@rneui/themed" {
   export interface InputProps {
     required?: boolean;
     labelNumber?: number;
+    name?: string; // required by formik
+    type?: "date" | "text";
   }
 
   export interface TextProps {
