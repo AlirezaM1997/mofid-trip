@@ -3,7 +3,6 @@ import Text from "@src/components/atoms/text";
 import Container from "@src/components/atoms/container";
 import useTranslation from "@src/hooks/translation";
 import WhiteSpace from "@src/components/atoms/white-space";
-import BookFormStep3 from "@organisms/book-form/step2";
 import { View, StyleSheet } from "react-native";
 import { Button, Divider, useTheme } from "@rneui/themed";
 import { useSelector } from "react-redux";
@@ -12,9 +11,6 @@ import { Formik } from "formik";
 import { useProjectTransactionAddMutation } from "@src/gql/generated";
 import { router, useLocalSearchParams } from "expo-router";
 import { Platform } from "react-native";
-import { useIsAuthenticated } from "@src/hooks/user";
-import BookFormStep2 from "@organisms/book-form/step1";
-
 
 export default () => {
   const { theme } = useTheme();
@@ -49,8 +45,6 @@ export default () => {
       }}>
       {({ handleSubmit, isValid }) => (
         <>
-          <BookFormStep2 />
-          
           <View style={style.container(theme)}>
             <Divider />
             <Container>
@@ -62,12 +56,6 @@ export default () => {
                   flexDirection: "row",
                   gap: 12,
                 }}>
-                <View style={style.priceContainer}>
-                  <Text>{tr("Total Price")}</Text>
-                  <Text variant="heading2" style={style.priceText}>
-                    ${price}
-                  </Text>
-                </View>
                 <Button
                   containerStyle={style.btnItem2}
                   size="lg"
@@ -111,12 +99,6 @@ const style = StyleSheet.create({
     gap: 10,
     paddingHorizontal: 10,
     marginBottom: 10,
-  },
-  priceContainer: {
-    flex: 1,
-  },
-  priceText: {
-    fontWeight: "bold",
   },
   btnItem: {
     flex: 1,
