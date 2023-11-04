@@ -16,9 +16,8 @@ const Item = ({ title, subtitle }) => (
   </View>
 )
 
-const ProjectBoldFeatures = () => {
+const ProjectBoldFeatures = ({capacity}) => {
   const { tr } = useTranslation()
-  const { capacity } = useSelector((state: RootState) => state?.projectSlice?.projectDetail)
   const totalCapacity = getCapacity(capacity)
 
   return (

@@ -925,6 +925,7 @@ export const messages = {
     ar: "هل أنت متأكد من الدفع؟",
     fa_ir: "آیا مطمئن به پرداخت هستید؟",
     en_us: "Are you sure about the payment?",
+  },
   "tours and my travels": {
     ar: "جولاتي وأسفاري",
     fa_ir: "تور ها و سفر های من",
@@ -1216,5 +1217,10 @@ export const messages = {
     ar: "معلومات الركاب",
     fa_ir: "اطلاعات مسافر",
     en_us: "passenger info",
+  },
+  "other hosts": {
+    ar: "المضيفين الآخرين",
+    fa_ir: "سایر اقامتگاه ها",
+    en_us: "Other Hosts",
   },
 };

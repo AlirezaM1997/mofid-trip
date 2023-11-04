@@ -5,6 +5,7 @@ import PlaceCard from "@modules/place-card";
 import { Avatar, Image, useTheme } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import { useNgoDetailQuery } from "@src/gql/generated";
+import useTranslation from "@src/hooks/translation";
 import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import { ActivityIndicator, StyleSheet } from "react-native";
@@ -13,11 +14,13 @@ import { ScrollView } from "react-native-gesture-handler";
 const height = 220;
 
 export default () => {
+  const {tr} = useTranslation()
   const { theme } = useTheme();
   const { ngoId } = useLocalSearchParams();
   const { loading, data } = useNgoDetailQuery({ variables: { pk: ngoId as string } });
 
   if (loading) return <ActivityIndicator size="large" color={theme.colors.primary} />;
+
 
   return (
     <ScrollView>
@@ -30,26 +33,21 @@ export default () => {
       <Avatar
         size={80}
         rounded
-        source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }}
+        source={{ uri: data.NGODetail.avatarS3.small }}
         containerStyle={styles.avatarContainerStyle(theme)}
       />
 
       <WhiteSpace size={50} />
       <Container>
-        <Text variant="heading2">Park elmo fanavari pardis</Text>
-        <Text>Park elmo fanavari pardis</Text>
+        <Text variant="heading2">{data.NGODetail.title}</Text>
+        <Text>{data.NGODetail.address}</Text>
         <WhiteSpace size={10} />
-        <Text>
-          In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to
-          demonstrate the visual form of a document or a typeface without relying on meaningful
-          content. Lorem ipsum may be used as a placeholder before final copy is available.
-          Wikipedia
-        </Text>
+        <Text>{data.NGODetail.description}</Text>
       </Container>
 
       <WhiteSpace size={20} />
       <Container>
-        <Text variant="heading2">Hostings</Text>
+        <Text variant="heading2">{tr("Other Hosts")}</Text>
         <WhiteSpace size={10} />
         <View style={styles.row}>
           {data?.NGODetail?.projectSet?.map(p => (
@@ -60,7 +58,7 @@ export default () => {
                 name={p.name}
                 price={p.price}
                 avatarS3={p.accommodation.avatarS3}
-                address={p.accommodation[0].address}
+                address={p.accommodation[0]?.address}
               />
               <PlaceCard
                 key={p.id}
@@ -68,7 +66,7 @@ export default () => {
                 name={p.name}
                 price={p.price}
                 avatarS3={p.accommodation.avatarS3}
-                address={p.accommodation[0].address}
+                address={p.accommodation[0]?.address}
               />
             </>
           ))}

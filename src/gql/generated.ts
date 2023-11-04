@@ -521,9 +521,9 @@ export type NgoQueryType = {
   id: Scalars['ID']['output'];
   lat?: Maybe<Scalars['Float']['output']>;
   lng?: Maybe<Scalars['Float']['output']>;
-  name: Scalars['String']['output'];
   /** List of projects associated with the NGO. */
   projectSet?: Maybe<Array<Maybe<ProjectQueryType>>>;
+  title: Scalars['String']['output'];
   tours: Array<TourQueryType>;
   user?: Maybe<UserQueryType>;
 };
@@ -1071,14 +1071,18 @@ export type TourFilterType = {
 export type TourGuestInputType = {
   /** Birthday of the guest. */
   birthday: Scalars['String']['input'];
+  /** Firstname of the guest. */
+  firstname: Scalars['String']['input'];
   /** Gender of the guest. */
   gender: GuestGenderEnum;
   /** Identification number of the guest. */
   identifyNumber: Scalars['String']['input'];
   /** Base64-encoded image of the guest's identification. */
   identifyPicture?: InputMaybe<Scalars['String']['input']>;
-  /** Name of the guest. */
-  name: Scalars['String']['input'];
+  /** Lastname of the guest. */
+  lastname: Scalars['String']['input'];
+  /** Phone number of the guest. */
+  phoneNumber: Scalars['String']['input'];
 };
 
 /** Type representing tour images in different sizes. */
@@ -1264,11 +1268,13 @@ export type UserQueryType = {
   bio?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
+  firstname?: Maybe<Scalars['String']['output']>;
   /** User fullname. */
   fullname?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isNgo?: Maybe<Scalars['Boolean']['output']>;
   lastName: Scalars['String']['output'];
+  lastname?: Maybe<Scalars['String']['output']>;
   ngo?: Maybe<NgoQueryType>;
   phoneNumber?: Maybe<Scalars['String']['output']>;
   /** List of projects associated with the User. */
@@ -1277,7 +1283,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
+  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: Scalars['String']['output'];
 };
 
@@ -1357,7 +1363,7 @@ export type NgoDetailQueryVariables = Exact<{
 }>;
 
 
-export type NgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, name: string, avatarS3?: { __typename?: 'NGOImageType', large?: string | null, medium?: string | null, small?: string | null } | null, user?: { __typename?: 'UserQueryType', id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, dateStart?: any | null, dateEnd?: any | null, gender: AccommodationProjectGenderChoices, requestFrom: AccommodationProjectRequestFromChoices, tax?: number | null, description?: string | null, status: AccommodationProjectStatusChoices, createdTime?: any | null, tours: Array<{ __typename?: 'TourQueryType', id: string, title: string }>, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, female: number, child: number } | null, categories?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null, displayName?: string | null }>, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null };
+export type NgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, title: string, address?: string | null, description?: string | null, avatarS3?: { __typename?: 'NGOImageType', large?: string | null, medium?: string | null, small?: string | null } | null, user?: { __typename?: 'UserQueryType', id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, dateStart?: any | null, dateEnd?: any | null, gender: AccommodationProjectGenderChoices, requestFrom: AccommodationProjectRequestFromChoices, tax?: number | null, description?: string | null, status: AccommodationProjectStatusChoices, createdTime?: any | null, tours: Array<{ __typename?: 'TourQueryType', id: string, title: string }>, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, female: number, child: number } | null, categories?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null, displayName?: string | null }>, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null };
 
 export type ProjectDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
@@ -1752,7 +1758,9 @@ export const NgoDetailDocument = gql`
     query NGODetail($pk: ID!) {
   NGODetail(pk: $pk) {
     id
-    name
+    title
+    address
+    description
     avatarS3 {
       large
       medium
