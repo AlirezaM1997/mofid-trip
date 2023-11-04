@@ -61,6 +61,30 @@ export const theme = isRtl =>
           <LinearGradient {...props} colors={["#e1e8ee", "#d1d8de", "#e1e8ee"]} />
         ),
       },
+      Text: (props, theme) => ({
+        style: {
+          fontSize: 14,
+          fontFamily: isRtl
+            ? "DanaNoEn"
+            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontWeight: "400",
+          direction: isRtl ? "rtl" : "ltr",
+        },
+        h1Style: {
+          fontSize: 18,
+          fontFamily: isRtl
+            ? "DanaNoEn"
+            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontWeight: "400",
+        },
+        h2Style: {
+          fontSize: 16,
+          fontFamily: isRtl
+            ? "DanaNoEn"
+            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontWeight: "400",
+        },
+      }),
       Text: (props, theme) => {
         return {
           style: {
