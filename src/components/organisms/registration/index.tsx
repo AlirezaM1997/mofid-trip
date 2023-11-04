@@ -18,7 +18,7 @@ const Registration = ({ type }: { type: "dataUser" | "dataNgo" }) => {
   const handlePress = () => {
     login({
       variables: {
-        type: {
+        dataUser: {
           phoneNumber: callingCode + phone,
         },
       },
