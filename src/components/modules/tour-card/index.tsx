@@ -4,16 +4,16 @@ import { Divider } from "@rneui/themed";
 import { Text } from "@rneui/themed";
 import useIsRtl from "@src/hooks/localization";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { ProjectQueryType } from "@src/gql/generated";
+import { TourImageType, TourPriceType, TourQueryType } from "@src/gql/generated";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
 import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native";
 
 type PropsType = {
-  avatarS3: ProjectQueryType["accommodation"]["avatarS3"];
-  address: ProjectQueryType["accommodation"]["address"];
-  price: ProjectQueryType["price"];
-  name: ProjectQueryType["name"];
-  id: ProjectQueryType["id"];
+  address: TourQueryType["destination"]["address"];
+  price: TourPriceType['price'];
+  name: TourQueryType["title"];
+  avatarS3: TourImageType[];
+  id: TourQueryType["id"];
 };
 
 function TourCard({ price, id, name, avatarS3, address }: PropsType) {
@@ -46,7 +46,9 @@ function TourCard({ price, id, name, avatarS3, address }: PropsType) {
       </View>
       <View style={style.top}>
         <View style={style.top2}>
-          <Text heading2 bold numberOfLines={1}>{name}</Text>
+          <Text heading2 bold numberOfLines={1}>
+            {name}
+          </Text>
 
           <View style={style.rate}>
             <FontAwesome name="star" size={20} color="#FEC30D" />
@@ -55,7 +57,9 @@ function TourCard({ price, id, name, avatarS3, address }: PropsType) {
         </View>
         <View style={style.address}>
           <EvilIcons name="location" size={20} color="black" />
-          <Text numberOfLines={1} type="grey3">{address}</Text>
+          <Text numberOfLines={1} type="grey3">
+            {address}
+          </Text>
         </View>
       </View>
       <Divider />
@@ -76,7 +80,7 @@ function TourCard({ price, id, name, avatarS3, address }: PropsType) {
 
 const style = StyleSheet.create({
   container: {
-    width: '100%',
+    width: "100%",
     overflow: "hidden",
     backgroundColor: "#fff",
     elevation: 5,
