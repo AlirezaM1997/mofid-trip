@@ -1,8 +1,9 @@
-mutation uerGetToken($data: UserEditInputType) {
+mutation userEdit($data: UserEditInputType) {
   userEdit(data: $data) {
     status
     statusCode
     message
+    metadata
     __typename
   }
 }

@@ -7,6 +7,7 @@ import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation
 import { ProjectQueryType } from "@src/gql/generated";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
 import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native";
+import { WIDTH } from "@src/constants";
 
 type PropsType = {
   avatarS3: ProjectQueryType["accommodation"]["avatarS3"];
@@ -79,7 +80,7 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
 
 const style = StyleSheet.create({
   container: {
-    maxWidth: 300,
+    width: WIDTH - 50,
     overflow: "hidden",
     backgroundColor: "#fff",
     elevation: 5,

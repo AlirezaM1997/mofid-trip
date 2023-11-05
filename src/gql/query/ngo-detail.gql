@@ -17,7 +17,7 @@ query NGODetail($pk: ID!) {
         small
       }
     }
-    tours {
+    tourSet {
       id
       title
     }

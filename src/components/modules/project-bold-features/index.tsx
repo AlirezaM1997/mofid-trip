@@ -1,31 +1,31 @@
-import { Text } from "@rneui/themed"
-import { getCapacity } from "@src/helper/tour"
-import useTranslation from "@src/hooks/translation"
-import { RootState } from "@src/store"
-import { StyleSheet, View } from "react-native"
-import { useSelector } from "react-redux"
+import { Text } from "@rneui/themed";
+import { getCapacity } from "@src/helper/tour";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { StyleSheet, View } from "react-native";
 
-const Item = ({ title, subtitle }) => (
-  <View style={style.itemContainer}>
-    <Text style={style.title} variant="body1">
-      {title}
-    </Text>
-    <Text style={style.subTitle} variant="body2">
-      {subtitle}
-    </Text>
-  </View>
-)
+const Item = ({ title, subtitle }) => {
+  const { localizeNumber } = useLocalizedNumberFormat();
 
-const ProjectBoldFeatures = ({capacity}) => {
-  const { tr } = useTranslation()
-  const totalCapacity = getCapacity(capacity)
+  return (
+    <View style={style.itemContainer}>
+      <Text heading1 bold>
+        {localizeNumber(title)}
+      </Text>
+      <Text heading2>{subtitle}</Text>
+    </View>
+  );
+};
+
+const ProjectBoldFeatures = ({ capacity }) => {
+  const { tr } = useTranslation();
+  const totalCapacity = getCapacity(capacity);
 
   return (
     <View style={style.container}>
       <Item title={totalCapacity} subtitle={tr("Capacity")} />
     </View>
-  )
-}
+  );
+};
 
 const style = StyleSheet.create({
   container: {
@@ -43,13 +43,6 @@ const style = StyleSheet.create({
     padding: 12,
     paddingVertical: 18,
   },
-  title: {
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-  subTitle: {
-    fontSize: 18,
-  },
-})
+});
 
-export default ProjectBoldFeatures
+export default ProjectBoldFeatures;

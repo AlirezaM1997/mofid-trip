@@ -5,7 +5,7 @@ import Map from "@src/components/modules/map";
 import { Text } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 import { getCapacity } from "@src/helper/tour";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useDispatch } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
@@ -29,6 +29,7 @@ const Page: React.FC = ({ ...props }) => {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const { projectId, name } = useLocalSearchParams();
+  const {localizeNumber} = useLocalizedNumberFormat()
 
   const { loading, data } = useProjectDetailQuery({
     variables: {
@@ -106,7 +107,7 @@ const Page: React.FC = ({ ...props }) => {
           <Text style={style.priceTitle}>{tr("Price")}</Text>
           <View style={style.priceContainer}>
             <Text variant="body1" style={style.priceNumber}>
-              ${data.projectDetail?.price}
+              ${localizeNumber(data.projectDetail?.price)}
             </Text>
             <Text style={style.priceText}> / {tr("Night")}</Text>
           </View>

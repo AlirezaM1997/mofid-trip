@@ -79,8 +79,8 @@ const Profile: React.FC = () => {
 
   return (
     <>
-      <WhiteSpace size={30} />
       <ScrollView>
+        <WhiteSpace size={30} />
         <Container size={15}>
           <Pressable style={style.userInfo} onPress={handleNavigateToEditProfile}>
             {userDetail?.avatarS3?.small ? (
@@ -100,7 +100,7 @@ const Profile: React.FC = () => {
         <WhiteSpace size={20} />
 
         <Container>
-          <Text color="grey3">{tr("Account")}</Text>
+          <Text type="grey3">{tr("Account")}</Text>
         </Container>
         <ListItem onPress={handleNavigateToEditProfile}>
           <Feather name="user" size={24} color="black" />
@@ -118,7 +118,7 @@ const Profile: React.FC = () => {
           <>
             <WhiteSpace size={20} />
             <Container>
-              <Text color="grey3">{tr("Managements")}</Text>
+              <Text type="grey3">{tr("Managements")}</Text>
             </Container>
             <ListItem bottomDivider onPress={openLanguageSetting}>
               <Feather name="aperture" size={24} color="black" />
@@ -131,7 +131,7 @@ const Profile: React.FC = () => {
                 color={theme.colors.grey3}
               />
             </ListItem>
-            <ListItem onPress={openLanguageSetting}>
+            <ListItem onPress={() => router.push("/comingsoon")}>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Tours")}</ListItem.Title>
@@ -149,9 +149,9 @@ const Profile: React.FC = () => {
           <>
             <WhiteSpace size={20} />
             <Container>
-              <Text color="grey3">{tr("Managements")}</Text>
+              <Text type="grey3">{tr("Managements")}</Text>
             </Container>
-            <ListItem onPress={openLanguageSetting}>
+            <ListItem onPress={() => router.push("/comingSoon")}>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>
@@ -170,9 +170,9 @@ const Profile: React.FC = () => {
         <WhiteSpace size={20} />
 
         <Container>
-          <Text color="grey3">{tr("Requests")}</Text>
+          <Text type="grey3">{tr("Requests")}</Text>
         </Container>
-        <ListItem bottomDivider onPress={openLanguageSetting}>
+        <ListItem bottomDivider onPress={() => router.push("/comingSoon")}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("My Tours Requests")}</ListItem.Title>
@@ -183,7 +183,7 @@ const Profile: React.FC = () => {
             color={theme.colors.grey3}
           />
         </ListItem>
-        <ListItem onPress={openLanguageSetting}>
+        <ListItem onPress={() => router.push("/comingSoon")}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("My Requests")}</ListItem.Title>
@@ -197,6 +197,9 @@ const Profile: React.FC = () => {
 
         <WhiteSpace size={20} />
 
+        <Container>
+          <Text type="grey3">{tr("Other Settings")}</Text>
+        </Container>
         <ListItem bottomDivider onPress={openLanguageSetting}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
@@ -254,11 +257,14 @@ const Profile: React.FC = () => {
             <ListItem.Title style={style.logoutStyle(isRtl)}>{tr("Logout")}</ListItem.Title>
           </ListItem.Content>
         </ListItem>
+
+        <WhiteSpace size={40} />
+
         <Text style={style.version(isRtl)}>
           {tr("version")} {localizeNumber(APP_VERSION)}
         </Text>
+        <WhiteSpace size={10} />
       </ScrollView>
-      <WhiteSpace size={10} />
       <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
         {Object.values(LanguageChoiceEnum).map(lang => (
           <ListItem key={lang} bottomDivider onPress={() => handleChangeLang(lang)}>

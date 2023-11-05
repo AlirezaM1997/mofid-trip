@@ -295,7 +295,7 @@ export const messages = {
   },
   save: {
     ar: "يحفظ",
-    fa_ir: "صرفه جویی",
+    fa_ir: "ثبت",
     en_us: "Save",
   },
   search: {
@@ -1242,5 +1242,15 @@ export const messages = {
     ar: "المضيفين الآخرين",
     fa_ir: "سایر اقامتگاه ها",
     en_us: "Other Hosts",
+  },
+  "other settings": {
+    ar: "اعدادات اخرى",
+    fa_ir: "سایر تنظیمات",
+    en_us: "Other Settings",
+  },
+  "host owner": {
+    ar: "ميزبان",
+    fa_ir: "میزبان",
+    en_us: "Host Owner",
   },
 };

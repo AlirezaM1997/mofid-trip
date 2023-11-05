@@ -2,8 +2,8 @@ query userDetail {
   userDetail {
     id
     username
-    firstName
-    lastName
+    firstname
+    lastname
     email
     bio
     phoneNumber

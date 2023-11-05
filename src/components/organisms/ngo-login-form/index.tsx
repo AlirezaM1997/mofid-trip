@@ -1,4 +1,4 @@
-import Text from "@atoms/text";
+import { Text } from "@rneui/themed";
 import { Button, useTheme } from "@rneui/themed";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";

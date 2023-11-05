@@ -38,8 +38,8 @@ export default () => {
 
       <WhiteSpace size={50} />
       <Container>
-        <Text heading2>{data.NGODetail.title}</Text>
-        <Text>{data.NGODetail.address}</Text>
+        <Text heading2 bold>{data.NGODetail.title}</Text>
+        <Text caption>{data.NGODetail.address}</Text>
         <WhiteSpace size={10} />
         <Text>{data.NGODetail.description}</Text>
       </Container>

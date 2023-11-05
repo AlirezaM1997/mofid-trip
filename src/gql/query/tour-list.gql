@@ -11,18 +11,148 @@ query tourList($search: String, $filter: TourFilterType, $page: PageType!) {
         enName
       }
       origin {
-        projectSet {
-          accommodation {
+        ... on AccommodationQueryType {
+          id
+          province
+          city
+          address
+          lat
+          lng
+          user {
             id
-            address
+            username
+            firstname
+            lastname
+            firstname
+            lastname
+            email
+            bio
+            smsActivationCode
+            phoneNumber
+            isNgo
+            fullname
             avatarS3 {
+              large
+              medium
               small
             }
+            tourtransactionSet {
+              id
+            }
+            transactionSet {
+              id
+            }
+            projectSet {
+              id
+            }
+            accommodationSet {
+              id
+            }
+            setting {
+              language
+            }
+            ngo {
+              id
+            }
+          }
+          projectSet {
+            id
+          }
+          avatarS3 {
+            large
+            medium
+            small
+          }
+          __typename
+        }
+        ... on ProjectQueryType {
+          id
+          creator {
+            id
+            username
+            firstname
+            lastname
+            email
+            bio
+            smsActivationCode
+            phoneNumber
+            isNgo
+            firstname
+            lastname
           }
         }
       }
       destination {
-        address
+        ... on AccommodationQueryType {
+          id
+          province
+          city
+          address
+          lat
+          lng
+          user {
+            id
+            username
+            firstname
+            lastname
+            # firstname
+            # lastname
+            email
+            bio
+            smsActivationCode
+            phoneNumber
+            isNgo
+            fullname
+            avatarS3 {
+              large
+              medium
+              small
+            }
+            tourtransactionSet {
+              id
+            }
+            transactionSet {
+              id
+            }
+            projectSet {
+              id
+            }
+            accommodationSet {
+              id
+            }
+            setting {
+              language
+            }
+            ngo {
+              id
+            }
+          }
+          projectSet {
+            id
+          }
+          avatarS3 {
+            large
+            medium
+            small
+          }
+          __typename
+        }
+        ... on ProjectQueryType {
+          id
+          creator {
+            id
+            username
+            firstname
+            lastname
+            email
+            bio
+            smsActivationCode
+            phoneNumber
+            isNgo
+            firstname
+            lastname
+          }
+        }
       }
       price {
         title

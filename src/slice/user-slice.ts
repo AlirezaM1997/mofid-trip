@@ -12,8 +12,8 @@ const initialState: initialStateType = {
   userDetail: {
     id: null,
     username: '',
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     email: '',
   },
 };

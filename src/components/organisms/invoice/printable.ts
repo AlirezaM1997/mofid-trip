@@ -73,7 +73,7 @@ export const htmlContent = (currentTransaction) => {
           <div style="display: flex; justify-content: space-between; margin: 50px 0">
             <div>
               <h3>from</h3>
-              <p>${owner.firstName || "no name" + owner.lastName}</p>
+              <p>${owner.firstname || "no name" + owner.lastname}</p>
               <p>${project.accommodation.address}</p>
             </div>
             <div>

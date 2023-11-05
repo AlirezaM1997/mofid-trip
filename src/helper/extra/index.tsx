@@ -25,9 +25,9 @@ export const isBase64 = (image: string) => !image.startsWith("http");
 
 export const getFullName = user => {
   if (user) {
-    if (user.firstName && user.lastName) return user.firstName + " " + user.lastName;
-    if (user.lastName) return user.lastName;
-    if (user.firstName) return user.firstName;
+    if (user.firstname && user.lastname) return user.firstname + " " + user.lastname;
+    if (user.lastname) return user.lastname;
+    if (user.firstname) return user.firstname;
     if (user.id) return "User " + user.id;
   }
 };

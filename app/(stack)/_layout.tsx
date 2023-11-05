@@ -119,6 +119,12 @@ const HomeLayout = () => {
           title: tr("successful payment"),
         }}
       />
+      <Stack.Screen
+        name="host-owner"
+        options={{
+          title: tr("Host Owner"),
+        }}
+      />
     </Stack>
   );
 };
