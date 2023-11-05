@@ -23,7 +23,13 @@ const HomeLayout = () => {
             type="clear"
             onPress={() => (Platform.OS === "web" ? history.back() : navigation.goBack())}
             containerStyle={[{ position: "relative" }, [isRtl ? { right: 0 } : { left: 0 }]]}
-            icon={<Feather size={24} name={isRtl ? "arrow-right" : "arrow-left"} color={theme.colors.grey5} />}
+            icon={
+              <Feather
+                size={24}
+                name={isRtl ? "arrow-right" : "arrow-left"}
+                color={theme.colors.grey5}
+              />
+            }
           />
         ),
         headerTitleStyle: style.headerTitleStyle(isRtl),
@@ -45,12 +51,6 @@ const HomeLayout = () => {
         name="login"
         options={{
           title: tr("Login"),
-        }}
-      />
-      <Stack.Screen
-        name="register"
-        options={{
-          title: tr("Register"),
         }}
       />
       <Stack.Screen
@@ -101,6 +101,12 @@ const HomeLayout = () => {
           title: tr("Coming Soon"),
         }}
       />
+      <Stack.Screen
+        name="successPayment"
+        options={{
+          title: tr("successful payment"),
+        }}
+      />
     </Stack>
   );
 };
@@ -108,12 +114,16 @@ const HomeLayout = () => {
 export default HomeLayout;
 
 const style = StyleSheet.create({
-  headerTitleStyle: (isRtl) => ({
+  headerTitleStyle: isRtl => ({
     fontWeight: "400",
-    fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+    fontFamily: isRtl
+      ? "DanaNoEn"
+      : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
   }),
-  headerBackTitleStyle: (isRtl) => ({
+  headerBackTitleStyle: isRtl => ({
     fontWeight: "400",
-    fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+    fontFamily: isRtl
+      ? "DanaNoEn"
+      : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
   }),
 });

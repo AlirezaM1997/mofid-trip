@@ -32,7 +32,7 @@ function PlaceCard({ price, id, name, avatarS3, address }: PropsType) {
     });
   };
 
-  const avatar = avatarS3.length > 0 ? avatarS3[0].small : "";
+  const avatar = avatarS3?.length > 0 ? avatarS3?.[0].small : "";
 
   return (
     <Pressable style={style.container} onPress={handlePress}>

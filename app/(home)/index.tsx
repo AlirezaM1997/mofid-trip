@@ -2,10 +2,10 @@ import { Divider } from "@rneui/themed";
 import TourList from "@organisms/tour-list";
 import HostList from "@organisms/host-list";
 import { SetStateAction, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
 import Container from "@src/components/atoms/container";
 import Banner from "@src/components/atoms/banner/banner";
 import SearchBar from "@src/components/modules/search-bar";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function Index() {
   const [searchText, setSearchText] = useState("");
