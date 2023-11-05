@@ -1,11 +1,11 @@
 import { router } from "expo-router";
+import TourCard from "@modules/tour-card";
 import useTourTable from "@src/hooks/db/tour";
-import { TourQueryType } from "@src/gql/generated";
 import React, { useEffect, useState } from "react";
 import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView, View, StyleSheet } from "react-native";
-import TourCard from "@modules/tour-card";
+import { AccommodationQueryType, TourQueryType } from "@src/gql/generated";
 
 function TourList() {
   const [list, setList] = useState<TourQueryType[]>();
@@ -47,9 +47,9 @@ function TourList() {
               key={index}
               id={tour.id}
               name={tour.title}
-              price={tour.price[0].price}
-              address={tour?.destination?.address || ""}
               avatarS3={tour.avatarS3}
+              price={tour.price[0].price}
+              address={(tour?.destination as AccommodationQueryType)?.address || ""}
             />
           </View>
         ))}
@@ -62,7 +62,6 @@ const style = StyleSheet.create({
   listContainer: {
     minHeight: 370,
     display: "flex",
-    marginBottom: 30,
     flexDirection: "row",
     paddingHorizontal: 24,
   },

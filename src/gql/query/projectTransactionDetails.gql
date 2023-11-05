@@ -5,7 +5,7 @@ query projectTransactionDetail($pk: ID!) {
     dateStart
     owner {
       id
-      lastname
+      fullname
       firstname
     }
     guestSet {

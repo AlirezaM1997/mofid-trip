@@ -51,7 +51,6 @@ function HostList() {
               address={project.accommodation.address}
               avatarS3={project.accommodation.avatarS3}
             />
-
           </View>
         ))}
       </ScrollView>
@@ -61,9 +60,8 @@ function HostList() {
 
 const style = StyleSheet.create({
   listContainer: {
-    minHeight: 370,
+    minHeight: 345,
     display: "flex",
-    marginBottom: 30,
     flexDirection: "row",
     paddingHorizontal: 24,
   },
