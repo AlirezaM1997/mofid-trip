@@ -71,7 +71,7 @@ const ContactCard = ({ user }) => {
           <Feather name="x-circle" size={24} color="black" />
         </Pressable>
         <View style={styles.socialContainer}>
-          <Text variant="body2" color={theme.colors.grey3} style={styles.contactText}>
+          <Text variant="body2" color="grey3" style={styles.contactText}>
             {tr(
               "You can contact the owner of the place through the following social networks or directly"
             )}

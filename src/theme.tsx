@@ -29,15 +29,13 @@ export const theme = isRtl =>
     components: {
       ListItemTitle: {
         style: {
-          fontFamily:
-            'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontFamily: "DanaNoEn",
           fontWeight: "400",
         },
       },
       ListItemSubtitle: {
         style: {
-          fontFamily:
-            'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontFamily: "DanaNoEn",
           fontWeight: "400",
         },
       },
@@ -57,12 +55,10 @@ export const theme = isRtl =>
       Text: ({ bold, italic, underline, center, color, type, ...props }, theme) => {
         let style = {
           fontSize: 14,
-          fontFamily:
-            'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-          fontWeight: bold ? "bold" : "normal",
+          fontFamily: bold ? "DanaNoEnDemiBold" : "DanaNoEn",
           fontStyle: italic ? "italic" : "normal",
           textDecorationLine: underline ? "underline" : "none",
-          textAlign: center ? "center" : "inherit",
+          textAlign: center ? "center" : "auto",
           color: color ? color : type ? theme.colors[type] : theme.colors.black,
           width: props.numberOfLines ? "100%" : "auto",
         };
@@ -109,8 +105,7 @@ export const theme = isRtl =>
 
         let buttonStyle: any = {
           borderRadius: 12,
-          fontFamily:
-            'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontFamily: "DanaNoEn",
           fontWeight: "400",
         };
 
@@ -173,15 +168,13 @@ export const theme = isRtl =>
       Input: {
         labelStyle: {
           marginBottom: 5,
-          fontFamily:
-            'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontFamily: "DanaNoEn",
         },
         inputStyle: {
           borderWidth: 1,
           borderRadius: 12,
           padding: 15,
-          fontFamily:
-            'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontFamily: "DanaNoEn",
           fontWeight: "400",
         },
         inputContainerStyle: {
@@ -195,8 +188,7 @@ export const theme = isRtl =>
       },
       CheckBox: {
         textStyle: {
-          fontFamily:
-            'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontFamily: "DanaNoEn",
           fontWeight: "400",
         },
       },
@@ -216,8 +208,7 @@ export const theme = isRtl =>
         },
         inputStyle: {
           fontSize: 12,
-          fontFamily:
-            'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontFamily: "DanaNoEn",
           fontWeight: "400",
           ...Platform.select({
             web: {
