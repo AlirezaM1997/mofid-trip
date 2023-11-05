@@ -4,8 +4,8 @@ import { TourQueryType } from "@src/gql/generated";
 import React, { useEffect, useState } from "react";
 import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
-import PlaceCard from "@src/components/modules/place-card";
 import { ScrollView, View, StyleSheet } from "react-native";
+import TourCard from "@modules/tour-card";
 
 function TourList() {
   const [list, setList] = useState<TourQueryType[]>();
@@ -43,7 +43,7 @@ function TourList() {
         style={style.listContainer}>
         {list?.map((tour, index) => (
           <View key={index}>
-            <PlaceCard
+            <TourCard
               key={index}
               id={tour.id}
               name={tour.title}

@@ -1,11 +1,11 @@
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import useProjectTable from "@src/hooks/db/project";
 import { ProjectQueryType } from "@src/gql/generated";
 import TitleWithAction from "@modules/title-with-action";
-import PlaceCard from "@src/components/modules/place-card";
 import { ScrollView, View, StyleSheet } from "react-native";
+import HostCard from "@modules/host-card";
 
 function HostList() {
   const [list, setList] = useState<ProjectQueryType[]>();
@@ -43,7 +43,7 @@ function HostList() {
         style={style.listContainer}>
         {list?.map((project, index) => (
           <View key={index}>
-            <PlaceCard
+            <HostCard
               key={index}
               id={project.id}
               name={project.name}
@@ -51,6 +51,7 @@ function HostList() {
               address={project.accommodation.address}
               avatarS3={project.accommodation.avatarS3}
             />
+
           </View>
         ))}
       </ScrollView>

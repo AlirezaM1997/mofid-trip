@@ -1,6 +1,6 @@
 import { Button } from "@rneui/themed";
 import CountDownTimer from "@src/components/atoms/count-down-timer";
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";

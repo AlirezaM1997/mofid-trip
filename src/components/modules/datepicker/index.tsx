@@ -1,4 +1,4 @@
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import dayjs from "dayjs"
 import { FlatList, StyleSheet, View } from "react-native"
 import moment, { Moment } from "moment"

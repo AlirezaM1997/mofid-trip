@@ -13,7 +13,7 @@ import { Platform } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { GuestGenderEnum } from "@src/gql/generated";
 import Input from "@atoms/input";
-import Text from "@atoms/text";
+import { Text } from "@rneui/themed";
 
 const defaultGuest = {
   firstname: "",

@@ -1660,7 +1660,7 @@ export type UerGetTokenMutationResult = Apollo.MutationResult<UerGetTokenMutatio
 export type UerGetTokenMutationOptions = Apollo.BaseMutationOptions<UerGetTokenMutation, UerGetTokenMutationVariables>;
 export const BannerListDocument = gql`
     query bannerList($page: PageType, $search: String) {
-  bannerList(search: $search) {
+  bannerList(search: $search, page: $page) {
     pageCount
     count
     data {
@@ -1673,7 +1673,6 @@ export const BannerListDocument = gql`
         small
       }
     }
-    pageCount
   }
 }
     `;

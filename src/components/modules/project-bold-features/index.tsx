@@ -1,4 +1,4 @@
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import { getCapacity } from "@src/helper/tour"
 import useTranslation from "@src/hooks/translation"
 import { RootState } from "@src/store"

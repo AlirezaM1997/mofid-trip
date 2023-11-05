@@ -21,7 +21,7 @@ export const messages = {
   },
   "anywhere you want": {
     ar: "في أي مكان تريده",
-    fa_ir: "هرجا که بخواهی",
+    fa_ir: "جستجوی تور ها",
     en_us: "Anywhere You Want",
   },
   "are you sure to cancel?": {

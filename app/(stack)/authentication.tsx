@@ -1,5 +1,5 @@
 import { Button } from "@rneui/themed";
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import WhiteSpace from "@src/components/atoms/white-space";
 import useTranslation from "@src/hooks/translation";
 import { useIsAuthenticated } from "@src/hooks/user";

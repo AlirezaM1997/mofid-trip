@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
-import Text from "@src/components/atoms/text";
 import Container from "@src/components/atoms/container";
-import { BottomSheet, Button, ListItem, useTheme } from "@rneui/themed";
+import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "@src/theme";
 import { logout } from "@src/slice/user-slice";
@@ -12,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@src/store";
 import { LanguageChoiceEnum, useSettingEditMutation } from "@src/gql/generated";
 import useSettingDetail from "@src/hooks/db/setting-detail";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { I18nManager } from "react-native";
 import { getFullName } from "@src/helper/extra";
 import useIsRtl from "@src/hooks/localization";
@@ -36,6 +35,7 @@ const Profile: React.FC = () => {
   });
   const { syncTable } = useSettingDetail();
   const [isVisibleLogout, setIsVisibleLogout] = useState(false);
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   I18nManager.allowRTL(true);
 
@@ -92,15 +92,15 @@ const Profile: React.FC = () => {
             )}
 
             <View>
-              <Text variant="heading2">{getFullName(userDetail) || tr("No Name")}</Text>
-              <Text>{userDetail?.username}</Text>
+              <Text heading2>{localizeNumber(getFullName(userDetail)) || tr("No Name")}</Text>
+              <Text center>{localizeNumber(userDetail?.username)}</Text>
             </View>
           </Pressable>
         </Container>
         <WhiteSpace size={20} />
 
         <Container>
-          <Text color={theme.colors.grey3}>{tr("Account")}</Text>
+          <Text color="grey3">{tr("Account")}</Text>
         </Container>
         <ListItem onPress={handleNavigateToEditProfile}>
           <Feather name="user" size={24} color="black" />
@@ -118,7 +118,7 @@ const Profile: React.FC = () => {
           <>
             <WhiteSpace size={20} />
             <Container>
-              <Text color={theme.colors.grey3}>{tr("Managements")}</Text>
+              <Text color="grey3">{tr("Managements")}</Text>
             </Container>
             <ListItem bottomDivider onPress={openLanguageSetting}>
               <Feather name="aperture" size={24} color="black" />
@@ -149,7 +149,7 @@ const Profile: React.FC = () => {
           <>
             <WhiteSpace size={20} />
             <Container>
-              <Text color={theme.colors.grey3}>{tr("Managements")}</Text>
+              <Text color="grey3">{tr("Managements")}</Text>
             </Container>
             <ListItem onPress={openLanguageSetting}>
               <Feather name="aperture" size={24} color="black" />
@@ -170,7 +170,7 @@ const Profile: React.FC = () => {
         <WhiteSpace size={20} />
 
         <Container>
-          <Text color={theme.colors.grey3}>{tr("Requests")}</Text>
+          <Text color="grey3">{tr("Requests")}</Text>
         </Container>
         <ListItem bottomDivider onPress={openLanguageSetting}>
           <Feather name="aperture" size={24} color="black" />
@@ -202,7 +202,7 @@ const Profile: React.FC = () => {
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("Language Settings")}</ListItem.Title>
           </ListItem.Content>
-          <Text color={theme.colors.primary}>{tr(language)}</Text>
+          <Text type="primary">{tr(language)}</Text>
         </ListItem>
         <ListItem bottomDivider onPress={handleNavigateToComingSoon}>
           <Feather name="user-plus" size={24} color="black" />
@@ -254,10 +254,10 @@ const Profile: React.FC = () => {
             <ListItem.Title style={style.logoutStyle(isRtl)}>{tr("Logout")}</ListItem.Title>
           </ListItem.Content>
         </ListItem>
+        <Text style={style.version(isRtl)}>
+          {tr("version")} {localizeNumber(APP_VERSION)}
+        </Text>
       </ScrollView>
-      <Text style={style.version(isRtl)}>
-        {tr("version")} {APP_VERSION}
-      </Text>
       <WhiteSpace size={10} />
       <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
         {Object.values(LanguageChoiceEnum).map(lang => (

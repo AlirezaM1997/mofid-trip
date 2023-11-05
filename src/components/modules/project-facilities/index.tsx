@@ -1,5 +1,5 @@
 import React from "react";
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/store";

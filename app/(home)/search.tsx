@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import SearchBar from "@src/components/modules/search-bar";
-import PlaceCard from "@src/components/modules/place-card";
 import Container from "@src/components/atoms/container";
 import { ScrollView } from "react-native-gesture-handler";
 import { NetworkStatus } from "@apollo/client";
@@ -12,8 +11,11 @@ import NoResult from "@src/components/organisms/no-result";
 import useProjectTable from "@src/hooks/db/project";
 import { ProjectListQueryResult } from "@src/gql/generated";
 import { Button } from "@rneui/themed";
+import TourCard from "@modules/tour-card";
+import useTranslation from "@src/hooks/translation";
 
 const SearchScreen: React.FC = () => {
+  const { tr } = useTranslation();
   const { theme } = useTheme();
   const [searchText, setSearchText] = useState("");
   const [list, setList] = useState<ProjectListQueryResult["data"]["projectList"] | undefined[]>([]);
@@ -63,7 +65,7 @@ const SearchScreen: React.FC = () => {
         ) : (
           <Container size={25} style={styles.resultContainer}>
             {list?.map((project, index) => (
-              <PlaceCard
+              <TourCard
                 key={index}
                 id={project.id}
                 name={project.name}
@@ -74,7 +76,7 @@ const SearchScreen: React.FC = () => {
             ))}
             {list?.length ? (
               <Button type="outline" onPress={() => setPageNumber(pageNumber + 1)}>
-                Fetch More
+                {tr("Fetch More")}
               </Button>
             ) : (
               <NoResult />

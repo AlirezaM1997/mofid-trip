@@ -1,5 +1,5 @@
 import React from "react";
-import Text from "@atoms/text";
+import { Text } from "@rneui/themed";
 import { View } from "react-native";
 import Container from "@atoms/container";
 import useTranslation from "@src/hooks/translation";

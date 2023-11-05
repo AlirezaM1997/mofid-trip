@@ -1,4 +1,4 @@
-import Text from "@atoms/text";
+import { Text } from "@rneui/themed";
 import React, { useState } from "react";
 import Container from "@atoms/container";
 import { StyleSheet, View } from "react-native";

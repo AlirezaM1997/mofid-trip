@@ -1,6 +1,6 @@
 import Container from "@atoms/container";
 import { useTheme } from "@rneui/themed";
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import { Pressable, StyleSheet, View } from "react-native";
 
 type TitleWithActionPropsType = {

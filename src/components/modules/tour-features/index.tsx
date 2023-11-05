@@ -1,4 +1,4 @@
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import { diffDays } from "@src/helper/date"
 import { getCapacity, getGender } from "@src/helper/tour"
 import useTranslation from "@src/hooks/translation"

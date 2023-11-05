@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Avatar, Icon, ListItem } from "@rneui/themed"
 import { Feather } from "@expo/vector-icons"
 import { Platform, StyleSheet, View } from "react-native"
-import { Project_Category } from "@src/gql/generated"
+import { ProjectCategoryEnum } from "@src/gql/generated"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@src/store"
 import { setProjectSetArguments } from "@src/slice/project-slice"
@@ -46,12 +46,12 @@ const FilterPlaceCategory = () => {
       isExpanded={isExpanded}
       onPress={() => setIsExpanded(!isExpanded)}
     >
-      {Object.keys(Project_Category).map((k, index) => (
-        <ListItem key={index} bottomDivider onPress={() => handleChange(k, Project_Category[k])}>
+      {Object.keys(ProjectCategoryEnum).map((k, index) => (
+        <ListItem key={index} bottomDivider onPress={() => handleChange(k, ProjectCategoryEnum[k])}>
           <ListItem.Content>
             <View style={styles.row}>
-              <ListItem.CheckBox checked={projectSetArguments.filter?.categories?.includes(k)} onPress={() => handleChange(k, Project_Category[k])} />
-              <ListItem.Title style={styles.label(isRtl)}>{tr(Project_Category[k])}</ListItem.Title>
+              <ListItem.CheckBox checked={projectSetArguments.filter?.categories?.includes(k)} onPress={() => handleChange(k, ProjectCategoryEnum[k])} />
+              <ListItem.Title style={styles.label(isRtl)}>{tr(ProjectCategoryEnum[k])}</ListItem.Title>
             </View>
           </ListItem.Content>
         </ListItem>

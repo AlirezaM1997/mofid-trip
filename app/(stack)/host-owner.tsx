@@ -1,7 +1,7 @@
 import Container from "@atoms/container";
-import Text from "@atoms/text";
+import { Text } from "@rneui/themed";
 import WhiteSpace from "@atoms/white-space";
-import PlaceCard from "@modules/place-card";
+import TourCard from "@modules/tour-card";
 import { Avatar, Image, useTheme } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import { useNgoDetailQuery } from "@src/gql/generated";
@@ -52,7 +52,7 @@ export default () => {
         <View style={styles.row}>
           {data?.NGODetail?.projectSet?.map(p => (
             <>
-              <PlaceCard
+              <TourCard
                 key={p.id}
                 id={p.id}
                 name={p.name}
@@ -60,7 +60,7 @@ export default () => {
                 avatarS3={p.accommodation.avatarS3}
                 address={p.accommodation[0]?.address}
               />
-              <PlaceCard
+              <TourCard
                 key={p.id}
                 id={p.id}
                 name={p.name}

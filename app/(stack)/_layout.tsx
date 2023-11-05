@@ -48,6 +48,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="/tour/[tourId]"
+        options={{
+          title: tr("Tour"),
+        }}
+      />
+      <Stack.Screen
         name="login"
         options={{
           title: tr("Login"),

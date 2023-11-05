@@ -2,7 +2,7 @@ import { Button } from "@rneui/themed";
 import { Divider } from "@rneui/themed";
 import React, { useEffect } from "react";
 import Map from "@src/components/modules/map";
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 import { getCapacity } from "@src/helper/tour";
 import useTranslation from "@src/hooks/translation";

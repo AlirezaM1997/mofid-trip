@@ -1,26 +1,24 @@
-import React, { useEffect } from "react"
-import { useTheme } from "@rneui/themed"
-import { useDispatch } from "react-redux"
-import Text from "@src/components/atoms/text"
-import { View, Image, StyleSheet, Pressable } from "react-native"
-import { AntDesign, Entypo } from "@expo/vector-icons"
-import { setData } from "@src/slice/transaction-slice"
-import TruncatedText from "@src/components/atoms/text/truncatedText"
-import { dateConverter } from "@src/helper/date"
-import { useNavigation } from "@react-navigation/native"
-import { UserTransactionQueryType } from "@src/gql/generated"
-import useTranslation from "@src/hooks/translation"
+import React, { useEffect } from "react";
+import { useTheme } from "@rneui/themed";
+import { useDispatch } from "react-redux";
+import { Text } from "@rneui/themed";
+import { View, Image, StyleSheet, Pressable } from "react-native";
+import { AntDesign, Entypo } from "@expo/vector-icons";
+import { setData } from "@src/slice/transaction-slice";
+import { dateConverter } from "@src/helper/date";
+import { useNavigation } from "@react-navigation/native";
+import { UserTransactionQueryType } from "@src/gql/generated";
+import useTranslation from "@src/hooks/translation";
 
 type TransactionDetailPropsType = {
-  transaction: UserTransactionQueryType
-}
+  transaction: UserTransactionQueryType;
+};
 
 const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
-
-  const { tr } = useTranslation()
-  const theme = useTheme()
-  const navigation = useNavigation()
-  const dispatch = useDispatch()
+  const { tr } = useTranslation();
+  const theme = useTheme();
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleNavigate = () => {
     navigation.navigate({
@@ -29,12 +27,12 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
         id: transaction?.project.id,
         name: transaction?.project.name,
       },
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    dispatch(setData({ id: transaction.id }))
-  }, [])
+    dispatch(setData({ id: transaction.id }));
+  }, []);
 
   return (
     <Pressable style={styles.container} onPress={handleNavigate}>
@@ -47,12 +45,12 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
       />
 
       <View style={styles.infoContainer}>
-        <TruncatedText variant="subtitle1" title={transaction?.project?.name} />
+        <Text variant="subtitle1">{transaction?.project?.name}</Text>
 
         <View style={styles.content}>
           <View style={styles.infoRow}>
             <Entypo name="location-pin" color={theme.theme.colors.secondary} size={14} />
-            <TruncatedText variant="caption" title={transaction?.project?.accommodation?.address} />
+            <Text variant="caption">{transaction?.project?.accommodation?.address}</Text>
           </View>
 
           <View style={styles.infoRow}>
@@ -71,8 +69,8 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
         </View>
       </View>
     </Pressable>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -97,6 +95,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
-})
+});
 
-export default TransactionDetail
+export default TransactionDetail;

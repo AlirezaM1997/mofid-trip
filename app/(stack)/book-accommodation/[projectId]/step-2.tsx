@@ -1,5 +1,5 @@
 import React from "react";
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
 import useTranslation from "@src/hooks/translation";
 import WhiteSpace from "@src/components/atoms/white-space";
