@@ -3,7 +3,7 @@ query userDetail {
     id
     username
     firstname
-    lastname
+    fullname
     email
     bio
     phoneNumber

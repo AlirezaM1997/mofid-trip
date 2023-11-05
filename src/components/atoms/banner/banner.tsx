@@ -68,7 +68,6 @@ const style = StyleSheet.create({
     width: "100%",
     height: 144,
     overflow: "hidden",
-    marginBottom: 12,
   },
   bannerSize: {
     borderRadius: 8,

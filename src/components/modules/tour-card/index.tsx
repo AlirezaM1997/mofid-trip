@@ -4,13 +4,19 @@ import { Divider } from "@rneui/themed";
 import { Text } from "@rneui/themed";
 import useIsRtl from "@src/hooks/localization";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { TourImageType, TourPriceType, TourQueryType } from "@src/gql/generated";
+import {
+  AccommodationQueryType,
+  TourImageType,
+  TourPriceType,
+  TourQueryType,
+} from "@src/gql/generated";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
 import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native";
+import { WIDTH } from "@src/constants";
 
 type PropsType = {
-  address: TourQueryType["destination"]["address"];
-  price: TourPriceType['price'];
+  address: AccommodationQueryType["address"];
+  price: TourPriceType["price"];
   name: TourQueryType["title"];
   avatarS3: TourImageType[];
   id: TourQueryType["id"];
@@ -80,7 +86,7 @@ function TourCard({ price, id, name, avatarS3, address }: PropsType) {
 
 const style = StyleSheet.create({
   container: {
-    width: "100%",
+    width: WIDTH - 50,
     overflow: "hidden",
     backgroundColor: "#fff",
     elevation: 5,

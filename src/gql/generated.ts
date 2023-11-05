@@ -1409,7 +1409,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
   username: Scalars['String']['output'];
 };
 
@@ -1496,7 +1496,7 @@ export type ProjectDetailQueryVariables = Exact<{
 }>;
 
 
-export type ProjectDetailQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, gender: AccommodationProjectGenderChoices, description?: string | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null }>, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, child: number, female: number } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, creator?: { __typename?: 'UserQueryType', id: string, lastname?: string | null, firstname?: string | null, phoneNumber?: string | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null };
+export type ProjectDetailQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, gender: AccommodationProjectGenderChoices, description?: string | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null }>, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, child: number, female: number } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, creator?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, firstname?: string | null, phoneNumber?: string | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null };
 
 export type ProjectListQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
@@ -1512,7 +1512,7 @@ export type ProjectTransactionDetailQueryVariables = Exact<{
 }>;
 
 
-export type ProjectTransactionDetailQuery = { __typename?: 'Query', projectTransactionDetail?: { __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, owner?: { __typename?: 'UserQueryType', id: string, lastname?: string | null, firstname?: string | null } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, tax?: number | null, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null } | null } | null } | null };
+export type ProjectTransactionDetailQuery = { __typename?: 'Query', projectTransactionDetail?: { __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, firstname?: string | null } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, tax?: number | null, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null } | null } | null } | null };
 
 export type ProjectTransactionListQueryVariables = Exact<{
   page?: InputMaybe<PageType>;
@@ -1520,7 +1520,7 @@ export type ProjectTransactionListQueryVariables = Exact<{
 }>;
 
 
-export type ProjectTransactionListQuery = { __typename?: 'Query', projectTransactionList?: { __typename?: 'ProjectTransactionListType', count?: number | null, pageCount?: number | null, data?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, description?: string | null, invoiceNumber?: any | null, createdDate?: any | null, owner?: { __typename?: 'UserQueryType', id: string, lastname?: string | null, firstname?: string | null } | null, status?: { __typename?: 'StatusQueryType', step?: string | null, isActive?: boolean | null } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, tax?: number | null, price?: number | null, description?: string | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null } | null> | null } | null };
+export type ProjectTransactionListQuery = { __typename?: 'Query', projectTransactionList?: { __typename?: 'ProjectTransactionListType', count?: number | null, pageCount?: number | null, data?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, description?: string | null, invoiceNumber?: any | null, createdDate?: any | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, firstname?: string | null } | null, status?: { __typename?: 'StatusQueryType', step?: string | null, isActive?: boolean | null } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, tax?: number | null, price?: number | null, description?: string | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null } | null> | null } | null };
 
 export type SettingDetailQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -1544,12 +1544,12 @@ export type TourListQueryVariables = Exact<{
 }>;
 
 
-export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description: string, startTime: any, endTime: any, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null } | null> | null, origin?: { __typename: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, user?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, lastname?: string | null, email: string, bio?: string | null, smsActivationCode?: number | null, phoneNumber?: string | null, isNgo?: boolean | null, fullname?: string | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, tourtransactionSet: Array<{ __typename?: 'TourTransactionQueryType', id: string }>, transactionSet: Array<{ __typename?: 'ProjectTransactionQueryType', id: string }>, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string } | null> | null, accommodationSet: Array<{ __typename?: 'AccommodationQueryType', id: string }>, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null, projectSet: Array<{ __typename?: 'ProjectQueryType', id: string }>, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string, creator?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, lastname?: string | null, email: string, bio?: string | null, smsActivationCode?: number | null, phoneNumber?: string | null, isNgo?: boolean | null } | null } | null, destination?: { __typename: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, user?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, lastname?: string | null, email: string, bio?: string | null, smsActivationCode?: number | null, phoneNumber?: string | null, isNgo?: boolean | null, fullname?: string | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, tourtransactionSet: Array<{ __typename?: 'TourTransactionQueryType', id: string }>, transactionSet: Array<{ __typename?: 'ProjectTransactionQueryType', id: string }>, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string } | null> | null, accommodationSet: Array<{ __typename?: 'AccommodationQueryType', id: string }>, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null, projectSet: Array<{ __typename?: 'ProjectQueryType', id: string }>, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string, creator?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, lastname?: string | null, email: string, bio?: string | null, smsActivationCode?: number | null, phoneNumber?: string | null, isNgo?: boolean | null } | null } | null, price?: Array<{ __typename?: 'TourPriceType', title?: string | null, price: number } | null> | null, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
+export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description: string, startTime: any, endTime: any, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, id: string } | { __typename?: 'ProjectQueryType' } | null, price?: Array<{ __typename?: 'TourPriceType', title?: string | null, price: number } | null> | null, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, lastname?: string | null, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null };
+export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, fullname?: string | null, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null };
 
 
 export const CreateLoginDocument = gql`
@@ -2009,7 +2009,7 @@ export const ProjectDetailDocument = gql`
     }
     creator {
       id
-      lastname
+      fullname
       firstname
       phoneNumber
       ngo {
@@ -2137,7 +2137,7 @@ export const ProjectTransactionDetailDocument = gql`
     dateStart
     owner {
       id
-      lastname
+      fullname
       firstname
     }
     guestSet {
@@ -2198,7 +2198,7 @@ export const ProjectTransactionListDocument = gql`
       createdDate
       owner {
         id
-        lastname
+        fullname
         firstname
       }
       status {
@@ -2351,146 +2351,10 @@ export const TourListDocument = gql`
         id
         enName
       }
-      origin {
-        ... on AccommodationQueryType {
-          id
-          province
-          city
-          address
-          lat
-          lng
-          user {
-            id
-            username
-            firstname
-            lastname
-            firstname
-            lastname
-            email
-            bio
-            smsActivationCode
-            phoneNumber
-            isNgo
-            fullname
-            avatarS3 {
-              large
-              medium
-              small
-            }
-            tourtransactionSet {
-              id
-            }
-            transactionSet {
-              id
-            }
-            projectSet {
-              id
-            }
-            accommodationSet {
-              id
-            }
-            setting {
-              language
-            }
-            ngo {
-              id
-            }
-          }
-          projectSet {
-            id
-          }
-          avatarS3 {
-            large
-            medium
-            small
-          }
-          __typename
-        }
-        ... on ProjectQueryType {
-          id
-          creator {
-            id
-            username
-            firstname
-            lastname
-            email
-            bio
-            smsActivationCode
-            phoneNumber
-            isNgo
-            firstname
-            lastname
-          }
-        }
-      }
       destination {
         ... on AccommodationQueryType {
-          id
-          province
-          city
           address
-          lat
-          lng
-          user {
-            id
-            username
-            firstname
-            lastname
-            email
-            bio
-            smsActivationCode
-            phoneNumber
-            isNgo
-            fullname
-            avatarS3 {
-              large
-              medium
-              small
-            }
-            tourtransactionSet {
-              id
-            }
-            transactionSet {
-              id
-            }
-            projectSet {
-              id
-            }
-            accommodationSet {
-              id
-            }
-            setting {
-              language
-            }
-            ngo {
-              id
-            }
-          }
-          projectSet {
-            id
-          }
-          avatarS3 {
-            large
-            medium
-            small
-          }
-          __typename
-        }
-        ... on ProjectQueryType {
           id
-          creator {
-            id
-            username
-            firstname
-            lastname
-            email
-            bio
-            smsActivationCode
-            phoneNumber
-            isNgo
-            firstname
-            lastname
-          }
         }
       }
       price {
@@ -2542,7 +2406,7 @@ export const UserDetailDocument = gql`
     id
     username
     firstname
-    lastname
+    fullname
     email
     bio
     phoneNumber
