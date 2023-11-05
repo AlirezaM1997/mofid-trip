@@ -17,6 +17,10 @@ query NGODetail($pk: ID!) {
         small
       }
     }
+    tours {
+      id
+      title
+    }
     projectSet {
       id
       # type
@@ -30,10 +34,6 @@ query NGODetail($pk: ID!) {
       description
       status
       createdTime
-      tours {
-        id
-        title
-      }
       capacity {
         id
         male
