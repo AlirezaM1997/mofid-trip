@@ -1,5 +1,5 @@
 import { Button } from "@rneui/themed";
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import WhiteSpace from "@src/components/atoms/white-space";
 import useTranslation from "@src/hooks/translation";
 import { useIsAuthenticated } from "@src/hooks/user";
@@ -28,10 +28,10 @@ const Authentication = () => {
         source={require("@assets/image/user-with-phone.jpg")}
       />
       <WhiteSpace size={10} />
-      <Text variant="heading1" style={{ textAlign: "center" }}>
+      <Text heading1 style={{ textAlign: "center" }}>
         {tr("let's start and login to mofid trip")}
       </Text>
-      <Text variant="body2" style={{ textAlign: "center" }}>
+      <Text body2 style={{ textAlign: "center" }}>
         {tr(
           "To reserve the places and use the application, you must log in or register in the first step, otherwise you will not be able to do any activity."
         )}

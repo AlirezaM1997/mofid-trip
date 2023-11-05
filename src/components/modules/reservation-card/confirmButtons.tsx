@@ -10,7 +10,7 @@ import { StatusInputType, Transaction_Status, useUserTransactionEditMutation } f
 import SuccessfulPaymentDetail from "../payment-detail/paymentDetails";
 import { Feather } from "@expo/vector-icons";
 import Container from "@src/components/atoms/container";
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import WhiteSpace from "@src/components/atoms/white-space";
 import useTranslation from "@src/hooks/translation";
 import { router } from "expo-router";

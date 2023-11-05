@@ -1,7 +1,7 @@
 import React from "react";
-import Text from "@atoms/text";
-import Container from "@atoms/container";
 import { StyleSheet, View } from "react-native";
+import { Text } from "@rneui/themed";
+import Container from "@atoms/container";
 import useTranslation from "@src/hooks/translation";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Avatar, Button, useTheme } from "@rneui/themed";
@@ -20,7 +20,7 @@ const SuccessPayment = () => {
   return (
     <>
       <Container style={styles.topContainer}>
-        <Text style={[{ color: theme.colors.success }, styles.title]} variant="heading2">
+        <Text style={[{ color: theme.colors.success }, styles.title]} heading2>
           {tr("payment was successful")}
         </Text>
 
@@ -35,17 +35,17 @@ const SuccessPayment = () => {
             </View>
 
             <View style={styles.tourTitleContainer}>
-              <Text variant="subtitle2">تور ماسوله و مرداب سراوان</Text>
+              <Text subtitle2>تور ماسوله و مرداب سراوان</Text>
               <View style={styles.subtitle}>
                 <Feather name="copy" size={12} color="black" />
-                <Text variant="subtitle2" style={{ color: theme.colors.grey2 }}>
+                <Text subtitle2 style={{ color: theme.colors.grey2 }}>
                   MFT - ۴۵۸۹۲۱۰۹۴۸۳۰۲
                 </Text>
               </View>
             </View>
           </View>
 
-          <Text variant="heading1" style={styles.price}>
+          <Text heading1 style={styles.price}>
             ۲۰۰۰ تومان
           </Text>
 
@@ -68,23 +68,23 @@ const SuccessPayment = () => {
         <View style={[{ borderColor: theme.colors.grey0 }, styles.bottomContent]} />
 
         <CustomView>
-          <Text variant="caption">{tr("time")}</Text>
-          <Text variant="caption">سه شنبه ۹ آبان . ۰۹:۴۵ ق.ظ</Text>
+          <Text caption>{tr("time")}</Text>
+          <Text caption>سه شنبه ۹ آبان . ۰۹:۴۵ ق.ظ</Text>
         </CustomView>
 
         <CustomView>
-          <Text variant="caption">{tr("transmitter")}</Text>
-          <Text variant="caption">سیدمحمدحسین میرشفیعی</Text>
+          <Text caption>{tr("transmitter")}</Text>
+          <Text caption>سیدمحمدحسین میرشفیعی</Text>
         </CustomView>
 
         <CustomView>
-          <Text variant="caption">{tr("transaction type")}</Text>
-          <Text variant="caption">انتقال از کیف پول</Text>
+          <Text caption>{tr("transaction type")}</Text>
+          <Text caption>انتقال از کیف پول</Text>
         </CustomView>
 
         <View style={styles.issueTrackingContainer}>
-          <Text variant="caption">{tr("issue Tracking")}</Text>
-          <Text variant="caption">۸۰۳۳۹۹</Text>
+          <Text caption>{tr("issue Tracking")}</Text>
+          <Text caption>۸۰۳۳۹۹</Text>
         </View>
       </Container>
 

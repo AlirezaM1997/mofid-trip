@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { SECONDARY_COLOR } from "@src/theme";
 import { ImageBackground, Pressable, StyleSheet, View } from "react-native";
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import * as Linking from "expo-linking";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
 import { getFullName } from "@src/helper/extra";
-import TruncatedText from "@src/components/atoms/text/truncatedText";
 import { useIsAuthenticated } from "@src/hooks/user";
 import { BottomSheet, useTheme } from "@rneui/themed";
 import { Ionicons } from "@expo/vector-icons";
@@ -47,7 +46,7 @@ const ContactCard = ({ user }) => {
           />
           <View style={styles.nameContainer}>
             <Text style={styles.contactName}>{tr("Hosted By")}</Text>
-            <TruncatedText
+            <Text
               variant="subtitle1"
               style={styles.contactName}
               width={120}

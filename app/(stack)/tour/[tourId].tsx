@@ -1,11 +1,19 @@
-import React from "react";
+import WhiteSpace from "@atoms/white-space";
 import { Text } from "@rneui/themed";
-import { ImageBackground, StyleSheet, View } from "react-native";
-import WhiteSpace from "@src/components/atoms/white-space";
 import useTranslation from "@src/hooks/translation";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useEffect } from "react";
+import { ImageBackground, StyleSheet, View } from "react-native";
 
-const Page: React.FC = () => {
+export default () => {
   const { tr } = useTranslation();
+  const navigation = useNavigation();
+  const { tourId, name } = useLocalSearchParams();
+
+  useEffect(() => {
+    navigation.setOptions({ title: name });
+  }, [name]);
+
   return (
     <View style={style.container}>
       <ImageBackground
@@ -17,9 +25,9 @@ const Page: React.FC = () => {
         source={require("@assets/image/bottle.jpg")}
       />
       <WhiteSpace size={10} />
-      <Text variant="heading1">{tr("Coming Soon")}</Text>
+      <Text heading1>{tr("Coming Soon")}</Text>
       <WhiteSpace size={10} />
-      <Text variant="body1" style={style.description}>
+      <Text body1 style={style.description}>
         {tr("This section is under development and will be available in the next update.")}
       </Text>
     </View>
@@ -39,5 +47,3 @@ const style = StyleSheet.create({
     color: "#ADAFAE",
   },
 });
-
-export default Page;

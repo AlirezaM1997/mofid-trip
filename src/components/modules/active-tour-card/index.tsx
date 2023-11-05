@@ -1,6 +1,6 @@
 import React from "react"
 import { Ionicons, FontAwesome } from "@expo/vector-icons"
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import { TourTypes } from "@src/gql/generated"
 import { Pressable, StyleSheet, View } from "react-native"
 import { Image } from "@rneui/themed"

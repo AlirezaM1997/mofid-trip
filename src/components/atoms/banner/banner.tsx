@@ -10,6 +10,10 @@ const Banner = ({ name }) => {
   const { loading, data, error } = useBannerListQuery({
     variables: {
       search: name,
+      page: {
+        pageNumber: 1,
+        pageSize: 100
+      }
     },
   });
 
@@ -39,8 +43,8 @@ const Banner = ({ name }) => {
     );
   }
 
-  const banner = data?.bannerList[0];
-
+  const banner = data.bannerList?.data?.[0];
+  
   return (
     <Pressable
       style={style.bannerStyle}

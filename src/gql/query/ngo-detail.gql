@@ -2,6 +2,8 @@ query NGODetail($pk: ID!) {
   NGODetail(pk: $pk) {
     id
     title
+    address
+    description
     avatarS3 {
       large
       medium

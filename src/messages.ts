@@ -21,7 +21,7 @@ export const messages = {
   },
   "anywhere you want": {
     ar: "في أي مكان تريده",
-    fa_ir: "هرجا که بخواهی",
+    fa_ir: "جستجوی تور ها",
     en_us: "Anywhere You Want",
   },
   "are you sure to cancel?": {
@@ -945,5 +945,302 @@ export const messages = {
     ar: "هل أنت متأكد من الدفع؟",
     fa_ir: "آیا مطمئن به پرداخت هستید؟",
     en_us: "Are you sure about the payment?",
+  },
+  "tours and my travels": {
+    ar: "جولاتي وأسفاري",
+    fa_ir: "تور ها و سفر های من",
+    en_us: "Tours and my travels",
+  },
+  "passengers info": {
+    ar: "معلومات الركاب",
+    fa_ir: "اطلاعات مسافران",
+    en_us: "Passengers Info",
+  },
+  "to request and reserve the tour, enter your details and those of your accompanying passengers.":
+    {
+      ar: "لطلب الجولة وحجزها، أدخل بياناتك وبيانات الركاب المرافقين لك.",
+      fa_ir: "برای درخواست و رزرو اولیه تور، مشخصات خودتان  و مسافران همراهتان را وارد کنید.",
+      en_us:
+        "To request and reserve the tour, enter your details and those of your accompanying passengers.",
+    },
+  "add new passenger": {
+    ar: "إضافة راكب جديد",
+    fa_ir: "افزودن مسافر جدید",
+    en_us: "Add new passenger",
+  },
+  "birth date": {
+    ar: "تاريخ الميلاد",
+    fa_ir: "تاریخ تولد",
+    en_us: "Birth Date",
+  },
+  "phone number": {
+    ar: "رقم التليفون",
+    fa_ir: "شماره تلفن",
+    en_us: "Phone Number",
+  },
+  "identify number": {
+    ar: "تحديد الرقم",
+    fa_ir: "کد ملی",
+    en_us: "Identify Number",
+  },
+  first: {
+    ar: "أول",
+    fa_ir: "اولین",
+    en_us: "First",
+  },
+  second: {
+    ar: "ثاني",
+    fa_ir: "دومین",
+    en_us: "Second",
+  },
+  third: {
+    ar: "ثالث",
+    fa_ir: "سومین",
+    en_us: "Third",
+  },
+  fourth: {
+    ar: "رابع",
+    fa_ir: "چهارمین",
+    en_us: "Fourth",
+  },
+  fifth: {
+    ar: "خامس",
+    fa_ir: "پنجمین",
+    en_us: "Fifth",
+  },
+  sixth: {
+    ar: "سادس",
+    fa_ir: "ششمین",
+    en_us: "Sixth",
+  },
+  seventh: {
+    ar: "سابع",
+    fa_ir: "هفتمین",
+    en_us: "Seventh",
+  },
+  eighth: {
+    ar: "ثامن",
+    fa_ir: "هشتمین",
+    en_us: "Eighth",
+  },
+  ninth: {
+    ar: "تاسع",
+    fa_ir: "نهمین",
+    en_us: "Ninth",
+  },
+  tenth: {
+    ar: "عاشر",
+    fa_ir: "دهمین",
+    en_us: "Tenth",
+  },
+  eleventh: {
+    ar: "أحد عشر",
+    fa_ir: "یازدهمین",
+    en_us: "Eleventh",
+  },
+  twelfth: {
+    ar: "الثاني عشر",
+    fa_ir: "دوازدهمین",
+    en_us: "Twelfth",
+  },
+  thirteenth: {
+    ar: "الثالث عشر",
+    fa_ir: "سیزدهمین",
+    en_us: "Thirteenth",
+  },
+  fourteenth: {
+    ar: "الرابع عشر",
+    fa_ir: "چهاردهمین",
+    en_us: "Fourteenth",
+  },
+  fifteenth: {
+    ar: "الخامس عشر",
+    fa_ir: "پانزدهمین",
+    en_us: "Fifteenth",
+  },
+  sixteenth: {
+    ar: "السادس عشر",
+    fa_ir: "شانزدهمین",
+    en_us: "Sixteenth",
+  },
+  seventeenth: {
+    ar: "السابع عشر",
+    fa_ir: "هفدهمین",
+    en_us: "Seventeenth",
+  },
+  eighteenth: {
+    ar: "الثامن عشر",
+    fa_ir: "هجدهمین",
+    en_us: "Eighteenth",
+  },
+  nineteenth: {
+    ar: "التاسع عشر",
+    fa_ir: "نوزدهمین",
+    en_us: "Nineteenth",
+  },
+  twentieth: {
+    ar: "العشرون",
+    fa_ir: "بیستم",
+    en_us: "Twentieth",
+  },
+  "twenty-first": {
+    ar: "الواحد والعشرون",
+    fa_ir: "بیست و یکم",
+    en_us: "Twenty-first",
+  },
+  "twenty-second": {
+    ar: "الثاني والعشرون",
+    fa_ir: "بیست و دوم",
+    en_us: "Twenty-second",
+  },
+  "twenty-third": {
+    ar: "الثالث والعشرون",
+    fa_ir: "بیست و سوم",
+    en_us: "Twenty-third",
+  },
+  "twenty-fourth": {
+    ar: "الرابع والعشرون",
+    fa_ir: "بیست و چهارم",
+    en_us: "Twenty-fourth",
+  },
+  "twenty-fifth": {
+    ar: "الخامس والعشرون",
+    fa_ir: "بیست و پنجم",
+    en_us: "Twenty-fifth",
+  },
+  "twenty-sixth": {
+    ar: "السادس والعشرون",
+    fa_ir: "بیست و ششم",
+    en_us: "Twenty-sixth",
+  },
+  "twenty-seventh": {
+    ar: "السابع والعشرون",
+    fa_ir: "بیست و هفتم",
+    en_us: "Twenty-seventh",
+  },
+  "twenty-eighth": {
+    ar: "الثامن والعشرون",
+    fa_ir: "بیست و هشتم",
+    en_us: "Twenty-eighth",
+  },
+  "twenty-ninth": {
+    ar: "التاسع والعشرون",
+    fa_ir: "بیست و نهم",
+    en_us: "Twenty-ninth",
+  },
+  thirtieth: {
+    ar: "الثلاثون",
+    fa_ir: "سی ام",
+    en_us: "Thirtieth",
+  },
+  "thirty-first": {
+    ar: "الواحد والثلاثون",
+    fa_ir: "سی و یکم",
+    en_us: "Thirty-first",
+  },
+  "thirty-second": {
+    ar: "الثاني والثلاثون",
+    fa_ir: "سی و دوم",
+    en_us: "Thirty-second",
+  },
+  "thirty-third": {
+    ar: "الثالث والثلاثون",
+    fa_ir: "سی و سوم",
+    en_us: "Thirty-third",
+  },
+  "thirty-fourth": {
+    ar: "الرابع والثلاثون",
+    fa_ir: "سی و چهارم",
+    en_us: "Thirty-fourth",
+  },
+  "thirty-fifth": {
+    ar: "الخامس والثلاثون",
+    fa_ir: "سی و پنجم",
+    en_us: "Thirty-fifth",
+  },
+  "thirty-sixth": {
+    ar: "السادس والثلاثون",
+    fa_ir: "سی و ششم",
+    en_us: "Thirty-sixth",
+  },
+  "thirty-seventh": {
+    ar: "السابع والثلاثون",
+    fa_ir: "سی و هفتم",
+    en_us: "Thirty-seventh",
+  },
+  "thirty-eighth": {
+    ar: "الثامن والثلاثون",
+    fa_ir: "سی و هشتم",
+    en_us: "Thirty-eighth",
+  },
+  "thirty-ninth": {
+    ar: "التاسع والثلاثون",
+    fa_ir: "سی و نهم",
+    en_us: "Thirty-ninth",
+  },
+  fortieth: {
+    ar: "الأربعون",
+    fa_ir: "چهلم",
+    en_us: "Fortieth",
+  },
+  "forty-first": {
+    ar: "الواحد والأربعون",
+    fa_ir: "چهل و یکم",
+    en_us: "Forty-first",
+  },
+  "forty-second": {
+    ar: "الثاني والأربعون",
+    fa_ir: "چهل و دوم",
+    en_us: "Forty-second",
+  },
+  "forty-third": {
+    ar: "الثالث والأربعون",
+    fa_ir: "چهل و سوم",
+    en_us: "Forty-third",
+  },
+  "forty-fourth": {
+    ar: "الرابع والأربعون",
+    fa_ir: "چهل و چهارم",
+    en_us: "Forty-fourth",
+  },
+  "forty-fifth": {
+    ar: "الخامس والأربعون",
+    fa_ir: "چهل و پنجم",
+    en_us: "Forty-fifth",
+  },
+  "forty-sixth": {
+    ar: "السادس والأربعون",
+    fa_ir: "چهل و ششم",
+    en_us: "Forty-sixth",
+  },
+  "forty-seventh": {
+    ar: "السابع والأربعون",
+    fa_ir: "چهل و هفتم",
+    en_us: "Forty-seventh",
+  },
+  "forty-eighth": {
+    ar: "الثامن والأربعون",
+    fa_ir: "چهل و هشتم",
+    en_us: "Forty-eighth",
+  },
+  "forty-ninth": {
+    ar: "التاسع والأربعون",
+    fa_ir: "چهل و نهم",
+    en_us: "Forty-ninth",
+  },
+  fiftieth: {
+    ar: "الخمسون",
+    fa_ir: "پنجاهم",
+    en_us: "Fiftieth",
+  },
+  "passenger info": {
+    ar: "معلومات الركاب",
+    fa_ir: "اطلاعات مسافر",
+    en_us: "passenger info",
+  },
+  "other hosts": {
+    ar: "المضيفين الآخرين",
+    fa_ir: "سایر اقامتگاه ها",
+    en_us: "Other Hosts",
   },
 };

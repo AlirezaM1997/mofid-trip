@@ -19,6 +19,7 @@ import useSettingDetail from "@src/hooks/db/setting-detail";
 import { LtrSpecificStyles, RtlSpecificStyles } from "@src/global-style";
 import { View, Platform, StyleSheet, Appearance, I18nManager } from "react-native";
 import { Slot } from "expo-router";
+import useUserDetail from "@src/hooks/db/user-detail";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -39,12 +40,17 @@ const MainContent = () => {
 
   const { data } = useSettingDetailQuery();
   const { syncTable } = useSettingDetail();
+  const { syncTable: syncTableUserDetail } = useUserDetail();
   const userId = useSelector((state: RootState) => state.userSlice?.loginData?.metadata?.id);
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
 
   useEffect(() => {
-    if (data) if (language !== data.settingDetail.language) syncTable({ userId });
+    if (data && language !== data.settingDetail.language) syncTable({ userId });
   }, [data]);
+
+  useEffect(() => {
+    syncTableUserDetail();
+  }, []);
 
   I18nManager.allowRTL(I18nManager.isRTL);
 
@@ -59,7 +65,6 @@ const MainContent = () => {
 };
 
 export default function App() {
-
   const colorScheme = Appearance.getColorScheme();
   const isDarkMode = colorScheme === "dark";
   const [fontsLoaded] = useFonts({

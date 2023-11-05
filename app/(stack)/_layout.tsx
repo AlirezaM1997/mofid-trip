@@ -60,6 +60,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="/tour/[tourId]"
+        options={{
+          title: tr("Tour"),
+        }}
+      />
+      <Stack.Screen
         name="SMS-verification"
         options={{
           title: tr("Verification"),

@@ -3,7 +3,7 @@ import React from "react"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { View, Pressable, StyleSheet } from "react-native"
 import { useTheme } from "@rneui/themed"
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import useTranslation from "@src/hooks/translation"
 import { useRouter } from "expo-router"
 

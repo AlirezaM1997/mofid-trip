@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { ListItem } from "@rneui/themed"
 import { Platform, StyleSheet, View } from "react-native"
-import { Project_Gender, Tag } from "@src/gql/generated"
+import { ProjectGenderEnum } from "@src/gql/generated"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@src/store"
 import { setProjectSetArguments } from "@src/slice/project-slice"
@@ -46,12 +46,12 @@ const FilterGender = () => {
       isExpanded={isExpanded}
       onPress={() => setIsExpanded(!isExpanded)}
     >
-      {Object.keys(Project_Gender).map((k, index) => (
-        <ListItem key={index} bottomDivider onPress={() => handleChange(k, Project_Gender[k])}>
+      {Object.keys(ProjectGenderEnum).map((k, index) => (
+        <ListItem key={index} bottomDivider onPress={() => handleChange(k, ProjectGenderEnum[k])}>
           <ListItem.Content>
             <View style={styles.row}>
-              <ListItem.CheckBox checked={projectSetArguments.filter?.gender?.includes(Project_Gender[k])} onPress={() => handleChange(k, Project_Gender[k])} />
-              <ListItem.Title style={styles.label(isRtl)}>{tr(Project_Gender[k])}</ListItem.Title>
+              <ListItem.CheckBox checked={projectSetArguments.filter?.gender?.includes(ProjectGenderEnum[k])} onPress={() => handleChange(k, ProjectGenderEnum[k])} />
+              <ListItem.Title style={styles.label(isRtl)}>{tr(ProjectGenderEnum[k])}</ListItem.Title>
             </View>
           </ListItem.Content>
         </ListItem>

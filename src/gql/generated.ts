@@ -1400,7 +1400,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
+  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: Scalars['String']['output'];
 };
 
@@ -1480,7 +1480,11 @@ export type NgoDetailQueryVariables = Exact<{
 }>;
 
 
+<<<<<<< HEAD
 export type NgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, title: string, avatarS3?: { __typename?: 'NGOImageType', large?: string | null, medium?: string | null, small?: string | null } | null, user?: { __typename?: 'UserQueryType', id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, dateStart?: any | null, dateEnd?: any | null, gender: AccommodationProjectGenderChoices, requestFrom: AccommodationProjectRequestFromChoices, tax?: number | null, description?: string | null, status: AccommodationProjectStatusChoices, createdTime?: any | null, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, female: number, child: number } | null, categories?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null, displayName?: string | null }>, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null };
+=======
+export type NgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, title: string, address?: string | null, description?: string | null, avatarS3?: { __typename?: 'NGOImageType', large?: string | null, medium?: string | null, small?: string | null } | null, user?: { __typename?: 'UserQueryType', id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, dateStart?: any | null, dateEnd?: any | null, gender: AccommodationProjectGenderChoices, requestFrom: AccommodationProjectRequestFromChoices, tax?: number | null, description?: string | null, status: AccommodationProjectStatusChoices, createdTime?: any | null, tours: Array<{ __typename?: 'TourQueryType', id: string, title: string }>, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, female: number, child: number } | null, categories?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null, displayName?: string | null }>, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null };
+>>>>>>> origin/master
 
 export type ProjectDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
@@ -1777,7 +1781,7 @@ export type UerGetTokenMutationResult = Apollo.MutationResult<UerGetTokenMutatio
 export type UerGetTokenMutationOptions = Apollo.BaseMutationOptions<UerGetTokenMutation, UerGetTokenMutationVariables>;
 export const BannerListDocument = gql`
     query bannerList($page: PageType, $search: String) {
-  bannerList(search: $search) {
+  bannerList(search: $search, page: $page) {
     pageCount
     count
     data {
@@ -1790,7 +1794,6 @@ export const BannerListDocument = gql`
         small
       }
     }
-    pageCount
   }
 }
     `;
@@ -1876,6 +1879,11 @@ export const NgoDetailDocument = gql`
   NGODetail(pk: $pk) {
     id
     title
+<<<<<<< HEAD
+=======
+    address
+    description
+>>>>>>> origin/master
     avatarS3 {
       large
       medium

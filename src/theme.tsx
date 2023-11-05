@@ -2,8 +2,8 @@ import { createTheme } from "@rneui/themed";
 import { DefaultTheme } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Platform } from "react-native";
-import useIsRtl from "./hooks/localization";
 import { WIDTH } from "./constants";
+import useIsRtl from "./hooks/localization";
 
 export const PRIMARY_COLOR = "#FF4332";
 export const SECONDARY_COLOR = "#101010";
@@ -62,30 +62,56 @@ export const theme = isRtl =>
           <LinearGradient {...props} colors={["#e1e8ee", "#d1d8de", "#e1e8ee"]} />
         ),
       },
-      Text: (props, theme) => ({
-        style: {
+      Text: ({ bold, italic, underline, center, color, type, ...props }, theme) => {
+        let style = {
           fontSize: 14,
-          fontFamily: isRtl
-            ? "DanaNoEn"
-            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-          fontWeight: "400",
-          direction: isRtl ? "rtl" : "ltr",
-        },
-        h1Style: {
-          fontSize: 18,
-          fontFamily: isRtl
-            ? "DanaNoEn"
-            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-          fontWeight: "400",
-        },
-        h2Style: {
-          fontSize: 16,
-          fontFamily: isRtl
-            ? "DanaNoEn"
-            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-          fontWeight: "400",
-        },
-      }),
+          fontFamily:
+            'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontWeight: bold ? "bold" : "normal",
+          fontStyle: italic ? "italic" : "normal",
+          textDecorationLine: underline ? "underline" : "none",
+          textAlign: center ? "center" : "inherit",
+          color: color ? color : type ? theme.colors[type] : theme.colors.black,
+          width: props.numberOfLines ? '100%' : 'auto'
+        };
+
+        const heading1Style = { fontSize: 18, lineHeight: 26 };
+        const heading2Style = { fontSize: 16 };
+        const subtitle1Style = { fontSize: 14 };
+        const subtitle2Style = { fontSize: 14 };
+        const body1Style = { fontSize: 14 };
+        const body2Style = { fontSize: 12 };
+        const captionStyle = { fontSize: 12 };
+        const cta1Style = { fontSize: 16 };
+        const cta2Style = { fontSize: 14 };
+        const cta3Style = { fontSize: 12 };
+
+        if (props.heading1) {
+          style = { ...style, ...heading1Style };
+        } else if (props.heading2) {
+          style = { ...style, ...heading2Style };
+        } else if (props.subtitle1) {
+          style = { ...style, ...subtitle1Style };
+        } else if (props.subtitle2) {
+          style = { ...style, ...subtitle2Style };
+        } else if (props.body1) {
+          style = { ...style, ...body1Style };
+        } else if (props.body2) {
+          style = { ...style, ...body2Style };
+        } else if (props.caption) {
+          style = { ...style, ...captionStyle };
+        } else if (props.cta1) {
+          style = { ...style, ...cta1Style };
+        } else if (props.cta2) {
+          style = { ...style, ...cta2Style };
+        } else if (props.cta3) {
+          style = { ...style, ...cta3Style };
+        }
+
+        return {
+          style: style,
+        };
+      },
       Button: (props, theme) => {
         const { type, color, size } = props;
 
@@ -154,6 +180,12 @@ export const theme = isRtl =>
         },
       }),
       Input: {
+        labelStyle: {
+          marginBottom: 5,
+          fontFamily: isRtl
+            ? "DanaNoEn"
+            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+        },
         inputStyle: {
           borderWidth: 1,
           borderRadius: 12,

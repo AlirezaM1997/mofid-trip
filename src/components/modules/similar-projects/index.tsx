@@ -1,4 +1,4 @@
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import { ProjectQueryType } from "@src/gql/generated";
 import { router } from "expo-router";
 import React from "react";

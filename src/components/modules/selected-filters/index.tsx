@@ -1,4 +1,4 @@
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import { RootState } from "@src/store"
 import { ScrollView, StyleSheet } from "react-native"
 import { Pressable, View } from "react-native"

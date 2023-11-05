@@ -1,4 +1,4 @@
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import { getCapacity } from "@src/helper/tour"
 import useTranslation from "@src/hooks/translation"
 import { RootState } from "@src/store"
@@ -16,9 +16,8 @@ const Item = ({ title, subtitle }) => (
   </View>
 )
 
-const ProjectBoldFeatures = () => {
+const ProjectBoldFeatures = ({capacity}) => {
   const { tr } = useTranslation()
-  const { capacity } = useSelector((state: RootState) => state?.projectSlice?.projectDetail)
   const totalCapacity = getCapacity(capacity)
 
   return (
