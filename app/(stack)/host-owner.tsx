@@ -1,7 +1,6 @@
 import Container from "@atoms/container";
 import { Text } from "@rneui/themed";
 import WhiteSpace from "@atoms/white-space";
-import TourCard from "@modules/tour-card";
 import { Avatar, Image, useTheme } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import { useNgoDetailQuery } from "@src/gql/generated";
@@ -10,17 +9,17 @@ import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import HostCard from "@modules/host-card";
 
 const height = 220;
 
 export default () => {
-  const {tr} = useTranslation()
+  const { tr } = useTranslation();
   const { theme } = useTheme();
   const { ngoId } = useLocalSearchParams();
   const { loading, data } = useNgoDetailQuery({ variables: { pk: ngoId as string } });
 
   if (loading) return <ActivityIndicator size="large" color={theme.colors.primary} />;
-
 
   return (
     <ScrollView>
@@ -39,7 +38,7 @@ export default () => {
 
       <WhiteSpace size={50} />
       <Container>
-        <Text variant="heading2">{data.NGODetail.title}</Text>
+        <Text heading2>{data.NGODetail.title}</Text>
         <Text>{data.NGODetail.address}</Text>
         <WhiteSpace size={10} />
         <Text>{data.NGODetail.description}</Text>
@@ -47,28 +46,18 @@ export default () => {
 
       <WhiteSpace size={20} />
       <Container>
-        <Text variant="heading2">{tr("Other Hosts")}</Text>
+        <Text heading2>{tr("Other Hosts")}</Text>
         <WhiteSpace size={10} />
         <View style={styles.row}>
           {data?.NGODetail?.projectSet?.map(p => (
-            <>
-              <TourCard
-                key={p.id}
-                id={p.id}
-                name={p.name}
-                price={p.price}
-                avatarS3={p.accommodation.avatarS3}
-                address={p.accommodation[0]?.address}
-              />
-              <TourCard
-                key={p.id}
-                id={p.id}
-                name={p.name}
-                price={p.price}
-                avatarS3={p.accommodation.avatarS3}
-                address={p.accommodation[0]?.address}
-              />
-            </>
+            <HostCard
+              key={p.id}
+              id={p.id}
+              name={p.name}
+              price={p.price}
+              avatarS3={p.accommodation.avatarS3}
+              address={p.accommodation[0]?.address}
+            />
           ))}
         </View>
         {!data?.NGODetail?.projectSet?.length && <Text>No project</Text>}

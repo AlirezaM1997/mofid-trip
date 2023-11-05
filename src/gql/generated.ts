@@ -1535,7 +1535,7 @@ export type TourListQueryVariables = Exact<{
 }>;
 
 
-export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description: string, startTime: any, endTime: any, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null } | null> | null, price?: Array<{ __typename?: 'TourPriceType', title?: string | null, price: number } | null> | null, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
+export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description: string, startTime: any, endTime: any, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null } | null> | null, origin?: { __typename?: 'AccommodationQueryType', projectSet: Array<{ __typename?: 'ProjectQueryType', accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null }> } | null, destination?: { __typename?: 'AccommodationQueryType', address?: string | null } | null, price?: Array<{ __typename?: 'TourPriceType', title?: string | null, price: number } | null> | null, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2340,6 +2340,20 @@ export const TourListDocument = gql`
       facilities {
         id
         enName
+      }
+      origin {
+        projectSet {
+          accommodation {
+            id
+            address
+            avatarS3 {
+              small
+            }
+          }
+        }
+      }
+      destination {
+        address
       }
       price {
         title

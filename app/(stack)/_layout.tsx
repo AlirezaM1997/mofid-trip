@@ -48,15 +48,21 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="/tour/[tourId]"
+        name="userLogin"
         options={{
-          title: tr("Tour"),
+          title: tr("log in , sign up"),
         }}
       />
       <Stack.Screen
-        name="login"
+        name="ngoLogin"
         options={{
-          title: tr("Login"),
+          title: tr("log in , sign up"),
+        }}
+      />
+      <Stack.Screen
+        name="/tour/[tourId]"
+        options={{
+          title: tr("Tour"),
         }}
       />
       <Stack.Screen

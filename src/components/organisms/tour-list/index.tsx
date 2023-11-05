@@ -48,8 +48,8 @@ function TourList() {
               id={tour.id}
               name={tour.title}
               price={tour.price[0].price}
-              address={tour.projects?.[0].accommodation?.address}
-              avatarS3={tour.projects?.[0].accommodation?.avatarS3}
+              address={tour?.destination?.address || ""}
+              avatarS3={tour.avatarS3}
             />
           </View>
         ))}

@@ -28,10 +28,10 @@ const Authentication = () => {
         source={require("@assets/image/user-with-phone.jpg")}
       />
       <WhiteSpace size={10} />
-      <Text variant="heading1" style={{ textAlign: "center" }}>
+      <Text heading1 style={{ textAlign: "center" }}>
         {tr("let's start and login to mofid trip")}
       </Text>
-      <Text variant="body2" style={{ textAlign: "center" }}>
+      <Text body2 style={{ textAlign: "center" }}>
         {tr(
           "To reserve the places and use the application, you must log in or register in the first step, otherwise you will not be able to do any activity."
         )}
@@ -42,7 +42,7 @@ const Authentication = () => {
           size="lg"
           color="secondary"
           containerStyle={style.buttonItem}
-          onPress={() => handleLogin("login")}>
+          onPress={() => handleLogin("userLogin")}>
           {tr("Login")}
         </Button>
         <Button
@@ -50,7 +50,7 @@ const Authentication = () => {
           color="secondary"
           type="outline"
           containerStyle={[style.buttonItem]}
-          onPress={() => handleLogin("login")}>
+          onPress={() => handleLogin("userLogin")}>
           {tr("Register")}
         </Button>
       </View>

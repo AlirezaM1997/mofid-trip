@@ -1,7 +1,7 @@
 import React from "react";
-import NgoLoginForm from "@organisms/ngo-login-form";
+import UserLoginForm from "@organisms/user-login-form";
 
 const LoginScreen = () => {
-  return <NgoLoginForm />;
+  return <UserLoginForm />;
 };
 export default LoginScreen;

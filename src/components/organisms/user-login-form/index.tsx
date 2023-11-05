@@ -1,4 +1,4 @@
-import { Text } from "@rneui/themed";
+import { Text, useTheme } from "@rneui/themed";
 import { Button } from "@rneui/themed";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
@@ -9,7 +9,8 @@ import CountryPicker from "@src/components/modules/country-picker";
 import useTranslation from "@src/hooks/translation";
 import { router } from "expo-router";
 
-const Registration = ({ type }: { type: "dataUser" | "dataNgo" }) => {
+const UserLoginForm = () => {
+  const { theme } = useTheme();
   const { tr } = useTranslation();
   const [phone, setPhone] = useState("");
   const [callingCode, setCallingCode] = useState("+964");
@@ -40,13 +41,13 @@ const Registration = ({ type }: { type: "dataUser" | "dataNgo" }) => {
     <>
       <View style={style.container}>
         <Container>
+          <WhiteSpace size={32} />
+          <Text heading1>{tr("log in , sign up")}</Text>
           <WhiteSpace size={10} />
-          <Text variant="heading2">{tr("log in , sign up")}</Text>
-          <Text variant="body1">
-            To enter and create an account in Mofid Trip, enter your mobile number to enter the
-            program
+          <Text caption style={{ color: theme.colors.grey2 }}>
+            {tr("enter your mobile number to log in and create an account on mofidtrip")}
           </Text>
-          <WhiteSpace size={10} />
+          <WhiteSpace size={24} />
           <CountryPicker
             callingCode={callingCode}
             setCallingCode={setCallingCode}
@@ -56,12 +57,11 @@ const Registration = ({ type }: { type: "dataUser" | "dataNgo" }) => {
         </Container>
       </View>
       <Container>
-        <Pressable style={style.bottomTextContainer} onPress={() => router.push("/login")}>
-          <Text>Haven't registered yet? </Text>
-          <Text style={style.registerText}>Register</Text>
+        <Pressable style={style.bottomTextContainer} onPress={() => router.push("/ngoLogin")}>
+          <Text style={style.registerText}>{tr("sign in as an organization")}</Text>
         </Pressable>
 
-        <WhiteSpace size={10} />
+        <WhiteSpace size={16} />
         <Button
           size="lg"
           onPress={handlePress}
@@ -95,4 +95,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default Registration;
+export default UserLoginForm;
