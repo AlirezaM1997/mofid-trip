@@ -24,7 +24,7 @@ const ContactCard = ({ user }) => {
     if (isAuthenticated) {
       setIsVisible(true);
     } else {
-      router.push("/login");
+      router.push("/userLogin");
     }
   };
 

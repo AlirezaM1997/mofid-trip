@@ -742,6 +742,26 @@ export const messages = {
     fa_ir: "میزان",
     en_us: "Amount",
   },
+  "log in as an individual": {
+    ar: "تسجيل الدخول كفرد",
+    fa_ir: "ورود به عنوان فرد",
+    en_us: "Log in as an individual",
+  },
+  "log in, register as a collection": {
+    ar: "تسجيل الدخول، سجل كمجموعة",
+    fa_ir: "ورود ، ثبت نام به عنوان مجموعه",
+    en_us: "Log in, register as a collection",
+  },
+  "enter your mobile number to log in and create an account on mofidtrip": {
+    ar: "أدخل رقم هاتفك المحمول لتسجيل الدخول وإنشاء حساب على Mofidtrip.",
+    fa_ir: "برای ورود و ایجاد حساب در مفیدتریپ ، شماره همراه خودتان را وارد کنید.",
+    en_us: "Enter your mobile number to log in and create an account on Mofidtrip",
+  },
+  "sign in as an organization": {
+    ar: "تسجيل الدخول كمنظمة",
+    fa_ir: "ورود به عنوان تشکل",
+    en_us: "Sign in as an organization",
+  },
   "log in , sign up": {
     ar: "الدخول ، التسجيل فى الموقع",
     fa_ir: "ورود ، ثبت نام",

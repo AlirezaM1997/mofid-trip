@@ -48,9 +48,15 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="login"
+        name="userLogin"
         options={{
-          title: tr("Login"),
+          title: tr("log in , sign up"),
+        }}
+      />
+      <Stack.Screen
+        name="ngoLogin"
+        options={{
+          title: tr("log in , sign up"),
         }}
       />
       <Stack.Screen
