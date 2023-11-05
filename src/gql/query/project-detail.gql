@@ -23,7 +23,7 @@ query projectDetail($pk: ID!) {
     }
     creator {
       id
-      lastname
+      fullname
       firstname
       phoneNumber
       ngo {

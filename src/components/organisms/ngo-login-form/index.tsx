@@ -1,5 +1,4 @@
-import { Text } from "@rneui/themed";
-import { Button, useTheme } from "@rneui/themed";
+import { Button, Text, useTheme } from "@rneui/themed";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import React, { useEffect, useState } from "react";
@@ -42,9 +41,9 @@ const NgoLoginForm = () => {
       <View style={style.container}>
         <Container>
           <WhiteSpace size={32} />
-          <Text variant="heading1">{tr("log in, register as a collection")}</Text>
+          <Text heading1>{tr("log in, register as a collection")}</Text>
           <WhiteSpace size={10} />
-          <Text variant="caption" style={{ color: theme.colors.grey2 }}>
+          <Text caption style={{ color: theme.colors.grey2 }}>
             {tr("enter your mobile number to log in and create an account on mofidtrip")}
           </Text>
           <WhiteSpace size={24} />

@@ -19,20 +19,25 @@ export default function Index() {
     <>
       <SearchBar onChangeText={handleChange} value={searchText} />
       <Divider />
-      <ScrollView>
-      <WhiteSpace size={10} />
-        <Container style={style.container}>
+      <ScrollView style={style.container}>
+        <Container>
           <Banner name="home-1" />
         </Container>
+        
+        <WhiteSpace size={32} />
 
         <WhiteSpace size={20} />
         <TourList />
-
-        <Container style={style.container}>
+        
+        <WhiteSpace size={32} />
+        
+        <Container>
           <Banner name="home-2" />
         </Container>
         <WhiteSpace size={20} />
 
+        <WhiteSpace size={32} />
+        
         <HostList />
       </ScrollView>
     </>
@@ -40,5 +45,5 @@ export default function Index() {
 }
 
 const style = StyleSheet.create({
-  container: { marginTop: 4, gap: 20 },
+  container: { marginTop: 40 },
 });
