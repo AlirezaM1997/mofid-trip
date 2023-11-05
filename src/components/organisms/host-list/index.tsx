@@ -6,6 +6,7 @@ import { ProjectQueryType } from "@src/gql/generated";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView, View, StyleSheet } from "react-native";
 import HostCard from "@modules/host-card";
+import WhiteSpace from "@atoms/white-space";
 
 function HostList() {
   const [list, setList] = useState<ProjectQueryType[]>();
@@ -39,8 +40,9 @@ function HostList() {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ gap: 10 }}
+        contentContainerStyle={style.gap}
         style={style.listContainer}>
+        <View style={style.spacer}></View>
         {list?.map((project, index) => (
           <View key={index}>
             <HostCard
@@ -53,6 +55,7 @@ function HostList() {
             />
           </View>
         ))}
+        <View style={style.spacer}></View>
       </ScrollView>
     </>
   );
@@ -63,8 +66,9 @@ const style = StyleSheet.create({
     minHeight: 345,
     display: "flex",
     flexDirection: "row",
-    paddingHorizontal: 24,
   },
+  gap: { gap: 10 },
+  spacer: { width: 15 },
 });
 
 export default HostList;

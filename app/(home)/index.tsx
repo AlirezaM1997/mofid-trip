@@ -39,6 +39,8 @@ export default function Index() {
         <WhiteSpace size={32} />
         
         <HostList />
+        
+        <WhiteSpace size={10} />
       </ScrollView>
     </>
   );

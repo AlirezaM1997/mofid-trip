@@ -60,7 +60,11 @@ export const theme = isRtl =>
           textDecorationLine: underline ? "underline" : "none",
           textAlign: center ? "center" : "auto",
           color: color ? color : type ? theme.colors[type] : theme.colors.black,
-          width: props.numberOfLines ? "100%" : "auto",
+          ...Platform.select({
+            web: {
+              width: props.numberOfLines ? "100%" : "auto"
+            }
+          })
         };
 
         const heading1Style = { fontSize: 18, lineHeight: 26 };
