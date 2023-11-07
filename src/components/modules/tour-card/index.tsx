@@ -72,7 +72,7 @@ function TourCard({ price, id, name, avatarS3, address }: PropsType) {
       <View>
         <View style={style.bottom}>
           <View style={style.bottomStyle}>
-            <Text subtitle1 style={style.price}>
+            <Text subtitle1 bold>
               ${localizeNumber(price.toString())}
             </Text>
             <Text>/ {tr("night")}</Text>
@@ -117,7 +117,6 @@ const style = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 15,
   },
-  price: { fontWeight: "bold" },
   bottom: {
     display: "flex",
     flexDirection: "row",

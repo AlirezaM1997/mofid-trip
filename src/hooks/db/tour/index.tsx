@@ -36,7 +36,6 @@ const useTourTable = () => {
 
   const search = ({ search, filter, page }: TourListQueryVariables) => {
     if (!tourList.data) return [];
-    console.log("data", tourList);
 
     let result = tourList.data;
     if (search) {

@@ -266,8 +266,8 @@ const Profile: React.FC = () => {
         <WhiteSpace size={10} />
       </ScrollView>
       <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
-        {Object.values(LanguageChoiceEnum).map(lang => (
-          <ListItem key={lang} bottomDivider onPress={() => handleChangeLang(lang)}>
+        {Object.values(LanguageChoiceEnum).map((lang, index) => (
+          <ListItem key={lang} bottomDivider={index !== 2} onPress={() => handleChangeLang(lang)}>
             <ListItem.CheckBox
               checkedIcon={<Feather name="check-circle" size={24} />}
               uncheckedIcon={<Feather name="circle" size={24} />}

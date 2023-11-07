@@ -47,7 +47,7 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
       </View>
       <View style={style.top}>
         <View style={style.top2}>
-          <Text heading2 bold>
+          <Text heading2 bold >
             {name}
           </Text>
           <View style={style.rate}>
@@ -66,7 +66,7 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
       <View>
         <View style={style.bottom}>
           <View style={style.bottomStyle}>
-            <Text subtitle1 style={style.price}>
+            <Text subtitle1 bold>
               ${localizeNumber(price.toString())}
             </Text>
             <Text>/ {tr("night")}</Text>
@@ -85,6 +85,7 @@ const style = StyleSheet.create({
     backgroundColor: "#fff",
     elevation: 5,
     borderRadius: 12,
+    marginBottom: 10,
     ...Platform.select({
       web: { boxShadow: "0 0 5px #12121233" },
     }),
@@ -111,7 +112,6 @@ const style = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 15,
   },
-  price: { fontWeight: "bold" },
   bottom: {
     display: "flex",
     flexDirection: "row",
