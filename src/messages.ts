@@ -1043,6 +1043,11 @@ export const messages = {
     fa_ir: "دوازدهمین",
     en_us: "Twelfth",
   },
+  "at what stage is your application?": {
+    ar: "في أي مرحلة هو طلبك؟",
+    fa_ir: "درخواست شما در چه مرحله ای است؟",
+    en_us: "at what stage is your application?",
+  },
   thirteenth: {
     ar: "الثالث عشر",
     fa_ir: "سیزدهمین",

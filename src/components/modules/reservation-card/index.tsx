@@ -1,26 +1,28 @@
-import Stepper from "../stepper"
-import { Divider } from "@rneui/base"
-import React, { useEffect, useState } from "react"
-import TransactionDetail from "./details"
-import ConfirmButton from "./confirmButtons"
-import { StyleSheet, View } from "react-native"
-import { UserTransactionQueryType } from "@src/gql/generated"
-import useTranslation from "@src/hooks/translation"
+import Stepper from "../stepper";
+import { Divider } from "@rneui/base";
+import TransactionDetail from "./details";
+import ConfirmButton from "./confirmButtons";
+import { StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import useTranslation from "@src/hooks/translation";
+import { ProjectTransactionQueryType } from "@src/gql/generated";
 
 type PropsType = {
-  index: number
-  transaction: UserTransactionQueryType
-  onCancelRequest: () => void
-}
+  index: number;
+  transaction: ProjectTransactionQueryType;
+};
 
-const ReservationCard = ({ transaction, index, onCancelRequest }: PropsType) => {
-  const { tr } = useTranslation()
-  const steps = [tr("my request"), tr("Accepting"), tr("payment"), tr("Successful")]
-  const [status, setStatus] = useState<{ step: number | string; isActive: boolean }>({ step: 0, isActive: false })
+const ReservationCard = ({ transaction, index }: PropsType) => {
+  const { tr } = useTranslation();
+  const steps = [tr("my request"), tr("Accepting"), tr("payment"), tr("Successful")];
+  const [status, setStatus] = useState<{ step: number | string; isActive: boolean }>({
+    step: 0,
+    isActive: false,
+  });
 
   useEffect(() => {
-    setStatus({ step: transaction.status.step, isActive: transaction.status.isActive })
-  }, [transaction])
+    setStatus({ step: transaction.status.step, isActive: transaction.status.isActive });
+  }, [transaction]);
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
@@ -28,9 +30,9 @@ const ReservationCard = ({ transaction, index, onCancelRequest }: PropsType) => 
       ACCEPT: 2,
       PAYMENT: 3,
       SUCCESSFUL: 4,
-    }
-    return lookup[status?.step || 0]
-  }
+    };
+    return lookup[status?.step || 0];
+  };
 
   return (
     <>
@@ -41,17 +43,16 @@ const ReservationCard = ({ transaction, index, onCancelRequest }: PropsType) => 
         <ConfirmButton
           status={status}
           setStatus={setStatus}
-          apiTransactionStep={transaction.status?.step as string}
           transactionId={transaction.id}
-          onCancelRequest={onCancelRequest}
+          apiTransactionStep={transaction.status?.step as string}
         />
       </View>
     </>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: { paddingVertical: 14, gap: 24 },
-})
+});
 
-export default ReservationCard
+export default ReservationCard;

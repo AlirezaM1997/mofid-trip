@@ -1,28 +1,27 @@
+import { router } from "expo-router";
+import { Text } from "@rneui/themed";
 import React, { useEffect } from "react";
 import { useTheme } from "@rneui/themed";
 import { useDispatch } from "react-redux";
-import { Text } from "@rneui/themed";
-import { View, Image, StyleSheet, Pressable } from "react-native";
+import { dateConverter } from "@src/helper/date";
+import useTranslation from "@src/hooks/translation";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import { setData } from "@src/slice/transaction-slice";
-import { dateConverter } from "@src/helper/date";
-import { useNavigation } from "@react-navigation/native";
-import { UserTransactionQueryType } from "@src/gql/generated";
-import useTranslation from "@src/hooks/translation";
+import { ProjectTransactionQueryType } from "@src/gql/generated";
+import { View, Image, StyleSheet, Pressable } from "react-native";
 
 type TransactionDetailPropsType = {
-  transaction: UserTransactionQueryType;
+  transaction: ProjectTransactionQueryType;
 };
 
 const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
-  const { tr } = useTranslation();
   const theme = useTheme();
-  const navigation = useNavigation();
   const dispatch = useDispatch();
+  const { tr } = useTranslation();
 
   const handleNavigate = () => {
-    navigation.navigate({
-      name: "ProjectScreen",
+    router.push({
+      pathname: "ProjectScreen",
       params: {
         id: transaction?.project.id,
         name: transaction?.project.name,
@@ -45,24 +44,24 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
       />
 
       <View style={styles.infoContainer}>
-        <Text variant="subtitle1">{transaction?.project?.name}</Text>
+        <Text subtitle1>{transaction?.project?.name}</Text>
 
         <View style={styles.content}>
           <View style={styles.infoRow}>
             <Entypo name="location-pin" color={theme.theme.colors.secondary} size={14} />
-            <Text variant="caption">{transaction?.project?.accommodation?.address}</Text>
+            <Text caption>{transaction?.project?.accommodation?.address}</Text>
           </View>
 
           <View style={styles.infoRow}>
             <AntDesign name="calendar" color={theme.theme.colors.secondary} size={14} />
-            <Text variant="caption">
+            <Text caption>
               {dateConverter(transaction?.dateStart)} To {dateConverter(transaction?.dateEnd)}
             </Text>
           </View>
 
           <View style={styles.infoRow}>
             <AntDesign name="user" color={theme.theme.colors.secondary} size={14} />
-            <Text variant="caption">
+            <Text caption>
               {transaction?.guestSet?.length} {tr("Person")}
             </Text>
           </View>
