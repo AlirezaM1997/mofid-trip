@@ -1,13 +1,20 @@
+import React from "react";
 import { Text } from "@rneui/themed";
-import React, { useState } from "react";
 import Container from "@atoms/container";
 import { StyleSheet, View } from "react-native";
 import { BottomSheet, Button } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
+import { ApolloCache, DefaultContext, MutationFunctionOptions } from "@apollo/client";
+import { Exact, TourPurchaseAddInputData, TourPurchaseAddMutation } from "@src/gql/generated";
 
-const AcceptPayment = () => {
+type PropsType = {
+  isVisible: boolean;
+  setIsVisible: (t: boolean) => void;
+  purchaseHandler: () => void;
+};
+
+const AcceptPayment = ({ isVisible, setIsVisible, purchaseHandler }: PropsType) => {
   const { tr } = useTranslation();
-  const [isVisible, setIsVisible] = useState(true);
 
   return (
     <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
@@ -20,8 +27,12 @@ const AcceptPayment = () => {
         </View>
 
         <View style={styles.btnContainer}>
-          <Button type="outline">{tr("cancel payment")}</Button>
-          <Button>{tr("pay")}</Button>
+          <Button type="outline" onPress={() => purchaseHandler()} containerStyle={styles.button}>
+            {tr("cancel payment")}
+          </Button>
+          <Button onPress={() => setIsVisible(false)} containerStyle={styles.button}>
+            {tr("pay")}
+          </Button>
         </View>
       </Container>
     </BottomSheet>
@@ -33,12 +44,14 @@ const styles = StyleSheet.create({
   headerText: { textAlign: "center" },
   container: { margin: "auto", gap: 24 },
   btnContainer: {
+    gap: 7,
+    width: "100%",
     display: "flex",
-    justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    gap: 7,
+    justifyContent: "center",
   },
+  button: { width: "50%" },
 });
 
 export default AcceptPayment;

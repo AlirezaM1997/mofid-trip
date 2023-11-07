@@ -1,0 +1,8 @@
+mutation tourPurchaseAdd($data: TourPurchaseAddInputData!) {
+  tourPurchaseAdd(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}

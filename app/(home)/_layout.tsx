@@ -1,6 +1,6 @@
 import { Tabs } from "expo-router/tabs";
-import { useTheme } from "@rneui/themed";
-import { StyleSheet } from "react-native";
+import { Button, useTheme } from "@rneui/themed";
+import { Platform, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import useTranslation from "@src/hooks/translation";
@@ -26,51 +26,55 @@ export default function AppLayout() {
     <Tabs
       initialRouteName="index"
       sceneContainerStyle={{ backgroundColor: "#fff" }}
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         tabBarStyle: style.tabBarStyle,
         tabBarActiveTintColor: theme.colors.primary,
         tabBarLabelStyle: style.tabBarLabelStyle(isRtl),
         headerTitleStyle: style.headerTitleStyle(isRtl),
-        headerShown: false,
-      }}
-    >
+        headerTitleAlign: "center",
+        headerLeft: () => (
+          <Button
+            type="clear"
+            onPress={() => (Platform.OS === "web" ? history.back() : navigation.goBack())}
+            containerStyle={[{ position: "relative" }, [isRtl ? { right: 0 } : { left: 0 }]]}
+            icon={
+              <Feather
+                size={24}
+                name={isRtl ? "arrow-right" : "arrow-left"}
+                color={theme.colors.grey5}
+              />
+            }
+          />
+        ),
+      })}>
       <Tabs.Screen
         name="index"
         options={{
           title: tr("Home"),
+          headerShown: false,
           tabBarLabel: tr("Home"),
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="home" size={size} color={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="search"
         options={{
           title: tr("Search"),
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="search" size={size} color={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <Feather name="search" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="reservation"
-        getId={() => Date.now().toString()}
         options={{
-          title: tr("Reservation"),
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="bookmark" size={size} color={color} />
-          ),
+          title: tr("my requests"),
+          tabBarIcon: ({ color, size }) => <Feather name="bookmark" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="profile"
-        getId={() => Date.now().toString()}
         options={{
           title: tr("Profile"),
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="user" size={size} color={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
         }}
       />
     </Tabs>
@@ -82,13 +86,13 @@ const style = StyleSheet.create({
     paddingBottom: 5,
     height: 55,
   },
-  tabBarLabelStyle: (isRtl) => ({
+  tabBarLabelStyle: isRtl => ({
     fontWeight: "400",
     fontFamily: isRtl
       ? "DanaNoEn"
       : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
   }),
-  headerTitleStyle: (isRtl) => ({
+  headerTitleStyle: isRtl => ({
     fontWeight: "400",
     fontFamily: isRtl
       ? "DanaNoEn"

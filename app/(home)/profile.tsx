@@ -114,7 +114,7 @@ const Profile: React.FC = () => {
           />
         </ListItem>
 
-        {userDetail.isNgo && (
+        {userDetail?.isNgo && (
           <>
             <WhiteSpace size={20} />
             <Container>
@@ -145,7 +145,7 @@ const Profile: React.FC = () => {
           </>
         )}
 
-        {!userDetail.isNgo && (
+        {!userDetail?.isNgo && (
           <>
             <WhiteSpace size={20} />
             <Container>

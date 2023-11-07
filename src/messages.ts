@@ -931,6 +931,21 @@ export const messages = {
     fa_ir: "مدیریت ها",
     en_us: "Managements",
   },
+  "tour transactions": {
+    ar: "طلب جولة",
+    fa_ir: "داخواست‌ به تور",
+    en_us: "Tour transactions",
+  },
+  "host transactions": {
+    ar: "طلب استضافة",
+    fa_ir: "داخواست‌ به هاست",
+    en_us: "Host transactions",
+  },
+  "manage your requests for hosting and trips": {
+    ar: "إدارة طلباتك للاستضافة والرحلات",
+    fa_ir: "مدیریت درخواست های شما به میزبانی ها و سفرهای انجام شده",
+    en_us: "Manage your requests for hosting and trips",
+  },
   requests: {
     ar: "طلبات",
     fa_ir: "درخواست ها",

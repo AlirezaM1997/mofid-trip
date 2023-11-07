@@ -29,7 +29,7 @@ export const useLocalizedNumberFormat = () => {
   );
 
   const localizeNumber = (number: string | number) => {
-    const n = number.toString()
+    const n = number?.toString();
     if ((language as string) === LanguageChoiceEnum.FaIr) {
       return convertToPersianNumbers(n);
     } else if ((language as string) === LanguageChoiceEnum.Ar) {

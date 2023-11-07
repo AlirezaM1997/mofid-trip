@@ -7,7 +7,7 @@ import { dateConverter } from "@src/helper/date";
 import useTranslation from "@src/hooks/translation";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import { setData } from "@src/slice/transaction-slice";
-import { ProjectTransactionQueryType } from "@src/gql/generated";
+import { AccommodationQueryType, ProjectTransactionQueryType } from "@src/gql/generated";
 import { View, Image, StyleSheet, Pressable } from "react-native";
 
 type TransactionDetailPropsType = {
@@ -58,13 +58,6 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
               {dateConverter(transaction?.dateStart)} To {dateConverter(transaction?.dateEnd)}
             </Text>
           </View>
-
-          <View style={styles.infoRow}>
-            <AntDesign name="user" color={theme.theme.colors.secondary} size={14} />
-            <Text caption>
-              {transaction?.guestSet?.length} {tr("Person")}
-            </Text>
-          </View>
         </View>
       </View>
     </Pressable>
@@ -78,8 +71,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   image: {
-    width: 144,
-    height: 88,
+    width: 140,
+    height: 80,
     borderRadius: 8,
   },
   infoContainer: {

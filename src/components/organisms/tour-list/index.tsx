@@ -49,7 +49,7 @@ function TourList() {
               id={tour.id}
               name={tour.title}
               avatarS3={tour.avatarS3}
-              price={tour.price[0].price}
+              price={tour.packages?.[0].price}
               address={(tour?.destination as AccommodationQueryType)?.address || ""}
             />
           </View>
