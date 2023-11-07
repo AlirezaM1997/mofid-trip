@@ -11,8 +11,8 @@ query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterT
       createdDate
       owner {
         id
-        lastName
-        firstName
+        fullname
+        firstname
       }
       status {
         step

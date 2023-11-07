@@ -3,20 +3,17 @@ query tourList($search: String, $filter: TourFilterType, $page: PageType!) {
     data {
       id
       title
-      shortDescription
+      description
       startTime
       endTime
       facilities {
         id
         enName
       }
-      projects {
-        accommodation {
-          id
+      destination {
+        ... on AccommodationQueryType {
           address
-          avatarS3 {
-            small
-          }
+          id
         }
       }
       price {

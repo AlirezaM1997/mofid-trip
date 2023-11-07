@@ -1,11 +1,12 @@
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import useProjectTable from "@src/hooks/db/project";
 import { ProjectQueryType } from "@src/gql/generated";
 import TitleWithAction from "@modules/title-with-action";
-import PlaceCard from "@src/components/modules/place-card";
 import { ScrollView, View, StyleSheet } from "react-native";
+import HostCard from "@modules/host-card";
+import WhiteSpace from "@atoms/white-space";
 
 function HostList() {
   const [list, setList] = useState<ProjectQueryType[]>();
@@ -39,11 +40,12 @@ function HostList() {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ gap: 10 }}
+        contentContainerStyle={style.gap}
         style={style.listContainer}>
+        <View style={style.spacer}></View>
         {list?.map((project, index) => (
           <View key={index}>
-            <PlaceCard
+            <HostCard
               key={index}
               id={project.id}
               name={project.name}
@@ -53,6 +55,7 @@ function HostList() {
             />
           </View>
         ))}
+        <View style={style.spacer}></View>
       </ScrollView>
     </>
   );
@@ -60,12 +63,12 @@ function HostList() {
 
 const style = StyleSheet.create({
   listContainer: {
-    minHeight: 370,
+    minHeight: 345,
     display: "flex",
-    marginBottom: 30,
     flexDirection: "row",
-    paddingHorizontal: 24,
   },
+  gap: { gap: 10 },
+  spacer: { width: 15 },
 });
 
 export default HostList;

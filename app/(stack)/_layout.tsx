@@ -48,9 +48,21 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="login"
+        name="userLogin"
         options={{
-          title: tr("Login"),
+          title: tr("log in , sign up"),
+        }}
+      />
+      <Stack.Screen
+        name="ngoLogin"
+        options={{
+          title: tr("log in , sign up"),
+        }}
+      />
+      <Stack.Screen
+        name="/tour/[tourId]"
+        options={{
+          title: tr("Tour"),
         }}
       />
       <Stack.Screen
@@ -105,6 +117,12 @@ const HomeLayout = () => {
         name="successPayment"
         options={{
           title: tr("successful payment"),
+        }}
+      />
+      <Stack.Screen
+        name="host-owner"
+        options={{
+          title: tr("Host Owner"),
         }}
       />
     </Stack>

@@ -6,11 +6,14 @@ import { StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import Toast from "react-native-toast-message";
 import { setData } from "@src/slice/transaction-slice";
-import { StatusInputType, Transaction_Status, useUserTransactionEditMutation } from "@src/gql/generated";
-import SuccessfulPaymentDetail from "../payment-detail/paymentDetails";
+import {
+  StatusInputType,
+  TransactionStatusEnum,
+  useProjectTransactionEditMutation,
+} from "@src/gql/generated";
 import { Feather } from "@expo/vector-icons";
 import Container from "@src/components/atoms/container";
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import WhiteSpace from "@src/components/atoms/white-space";
 import useTranslation from "@src/hooks/translation";
 import { router } from "expo-router";
@@ -20,21 +23,23 @@ type PropsType = {
   apiTransactionStep: string;
   status: { step: string | number; isActive: boolean };
   setStatus: (status: { step: string | number; isActive: boolean }) => void;
-  onCancelRequest: () => {};
 };
 
-const ConfirmButton = ({ apiTransactionStep, status, setStatus, transactionId, onCancelRequest }: PropsType) => {
+const ConfirmButton = ({ apiTransactionStep, status, setStatus, transactionId }: PropsType) => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  const [cancel] = useUserTransactionEditMutation();
+  const [cancel] = useProjectTransactionEditMutation();
 
   const onCancel = async () => setIsVisible(true);
 
   const handleCancel = async () => {
     const newStatus = {
-      step: apiTransactionStep === Transaction_Status.Accept ? Transaction_Status.Payment : apiTransactionStep,
+      step:
+        apiTransactionStep === TransactionStatusEnum.Accept
+          ? TransactionStatusEnum.Payment
+          : apiTransactionStep,
       isActive: false,
     };
     setStatus(newStatus);
@@ -48,11 +53,11 @@ const ConfirmButton = ({ apiTransactionStep, status, setStatus, transactionId, o
       },
     });
 
-    if (data?.userTransactionEdit?.statusCode === 200) {
+    if (data?.projectTransactionEdit?.statusCode === 200) {
       Toast.show({
         type: "success",
         text1: "Successful",
-        text2: data.userTransactionEdit.message,
+        text2: data.projectTransactionEdit.message,
       });
     }
     setIsVisible(false);
@@ -107,7 +112,15 @@ const ConfirmButton = ({ apiTransactionStep, status, setStatus, transactionId, o
   return (
     <>
       <View style={styles.buttonContainer}>
-        {buttonType()?.cancel && <Button title={tr("Cancel Request")} color="secondary" type="outline" onPress={onCancel} containerStyle={styles.button} />}
+        {buttonType()?.cancel && (
+          <Button
+            title={tr("Cancel Request")}
+            color="secondary"
+            type="outline"
+            onPress={onCancel}
+            containerStyle={styles.button}
+          />
+        )}
 
         <Button
           type={buttonType()?.type}
@@ -121,14 +134,14 @@ const ConfirmButton = ({ apiTransactionStep, status, setStatus, transactionId, o
       <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
         <Pressable style={styles.close} onPress={() => setIsVisible(false)}>
           <Feather name="x-circle" size={24} color="transparent" />
-          <Text variant="heading1">{tr("Delete")}</Text>
+          <Text heading1>{tr("Delete")}</Text>
           <Feather name="x-circle" size={24} color="black" />
         </Pressable>
         <Divider />
         <View style={styles.contentContainerStyle}>
           <Container>
             <WhiteSpace size={10} />
-            <Text style={styles.centerText} variant="body1">
+            <Text style={styles.centerText} body1>
               {tr("Are you sure to cancel?")}
             </Text>
             <WhiteSpace size={10} />

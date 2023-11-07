@@ -1,30 +1,35 @@
 import React from "react";
 import { router } from "expo-router";
 import { Divider } from "@rneui/themed";
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import useIsRtl from "@src/hooks/localization";
-import useTranslation from "@src/hooks/translation";
-import { ProjectQueryType } from "@src/gql/generated";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import {
+  AccommodationQueryType,
+  TourImageType,
+  TourPriceType,
+  TourQueryType,
+} from "@src/gql/generated";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
-import TruncatedText from "@src/components/atoms/text/truncatedText";
 import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native";
+import { WIDTH } from "@src/constants";
 
 type PropsType = {
-  avatarS3: ProjectQueryType["accommodation"]["avatarS3"];
-  address: ProjectQueryType["accommodation"]["address"];
-  price: ProjectQueryType["price"];
-  name: ProjectQueryType["name"];
-  id: ProjectQueryType["id"];
+  address: AccommodationQueryType["address"];
+  price: TourPriceType["price"];
+  name: TourQueryType["title"];
+  avatarS3: TourImageType[];
+  id: TourQueryType["id"];
 };
 
-function PlaceCard({ price, id, name, avatarS3, address }: PropsType) {
+function TourCard({ price, id, name, avatarS3, address }: PropsType) {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
-  // const handleClick = () => navigate("/accommodation/" + project.id);
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const handlePress = () => {
     router.push({
-      pathname: `/project/${id}`,
+      pathname: `/tour/${id}`,
       params: {
         id: id,
         name: name,
@@ -47,24 +52,28 @@ function PlaceCard({ price, id, name, avatarS3, address }: PropsType) {
       </View>
       <View style={style.top}>
         <View style={style.top2}>
-          <TruncatedText title={name} style={style.name} />
+          <Text heading2 bold numberOfLines={1}>
+            {name}
+          </Text>
 
           <View style={style.rate}>
             <FontAwesome name="star" size={20} color="#FEC30D" />
-            <Text style={{ fontSize: 15 }}>4.9</Text>
+            <Text style={{ fontSize: 15 }}>{localizeNumber(4.1)}</Text>
           </View>
         </View>
         <View style={style.address}>
           <EvilIcons name="location" size={20} color="black" />
-          <TruncatedText title={address} style={style.addressText} />
+          <Text numberOfLines={1} type="grey3">
+            {address}
+          </Text>
         </View>
       </View>
       <Divider />
       <View>
         <View style={style.bottom}>
           <View style={style.bottomStyle}>
-            <Text variant="subtitle1" style={style.price}>
-              ${price.toString()}
+            <Text subtitle1 bold>
+              ${localizeNumber(price.toString())}
             </Text>
             <Text>/ {tr("night")}</Text>
           </View>
@@ -77,7 +86,7 @@ function PlaceCard({ price, id, name, avatarS3, address }: PropsType) {
 
 const style = StyleSheet.create({
   container: {
-    minWidth: 300,
+    width: WIDTH - 50,
     overflow: "hidden",
     backgroundColor: "#fff",
     elevation: 5,
@@ -108,7 +117,6 @@ const style = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 15,
   },
-  price: { fontWeight: "bold" },
   bottom: {
     display: "flex",
     flexDirection: "row",
@@ -132,7 +140,6 @@ const style = StyleSheet.create({
     marginBottom: 10,
     alignItems: "center",
   },
-  name: { fontSize: 18, fontWeight: "bold" },
   addressText: {
     fontSize: 14,
     color: "grey",
@@ -151,4 +158,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default PlaceCard;
+export default TourCard;

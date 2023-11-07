@@ -1,7 +1,9 @@
 query NGODetail($pk: ID!) {
   NGODetail(pk: $pk) {
     id
-    name
+    title
+    address
+    description
     avatarS3 {
       large
       medium
@@ -14,6 +16,10 @@ query NGODetail($pk: ID!) {
         medium
         small
       }
+    }
+    tourSet {
+      id
+      title
     }
     projectSet {
       id
@@ -28,10 +34,6 @@ query NGODetail($pk: ID!) {
       description
       status
       createdTime
-      tours {
-        id
-        title
-      }
       capacity {
         id
         male

@@ -1,5 +1,5 @@
 import React from "react"
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import WhiteSpace from "@src/components/atoms/white-space"
 import { Image, Platform, StyleSheet, View } from "react-native"
 import useTranslation from "@src/hooks/translation"

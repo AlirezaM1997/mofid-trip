@@ -1,4 +1,4 @@
-import Text from "@atoms/text";
+import { Text } from "@rneui/themed";
 import React, { useState } from "react";
 import Container from "@atoms/container";
 import { StyleSheet, View } from "react-native";
@@ -13,12 +13,10 @@ const AcceptPayment = () => {
     <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
       <Container style={styles.container}>
         <View style={styles.textContainer}>
-          <Text variant="heading2" style={styles.headerText}>
+          <Text heading2 style={styles.headerText}>
             {tr("Are you sure about the payment?")}
           </Text>
-          <Text variant="caption">
-            {tr("After paying the tour fee, your reservation will be finalized")}
-          </Text>
+          <Text caption>{tr("After paying the tour fee, your reservation will be finalized")}</Text>
         </View>
 
         <View style={styles.btnContainer}>

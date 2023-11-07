@@ -1,22 +1,24 @@
+import { Button } from "@rneui/themed";
+import { NetworkStatus } from "@apollo/client";
+import { Divider, useTheme } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
-import SearchBar from "@src/components/modules/search-bar";
-import PlaceCard from "@src/components/modules/place-card";
+import useProjectTable from "@src/hooks/db/project";
+import useTranslation from "@src/hooks/translation";
+import { ProjectListQuery } from "@src/gql/generated";
 import Container from "@src/components/atoms/container";
 import { ScrollView } from "react-native-gesture-handler";
-import { NetworkStatus } from "@apollo/client";
-import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
-import { Divider, useTheme } from "@rneui/themed";
+import SearchBar from "@src/components/modules/search-bar";
 import WhiteSpace from "@src/components/atoms/white-space";
-import SelectedFilters from "@src/components/modules/selected-filters";
 import NoResult from "@src/components/organisms/no-result";
-import useProjectTable from "@src/hooks/db/project";
-import { ProjectListQueryResult } from "@src/gql/generated";
-import { Button } from "@rneui/themed";
+import SelectedFilters from "@src/components/modules/selected-filters";
+import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
+import HostCard from "@modules/host-card";
 
 const SearchScreen: React.FC = () => {
+  const { tr } = useTranslation();
   const { theme } = useTheme();
   const [searchText, setSearchText] = useState("");
-  const [list, setList] = useState<ProjectListQueryResult["data"]["projectList"] | undefined[]>([]);
+  const [list, setList] = useState<ProjectListQuery | undefined[]>([]);
   const { search, syncTable, networkStatus } = useProjectTable();
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -63,7 +65,7 @@ const SearchScreen: React.FC = () => {
         ) : (
           <Container size={25} style={styles.resultContainer}>
             {list?.map((project, index) => (
-              <PlaceCard
+              <HostCard
                 key={index}
                 id={project.id}
                 name={project.name}
@@ -74,7 +76,7 @@ const SearchScreen: React.FC = () => {
             ))}
             {list?.length ? (
               <Button type="outline" onPress={() => setPageNumber(pageNumber + 1)}>
-                Fetch More
+                {tr("Fetch More")}
               </Button>
             ) : (
               <NoResult />

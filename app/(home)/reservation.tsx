@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { useDispatch } from "react-redux";
 import { NetworkStatus } from "@apollo/client";
 import { useIsAuthenticated } from "@src/hooks/user";
@@ -11,7 +12,6 @@ import { setTransactionList } from "@src/slice/transaction-list-slice";
 import ReservationCard from "@src/components/modules/reservation-card";
 import ReservationSkeleton from "@src/components/modules/reservation-skeleton";
 import { ProjectTransactionQueryType, useProjectTransactionListQuery } from "@src/gql/generated";
-import { router } from "expo-router";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -56,18 +56,13 @@ const Page = () => {
 
   return (
     <ScrollView
-      contentContainerStyle={
-        data?.projectTransactionList?.length === 0
-          ? {
-              flex: 1,
-            }
-          : {}
-      }
+      contentContainerStyle={data?.projectTransactionList?.data?.length === 0 ? { flex: 1 } : {}}
       refreshControl={
         <RefreshControl refreshing={networkStatus !== NetworkStatus.ready} onRefresh={onRefresh} />
       }>
-      {data?.projectTransactionList?.length === 0 && <NoResult />}
-      {data?.projectTransactionList?.map((transaction, index) => (
+      {data?.projectTransactionList?.data?.length === 0 && <NoResult />}
+
+      {data?.projectTransactionList?.data?.map((transaction, index) => (
         <Container key={transaction.id}>
           <ReservationCard transaction={transaction as ProjectTransactionQueryType} index={index} />
         </Container>

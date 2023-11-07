@@ -22,16 +22,16 @@ const Page = () => {
   const { userDetail } = useSelector((state: RootState) => state.userSlice);
   const { loading: loadingUserDetail, data: dataUserDetail, error: errorUserDetail, refetch } = useUserDetailQuery();
   const [userDetailTemp, setUserDetailTemp] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     bio: "",
     base64Image: "",
   });
 
   useEffect(() => {
     setUserDetailTemp({
-      firstName: userDetail?.firstName ?? "",
-      lastName: userDetail?.lastName ?? "",
+      firstname: userDetail?.firstname ?? "",
+      lastname: userDetail?.lastname ?? "",
       bio: userDetail?.bio ?? "",
       base64Image: userDetail?.avatarS3?.small ?? "",
     });
@@ -56,8 +56,8 @@ const Page = () => {
 
   const handleSave = () => {
     let tempData = {
-      firstName: userDetailTemp?.firstName ?? "",
-      lastName: userDetailTemp?.lastName ?? "",
+      firstname: userDetailTemp?.firstname ?? "",
+      lastname: userDetailTemp?.lastname ?? "",
       bio: userDetailTemp?.bio ?? "",
     };
     if (userDetailTemp?.base64Image && isBase64(userDetailTemp.base64Image)) {
@@ -113,21 +113,21 @@ const Page = () => {
           <Container>
             <Input
               label={tr("First Name")}
-              value={userDetailTemp.firstName}
+              value={userDetailTemp.firstname}
               onChangeText={(t) => {
                 setUserDetailTemp({
                   ...userDetailTemp,
-                  firstName: t,
+                  firstname: t,
                 });
               }}
             />
             <Input
               label={tr("Last Name")}
-              value={userDetailTemp.lastName}
+              value={userDetailTemp.lastname}
               onChangeText={(t) =>
                 setUserDetailTemp({
                   ...userDetailTemp,
-                  lastName: t,
+                  lastname: t,
                 })
               }
             />

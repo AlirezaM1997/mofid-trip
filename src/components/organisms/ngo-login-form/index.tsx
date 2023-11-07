@@ -1,5 +1,4 @@
-import Text from "@atoms/text";
-import { Button } from "@rneui/themed";
+import { Button, Text, useTheme } from "@rneui/themed";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import React, { useEffect, useState } from "react";
@@ -9,7 +8,8 @@ import CountryPicker from "@src/components/modules/country-picker";
 import useTranslation from "@src/hooks/translation";
 import { router } from "expo-router";
 
-const Registration = ({ title }: { title: string }) => {
+const NgoLoginForm = () => {
+  const { theme } = useTheme();
   const { tr } = useTranslation();
   const [phone, setPhone] = useState("");
   const [callingCode, setCallingCode] = useState("+964");
@@ -18,7 +18,7 @@ const Registration = ({ title }: { title: string }) => {
   const handlePress = () => {
     login({
       variables: {
-        dataUser: {
+        dataNgo: {
           phoneNumber: callingCode + phone,
         },
       },
@@ -40,13 +40,13 @@ const Registration = ({ title }: { title: string }) => {
     <>
       <View style={style.container}>
         <Container>
+          <WhiteSpace size={32} />
+          <Text heading1>{tr("log in, register as a collection")}</Text>
           <WhiteSpace size={10} />
-          <Text variant="heading2">{title}</Text>
-          <Text variant="body1">
-            To enter and create an account in Mofid Trip, enter your mobile number to enter the
-            program
+          <Text caption style={{ color: theme.colors.grey2 }}>
+            {tr("enter your mobile number to log in and create an account on mofidtrip")}
           </Text>
-          <WhiteSpace size={10} />
+          <WhiteSpace size={24} />
           <CountryPicker
             callingCode={callingCode}
             setCallingCode={setCallingCode}
@@ -56,30 +56,11 @@ const Registration = ({ title }: { title: string }) => {
         </Container>
       </View>
       <Container>
-        {title === "Login" ? (
-          <Pressable style={style.bottomTextContainer} onPress={() => router.push("/register")}>
-            <Text>Haven't registered yet? </Text>
-            <Text style={style.registerText}>Register</Text>
-          </Pressable>
-        ) : (
-          <>
-            <View style={style.bottomTextContainer}>
-              <Text
-                style={{
-                  textAlign: "center",
-                  height: "auto",
-                  overflow: "hidden",
-                }}>
-                By clicking the create account button, you agree to the privacy policy of the
-                software
-              </Text>
-            </View>
-            <Pressable onPress={() => router.push("/termsOfServices")}>
-              <Text style={style.registerText}>privacy policy</Text>
-            </Pressable>
-          </>
-        )}
-        <WhiteSpace size={10} />
+        <Pressable style={style.bottomTextContainer} onPress={() => router.push("/userLogin")}>
+          <Text style={style.registerText}>{tr("log in as an individual")}</Text>
+        </Pressable>
+
+        <WhiteSpace size={16} />
         <Button
           size="lg"
           onPress={handlePress}
@@ -113,4 +94,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default Registration;
+export default NgoLoginForm;

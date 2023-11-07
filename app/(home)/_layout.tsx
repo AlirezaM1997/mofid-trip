@@ -38,7 +38,7 @@ export default function AppLayout() {
         name="index"
         options={{
           title: tr("Home"),
-          tabBarLabel: "Home",
+          tabBarLabel: tr("Home"),
           tabBarIcon: ({ color, size }) => (
             <Feather name="home" size={size} color={color} />
           ),
