@@ -43,7 +43,7 @@ const ReservationCard = ({ transaction, index }: PropsType) => {
         <ConfirmButton
           status={status}
           setStatus={setStatus}
-          transactionId={transaction.id}
+          transaction={transaction}
           apiTransactionStep={transaction.status?.step as string}
         />
       </View>

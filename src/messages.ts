@@ -937,7 +937,7 @@ export const messages = {
     en_us: "Tour transactions",
   },
   "host transactions": {
-    ar: "طلب استضافة",
+    ar: "طلب استضافةه",
     fa_ir: "داخواست‌ به هاست",
     en_us: "Host transactions",
   },
@@ -950,6 +950,11 @@ export const messages = {
     ar: "طلبات",
     fa_ir: "درخواست ها",
     en_us: "Requests",
+  },
+  buy: {
+    ar: "يشتري",
+    fa_ir: "خرید",
+    en_us: "buy",
   },
   "after paying the tour fee, your reservation will be finalized": {
     ar: "بعد دفع رسوم الجولة، سيتم الانتهاء من حجزك",

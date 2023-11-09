@@ -15,7 +15,7 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
 
   const handleNavigate = () => {
     router.push({
-      pathname: "ProjectScreen",
+      pathname: "/tour",
       params: {
         id: transaction?.id,
         name: transaction?.tourPackage.title,

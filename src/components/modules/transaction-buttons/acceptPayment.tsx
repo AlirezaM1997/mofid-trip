@@ -4,8 +4,7 @@ import Container from "@atoms/container";
 import { StyleSheet, View } from "react-native";
 import { BottomSheet, Button } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { ApolloCache, DefaultContext, MutationFunctionOptions } from "@apollo/client";
-import { Exact, TourPurchaseAddInputData, TourPurchaseAddMutation } from "@src/gql/generated";
+import { WIDTH } from "@src/constants";
 
 type PropsType = {
   isVisible: boolean;
@@ -17,7 +16,10 @@ const AcceptPayment = ({ isVisible, setIsVisible, purchaseHandler }: PropsType) 
   const { tr } = useTranslation();
 
   return (
-    <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
+    <BottomSheet
+      containerStyle={styles.bottomSheetContainer}
+      isVisible={isVisible}
+      onBackdropPress={() => setIsVisible(false)}>
       <Container style={styles.container}>
         <View style={styles.textContainer}>
           <Text heading2 style={styles.headerText}>
@@ -27,10 +29,10 @@ const AcceptPayment = ({ isVisible, setIsVisible, purchaseHandler }: PropsType) 
         </View>
 
         <View style={styles.btnContainer}>
-          <Button type="outline" onPress={() => purchaseHandler()} containerStyle={styles.button}>
+          <Button type="outline" onPress={() => setIsVisible(false)} containerStyle={styles.button}>
             {tr("cancel payment")}
           </Button>
-          <Button onPress={() => setIsVisible(false)} containerStyle={styles.button}>
+          <Button onPress={() => purchaseHandler()} containerStyle={styles.button}>
             {tr("pay")}
           </Button>
         </View>
@@ -40,6 +42,7 @@ const AcceptPayment = ({ isVisible, setIsVisible, purchaseHandler }: PropsType) 
 };
 
 const styles = StyleSheet.create({
+  bottomSheetContainer: { width: "100%" },
   textContainer: { gap: 8 },
   headerText: { textAlign: "center" },
   container: { margin: "auto", gap: 24 },
