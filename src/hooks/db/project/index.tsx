@@ -1,46 +1,67 @@
+import {
+  ProjectListQuery,
+  ProjectListQueryVariables,
+  ProjectQueryType,
+  useProjectListLazyQuery,
+} from "@src/gql/generated";
 import { RootState } from "@src/store";
+import { PAGE_SIZE } from "@src/settings";
+import { useEffect, useState } from "react";
 import { NetworkStatus } from "@apollo/client";
-import React, { useEffect, useState } from "react";
 import NetInfo from "@react-native-community/netinfo";
 import { useDispatch, useSelector } from "react-redux";
 import { setProjectSet } from "@src/slice/project-slice";
-import { Exact, ProjectSetQueryVariables, useProjectSetLazyQuery } from "@src/gql/generated";
+
+const hasIntersection = (a: any[], b: any[]) => a.some(item => b.includes(item));
 
 const useProjectTable = () => {
   const dispatch = useDispatch();
   const { projectSet } = useSelector((state: RootState) => state.projectSlice);
   const [networkStatus, setNetworkStatus] = useState<NetworkStatus | undefined>();
-  const [data, setData] = useState<Exact<{ projectSet: ProjectType[] }> | undefined>();
+  const [data, setData] = useState<ProjectListQuery | undefined>();
 
-  const [fetchProjectSet, { networkStatus: queryNetworkStatus }] = useProjectSetLazyQuery({
+  const [fetchProjectSet, { networkStatus: queryNetworkStatus }] = useProjectListLazyQuery({
     notifyOnNetworkStatusChange: false,
-    onCompleted: (data) => setData(data),
+    onCompleted: data => setData(data),
   });
 
   useEffect(() => {
     setNetworkStatus(queryNetworkStatus);
   }, [queryNetworkStatus]);
 
-  const syncTable = (variables: ProjectSetQueryVariables) => {
+  const syncTable = (variables: ProjectListQueryVariables) => {
     NetInfo.fetch().then(({ isConnected }) => {
-      if (isConnected && "page" in variables) {
-        fetchProjectSet({ variables });
+      if (isConnected) {
+        fetchProjectSet({ variables: variables }).then(({ data }) => {
+          if (data) dispatch(setProjectSet(data.projectList));
+        });
       }
     });
   };
 
-  useEffect(() => {
-    if (networkStatus === NetworkStatus.ready && data) {
-      dispatch(setProjectSet(data.projectSet));
+  const search = ({ search, filter, page }: ProjectListQueryVariables) => {
+    if (!projectSet.data) return [];
+    let result = projectSet.data;
+    if (search) {
+      result = result.filter(p => p.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
     }
-  }, [networkStatus, data]);
-
-  const search = (searchText: string) => {
-    let result = projectSet.filter((p) => p.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
-    return result;
+    if (filter) {
+      if (filter?.tags) {
+        result = result.filter(p => {
+          const tagNames = p.tags.map(t => t.name);
+          return hasIntersection(tagNames ?? [], filter.tags);
+        });
+      }
+    }
+    const pageSize = page?.pageSize ?? PAGE_SIZE;
+    const pageNumber = page?.pageNumber ?? 1;
+    return result.slice(pageSize * (pageNumber - 1), pageSize * pageNumber);
   };
 
-  return { networkStatus, syncTable, search };
+  const findById = (id: string): ProjectQueryType | undefined =>
+    projectSet?.data?.find(p => p.id === id);
+
+  return { networkStatus, syncTable, search, findById };
 };
 
 export default useProjectTable;

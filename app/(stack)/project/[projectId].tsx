@@ -1,21 +1,19 @@
 import { Button } from "@rneui/themed";
-import { RootState } from "@src/store";
 import { Divider } from "@rneui/themed";
 import React, { useEffect } from "react";
 import Map from "@src/components/modules/map";
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 import { getCapacity } from "@src/helper/tour";
-import useTranslation from "@src/hooks/translation";
-import { useDispatch, useSelector } from "react-redux";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { useDispatch } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
 import { ScrollView } from "react-native-gesture-handler";
 import { useProjectDetailQuery } from "@src/gql/generated";
-import { Pressable, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { setProjectDetail } from "@src/slice/project-slice";
-import Slider from "@src/components/modules/slider-project";
 import ProjectTags from "@src/components/modules/project-tags";
 import ContactCard from "@src/components/modules/contact-card";
 import SimilarProjects from "@src/components/modules/similar-projects";
@@ -23,14 +21,15 @@ import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import ProjectFacilities from "@src/components/modules/project-facilities";
 import ProjectBoldFeatures from "@src/components/modules/project-bold-features";
+import ImageSlider from "@modules/image-slider";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const isFocused = useIsFocused();
   const navigation = useNavigation();
-  const { projectId } = useLocalSearchParams();
-  const { id, name, accommodation, creator, price, capacity } = useSelector((state: RootState) => state.projectSlice?.projectDetail);
+  const { projectId, name } = useLocalSearchParams();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { loading, data } = useProjectDetailQuery({
     variables: {
@@ -39,7 +38,7 @@ const Page: React.FC = ({ ...props }) => {
   });
 
   const handlePress = () => {
-    if (getCapacity(capacity) === 0) {
+    if (getCapacity(data?.projectDetail?.capacity) === 0) {
       Toast.show({
         type: "error",
         text1: "Warning",
@@ -47,7 +46,7 @@ const Page: React.FC = ({ ...props }) => {
       });
       return;
     }
-    router.push(`/bookAccommodation/${id}`);
+    router.push(`/book-accommodation/${projectId}/step-1`);
   };
 
   useEffect(() => {
@@ -67,30 +66,39 @@ const Page: React.FC = ({ ...props }) => {
       <ScrollView style={style.scrollView}>
         <WhiteSpace size={10} />
         <Container style={style.container}>
-          <Slider />
+          <ImageSlider imageList={data.projectDetail.accommodation.avatarS3} />
 
-          <ProjectTags />
+          <ProjectTags tags={data?.projectDetail?.tags ?? []} />
 
           <View style={style.infoContainer}>
-            <Text variant="heading1">{accommodation?.name}</Text>
-            <Text variant="heading2">{accommodation?.address}</Text>
+            <Text variant="heading1">{data.projectDetail?.accommodation?.name}</Text>
+            <Text variant="heading2">{data.projectDetail?.accommodation?.address}</Text>
           </View>
 
-          <ProjectBoldFeatures />
+          <ProjectBoldFeatures capacity={data?.projectDetail?.capacity ?? 0} />
 
           <View style={style.infoContainer}>
             <Text variant="heading1">{tr("Description")}</Text>
-            <Text variant="body1">{accommodation?.description}</Text>
+            <Text variant="body1">{data.projectDetail?.accommodation?.description}</Text>
           </View>
 
-          <ProjectFacilities />
+          <ProjectFacilities facilities={data.projectDetail?.facilities} />
 
-          {isFocused && <Map lat={accommodation?.lat} lng={accommodation?.lng} />}
+          {isFocused && (
+            <Map
+              lat={data.projectDetail?.accommodation?.lat}
+              lng={data.projectDetail?.accommodation?.lng}
+            />
+          )}
 
-          <ContactCard user={creator} />
+          <ContactCard user={data?.projectDetail?.creator ?? {}} />
 
-          <SimilarProjects currentProjectId={id} projects={creator?.projectSet} />
+          <SimilarProjects
+            currentProjectId={projectId}
+            projects={data.projectDetail?.creator?.projectSet}
+          />
         </Container>
+        <WhiteSpace size={10} />
       </ScrollView>
 
       <Divider />
@@ -99,7 +107,7 @@ const Page: React.FC = ({ ...props }) => {
           <Text style={style.priceTitle}>{tr("Price")}</Text>
           <View style={style.priceContainer}>
             <Text variant="body1" style={style.priceNumber}>
-              ${price}
+              ${localizeNumber(data.projectDetail?.price)}
             </Text>
             <Text style={style.priceText}> / {tr("Night")}</Text>
           </View>

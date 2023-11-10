@@ -1,4 +1,4 @@
-import Text from "@src/components/atoms/text";
+import { Text } from "@rneui/themed";
 import { useEffect, useState } from "react";
 import NetInfo from "@react-native-community/netinfo";
 import { useDispatch, useSelector } from "react-redux";

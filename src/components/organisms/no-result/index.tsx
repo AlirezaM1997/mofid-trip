@@ -1,5 +1,5 @@
 import React from "react"
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import WhiteSpace from "@src/components/atoms/white-space"
 import { Image, Platform, StyleSheet, View } from "react-native"
 import useTranslation from "@src/hooks/translation"
@@ -11,9 +11,8 @@ const NoResult = () => {
       {Platform.OS === "android" ? (
         <Image source={require("../../../../assets/image/no-result.jpg")} />
       ) : (
-        <img src={require("../../../../assets/image/no-result.jpg")} />
+        <Image source={require("../../../../assets/image/no-result.jpg")} />
       )}
-      {/* <Image source={require("../../../../assets/image/no-result.jpg")} /> */}
       <WhiteSpace size={10} />
       <Text variant="heading1" style={{ textAlign: "center" }}>
         {tr("No Result")}

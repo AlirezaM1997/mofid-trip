@@ -1,44 +1,43 @@
-import { View } from "react-native"
-import React, { useState } from "react"
-import { Pressable } from "react-native"
-import { BottomSheet, Button, Divider } from "@rneui/themed"
-import { StyleSheet } from "react-native"
-import { useDispatch } from "react-redux"
-import Toast from "react-native-toast-message"
-import { setData } from "@src/slice/transaction-slice"
-import { useNavigation } from "@react-navigation/native"
-import { StatusInputType, Transaction_Status, useUserTransactionEditMutation } from "@src/gql/generated"
-import SuccessfulPaymentDetail from "../payment-detail/paymentDetails"
-import { Feather } from "@expo/vector-icons"
-import Container from "@src/components/atoms/container"
-import Text from "@src/components/atoms/text"
-import WhiteSpace from "@src/components/atoms/white-space"
-import useTranslation from "@src/hooks/translation"
+import { View } from "react-native";
+import React, { useState } from "react";
+import { Pressable } from "react-native";
+import { BottomSheet, Button, Divider } from "@rneui/themed";
+import { StyleSheet } from "react-native";
+import { useDispatch } from "react-redux";
+import Toast from "react-native-toast-message";
+import { setData } from "@src/slice/transaction-slice";
+import { StatusInputType, Transaction_Status, useUserTransactionEditMutation } from "@src/gql/generated";
+import SuccessfulPaymentDetail from "../payment-detail/paymentDetails";
+import { Feather } from "@expo/vector-icons";
+import Container from "@src/components/atoms/container";
+import { Text } from "@rneui/themed";
+import WhiteSpace from "@src/components/atoms/white-space";
+import useTranslation from "@src/hooks/translation";
+import { router } from "expo-router";
 
 type PropsType = {
-  transactionId: string
-  apiTransactionStep: string
-  status: { step: string | number; isActive: boolean }
-  setStatus: (status: { step: string | number; isActive: boolean }) => void
-  onCancelRequest: () => {}
-}
+  transactionId: string;
+  apiTransactionStep: string;
+  status: { step: string | number; isActive: boolean };
+  setStatus: (status: { step: string | number; isActive: boolean }) => void;
+  onCancelRequest: () => {};
+};
 
 const ConfirmButton = ({ apiTransactionStep, status, setStatus, transactionId, onCancelRequest }: PropsType) => {
-  const { tr } = useTranslation()
-  const navigation = useNavigation()
-  const [isVisible, setIsVisible] = useState<boolean>(false)
-  const dispatch = useDispatch()
+  const { tr } = useTranslation();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
-  const [cancel] = useUserTransactionEditMutation()
+  const [cancel] = useUserTransactionEditMutation();
 
-  const onCancel = async () => setIsVisible(true)
+  const onCancel = async () => setIsVisible(true);
 
   const handleCancel = async () => {
     const newStatus = {
       step: apiTransactionStep === Transaction_Status.Accept ? Transaction_Status.Payment : apiTransactionStep,
       isActive: false,
-    }
-    setStatus(newStatus)
+    };
+    setStatus(newStatus);
 
     const { data } = await cancel({
       variables: {
@@ -47,31 +46,35 @@ const ConfirmButton = ({ apiTransactionStep, status, setStatus, transactionId, o
           status: newStatus as StatusInputType,
         },
       },
-    })
+    });
 
     if (data?.userTransactionEdit?.statusCode === 200) {
       Toast.show({
         type: "success",
         text1: "Successful",
         text2: data.userTransactionEdit.message,
-      })
+      });
     }
-    setIsVisible(false)
-  }
+    setIsVisible(false);
+  };
 
   const payToReserve = () => {
-    navigation.navigate("PayDetailScreen", {
+    router.push({
+      pathname: "pay-details",
       params: {
         transactionId: transactionId,
       },
-    })
-  }
+    });
+  };
   const openReserveBill = () => {
-    dispatch(setData({ id: transactionId }))
-    navigation.navigate("InvoiceScreen", {
-      transactionId: transactionId,
-    })
-  }
+    dispatch(setData({ id: transactionId }));
+    router.push({
+      pathname: "/invoice",
+      params: {
+        transactionId: transactionId,
+      },
+    });
+  };
 
   const buttonType = () => {
     const lookup = {
@@ -96,10 +99,10 @@ const ConfirmButton = ({ apiTransactionStep, status, setStatus, transactionId, o
         color: "primary",
         cancel: false,
       },
-    }
-    if (!status.isActive) return { title: tr("Rejected"), type: "solid", disabled: true }
-    if (status.step in lookup) return lookup[status.step]
-  }
+    };
+    if (!status.isActive) return { title: tr("Rejected"), type: "solid", disabled: true };
+    if (status.step in lookup) return lookup[status.step];
+  };
 
   return (
     <>
@@ -125,7 +128,9 @@ const ConfirmButton = ({ apiTransactionStep, status, setStatus, transactionId, o
         <View style={styles.contentContainerStyle}>
           <Container>
             <WhiteSpace size={10} />
-            <Text style={styles.centerText} variant="body1">{tr("Are you sure to cancel?")}</Text>
+            <Text style={styles.centerText} variant="body1">
+              {tr("Are you sure to cancel?")}
+            </Text>
             <WhiteSpace size={10} />
             <Button onPress={handleCancel}>{tr("Yes")}</Button>
             <WhiteSpace size={10} />
@@ -133,8 +138,8 @@ const ConfirmButton = ({ apiTransactionStep, status, setStatus, transactionId, o
         </View>
       </BottomSheet>
     </>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -159,8 +164,8 @@ const styles = StyleSheet.create({
   },
   contentContainerStyle: { backgroundColor: "#fff" },
   centerText: {
-    textAlign: 'center'
-  }
-})
+    textAlign: "center",
+  },
+});
 
-export default ConfirmButton
+export default ConfirmButton;

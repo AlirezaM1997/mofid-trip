@@ -1,6 +1,6 @@
 import React from "react"
 import { BottomSheet } from "@rneui/base"
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import { AntDesign } from "@expo/vector-icons"
 import { View, StyleSheet } from "react-native"
 import { Button, useTheme } from "@rneui/themed"

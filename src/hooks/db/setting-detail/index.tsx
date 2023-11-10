@@ -1,38 +1,48 @@
-import * as Updates from "expo-updates"
-import { useDispatch } from "react-redux"
-import { NetworkStatus } from "@apollo/client"
-import { I18nManager, Platform } from "react-native"
-import NetInfo from "@react-native-community/netinfo"
-import { setSettingDetail } from "@src/slice/setting-detail-slice"
-import { Exact, Language_Choice, useSettingDetailLazyQuery } from "@src/gql/generated"
+import * as Updates from "expo-updates";
+import { useDispatch, useSelector } from "react-redux";
+import { NetworkStatus } from "@apollo/client";
+import { I18nManager, Platform } from "react-native";
+import NetInfo from "@react-native-community/netinfo";
+import { setSettingDetail } from "@src/slice/setting-detail-slice";
+import { Exact, LanguageChoiceEnum, useSettingDetailLazyQuery } from "@src/gql/generated";
+import { RootState } from "@src/store";
 
-const useSettingDetail = () => {
-  const dispatch = useDispatch()
-  const [_, { refetch, loading, data, networkStatus }] = useSettingDetailLazyQuery({ notifyOnNetworkStatusChange: true })
+const useSettingDetailTable = () => {
+  const dispatch = useDispatch();
+  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
+  const [_, { refetch, loading, data, networkStatus }] = useSettingDetailLazyQuery({
+    notifyOnNetworkStatusChange: true,
+  });
 
   const syncTable = (variables?: Partial<Exact<{ userId?: string }>>) => {
     NetInfo.fetch().then(({ isConnected }) => {
       if (isConnected) {
         refetch(variables).then(({ networkStatus, data }) => {
           if (networkStatus === NetworkStatus.ready && data) {
-            dispatch(setSettingDetail(data.settingDetail))
-            const shouldBeRtl = [Language_Choice.FaIr, Language_Choice.Ar].includes(data.settingDetail.language)
-            if (Platform.OS === "web") {
-              window.location.href = ""
-            } else {
-              I18nManager.allowRTL(shouldBeRtl)
-              I18nManager.forceRTL(shouldBeRtl)
-              setTimeout(() => {
-                Updates.reloadAsync().then((r) => r)
-              }, 0)
+            const languageHasBeenChanges = data.settingDetail.language !== language;
+            dispatch(setSettingDetail(data.settingDetail));
+            if (languageHasBeenChanges) {
+              const shouldBeRtl = [LanguageChoiceEnum.FaIr, LanguageChoiceEnum.Ar].includes(
+                data.settingDetail.language
+              );
+              if (Platform.OS === "web") {
+                // reload on web required to load proper fonts
+                window.location.href = "";
+              } else {
+                I18nManager.allowRTL(shouldBeRtl);
+                I18nManager.forceRTL(shouldBeRtl);
+                setTimeout(() => {
+                  Updates.reloadAsync().then(r => r);
+                }, 0);
+              }
             }
           }
-        })
+        });
       }
-    })
-  }
+    });
+  };
 
-  return { syncTable, networkStatus }
-}
+  return { syncTable, networkStatus };
+};
 
-export default useSettingDetail
+export default useSettingDetailTable;

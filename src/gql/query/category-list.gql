@@ -1,12 +1,17 @@
-query categoryList {
-  categoryList {
-    id
-    name
-    displayName
-    avatarS3 {
-      large
-      medium
-      small
+query categoryList($page: PageType, $search: String) {
+  categoryList(search: $search) {
+    pageCount
+    count
+    data {
+      id
+      name
+      displayName
+      avatarS3 {
+        large
+        medium
+        small
+      }
     }
+    pageCount
   }
 }

@@ -1,9 +1,8 @@
-mutation userTransactionEdit($data: TransactionEditInputType!) {
-  userTransactionEdit(data: $data) {
-    ... on ResponseBase {
-      message
-      status
-      statusCode
-    }
+mutation projectTransactionEdit($data: ProjectTransactionEditInputType!) {
+  projectTransactionEdit(data: $data) {
+    message
+    status
+    statusCode
+    __typename
   }
 }

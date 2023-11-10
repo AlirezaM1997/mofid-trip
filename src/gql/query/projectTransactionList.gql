@@ -1,0 +1,46 @@
+query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterType) {
+  projectTransactionList(page: $page, filter: $filter) {
+    count
+    pageCount
+    data {
+      id
+      dateEnd
+      dateStart
+      description
+      invoiceNumber
+      createdDate
+      owner {
+        id
+        fullname
+        firstname
+      }
+      status {
+        step
+        isActive
+      }
+      guestSet {
+        name
+      }
+      project {
+        id
+        name
+        tax
+        price
+        description
+        facilities {
+          id
+          enName
+        }
+        accommodation {
+          id
+          address
+          lat
+          lng
+          avatarS3 {
+            small
+          }
+        }
+      }
+    }
+  }
+}

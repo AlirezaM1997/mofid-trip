@@ -1,10 +1,9 @@
 import React from "react"
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import { View, StyleSheet } from "react-native"
 import { Button, useTheme } from "@rneui/themed"
 import dateConverter from "@src/utils/dateConveter"
 import { useNavigation } from "@react-navigation/native"
-import TruncatedText from "@src/components/atoms/text/truncatedText"
 import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons"
 import WhiteSpace from "@src/components/atoms/white-space"
 import useTranslation from "@src/hooks/translation"
@@ -76,7 +75,7 @@ const PaymentDetails = ({ data }) => {
               <Text variant="caption" style={themeStyles.detailLabel}>
                 {tr("Place requested")}
               </Text>
-              <TruncatedText variant="subtitle2" title={data?.project?.name} />
+              <Text variant="subtitle2">{data?.project?.name}</Text>
             </View>
           </View>
 

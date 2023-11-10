@@ -1,4 +1,4 @@
-import { TourCapacityType } from "@src/gql/generated";
+import { CapacityQueryType, TourCapacityType } from "@src/gql/generated";
 
 export const getGender = (capacity: TourCapacityType) => {
   const res = [];

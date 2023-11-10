@@ -1,14 +1,9 @@
 mutation userEdit($data: UserEditInputType) {
   userEdit(data: $data) {
-    ... on ResponseWithToken {
-      status
-      statusCode
-      message
-    }
-    ... on ResponseBase {
-      status
-      statusCode
-      message
-    }
+    status
+    statusCode
+    message
+    metadata
+    __typename
   }
 }

@@ -1,5 +1,5 @@
 import { useTheme } from "@rneui/themed"
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import useTranslation from "@src/hooks/translation"
 import React from "react"
 import { View, StyleSheet } from "react-native"

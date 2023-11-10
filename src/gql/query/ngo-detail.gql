@@ -1,0 +1,74 @@
+query NGODetail($pk: ID!) {
+  NGODetail(pk: $pk) {
+    id
+    title
+    address
+    description
+    avatarS3 {
+      large
+      medium
+      small
+    }
+    user {
+      id
+      avatarS3 {
+        large
+        medium
+        small
+      }
+    }
+    tourSet {
+      id
+      title
+    }
+    projectSet {
+      id
+      # type
+      name
+      price
+      dateStart
+      dateEnd
+      gender
+      requestFrom
+      tax
+      description
+      status
+      createdTime
+      capacity {
+        id
+        male
+        female
+        child
+      }
+      categories {
+        id
+        name
+        displayName
+        avatarS3 {
+          large
+          medium
+          small
+        }
+      }
+      tags {
+        id
+        name
+        displayName
+      }
+      facilities {
+        id
+        faName
+        enName
+        arName
+      }
+      accommodation {
+        id
+        avatarS3 {
+          large
+          medium
+          small
+        }
+      }
+    }
+  }
+}

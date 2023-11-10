@@ -1,18 +1,29 @@
 import { Chip } from "@rneui/themed";
+import { AccountSettingLanguageChoices, TourFacilityQueryType } from "@src/gql/generated";
 import { RootState } from "@src/store";
 import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 
-const TourFacilities = () => {
-  const { tourDetail } = useSelector((state: RootState) => state.tourSlice);
+type TourFacilitiesProps = {
+  facilities: TourFacilityQueryType[];
+};
+
+const TourFacilities = ({ facilities, ...props }: TourFacilitiesProps) => {
+  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
 
   return (
     <View style={style.container}>
-      {tourDetail?.facilities?.map((facility, index) => {
+      {facilities?.map((facility, index) => {
         return (
           <Chip
             key={index}
-            title={facility.enName}
+            title={
+              language === AccountSettingLanguageChoices.EnUs
+                ? facility.enName
+                : language === AccountSettingLanguageChoices.FaIr
+                ? facility.faName
+                : facility.arName
+            }
             type="outline"
             buttonStyle={style.buttonStyle}
             titleStyle={style.titleStyle}

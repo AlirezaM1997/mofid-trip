@@ -23,9 +23,12 @@ query projectDetail($pk: ID!) {
     }
     creator {
       id
-      lastName
-      firstName
+      fullname
+      firstname
       phoneNumber
+      ngo {
+        id
+      }
       avatarS3 {
         small
       }
@@ -35,7 +38,6 @@ query projectDetail($pk: ID!) {
         price
         accommodation {
           id
-          name
           address
           avatarS3 {
             large
@@ -49,9 +51,7 @@ query projectDetail($pk: ID!) {
       id
       lat
       lng
-      name
       address
-      description
       avatarS3 {
         large
         medium

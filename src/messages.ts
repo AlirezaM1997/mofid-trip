@@ -21,7 +21,7 @@ export const messages = {
   },
   "anywhere you want": {
     ar: "في أي مكان تريده",
-    fa_ir: "هرجا که بخواهی",
+    fa_ir: "جستجوی اقامتگاه ها",
     en_us: "Anywhere You Want",
   },
   "are you sure to cancel?": {
@@ -129,7 +129,7 @@ export const messages = {
   },
   "first name": {
     ar: "اسم",
-    fa_ir: "نام کوچک",
+    fa_ir: "نام",
     en_us: "First Name",
   },
   gender: {
@@ -222,8 +222,13 @@ export const messages = {
   },
   pay: {
     ar: "يدفع",
-    fa_ir: "پرداخت",
+    fa_ir: "پرداخت کن",
     en_us: "Pay",
+  },
+  "cancel payment": {
+    ar: "الغاء الدفع",
+    fa_ir: "لغو پرداخت",
+    en_us: "cancel payment",
   },
   "payment detail": {
     ar: "تفاصيل الدفع",
@@ -270,7 +275,7 @@ export const messages = {
     },
   profile: {
     ar: "الحساب",
-    fa_ir: "مشخصات",
+    fa_ir: "پروفایل",
     en_us: "Profile",
   },
   project: {
@@ -290,12 +295,12 @@ export const messages = {
   },
   save: {
     ar: "يحفظ",
-    fa_ir: "صرفه جویی",
+    fa_ir: "ثبت",
     en_us: "Save",
   },
   search: {
     ar: "يبحث",
-    fa_ir: "جستجو کردن",
+    fa_ir: "جستجو",
     en_us: "Search",
   },
   "see all": {
@@ -395,6 +400,16 @@ export const messages = {
     ar: "مع مكان الخصم",
     fa_ir: "با تخفیف",
     en_us: "With Discount Place",
+  },
+  "available hosts": {
+    ar: "الاستضافة المتوفرة",
+    fa_ir: "میزبانی های موجود",
+    en_us: "Available hosts",
+  },
+  "available tours": {
+    ar: "الجولات المتاحة",
+    fa_ir: "تورهای موجود",
+    en_us: "Available tours",
   },
   yes: {
     ar: "نعم",
@@ -664,8 +679,13 @@ export const messages = {
   },
   "payment was successful": {
     ar: "تم الدفع بنجاح",
-    fa_ir: "پرداخت موفقیت آمیز بود",
+    fa_ir: "پرداخت با موفقیت انجام شد",
     en_us: "Payment Was Successful",
+  },
+  "successful payment": {
+    ar: "الدفع الناجح",
+    fa_ir: "پرداخت موفق",
+    en_us: "Successful payment",
   },
   "tracking code": {
     ar: "شفرة التتبع",
@@ -677,20 +697,80 @@ export const messages = {
     fa_ir: "تاریخ",
     en_us: "Date",
   },
+  "successful transfer": {
+    ar: "نقل ناجح",
+    fa_ir: "انتقال موفق",
+    en_us: "Successful transfer",
+  },
   time: {
     ar: "وقت",
     fa_ir: "زمان",
     en_us: "Time",
+  },
+  transmitter: {
+    ar: "الارسال",
+    fa_ir: "انتقال دهنده",
+    en_us: "Transmitter",
+  },
+  "transaction type": {
+    ar: "نوع المعاملة",
+    fa_ir: "نوع تراکنش",
+    en_us: "Transaction type",
   },
   "payment method": {
     ar: "طريقة الدفع او السداد",
     fa_ir: "روش پرداخت",
     en_us: "Payment Method",
   },
+  "initial deposit": {
+    ar: "ألإيداع المبدئى",
+    fa_ir: "سپرده مبداء",
+    en_us: "Initial deposit",
+  },
+  "issue Tracking": {
+    ar: "تتبع القضية",
+    fa_ir: "شماره پیگیری",
+    en_us: "Issue Tracking",
+  },
+  "return to home": {
+    ar: "العودة إلى المنزل",
+    fa_ir: "بازگشت به خانه",
+    en_us: "return to home",
+  },
   amount: {
     ar: "كمية",
     fa_ir: "میزان",
     en_us: "Amount",
+  },
+  "log in as an individual": {
+    ar: "تسجيل الدخول كفرد",
+    fa_ir: "ورود به عنوان فرد",
+    en_us: "Log in as an individual",
+  },
+  "log in, register as a collection": {
+    ar: "تسجيل الدخول، سجل كمجموعة",
+    fa_ir: "ورود ، ثبت نام به عنوان مجموعه",
+    en_us: "Log in, register as a collection",
+  },
+  "enter your mobile number to log in and create an account on mofidtrip": {
+    ar: "أدخل رقم هاتفك المحمول لتسجيل الدخول وإنشاء حساب على Mofidtrip.",
+    fa_ir: "برای ورود و ایجاد حساب در مفیدتریپ ، شماره همراه خودتان را وارد کنید.",
+    en_us: "Enter your mobile number to log in and create an account on Mofidtrip",
+  },
+  "sign in as an organization": {
+    ar: "تسجيل الدخول كمنظمة",
+    fa_ir: "ورود به عنوان تشکل",
+    en_us: "Sign in as an organization",
+  },
+  "log in, sign up": {
+    ar: "الدخول ، التسجيل فى الموقع",
+    fa_ir: "ورود ، ثبت نام",
+    en_us: "Log in, Sign up",
+  },
+  share: {
+    ar: "يشارك",
+    fa_ir: "اشتراک گذاری",
+    en_us: "share",
   },
   paypal: {
     ar: "پی پال",
@@ -747,11 +827,14 @@ export const messages = {
     fa_ir: "بیایید شروع کنیم و برای رزرو اربعین وارد شوید",
     en_us: "Let's Start And Login To Mofidtrip",
   },
-  "to reserve the places and use the application, you must log in or register in the first step, otherwise you will not be able to do any activity.": {
-    ar: "لحجز القصور واستخدام التطبيق يجب عليك تسجيل الدخول أو التسجيل في الخطوة الأولى، وإلا فلن تتمكن من القيام بأي نشاط.",
-    fa_ir: "برای رزرو کاخ ها و استفاده از اپلیکیشن باید در مرحله اول وارد شوید یا ثبت نام کنید در غیر این صورت هیچ فعالیتی نمی توانید انجام دهید.",
-    en_us: "To Reserve The Places And Use The Application, You Must Log In Or Register In The First Step, Otherwise You Will Not Be Able To Do Any Activity.",
-  },
+  "to reserve the places and use the application, you must log in or register in the first step, otherwise you will not be able to do any activity.":
+    {
+      ar: "لحجز القصور واستخدام التطبيق يجب عليك تسجيل الدخول أو التسجيل في الخطوة الأولى، وإلا فلن تتمكن من القيام بأي نشاط.",
+      fa_ir:
+        "برای رزرو کاخ ها و استفاده از اپلیکیشن باید در مرحله اول وارد شوید یا ثبت نام کنید در غیر این صورت هیچ فعالیتی نمی توانید انجام دهید.",
+      en_us:
+        "To Reserve The Places And Use The Application, You Must Log In Or Register In The First Step, Otherwise You Will Not Be Able To Do Any Activity.",
+    },
   Login: {
     ar: "تسجيل الدخول",
     fa_ir: "وارد شدن",
@@ -770,7 +853,8 @@ export const messages = {
   "you can contact the owner of the place through the following social networks or directly": {
     ar: "يمكنكم التواصل مع صاحب القصر عبر شبكات التواصل الاجتماعي التالية أو مباشرة",
     fa_ir: "می توانید از طریق شبکه های اجتماعی زیر و یا مستقیما با صاحب اقامتگاه تماس بگیرید",
-    en_us: "You can contact the owner of the place through the following social networks or directly",
+    en_us:
+      "You can contact the owner of the place through the following social networks or directly",
   },
   whatsapp: {
     ar: "واتس اب",
@@ -817,4 +901,441 @@ export const messages = {
     fa_ir: "مشاهده",
     en_us: "Review",
   },
-}
+  account: {
+    ar: "حساب",
+    fa_ir: "حساب کاربری",
+    en_us: "Account",
+  },
+  "create tour": {
+    ar: "إنشاء جولة",
+    fa_ir: "ایجاد تور",
+    en_us: "Create Tour",
+  },
+  "manage my tours": {
+    ar: "إدارة جولاتي",
+    fa_ir: "مدیریت تور های من",
+    en_us: "Manage My Tours",
+  },
+  "my tours requests": {
+    ar: "طلبات جولاتي",
+    fa_ir: "درخواست به تور های من",
+    en_us: "My Tours Requests",
+  },
+  "my requests": {
+    ar: "طلباتي",
+    fa_ir: "درخواست های من",
+    en_us: "My Requests",
+  },
+  managements: {
+    ar: "إدارة",
+    fa_ir: "مدیریت ها",
+    en_us: "Managements",
+  },
+  requests: {
+    ar: "طلبات",
+    fa_ir: "درخواست ها",
+    en_us: "Requests",
+  },
+  "after paying the tour fee, your reservation will be finalized": {
+    ar: "بعد دفع رسوم الجولة، سيتم الانتهاء من حجزك",
+    fa_ir: "شما بعد از پرداخت هزینه تور ، رزروتان نهایی می شود",
+    en_us: "After paying the tour fee, your reservation will be finalized",
+  },
+  "are you sure about the payment?": {
+    ar: "هل أنت متأكد من الدفع؟",
+    fa_ir: "آیا مطمئن به پرداخت هستید؟",
+    en_us: "Are you sure about the payment?",
+  },
+  "tours and my travels": {
+    ar: "جولاتي وأسفاري",
+    fa_ir: "تور ها و سفر های من",
+    en_us: "Tours and my travels",
+  },
+  "passengers info": {
+    ar: "معلومات الركاب",
+    fa_ir: "اطلاعات مسافران",
+    en_us: "Passengers Info",
+  },
+  "to request and reserve the tour, enter your details and those of your accompanying passengers.":
+    {
+      ar: "لطلب الجولة وحجزها، أدخل بياناتك وبيانات الركاب المرافقين لك.",
+      fa_ir: "برای درخواست و رزرو اولیه تور، مشخصات خودتان  و مسافران همراهتان را وارد کنید.",
+      en_us:
+        "To request and reserve the tour, enter your details and those of your accompanying passengers.",
+    },
+  "add new passenger": {
+    ar: "إضافة راكب جديد",
+    fa_ir: "افزودن مسافر جدید",
+    en_us: "Add new passenger",
+  },
+  "birth date": {
+    ar: "تاريخ الميلاد",
+    fa_ir: "تاریخ تولد",
+    en_us: "Birth Date",
+  },
+  "phone number": {
+    ar: "رقم التليفون",
+    fa_ir: "شماره تلفن",
+    en_us: "Phone Number",
+  },
+  "identify number": {
+    ar: "تحديد الرقم",
+    fa_ir: "کد ملی",
+    en_us: "Identify Number",
+  },
+  first: {
+    ar: "أول",
+    fa_ir: "اولین",
+    en_us: "First",
+  },
+  second: {
+    ar: "ثاني",
+    fa_ir: "دومین",
+    en_us: "Second",
+  },
+  third: {
+    ar: "ثالث",
+    fa_ir: "سومین",
+    en_us: "Third",
+  },
+  fourth: {
+    ar: "رابع",
+    fa_ir: "چهارمین",
+    en_us: "Fourth",
+  },
+  fifth: {
+    ar: "خامس",
+    fa_ir: "پنجمین",
+    en_us: "Fifth",
+  },
+  sixth: {
+    ar: "سادس",
+    fa_ir: "ششمین",
+    en_us: "Sixth",
+  },
+  seventh: {
+    ar: "سابع",
+    fa_ir: "هفتمین",
+    en_us: "Seventh",
+  },
+  eighth: {
+    ar: "ثامن",
+    fa_ir: "هشتمین",
+    en_us: "Eighth",
+  },
+  ninth: {
+    ar: "تاسع",
+    fa_ir: "نهمین",
+    en_us: "Ninth",
+  },
+  tenth: {
+    ar: "عاشر",
+    fa_ir: "دهمین",
+    en_us: "Tenth",
+  },
+  eleventh: {
+    ar: "أحد عشر",
+    fa_ir: "یازدهمین",
+    en_us: "Eleventh",
+  },
+  twelfth: {
+    ar: "الثاني عشر",
+    fa_ir: "دوازدهمین",
+    en_us: "Twelfth",
+  },
+  thirteenth: {
+    ar: "الثالث عشر",
+    fa_ir: "سیزدهمین",
+    en_us: "Thirteenth",
+  },
+  fourteenth: {
+    ar: "الرابع عشر",
+    fa_ir: "چهاردهمین",
+    en_us: "Fourteenth",
+  },
+  fifteenth: {
+    ar: "الخامس عشر",
+    fa_ir: "پانزدهمین",
+    en_us: "Fifteenth",
+  },
+  sixteenth: {
+    ar: "السادس عشر",
+    fa_ir: "شانزدهمین",
+    en_us: "Sixteenth",
+  },
+  seventeenth: {
+    ar: "السابع عشر",
+    fa_ir: "هفدهمین",
+    en_us: "Seventeenth",
+  },
+  eighteenth: {
+    ar: "الثامن عشر",
+    fa_ir: "هجدهمین",
+    en_us: "Eighteenth",
+  },
+  nineteenth: {
+    ar: "التاسع عشر",
+    fa_ir: "نوزدهمین",
+    en_us: "Nineteenth",
+  },
+  twentieth: {
+    ar: "العشرون",
+    fa_ir: "بیستم",
+    en_us: "Twentieth",
+  },
+  "twenty-first": {
+    ar: "الواحد والعشرون",
+    fa_ir: "بیست و یکم",
+    en_us: "Twenty-first",
+  },
+  "twenty-second": {
+    ar: "الثاني والعشرون",
+    fa_ir: "بیست و دوم",
+    en_us: "Twenty-second",
+  },
+  "twenty-third": {
+    ar: "الثالث والعشرون",
+    fa_ir: "بیست و سوم",
+    en_us: "Twenty-third",
+  },
+  "twenty-fourth": {
+    ar: "الرابع والعشرون",
+    fa_ir: "بیست و چهارم",
+    en_us: "Twenty-fourth",
+  },
+  "twenty-fifth": {
+    ar: "الخامس والعشرون",
+    fa_ir: "بیست و پنجم",
+    en_us: "Twenty-fifth",
+  },
+  "twenty-sixth": {
+    ar: "السادس والعشرون",
+    fa_ir: "بیست و ششم",
+    en_us: "Twenty-sixth",
+  },
+  "twenty-seventh": {
+    ar: "السابع والعشرون",
+    fa_ir: "بیست و هفتم",
+    en_us: "Twenty-seventh",
+  },
+  "twenty-eighth": {
+    ar: "الثامن والعشرون",
+    fa_ir: "بیست و هشتم",
+    en_us: "Twenty-eighth",
+  },
+  "twenty-ninth": {
+    ar: "التاسع والعشرون",
+    fa_ir: "بیست و نهم",
+    en_us: "Twenty-ninth",
+  },
+  thirtieth: {
+    ar: "الثلاثون",
+    fa_ir: "سی ام",
+    en_us: "Thirtieth",
+  },
+  "thirty-first": {
+    ar: "الواحد والثلاثون",
+    fa_ir: "سی و یکم",
+    en_us: "Thirty-first",
+  },
+  "thirty-second": {
+    ar: "الثاني والثلاثون",
+    fa_ir: "سی و دوم",
+    en_us: "Thirty-second",
+  },
+  "thirty-third": {
+    ar: "الثالث والثلاثون",
+    fa_ir: "سی و سوم",
+    en_us: "Thirty-third",
+  },
+  "thirty-fourth": {
+    ar: "الرابع والثلاثون",
+    fa_ir: "سی و چهارم",
+    en_us: "Thirty-fourth",
+  },
+  "thirty-fifth": {
+    ar: "الخامس والثلاثون",
+    fa_ir: "سی و پنجم",
+    en_us: "Thirty-fifth",
+  },
+  "thirty-sixth": {
+    ar: "السادس والثلاثون",
+    fa_ir: "سی و ششم",
+    en_us: "Thirty-sixth",
+  },
+  "thirty-seventh": {
+    ar: "السابع والثلاثون",
+    fa_ir: "سی و هفتم",
+    en_us: "Thirty-seventh",
+  },
+  "thirty-eighth": {
+    ar: "الثامن والثلاثون",
+    fa_ir: "سی و هشتم",
+    en_us: "Thirty-eighth",
+  },
+  "thirty-ninth": {
+    ar: "التاسع والثلاثون",
+    fa_ir: "سی و نهم",
+    en_us: "Thirty-ninth",
+  },
+  fortieth: {
+    ar: "الأربعون",
+    fa_ir: "چهلم",
+    en_us: "Fortieth",
+  },
+  "forty-first": {
+    ar: "الواحد والأربعون",
+    fa_ir: "چهل و یکم",
+    en_us: "Forty-first",
+  },
+  "forty-second": {
+    ar: "الثاني والأربعون",
+    fa_ir: "چهل و دوم",
+    en_us: "Forty-second",
+  },
+  "forty-third": {
+    ar: "الثالث والأربعون",
+    fa_ir: "چهل و سوم",
+    en_us: "Forty-third",
+  },
+  "forty-fourth": {
+    ar: "الرابع والأربعون",
+    fa_ir: "چهل و چهارم",
+    en_us: "Forty-fourth",
+  },
+  "forty-fifth": {
+    ar: "الخامس والأربعون",
+    fa_ir: "چهل و پنجم",
+    en_us: "Forty-fifth",
+  },
+  "forty-sixth": {
+    ar: "السادس والأربعون",
+    fa_ir: "چهل و ششم",
+    en_us: "Forty-sixth",
+  },
+  "forty-seventh": {
+    ar: "السابع والأربعون",
+    fa_ir: "چهل و هفتم",
+    en_us: "Forty-seventh",
+  },
+  "forty-eighth": {
+    ar: "الثامن والأربعون",
+    fa_ir: "چهل و هشتم",
+    en_us: "Forty-eighth",
+  },
+  "forty-ninth": {
+    ar: "التاسع والأربعون",
+    fa_ir: "چهل و نهم",
+    en_us: "Forty-ninth",
+  },
+  fiftieth: {
+    ar: "الخمسون",
+    fa_ir: "پنجاهم",
+    en_us: "Fiftieth",
+  },
+  "passenger info": {
+    ar: "معلومات الركاب",
+    fa_ir: "اطلاعات مسافر",
+    en_us: "passenger info",
+  },
+  "other hosts": {
+    ar: "المضيفين الآخرين",
+    fa_ir: "سایر اقامتگاه ها",
+    en_us: "Other Hosts",
+  },
+  "other settings": {
+    ar: "اعدادات اخرى",
+    fa_ir: "سایر تنظیمات",
+    en_us: "Other Settings",
+  },
+  "host owner": {
+    ar: "ميزبان",
+    fa_ir: "میزبان",
+    en_us: "Host Owner",
+  },
+  birthday: {
+    ar: "عيد ميلاد",
+    fa_ir: "تاریخ تولد",
+    en_us: "Birthday",
+  },
+  "tour reservation": {
+    ar: "حجز الجولة",
+    fa_ir: "رزرو تور",
+    en_us: "Tour Reservation",
+  },
+  "passengers count": {
+    ar: "عدد الركاب",
+    fa_ir: "تعداد مسافران",
+    en_us: "Passengers Count",
+  },
+  "group leader information": {
+    ar: "معلومات قائد المجموعة",
+    fa_ir: "اطلاعات سرگروه",
+    en_us: "Group leader information",
+  },
+  view: {
+    ar: "منظر",
+    fa_ir: "مشاهده",
+    en_us: "View",
+  },
+  duration: {
+    ar: "مدة",
+    fa_ir: "مدت",
+    en_us: "Duration",
+  },
+  "tour facilities": {
+    ar: "مرافق الجولة",
+    fa_ir: "امکانات تور",
+    en_us: "Tour Facilities",
+  },
+  address: {
+    ar: "عنوان",
+    fa_ir: "آدرس",
+    en_us: "Address",
+  },
+  "too many tries! please try again in the future": {
+    ar: "لقد قمت بالعديد من المحاولات لاستخدام التطبيق. يرجى المحاولة مرة أخرى في بضع دقائق",
+    fa_ir: "تلاش های زیادی برای استفاده از اپ داشته اید. لطفا چند دقیقه دیگر دوباره امتحان کنید",
+    en_us: "Too many tries! please try again in the future",
+  },
+  "no address": {
+    ar: "لا يوجد عنوان",
+    fa_ir: "بدون آدرس",
+    en_us: "No Address",
+  },
+  authentication: {
+    ar: "المصادقة",
+    fa_ir: "احراز هویت",
+    en_us: "Authentication",
+  },
+  "final information": {
+    ar: "المعلومات النهائية",
+    fa_ir: "جزئیات نهایی و ثبت شده شما",
+    en_us: "Final Information",
+  },
+  "your registered details for the initial request and booking of the tour": {
+    ar: "التفاصيل المسجلة الخاصة بك للطلب الأولي وحجز الجولة",
+    fa_ir: "جزئیات ثبت شده شما برای درخواست و رزرو اولیه تور",
+    en_us: "Your registered details for the initial request and booking of the tour",
+  },
+  "your selected package": {
+    ar: "الحزمة التي اخترتها",
+    fa_ir: "پکیج انتخابی شما",
+    en_us: "Your selected package",
+  },
+  "reserve": {
+    ar: "ذخيرة",
+    fa_ir: "رزرو",
+    en_us: "Reserve",
+  },
+  "buy": {
+    ar: "يشتري",
+    fa_ir: "خرید",
+    en_us: "Buy",
+  },
+  "tooman": {
+    ar: "تومان",
+    fa_ir: "تومان",
+    en_us: "Tooman",
+  },
+};

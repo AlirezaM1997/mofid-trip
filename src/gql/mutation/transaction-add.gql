@@ -1,17 +1,9 @@
-mutation userTransactionAdd($data: TransactionAddInputType!) {
-  userTransactionAdd(data: $data) {
+mutation projectTransactionAdd($data: ProjectTransactionAddInputType!) {
+  projectTransactionAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
     __typename
-    ... on ResponseWithToken {
-      status
-      statusCode
-      message
-      metadata
-    }
-    ... on ResponseBase {
-      status
-      statusCode
-      message
-      metadata
-    }
   }
 }

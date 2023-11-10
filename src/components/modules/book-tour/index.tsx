@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native"
 import { Button } from "@rneui/themed"
-import Text from "@src/components/atoms/text"
+import { Text } from "@rneui/themed"
 import useTranslation from "@src/hooks/translation"
 import { RootState } from "@src/store"
 import React from "react"

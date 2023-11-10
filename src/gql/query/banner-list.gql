@@ -1,12 +1,16 @@
-query bannerList($search: String) {
-  bannerList(search: $search) {
-    id
-    url
-    title
-    avatarS3 {
-      large
-      medium
-      small
+query bannerList($page: PageType, $search: String) {
+  bannerList(search: $search, page: $page) {
+    pageCount
+    count
+    data {
+      id
+      url
+      title
+      avatarS3 {
+        large
+        medium
+        small
+      }
     }
   }
 }

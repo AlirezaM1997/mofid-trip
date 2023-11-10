@@ -1,0 +1,25 @@
+query projectTransactionDetail($pk: ID!) {
+  projectTransactionDetail(pk: $pk) {
+    id
+    dateEnd
+    dateStart
+    owner {
+      id
+      fullname
+      firstname
+    }
+    guestSet {
+      name
+    }
+    project {
+      id
+      tax
+      name
+      price
+      accommodation {
+        id
+        address
+      }
+    }
+  }
+}

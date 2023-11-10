@@ -1,15 +1,27 @@
-query projectSet(
+query projectList(
   $search: String
   $filter: ProjectFilterType
   $page: PageType!
 ) {
-  projectSet(search: $search, filter: $filter, page: $page) {
+  projectList(search: $search, filter: $filter, page: $page) {
     pageCount
     count
     data {
       id
       name
       price
+      dateStart
+      dateEnd
+      capacity {
+        id
+        male
+        female
+        child
+      }
+      tags {
+        id
+        name
+      }
       accommodation {
         id
         address
