@@ -6,35 +6,33 @@ import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView, View, StyleSheet } from "react-native";
 import { AccommodationQueryType, TourQueryType } from "@src/gql/generated";
+import Container from "@atoms/container";
 
 function TourList() {
-  const [list, setList] = useState<TourQueryType[]>();
-  const { syncTable, search } = useTourTable();
   const { tr } = useTranslation();
+  const { search } = useTourTable();
+  const [list, setList] = useState<TourQueryType[]>();
 
   useEffect(() => {
-    syncTable({
-      page: {
-        pageNumber: 1,
-        pageSize: 10,
-      },
-    });
-    const res = search({
-      page: {
-        pageNumber: 1,
-        pageSize: 10,
-      },
-    });
-    setList(res);
+    setList(
+      search({
+        page: {
+          pageNumber: 1,
+          pageSize: 9999,
+        },
+      })
+    );
   }, []);
 
   return (
     <>
-      <TitleWithAction
-        title={tr("available tours")}
-        actionTitle={tr("See All")}
-        onActionPress={() => router.push("/search")}
-      />
+      <Container>
+        <TitleWithAction
+          title={tr("available tours")}
+          actionTitle={tr("See All")}
+          onActionPress={() => router.push("/search")}
+        />
+      </Container>
 
       <ScrollView
         horizontal
@@ -49,8 +47,8 @@ function TourList() {
               id={tour.id}
               name={tour.title}
               avatarS3={tour.avatarS3}
-              price={tour.price[0].price}
-              address={(tour?.destination as AccommodationQueryType)?.address || ""}
+              price={tour.packages?.[0]?.price}
+              address={(tour?.destination as AccommodationQueryType)?.address || tr("No Address")}
             />
           </View>
         ))}

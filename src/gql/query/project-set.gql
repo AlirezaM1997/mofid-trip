@@ -10,6 +10,14 @@ query projectList(
       id
       name
       price
+      dateStart
+      dateEnd
+      capacity {
+        id
+        male
+        female
+        child
+      }
       tags {
         id
         name

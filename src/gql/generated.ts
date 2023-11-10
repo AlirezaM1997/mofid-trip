@@ -21,26 +21,12 @@ export type Scalars = {
   UUID: { input: any; output: any; }
 };
 
-/** Input type for adding a new accommodation. */
+/** Input type for adding accommodation for the tour. */
 export type AccommodationAddInputType = {
   /** Address of the accommodation. */
-  address?: InputMaybe<Scalars['String']['input']>;
+  address: Scalars['String']['input'];
   /** List of base64-encoded images. */
   base64Images?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  /** Description of the accommodation. */
-  description?: InputMaybe<Scalars['String']['input']>;
-  /** Latitude of the accommodation. */
-  lat: Scalars['Float']['input'];
-  /** Longitude of the accommodation. */
-  lng: Scalars['Float']['input'];
-  /** Name of the accommodation. */
-  name: Scalars['String']['input'];
-};
-
-/** Input type for adding an accommodation for the tour. */
-export type AccommodationAddType = {
-  /** Address of the accommodation. */
-  address: Scalars['String']['input'];
   /** The city of the accommodation. */
   city?: InputMaybe<Scalars['String']['input']>;
   /** Latitude of the accommodation. */
@@ -341,9 +327,6 @@ export type Mutation = {
    * This mutation is used to create a new user or NGO account and send an SMS activation code.
    */
   createLogin?: Maybe<ResponseBase>;
-  createTour?: Maybe<ResponseBase>;
-  /** Mutation to edit an existing tour. */
-  editTour?: Maybe<ResponseBase>;
   /**
    * NGOEdit Mutation
    * This mutation is used to edit an NGO's information, including their avatar image.
@@ -369,6 +352,11 @@ export type Mutation = {
    * This mutation is used to edit user settings, including the selected language.
    */
   settingEdit?: Maybe<ResponseBase>;
+  tourAdd?: Maybe<ResponseBase>;
+  /** Mutation to edit an existing tour. */
+  tourEdit?: Maybe<ResponseBase>;
+  /** Mutation for adding purchase to tour transaction. */
+  tourPurchaseAdd?: Maybe<ResponseBase>;
   /**
    * TourTransactionAdd Mutation
    * This mutation is used to add a new tour transaction, including details of the tour, guest information, and transaction data.
@@ -414,16 +402,6 @@ export type MutationCreateLoginArgs = {
 };
 
 
-export type MutationCreateTourArgs = {
-  data: TourAddInputType;
-};
-
-
-export type MutationEditTourArgs = {
-  data: TourEditInputType;
-};
-
-
 export type MutationNgoEditArgs = {
   data?: InputMaybe<NgoEditInputType>;
 };
@@ -456,6 +434,21 @@ export type MutationRefreshTokenArgs = {
 
 export type MutationSettingEditArgs = {
   data?: InputMaybe<SettingEditInputType>;
+};
+
+
+export type MutationTourAddArgs = {
+  data: TourAddInputType;
+};
+
+
+export type MutationTourEditArgs = {
+  data: TourEditInputType;
+};
+
+
+export type MutationTourPurchaseAddArgs = {
+  data: TourPurchaseAddInputData;
 };
 
 
@@ -544,6 +537,8 @@ export type NgoQueryType = {
   address?: Maybe<Scalars['String']['output']>;
   /** NGO avatar image. */
   avatarS3?: Maybe<NgoImageType>;
+  /** NGO banner image. */
+  bannerS3?: Maybe<NgoImageType>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   lat?: Maybe<Scalars['Float']['output']>;
@@ -812,7 +807,7 @@ export type Query = {
   tourFacilityList?: Maybe<TourFacilityListType>;
   tourList?: Maybe<TourListType>;
   tourTransactionDetail?: Maybe<TourTransactionQueryType>;
-  tourTransactionList?: Maybe<Array<Maybe<TourTransactionQueryType>>>;
+  tourTransactionList?: Maybe<TourTransactionListType>;
   userDetail?: Maybe<UserQueryType>;
   userList?: Maybe<UserListType>;
   /** A GraphQL field containing version information. */
@@ -1066,7 +1061,7 @@ export type TourAddInputType = {
   /** Description of the tour. */
   description?: InputMaybe<Scalars['String']['input']>;
   /** Details of the destination for the tour. */
-  destination: AccommodationAddType;
+  destination: AccommodationAddInputType;
   /** Discount applied to the tour. */
   discount: Scalars['Int']['input'];
   /** End date and time of the tour. */
@@ -1074,7 +1069,7 @@ export type TourAddInputType = {
   /** List of associated facility names for the tour. */
   facilities: Array<InputMaybe<Scalars['String']['input']>>;
   /** Details of the origin for the tour. */
-  origin: AccommodationAddType;
+  origin: AccommodationAddInputType;
   /** Price of the tour. */
   price: Scalars['Int']['input'];
   /** Start date and time of the tour. */
@@ -1123,7 +1118,7 @@ export type TourEditInputType = {
   /** New Description of the tour. */
   description?: InputMaybe<Scalars['String']['input']>;
   /** New Details of the destination for the tour. */
-  destination: AccommodationAddType;
+  destination: AccommodationAddInputType;
   /** New Discount applied to the tour. */
   discount: Scalars['Int']['input'];
   /** New End date and time of the tour. */
@@ -1131,7 +1126,7 @@ export type TourEditInputType = {
   /** List of New associated facility names for the tour. */
   facilities: Array<InputMaybe<Scalars['String']['input']>>;
   /** New Details of the origin for the tour. */
-  origin: AccommodationAddType;
+  origin: AccommodationAddInputType;
   /** ID of the tour to edit. */
   pk: Scalars['ID']['input'];
   /** New Price of the tour. */
@@ -1218,12 +1213,27 @@ export type TourListType = {
   pageCount?: Maybe<Scalars['Int']['output']>;
 };
 
-/** Type representing tour prices with additional fields. */
-export type TourPriceType = {
-  __typename?: 'TourPriceType';
+/** Type representing tour packages with additional fields. */
+export type TourPackageType = {
+  __typename?: 'TourPackageType';
   id: Scalars['ID']['output'];
   price: Scalars['Float']['output'];
   title?: Maybe<Scalars['String']['output']>;
+  tour?: Maybe<TourQueryType>;
+};
+
+/** Input object type for purchase related to tour transaction. */
+export type TourPurchaseAddInputData = {
+  /** URL for further information or following after purchase procedure */
+  appLink: Scalars['String']['input'];
+  /** Details related to the purchase */
+  description: Scalars['String']['input'];
+  /** IP address associated with the user's purchase */
+  ip: Scalars['String']['input'];
+  /** Price/Amount of the purchase in TOMAN currency. */
+  price: Scalars['String']['input'];
+  /** ID of the tour transaction associated with the purchase */
+  tourTransactionId: Scalars['ID']['input'];
 };
 
 /** Type representing a tour with additional fields. */
@@ -1241,14 +1251,11 @@ export type TourQueryType = {
   facilities?: Maybe<Array<Maybe<TourFacilityQueryType>>>;
   id: Scalars['ID']['output'];
   origin?: Maybe<TourDestOrigUnion>;
-  /** List of tour prices. */
-  price?: Maybe<Array<Maybe<TourPriceType>>>;
-  prices: Array<TourPriceType>;
+  packages: Array<TourPackageType>;
   startTime: Scalars['DateTime']['output'];
   statusActivation: Scalars['Boolean']['output'];
   statusStep?: Maybe<TourTourStatusStepChoices>;
   title: Scalars['String']['output'];
-  tourtransactionSet: Array<TourTransactionQueryType>;
 };
 
 export enum TourStatusEnum {
@@ -1286,22 +1293,18 @@ export enum TourTourStatusStepChoices {
 
 /** Input type for adding a new tour transaction. */
 export type TourTransactionAddInputType = {
-  /** End date of the transaction. */
-  dateEnd: Scalars['String']['input'];
-  /** Start date of the transaction. */
-  dateStart: Scalars['String']['input'];
   /** Description of the transaction. */
   description?: InputMaybe<Scalars['String']['input']>;
   /** List of guests in the transaction. */
-  guests?: InputMaybe<Array<InputMaybe<TourGuestInputType>>>;
-  /** ID of the associated tour. */
-  tourId: Scalars['ID']['input'];
+  guests: Array<InputMaybe<TourGuestInputType>>;
+  /** ID of the associated tour package. */
+  tourPackageId: Scalars['ID']['input'];
 };
 
 /** Input type for editing a tour transaction. */
 export type TourTransactionEditInputType = {
   /** New status information for the transaction. */
-  status?: InputMaybe<TourStatusInputType>;
+  status?: InputMaybe<TourTransactionStatusInputType>;
   /** ID of the transaction to edit. */
   transactionId: Scalars['ID']['input'];
 };
@@ -1312,12 +1315,21 @@ export type TourTransactionFilterType = {
   statusStep?: InputMaybe<TransactionStatusEnum>;
 };
 
+/** Type representing a page of TourTransactionQueryType objects. */
+export type TourTransactionListType = {
+  __typename?: 'TourTransactionListType';
+  /** Total count of tour transaction. */
+  count?: Maybe<Scalars['Int']['output']>;
+  /** List of tour transaction data. */
+  data?: Maybe<Array<Maybe<TourTransactionQueryType>>>;
+  /** Number of pages. */
+  pageCount?: Maybe<Scalars['Int']['output']>;
+};
+
 /** Type representing a tour transaction with additional fields. */
 export type TourTransactionQueryType = {
   __typename?: 'TourTransactionQueryType';
   createdDate?: Maybe<Scalars['DateTime']['output']>;
-  dateEnd?: Maybe<Scalars['DateTime']['output']>;
-  dateStart?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   invoiceNumber?: Maybe<Scalars['UUID']['output']>;
@@ -1325,7 +1337,15 @@ export type TourTransactionQueryType = {
   owner?: Maybe<UserQueryType>;
   /** Status information for the transaction. */
   status?: Maybe<TourStatusQueryType>;
-  tour?: Maybe<TourQueryType>;
+  tourPackage?: Maybe<TourPackageType>;
+};
+
+/** Input type for updating the status of a tour transaction. */
+export type TourTransactionStatusInputType = {
+  /** New active status for the transaction. */
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  /** New step/status for the transaction. */
+  step?: InputMaybe<TransactionStatusEnum>;
 };
 
 export enum TransactionStatusEnum {
@@ -1409,7 +1429,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
+  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: Scalars['String']['output'];
 };
 
@@ -1438,6 +1458,13 @@ export type SettingEditMutationVariables = Exact<{
 
 
 export type SettingEditMutation = { __typename?: 'Mutation', settingEdit?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
+export type TourTransactionAddMutationVariables = Exact<{
+  data: TourTransactionAddInputType;
+}>;
+
+
+export type TourTransactionAddMutation = { __typename?: 'Mutation', tourTransactionAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
 export type ProjectTransactionEditMutationVariables = Exact<{
   data: ProjectTransactionEditInputType;
@@ -1505,7 +1532,7 @@ export type ProjectListQueryVariables = Exact<{
 }>;
 
 
-export type ProjectListQuery = { __typename?: 'Query', projectList?: { __typename?: 'ProjectListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null }>, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null> | null } | null };
+export type ProjectListQuery = { __typename?: 'Query', projectList?: { __typename?: 'ProjectListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, dateStart?: any | null, dateEnd?: any | null, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, female: number, child: number } | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null }>, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null> | null } | null };
 
 export type ProjectTransactionDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
@@ -1544,7 +1571,7 @@ export type TourListQueryVariables = Exact<{
 }>;
 
 
-export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description: string, startTime: any, endTime: any, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, id: string } | { __typename?: 'ProjectQueryType' } | null, price?: Array<{ __typename?: 'TourPriceType', title?: string | null, price: number } | null> | null, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
+export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description: string, startTime: any, endTime: any, NGO: { __typename?: 'NGOQueryType', id: string, user?: { __typename?: 'UserQueryType', id: string, phoneNumber?: string | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: number } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1627,6 +1654,42 @@ export function useSettingEditMutation(baseOptions?: Apollo.MutationHookOptions<
 export type SettingEditMutationHookResult = ReturnType<typeof useSettingEditMutation>;
 export type SettingEditMutationResult = Apollo.MutationResult<SettingEditMutation>;
 export type SettingEditMutationOptions = Apollo.BaseMutationOptions<SettingEditMutation, SettingEditMutationVariables>;
+export const TourTransactionAddDocument = gql`
+    mutation tourTransactionAdd($data: TourTransactionAddInputType!) {
+  tourTransactionAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}
+    `;
+export type TourTransactionAddMutationFn = Apollo.MutationFunction<TourTransactionAddMutation, TourTransactionAddMutationVariables>;
+
+/**
+ * __useTourTransactionAddMutation__
+ *
+ * To run a mutation, you first call `useTourTransactionAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTourTransactionAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [tourTransactionAddMutation, { data, loading, error }] = useTourTransactionAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useTourTransactionAddMutation(baseOptions?: Apollo.MutationHookOptions<TourTransactionAddMutation, TourTransactionAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<TourTransactionAddMutation, TourTransactionAddMutationVariables>(TourTransactionAddDocument, options);
+      }
+export type TourTransactionAddMutationHookResult = ReturnType<typeof useTourTransactionAddMutation>;
+export type TourTransactionAddMutationResult = Apollo.MutationResult<TourTransactionAddMutation>;
+export type TourTransactionAddMutationOptions = Apollo.BaseMutationOptions<TourTransactionAddMutation, TourTransactionAddMutationVariables>;
 export const ProjectTransactionEditDocument = gql`
     mutation projectTransactionEdit($data: ProjectTransactionEditInputType!) {
   projectTransactionEdit(data: $data) {
@@ -2084,6 +2147,14 @@ export const ProjectListDocument = gql`
       id
       name
       price
+      dateStart
+      dateEnd
+      capacity {
+        id
+        male
+        female
+        child
+      }
       tags {
         id
         name
@@ -2347,17 +2418,54 @@ export const TourListDocument = gql`
       description
       startTime
       endTime
+      NGO {
+        id
+        user {
+          id
+          phoneNumber
+        }
+        tourSet {
+          id
+          title
+          packages {
+            id
+            title
+            price
+          }
+          destination {
+            ... on AccommodationQueryType {
+              address
+              avatarS3 {
+                large
+                medium
+                small
+              }
+            }
+          }
+        }
+      }
+      capacity {
+        id
+        male
+        female
+        child
+      }
       facilities {
         id
         enName
+        faName
+        arName
       }
       destination {
         ... on AccommodationQueryType {
-          address
           id
+          address
+          lat
+          lng
         }
       }
-      price {
+      packages {
+        id
         title
         price
       }

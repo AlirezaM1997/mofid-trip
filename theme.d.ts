@@ -43,10 +43,12 @@ declare module "@rneui/themed" {
 
   export interface ButtonProps {
     onPress?: (e?: FormEvent<HTMLFormElement>) => void;
+    color?: ButtonProps['color'] | 'grey'
   }
 
   export interface ComponentTheme {
     Input: Partial<InputProps>;
     Text: Partial<TextProps>;
+    Button: Partial<ButtonProps>;
   }
 }

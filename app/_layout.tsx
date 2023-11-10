@@ -1,36 +1,38 @@
 import "react-native-gesture-handler";
+import useIsRtl from "@src/hooks/localization";
+import Toast from "react-native-toast-message";
+import useApolloClient from "@src/hooks/apollo/client/index";
+import * as SplashScreen from "expo-splash-screen";
+import React, { useCallback, useEffect } from "react";
 import { useFonts } from "expo-font";
 import { theme } from "@src/theme";
 import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "@rneui/themed";
-import useIsRtl from "@src/hooks/localization";
-import Toast from "react-native-toast-message";
 import { toastConfig } from "@src/toast-config";
 import { ApolloProvider } from "@apollo/client";
-import * as SplashScreen from "expo-splash-screen";
-import { Provider, useSelector } from "react-redux";
-import React, { useCallback, useEffect } from "react";
-import { RootState, persistor, store } from "@src/store";
-import { useSettingDetailQuery } from "@src/gql/generated";
-import useApolloClient from "@src/hooks/apollo/client/index";
+import { Provider } from "react-redux";
+import { persistor, store } from "@src/store";
 import { PersistGate } from "redux-persist/integration/react";
-import useSettingDetail from "@src/hooks/db/setting-detail";
-// import NetworkState from "@src/components/atoms/network-state";
 import { LtrSpecificStyles, RtlSpecificStyles } from "@src/global-style";
 import { View, Platform, StyleSheet, Appearance, I18nManager } from "react-native";
 import { Slot } from "expo-router";
-import useUserDetail from "@src/hooks/db/user-detail";
+import useTourTable from "@src/hooks/db/tour";
+import useUserDetailTable from "@src/hooks/db/user-detail";
+import useSettingDetailTable from "@src/hooks/db/setting-detail";
+import useProjectTable from "@src/hooks/db/project";
 
 SplashScreen.preventAutoHideAsync();
 
 export function PatchedApolloProvider({ children }) {
   const isRtl = useIsRtl();
   const client = useApolloClient();
+
   useEffect(() => {
     if (Platform.OS === "web") {
       document.body.insertAdjacentHTML("beforeend", isRtl ? RtlSpecificStyles : LtrSpecificStyles);
     }
   }, []);
+
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 }
 
@@ -38,18 +40,26 @@ const MainContent = () => {
   const isRtl = useIsRtl();
   const Theme = theme(isRtl);
 
-  const { data } = useSettingDetailQuery();
-  const { syncTable } = useSettingDetail();
-  const { syncTable: syncTableUserDetail } = useUserDetail();
-  const userId = useSelector((state: RootState) => state.userSlice?.loginData?.metadata?.id);
-  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
-
-  useEffect(() => {
-    if (data && language !== data.settingDetail.language) syncTable({ userId });
-  }, [data]);
+  const { syncTable: syncTableSettingDetail } = useSettingDetailTable();
+  const { syncTable: syncTableUserDetail } = useUserDetailTable();
+  const { syncTable: syncTableTour } = useTourTable();
+  const { syncTable: syncTableProject } = useProjectTable();
 
   useEffect(() => {
     syncTableUserDetail();
+    syncTableSettingDetail();
+    syncTableTour({
+      page: {
+        pageNumber: 1,
+        pageSize: 99999,
+      },
+    });
+    syncTableProject({
+      page: {
+        pageNumber: 1,
+        pageSize: 99999,
+      },
+    });
   }, []);
 
   I18nManager.allowRTL(I18nManager.isRTL);

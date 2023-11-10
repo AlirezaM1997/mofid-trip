@@ -2,18 +2,21 @@ import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Button, Divider, useTheme } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@src/store";
 import * as Yup from "yup";
 import { Field, FieldArray, Formik } from "formik";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Platform } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { GuestGenderEnum } from "@src/gql/generated";
+import { GuestGenderEnum, TourPackageType } from "@src/gql/generated";
 import Input from "@atoms/input";
 import { Text } from "@rneui/themed";
+import useTourTable from "@src/hooks/db/tour";
+import numbro from "numbro";
+import { formatPrice } from "@src/helper/extra";
 
 const defaultGuest = {
   firstname: "",
@@ -80,7 +83,13 @@ const numbers = [
 export default () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { id } = useSelector((state: RootState) => state.projectSlice.projectDetail);
+  const { tourId, tourPackage } = useLocalSearchParams();
+  const { findById } = useTourTable();
+  const tour = findById(tourId as string);
+  const tourPackageObj: TourPackageType = JSON.parse(tourPackage as string);
+  const { localizeNumber } = useLocalizedNumberFormat();
+
+  const handleBack = () => router.back();
 
   return (
     <>
@@ -102,19 +111,35 @@ export default () => {
         onSubmit={values => {
           // Handle form submission with values
           console.log(values);
-          router.push(`/book-accommodation/${id}/step-2`);
+          router.push({
+            pathname: `/tour/${tour.id}/reservation/step-2`,
+            params: {
+              tourId: tour.id,
+              guests: JSON.stringify(values.guests),
+              tourPackage: tourPackage,
+            },
+          });
         }}>
         {({ values, errors, touched, handleBlur, handleChange, handleSubmit }) => (
           <>
             <ScrollView style={style.scrollView}>
               <Container>
                 <WhiteSpace size={20} />
-                <Text variant="heading2">{tr("Passengers Info")}</Text>
+                <Text heading2>{tr("Passengers Info")}</Text>
                 <Text>
                   {tr(
                     "to request and reserve the tour, enter your details and those of your accompanying passengers."
                   )}
                 </Text>
+
+                <WhiteSpace size={10} />
+
+                <Text bold>{tr("Your selected package")}</Text>
+                <View style={style.row}>
+                  <Text>{tourPackageObj.title}</Text>
+                  <Text>{localizeNumber(formatPrice(tourPackageObj.price))}</Text>
+                </View>
+
                 <View>
                   <FieldArray
                     name="guests"
@@ -123,9 +148,8 @@ export default () => {
                         {values.guests && values.guests.length > 0
                           ? values.guests.map((guest, index) => (
                               <View key={index}>
-                                <WhiteSpace size={40} />
                                 <View style={style.row}>
-                                  <Text variant="heading1">
+                                  <Text heading2>
                                     {tr(numbers[index]) + " " + tr("passenger info")}
                                   </Text>
                                   <Button
@@ -193,7 +217,7 @@ export default () => {
                                   required
                                   value={guest.birthday}
                                   name={`guests[${index}].birthday`}
-                                  placeholder={tr("Identify Number")}
+                                  placeholder={tr("Birthday")}
                                   onChangeText={handleChange(`guests[${index}].birthday`)}
                                   onBlur={handleBlur(`guests[${index}].birthday`)}
                                   errorMessage={
@@ -221,7 +245,12 @@ export default () => {
               <Container>
                 <WhiteSpace size={10} />
                 <View style={style.row}>
-                  <Button disabled size="lg" containerStyle={style.btn} color="secondary">
+                  <Button
+                    size="lg"
+                    containerStyle={style.btn}
+                    color="secondary"
+                    type="outline"
+                    onPress={handleBack}>
                     {tr("Back")}
                   </Button>
                   <Button size="lg" containerStyle={style.btn} onPress={handleSubmit}>

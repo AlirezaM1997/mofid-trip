@@ -14,7 +14,6 @@ import { useProjectDetailQuery } from "@src/gql/generated";
 import { StyleSheet, View } from "react-native";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { setProjectDetail } from "@src/slice/project-slice";
-import Slider from "@src/components/modules/slider-project";
 import ProjectTags from "@src/components/modules/project-tags";
 import ContactCard from "@src/components/modules/contact-card";
 import SimilarProjects from "@src/components/modules/similar-projects";
@@ -22,6 +21,7 @@ import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import ProjectFacilities from "@src/components/modules/project-facilities";
 import ProjectBoldFeatures from "@src/components/modules/project-bold-features";
+import ImageSlider from "@modules/image-slider";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const Page: React.FC = ({ ...props }) => {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const { projectId, name } = useLocalSearchParams();
-  const {localizeNumber} = useLocalizedNumberFormat()
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { loading, data } = useProjectDetailQuery({
     variables: {
@@ -66,7 +66,7 @@ const Page: React.FC = ({ ...props }) => {
       <ScrollView style={style.scrollView}>
         <WhiteSpace size={10} />
         <Container style={style.container}>
-          <Slider />
+          <ImageSlider imageList={data.projectDetail.accommodation.avatarS3} />
 
           <ProjectTags tags={data?.projectDetail?.tags ?? []} />
 

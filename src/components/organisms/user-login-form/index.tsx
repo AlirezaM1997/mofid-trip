@@ -42,7 +42,7 @@ const UserLoginForm = () => {
       <View style={style.container}>
         <Container>
           <WhiteSpace size={32} />
-          <Text heading1>{tr("log in , sign up")}</Text>
+          <Text heading1>{tr("log in, sign up")}</Text>
           <WhiteSpace size={10} />
           <Text caption style={{ color: theme.colors.grey2 }}>
             {tr("enter your mobile number to log in and create an account on mofidtrip")}
