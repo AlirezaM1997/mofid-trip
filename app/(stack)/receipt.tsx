@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@src/store";
 import moment from "jalali-moment";
 import { router } from "expo-router";
+import BottomButtonLayout from "@components/layout/bottom-button";
 
 const CustomView = ({ children }) => {
   const { theme } = useTheme();
@@ -25,7 +26,18 @@ const Receipt = () => {
   const { theme } = useTheme();
 
   return (
-    <>
+    <BottomButtonLayout
+      buttons={[
+        <View style={styles.btnContainer}>
+          <Button containerStyle={styles.buttonStyle}>{tr("share")}</Button>
+          <Button
+            containerStyle={styles.buttonStyle}
+            type="outline"
+            onPress={() => router.push("/")}>
+            {tr("return to home")}
+          </Button>
+        </View>,
+      ]}>
       <Container style={styles.topContainer}>
         <Text style={[{ color: theme.colors.success }, styles.title]} heading2>
           {tr("payment was successful")}
@@ -107,19 +119,7 @@ const Receipt = () => {
           <Text caption>{data.invoiceNumber}</Text>
         </View>
       </Container>
-
-      <Container style={styles.bottomContainer}>
-        <View style={styles.btnContainer}>
-          <Button containerStyle={styles.buttonStyle}>{tr("share")}</Button>
-          <Button
-            containerStyle={styles.buttonStyle}
-            type="outline"
-            onPress={() => router.push("/")}>
-            {tr("return to home")}
-          </Button>
-        </View>
-      </Container>
-    </>
+    </BottomButtonLayout>
   );
 };
 
@@ -139,10 +139,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   centerContainer: { marginVertical: 27 },
-  bottomContainer: { paddingBottom: 32, display: "flex", alignItems: "center" },
   btnContainer: {
     gap: 10,
-    width: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",

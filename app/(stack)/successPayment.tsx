@@ -5,14 +5,26 @@ import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import { Button, Text, useTheme } from "@rneui/themed";
+import BottomButtonLayout from "@components/layout/bottom-button";
 
 const SuccessPayment = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
   return (
-    <Container style={styles.container}>
-      <View style={styles.contentContainer}>
+    <BottomButtonLayout
+      contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      buttons={[
+        <View style={styles.butContainer}>
+          <Button containerStyle={styles.buttonStyle} onPress={() => router.push("/receipt")}>
+            {tr("view receipt")}
+          </Button>
+          <Button containerStyle={styles.buttonStyle} onPress={() => router.back()}>
+            {tr("back")}
+          </Button>
+        </View>,
+      ]}>
+      <Container style={styles.container}>
         <AntDesign
           size={48}
           color="black"
@@ -20,49 +32,23 @@ const SuccessPayment = () => {
           style={{ color: theme.colors.success }}
         />
 
-        <View style={styles.titleContainer}>
-          <Text>{tr("payment was successful")}</Text>
-          <Text caption type="grey2" style={styles.subTitle}>
-            {tr(
-              "your payment has been successfully completed, to continue the process and view receipt click the return button."
-            )}
-          </Text>
-        </View>
-      </View>
-
-      <View style={styles.butContainer}>
-        <Button containerStyle={styles.buttonStyle} onPress={() => router.push("/receipt")}>
-          {tr("view receipt")}
-        </Button>
-        <Button containerStyle={styles.buttonStyle} onPress={() => router.back()}>
-          {tr("back")}
-        </Button>
-      </View>
-    </Container>
+        <Text>{tr("payment was successful")}</Text>
+        <Text caption type="grey2" style={styles.subTitle}>
+          {tr(
+            "your payment has been successfully completed, to continue the process and view receipt click the return button."
+          )}
+        </Text>
+      </Container>
+    </BottomButtonLayout>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
-    display: "flex",
-    paddingBottom: 24,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  contentContainer: {
-    flex: 1,
-    gap: 16,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   },
-  titleContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
   subTitle: {
     textAlign: "center",
   },
@@ -73,7 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonStyle: {
-    width: "100%",
+    width: "50%",
   },
 });
 
