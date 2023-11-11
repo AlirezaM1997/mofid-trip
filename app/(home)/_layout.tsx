@@ -32,6 +32,7 @@ export default function AppLayout() {
         tabBarLabelStyle: style.tabBarLabelStyle(isRtl),
         headerTitleStyle: style.headerTitleStyle(isRtl),
         headerTitleAlign: "center",
+        headerShown: false,
         headerLeft: () => (
           <Button
             type="clear"
@@ -51,7 +52,6 @@ export default function AppLayout() {
         name="index"
         options={{
           title: tr("Home"),
-          headerShown: false,
           tabBarLabel: tr("Home"),
           tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
         }}

@@ -827,8 +827,8 @@ export const messages = {
     en_us: "Error",
   },
   pending: {
-    ar: "در حال بررسی",
-    fa_ir: "قيد الانتظار",
+    ar: "قيد الانتظار",
+    fa_ir: "در حال بررسی",
     en_us: "pending",
   },
   "my request": {
@@ -952,12 +952,12 @@ export const messages = {
   },
   "tour transactions": {
     ar: "طلب جولة",
-    fa_ir: "داخواست‌ به تور",
+    fa_ir: "درخواست به تور",
     en_us: "Tour transactions",
   },
   "host transactions": {
     ar: "طلب استضافةه",
-    fa_ir: "داخواست‌ به هاست",
+    fa_ir: "درخواست به هاست",
     en_us: "Host transactions",
   },
   "manage your requests for hosting and trips": {

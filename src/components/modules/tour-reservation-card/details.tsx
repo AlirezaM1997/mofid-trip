@@ -10,14 +10,11 @@ type TransactionDetailPropsType = {
 };
 
 const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
-  const dispatch = useDispatch();
-
   const handleNavigate = () => {
     router.push({
-      pathname: "/tour",
+      pathname: `/tour/${transaction?.id}`,
       params: {
-        id: transaction?.id,
-        name: transaction?.tourPackage.title,
+        name: transaction?.tourPackage?.tour?.title,
       },
     });
   };

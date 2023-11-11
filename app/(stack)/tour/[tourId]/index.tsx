@@ -23,12 +23,14 @@ export default () => {
   const { tr } = useTranslation();
   const navigation = useNavigation();
   const { tourId, name } = useLocalSearchParams();
+  const aaa = useLocalSearchParams();
   const { findById } = useTourTable();
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();
 
   useEffect(() => {
     navigation.setOptions({ title: name });
+    console.log('aaa', aaa)
   }, [name]);
 
   const tour = findById(tourId as string);
