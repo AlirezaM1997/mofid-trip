@@ -12,6 +12,9 @@ import TransactionButtons from "@modules/transaction-buttons";
 import useTranslation from "@src/hooks/translation";
 import { Linking } from "react-native";
 import { router } from "expo-router";
+import { ZARINPAL_CALLBACK_URL } from "@src/settings";
+import { useDispatch } from "react-redux";
+import { setTourTransaction } from "@src/slice/tour-success-transaction";
 
 type PropsType = {
   apiTransactionStep: string;
@@ -21,6 +24,7 @@ type PropsType = {
 };
 
 const ConfirmButton = ({ apiTransactionStep, status, setStatus, transaction }: PropsType) => {
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
   const [cancel] = useTourTransactionEditMutation();
   const [addPurchase] = useTourPurchaseAddMutation();
@@ -59,16 +63,14 @@ const ConfirmButton = ({ apiTransactionStep, status, setStatus, transaction }: P
       variables: {
         data: {
           ip,
-          // appLink: "http://localhost:8081/successPayment",
-          appLink: "http://localhost:8081/successPayment",
+          appLink: ZARINPAL_CALLBACK_URL,
           tourTransactionId: transaction.id,
           price: transaction.tourPackage.price.toString(),
           description: `${tr("buy")} ${transaction?.tourPackage?.tour.title}`,
         },
       },
     });
-    console.log(data.tourPurchaseAdd.metadata);
-
+    dispatch(setTourTransaction(transaction));
     router.push(data.tourPurchaseAdd.metadata?.url);
   };
 

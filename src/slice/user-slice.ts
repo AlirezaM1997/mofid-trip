@@ -4,17 +4,17 @@ import { ResponseWithToken, UserDetailQuery } from "@src/gql/generated";
 
 type initialStateType = {
   loginData: ResponseWithToken;
-  userDetail: UserDetailQuery['userDetail'];
+  userDetail: UserDetailQuery["userDetail"];
 };
 
 const initialState: initialStateType = {
   loginData: {},
   userDetail: {
     id: null,
-    username: '',
-    firstname: '',
-    lastname: '',
-    email: '',
+    username: "",
+    firstname: "",
+    lastname: "",
+    email: "",
   },
 };
 

@@ -120,6 +120,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="receipt"
+        options={{
+          title: tr("receipt"),
+        }}
+      />
+      <Stack.Screen
         name="host-owner"
         options={{
           title: tr("Host Owner"),

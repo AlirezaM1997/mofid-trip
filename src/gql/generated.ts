@@ -1293,10 +1293,6 @@ export enum TourTourStatusStepChoices {
 
 /** Input type for adding a new tour transaction. */
 export type TourTransactionAddInputType = {
-  /** End date of the transaction. */
-  dateEnd: Scalars['String']['input'];
-  /** Start date of the transaction. */
-  dateStart: Scalars['String']['input'];
   /** Description of the transaction. */
   description?: InputMaybe<Scalars['String']['input']>;
   /** List of guests in the transaction. */
@@ -1334,8 +1330,6 @@ export type TourTransactionListType = {
 export type TourTransactionQueryType = {
   __typename?: 'TourTransactionQueryType';
   createdDate?: Maybe<Scalars['DateTime']['output']>;
-  dateEnd?: Maybe<Scalars['DateTime']['output']>;
-  dateStart?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   invoiceNumber?: Maybe<Scalars['UUID']['output']>;
@@ -1589,7 +1583,7 @@ export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'T
 export type TourTransactionListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionList?: { __typename?: 'TourTransactionListType', count?: number | null, data?: Array<{ __typename?: 'TourTransactionQueryType', id: string, description?: string | null, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', price: number, tour?: { __typename?: 'TourQueryType', title: string, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null> | null } | null };
+export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionList?: { __typename?: 'TourTransactionListType', count?: number | null, data?: Array<{ __typename?: 'TourTransactionQueryType', id: string, description?: string | null, invoiceNumber?: any | null, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', price: number, tour?: { __typename?: 'TourQueryType', startTime: any, endTime: any, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null> | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2562,6 +2556,7 @@ export const TourTransactionListDocument = gql`
     data {
       id
       description
+      invoiceNumber
       status {
         isActive
         step
@@ -2569,6 +2564,8 @@ export const TourTransactionListDocument = gql`
       tourPackage {
         price
         tour {
+          startTime
+          endTime
           avatarS3 {
             large
             medium

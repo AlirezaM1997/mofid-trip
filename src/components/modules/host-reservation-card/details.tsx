@@ -6,8 +6,7 @@ import { useDispatch } from "react-redux";
 import { dateConverter } from "@src/helper/date";
 import useTranslation from "@src/hooks/translation";
 import { AntDesign, Entypo } from "@expo/vector-icons";
-import { setData } from "@src/slice/transaction-slice";
-import { AccommodationQueryType, ProjectTransactionQueryType } from "@src/gql/generated";
+import { ProjectTransactionQueryType } from "@src/gql/generated";
 import { View, Image, StyleSheet, Pressable } from "react-native";
 
 type TransactionDetailPropsType = {
@@ -16,8 +15,6 @@ type TransactionDetailPropsType = {
 
 const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
   const theme = useTheme();
-  const dispatch = useDispatch();
-  const { tr } = useTranslation();
 
   const handleNavigate = () => {
     router.push({
@@ -28,10 +25,6 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
       },
     });
   };
-
-  useEffect(() => {
-    dispatch(setData({ id: transaction.id }));
-  }, []);
 
   return (
     <Pressable style={styles.container} onPress={handleNavigate}>

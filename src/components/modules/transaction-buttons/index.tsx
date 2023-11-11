@@ -1,8 +1,3 @@
-import {
-  Exact,
-  TourTransactionEditInputType,
-  TourTransactionEditMutation,
-} from "@src/gql/generated";
 import { View } from "react-native";
 import { router } from "expo-router";
 import { Button } from "@rneui/themed";
@@ -12,8 +7,6 @@ import { useDispatch } from "react-redux";
 import AcceptPayment from "./acceptPayment";
 import useTranslation from "@src/hooks/translation";
 import CancelTransaction from "./cancelTransaction";
-import { setData } from "@src/slice/transaction-slice";
-import { ApolloCache, DefaultContext, MutationFunctionOptions } from "@apollo/client";
 
 type PropsType = {
   transactionId: string;
@@ -42,9 +35,8 @@ const TransactionButtons = ({
   const payToReserve = () => setIsAcceptPaymentVisible(true);
 
   const openReserveBill = () => {
-    dispatch(setData({ id: transactionId }));
     router.push({
-      pathname: "/successPayment",
+      pathname: "/receipt",
       params: {
         transactionId: transactionId,
       },
@@ -54,21 +46,21 @@ const TransactionButtons = ({
   const buttonType = () => {
     const lookup = {
       REQUEST: {
-        title: tr("Cancel Request"),
+        title: tr("cancel request"),
         type: "outline",
         changeHandler: onCancel,
         color: "secondary",
         cancel: false,
       },
       ACCEPT: {
-        title: tr("Pay"),
+        title: tr("pay"),
         type: "solid",
         changeHandler: payToReserve,
         color: "primary",
         cancel: true,
       },
-      SUCCESSFUL: {
-        title: tr("View PDF Receipt"),
+      PAYMENT: {
+        title: tr("view receipt"),
         type: "solid",
         changeHandler: openReserveBill,
         color: "primary",

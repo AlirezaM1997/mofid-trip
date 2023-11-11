@@ -1,8 +1,7 @@
+import React from "react";
 import { router } from "expo-router";
 import { Text } from "@rneui/themed";
-import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setData } from "@src/slice/transaction-slice";
 import { View, Image, StyleSheet, Pressable } from "react-native";
 import { AccommodationQueryType, TourTransactionQueryType } from "@src/gql/generated";
 
@@ -22,10 +21,6 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
       },
     });
   };
-
-  useEffect(() => {
-    dispatch(setData({ id: transaction.id }));
-  }, []);
 
   return (
     <Pressable style={styles.container} onPress={handleNavigate}>

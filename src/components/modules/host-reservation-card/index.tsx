@@ -14,7 +14,7 @@ type PropsType = {
 
 const ReservationCard = ({ transaction, index }: PropsType) => {
   const { tr } = useTranslation();
-  const steps = [tr("my request"), tr("Accepting"), tr("payment"), tr("Successful")];
+  const steps = [tr("pending"), tr("Accepting"), tr("payment"), tr("finish the trip")];
   const [status, setStatus] = useState<{ step: number | string; isActive: boolean }>({
     step: 0,
     isActive: false,

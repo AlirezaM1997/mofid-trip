@@ -29,23 +29,6 @@
         "foregroundImage": "./assets/image/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "intentFilters": [
-        {
-          "action": "VIEW",
-          "autoVerify": true,
-          "data": [
-            {
-              "scheme": "https",
-              "host": "http://localhost:8081/",
-              "pathPrefix": "/successPayment"
-            }
-          ],
-          "category": [
-            "BROWSABLE",
-            "DEFAULT"
-          ]
-        }
-      ],
       "package": "com.mofidtrip"
     },
     "web": {
