@@ -39,7 +39,6 @@
     "formik": "^2.4.5",
     "graphql": "^15.8.0",
     "jalali-moment": "^3.3.11",
-    "numbro": "^2.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-measure": "^2.5.2",

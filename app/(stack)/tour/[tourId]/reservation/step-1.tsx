@@ -11,12 +11,15 @@ import { Field, FieldArray, Formik } from "formik";
 import { router, useLocalSearchParams } from "expo-router";
 import { Platform } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { GuestGenderEnum, TourPackageType } from "@src/gql/generated";
+import {
+  AccountSettingLanguageChoices,
+  GuestGenderEnum,
+  TourPackageType,
+} from "@src/gql/generated";
 import Input from "@atoms/input";
 import { Text } from "@rneui/themed";
 import useTourTable from "@src/hooks/db/tour";
-import numbro from "numbro";
-import { formatPrice } from "@src/helper/extra";
+import { formatPrice } from "@src/hooks/localization";
 
 const defaultGuest = {
   firstname: "",
@@ -88,6 +91,7 @@ export default () => {
   const tour = findById(tourId as string);
   const tourPackageObj: TourPackageType = JSON.parse(tourPackage as string);
   const { localizeNumber } = useLocalizedNumberFormat();
+  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
 
   const handleBack = () => router.back();
 
@@ -125,7 +129,9 @@ export default () => {
             <ScrollView style={style.scrollView}>
               <Container>
                 <WhiteSpace size={20} />
-                <Text heading2>{tr("Passengers Info")}</Text>
+                <Text heading2 bold>
+                  {tr("Passengers Info")}
+                </Text>
                 <Text>
                   {tr(
                     "to request and reserve the tour, enter your details and those of your accompanying passengers."
@@ -150,7 +156,9 @@ export default () => {
                               <View key={index}>
                                 <View style={style.row}>
                                   <Text heading2>
-                                    {tr(numbers[index]) + " " + tr("passenger info")}
+                                    {language === AccountSettingLanguageChoices.EnUs
+                                      ? tr(numbers[index]) + " " + tr("passenger info")
+                                      : tr("passenger info") + " " + tr(numbers[index])}
                                   </Text>
                                   <Button
                                     title={tr("delete")}
