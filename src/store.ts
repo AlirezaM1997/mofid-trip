@@ -2,7 +2,7 @@ import transactionListSlice from "./slice/transaction-list-slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistStore, persistReducer } from "redux-persist";
 import { combineReducers, createStore } from "@reduxjs/toolkit";
-import transactionSlice from "@src/slice/transaction-slice";
+import tourTransactionSlice from "@src/slice/tour-success-transaction";
 import projectSlice from "@src/slice/project-slice";
 import tourSlice from "@src/slice/tour-slice";
 import userSlice from "@src/slice/user-slice";
@@ -22,7 +22,7 @@ const persistConfig = {
 
 const appReducer = combineReducers({
   userSlice: userSlice,
-  transactionSlice: transactionSlice,
+  tourTransactionSlice: tourTransactionSlice,
   transactionListSlice: transactionListSlice,
   projectSlice: projectSlice,
   tourSlice: tourSlice,

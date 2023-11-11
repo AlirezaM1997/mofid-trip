@@ -1,0 +1,33 @@
+query tourTransactionList {
+  tourTransactionList {
+    count
+    data {
+      id
+      description
+      invoiceNumber
+      status {
+        isActive
+        step
+      }
+      tourPackage {
+        price
+        tour {
+          startTime
+          endTime
+          avatarS3 {
+            large
+            medium
+            small
+          }
+          destination {
+            ... on AccommodationQueryType {
+              id
+              address
+            }
+          }
+          title
+        }
+      }
+    }
+  }
+}

@@ -391,10 +391,15 @@ export const messages = {
     fa_ir: "تایید",
     en_us: "Verification",
   },
-  "view pdf receipt": {
+  receipt: {
+    ar: "إيصال",
+    fa_ir: "رسید",
+    en_us: "Receipt",
+  },
+  "view receipt": {
     ar: "المتن",
-    fa_ir: "مشاهده رسید pdf",
-    en_us: "View Pdf Receipt",
+    fa_ir: "مشاهده رسید",
+    en_us: "View Receipt",
   },
   "with discount place": {
     ar: "مع مكان الخصم",
@@ -486,11 +491,7 @@ export const messages = {
     fa_ir: "اولیه",
     en_us: "Initial",
   },
-  pending: {
-    ar: "قيد الانتظار",
-    fa_ir: "انتظار",
-    en_us: "Pending",
-  },
+
   rejected: {
     ar: "مرفوض",
     fa_ir: "رد شده",
@@ -516,10 +517,15 @@ export const messages = {
     fa_ir: "تایید کنید",
     en_us: "Accept",
   },
+  "finish the trip": {
+    ar: "أنهي الرحلة",
+    fa_ir: "اتمام سفر",
+    en_us: "finish the trip",
+  },
   payment: {
     ar: "قسط",
     fa_ir: "پرداخت",
-    en_us: "Payment",
+    en_us: "payment",
   },
   request: {
     ar: "طلب",
@@ -677,6 +683,14 @@ export const messages = {
     fa_ir: "نه، لغو",
     en_us: "No, Cancel",
   },
+  "your payment has been successfully completed, to continue the process and view receipt click the return button.":
+    {
+      ar: "لقد تم إتمام عملية الدفع بنجاح، لمواصلة العملية والعرض استلام انقر فوق زر العودة.",
+      fa_ir:
+        "پرداخت شما با موفقیت انجام شد ، برای ادامه فرایند و مشاهده رسید روی دکمه بازگشت کلیک کنید.",
+      en_us:
+        "Your payment has been successfully completed, to continue the process and view Receipt Click the Return button.",
+    },
   "payment was successful": {
     ar: "تم الدفع بنجاح",
     fa_ir: "پرداخت با موفقیت انجام شد",
@@ -727,7 +741,7 @@ export const messages = {
     fa_ir: "سپرده مبداء",
     en_us: "Initial deposit",
   },
-  "issue Tracking": {
+  "issue tracking": {
     ar: "تتبع القضية",
     fa_ir: "شماره پیگیری",
     en_us: "Issue Tracking",
@@ -812,6 +826,11 @@ export const messages = {
     fa_ir: "خطا",
     en_us: "Error",
   },
+  pending: {
+    ar: "در حال بررسی",
+    fa_ir: "قيد الانتظار",
+    en_us: "pending",
+  },
   "my request": {
     ar: "طلبي",
     fa_ir: "درخواست من",
@@ -819,8 +838,8 @@ export const messages = {
   },
   accepting: {
     ar: "قبول",
-    fa_ir: "پذیرش",
-    en_us: "Accepting",
+    fa_ir: "تایید / رد",
+    en_us: "accepting",
   },
   "let's start and login to mofid trip": {
     ar: "لنبدأ ونسجل الدخول لحجز الأربعين",
@@ -931,10 +950,30 @@ export const messages = {
     fa_ir: "مدیریت ها",
     en_us: "Managements",
   },
+  "tour transactions": {
+    ar: "طلب جولة",
+    fa_ir: "داخواست‌ به تور",
+    en_us: "Tour transactions",
+  },
+  "host transactions": {
+    ar: "طلب استضافةه",
+    fa_ir: "داخواست‌ به هاست",
+    en_us: "Host transactions",
+  },
+  "manage your requests for hosting and trips": {
+    ar: "إدارة طلباتك للاستضافة والرحلات",
+    fa_ir: "مدیریت درخواست های شما به میزبانی ها و سفرهای انجام شده",
+    en_us: "Manage your requests for hosting and trips",
+  },
   requests: {
     ar: "طلبات",
     fa_ir: "درخواست ها",
     en_us: "Requests",
+  },
+  buy: {
+    ar: "يشتري",
+    fa_ir: "خرید",
+    en_us: "buy",
   },
   "after paying the tour fee, your reservation will be finalized": {
     ar: "بعد دفع رسوم الجولة، سيتم الانتهاء من حجزك",
@@ -1042,6 +1081,11 @@ export const messages = {
     ar: "الثاني عشر",
     fa_ir: "دوازدهم",
     en_us: "Twelfth",
+  },
+  "at what stage is your application?": {
+    ar: "في أي مرحلة هو طلبك؟",
+    fa_ir: "درخواست شما در چه مرحله ای است؟",
+    en_us: "at what stage is your application?",
   },
   thirteenth: {
     ar: "الثالث عشر",

@@ -1,18 +1,16 @@
-import { useTheme } from "@rneui/themed"
-import { Text } from "@rneui/themed"
-import React from "react"
-import { View, StyleSheet } from "react-native"
+import { useTheme } from "@rneui/themed";
+import { Text } from "@rneui/themed";
+import React from "react";
+import { View, StyleSheet } from "react-native";
 
 const Stepper = ({ steps, activeStep, isActive }) => {
-  const theme = useTheme()
+  const theme = useTheme();
 
   const themeStyles = {
     successColor: { backgroundColor: theme.theme.colors.success },
     errorColor: { backgroundColor: theme.theme.colors.error },
     greyColor: { backgroundColor: theme.theme.colors.grey1 },
-    borderGreyColor: { borderColor: theme.theme.colors.grey1 },
-    textWhiteColor: { color: theme.theme.colors.white },
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -20,24 +18,18 @@ const Stepper = ({ steps, activeStep, isActive }) => {
         <View key={index} style={styles.stepContainer}>
           <View
             style={[
-              [styles.stepCircle, themeStyles.borderGreyColor],
-              index + 1 <= activeStep && (isActive ? [styles.completedStep, themeStyles.successColor] : [styles.failedStep, themeStyles.greyColor]),
-              index + 1 === activeStep && !isActive && [styles.rejectedStep, themeStyles.errorColor],
-            ]}
-          >
-            <Text
-              style={index + 1 <= activeStep && isActive ? themeStyles.textWhiteColor : index + 1 === activeStep && !isActive && themeStyles.textWhiteColor}
-            >
-              {index + 1}
-            </Text>
-          </View>
+              [styles.stepCircle, themeStyles.greyColor],
+              index + 1 <= activeStep &&
+                (isActive ? [themeStyles.successColor] : [themeStyles.greyColor]),
+              index + 1 === activeStep && !isActive && [themeStyles.errorColor],
+            ]}></View>
 
           <Text style={styles.stepLabel}>{step}</Text>
         </View>
       ))}
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -50,29 +42,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   stepCircle: {
-    width: 32,
-    height: 32,
-    borderRadius: 15,
-    borderWidth: 2,
+    width: 75,
+    height: 8,
 
     justifyContent: "center",
     alignItems: "center",
-  },
-
-  completedStep: {
-    borderWidth: 0,
-  },
-  failedStep: {
-    borderWidth: 0,
-  },
-  rejectedStep: {
-    borderWidth: 0,
   },
 
   stepLabel: {
     marginTop: 4,
     textAlign: "center",
   },
-})
+});
 
-export default Stepper
+export default Stepper;
