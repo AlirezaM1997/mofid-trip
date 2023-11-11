@@ -1024,62 +1024,62 @@ export const messages = {
   },
   first: {
     ar: "أول",
-    fa_ir: "اولین",
+    fa_ir: "اول",
     en_us: "First",
   },
   second: {
     ar: "ثاني",
-    fa_ir: "دومین",
+    fa_ir: "دوم",
     en_us: "Second",
   },
   third: {
     ar: "ثالث",
-    fa_ir: "سومین",
+    fa_ir: "سوم",
     en_us: "Third",
   },
   fourth: {
     ar: "رابع",
-    fa_ir: "چهارمین",
+    fa_ir: "چهارم",
     en_us: "Fourth",
   },
   fifth: {
     ar: "خامس",
-    fa_ir: "پنجمین",
+    fa_ir: "پنجم",
     en_us: "Fifth",
   },
   sixth: {
     ar: "سادس",
-    fa_ir: "ششمین",
+    fa_ir: "ششم",
     en_us: "Sixth",
   },
   seventh: {
     ar: "سابع",
-    fa_ir: "هفتمین",
+    fa_ir: "هفتم",
     en_us: "Seventh",
   },
   eighth: {
     ar: "ثامن",
-    fa_ir: "هشتمین",
+    fa_ir: "هشتم",
     en_us: "Eighth",
   },
   ninth: {
     ar: "تاسع",
-    fa_ir: "نهمین",
+    fa_ir: "نهم",
     en_us: "Ninth",
   },
   tenth: {
     ar: "عاشر",
-    fa_ir: "دهمین",
+    fa_ir: "دهم",
     en_us: "Tenth",
   },
   eleventh: {
     ar: "أحد عشر",
-    fa_ir: "یازدهمین",
+    fa_ir: "یادهم",
     en_us: "Eleventh",
   },
   twelfth: {
     ar: "الثاني عشر",
-    fa_ir: "دوازدهمین",
+    fa_ir: "دوازدهم",
     en_us: "Twelfth",
   },
   "at what stage is your application?": {
@@ -1089,37 +1089,37 @@ export const messages = {
   },
   thirteenth: {
     ar: "الثالث عشر",
-    fa_ir: "سیزدهمین",
+    fa_ir: "سیزدهم",
     en_us: "Thirteenth",
   },
   fourteenth: {
     ar: "الرابع عشر",
-    fa_ir: "چهاردهمین",
+    fa_ir: "چهاردهم",
     en_us: "Fourteenth",
   },
   fifteenth: {
     ar: "الخامس عشر",
-    fa_ir: "پانزدهمین",
+    fa_ir: "پانزدهم",
     en_us: "Fifteenth",
   },
   sixteenth: {
     ar: "السادس عشر",
-    fa_ir: "شانزدهمین",
+    fa_ir: "شانزدهم",
     en_us: "Sixteenth",
   },
   seventeenth: {
     ar: "السابع عشر",
-    fa_ir: "هفدهمین",
+    fa_ir: "هفدهم",
     en_us: "Seventeenth",
   },
   eighteenth: {
     ar: "الثامن عشر",
-    fa_ir: "هجدهمین",
+    fa_ir: "هجدهم",
     en_us: "Eighteenth",
   },
   nineteenth: {
     ar: "التاسع عشر",
-    fa_ir: "نوزدهمین",
+    fa_ir: "نوزدهم",
     en_us: "Nineteenth",
   },
   twentieth: {
@@ -1381,5 +1381,10 @@ export const messages = {
     ar: "تومان",
     fa_ir: "تومان",
     en_us: "Tooman",
+  },
+  "tour management": {
+    ar: "إدارة الرحلات",
+    fa_ir: "مدیریت تور ها",
+    en_us: "Tour Management",
   },
 };

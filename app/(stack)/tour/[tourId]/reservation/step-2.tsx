@@ -15,8 +15,10 @@ import { getCapacity } from "@src/helper/tour";
 import useTourTable from "@src/hooks/db/tour";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { TourPackageType, useTourTransactionAddMutation } from "@src/gql/generated";
+import useIsRtl from "@src/hooks/localization";
 
 export default () => {
+  const isRtl = useIsRtl()
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
@@ -72,7 +74,7 @@ export default () => {
                 onPress={() => router.push(`/book-accommodation/${tourId}/step-1`)}
                 style={style.btn}>
                 {tr("View")}
-                <Feather name="chevron-right" size={24} color={theme.colors.black} />
+                <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.black} />
               </Button>
             }
           />
@@ -89,7 +91,7 @@ export default () => {
                 onPress={() => router.push(`/book-accommodation/${tourId}/step-1`)}
                 style={style.btn}>
                 {tr("Edit")}
-                <Feather name="chevron-right" size={24} color={theme.colors.black} />
+                <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.black} />
               </Button>
             }
           />
@@ -106,7 +108,7 @@ export default () => {
                 onPress={() => router.push(`/book-accommodation/${tourId}/step-1`)}
                 style={style.btn}>
                 {tr("Edit")}
-                <Feather name="chevron-right" size={24} color={theme.colors.black} />
+                <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.black} />
               </Button>
             }
           />
