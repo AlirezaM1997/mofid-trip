@@ -1,5 +1,3 @@
-import Container from "@atoms/container";
-import { useTheme } from "@rneui/themed";
 import { Text } from "@rneui/themed";
 import { Pressable, StyleSheet, View } from "react-native";
 
@@ -11,14 +9,16 @@ type TitleWithActionPropsType = {
 
 const TitleWithAction = ({ title, actionTitle, onActionPress }: TitleWithActionPropsType) => {
   return (
-    <Container style={style.container}>
-      <Text heading2 bold>{title}</Text>
+    <View style={style.container}>
+      <Text heading2 bold>
+        {title}
+      </Text>
       <Pressable onPress={onActionPress}>
         <Text type="primary" caption>
           {actionTitle}
         </Text>
       </Pressable>
-    </Container>
+    </View>
   );
 };
 

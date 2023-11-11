@@ -3,7 +3,7 @@ import { useUserDetailLazyQuery } from "@src/gql/generated";
 import { setUserDetail } from "@src/slice/user-slice";
 import { useDispatch } from "react-redux";
 
-const useUserDetail = () => {
+const useUserDetailTable = () => {
   const dispatch = useDispatch();
   const [_, { networkStatus, refetch }] = useUserDetailLazyQuery({
     notifyOnNetworkStatusChange: true,
@@ -20,4 +20,4 @@ const useUserDetail = () => {
   return { syncTable, networkStatus };
 };
 
-export default useUserDetail;
+export default useUserDetailTable;

@@ -1,41 +1,38 @@
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import useTranslation from "@src/hooks/translation";
 import useProjectTable from "@src/hooks/db/project";
 import { ProjectQueryType } from "@src/gql/generated";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView, View, StyleSheet } from "react-native";
 import HostCard from "@modules/host-card";
-import WhiteSpace from "@atoms/white-space";
+import Container from "@atoms/container";
 
 function HostList() {
-  const [list, setList] = useState<ProjectQueryType[]>();
-  const { search, syncTable } = useProjectTable();
   const { tr } = useTranslation();
+  const { search } = useProjectTable();
+  const [list, setList] = useState<ProjectQueryType[]>();
 
   useEffect(() => {
-    syncTable({
-      page: {
-        pageNumber: 1,
-        pageSize: 10,
-      },
-    });
-    const res = search({
-      page: {
-        pageNumber: 1,
-        pageSize: 10,
-      },
-    });
-    setList(res);
+    setList(
+      search({
+        page: {
+          pageNumber: 1,
+          pageSize: 999,
+        },
+      })
+    );
   }, []);
 
   return (
     <>
-      <TitleWithAction
-        title={tr("Available hosts")}
-        actionTitle={tr("See All")}
-        onActionPress={() => router.push("/search")}
-      />
+      <Container>
+        <TitleWithAction
+          title={tr("Available hosts")}
+          actionTitle={tr("See All")}
+          onActionPress={() => router.push("/search")}
+        />
+      </Container>
 
       <ScrollView
         horizontal

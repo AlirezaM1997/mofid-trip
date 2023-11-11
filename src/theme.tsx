@@ -29,13 +29,35 @@ export const theme = isRtl =>
     components: {
       ListItemTitle: {
         style: {
-          fontFamily: "DanaNoEn",
+          ...Platform.select({
+            web: {
+              fontFamily:
+                'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            },
+            android: {
+              fontFamily: "DanaNoEn",
+            },
+            ios: {
+              fontFamily: "DanaNoEn",
+            },
+          }),
           fontWeight: "400",
         },
       },
       ListItemSubtitle: {
         style: {
-          fontFamily: "DanaNoEn",
+          ...Platform.select({
+            web: {
+              fontFamily:
+                'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            },
+            android: {
+              fontFamily: "DanaNoEn",
+            },
+            ios: {
+              fontFamily: "DanaNoEn",
+            },
+          }),
           fontWeight: "400",
         },
       },
@@ -52,19 +74,32 @@ export const theme = isRtl =>
           <LinearGradient {...props} colors={["#e1e8ee", "#d1d8de", "#e1e8ee"]} />
         ),
       },
+      Chip: {
+        titleStyle: {
+          fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+        },
+      },
       Text: ({ bold, italic, underline, center, color, type, ...props }, theme) => {
         let style = {
           fontSize: 14,
-          fontFamily: bold ? "DanaNoEnDemiBold" : "DanaNoEn",
           fontStyle: italic ? "italic" : "normal",
           textDecorationLine: underline ? "underline" : "none",
-          textAlign: center ? "center" : "auto",
+          textAlign: center ? "center" : isRtl ? "right" : "left",
           color: color ? color : type ? theme.colors[type] : theme.colors.black,
           ...Platform.select({
             web: {
-              width: props.numberOfLines ? "100%" : "auto"
-            }
-          })
+              width: props.numberOfLines ? "100%" : "auto",
+              fontFamily: bold
+                ? 'DanaNoEnDemiBold, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
+                : 'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            },
+            android: {
+              fontFamily: bold ? "DanaNoEnDemiBold" : "DanaNoEn",
+            },
+            ios: {
+              fontFamily: bold ? "DanaNoEnDemiBold" : "DanaNoEn",
+            },
+          }),
         };
 
         const heading1Style = { fontSize: 18, lineHeight: 26 };
@@ -109,8 +144,19 @@ export const theme = isRtl =>
 
         let buttonStyle: any = {
           borderRadius: 12,
-          fontFamily: "DanaNoEn",
           fontWeight: "400",
+          ...Platform.select({
+            web: {
+              fontFamily:
+                'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            },
+            android: {
+              fontFamily: "DanaNoEn",
+            },
+            ios: {
+              fontFamily: "DanaNoEn",
+            },
+          }),
         };
 
         let containerStyle = {};
@@ -172,14 +218,37 @@ export const theme = isRtl =>
       Input: {
         labelStyle: {
           marginBottom: 5,
-          fontFamily: "DanaNoEn",
+          ...Platform.select({
+            web: {
+              fontFamily:
+                'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            },
+            android: {
+              fontFamily: "DanaNoEn",
+            },
+            ios: {
+              fontFamily: "DanaNoEn",
+            },
+          }),
         },
         inputStyle: {
           borderWidth: 1,
           borderRadius: 12,
           padding: 15,
-          fontFamily: "DanaNoEn",
+          ...Platform.select({
+            web: {
+              fontFamily:
+                'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            },
+            android: {
+              fontFamily: "DanaNoEn",
+            },
+            ios: {
+              fontFamily: "DanaNoEn",
+            },
+          }),
           fontWeight: "400",
+          textAlign: isRtl ? 'right' : 'left'
         },
         inputContainerStyle: {
           borderBottomWidth: 0,
@@ -192,7 +261,18 @@ export const theme = isRtl =>
       },
       CheckBox: {
         textStyle: {
-          fontFamily: "DanaNoEn",
+          ...Platform.select({
+            web: {
+              fontFamily:
+                'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            },
+            android: {
+              fontFamily: "DanaNoEn",
+            },
+            ios: {
+              fontFamily: "DanaNoEn",
+            },
+          }),
           fontWeight: "400",
         },
       },
@@ -212,7 +292,18 @@ export const theme = isRtl =>
         },
         inputStyle: {
           fontSize: 12,
-          fontFamily: "DanaNoEn",
+          ...Platform.select({
+            web: {
+              fontFamily:
+                'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            },
+            android: {
+              fontFamily: "DanaNoEn",
+            },
+            ios: {
+              fontFamily: "DanaNoEn",
+            },
+          }),
           fontWeight: "400",
           ...Platform.select({
             web: {

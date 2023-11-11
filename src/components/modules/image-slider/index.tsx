@@ -1,15 +1,17 @@
 import { Text } from "@rneui/themed";
+import { TourImageType } from "@src/gql/generated";
 import { RootState } from "@src/store";
 import React, { useState } from "react";
 import { ImageBackground, Pressable, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 
-function Slider(props: { title?: string }) {
+type ImageSlider = {
+  imageList?: TourImageType[];
+};
+
+function ImageSlider({ imageList }: ImageSlider) {
   const [activeSlide, setActiveSlide] = useState(0);
-  const avatarS3 = useSelector(
-    (state: RootState) => state.tourSlice?.tourDetail?.avatarS3 || []
-  );
 
   return (
     <View>
@@ -17,26 +19,25 @@ function Slider(props: { title?: string }) {
         style={style.sliderActiveSlide}
         imageStyle={style.sliderImageActiveSlide}
         source={{
-          uri: avatarS3[activeSlide]?.large ?? "",
+          uri: imageList?.[activeSlide].medium ?? "",
         }}
       />
 
-      <ScrollView horizontal>
+      <ScrollView horizontal style={{ overflow: "scroll" }}>
         <View style={style.sliderThumbnails}>
-          {avatarS3.map((i, index) => (
+          {imageList.map((img, index) => (
             <Pressable
               key={index}
               onPress={() => setActiveSlide(index)}
               style={{
                 display: "flex",
                 flexDirection: "row",
-              }}
-            >
+              }}>
               <ImageBackground
                 style={style.sliderSlideThumbnail}
                 imageStyle={style.sliderImageSlideThumbnail}
                 source={{
-                  uri: i.small,
+                  uri: img.medium,
                 }}
               />
             </Pressable>
@@ -75,4 +76,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default Slider;
+export default ImageSlider;

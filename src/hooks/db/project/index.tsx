@@ -1,6 +1,7 @@
 import {
   ProjectListQuery,
   ProjectListQueryVariables,
+  ProjectQueryType,
   useProjectListLazyQuery,
 } from "@src/gql/generated";
 import { RootState } from "@src/store";
@@ -57,7 +58,10 @@ const useProjectTable = () => {
     return result.slice(pageSize * (pageNumber - 1), pageSize * pageNumber);
   };
 
-  return { networkStatus, syncTable, search };
+  const findById = (id: string): ProjectQueryType | undefined =>
+    projectSet?.data?.find(p => p.id === id);
+
+  return { networkStatus, syncTable, search, findById };
 };
 
 export default useProjectTable;

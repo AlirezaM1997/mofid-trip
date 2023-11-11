@@ -21,7 +21,7 @@ export const messages = {
   },
   "anywhere you want": {
     ar: "في أي مكان تريده",
-    fa_ir: "جستجوی تور ها",
+    fa_ir: "جستجوی اقامتگاه ها",
     en_us: "Anywhere You Want",
   },
   "are you sure to cancel?": {
@@ -129,7 +129,7 @@ export const messages = {
   },
   "first name": {
     ar: "اسم",
-    fa_ir: "نام کوچک",
+    fa_ir: "نام",
     en_us: "First Name",
   },
   gender: {
@@ -275,7 +275,7 @@ export const messages = {
     },
   profile: {
     ar: "الحساب",
-    fa_ir: "مشخصات",
+    fa_ir: "پروفایل",
     en_us: "Profile",
   },
   project: {
@@ -300,7 +300,7 @@ export const messages = {
   },
   search: {
     ar: "يبحث",
-    fa_ir: "جستجو کردن",
+    fa_ir: "جستجو",
     en_us: "Search",
   },
   "see all": {
@@ -776,10 +776,10 @@ export const messages = {
     fa_ir: "ورود به عنوان تشکل",
     en_us: "Sign in as an organization",
   },
-  "log in , sign up": {
+  "log in, sign up": {
     ar: "الدخول ، التسجيل فى الموقع",
     fa_ir: "ورود ، ثبت نام",
-    en_us: "log in , sign up",
+    en_us: "Log in, Sign up",
   },
   share: {
     ar: "يشارك",
@@ -1296,5 +1296,90 @@ export const messages = {
     ar: "ميزبان",
     fa_ir: "میزبان",
     en_us: "Host Owner",
+  },
+  birthday: {
+    ar: "عيد ميلاد",
+    fa_ir: "تاریخ تولد",
+    en_us: "Birthday",
+  },
+  "tour reservation": {
+    ar: "حجز الجولة",
+    fa_ir: "رزرو تور",
+    en_us: "Tour Reservation",
+  },
+  "passengers count": {
+    ar: "عدد الركاب",
+    fa_ir: "تعداد مسافران",
+    en_us: "Passengers Count",
+  },
+  "group leader information": {
+    ar: "معلومات قائد المجموعة",
+    fa_ir: "اطلاعات سرگروه",
+    en_us: "Group leader information",
+  },
+  view: {
+    ar: "منظر",
+    fa_ir: "مشاهده",
+    en_us: "View",
+  },
+  duration: {
+    ar: "مدة",
+    fa_ir: "مدت",
+    en_us: "Duration",
+  },
+  "tour facilities": {
+    ar: "مرافق الجولة",
+    fa_ir: "امکانات تور",
+    en_us: "Tour Facilities",
+  },
+  address: {
+    ar: "عنوان",
+    fa_ir: "آدرس",
+    en_us: "Address",
+  },
+  "too many tries! please try again in the future": {
+    ar: "لقد قمت بالعديد من المحاولات لاستخدام التطبيق. يرجى المحاولة مرة أخرى في بضع دقائق",
+    fa_ir: "تلاش های زیادی برای استفاده از اپ داشته اید. لطفا چند دقیقه دیگر دوباره امتحان کنید",
+    en_us: "Too many tries! please try again in the future",
+  },
+  "no address": {
+    ar: "لا يوجد عنوان",
+    fa_ir: "بدون آدرس",
+    en_us: "No Address",
+  },
+  authentication: {
+    ar: "المصادقة",
+    fa_ir: "احراز هویت",
+    en_us: "Authentication",
+  },
+  "final information": {
+    ar: "المعلومات النهائية",
+    fa_ir: "جزئیات نهایی و ثبت شده شما",
+    en_us: "Final Information",
+  },
+  "your registered details for the initial request and booking of the tour": {
+    ar: "التفاصيل المسجلة الخاصة بك للطلب الأولي وحجز الجولة",
+    fa_ir: "جزئیات ثبت شده شما برای درخواست و رزرو اولیه تور",
+    en_us: "Your registered details for the initial request and booking of the tour",
+  },
+  "your selected package": {
+    ar: "الحزمة التي اخترتها",
+    fa_ir: "پکیج انتخابی شما",
+    en_us: "Your selected package",
+  },
+  "reserve": {
+    ar: "ذخيرة",
+    fa_ir: "رزرو",
+    en_us: "Reserve",
+  },
+  "buy": {
+    ar: "يشتري",
+    fa_ir: "خرید",
+    en_us: "Buy",
+  },
+  "tooman": {
+    ar: "تومان",
+    fa_ir: "تومان",
+    en_us: "Tooman",
   },
 };

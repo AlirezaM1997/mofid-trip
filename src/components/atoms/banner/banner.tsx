@@ -12,12 +12,12 @@ const Banner = ({ name }) => {
       search: name,
       page: {
         pageNumber: 1,
-        pageSize: 100
-      }
+        pageSize: 100,
+      },
     },
   });
 
-  const handlePress = (url) => {
+  const handlePress = url => {
     if (url) {
       if (Platform.OS === "web") {
         Linking.openURL(url);
@@ -33,28 +33,15 @@ const Banner = ({ name }) => {
   };
 
   if (loading) {
-    return (
-      <Skeleton
-        animation="wave"
-        width={"100%"}
-        height={130}
-        style={style.skeletonBox}
-      />
-    );
+    return <Skeleton animation="wave" width={"100%"} height={130} style={style.skeletonBox} />;
   }
 
   const banner = data.bannerList?.data?.[0];
-  
+
   return (
-    <Pressable
-      style={style.bannerStyle}
-      onPress={() => handlePress(banner.url)}
-    >
+    <Pressable style={style.bannerStyle} onPress={() => handlePress(banner.url)}>
       {banner?.avatarS3 ? (
-        <Image
-          source={{ uri: banner?.avatarS3.large }}
-          style={style.bannerSize}
-        />
+        <Image source={{ uri: banner?.avatarS3.large }} style={style.bannerSize} />
       ) : null}
     </Pressable>
   );

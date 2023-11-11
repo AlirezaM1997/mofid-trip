@@ -10,7 +10,6 @@ import { APP_VERSION } from "@src/settings";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@src/store";
 import { LanguageChoiceEnum, useSettingEditMutation } from "@src/gql/generated";
-import useSettingDetail from "@src/hooks/db/setting-detail";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { I18nManager } from "react-native";
 import { getFullName } from "@src/helper/extra";
@@ -18,6 +17,7 @@ import useIsRtl from "@src/hooks/localization";
 import { router, useRootNavigationState } from "expo-router";
 import { useIsAuthenticated } from "@src/hooks/user";
 import Authentication from "app/(stack)/authentication";
+import useSettingDetailTable from "@src/hooks/db/setting-detail";
 
 const Profile: React.FC = () => {
   const isRtl = useIsRtl();
@@ -33,7 +33,7 @@ const Profile: React.FC = () => {
   const [settingEdit] = useSettingEditMutation({
     notifyOnNetworkStatusChange: true,
   });
-  const { syncTable } = useSettingDetail();
+  const { syncTable } = useSettingDetailTable();
   const [isVisibleLogout, setIsVisibleLogout] = useState(false);
   const { localizeNumber } = useLocalizedNumberFormat();
 
@@ -55,7 +55,7 @@ const Profile: React.FC = () => {
     router.push("/");
   };
 
-  const handleNavigateToEditProfile = () => router.push("/editProfile");
+  const handleNavigateToEditProfile = () => router.push("/edit-profile");
 
   const handleNavigateToComingSoon = () => router.push("/comingSoon");
 

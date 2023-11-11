@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import Toast from "react-native-toast-message";
 import { RootState } from "@src/store";
 import { LanguageChoiceEnum } from "@src/gql/generated";
+import useTranslation from "@src/hooks/translation";
 
 const languageCodes = {
   [LanguageChoiceEnum.FaIr]: "fa",
@@ -16,7 +17,10 @@ const languageCodes = {
 
 const customUseApolloClient = () => {
   const { token } = useSelector((state: RootState) => state.userSlice.loginData);
-  const lang = useSelector((state: RootState) => state.settingDetailSlice.settingDetail.language || LanguageChoiceEnum.EnUs);
+  const lang = useSelector(
+    (state: RootState) => state.settingDetailSlice.settingDetail.language || LanguageChoiceEnum.EnUs
+  );
+  const { tr } = useTranslation();
 
   const authLink = setContext((_, { headers }) => {
     return {
@@ -30,7 +34,7 @@ const customUseApolloClient = () => {
 
   const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
-      graphQLErrors.map((error) => {
+      graphQLErrors.map(error => {
         if (error.message === "'AnonymousUser' object is not iterable") {
           window.location.href = "/authentication";
           // navigationRef.navigate("LoginScreen")
@@ -50,6 +54,13 @@ const customUseApolloClient = () => {
           type: "error",
           text1: "Error",
           text2: JSON.stringify(networkError.message),
+        });
+      }
+      if (networkError.statusCode !== 429) {
+        Toast.show({
+          type: "error",
+          text1: "Error",
+          text2: tr("Too many tries! please try again in the future"),
         });
       }
     }

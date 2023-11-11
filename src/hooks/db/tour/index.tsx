@@ -5,9 +5,12 @@ import { NetworkStatus } from "@apollo/client";
 import { setTourList } from "@src/slice/tour-slice";
 import NetInfo from "@react-native-community/netinfo";
 import { useDispatch, useSelector } from "react-redux";
-import { TourListQuery, useTourListLazyQuery, TourListQueryVariables } from "@src/gql/generated";
-
-const hasIntersection = (a: any[], b: any[]) => a.some(item => b.includes(item));
+import {
+  TourListQuery,
+  useTourListLazyQuery,
+  TourListQueryVariables,
+  TourQueryType,
+} from "@src/gql/generated";
 
 const useTourTable = () => {
   const dispatch = useDispatch();
@@ -54,7 +57,10 @@ const useTourTable = () => {
     return result.slice(pageSize * (pageNumber - 1), pageSize * pageNumber);
   };
 
-  return { networkStatus, syncTable, search };
+  const findById = (id: string): TourQueryType | undefined =>
+    tourList?.data?.find(p => p.id === id);
+
+  return { networkStatus, syncTable, search, findById };
 };
 
 export default useTourTable;

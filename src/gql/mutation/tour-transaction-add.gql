@@ -1,0 +1,8 @@
+mutation tourTransactionAdd($data: TourTransactionAddInputType!) {
+  tourTransactionAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}

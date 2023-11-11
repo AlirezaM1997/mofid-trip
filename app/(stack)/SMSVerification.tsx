@@ -19,8 +19,11 @@ import { NetworkStatus } from "@apollo/client";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import OtpInput from "@src/components/modules/otp-input";
 import { router, useLocalSearchParams } from "expo-router";
+import useTranslation from "@src/hooks/translation";
+import Toast from "react-native-toast-message";
 
 const SMSVerificationScreen = () => {
+  const { tr } = useTranslation();
   const dispatch = useDispatch();
   const countDownTimerRef = useRef();
   const { phone } = useLocalSearchParams();
@@ -57,6 +60,14 @@ const SMSVerificationScreen = () => {
         code: parseInt(text),
         phoneNumber: phone as string,
       },
+    }).then(({ data, errors }) => {
+      if (data.userGetToken.statusCode === 404) {
+        Toast.show({
+          type: "error",
+          text1: tr("Error"),
+          text2: data.userGetToken.message,
+        });
+      }
     });
   };
 

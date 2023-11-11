@@ -17,7 +17,19 @@ const HomeLayout = () => {
       ref={navigationRef}
       screenOptions={({ navigation }) => ({
         headerTitleAlign: "center",
-        contentStyle: { backgroundColor: "#fff" },
+        contentStyle: { backgroundColor: theme.colors.white },
+        headerTitleStyle: Platform.select({
+          web: {
+            fontFamily:
+              'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          },
+          android: {
+            fontFamily: "DanaNoEn",
+          },
+          ios: {
+            fontFamily: "DanaNoEn",
+          },
+        }),
         headerLeft: () => (
           <Button
             type="clear"
@@ -32,8 +44,6 @@ const HomeLayout = () => {
             }
           />
         ),
-        headerTitleStyle: style.headerTitleStyle(isRtl),
-        headerBackTitleStyle: style.headerBackTitleStyle(isRtl),
       })}>
       <Stack.Screen
         name="tour"
@@ -50,13 +60,19 @@ const HomeLayout = () => {
       <Stack.Screen
         name="userLogin"
         options={{
-          title: tr("log in , sign up"),
+          title: tr("log in, sign up"),
         }}
       />
       <Stack.Screen
         name="ngoLogin"
         options={{
-          title: tr("log in , sign up"),
+          title: tr("log in, sign up"),
+        }}
+      />
+      <Stack.Screen
+        name="SMSVerification"
+        options={{
+          title: tr("Verification"),
         }}
       />
       <Stack.Screen
@@ -66,15 +82,15 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="SMS-verification"
+        name="tour/[tourId]/reservation/step-1"
         options={{
-          title: tr("Verification"),
+          title: tr("Tour Reservation"),
         }}
       />
       <Stack.Screen
-        name="book-accommodation/[projectId]"
+        name="tour/[tourId]/reservation/step-2"
         options={{
-          title: tr("Book Accommodation"),
+          title: tr("Tour Reservation"),
         }}
       />
       <Stack.Screen
@@ -131,23 +147,14 @@ const HomeLayout = () => {
           title: tr("Host Owner"),
         }}
       />
+      <Stack.Screen
+        name="authentication"
+        options={{
+          title: tr("Authentication"),
+        }}
+      />
     </Stack>
   );
 };
 
 export default HomeLayout;
-
-const style = StyleSheet.create({
-  headerTitleStyle: isRtl => ({
-    fontWeight: "400",
-    fontFamily: isRtl
-      ? "DanaNoEn"
-      : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-  }),
-  headerBackTitleStyle: isRtl => ({
-    fontWeight: "400",
-    fontFamily: isRtl
-      ? "DanaNoEn"
-      : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-  }),
-});
