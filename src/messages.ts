@@ -1338,4 +1338,9 @@ export const messages = {
     fa_ir: "تومان",
     en_us: "Tooman",
   },
+  "tour management": {
+    ar: "إدارة الرحلات",
+    fa_ir: "مدیریت تور ها",
+    en_us: "Tour Management",
+  },
 };

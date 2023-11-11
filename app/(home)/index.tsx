@@ -19,12 +19,11 @@ export default function Index() {
     <>
       <SearchBar onChangeText={handleChange} value={searchText} />
       <Divider />
-      <ScrollView style={style.container}>
+      <ScrollView>
+        <WhiteSpace size={20} />
         <Container>
           <Banner name="home-1" />
         </Container>
-
-        <WhiteSpace size={32} />
 
         <WhiteSpace size={20} />
         <TourList />
@@ -36,8 +35,6 @@ export default function Index() {
         </Container>
         <WhiteSpace size={20} />
 
-        <WhiteSpace size={32} />
-
         <HostList />
 
         <WhiteSpace size={10} />
@@ -45,7 +42,3 @@ export default function Index() {
     </>
   );
 }
-
-const style = StyleSheet.create({
-  container: { marginTop: 40 },
-});

@@ -16,9 +16,10 @@ import TitleWithAction from "@modules/title-with-action";
 import ContactCard from "@modules/contact-card";
 import Map from "@modules/map";
 import SimilarTours from "@modules/similar-tours";
-import { formatPrice } from "@src/hooks/localization";
+import useIsRtl, { formatPrice } from "@src/hooks/localization";
 
 export default () => {
+  const isRtl = useIsRtl();
   const { tr } = useTranslation();
   const navigation = useNavigation();
   const { tourId, name } = useLocalSearchParams();
@@ -99,14 +100,18 @@ export default () => {
 
         <WhiteSpace size={20} />
 
-        <Text>{tr("Address")}</Text>
-        <Text type="grey4">{(tour?.destination as AccommodationQueryType)?.address}</Text>
+        {(tour?.destination as AccommodationQueryType)?.address && (
+          <>
+            <Text bold>{tr("Address")}</Text>
+            <Text type="grey4">{(tour?.destination as AccommodationQueryType)?.address}</Text>
 
-        <WhiteSpace size={20} />
-        <Map
-          lat={(tour.destination as AccommodationQueryType)?.lat}
-          lng={(tour.destination as AccommodationQueryType)?.lng}
-        />
+            <WhiteSpace size={20} />
+            <Map
+              lat={(tour.destination as AccommodationQueryType)?.lat}
+              lng={(tour.destination as AccommodationQueryType)?.lng}
+            />
+          </>
+        )}
       </Container>
       <WhiteSpace size={20} />
       <SimilarTours currentTourId={tour.id} tours={tour.NGO.tourSet} />
@@ -118,7 +123,7 @@ export default () => {
             bottomDivider={index !== tour.packages.length - 1}
             onPress={() => handleNavigateToReserve(p)}>
             <ListItem.Content>
-              <View style={styles.priceItem}>
+              <View style={styles.priceItem(isRtl)}>
                 <View>
                   <Text>{p.title}</Text>
                   <Text>{localizeNumber(formatPrice(p.price))}</Text>
@@ -136,12 +141,12 @@ export default () => {
 };
 
 const styles = StyleSheet.create({
-  priceItem: {
+  priceItem: (isRtl: boolean) => ({
     display: "flex",
-    flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
-  },
+    flexDirection: isRtl ? "row-reverse" : "row",
+  }),
   gridRow: {
     display: "flex",
     flexDirection: "row",
