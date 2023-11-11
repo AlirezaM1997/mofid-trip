@@ -4,15 +4,11 @@ import { Divider } from "@rneui/themed";
 import { Text } from "@rneui/themed";
 import useIsRtl from "@src/hooks/localization";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import {
-  AccommodationQueryType,
-  TourImageType,
-  TourPriceType,
-  TourQueryType,
-} from "@src/gql/generated";
+import { AccommodationQueryType, TourImageType, TourQueryType } from "@src/gql/generated";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
 import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native";
 import { WIDTH } from "@src/constants";
+import { formatPrice } from "@src/hooks/localization";
 
 type PropsType = {
   address: AccommodationQueryType["address"];
@@ -73,7 +69,7 @@ function TourCard({ price, id, name, avatarS3, address }: PropsType) {
         <View style={style.bottom}>
           <View style={style.bottomStyle}>
             <Text subtitle1 bold>
-              ${localizeNumber(price.toString())}
+              {localizeNumber(formatPrice(price.toString()))}
             </Text>
             <Text>/ {tr("night")}</Text>
           </View>

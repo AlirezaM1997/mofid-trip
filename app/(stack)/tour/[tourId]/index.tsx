@@ -2,7 +2,6 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import ImageSlider from "@modules/image-slider";
-import TourFeatures from "@modules/tour-features";
 import { BottomSheet, Button, ListItem, Text } from "@rneui/themed";
 import { AccommodationQueryType, TourPackageType } from "@src/gql/generated";
 import { getCapacity } from "@src/helper/tour";
@@ -10,13 +9,14 @@ import useTourTable from "@src/hooks/db/tour";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
-import { ImageBackground, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import moment from "jalali-moment";
 import TourFacilities from "@modules/tour-facilities";
 import TitleWithAction from "@modules/title-with-action";
 import ContactCard from "@modules/contact-card";
 import Map from "@modules/map";
 import SimilarTours from "@modules/similar-tours";
+import { formatPrice } from "@src/hooks/localization";
 
 export default () => {
   const { tr } = useTranslation();
@@ -121,7 +121,7 @@ export default () => {
               <View style={styles.priceItem}>
                 <View>
                   <Text>{p.title}</Text>
-                  <Text>{localizeNumber(p.price)}</Text>
+                  <Text>{localizeNumber(formatPrice(p.price))}</Text>
                 </View>
                 <Button size="sm" type="outline" onPress={() => handleNavigateToReserve(p)}>
                   {tr("Buy")}
