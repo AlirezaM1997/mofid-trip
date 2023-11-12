@@ -40,8 +40,7 @@ export default () => {
         },
       },
     }).then(({data, errors}) => {
-      console.log('data', data)
-      console.log('errors', errors)
+      if (!errors?.length) router.push('/reservation')
     })
   };
 
@@ -71,7 +70,12 @@ export default () => {
                 color="secondary"
                 type="outline"
                 size="sm"
-                onPress={() => router.push(`/book-accommodation/${tourId}/step-1`)}
+                onPress={() => router.push({
+                  pathname: `/tour/${tourId}`,
+                  params: {
+                    name: tour.title
+                  }
+                })}
                 style={style.btn}>
                 {tr("View")}
                 <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.black} />
@@ -88,7 +92,7 @@ export default () => {
                 color="secondary"
                 type="outline"
                 size="sm"
-                onPress={() => router.push(`/book-accommodation/${tourId}/step-1`)}
+                onPress={() => router.back()}
                 style={style.btn}>
                 {tr("Edit")}
                 <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.black} />
@@ -105,7 +109,7 @@ export default () => {
                 color="secondary"
                 type="outline"
                 size="sm"
-                onPress={() => router.push(`/book-accommodation/${tourId}/step-1`)}
+                onPress={() => router.back()}
                 style={style.btn}>
                 {tr("Edit")}
                 <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.black} />

@@ -76,7 +76,9 @@ export const theme = isRtl =>
       },
       Chip: {
         titleStyle: {
-          fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontFamily: isRtl
+            ? "DanaNoEn"
+            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
         },
       },
       Text: ({ bold, italic, underline, center, color, type, ...props }, theme) => {
@@ -248,7 +250,7 @@ export const theme = isRtl =>
             },
           }),
           fontWeight: "400",
-          textAlign: isRtl ? 'right' : 'left'
+          textAlign: isRtl ? "right" : "left",
         },
         inputContainerStyle: {
           borderBottomWidth: 0,
@@ -311,6 +313,20 @@ export const theme = isRtl =>
             },
           }),
         },
+      },
+      TabItem: {
+        titleStyle: Platform.select({
+          web: {
+            fontFamily:
+              'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          },
+          android: {
+            fontFamily: "DanaNoEn",
+          },
+          ios: {
+            fontFamily: "DanaNoEn",
+          },
+        }),
       },
     },
   });
