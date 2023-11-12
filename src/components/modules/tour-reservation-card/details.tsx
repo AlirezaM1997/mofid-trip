@@ -1,7 +1,6 @@
 import React from "react";
 import { router } from "expo-router";
 import { Text } from "@rneui/themed";
-import { useDispatch } from "react-redux";
 import { View, Image, StyleSheet, Pressable } from "react-native";
 import { AccommodationQueryType, TourTransactionQueryType } from "@src/gql/generated";
 

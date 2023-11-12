@@ -1,9 +1,9 @@
+import React from "react";
 import Stepper from "../stepper";
 import { Divider } from "@rneui/base";
 import TransactionDetail from "./details";
 import ConfirmButton from "./confirmButtons";
 import { StyleSheet, View } from "react-native";
-import React, { useEffect, useState } from "react";
 import useTranslation from "@src/hooks/translation";
 import { TourTransactionQueryType } from "@src/gql/generated";
 
@@ -15,14 +15,6 @@ type PropsType = {
 const ReservationCard = ({ transaction, index }: PropsType) => {
   const { tr } = useTranslation();
   const steps = [tr("pending"), tr("accepting"), tr("payment"), tr("finish the trip")];
-  const [status, setStatus] = useState<{ step: number | string; isActive: boolean }>({
-    step: 0,
-    isActive: false,
-  });
-
-  useEffect(() => {
-    setStatus({ step: transaction.status.step, isActive: transaction.status.isActive });
-  }, [transaction]);
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
@@ -31,7 +23,7 @@ const ReservationCard = ({ transaction, index }: PropsType) => {
       PAYMENT: 3,
       SUCCESSFUL: 4,
     };
-    return lookup[status?.step || 0];
+    return lookup[transaction.status.step || 0];
   };
 
   return (
@@ -39,13 +31,12 @@ const ReservationCard = ({ transaction, index }: PropsType) => {
       {index !== 0 && <Divider style={{ marginVertical: 4 }} />}
       <View style={styles.container}>
         <TransactionDetail transaction={transaction} />
-        <Stepper steps={steps} activeStep={activeStep()} isActive={status.isActive as boolean} />
-        <ConfirmButton
-          status={status}
-          setStatus={setStatus}
-          transaction={transaction}
-          apiTransactionStep={transaction.status?.step as string}
+        <Stepper
+          steps={steps}
+          activeStep={activeStep()}
+          isActive={transaction.status.isActive as boolean}
         />
+        <ConfirmButton transaction={transaction} />
       </View>
     </>
   );
