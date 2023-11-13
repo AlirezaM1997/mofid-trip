@@ -36,7 +36,7 @@ const Banner = ({ name }) => {
     return <Skeleton animation="wave" width={"100%"} height={130} style={style.skeletonBox} />;
   }
 
-  const banner = data.bannerList?.data?.[0];
+  const banner = data?.bannerList?.data?.[0] || {};
 
   return (
     <Pressable style={style.bannerStyle} onPress={() => handlePress(banner.url)}>

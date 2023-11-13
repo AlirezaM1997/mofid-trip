@@ -44,9 +44,9 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
         changeHandler: () => pressHandler(`/tour/${transaction.id}`),
       },
     };
-    if (!transaction.status.isActive)
+    if (!transaction?.status?.isActive)
       return { title: tr("Rejected"), type: "solid", disabled: true };
-    if (transaction.status.step in lookup) return lookup[transaction.status.step];
+    if (transaction?.status?.step in lookup) return lookup[transaction?.status?.step];
   };
 
   return (
