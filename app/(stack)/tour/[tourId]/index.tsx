@@ -30,7 +30,7 @@ export default () => {
 
   useEffect(() => {
     navigation.setOptions({ title: name });
-    console.log('aaa', aaa)
+    console.log("aaa", aaa);
   }, [name]);
 
   const tour = findById(tourId as string);
@@ -50,8 +50,8 @@ export default () => {
     });
   };
 
-  const startTime = moment(tour.startTime).locale("fa").format("MMMM D");
-  const endTime = moment(tour.endTime).locale("fa").format("MMMM D");
+  const startTime = moment(tour?.startTime).locale("fa").format("MMMM D");
+  const endTime = moment(tour?.endTime).locale("fa").format("MMMM D");
 
   return (
     <BottomButtonLayout buttons={[<Button onPress={handleBottomSheet}>{tr("Reserve")}</Button>]}>

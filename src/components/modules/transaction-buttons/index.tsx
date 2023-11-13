@@ -3,84 +3,62 @@ import { router } from "expo-router";
 import { Button } from "@rneui/themed";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
 import AcceptPayment from "./acceptPayment";
 import useTranslation from "@src/hooks/translation";
-import CancelTransaction from "./cancelTransaction";
+import { TourTransactionQueryType } from "@src/gql/generated";
 
 type PropsType = {
-  transactionId: string;
-  cancelHandler: () => void;
-  apiTransactionStep: string;
   purchaseHandler: () => void;
-  status: { step: string | number; isActive: boolean };
-  setStatus: (status: { step: string | number; isActive: boolean }) => void;
+  transaction: TourTransactionQueryType;
 };
 
-const TransactionButtons = ({
-  cancelHandler,
-  status,
-  setStatus,
-  transactionId,
-  purchaseHandler,
-  apiTransactionStep,
-}: PropsType) => {
-  const dispatch = useDispatch();
+const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
   const { tr } = useTranslation();
-  const [isCancelVisible, setIsCancelVisible] = useState(false);
   const [isAcceptPaymentVisible, setIsAcceptPaymentVisible] = useState(false);
 
-  const onCancel = async () => setIsCancelVisible(true);
-
-  const payToReserve = () => setIsAcceptPaymentVisible(true);
-
-  const openReserveBill = () => {
-    router.push({
-      pathname: "/receipt",
-      params: {
-        transactionId: transactionId,
-      },
-    });
+  const pressHandler = (pathname: string) => {
+    router.push(pathname);
   };
 
   const buttonType = () => {
     const lookup = {
       REQUEST: {
-        title: tr("cancel request"),
         type: "outline",
-        changeHandler: onCancel,
+        detailsBtn: false,
         color: "secondary",
-        cancel: false,
+        title: tr("request details"),
+        changeHandler: () => pressHandler(`/tour-transaction-detail/${transaction.id}`),
       },
       ACCEPT: {
-        title: tr("pay"),
         type: "solid",
-        changeHandler: payToReserve,
         color: "primary",
-        cancel: true,
+        title: tr("pay"),
+        detailsBtn: true,
+        changeHandler: () => setIsAcceptPaymentVisible(true),
       },
       PAYMENT: {
-        title: tr("view receipt"),
         type: "solid",
-        changeHandler: openReserveBill,
         color: "primary",
-        cancel: false,
+        detailsBtn: false,
+        title: tr("tour details"),
+        changeHandler: () => pressHandler(`/tour/${transaction.id}`),
       },
     };
-    if (!status.isActive) return { title: tr("Rejected"), type: "solid", disabled: true };
-    if (status.step in lookup) return lookup[status.step];
+    if (!transaction.status.isActive)
+      return { title: tr("Rejected"), type: "solid", disabled: true };
+    if (transaction.status.step in lookup) return lookup[transaction.status.step];
   };
 
   return (
     <>
       <View style={styles.buttonContainer}>
-        {buttonType()?.cancel && (
+        {buttonType()?.detailsBtn && (
           <Button
             size="sm"
             type="outline"
             color="secondary"
-            onPress={onCancel}
-            title={tr("Cancel Request")}
+            onPress={() => pressHandler(`/tour-transaction-detail/${transaction.id}`)}
+            title={tr("request details")}
             containerStyle={styles.button}
           />
         )}
@@ -100,14 +78,6 @@ const TransactionButtons = ({
         purchaseHandler={purchaseHandler}
         isVisible={isAcceptPaymentVisible}
         setIsVisible={setIsAcceptPaymentVisible}
-      />
-      <CancelTransaction
-        setStatus={setStatus}
-        isVisible={isCancelVisible}
-        transactionId={transactionId}
-        cancelHandler={cancelHandler}
-        setIsVisible={setIsCancelVisible}
-        apiTransactionStep={apiTransactionStep}
       />
     </>
   );

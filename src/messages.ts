@@ -527,6 +527,11 @@ export const messages = {
     fa_ir: "پرداخت",
     en_us: "payment",
   },
+  "request details": {
+    ar: "تفاصيل التطبيق",
+    fa_ir: "جزئیات درخواست ",
+    en_us: "request details ",
+  },
   request: {
     ar: "طلب",
     fa_ir: "درخواست",
@@ -1367,20 +1372,20 @@ export const messages = {
     fa_ir: "پکیج انتخابی شما",
     en_us: "Your selected package",
   },
-  "reserve": {
+  reserve: {
     ar: "ذخيرة",
     fa_ir: "رزرو",
     en_us: "Reserve",
   },
-  "buy": {
-    ar: "يشتري",
-    fa_ir: "خرید",
-    en_us: "Buy",
-  },
-  "tooman": {
+  tooman: {
     ar: "تومان",
     fa_ir: "تومان",
     en_us: "Tooman",
+  },
+  "tour details": {
+    ar: "تفاصيل الجولة",
+    fa_ir: "جزئیات تور",
+    en_us: "Tour details",
   },
   "tour management": {
     ar: "إدارة الرحلات",
