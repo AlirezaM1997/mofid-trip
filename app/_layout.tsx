@@ -10,8 +10,8 @@ import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "@rneui/themed";
 import { toastConfig } from "@src/toast-config";
 import { ApolloProvider } from "@apollo/client";
-import { Provider } from "react-redux";
-import { persistor, store } from "@src/store";
+import { Provider, useSelector } from "react-redux";
+import { RootState, persistor, store } from "@src/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { LtrSpecificStyles, RtlSpecificStyles } from "@src/global-style";
 import { View, Platform, StyleSheet, Appearance, I18nManager } from "react-native";
@@ -20,6 +20,8 @@ import useTourTable from "@src/hooks/db/tour";
 import useUserDetailTable from "@src/hooks/db/user-detail";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
 import useProjectTable from "@src/hooks/db/project";
+import { useIsAuthenticated } from "@src/hooks/user";
+import useMyNGOTable from "@src/hooks/db/ngo";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -39,11 +41,14 @@ export function PatchedApolloProvider({ children }) {
 const MainContent = () => {
   const isRtl = useIsRtl();
   const Theme = theme(isRtl);
+  const isAuthenticated = useIsAuthenticated();
+  const { isNgo } = useSelector((state: RootState) => state.userSlice.userDetail);
 
   const { syncTable: syncTableSettingDetail } = useSettingDetailTable();
   const { syncTable: syncTableUserDetail } = useUserDetailTable();
   const { syncTable: syncTableTour } = useTourTable();
   const { syncTable: syncTableProject } = useProjectTable();
+  const { syncTable: syncTableMyNGOTable } = useMyNGOTable();
 
   useEffect(() => {
     syncTableUserDetail();
@@ -61,6 +66,13 @@ const MainContent = () => {
       },
     });
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated && isNgo) {
+      console.log('--00')
+      syncTableMyNGOTable();
+    }
+  }, [isAuthenticated, isNgo]);
 
   I18nManager.allowRTL(I18nManager.isRTL);
 

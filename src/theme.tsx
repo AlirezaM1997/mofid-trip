@@ -418,6 +418,7 @@ export const theme = isRtl =>
           style: {
             ...baseStyle.style,
             paddingHorizontal: 12,
+            marginBottom: 5,
           },
         };
       },
@@ -427,7 +428,6 @@ export const theme = isRtl =>
           ...baseStyle,
           style: {
             ...baseStyle.style,
-            color: theme.colors.black,
             paddingHorizontal: 12,
           },
         };
@@ -438,7 +438,6 @@ export const theme = isRtl =>
           ...baseStyle,
           style: {
             ...baseStyle.style,
-            color: theme.colors.black,
             paddingHorizontal: 12,
           },
         };
@@ -452,23 +451,70 @@ export const theme = isRtl =>
       CardDivider: (props, theme) => ({
         color: theme.colors.grey0,
       }),
-      Badge: (props, theme) => ({
-        style: {
-          padding: 10,
-        },
-        textStyle: Platform.select({
-          web: {
-            fontFamily:
-              'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+      Badge: ({ type, color, ...props }, theme) => {
+        let styles = {
+          style: {
+            padding: 10,
+            margin: 10,
           },
-          android: {
-            fontFamily: "DanaNoEn",
+          badgeStyle: {
+            padding: 12,
+            borderRadius: 20,
+            alignSelf: 'flex-end',
           },
-          ios: {
-            fontFamily: "DanaNoEn",
-          },
-        }),
-      }),
+          textStyle: Platform.select({
+            web: {
+              fontFamily:
+                'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            },
+            android: {
+              fontFamily: "DanaNoEn",
+            },
+            ios: {
+              fontFamily: "DanaNoEn",
+            },
+          }),
+        };
+        const c = theme.colors[color as string] ?? theme.colors.primary;
+        if (type === "solid") {
+          styles = {
+            ...styles,
+            badgeStyle: {
+              ...styles.badgeStyle,
+              backgroundColor: c,
+            },
+            textStyle: {
+              ...styles.textStyle,
+            },
+          };
+        } else if (type === "outline") {
+          styles = {
+            ...styles,
+            badgeStyle: {
+              ...styles.badgeStyle,
+              backgroundColor: "transparent",
+              borderColor: c,
+            },
+            textStyle: {
+              ...styles.textStyle,
+              color: c,
+            },
+          };
+        } else if (type === "clear") {
+          styles = {
+            ...styles,
+            badgeStyle: {
+              ...styles.badgeStyle,
+              backgroundColor: "transparent",
+            },
+            textStyle: {
+              ...styles.textStyle,
+              color: c,
+            },
+          };
+        }
+        return styles;
+      },
     },
   });
 

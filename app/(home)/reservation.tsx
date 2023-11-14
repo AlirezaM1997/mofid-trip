@@ -4,7 +4,7 @@ import Container from "@atoms/container";
 import { StyleSheet } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import TourReservation from "@organisms/tour-reservation";
-import { ifNotLoggedInRedirectTo } from "@src/hooks/auth";
+import { ifNotLoggedInRedirectTo } from "@src/hooks/user";
 
 const Page = () => {
   const { tr } = useTranslation();
