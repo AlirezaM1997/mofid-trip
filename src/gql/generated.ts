@@ -1592,6 +1592,13 @@ export type TourListQueryVariables = Exact<{
 
 export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description: string, startTime: any, endTime: any, NGO: { __typename?: 'NGOQueryType', id: string, user?: { __typename?: 'UserQueryType', id: string, phoneNumber?: string | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: number } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
 
+export type TourTransactionDetailQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+}>;
+
+
+export type TourTransactionDetailQuery = { __typename?: 'Query', tourTransactionDetail?: { __typename?: 'TourTransactionQueryType', createdDate?: any | null, description?: string | null, id: string, invoiceNumber?: any | null, modifiedDate?: any | null, tourPackage?: { __typename?: 'TourPackageType', title?: string | null, price: number, id: string, tour?: { __typename?: 'TourQueryType', id: string, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', small?: string | null } | null> | null } | null } | null } | null };
+
 export type TourTransactionListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2687,6 +2694,57 @@ export function useTourListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<T
 export type TourListQueryHookResult = ReturnType<typeof useTourListQuery>;
 export type TourListLazyQueryHookResult = ReturnType<typeof useTourListLazyQuery>;
 export type TourListQueryResult = Apollo.QueryResult<TourListQuery, TourListQueryVariables>;
+export const TourTransactionDetailDocument = gql`
+    query tourTransactionDetail($pk: ID!) {
+  tourTransactionDetail(pk: $pk) {
+    createdDate
+    description
+    id
+    invoiceNumber
+    modifiedDate
+    tourPackage {
+      title
+      price
+      id
+      tour {
+        avatarS3 {
+          small
+        }
+        id
+        title
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useTourTransactionDetailQuery__
+ *
+ * To run a query within a React component, call `useTourTransactionDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTourTransactionDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTourTransactionDetailQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useTourTransactionDetailQuery(baseOptions: Apollo.QueryHookOptions<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>(TourTransactionDetailDocument, options);
+      }
+export function useTourTransactionDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>(TourTransactionDetailDocument, options);
+        }
+export type TourTransactionDetailQueryHookResult = ReturnType<typeof useTourTransactionDetailQuery>;
+export type TourTransactionDetailLazyQueryHookResult = ReturnType<typeof useTourTransactionDetailLazyQuery>;
+export type TourTransactionDetailQueryResult = Apollo.QueryResult<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>;
 export const TourTransactionListDocument = gql`
     query tourTransactionList {
   tourTransactionList {

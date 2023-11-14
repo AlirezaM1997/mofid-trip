@@ -62,15 +62,17 @@ const TourReservation = () => {
       refreshControl={
         <RefreshControl refreshing={networkStatus !== NetworkStatus.ready} onRefresh={onRefresh} />
       }>
-      {data?.tourTransactionList?.data?.length === 0 && <NoResult />}
+      <Container>
+        {data?.tourTransactionList?.data?.length === 0 && <NoResult />}
 
-      {data?.tourTransactionList?.data?.map((transaction, index) => (
-        <ReservationCard
-          transaction={transaction as TourTransactionQueryType}
-          key={transaction.id}
-          index={index}
-        />
-      ))}
+        {data?.tourTransactionList?.data?.map((transaction, index) => (
+          <ReservationCard
+            transaction={transaction as TourTransactionQueryType}
+            key={transaction.id}
+            index={index}
+          />
+        ))}
+      </Container>
     </ScrollView>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "@rneui/themed";
 import Container from "@atoms/container";
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import TourReservation from "@organisms/tour-reservation";
 
@@ -15,9 +15,9 @@ const Page = () => {
         <Text caption type="grey2">
           {tr("manage your requests for hosting and trips")}
         </Text>
-
-        <TourReservation />
       </Container>
+
+      <TourReservation />
     </>
   );
 };

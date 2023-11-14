@@ -262,6 +262,7 @@ export const theme = isRtl =>
         },
       },
       CheckBox: {
+        // com
         textStyle: {
           ...Platform.select({
             web: {

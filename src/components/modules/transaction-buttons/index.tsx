@@ -37,15 +37,15 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
         changeHandler: () => setIsAcceptPaymentVisible(true),
       },
       PAYMENT: {
-        type: "solid",
-        color: "primary",
+        type: "outline",
+        color: "secondary",
         detailsBtn: false,
         title: tr("tour details"),
         changeHandler: () => pressHandler(`/tour/${transaction.id}`),
       },
     };
     if (!transaction.status.isActive)
-      return { title: tr("Rejected"), type: "solid", disabled: true };
+      return { title: tr("Rejected"), type: "outline", disabled: true };
     if (transaction.status.step in lookup) return lookup[transaction.status.step];
   };
 
