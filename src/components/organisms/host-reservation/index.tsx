@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { useDispatch } from "react-redux";
 import { NetworkStatus } from "@apollo/client";
-import { useIsAuthenticated } from "@src/hooks/user";
+import { useIsAuthenticated } from "@src/hooks/auth";
 import { ScrollView, StyleSheet } from "react-native";
 import React, { useCallback, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";

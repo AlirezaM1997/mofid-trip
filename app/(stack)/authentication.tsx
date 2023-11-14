@@ -2,7 +2,7 @@ import { Button } from "@rneui/themed";
 import { Text } from "@rneui/themed";
 import WhiteSpace from "@src/components/atoms/white-space";
 import useTranslation from "@src/hooks/translation";
-import { useIsAuthenticated } from "@src/hooks/user";
+import { useIsAuthenticated } from "@src/hooks/auth";
 import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 import { SECONDARY_COLOR } from "@src/theme";
 import { router, useLocalSearchParams } from "expo-router";
@@ -14,12 +14,12 @@ const Authentication = () => {
   const { tr } = useTranslation();
   const dispatch = useDispatch();
   const isAuthenticated = useIsAuthenticated();
-  const { protectedScreen } = useLocalSearchParams();
+  const { protectedPath } = useLocalSearchParams();
 
   const handleLogin = (address: string) => router.push(address);
 
   if (!isAuthenticated) {
-    dispatch(setRedirectToScreenAfterLogin(protectedScreen));
+    dispatch(setRedirectToScreenAfterLogin(protectedPath));
   }
   return (
     <View style={style.container}>

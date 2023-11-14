@@ -101,11 +101,11 @@ export default () => {
         validationSchema={Yup.object({
           guests: Yup.array().of(
             Yup.object().shape({
-              firstname: Yup.string().required("First name is required"),
-              lastname: Yup.string().required("Last name is required"),
-              phoneNumber: Yup.string().required("Phone number name is required"),
-              birthday: Yup.string().required("Birth day is required"),
-              identifyNumber: Yup.string().required("Identify number day is required"),
+              firstname: Yup.string().required(tr("First name is required")),
+              lastname: Yup.string().required(tr("Last name is required")),
+              phoneNumber: Yup.string().required(tr("Phone number name is required")),
+              birthday: Yup.string().required(tr("Birth day is required")),
+              identifyNumber: Yup.string().required(tr("Identify number day is required")),
             })
           ),
         })}

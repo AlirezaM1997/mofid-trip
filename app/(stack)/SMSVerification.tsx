@@ -86,7 +86,11 @@ const SMSVerificationScreen = () => {
       if (dataChecking.userGetToken.statusCode === 200) {
         dispatch(setLoginData(dataChecking.userGetToken));
       } else {
-        // toast.error(dataChecking.userCheckSmsVerificationCode.message);
+        Toast.show({
+          type: "error",
+          text1: tr("Error"),
+          text2: dataChecking.userGetToken.message,
+        });
       }
     }
   }, [loadingChecking, dataChecking]);
@@ -101,7 +105,7 @@ const SMSVerificationScreen = () => {
         dispatch(setUserDetail(dataUserDetail.userDetail));
         router.push(redirectToScreenAfterLogin);
       } else {
-        // router.push("HomeScreen")
+        router.push("/")
       }
     }
   }, [networkStatus, dataUserDetail]);

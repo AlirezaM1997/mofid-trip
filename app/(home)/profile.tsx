@@ -15,7 +15,7 @@ import { I18nManager } from "react-native";
 import { getFullName } from "@src/helper/extra";
 import useIsRtl from "@src/hooks/localization";
 import { router, useRootNavigationState } from "expo-router";
-import { useIsAuthenticated } from "@src/hooks/user";
+import { useIsAuthenticated } from "@src/hooks/auth";
 import Authentication from "app/(stack)/authentication";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
 
@@ -113,7 +113,7 @@ const Profile: React.FC = () => {
             color={theme.colors.grey3}
           />
         </ListItem>
-
+{console.log('>>', userDetail?.isNgo)}
         {userDetail?.isNgo && (
           <>
             <WhiteSpace size={20} />
