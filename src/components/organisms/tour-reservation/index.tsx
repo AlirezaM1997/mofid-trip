@@ -1,8 +1,6 @@
-import { router } from "expo-router";
 import { useDispatch } from "react-redux";
 import { NetworkStatus } from "@apollo/client";
-import { useIsAuthenticated } from "@src/hooks/user";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import React, { useCallback, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
@@ -12,11 +10,11 @@ import { setTransactionList } from "@src/slice/transaction-list-slice";
 import ReservationCard from "@src/components/modules/tour-reservation-card";
 import ReservationSkeleton from "@src/components/modules/reservation-skeleton";
 import { TourTransactionQueryType, useTourTransactionListQuery } from "@src/gql/generated";
+import { HEIGHT } from "@src/constants";
 
 const TourReservation = () => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const isAuthenticated = useIsAuthenticated();
   const { data, refetch, networkStatus } = useTourTransactionListQuery({
     notifyOnNetworkStatusChange: true,
   });
@@ -34,14 +32,6 @@ const TourReservation = () => {
       refetch();
     }
   }, [isFocused]);
-
-  if (!isAuthenticated) {
-    router.push({
-      pathname: "/authentication",
-      params: { tour: "/tour-reservation" },
-    });
-    return;
-  }
 
   if (networkStatus === NetworkStatus.loading)
     return (
@@ -63,7 +53,11 @@ const TourReservation = () => {
         <RefreshControl refreshing={networkStatus !== NetworkStatus.ready} onRefresh={onRefresh} />
       }>
       <Container>
-        {data?.tourTransactionList?.data?.length === 0 && <NoResult />}
+        {data?.tourTransactionList?.data?.length === 0 && (
+          <View style={{ height: HEIGHT - 150 }}>
+            <NoResult />
+          </View>
+        )}
 
         {data?.tourTransactionList?.data?.map((transaction, index) => (
           <ReservationCard

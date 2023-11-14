@@ -46,9 +46,15 @@ declare module "@rneui/themed" {
     color?: ButtonProps['color'] | 'grey'
   }
 
+  export interface BadgeProps {
+    color?: ButtonProps['color']
+    type?: ButtonProps['type']
+  }
+
   export interface ComponentTheme {
     Input: Partial<InputProps>;
     Text: Partial<TextProps>;
     Button: Partial<ButtonProps>;
+    Badge: Partial<BadgeProps>;
   }
 }

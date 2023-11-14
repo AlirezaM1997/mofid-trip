@@ -4,7 +4,7 @@ import { setMyNFODetail } from "@src/slice/my-ngo-slice";
 import { RootState } from "@src/store";
 import { useDispatch, useSelector } from "react-redux";
 
-const useNGODTable = () => {
+const useMyNGOTable = () => {
   const dispatch = useDispatch();
   const { myNGODetail } = useSelector((state: RootState) => state.myNGODetailSlice);
   const [_, { networkStatus, refetch }] = useMyNgoDetailLazyQuery({
@@ -24,4 +24,4 @@ const useNGODTable = () => {
   return { syncTable, networkStatus, get };
 };
 
-export default useNGODTable;
+export default useMyNGOTable;

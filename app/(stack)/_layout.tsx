@@ -118,6 +118,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="tour-transaction-detail/[transactionId]"
+        options={{
+          title: tr("Tour Transaction Detail"),
+        }}
+      />
+      <Stack.Screen
         name="edit-profile"
         options={{
           title: tr("Edit Profile"),

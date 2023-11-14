@@ -124,9 +124,11 @@ const Receipt = () => {
         <CustomView>
           <Text caption>{tr("time")}</Text>
           <Text caption>
-            {Intl.DateTimeFormat("fa-IR", { dateStyle: "full" }).format(
-              moment(modifiedDate, "YYYY-M-DTH").toDate()
-            )}
+            {Intl.DateTimeFormat("fa-IR", {
+              dateStyle: "medium",
+              timeStyle: "short",
+              hour12: true,
+            }).format(moment(modifiedDate, "YYYY-M-DTH").toDate())}
           </Text>
         </CustomView>
 

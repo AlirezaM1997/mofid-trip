@@ -14,13 +14,14 @@ const Authentication = () => {
   const { tr } = useTranslation();
   const dispatch = useDispatch();
   const isAuthenticated = useIsAuthenticated();
-  const { protectedScreen } = useLocalSearchParams();
+  const { protectedPath } = useLocalSearchParams();
 
   const handleLogin = (address: string) => router.push(address);
 
   if (!isAuthenticated) {
-    dispatch(setRedirectToScreenAfterLogin(protectedScreen));
+    dispatch(setRedirectToScreenAfterLogin(protectedPath));
   }
+
   return (
     <View style={style.container}>
       <ImageBackground

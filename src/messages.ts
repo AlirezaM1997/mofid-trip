@@ -950,7 +950,7 @@ export const messages = {
   },
   "yes, logout": {
     ar: "نعم، تسجيل الخروج",
-    fa_ir: "بله، حارج می‌شوم",
+    fa_ir: "بله، خارج می‌شوم",
     en_us: "Yes, Logout",
   },
   "are you sure you want to logout?": {
@@ -1030,7 +1030,7 @@ export const messages = {
   },
   "after paying the tour fee, your reservation will be finalized": {
     ar: "بعد دفع رسوم الجولة، سيتم الانتهاء من حجزك",
-    fa_ir: "شما بعد از پرداخت هزینه تور ، رزروتان نهایی می شود",
+    fa_ir: "شما بعد از پرداخت هزینه تور، رزروتان نهایی می شود",
     en_us: "After paying the tour fee, your reservation will be finalized",
   },
   "are you sure about the payment?": {
@@ -1439,5 +1439,35 @@ export const messages = {
     ar: "إدارة الرحلات",
     fa_ir: "مدیریت تور ها",
     en_us: "Tour Management",
+  },
+  "first name is required": {
+    ar: "الإسم الأول مطلوب",
+    fa_ir: "لطفا نام را وارد کنید",
+    en_us: "First name is required",
+  },
+  "last name is required": {
+    ar: "إسم العائلة مطلوب",
+    fa_ir: "لطفا نام خانوادگی را وارد کنید",
+    en_us: "Last name is required",
+  },
+  "phone number name is required": {
+    ar: "اسم رقم الهاتف مطلوب",
+    fa_ir: "لطفا شماره همراه را وارد کنید",
+    en_us: "Phone number name is required",
+  },
+  "birth day is required": {
+    ar: "يوم الميلاد مطلوب",
+    fa_ir: "لطفا تاریخ تولد را وارد کنید",
+    en_us: "Birth day is required",
+  },
+  "identify number day is required": {
+    ar: "مطلوب تحديد رقم اليوم",
+    fa_ir: "لطفا کد ملی را وارد کنید",
+    en_us: "Identify number day is required",
+  },
+  "tour transaction detail": {
+    ar: "تفاصيل معاملة الجولة",
+    fa_ir: "جزئیات رزرو تور",
+    en_us: "Tour Transaction Detail",
   },
 };

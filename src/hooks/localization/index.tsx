@@ -2,6 +2,7 @@ import React from "react";
 import { RootState } from "@src/store";
 import { useSelector } from "react-redux";
 import { AccountSettingLanguageChoices, LanguageChoiceEnum } from "@src/gql/generated";
+import useTranslation from "../translation";
 
 const useIsRtl = () => {
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
@@ -11,24 +12,34 @@ export default useIsRtl;
 
 export const formatPrice = (price: number) => {
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
+  const { tr } = useTranslation();
+
   if (language === AccountSettingLanguageChoices.FaIr) {
     return (
       price.toLocaleString("fa-IR", {
         style: "decimal",
         useGrouping: true,
-      }) + " تومان"
+      }) +
+      " " +
+      tr("tooman")
     );
   } else if (language === AccountSettingLanguageChoices.EnUs) {
-    const currencyFormatter = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
-    return currencyFormatter.format(price);
+    return (
+      price.toLocaleString("en-US", {
+        style: "decimal",
+        useGrouping: true,
+      }) +
+      " " +
+      tr("tooman")
+    );
   } else if (language === AccountSettingLanguageChoices.Ar) {
-    const currencyFormatter = new Intl.NumberFormat("ar-SA", {
-      style: "currency",
-      currency: "SAR",
-    });
-    return currencyFormatter.format(price);
+    return (
+      price.toLocaleString("ar-SA", {
+        style: "decimal",
+        useGrouping: true,
+      }) +
+      " " +
+      tr("tooman")
+    );
   }
 };
