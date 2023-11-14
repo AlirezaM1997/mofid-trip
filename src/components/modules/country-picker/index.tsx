@@ -11,7 +11,7 @@ import WhiteSpace from "@src/components/atoms/white-space"
 
 const CountryPicker = ({ value, setValue, callingCode, setCallingCode, ...props }) => {
   const [isVisible, setIsVisible] = useState(false)
-  const [country, setCountry] = useState(data[226])
+  const [country, setCountry] = useState(data[239])
   const [inputValue, setInputValue] = useState("")
   const [tempData, setTempData] = useState(data)
   const [searchText, setSearchText] = useState()

@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { useDispatch } from "react-redux";
 import { NetworkStatus } from "@apollo/client";
-import { useIsAuthenticated } from "@src/hooks/user";
+import { useIsAuthenticated } from "@src/hooks/auth";
 import { ScrollView, StyleSheet } from "react-native";
 import React, { useCallback, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
@@ -9,7 +9,7 @@ import Container from "@src/components/atoms/container";
 import NoResult from "@src/components/organisms/no-result";
 import { RefreshControl } from "react-native-gesture-handler";
 import { setTransactionList } from "@src/slice/transaction-list-slice";
-import ReservationCard from "@src/components/modules/host-reservation-card";
+import ReservationCard from "@modules/tour-reservation-card";
 import ReservationSkeleton from "@src/components/modules/reservation-skeleton";
 import { ProjectTransactionQueryType, useProjectTransactionListQuery } from "@src/gql/generated";
 

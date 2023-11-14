@@ -13,7 +13,7 @@ const UserLoginForm = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const [phone, setPhone] = useState("");
-  const [callingCode, setCallingCode] = useState("+964");
+  const [callingCode, setCallingCode] = useState("+98");
   const [login, { loading, data, error }] = useCreateLoginMutation();
 
   const handlePress = () => {

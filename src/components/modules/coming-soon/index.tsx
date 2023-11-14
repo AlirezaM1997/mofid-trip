@@ -17,9 +17,9 @@ const ComingSoon = () => {
         source={require("../../../../assets/image/bottle.jpg")}
       />
       <WhiteSpace size={10} />
-      <Text variant="heading1">{tr("Coming Soon")}</Text>
+      <Text heading1>{tr("Coming Soon")}</Text>
       <WhiteSpace size={10} />
-      <Text variant="body1" style={style.description}>
+      <Text body1 center type="grey3">
         {tr("This section is under development and will be available in the next update.")}
       </Text>
     </View>
@@ -33,10 +33,6 @@ const style = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     paddingHorizontal: 20,
-  },
-  description: {
-    textAlign: "center",
-    color: "#ADAFAE",
   },
 })
 

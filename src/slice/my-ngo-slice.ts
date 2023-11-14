@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { NgoDetailQuery } from "@src/gql/generated";
+import { MyNgoDetailQuery } from "@src/gql/generated";
 
 type initialStateType = {
-  myNGODetail: NgoDetailQuery["NGODetail"];
+  myNGODetail: MyNgoDetailQuery["NGODetail"];
 };
 
 const initialState: initialStateType = {

@@ -21,6 +21,7 @@ import OtpInput from "@src/components/modules/otp-input";
 import { router, useLocalSearchParams } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import Toast from "react-native-toast-message";
+import useMyNGOTable from "@src/hooks/db/ngo";
 
 const SMSVerificationScreen = () => {
   const { tr } = useTranslation();
@@ -31,6 +32,7 @@ const SMSVerificationScreen = () => {
   const { redirectToScreenAfterLogin } = useSelector((state: RootState) => state.navigationSlice);
   const { loginData } = useSelector((state: RootState) => state.userSlice);
   const [login, { loading, data, error }] = useCreateLoginMutation();
+  const { syncTable: syncTableMyNGOTable } = useMyNGOTable();
   const [
     userCheckSmsVerificationCode,
     { loading: loadingChecking, data: dataChecking, error: errorChecking },
@@ -86,7 +88,11 @@ const SMSVerificationScreen = () => {
       if (dataChecking.userGetToken.statusCode === 200) {
         dispatch(setLoginData(dataChecking.userGetToken));
       } else {
-        // toast.error(dataChecking.userCheckSmsVerificationCode.message);
+        Toast.show({
+          type: "error",
+          text1: tr("Error"),
+          text2: dataChecking.userGetToken.message,
+        });
       }
     }
   }, [loadingChecking, dataChecking]);
@@ -97,11 +103,11 @@ const SMSVerificationScreen = () => {
 
   useEffect(() => {
     if (networkStatus === NetworkStatus.ready && dataUserDetail) {
+      dispatch(setUserDetail(dataUserDetail.userDetail));
       if (redirectToScreenAfterLogin) {
-        dispatch(setUserDetail(dataUserDetail.userDetail));
         router.push(redirectToScreenAfterLogin);
       } else {
-        // router.push("HomeScreen")
+        router.push("/");
       }
     }
   }, [networkStatus, dataUserDetail]);

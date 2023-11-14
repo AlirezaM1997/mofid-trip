@@ -4,7 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { Platform, StyleSheet } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { navigationRef } from "@src/utils/root-navigation";
 
 const HomeLayout = () => {
@@ -118,6 +118,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="tour-transaction-detail/[transactionId]"
+        options={{
+          title: tr("Tour Transaction Detail"),
+        }}
+      />
+      <Stack.Screen
         name="edit-profile"
         options={{
           title: tr("Edit Profile"),
@@ -138,7 +144,9 @@ const HomeLayout = () => {
       <Stack.Screen
         name="successPayment"
         options={{
+          headerLeft: () => null,
           title: tr("successful payment"),
+          headerBackButtonMenuEnabled: false,
         }}
       />
       <Stack.Screen

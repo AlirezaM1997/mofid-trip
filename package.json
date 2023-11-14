@@ -24,6 +24,7 @@
     "@rneui/themed": "^4.0.0-rc.8",
     "apollo-link-error": "^1.1.13",
     "expo": "^49.0.16",
+    "expo-clipboard": "~4.3.1",
     "expo-constants": "~14.4.2",
     "expo-image-picker": "~14.3.2",
     "expo-leaflet": "^1.0.3",

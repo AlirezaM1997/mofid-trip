@@ -1,5 +1,5 @@
 // export const BASE_URL = "https://www.sandboxapps.ca";
-export const ZARINPAL_CALLBACK_URL = "http://localhost:8081/successPayment";
+export const ZARINPAL_CALLBACK_URL = "http://localhost:8081/paymentStatus";
 export const BASE_URL = "https://api.hamafza-startup.ir";
 export const PAGE_SIZE = 10;
 export const API_URL = BASE_URL + "/graphql/";

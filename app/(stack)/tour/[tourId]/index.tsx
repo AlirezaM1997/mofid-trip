@@ -30,7 +30,6 @@ export default () => {
 
   useEffect(() => {
     navigation.setOptions({ title: name });
-    console.log("aaa", aaa);
   }, [name]);
 
   const tour = findById(tourId as string);
