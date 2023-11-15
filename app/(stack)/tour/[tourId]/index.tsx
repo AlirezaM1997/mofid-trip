@@ -23,7 +23,6 @@ export default () => {
   const { tr } = useTranslation();
   const navigation = useNavigation();
   const { tourId, name } = useLocalSearchParams();
-  const aaa = useLocalSearchParams();
   const { findById } = useTourTable();
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();

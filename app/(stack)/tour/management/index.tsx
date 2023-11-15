@@ -1,18 +1,15 @@
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import { Badge, BottomSheet, Button, ButtonGroup, Card, Text, useTheme } from "@rneui/themed";
-import {
-  AccommodationQueryType,
-  MyNgoDetailQuery,
-  TourTourStatusStepChoices,
-} from "@src/gql/generated";
 import useMyNGOTable from "@src/hooks/db/ngo";
-import { StyleSheet, View } from "react-native";
-import { Feather } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
+import ComingSoon from "@modules/coming-soon";
+import { Badge, BottomSheet, Button, Card, useTheme } from "@rneui/themed";
+import { AccommodationQueryType } from "@src/gql/generated";
+import { Pressable, StyleSheet, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import { getTourRequestStatusBadgeColor } from "@src/helper/tour";
 import { useState } from "react";
-import ComingSoon from "@modules/coming-soon";
+import { router } from "expo-router";
 
 const TourManagement = () => {
   const { tr } = useTranslation();
@@ -22,26 +19,36 @@ const TourManagement = () => {
 
   const { tourSet } = get();
 
+  const navigateToTourDetail = (tour: (typeof tourSet)[0]) =>
+    router.push({
+      pathname: `/tour/management/${tour.id}`,
+      params: {
+        tourStr: JSON.stringify(tour),
+      },
+    });
+
   return (
     <View>
       {tourSet.map(tour => (
         <Card key={tour.id}>
-          <Card.Image
-            source={{
-              uri: tour.avatarS3?.[0]?.medium,
-            }}
-          />
-          <WhiteSpace size={10} />
-          <Card.Title heading1 bold caption>
-            {tour.title}
-          </Card.Title>
-          <Card.FeaturedTitle caption>
-            {(tour.destination as AccommodationQueryType)?.province ?? tr("Province")},
-            {(tour.destination as AccommodationQueryType)?.city ?? tr("City")}
-          </Card.FeaturedTitle>
-          <Card.FeaturedSubtitle numberOfLines={2} type="grey3">
-            {tour.description}
-          </Card.FeaturedSubtitle>
+          <Pressable onPress={() => navigateToTourDetail(tour)}>
+            <Card.Image
+              source={{
+                uri: tour.avatarS3?.[0]?.medium,
+              }}
+            />
+            <WhiteSpace size={10} />
+            <Card.Title heading1 bold caption>
+              {tour.title}
+            </Card.Title>
+            <Card.FeaturedTitle caption>
+              {(tour.destination as AccommodationQueryType)?.province ?? tr("Province")},{" "}
+              {(tour.destination as AccommodationQueryType)?.city ?? tr("City")}
+            </Card.FeaturedTitle>
+            <Card.FeaturedSubtitle numberOfLines={2} type="grey3">
+              {tour.description}
+            </Card.FeaturedSubtitle>
+          </Pressable>
           <Container size={10} style={styles.footer}>
             <View style={styles.buttonContainer}>
               <Button type="outline" color="secondary" size="sm" onPress={() => setIsVisible(true)}>
@@ -65,9 +72,9 @@ const TourManagement = () => {
           <WhiteSpace size={10} />
           <ComingSoon />
           <WhiteSpace size={10} />
-        <Button size="sm" type="outline" color="secondary" onPress={() => setIsVisible(false)}>
-          {tr("ok")}
-        </Button>
+          <Button size="sm" type="outline" color="secondary" onPress={() => setIsVisible(false)}>
+            {tr("ok")}
+          </Button>
         </Container>
       </BottomSheet>
     </View>

@@ -136,7 +136,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="coming-soon"
+        name="comingSoon"
         options={{
           title: tr("Coming Soon"),
         }}
@@ -165,6 +165,18 @@ const HomeLayout = () => {
         name="authentication"
         options={{
           title: tr("Authentication"),
+        }}
+      />
+      <Stack.Screen
+        name="failedReceipt"
+        options={{
+          title: tr("Unsuccessful Payment"),
+        }}
+      />
+      <Stack.Screen
+        name="successReceipt"
+        options={{
+          title: tr("Success Receipt"),
         }}
       />
     </Stack>

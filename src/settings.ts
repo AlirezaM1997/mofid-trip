@@ -1,7 +1,6 @@
-// export const BASE_URL = "https://www.sandboxapps.ca";
-export const ZARINPAL_CALLBACK_URL = "http://localhost:8081/paymentStatus";
+export const ZARINPAL_CALLBACK_URL = window.location.origin + "/paymentStatus";
 export const BASE_URL = "https://api.hamafza-startup.ir";
 export const PAGE_SIZE = 10;
 export const API_URL = BASE_URL + "/graphql/";
 export const RERENDERING_INSPECTOR_IS_ACTIVE = false;
-export const APP_VERSION = "2.0.0";
+export const APP_VERSION = "2.0.1";

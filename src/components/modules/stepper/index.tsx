@@ -40,11 +40,11 @@ const styles = StyleSheet.create({
   },
   stepContainer: {
     alignItems: "center",
+    flexGrow: 0.2,
   },
   stepCircle: {
-    width: 75,
+    width: "100%",
     height: 8,
-
     justifyContent: "center",
     alignItems: "center",
   },

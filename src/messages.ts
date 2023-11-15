@@ -722,7 +722,7 @@ export const messages = {
     {
       ar: "لقد تم إتمام عملية الدفع بنجاح، لمواصلة العملية والعرض استلام انقر فوق زر العودة.",
       fa_ir:
-        "پرداخت شما با موفقیت انجام شد ، برای ادامه فرایند و مشاهده رسید روی دکمه بازگشت کلیک کنید.",
+        "پرداخت شما با موفقیت انجام شد ، برای ادامه فرایند و مشاهده رسید روی دکمه مشاهده رسید کلیک کنید.",
       en_us:
         "Your payment has been successfully completed, to continue the process and view Receipt Click the Return button.",
     },
@@ -741,7 +741,7 @@ export const messages = {
 
   "unsuccessful payment": {
     ar: "عملية دفع غير ناجحة",
-    fa_ir: "پرداخت نا موفق",
+    fa_ir: "پرداخت ناموفق",
     en_us: "Unsuccessful payment",
   },
   "payment status": {
@@ -877,7 +877,7 @@ export const messages = {
   pending: {
     ar: "قيد الانتظار",
     fa_ir: "در حال بررسی",
-    en_us: "pending",
+    en_us: "Pending",
   },
   "my request": {
     ar: "طلبي",
@@ -1496,8 +1496,38 @@ export const messages = {
     en_us: "City",
   },
   ok: {
-    ar: "",
+    ar: "نعم",
     fa_ir: "باشه",
     en_us: "OK",
+  },
+  published: {
+    ar: "نشرت",
+    fa_ir: "منتشر شده",
+    en_us: "Published",
+  },
+  "end tour": {
+    ar: "نهاية الجولة",
+    fa_ir: "پایان تور",
+    en_us: "End Tour",
+  },
+  "tour preview": {
+    ar: "معاينة الجولة",
+    fa_ir: "پیشنمایش تور",
+    en_us: "Tour Preview",
+  },
+  "contact support": {
+    ar: "اتصل بالدعم",
+    fa_ir: "تماس با پشتیبانی",
+    en_us: "Contact Support",
+  },
+  "requests and passengers": {
+    ar: "اتصل بالدعم",
+    fa_ir: "درخواست ها و مسافران",
+    en_us: "Requests And Passengers",
+  },
+  "success receipt": {
+    ar: "إيصال النجاح",
+    fa_ir: "پرداخت موفق",
+    en_us: "Success Receipt",
   },
 };

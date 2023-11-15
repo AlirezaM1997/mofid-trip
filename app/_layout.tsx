@@ -42,7 +42,7 @@ const MainContent = () => {
   const isRtl = useIsRtl();
   const Theme = theme(isRtl);
   const isAuthenticated = useIsAuthenticated();
-  const { isNgo } = useSelector((state: RootState) => state.userSlice.userDetail);
+  const isNgo = useSelector((state: RootState) => state.userSlice?.userDetail?.isNgo || false);
 
   const { syncTable: syncTableSettingDetail } = useSettingDetailTable();
   const { syncTable: syncTableUserDetail } = useUserDetailTable();
@@ -69,7 +69,6 @@ const MainContent = () => {
 
   useEffect(() => {
     if (isAuthenticated && isNgo) {
-      console.log('--00')
       syncTableMyNGOTable();
     }
   }, [isAuthenticated, isNgo]);
