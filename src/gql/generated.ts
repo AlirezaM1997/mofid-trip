@@ -224,6 +224,20 @@ export type CapacityType = {
   male?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export enum CategoryFilterEnum {
+  Apartment = 'Apartment',
+  Beachfront = 'Beachfront',
+  Hussainiyah = 'Hussainiyah',
+  Moukeb = 'Moukeb',
+  Room = 'Room'
+}
+
+/** Input type for filtering project categories. */
+export type CategoryFilterType = {
+  /** Filter project categories by name. */
+  categoriesName?: InputMaybe<Array<InputMaybe<CategoryFilterEnum>>>;
+};
+
 /** Type representing a category image with different sizes. */
 export type CategoryImageType = {
   __typename?: 'CategoryImageType';
@@ -850,6 +864,7 @@ export type QueryBannerListArgs = {
 
 
 export type QueryCategoryListArgs = {
+  filter?: InputMaybe<CategoryFilterType>;
   page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
 };
@@ -881,6 +896,7 @@ export type QueryProjectTransactionDetailArgs = {
 export type QueryProjectTransactionListArgs = {
   filter?: InputMaybe<ProjectTransactionFilterType>;
   page?: InputMaybe<PageType>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -890,6 +906,7 @@ export type QuerySettingDetailArgs = {
 
 
 export type QueryTagListArgs = {
+  filter?: InputMaybe<TagFilterType>;
   page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
 };
@@ -921,6 +938,7 @@ export type QueryTourTransactionDetailArgs = {
 export type QueryTourTransactionListArgs = {
   filter?: InputMaybe<TourTransactionFilterType>;
   page?: InputMaybe<PageType>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -932,6 +950,7 @@ export type QueryUserDetailArgs = {
 
 export type QueryUserListArgs = {
   page?: InputMaybe<PageType>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Refresh = {
@@ -1028,6 +1047,21 @@ export type StatusQueryType = {
   isActive?: Maybe<Scalars['Boolean']['output']>;
   /** Transaction status step. */
   step?: Maybe<Scalars['String']['output']>;
+};
+
+export enum TagFilterEnum {
+  Discount = 'DISCOUNT',
+  Economy = 'ECONOMY',
+  Free = 'FREE',
+  Luxe = 'LUXE',
+  New = 'NEW',
+  Trend = 'TREND'
+}
+
+/** Input type for filtering project tags. */
+export type TagFilterType = {
+  /** Filter project tag by name. */
+  tagsName?: InputMaybe<Array<InputMaybe<TagFilterEnum>>>;
 };
 
 /** Type representing a page of TagQueryType objects. */
@@ -1244,12 +1278,14 @@ export type TourQueryType = {
   avatarS3?: Maybe<Array<Maybe<TourImageType>>>;
   /** Tour capacity information. */
   capacity?: Maybe<TourCapacityType>;
+  createdDate?: Maybe<Scalars['DateTime']['output']>;
   description: Scalars['String']['output'];
   destination?: Maybe<TourDestOrigUnion>;
   endTime: Scalars['DateTime']['output'];
   /** List of tour facilities. */
   facilities?: Maybe<Array<Maybe<TourFacilityQueryType>>>;
   id: Scalars['ID']['output'];
+  modifiedDate?: Maybe<Scalars['DateTime']['output']>;
   origin?: Maybe<TourDestOrigUnion>;
   packages: Array<TourPackageType>;
   startTime: Scalars['DateTime']['output'];
@@ -1597,7 +1633,7 @@ export type TourTransactionDetailQueryVariables = Exact<{
 }>;
 
 
-export type TourTransactionDetailQuery = { __typename?: 'Query', tourTransactionDetail?: { __typename?: 'TourTransactionQueryType', createdDate?: any | null, description?: string | null, id: string, invoiceNumber?: any | null, modifiedDate?: any | null, tourPackage?: { __typename?: 'TourPackageType', title?: string | null, price: number, id: string, tour?: { __typename?: 'TourQueryType', id: string, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', small?: string | null } | null> | null } | null } | null } | null };
+export type TourTransactionDetailQuery = { __typename?: 'Query', tourTransactionDetail?: { __typename?: 'TourTransactionQueryType', id: string, createdDate?: any | null, description?: string | null, modifiedDate?: any | null, invoiceNumber?: any | null, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', title?: string | null, price: number, id: string, tour?: { __typename?: 'TourQueryType', id: string, title: string, endTime: any, startTime: any, avatarS3?: Array<{ __typename?: 'TourImageType', small?: string | null, medium?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null, medium?: string | null, large?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null };
 
 export type TourTransactionListQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2717,11 +2753,15 @@ export type TourListQueryResult = Apollo.QueryResult<TourListQuery, TourListQuer
 export const TourTransactionDetailDocument = gql`
     query tourTransactionDetail($pk: ID!) {
   tourTransactionDetail(pk: $pk) {
+    id
     createdDate
     description
-    id
-    invoiceNumber
     modifiedDate
+    invoiceNumber
+    status {
+      isActive
+      step
+    }
     tourPackage {
       title
       price
@@ -2729,9 +2769,23 @@ export const TourTransactionDetailDocument = gql`
       tour {
         avatarS3 {
           small
+          medium
         }
         id
         title
+        endTime
+        startTime
+        destination {
+          ... on AccommodationQueryType {
+            id
+            address
+            avatarS3 {
+              small
+              medium
+              large
+            }
+          }
+        }
       }
     }
   }
