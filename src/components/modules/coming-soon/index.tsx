@@ -1,11 +1,11 @@
-import React from "react"
-import { Text } from "@rneui/themed"
-import WhiteSpace from "@src/components/atoms/white-space"
-import { ImageBackground, StyleSheet, View } from "react-native"
-import useTranslation from "@src/hooks/translation"
+import React from "react";
+import { Text } from "@rneui/themed";
+import WhiteSpace from "@src/components/atoms/white-space";
+import { ImageBackground, StyleSheet, View } from "react-native";
+import useTranslation from "@src/hooks/translation";
 
 const ComingSoon = () => {
-  const { tr } = useTranslation()
+  const { tr } = useTranslation();
   return (
     <View style={style.container}>
       <ImageBackground
@@ -23,8 +23,8 @@ const ComingSoon = () => {
         {tr("This section is under development and will be available in the next update.")}
       </Text>
     </View>
-  )
-}
+  );
+};
 
 const style = StyleSheet.create({
   container: {
@@ -34,6 +34,6 @@ const style = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
-})
+});
 
-export default ComingSoon
+export default ComingSoon;

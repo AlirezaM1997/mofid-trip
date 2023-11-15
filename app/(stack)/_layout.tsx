@@ -142,10 +142,10 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="successPayment"
+        name="paymentStatus"
         options={{
           headerLeft: () => null,
-          title: tr("successful payment"),
+          title: tr("payment status"),
           headerBackButtonMenuEnabled: false,
         }}
       />

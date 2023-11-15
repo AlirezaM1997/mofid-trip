@@ -1,11 +1,13 @@
 import { View } from "react-native";
 import { router } from "expo-router";
-import { Button } from "@rneui/themed";
+import { Button, useTheme } from "@rneui/themed";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import AcceptPayment from "./acceptPayment";
+import { Feather } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
-import { TourTransactionQueryType } from "@src/gql/generated";
+import { TourTransactionQueryType, TransactionStatusEnum } from "@src/gql/generated";
+import RejectedDetails from "./rejectedDetails";
 
 type PropsType = {
   purchaseHandler: () => void;
@@ -14,7 +16,9 @@ type PropsType = {
 
 const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
   const { tr } = useTranslation();
+  const { theme } = useTheme();
   const [isAcceptPaymentVisible, setIsAcceptPaymentVisible] = useState(false);
+  const [isRejectedVisible, setIsRejectedVisible] = useState(false);
 
   const pressHandler = (pathname: string) => {
     router.push(pathname);
@@ -24,19 +28,37 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
     const lookup = {
       REQUEST: {
         type: "outline",
-        detailsBtn: false,
         color: "secondary",
         title: tr("request details"),
         changeHandler: () => pressHandler(`/tour-transaction-detail/${transaction.id}`),
       },
-      ACCEPT: {
-        type: "solid",
-        color: "primary",
-        title: tr("pay"),
-        detailsBtn: true,
-        changeHandler: () => setIsAcceptPaymentVisible(true),
-      },
-      PAYMENT: {
+      ACCEPT: transaction.status.isActive
+        ? {
+            title: tr("pay"),
+            detailsBtn: true,
+            changeHandler: () => setIsAcceptPaymentVisible(true),
+          }
+        : {
+            title: tr("reason for rejecting the request"),
+            changeHandler: () => setIsRejectedVisible(true),
+            icon: (
+              <Feather name="info" size={16} style={{ marginLeft: 8 }} color={theme.colors.white} />
+            ),
+          },
+      PAYMENT: transaction.status.isActive
+        ? {
+            type: "outline",
+            color: "secondary",
+            detailsBtn: false,
+            title: tr("tour details"),
+            changeHandler: () => pressHandler(`/tour/${transaction.id}`),
+          }
+        : {
+            title: tr("pay"),
+            detailsBtn: true,
+            changeHandler: () => setIsAcceptPaymentVisible(true),
+          },
+      SUCCESSFUL: {
         type: "outline",
         color: "secondary",
         detailsBtn: false,
@@ -44,8 +66,7 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
         changeHandler: () => pressHandler(`/tour/${transaction.id}`),
       },
     };
-    if (!transaction.status.isActive)
-      return { title: tr("Rejected"), type: "outline", disabled: true };
+
     if (transaction.status.step in lookup) return lookup[transaction.status.step];
   };
 
@@ -57,17 +78,18 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
             size="sm"
             type="outline"
             color="secondary"
-            onPress={() => pressHandler(`/tour-transaction-detail/${transaction.id}`)}
             title={tr("request details")}
             containerStyle={styles.button}
+            onPress={() => pressHandler(`/tour-transaction-detail/${transaction.id}`)}
           />
         )}
 
         <Button
           size="sm"
+          icon={buttonType().icon}
           type={buttonType()?.type}
-          title={buttonType()?.title}
           color={buttonType()?.color}
+          title={buttonType()?.title}
           containerStyle={styles.button}
           disabled={buttonType()?.disabled}
           onPress={buttonType()?.changeHandler}
@@ -78,6 +100,11 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
         purchaseHandler={purchaseHandler}
         isVisible={isAcceptPaymentVisible}
         setIsVisible={setIsAcceptPaymentVisible}
+      />
+      <RejectedDetails
+        transaction={transaction}
+        isVisible={isRejectedVisible}
+        setIsVisible={setIsRejectedVisible}
       />
     </>
   );

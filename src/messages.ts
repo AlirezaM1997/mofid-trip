@@ -678,6 +678,11 @@ export const messages = {
     fa_ir: "وضعیت",
     en_us: "Status",
   },
+  "reason for rejecting the request": {
+    ar: "سبب رفض الطلب",
+    fa_ir: "دلیل رد درخواست",
+    en_us: "reason for rejecting the request",
+  },
   tax: {
     ar: "ضريبة",
     fa_ir: "مالیات",
@@ -739,9 +744,9 @@ export const messages = {
     fa_ir: "پرداخت نا موفق",
     en_us: "Unsuccessful payment",
   },
-  "successful payment": {
-    ar: "الدفع الناجح",
-    fa_ir: "پرداخت موفق",
+  "payment status": {
+    ar: "حالة السداد",
+    fa_ir: "وضعیت پرداخت ",
     en_us: "Successful payment",
   },
   "tracking code": {
