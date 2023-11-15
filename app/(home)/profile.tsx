@@ -113,7 +113,7 @@ const Profile: React.FC = () => {
             color={theme.colors.grey3}
           />
         </ListItem>
-{console.log('>>', userDetail?.isNgo)}
+        {console.log(">>", userDetail?.isNgo)}
         {userDetail?.isNgo && (
           <>
             <WhiteSpace size={20} />

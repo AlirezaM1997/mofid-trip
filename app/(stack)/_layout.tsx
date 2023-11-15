@@ -136,7 +136,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="coming-soon"
+        name="comingSoon"
         options={{
           title: tr("Coming Soon"),
         }}

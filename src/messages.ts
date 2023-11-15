@@ -834,7 +834,7 @@ export const messages = {
   pending: {
     ar: "قيد الانتظار",
     fa_ir: "در حال بررسی",
-    en_us: "pending",
+    en_us: "Pending",
   },
   "my request": {
     ar: "طلبي",
@@ -1422,19 +1422,49 @@ export const messages = {
     fa_ir: "جزئیات رزرو تور",
     en_us: "Tour Transaction Detail",
   },
-  "province": {
+  province: {
     ar: "مقاطعة",
     fa_ir: "استان",
     en_us: "Province",
   },
-  "city": {
+  city: {
     ar: "مدينة",
     fa_ir: "شهر",
     en_us: "City",
   },
-  "ok": {
-    ar: "",
+  ok: {
+    ar: "نعم",
     fa_ir: "باشه",
     en_us: "OK",
+  },
+  "at what stage is your application?": {
+    ar: "في أي مرحلة هو طلبك؟",
+    fa_ir: "درخواست شما در چه مرحله ای است؟",
+    en_us: "At what stage is your application?",
+  },
+  published: {
+    ar: "نشرت",
+    fa_ir: "منتشر شده",
+    en_us: "Published",
+  },
+  "end tour": {
+    ar: "نهاية الجولة",
+    fa_ir: "پایان تور",
+    en_us: "End Tour",
+  },
+  "tour preview": {
+    ar: "معاينة الجولة",
+    fa_ir: "پیشنمایش تور",
+    en_us: "Tour Preview",
+  },
+  "contact support": {
+    ar: "اتصل بالدعم",
+    fa_ir: "تماس با پشتیبانی",
+    en_us: "Contact Support",
+  },
+  "requests and passengers": {
+    ar: "اتصل بالدعم",
+    fa_ir: "درخواست ها و مسافران",
+    en_us: "Requests And Passengers",
   },
 };

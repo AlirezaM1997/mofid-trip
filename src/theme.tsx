@@ -148,6 +148,7 @@ export const theme = isRtl =>
           textDecorationLine: underline ? "underline" : "none",
           textAlign: center ? "center" : isRtl ? "right" : "left",
           color: color ? color : type ? theme.colors[type] : theme.colors.black,
+          fontWeight: bold ? "bold" : "normal",
           ...Platform.select({
             web: {
               width: props.numberOfLines ? "100%" : "auto",
@@ -451,6 +452,13 @@ export const theme = isRtl =>
       CardDivider: (props, theme) => ({
         color: theme.colors.grey0,
       }),
+      Divider: ({ thickness, bgColor, style, ...props }, theme) => ({
+        style: {
+          borderWidth: thickness,
+          borderColor: theme.colors[bgColor as string] ?? theme.colors.grey1,
+          backgroundColor: "transparent",
+        },
+      }),
       Badge: ({ type, color, ...props }, theme) => {
         let styles = {
           style: {
@@ -460,7 +468,7 @@ export const theme = isRtl =>
           badgeStyle: {
             padding: 12,
             borderRadius: 20,
-            alignSelf: 'flex-end',
+            alignSelf: "flex-end",
           },
           textStyle: Platform.select({
             web: {

@@ -1,5 +1,5 @@
 import "@rneui/themed";
-import { Colors } from "@rneui/themed";
+import { Colors, DividerProps } from "@rneui/themed";
 import { GestureResponderEvent } from "react-native";
 import { TextStyle } from "react-native";
 
@@ -43,12 +43,17 @@ declare module "@rneui/themed" {
 
   export interface ButtonProps {
     onPress?: (e?: FormEvent<HTMLFormElement>) => void;
-    color?: ButtonProps['color'] | 'grey'
+    color?: ButtonProps["color"] | "grey";
   }
 
   export interface BadgeProps {
-    color?: ButtonProps['color']
-    type?: ButtonProps['type']
+    color?: ButtonProps["color"];
+    type?: ButtonProps["type"];
+  }
+  
+  export interface DividerProps {
+    thickness?: number;
+    bgColor?: keyof Colors;
   }
 
   export interface ComponentTheme {
@@ -56,5 +61,6 @@ declare module "@rneui/themed" {
     Text: Partial<TextProps>;
     Button: Partial<ButtonProps>;
     Badge: Partial<BadgeProps>;
+    Divider: Partial<DividerProps>;
   }
 }
