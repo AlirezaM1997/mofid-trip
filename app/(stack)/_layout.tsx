@@ -167,6 +167,18 @@ const HomeLayout = () => {
           title: tr("Authentication"),
         }}
       />
+      <Stack.Screen
+        name="failedReceipt"
+        options={{
+          title: tr("Unsuccessful Payment"),
+        }}
+      />
+      <Stack.Screen
+        name="successReceipt"
+        options={{
+          title: tr("Success Receipt"),
+        }}
+      />
     </Stack>
   );
 };

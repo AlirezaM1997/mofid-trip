@@ -6,6 +6,7 @@ import { Button, Text, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
+import WhiteSpace from "@atoms/white-space";
 
 const FailedPayment = () => {
   const { theme } = useTheme();
@@ -27,7 +28,9 @@ const FailedPayment = () => {
           name="closecircle"
           style={{ color: theme.colors.error }}
         />
+        <WhiteSpace size={15} />
         <Text>{tr("unsuccessful payment")}</Text>
+        <WhiteSpace size={5} />
         <Text caption type="grey2" style={styles.subTitle}>
           {tr(
             "your payment has been failed, to continue the process and view receipt click the return button."

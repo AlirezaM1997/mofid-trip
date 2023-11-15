@@ -69,7 +69,6 @@ const MainContent = () => {
 
   useEffect(() => {
     if (isAuthenticated && isNgo) {
-      console.log('--00')
       syncTableMyNGOTable();
     }
   }, [isAuthenticated, isNgo]);

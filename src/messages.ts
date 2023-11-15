@@ -722,7 +722,7 @@ export const messages = {
     {
       ar: "لقد تم إتمام عملية الدفع بنجاح، لمواصلة العملية والعرض استلام انقر فوق زر العودة.",
       fa_ir:
-        "پرداخت شما با موفقیت انجام شد ، برای ادامه فرایند و مشاهده رسید روی دکمه بازگشت کلیک کنید.",
+        "پرداخت شما با موفقیت انجام شد ، برای ادامه فرایند و مشاهده رسید روی دکمه مشاهده رسید کلیک کنید.",
       en_us:
         "Your payment has been successfully completed, to continue the process and view Receipt Click the Return button.",
     },
@@ -741,7 +741,7 @@ export const messages = {
 
   "unsuccessful payment": {
     ar: "عملية دفع غير ناجحة",
-    fa_ir: "پرداخت نا موفق",
+    fa_ir: "پرداخت ناموفق",
     en_us: "Unsuccessful payment",
   },
   "payment status": {
@@ -1519,5 +1519,10 @@ export const messages = {
     ar: "اتصل بالدعم",
     fa_ir: "درخواست ها و مسافران",
     en_us: "Requests And Passengers",
+  },
+  "success receipt": {
+    ar: "إيصال النجاح",
+    fa_ir: "پرداخت موفق",
+    en_us: "Success Receipt",
   },
 };
