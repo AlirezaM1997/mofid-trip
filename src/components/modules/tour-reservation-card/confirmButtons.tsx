@@ -19,7 +19,6 @@ const ConfirmButton = ({ transaction }: PropsType) => {
 
   const purchaseHandler = async () => {
     const ip = await Network.getIpAddressAsync();
-
     const { data } = await addPurchase({
       variables: {
         data: {
@@ -34,7 +33,8 @@ const ConfirmButton = ({ transaction }: PropsType) => {
     dispatch(setTourTransaction(transaction));
     router.push(data.tourPurchaseAdd.metadata?.url);
   };
-
+  
+  console.log('888', ZARINPAL_CALLBACK_URL)
   return <TransactionButtons transaction={transaction} purchaseHandler={purchaseHandler} />;
 };
 export default ConfirmButton;
