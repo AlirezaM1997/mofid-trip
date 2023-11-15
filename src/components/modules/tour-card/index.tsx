@@ -69,7 +69,7 @@ function TourCard({ price, id, name, avatarS3, address }: PropsType) {
         <View style={style.bottom}>
           <View style={style.bottomStyle}>
             <Text subtitle1 bold>
-              {localizeNumber(formatPrice(price.toString()))}
+              {localizeNumber(formatPrice(price))}
             </Text>
             <Text>/ {tr("night")}</Text>
           </View>

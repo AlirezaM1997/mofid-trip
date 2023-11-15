@@ -1,4 +1,5 @@
-import { CapacityQueryType, TourCapacityType } from "@src/gql/generated";
+import { Colors } from "@rneui/themed";
+import { CapacityQueryType, MyNgoDetailQuery, TourCapacityType, TourTourStatusStepChoices } from "@src/gql/generated";
 
 export const getGender = (capacity: TourCapacityType) => {
   const res = [];
@@ -16,3 +17,14 @@ export const getGender = (capacity: TourCapacityType) => {
 
 export const getCapacity = (capacity: TourCapacityType) =>
   capacity?.male ?? 0 + capacity?.female ?? 0 + capacity?.child ?? 0;
+
+export const getTourRequestStatusBadgeColor: (
+  tour: MyNgoDetailQuery["NGODetail"]["tourSet"][0]
+) => keyof Colors = tour => {
+  if (tour.statusStep === TourTourStatusStepChoices.Accept) {
+    return tour.statusActivation ? 'success' : 'warning'
+  } else if (tour.statusStep === TourTourStatusStepChoices.Request) {
+    return tour.statusActivation ? 'success' : 'warning'
+  }
+  return 'error'
+};

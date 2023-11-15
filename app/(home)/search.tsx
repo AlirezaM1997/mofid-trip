@@ -13,6 +13,7 @@ import NoResult from "@src/components/organisms/no-result";
 import SelectedFilters from "@src/components/modules/selected-filters";
 import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
 import HostCard from "@modules/host-card";
+import { PAGE_SIZE } from "@src/settings";
 
 const SearchScreen: React.FC = () => {
   const { tr } = useTranslation();
@@ -38,6 +39,7 @@ const SearchScreen: React.FC = () => {
   useEffect(() => {
     const res = search({ search: searchText, page: { pageNumber: 1, pageSize: 10 } });
     setList(res);
+    setPageNumber(1)
   }, [searchText]);
 
   useEffect(() => {
@@ -74,13 +76,12 @@ const SearchScreen: React.FC = () => {
                 avatarS3={project.accommodation.avatarS3}
               />
             ))}
-            {list?.length ? (
+            {list?.length && list?.length === pageNumber * PAGE_SIZE && (
               <Button type="outline" onPress={() => setPageNumber(pageNumber + 1)}>
                 {tr("Fetch More")}
               </Button>
-            ) : (
-              <NoResult />
             )}
+            {!list?.length ? <NoResult /> : ""}
           </Container>
         )}
 

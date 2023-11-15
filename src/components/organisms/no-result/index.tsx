@@ -14,10 +14,10 @@ const NoResult = () => {
         <Image source={require("../../../../assets/image/no-result.jpg")} />
       )}
       <WhiteSpace size={10} />
-      <Text variant="heading1" style={{ textAlign: "center" }}>
+      <Text heading1>
         {tr("No Result")}
       </Text>
-      <Text variant="body2" style={{ textAlign: "center" }}>
+      <Text body2>
         {tr("Click the button to Book Now and go through the process")}
       </Text>
     </View>

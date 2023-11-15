@@ -1,15 +1,15 @@
-import dayjs from "dayjs"
-import { createSlice } from "@reduxjs/toolkit"
-import type { PayloadAction } from "@reduxjs/toolkit"
-import { ProjectTransactionListQuery } from "@src/gql/generated"
+import dayjs from "dayjs";
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { ProjectTransactionListQuery } from "@src/gql/generated";
 
 export interface TransactionState {
-  data: ProjectTransactionListQuery["projectTransactionList"]
+  data: ProjectTransactionListQuery["projectTransactionList"];
 }
 
 const initialState: TransactionState = {
   data: [],
-}
+};
 
 export const transactionListSlice = createSlice({
   name: "transaction",
@@ -19,12 +19,12 @@ export const transactionListSlice = createSlice({
       state.data = {
         ...state.data,
         ...action.payload,
-      }
+      };
     },
   },
-})
+});
 
 // Action creators are generated for each case reducer function
-export const { setTransactionList } = transactionListSlice.actions
+export const { setTransactionList } = transactionListSlice.actions;
 
-export default transactionListSlice.reducer
+export default transactionListSlice.reducer;

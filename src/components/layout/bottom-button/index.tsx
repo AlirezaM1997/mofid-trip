@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { View } from "react-native";
+import { ScrollViewProps, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Dimensions } from "react-native";
 import { useTheme } from "@rneui/themed";
@@ -10,14 +10,15 @@ const { height } = Dimensions.get("screen");
 type BottomButtonLayoutProps = {
   children: ReactNode;
   buttons: ReactNode[];
+  layoutStyle?: { [key: string]: string };
 };
 
-const BottomButtonLayout = ({ children, buttons }: BottomButtonLayoutProps) => {
+const BottomButtonLayout = ({ children, buttons, contentContainerStyle }: BottomButtonLayoutProps & ScrollViewProps) => {
   const { theme } = useTheme();
 
   return (
     <>
-      <ScrollView style={styles.contentContainer}>{children}</ScrollView>
+      <ScrollView contentContainerStyle={contentContainerStyle} style={styles.contentContainer}>{children}</ScrollView>
       <Divider />
       <View style={styles.buttonContainer(theme)}>
         {buttons.map((b, i) => (

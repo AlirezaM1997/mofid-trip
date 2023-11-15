@@ -46,12 +46,9 @@ const ContactCard = ({ user }) => {
           />
           <View style={styles.nameContainer}>
             <Text style={styles.contactName}>{tr("Hosted By")}</Text>
-            <Text
-              variant="subtitle1"
-              style={styles.contactName}
-              width={120}
-              title={getFullName(user) ?? tr("No Name")}
-            />
+            <Text subtitle1 style={styles.contactName}>
+              {getFullName(user) ?? tr("No Name")}
+            </Text>
           </View>
         </Pressable>
         <Pressable style={styles.btnContainer} onPress={handleBottomSheet}>
@@ -68,7 +65,7 @@ const ContactCard = ({ user }) => {
         <Pressable style={styles.closer} onPress={() => setIsVisible(false)}>
           <Feather name="x-circle" size={24} color="transparent" />
           <Text variant="heading1">{tr("Contact the place")}</Text>
-          <Feather name="x-circle" size={24} color="black" />
+          <Feather name="x-circle" size={24} color={theme.colors.black} />
         </Pressable>
         <View style={styles.socialContainer}>
           <Text variant="body2" color="grey3" style={styles.contactText}>
@@ -81,7 +78,7 @@ const ContactCard = ({ user }) => {
               <Pressable
                 style={styles.socialIcons}
                 onPress={() => Linking.openURL(`https://wa.me/${user.phoneNumber}`)}>
-                <Ionicons name="logo-whatsapp" size={16} color="black" />
+                <Ionicons name="logo-whatsapp" size={16} color={theme.colors.black} />
               </Pressable>
               <Text style={styles.socialIconsName}>{tr("Whatsapp")}</Text>
             </View>
@@ -133,9 +130,11 @@ const styles = StyleSheet.create({
   imageBackground: { marginRight: 10, width: 65, height: 65 },
   contactName: {
     color: "#fff",
+    width: 100,
   },
   nameContainer: {
     display: "flex",
+    marginHorizontal: 10,
   },
   btn: {
     backgroundColor: "#fff",

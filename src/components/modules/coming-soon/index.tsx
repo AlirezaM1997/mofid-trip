@@ -1,11 +1,11 @@
-import React from "react"
-import { Text } from "@rneui/themed"
-import WhiteSpace from "@src/components/atoms/white-space"
-import { ImageBackground, StyleSheet, View } from "react-native"
-import useTranslation from "@src/hooks/translation"
+import React from "react";
+import { Text } from "@rneui/themed";
+import WhiteSpace from "@src/components/atoms/white-space";
+import { ImageBackground, StyleSheet, View } from "react-native";
+import useTranslation from "@src/hooks/translation";
 
 const ComingSoon = () => {
-  const { tr } = useTranslation()
+  const { tr } = useTranslation();
   return (
     <View style={style.container}>
       <ImageBackground
@@ -17,14 +17,14 @@ const ComingSoon = () => {
         source={require("../../../../assets/image/bottle.jpg")}
       />
       <WhiteSpace size={10} />
-      <Text variant="heading1">{tr("Coming Soon")}</Text>
+      <Text heading1>{tr("Coming Soon")}</Text>
       <WhiteSpace size={10} />
-      <Text variant="body1" style={style.description}>
+      <Text body1 center type="grey3">
         {tr("This section is under development and will be available in the next update.")}
       </Text>
     </View>
-  )
-}
+  );
+};
 
 const style = StyleSheet.create({
   container: {
@@ -34,10 +34,6 @@ const style = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
-  description: {
-    textAlign: "center",
-    color: "#ADAFAE",
-  },
-})
+});
 
-export default ComingSoon
+export default ComingSoon;

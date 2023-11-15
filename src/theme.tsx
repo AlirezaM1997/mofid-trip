@@ -3,10 +3,70 @@ import { DefaultTheme } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Platform } from "react-native";
 import { WIDTH } from "./constants";
-import useIsRtl from "./hooks/localization";
 
 export const PRIMARY_COLOR = "#FF4332";
 export const SECONDARY_COLOR = "#101010";
+
+const getTextTheme = ({ bold, italic, underline, center, color, type, ...props }, theme, isRtl) => {
+  let style = {
+    fontSize: 14,
+    fontStyle: italic ? "italic" : "normal",
+    textDecorationLine: underline ? "underline" : "none",
+    textAlign: center ? "center" : isRtl ? "right" : "left",
+    color: color ? color : type ? theme.colors[type] : theme.colors.black,
+    ...Platform.select({
+      web: {
+        width: props.numberOfLines ? "100%" : "auto",
+        fontFamily: bold
+          ? 'DanaNoEnDemiBold, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
+          : 'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+      },
+      android: {
+        fontFamily: bold ? "DanaNoEnDemiBold" : "DanaNoEn",
+      },
+      ios: {
+        fontFamily: bold ? "DanaNoEnDemiBold" : "DanaNoEn",
+      },
+    }),
+  };
+
+  const heading1Style = { fontSize: 18, lineHeight: 26 };
+  const heading2Style = { fontSize: 16 };
+  const subtitle1Style = { fontSize: 14 };
+  const subtitle2Style = { fontSize: 14 };
+  const body1Style = { fontSize: 14 };
+  const body2Style = { fontSize: 12 };
+  const captionStyle = { fontSize: 12 };
+  const cta1Style = { fontSize: 16 };
+  const cta2Style = { fontSize: 14 };
+  const cta3Style = { fontSize: 12 };
+
+  if (props.heading1) {
+    style = { ...style, ...heading1Style };
+  } else if (props.heading2) {
+    style = { ...style, ...heading2Style };
+  } else if (props.subtitle1) {
+    style = { ...style, ...subtitle1Style };
+  } else if (props.subtitle2) {
+    style = { ...style, ...subtitle2Style };
+  } else if (props.body1) {
+    style = { ...style, ...body1Style };
+  } else if (props.body2) {
+    style = { ...style, ...body2Style };
+  } else if (props.caption) {
+    style = { ...style, ...captionStyle };
+  } else if (props.cta1) {
+    style = { ...style, ...cta1Style };
+  } else if (props.cta2) {
+    style = { ...style, ...cta2Style };
+  } else if (props.cta3) {
+    style = { ...style, ...cta3Style };
+  }
+
+  return {
+    style: style,
+  };
+};
 
 export const theme = isRtl =>
   createTheme({
@@ -76,7 +136,9 @@ export const theme = isRtl =>
       },
       Chip: {
         titleStyle: {
-          fontFamily: isRtl ? "DanaNoEn" : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          fontFamily: isRtl
+            ? "DanaNoEn"
+            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
         },
       },
       Text: ({ bold, italic, underline, center, color, type, ...props }, theme) => {
@@ -86,6 +148,7 @@ export const theme = isRtl =>
           textDecorationLine: underline ? "underline" : "none",
           textAlign: center ? "center" : isRtl ? "right" : "left",
           color: color ? color : type ? theme.colors[type] : theme.colors.black,
+          fontWeight: bold ? "bold" : "normal",
           ...Platform.select({
             web: {
               width: props.numberOfLines ? "100%" : "auto",
@@ -216,6 +279,18 @@ export const theme = isRtl =>
         },
       }),
       Input: {
+        errorStyle: Platform.select({
+          web: {
+            fontFamily:
+              'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          },
+          android: {
+            fontFamily: "DanaNoEn",
+          },
+          ios: {
+            fontFamily: "DanaNoEn",
+          },
+        }),
         labelStyle: {
           marginBottom: 5,
           ...Platform.select({
@@ -248,7 +323,7 @@ export const theme = isRtl =>
             },
           }),
           fontWeight: "400",
-          textAlign: isRtl ? 'right' : 'left'
+          textAlign: isRtl ? "right" : "left",
         },
         inputContainerStyle: {
           borderBottomWidth: 0,
@@ -260,6 +335,7 @@ export const theme = isRtl =>
         },
       },
       CheckBox: {
+        // com
         textStyle: {
           ...Platform.select({
             web: {
@@ -311,6 +387,142 @@ export const theme = isRtl =>
             },
           }),
         },
+      },
+      TabItem: {
+        titleStyle: Platform.select({
+          web: {
+            fontFamily:
+              'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          },
+          android: {
+            fontFamily: "DanaNoEn",
+          },
+          ios: {
+            fontFamily: "DanaNoEn",
+          },
+        }),
+      },
+      Card: {
+        containerStyle: {
+          borderWidth: 0,
+          borderRadius: 12,
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.5,
+          shadowRadius: 2,
+          elevation: 2,
+          padding: 0,
+        },
+      },
+      CardTitle: (props, theme) => {
+        let baseStyle = getTextTheme(props, theme, isRtl);
+        return {
+          ...baseStyle,
+          style: {
+            ...baseStyle.style,
+            paddingHorizontal: 12,
+            marginBottom: 5,
+          },
+        };
+      },
+      CardFeaturedTitle: (props, theme) => {
+        let baseStyle = getTextTheme(props, theme, isRtl);
+        return {
+          ...baseStyle,
+          style: {
+            ...baseStyle.style,
+            paddingHorizontal: 12,
+          },
+        };
+      },
+      CardFeaturedSubtitle: (props, theme) => {
+        let baseStyle = getTextTheme(props, theme, isRtl);
+        return {
+          ...baseStyle,
+          style: {
+            ...baseStyle.style,
+            paddingHorizontal: 12,
+          },
+        };
+      },
+      CardImage: {
+        style: {
+          borderTopLeftRadius: 12,
+          borderTopRightRadius: 12,
+        },
+      },
+      CardDivider: (props, theme) => ({
+        color: theme.colors.grey0,
+      }),
+      Divider: ({ thickness, bgColor, style, ...props }, theme) => ({
+        style: {
+          borderWidth: thickness,
+          borderColor: theme.colors[bgColor as string] ?? theme.colors.grey1,
+          backgroundColor: "transparent",
+        },
+      }),
+      Badge: ({ type, color, ...props }, theme) => {
+        let styles = {
+          style: {
+            padding: 10,
+            margin: 10,
+          },
+          badgeStyle: {
+            padding: 12,
+            borderRadius: 20,
+            alignSelf: "flex-end",
+          },
+          textStyle: Platform.select({
+            web: {
+              fontFamily:
+                'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            },
+            android: {
+              fontFamily: "DanaNoEn",
+            },
+            ios: {
+              fontFamily: "DanaNoEn",
+            },
+          }),
+        };
+        const c = theme.colors[color as string] ?? theme.colors.primary;
+        if (type === "solid") {
+          styles = {
+            ...styles,
+            badgeStyle: {
+              ...styles.badgeStyle,
+              backgroundColor: c,
+            },
+            textStyle: {
+              ...styles.textStyle,
+            },
+          };
+        } else if (type === "outline") {
+          styles = {
+            ...styles,
+            badgeStyle: {
+              ...styles.badgeStyle,
+              backgroundColor: "transparent",
+              borderColor: c,
+            },
+            textStyle: {
+              ...styles.textStyle,
+              color: c,
+            },
+          };
+        } else if (type === "clear") {
+          styles = {
+            ...styles,
+            badgeStyle: {
+              ...styles.badgeStyle,
+              backgroundColor: "transparent",
+            },
+            textStyle: {
+              ...styles.textStyle,
+              color: c,
+            },
+          };
+        }
+        return styles;
       },
     },
   });

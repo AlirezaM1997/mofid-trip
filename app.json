@@ -45,6 +45,9 @@
       "eas": {
         "projectId": "e7a0d71a-f8b1-4da4-b820-549b93828ec1"
       }
-    }
-  }
+    },
+    "sdkVersion": "49.0.0",
+    "entryPoint": ".vscode/exponentIndex.js"
+  },
+  "name": "mofid-trip"
 }

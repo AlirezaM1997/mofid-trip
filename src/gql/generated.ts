@@ -1466,6 +1466,13 @@ export type TourTransactionAddMutationVariables = Exact<{
 
 export type TourTransactionAddMutation = { __typename?: 'Mutation', tourTransactionAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
+export type TourPurchaseAddMutationVariables = Exact<{
+  data: TourPurchaseAddInputData;
+}>;
+
+
+export type TourPurchaseAddMutation = { __typename?: 'Mutation', tourPurchaseAdd?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
+
 export type ProjectTransactionEditMutationVariables = Exact<{
   data: ProjectTransactionEditInputType;
 }>;
@@ -1479,6 +1486,13 @@ export type ProjectTransactionAddMutationVariables = Exact<{
 
 
 export type ProjectTransactionAddMutation = { __typename?: 'Mutation', projectTransactionAdd?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
+export type TourTransactionEditMutationVariables = Exact<{
+  data: TourTransactionEditInputType;
+}>;
+
+
+export type TourTransactionEditMutation = { __typename?: 'Mutation', tourTransactionEdit?: { __typename: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
 
 export type UserGetTokenMutationVariables = Exact<{
   code: Scalars['Int']['input'];
@@ -1510,6 +1524,11 @@ export type CategoryListQueryVariables = Exact<{
 
 
 export type CategoryListQuery = { __typename?: 'Query', categoryList?: { __typename?: 'CategoryListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null } | null };
+
+export type MyNgoDetailQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyNgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description: string, startTime: any, endTime: any, statusStep?: TourTourStatusStepChoices | null, statusActivation: boolean, origin?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: number } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null } | null> | null } | null };
 
 export type NgoDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
@@ -1572,6 +1591,18 @@ export type TourListQueryVariables = Exact<{
 
 
 export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description: string, startTime: any, endTime: any, NGO: { __typename?: 'NGOQueryType', id: string, user?: { __typename?: 'UserQueryType', id: string, phoneNumber?: string | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: number } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
+
+export type TourTransactionDetailQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+}>;
+
+
+export type TourTransactionDetailQuery = { __typename?: 'Query', tourTransactionDetail?: { __typename?: 'TourTransactionQueryType', createdDate?: any | null, description?: string | null, id: string, invoiceNumber?: any | null, modifiedDate?: any | null, tourPackage?: { __typename?: 'TourPackageType', title?: string | null, price: number, id: string, tour?: { __typename?: 'TourQueryType', id: string, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', small?: string | null } | null> | null } | null } | null } | null };
+
+export type TourTransactionListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionList?: { __typename?: 'TourTransactionListType', count?: number | null, data?: Array<{ __typename?: 'TourTransactionQueryType', id: string, description?: string | null, invoiceNumber?: any | null, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', price: number, tour?: { __typename?: 'TourQueryType', startTime: any, endTime: any, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null> | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1690,6 +1721,42 @@ export function useTourTransactionAddMutation(baseOptions?: Apollo.MutationHookO
 export type TourTransactionAddMutationHookResult = ReturnType<typeof useTourTransactionAddMutation>;
 export type TourTransactionAddMutationResult = Apollo.MutationResult<TourTransactionAddMutation>;
 export type TourTransactionAddMutationOptions = Apollo.BaseMutationOptions<TourTransactionAddMutation, TourTransactionAddMutationVariables>;
+export const TourPurchaseAddDocument = gql`
+    mutation tourPurchaseAdd($data: TourPurchaseAddInputData!) {
+  tourPurchaseAdd(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}
+    `;
+export type TourPurchaseAddMutationFn = Apollo.MutationFunction<TourPurchaseAddMutation, TourPurchaseAddMutationVariables>;
+
+/**
+ * __useTourPurchaseAddMutation__
+ *
+ * To run a mutation, you first call `useTourPurchaseAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTourPurchaseAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [tourPurchaseAddMutation, { data, loading, error }] = useTourPurchaseAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useTourPurchaseAddMutation(baseOptions?: Apollo.MutationHookOptions<TourPurchaseAddMutation, TourPurchaseAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<TourPurchaseAddMutation, TourPurchaseAddMutationVariables>(TourPurchaseAddDocument, options);
+      }
+export type TourPurchaseAddMutationHookResult = ReturnType<typeof useTourPurchaseAddMutation>;
+export type TourPurchaseAddMutationResult = Apollo.MutationResult<TourPurchaseAddMutation>;
+export type TourPurchaseAddMutationOptions = Apollo.BaseMutationOptions<TourPurchaseAddMutation, TourPurchaseAddMutationVariables>;
 export const ProjectTransactionEditDocument = gql`
     mutation projectTransactionEdit($data: ProjectTransactionEditInputType!) {
   projectTransactionEdit(data: $data) {
@@ -1763,6 +1830,43 @@ export function useProjectTransactionAddMutation(baseOptions?: Apollo.MutationHo
 export type ProjectTransactionAddMutationHookResult = ReturnType<typeof useProjectTransactionAddMutation>;
 export type ProjectTransactionAddMutationResult = Apollo.MutationResult<ProjectTransactionAddMutation>;
 export type ProjectTransactionAddMutationOptions = Apollo.BaseMutationOptions<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>;
+export const TourTransactionEditDocument = gql`
+    mutation tourTransactionEdit($data: TourTransactionEditInputType!) {
+  tourTransactionEdit(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+    __typename
+  }
+}
+    `;
+export type TourTransactionEditMutationFn = Apollo.MutationFunction<TourTransactionEditMutation, TourTransactionEditMutationVariables>;
+
+/**
+ * __useTourTransactionEditMutation__
+ *
+ * To run a mutation, you first call `useTourTransactionEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTourTransactionEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [tourTransactionEditMutation, { data, loading, error }] = useTourTransactionEditMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useTourTransactionEditMutation(baseOptions?: Apollo.MutationHookOptions<TourTransactionEditMutation, TourTransactionEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<TourTransactionEditMutation, TourTransactionEditMutationVariables>(TourTransactionEditDocument, options);
+      }
+export type TourTransactionEditMutationHookResult = ReturnType<typeof useTourTransactionEditMutation>;
+export type TourTransactionEditMutationResult = Apollo.MutationResult<TourTransactionEditMutation>;
+export type TourTransactionEditMutationOptions = Apollo.BaseMutationOptions<TourTransactionEditMutation, TourTransactionEditMutationVariables>;
 export const UserGetTokenDocument = gql`
     mutation userGetToken($code: Int!, $phoneNumber: String!) {
   userGetToken(code: $code, phoneNumber: $phoneNumber) {
@@ -1943,6 +2047,108 @@ export function useCategoryListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type CategoryListQueryHookResult = ReturnType<typeof useCategoryListQuery>;
 export type CategoryListLazyQueryHookResult = ReturnType<typeof useCategoryListLazyQuery>;
 export type CategoryListQueryResult = Apollo.QueryResult<CategoryListQuery, CategoryListQueryVariables>;
+export const MyNgoDetailDocument = gql`
+    query myNGODetail {
+  NGODetail {
+    id
+    tourSet {
+      id
+      title
+      description
+      startTime
+      endTime
+      statusStep
+      statusActivation
+      origin {
+        ... on AccommodationQueryType {
+          id
+          province
+          city
+          address
+          lat
+          lng
+          avatarS3 {
+            large
+            medium
+            small
+          }
+        }
+        ... on ProjectQueryType {
+          id
+        }
+      }
+      destination {
+        ... on AccommodationQueryType {
+          id
+          province
+          city
+          address
+          lat
+          lng
+          avatarS3 {
+            large
+            medium
+            small
+          }
+        }
+        ... on ProjectQueryType {
+          id
+        }
+        __typename
+      }
+      avatarS3 {
+        large
+        medium
+        small
+      }
+      packages {
+        id
+        title
+        price
+      }
+      capacity {
+        id
+        male
+        female
+        child
+      }
+      facilities {
+        id
+        faName
+        enName
+        arName
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useMyNgoDetailQuery__
+ *
+ * To run a query within a React component, call `useMyNgoDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyNgoDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyNgoDetailQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyNgoDetailQuery(baseOptions?: Apollo.QueryHookOptions<MyNgoDetailQuery, MyNgoDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyNgoDetailQuery, MyNgoDetailQueryVariables>(MyNgoDetailDocument, options);
+      }
+export function useMyNgoDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyNgoDetailQuery, MyNgoDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyNgoDetailQuery, MyNgoDetailQueryVariables>(MyNgoDetailDocument, options);
+        }
+export type MyNgoDetailQueryHookResult = ReturnType<typeof useMyNgoDetailQuery>;
+export type MyNgoDetailLazyQueryHookResult = ReturnType<typeof useMyNgoDetailLazyQuery>;
+export type MyNgoDetailQueryResult = Apollo.QueryResult<MyNgoDetailQuery, MyNgoDetailQueryVariables>;
 export const NgoDetailDocument = gql`
     query NGODetail($pk: ID!) {
   NGODetail(pk: $pk) {
@@ -2508,6 +2714,119 @@ export function useTourListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<T
 export type TourListQueryHookResult = ReturnType<typeof useTourListQuery>;
 export type TourListLazyQueryHookResult = ReturnType<typeof useTourListLazyQuery>;
 export type TourListQueryResult = Apollo.QueryResult<TourListQuery, TourListQueryVariables>;
+export const TourTransactionDetailDocument = gql`
+    query tourTransactionDetail($pk: ID!) {
+  tourTransactionDetail(pk: $pk) {
+    createdDate
+    description
+    id
+    invoiceNumber
+    modifiedDate
+    tourPackage {
+      title
+      price
+      id
+      tour {
+        avatarS3 {
+          small
+        }
+        id
+        title
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useTourTransactionDetailQuery__
+ *
+ * To run a query within a React component, call `useTourTransactionDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTourTransactionDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTourTransactionDetailQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useTourTransactionDetailQuery(baseOptions: Apollo.QueryHookOptions<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>(TourTransactionDetailDocument, options);
+      }
+export function useTourTransactionDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>(TourTransactionDetailDocument, options);
+        }
+export type TourTransactionDetailQueryHookResult = ReturnType<typeof useTourTransactionDetailQuery>;
+export type TourTransactionDetailLazyQueryHookResult = ReturnType<typeof useTourTransactionDetailLazyQuery>;
+export type TourTransactionDetailQueryResult = Apollo.QueryResult<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>;
+export const TourTransactionListDocument = gql`
+    query tourTransactionList {
+  tourTransactionList {
+    count
+    data {
+      id
+      description
+      invoiceNumber
+      status {
+        isActive
+        step
+      }
+      tourPackage {
+        price
+        tour {
+          startTime
+          endTime
+          avatarS3 {
+            large
+            medium
+            small
+          }
+          destination {
+            ... on AccommodationQueryType {
+              id
+              address
+            }
+          }
+          title
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useTourTransactionListQuery__
+ *
+ * To run a query within a React component, call `useTourTransactionListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTourTransactionListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTourTransactionListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useTourTransactionListQuery(baseOptions?: Apollo.QueryHookOptions<TourTransactionListQuery, TourTransactionListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TourTransactionListQuery, TourTransactionListQueryVariables>(TourTransactionListDocument, options);
+      }
+export function useTourTransactionListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TourTransactionListQuery, TourTransactionListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TourTransactionListQuery, TourTransactionListQueryVariables>(TourTransactionListDocument, options);
+        }
+export type TourTransactionListQueryHookResult = ReturnType<typeof useTourTransactionListQuery>;
+export type TourTransactionListLazyQueryHookResult = ReturnType<typeof useTourTransactionListLazyQuery>;
+export type TourTransactionListQueryResult = Apollo.QueryResult<TourTransactionListQuery, TourTransactionListQueryVariables>;
 export const UserDetailDocument = gql`
     query userDetail {
   userDetail {

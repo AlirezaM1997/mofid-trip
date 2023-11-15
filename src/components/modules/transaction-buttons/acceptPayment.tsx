@@ -1,16 +1,25 @@
+import React from "react";
 import { Text } from "@rneui/themed";
-import React, { useState } from "react";
 import Container from "@atoms/container";
 import { StyleSheet, View } from "react-native";
 import { BottomSheet, Button } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
+import { WIDTH } from "@src/constants";
 
-const AcceptPayment = () => {
+type PropsType = {
+  isVisible: boolean;
+  setIsVisible: (t: boolean) => void;
+  purchaseHandler: () => void;
+};
+
+const AcceptPayment = ({ isVisible, setIsVisible, purchaseHandler }: PropsType) => {
   const { tr } = useTranslation();
-  const [isVisible, setIsVisible] = useState(true);
 
   return (
-    <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
+    <BottomSheet
+      containerStyle={styles.bottomSheetContainer}
+      isVisible={isVisible}
+      onBackdropPress={() => setIsVisible(false)}>
       <Container style={styles.container}>
         <View style={styles.textContainer}>
           <Text heading2 style={styles.headerText}>
@@ -20,8 +29,12 @@ const AcceptPayment = () => {
         </View>
 
         <View style={styles.btnContainer}>
-          <Button type="outline">{tr("cancel payment")}</Button>
-          <Button>{tr("pay")}</Button>
+          <Button type="outline" onPress={() => setIsVisible(false)} containerStyle={styles.button}>
+            {tr("cancel payment")}
+          </Button>
+          <Button onPress={() => purchaseHandler()} containerStyle={styles.button}>
+            {tr("pay")}
+          </Button>
         </View>
       </Container>
     </BottomSheet>
@@ -29,16 +42,19 @@ const AcceptPayment = () => {
 };
 
 const styles = StyleSheet.create({
+  bottomSheetContainer: { width: "100%" },
   textContainer: { gap: 8 },
   headerText: { textAlign: "center" },
   container: { margin: "auto", gap: 24 },
   btnContainer: {
+    gap: 7,
+    width: "100%",
     display: "flex",
-    justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    gap: 7,
+    justifyContent: "center",
   },
+  button: { width: "50%" },
 });
 
 export default AcceptPayment;

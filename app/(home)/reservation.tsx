@@ -1,83 +1,33 @@
-import { useDispatch } from "react-redux";
-import { NetworkStatus } from "@apollo/client";
-import { useIsAuthenticated } from "@src/hooks/user";
+import React from "react";
+import { Text } from "@rneui/themed";
+import Container from "@atoms/container";
 import { ScrollView, StyleSheet } from "react-native";
-import React, { useCallback, useEffect } from "react";
-import { useIsFocused } from "@react-navigation/native";
-import Container from "@src/components/atoms/container";
-import NoResult from "@src/components/organisms/no-result";
-import { RefreshControl } from "react-native-gesture-handler";
-import { setTransactionList } from "@src/slice/transaction-list-slice";
-import ReservationCard from "@src/components/modules/reservation-card";
-import ReservationSkeleton from "@src/components/modules/reservation-skeleton";
-import { ProjectTransactionQueryType, useProjectTransactionListQuery } from "@src/gql/generated";
-import { router } from "expo-router";
+import useTranslation from "@src/hooks/translation";
+import TourReservation from "@organisms/tour-reservation";
+import { ifNotLoggedInRedirectTo } from "@src/hooks/user";
 
 const Page = () => {
-  const dispatch = useDispatch();
-  const isFocused = useIsFocused();
-  const isAuthenticated = useIsAuthenticated();
-  const { data, refetch, networkStatus } = useProjectTransactionListQuery({
-    notifyOnNetworkStatusChange: true,
-  });
+  const { tr } = useTranslation();
 
-  const onRefresh = useCallback(() => {
-    try {
-      refetch();
-    } catch (error) {
-      console.error("Error while refetching data:", error);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isFocused) {
-      refetch();
-    }
-  }, [isFocused]);
-
-  if (!isAuthenticated)
-    return router.push({
-      pathname: "/authentication",
-      params: { protectedScreen: "/reservation" },
-    });
-
-  if (networkStatus === NetworkStatus.loading)
-    return (
-      <ScrollView contentContainerStyle={styles.container}>
-        <Container>
-          <ReservationSkeleton />
-          <ReservationSkeleton />
-          <ReservationSkeleton />
-        </Container>
-      </ScrollView>
-    );
-
-  dispatch(setTransactionList(data));
+  ifNotLoggedInRedirectTo("/reservation");
 
   return (
-    <ScrollView
-      contentContainerStyle={
-        data?.projectTransactionList?.data?.length === 0
-          ? {
-              flex: 1,
-            }
-          : {}
-      }
-      refreshControl={
-        <RefreshControl refreshing={networkStatus !== NetworkStatus.ready} onRefresh={onRefresh} />
-      }>
-      {data?.projectTransactionList?.data?.length === 0 && <NoResult />}
-      {data?.projectTransactionList?.data?.map((transaction, index) => (
-        <Container key={transaction.id}>
-          <ReservationCard transaction={transaction as ProjectTransactionQueryType} index={index} />
-        </Container>
-      ))}
-    </ScrollView>
+    <>
+      <Container style={styles.container}>
+        <Text heading2>{tr("my requests")}</Text>
+        <Text caption type="grey2">
+          {tr("manage your requests for hosting and trips")}
+        </Text>
+      </Container>
+
+      <TourReservation />
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { gap: 20, marginVertical: 10 },
+  container: { marginVertical: 24 },
+  tabContainer: { width: "100%" },
 });
 
 export default Page;

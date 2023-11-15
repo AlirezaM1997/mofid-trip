@@ -391,10 +391,15 @@ export const messages = {
     fa_ir: "تایید",
     en_us: "Verification",
   },
-  "view pdf receipt": {
+  receipt: {
+    ar: "إيصال",
+    fa_ir: "رسید",
+    en_us: "Receipt",
+  },
+  "view receipt": {
     ar: "المتن",
-    fa_ir: "مشاهده رسید pdf",
-    en_us: "View Pdf Receipt",
+    fa_ir: "مشاهده رسید",
+    en_us: "View Receipt",
   },
   "with discount place": {
     ar: "مع مكان الخصم",
@@ -486,11 +491,7 @@ export const messages = {
     fa_ir: "اولیه",
     en_us: "Initial",
   },
-  pending: {
-    ar: "قيد الانتظار",
-    fa_ir: "انتظار",
-    en_us: "Pending",
-  },
+
   rejected: {
     ar: "مرفوض",
     fa_ir: "رد شده",
@@ -516,10 +517,40 @@ export const messages = {
     fa_ir: "تایید کنید",
     en_us: "Accept",
   },
+  "i have a 12 year old child": {
+    ar: "لدي طفل عمره 12 عاما",
+    fa_ir: "دارای کودک ۱۲ ساله می‌باشم",
+    en_us: "I have a 12 year old child",
+  },
+  "enter the capacity(quantity)": {
+    ar: "أدخل السعة (الكمية)",
+    fa_ir: "ظرفیت را وارد کنید ( تعداد )",
+    en_us: "Enter the capacity (quantity)",
+  },
+  "number of people": {
+    ar: "عدد الاشخاص",
+    fa_ir: "تعداد نفرات",
+    en_us: "number of people",
+  },
+  "to request and reserve hosting, choose the number and gender of your people": {
+    ar: "لطلب وحجز الاستضافة، اختر عدد الأشخاص وجنسهم",
+    fa_ir: "برای درخواست و رزرو اولیه میزبانی ، تعداد و جنسیت نفرات خودتان را  انتخاب کنید",
+    en_us: "To request and reserve hosting, choose the number and gender of your people",
+  },
+  "finish the trip": {
+    ar: "أنهي الرحلة",
+    fa_ir: "اتمام سفر",
+    en_us: "finish the trip",
+  },
   payment: {
     ar: "قسط",
     fa_ir: "پرداخت",
-    en_us: "Payment",
+    en_us: "payment",
+  },
+  "request details": {
+    ar: "تفاصيل التطبيق",
+    fa_ir: "جزئیات درخواست ",
+    en_us: "request details ",
   },
   request: {
     ar: "طلب",
@@ -647,6 +678,11 @@ export const messages = {
     fa_ir: "وضعیت",
     en_us: "Status",
   },
+  "reason for rejecting the request": {
+    ar: "سبب رفض الطلب",
+    fa_ir: "دلیل رد درخواست",
+    en_us: "reason for rejecting the request",
+  },
   tax: {
     ar: "ضريبة",
     fa_ir: "مالیات",
@@ -677,14 +713,40 @@ export const messages = {
     fa_ir: "نه، لغو",
     en_us: "No, Cancel",
   },
+  "unsuccessful payment, wallet balance is not enough": {
+    ar: "عملية دفع غير ناجحة، رصيد المحفظة غير كافي",
+    fa_ir: "پرداخت ناموفق ، موجودی کیف پول کافی نمی‌باشد",
+    en_us: "Unsuccessful payment, wallet balance is not enough",
+  },
+  "your payment has been successfully completed, to continue the process and view receipt click the return button.":
+    {
+      ar: "لقد تم إتمام عملية الدفع بنجاح، لمواصلة العملية والعرض استلام انقر فوق زر العودة.",
+      fa_ir:
+        "پرداخت شما با موفقیت انجام شد ، برای ادامه فرایند و مشاهده رسید روی دکمه مشاهده رسید کلیک کنید.",
+      en_us:
+        "Your payment has been successfully completed, to continue the process and view Receipt Click the Return button.",
+    },
   "payment was successful": {
     ar: "تم الدفع بنجاح",
     fa_ir: "پرداخت با موفقیت انجام شد",
     en_us: "Payment Was Successful",
   },
-  "successful payment": {
-    ar: "الدفع الناجح",
-    fa_ir: "پرداخت موفق",
+  "your payment has been failed, to continue the process and view receipt click the return button.":
+    {
+      ar: "لقد فشلت عملية الدفع الخاصة بك، لمواصلة العملية وعرض الإيصال انقر فوق زر العودة.",
+      fa_ir: "پرداخت شما انجام نشد، برای ادامه فرآیند و مشاهده رسید، دکمه بازگشت را کلیک کنید.",
+      en_us:
+        "your payment has been failed, to continue the process and view receipt click the return button.",
+    },
+
+  "unsuccessful payment": {
+    ar: "عملية دفع غير ناجحة",
+    fa_ir: "پرداخت ناموفق",
+    en_us: "Unsuccessful payment",
+  },
+  "payment status": {
+    ar: "حالة السداد",
+    fa_ir: "وضعیت پرداخت ",
     en_us: "Successful payment",
   },
   "tracking code": {
@@ -727,7 +789,7 @@ export const messages = {
     fa_ir: "سپرده مبداء",
     en_us: "Initial deposit",
   },
-  "issue Tracking": {
+  "issue tracking": {
     ar: "تتبع القضية",
     fa_ir: "شماره پیگیری",
     en_us: "Issue Tracking",
@@ -812,6 +874,11 @@ export const messages = {
     fa_ir: "خطا",
     en_us: "Error",
   },
+  pending: {
+    ar: "قيد الانتظار",
+    fa_ir: "در حال بررسی",
+    en_us: "Pending",
+  },
   "my request": {
     ar: "طلبي",
     fa_ir: "درخواست من",
@@ -819,8 +886,18 @@ export const messages = {
   },
   accepting: {
     ar: "قبول",
-    fa_ir: "پذیرش",
-    en_us: "Accepting",
+    fa_ir: "تایید / رد",
+    en_us: "accepting",
+  },
+  to: {
+    ar: "إلى",
+    fa_ir: "تا",
+    en_us: "to",
+  },
+  copied: {
+    ar: "نسخ",
+    fa_ir: "کپی شد",
+    en_us: "copied",
   },
   "let's start and login to mofid trip": {
     ar: "لنبدأ ونسجل الدخول لحجز الأربعين",
@@ -878,7 +955,7 @@ export const messages = {
   },
   "yes, logout": {
     ar: "نعم، تسجيل الخروج",
-    fa_ir: "بله، حارج می‌شوم",
+    fa_ir: "بله، خارج می‌شوم",
     en_us: "Yes, Logout",
   },
   "are you sure you want to logout?": {
@@ -931,14 +1008,34 @@ export const messages = {
     fa_ir: "مدیریت ها",
     en_us: "Managements",
   },
+  "tour transactions": {
+    ar: "طلب جولة",
+    fa_ir: "درخواست به تور",
+    en_us: "Tour transactions",
+  },
+  "host transactions": {
+    ar: "طلب استضافةه",
+    fa_ir: "درخواست به هاست",
+    en_us: "Host transactions",
+  },
+  "manage your requests for hosting and trips": {
+    ar: "إدارة طلباتك للاستضافة والرحلات",
+    fa_ir: "مدیریت درخواست های شما به میزبانی ها و سفرهای انجام شده",
+    en_us: "Manage your requests for hosting and trips",
+  },
   requests: {
     ar: "طلبات",
     fa_ir: "درخواست ها",
     en_us: "Requests",
   },
+  buy: {
+    ar: "يشتري",
+    fa_ir: "خرید",
+    en_us: "buy",
+  },
   "after paying the tour fee, your reservation will be finalized": {
     ar: "بعد دفع رسوم الجولة، سيتم الانتهاء من حجزك",
-    fa_ir: "شما بعد از پرداخت هزینه تور ، رزروتان نهایی می شود",
+    fa_ir: "شما بعد از پرداخت هزینه تور، رزروتان نهایی می شود",
     en_us: "After paying the tour fee, your reservation will be finalized",
   },
   "are you sure about the payment?": {
@@ -1042,6 +1139,11 @@ export const messages = {
     ar: "الثاني عشر",
     fa_ir: "دوازدهم",
     en_us: "Twelfth",
+  },
+  "at what stage is your application?": {
+    ar: "في أي مرحلة هو طلبك؟",
+    fa_ir: "درخواست شما در چه مرحله ای است؟",
+    en_us: "at what stage is your application?",
   },
   thirteenth: {
     ar: "الثالث عشر",
@@ -1323,19 +1425,104 @@ export const messages = {
     fa_ir: "پکیج انتخابی شما",
     en_us: "Your selected package",
   },
-  "reserve": {
+  reserve: {
     ar: "ذخيرة",
     fa_ir: "رزرو",
     en_us: "Reserve",
   },
-  "buy": {
-    ar: "يشتري",
-    fa_ir: "خرید",
-    en_us: "Buy",
-  },
-  "tooman": {
+  tooman: {
     ar: "تومان",
     fa_ir: "تومان",
     en_us: "Tooman",
+  },
+  "tour details": {
+    ar: "تفاصيل الجولة",
+    fa_ir: "جزئیات تور",
+    en_us: "Tour details",
+  },
+  "tour management": {
+    ar: "إدارة الرحلات",
+    fa_ir: "مدیریت تور ها",
+    en_us: "Tour Management",
+  },
+  "first name is required": {
+    ar: "الإسم الأول مطلوب",
+    fa_ir: "لطفا نام را وارد کنید",
+    en_us: "First name is required",
+  },
+  "last name is required": {
+    ar: "إسم العائلة مطلوب",
+    fa_ir: "لطفا نام خانوادگی را وارد کنید",
+    en_us: "Last name is required",
+  },
+  "phone number name is required": {
+    ar: "اسم رقم الهاتف مطلوب",
+    fa_ir: "لطفا شماره همراه را وارد کنید",
+    en_us: "Phone number name is required",
+  },
+  "birth day is required": {
+    ar: "يوم الميلاد مطلوب",
+    fa_ir: "لطفا تاریخ تولد را وارد کنید",
+    en_us: "Birth day is required",
+  },
+  "identify number day is required": {
+    ar: "مطلوب تحديد رقم اليوم",
+    fa_ir: "لطفا کد ملی را وارد کنید",
+    en_us: "Identify number day is required",
+  },
+  "tour transaction detail": {
+    ar: "تفاصيل معاملة الجولة",
+    fa_ir: "جزئیات رزرو تور",
+    en_us: "Tour Transaction Detail",
+  },
+  province: {
+    ar: "مقاطعة",
+    fa_ir: "استان",
+    en_us: "Province",
+  },
+  city: {
+    ar: "مدينة",
+    fa_ir: "شهر",
+    en_us: "City",
+  },
+  ok: {
+    ar: "نعم",
+    fa_ir: "باشه",
+    en_us: "OK",
+  },
+  "at what stage is your application?": {
+    ar: "في أي مرحلة هو طلبك؟",
+    fa_ir: "درخواست شما در چه مرحله ای است؟",
+    en_us: "At what stage is your application?",
+  },
+  published: {
+    ar: "نشرت",
+    fa_ir: "منتشر شده",
+    en_us: "Published",
+  },
+  "end tour": {
+    ar: "نهاية الجولة",
+    fa_ir: "پایان تور",
+    en_us: "End Tour",
+  },
+  "tour preview": {
+    ar: "معاينة الجولة",
+    fa_ir: "پیشنمایش تور",
+    en_us: "Tour Preview",
+  },
+  "contact support": {
+    ar: "اتصل بالدعم",
+    fa_ir: "تماس با پشتیبانی",
+    en_us: "Contact Support",
+  },
+  "requests and passengers": {
+    ar: "اتصل بالدعم",
+    fa_ir: "درخواست ها و مسافران",
+    en_us: "Requests And Passengers",
+  },
+  "success receipt": {
+    ar: "إيصال النجاح",
+    fa_ir: "پرداخت موفق",
+    en_us: "Success Receipt",
   },
 };

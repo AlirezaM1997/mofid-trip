@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import Container from "@src/components/atoms/container";
@@ -16,8 +16,8 @@ import { getFullName } from "@src/helper/extra";
 import useIsRtl from "@src/hooks/localization";
 import { router, useRootNavigationState } from "expo-router";
 import { useIsAuthenticated } from "@src/hooks/user";
-import Authentication from "app/(stack)/authentication";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
+import useMyNGOTable from "@src/hooks/db/ngo";
 
 const Profile: React.FC = () => {
   const isRtl = useIsRtl();
@@ -113,8 +113,8 @@ const Profile: React.FC = () => {
             color={theme.colors.grey3}
           />
         </ListItem>
-
-        {userDetail.isNgo && (
+        {console.log(">>", userDetail?.isNgo)}
+        {userDetail?.isNgo && (
           <>
             <WhiteSpace size={20} />
             <Container>
@@ -131,7 +131,7 @@ const Profile: React.FC = () => {
                 color={theme.colors.grey3}
               />
             </ListItem>
-            <ListItem onPress={() => router.push("/comingsoon")}>
+            <ListItem onPress={() => router.push("/tour/management")}>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Tours")}</ListItem.Title>
@@ -145,7 +145,7 @@ const Profile: React.FC = () => {
           </>
         )}
 
-        {!userDetail.isNgo && (
+        {!userDetail?.isNgo && (
           <>
             <WhiteSpace size={20} />
             <Container>
