@@ -1,13 +1,13 @@
 import { View } from "react-native";
 import { router } from "expo-router";
-import { Button, useTheme } from "@rneui/themed";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import AcceptPayment from "./acceptPayment";
 import { Feather } from "@expo/vector-icons";
-import useTranslation from "@src/hooks/translation";
-import { TourTransactionQueryType, TransactionStatusEnum } from "@src/gql/generated";
 import RejectedDetails from "./rejectedDetails";
+import { Button, useTheme } from "@rneui/themed";
+import useTranslation from "@src/hooks/translation";
+import { TourTransactionQueryType } from "@src/gql/generated";
 
 type PropsType = {
   purchaseHandler: () => void;

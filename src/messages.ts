@@ -1475,4 +1475,19 @@ export const messages = {
     fa_ir: "جزئیات رزرو تور",
     en_us: "Tour Transaction Detail",
   },
+  "province": {
+    ar: "مقاطعة",
+    fa_ir: "استان",
+    en_us: "Province",
+  },
+  "city": {
+    ar: "مدينة",
+    fa_ir: "شهر",
+    en_us: "City",
+  },
+  "ok": {
+    ar: "",
+    fa_ir: "باشه",
+    en_us: "OK",
+  },
 };
