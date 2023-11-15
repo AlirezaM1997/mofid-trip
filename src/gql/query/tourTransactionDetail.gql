@@ -1,0 +1,21 @@
+query tourTransactionDetail($pk: ID!) {
+  tourTransactionDetail(pk: $pk) {
+    createdDate
+    description
+    id
+    invoiceNumber
+    modifiedDate
+    tourPackage {
+      title
+      price
+      id
+      tour {
+        avatarS3 {
+          small
+        }
+        id
+        title
+      }
+    }
+  }
+}

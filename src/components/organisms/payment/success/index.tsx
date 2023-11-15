@@ -1,28 +1,23 @@
 import React from "react";
-import { router } from "expo-router";
 import Container from "@atoms/container";
+import { StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { StyleSheet, View } from "react-native";
-import useTranslation from "@src/hooks/translation";
 import { Button, Text, useTheme } from "@rneui/themed";
+import useTranslation from "@src/hooks/translation";
+import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
 
 const SuccessPayment = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-
+  const { id } = useLocalSearchParams();
   return (
     <BottomButtonLayout
       contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
       buttons={[
-        <View style={styles.butContainer}>
-          <Button containerStyle={styles.buttonStyle} onPress={() => router.push("/receipt")}>
-            {tr("view receipt")}
-          </Button>
-          <Button containerStyle={styles.buttonStyle} onPress={() => router.back()}>
-            {tr("back")}
-          </Button>
-        </View>,
+        <Button onPress={() => router.push(`/successReceipt?id=${id}`)}>
+          {tr("view receipt")}
+        </Button>,
       ]}>
       <Container style={styles.container}>
         <AntDesign
@@ -31,7 +26,6 @@ const SuccessPayment = () => {
           name="checkcircle"
           style={{ color: theme.colors.success }}
         />
-
         <Text>{tr("payment was successful")}</Text>
         <Text caption type="grey2" style={styles.subTitle}>
           {tr(
@@ -51,15 +45,6 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     textAlign: "center",
-  },
-  butContainer: {
-    gap: 4,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  buttonStyle: {
-    width: "50%",
   },
 });
 

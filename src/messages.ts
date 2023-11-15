@@ -517,6 +517,26 @@ export const messages = {
     fa_ir: "تایید کنید",
     en_us: "Accept",
   },
+  "i have a 12 year old child": {
+    ar: "لدي طفل عمره 12 عاما",
+    fa_ir: "دارای کودک ۱۲ ساله می‌باشم",
+    en_us: "I have a 12 year old child",
+  },
+  "enter the capacity(quantity)": {
+    ar: "أدخل السعة (الكمية)",
+    fa_ir: "ظرفیت را وارد کنید ( تعداد )",
+    en_us: "Enter the capacity (quantity)",
+  },
+  "number of people": {
+    ar: "عدد الاشخاص",
+    fa_ir: "تعداد نفرات",
+    en_us: "number of people",
+  },
+  "to request and reserve hosting, choose the number and gender of your people": {
+    ar: "لطلب وحجز الاستضافة، اختر عدد الأشخاص وجنسهم",
+    fa_ir: "برای درخواست و رزرو اولیه میزبانی ، تعداد و جنسیت نفرات خودتان را  انتخاب کنید",
+    en_us: "To request and reserve hosting, choose the number and gender of your people",
+  },
   "finish the trip": {
     ar: "أنهي الرحلة",
     fa_ir: "اتمام سفر",
@@ -658,6 +678,11 @@ export const messages = {
     fa_ir: "وضعیت",
     en_us: "Status",
   },
+  "reason for rejecting the request": {
+    ar: "سبب رفض الطلب",
+    fa_ir: "دلیل رد درخواست",
+    en_us: "reason for rejecting the request",
+  },
   tax: {
     ar: "ضريبة",
     fa_ir: "مالیات",
@@ -688,6 +713,11 @@ export const messages = {
     fa_ir: "نه، لغو",
     en_us: "No, Cancel",
   },
+  "unsuccessful payment, wallet balance is not enough": {
+    ar: "عملية دفع غير ناجحة، رصيد المحفظة غير كافي",
+    fa_ir: "پرداخت ناموفق ، موجودی کیف پول کافی نمی‌باشد",
+    en_us: "Unsuccessful payment, wallet balance is not enough",
+  },
   "your payment has been successfully completed, to continue the process and view receipt click the return button.":
     {
       ar: "لقد تم إتمام عملية الدفع بنجاح، لمواصلة العملية والعرض استلام انقر فوق زر العودة.",
@@ -701,9 +731,22 @@ export const messages = {
     fa_ir: "پرداخت با موفقیت انجام شد",
     en_us: "Payment Was Successful",
   },
-  "successful payment": {
-    ar: "الدفع الناجح",
-    fa_ir: "پرداخت موفق",
+  "your payment has been failed, to continue the process and view receipt click the return button.":
+    {
+      ar: "لقد فشلت عملية الدفع الخاصة بك، لمواصلة العملية وعرض الإيصال انقر فوق زر العودة.",
+      fa_ir: "پرداخت شما انجام نشد، برای ادامه فرآیند و مشاهده رسید، دکمه بازگشت را کلیک کنید.",
+      en_us:
+        "your payment has been failed, to continue the process and view receipt click the return button.",
+    },
+
+  "unsuccessful payment": {
+    ar: "عملية دفع غير ناجحة",
+    fa_ir: "پرداخت نا موفق",
+    en_us: "Unsuccessful payment",
+  },
+  "payment status": {
+    ar: "حالة السداد",
+    fa_ir: "وضعیت پرداخت ",
     en_us: "Successful payment",
   },
   "tracking code": {
@@ -845,6 +888,16 @@ export const messages = {
     ar: "قبول",
     fa_ir: "تایید / رد",
     en_us: "accepting",
+  },
+  to: {
+    ar: "إلى",
+    fa_ir: "تا",
+    en_us: "to",
+  },
+  copied: {
+    ar: "نسخ",
+    fa_ir: "کپی شد",
+    en_us: "copied",
   },
   "let's start and login to mofid trip": {
     ar: "لنبدأ ونسجل الدخول لحجز الأربعين",

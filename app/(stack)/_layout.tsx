@@ -4,7 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { Platform, StyleSheet } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { navigationRef } from "@src/utils/root-navigation";
 
 const HomeLayout = () => {
@@ -142,9 +142,11 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="successPayment"
+        name="paymentStatus"
         options={{
-          title: tr("successful payment"),
+          headerLeft: () => null,
+          title: tr("payment status"),
+          headerBackButtonMenuEnabled: false,
         }}
       />
       <Stack.Screen

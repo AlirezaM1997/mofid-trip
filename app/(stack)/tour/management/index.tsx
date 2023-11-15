@@ -1,18 +1,14 @@
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import { Badge, BottomSheet, Button, ButtonGroup, Card, Text, useTheme } from "@rneui/themed";
-import {
-  AccommodationQueryType,
-  MyNgoDetailQuery,
-  TourTourStatusStepChoices,
-} from "@src/gql/generated";
 import useMyNGOTable from "@src/hooks/db/ngo";
+import useTranslation from "@src/hooks/translation";
+import ComingSoon from "@modules/coming-soon";
+import { Badge, BottomSheet, Button, Card, useTheme } from "@rneui/themed";
+import { AccommodationQueryType } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import useTranslation from "@src/hooks/translation";
 import { getTourRequestStatusBadgeColor } from "@src/helper/tour";
 import { useState } from "react";
-import ComingSoon from "@modules/coming-soon";
 import { router } from "expo-router";
 
 const TourManagement = () => {

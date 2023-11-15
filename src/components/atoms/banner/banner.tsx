@@ -1,7 +1,7 @@
 import React from "react";
 import { Skeleton } from "@rneui/themed";
 import { Image, StyleSheet, Pressable, Platform } from "react-native";
-import { useBannerListQuery } from "@src/gql/generated";
+import { BannerImageType, useBannerListQuery } from "@src/gql/generated";
 import * as Linking from "expo-linking";
 import { useRouter } from "expo-router/src/hooks";
 
@@ -36,7 +36,7 @@ const Banner = ({ name }) => {
     return <Skeleton animation="wave" width={"100%"} height={130} style={style.skeletonBox} />;
   }
 
-  const banner = data?.bannerList?.data?.[0] || {};
+  const banner = data?.bannerList?.data?.[0];
 
   return (
     <Pressable style={style.bannerStyle} onPress={() => handlePress(banner.url)}>
