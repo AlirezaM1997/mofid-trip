@@ -1638,7 +1638,7 @@ export type TourTransactionDetailQuery = { __typename?: 'Query', tourTransaction
 export type TourTransactionListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionList?: { __typename?: 'TourTransactionListType', count?: number | null, data?: Array<{ __typename?: 'TourTransactionQueryType', id: string, description?: string | null, invoiceNumber?: any | null, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', price: number, tour?: { __typename?: 'TourQueryType', startTime: any, endTime: any, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null> | null } | null };
+export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionList?: { __typename?: 'TourTransactionListType', count?: number | null, data?: Array<{ __typename?: 'TourTransactionQueryType', id: string, description?: string | null, invoiceNumber?: any | null, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', price: number, tour?: { __typename?: 'TourQueryType', id: string, startTime: any, endTime: any, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null> | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2837,6 +2837,7 @@ export const TourTransactionListDocument = gql`
       tourPackage {
         price
         tour {
+          id
           startTime
           endTime
           avatarS3 {
@@ -2848,6 +2849,9 @@ export const TourTransactionListDocument = gql`
             ... on AccommodationQueryType {
               id
               address
+              avatarS3 {
+                small
+              }
             }
           }
           title

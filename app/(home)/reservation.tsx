@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "@rneui/themed";
 import Container from "@atoms/container";
-import { ScrollView, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import TourReservation from "@organisms/tour-reservation";
 import { ifNotLoggedInRedirectTo } from "@src/hooks/user";
