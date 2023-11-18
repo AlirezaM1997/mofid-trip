@@ -57,11 +57,6 @@ export const messages = {
       en_us:
         "By Using Mofidtrip Platform Services, You Implicitly Agree To The Platform's Rules And Regulations And Are Obligated To Read Updates And Comply With Them. Using Any Of The Mofidtrip Platform's Products And Services Implies Your Acceptance Of All Its Conditions. If Changes Occur In The Stated Rules, Procedures, And Services Of The Mofidtrip Platform, They Will Be Published And Updated On This Page, And You Will Be Informed Of Any New Changes In The Mofidtrip Platform's Rules. You Agree That Continuous Use Of The Platform Implies Reading And Accepting Any Changes. The Mofidtrip Platform Reserves The Right To Change Policies, Rules, Terms Of Service, And Service Prices. Services May Change Over Time By Adding New Features And Capabilities. The Mofidtrip Platform May Suspend, Stop, Or Replace Services At Any Time Without Prior Notice As Needed. Additionally, Content May Be Removed Based On Discretion. Users Will Be Responsible For All Activities Conducted Under Their Usernames. Users Commit Not To Misuse Our Services For Misleading Individuals, Creating Suspicion, Engaging In Malicious Activities, Or Engaging In Other Unethical Behaviors. The Responsibility For Any Misuse Of The Platform's Features And Capabilities By Users Will Not Be Borne By The Mofidtrip Platform, And The Mofidtrip Platform Reserves The Right To Take Legal Action Against Any Unauthorized Use Or Misuse Of The Provided Information Or Unauthorized Copying Whenever Discovered.",
     },
-  "cancel request": {
-    ar: "إلغاء الطلب",
-    fa_ir: "ابطال درخواست",
-    en_us: "Cancel Request",
-  },
   capacity: {
     ar: "سعة",
     fa_ir: "ظرفیت",
@@ -277,6 +272,11 @@ export const messages = {
     ar: "الحساب",
     fa_ir: "پروفایل",
     en_us: "Profile",
+  },
+  beginning: {
+    ar: "بداية",
+    fa_ir: "شروع",
+    en_us: "beginning",
   },
   project: {
     ar: "مشروع",
@@ -1135,6 +1135,11 @@ export const messages = {
     fa_ir: "یادهم",
     en_us: "Eleventh",
   },
+  "cancel request": {
+    ar: "إلغاء الطلب",
+    fa_ir: "لغو درخواست",
+    en_us: "cancel request",
+  },
   twelfth: {
     ar: "الثاني عشر",
     fa_ir: "دوازدهم",
@@ -1440,6 +1445,11 @@ export const messages = {
     fa_ir: "جزئیات تور",
     en_us: "Tour details",
   },
+  "view tour details": {
+    ar: "عرض تفاصيل الجولة",
+    fa_ir: "مشاهده جزئیات تور",
+    en_us: "View tour details",
+  },
   "tour management": {
     ar: "إدارة الرحلات",
     fa_ir: "مدیریت تور ها",
@@ -1489,11 +1499,6 @@ export const messages = {
     ar: "نعم",
     fa_ir: "باشه",
     en_us: "OK",
-  },
-  "at what stage is your application?": {
-    ar: "في أي مرحلة هو طلبك؟",
-    fa_ir: "درخواست شما در چه مرحله ای است؟",
-    en_us: "At what stage is your application?",
   },
   published: {
     ar: "نشرت",

@@ -1,8 +1,9 @@
 import { createTheme } from "@rneui/themed";
 import { DefaultTheme } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Platform } from "react-native";
+import { Platform, Pressable, PressableProps } from "react-native";
 import { WIDTH } from "./constants";
+import { View } from "react-native";
 
 export const PRIMARY_COLOR = "#FF4332";
 export const SECONDARY_COLOR = "#101010";
@@ -335,7 +336,13 @@ export const theme = isRtl =>
         },
       },
       CheckBox: {
-        // com
+        Component: ({ children, ...props }: PressableProps) => (
+          <View style={{ marginHorizontal: -5 }}>
+            <Pressable {...props} style={[props.style, { margin: 0, padding: 0 }]}>
+              {children}
+            </Pressable>
+          </View>
+        ),
         textStyle: {
           ...Platform.select({
             web: {

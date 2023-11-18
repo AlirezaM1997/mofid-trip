@@ -1,10 +1,14 @@
 query tourTransactionDetail($pk: ID!) {
   tourTransactionDetail(pk: $pk) {
+    id
     createdDate
     description
-    id
-    invoiceNumber
     modifiedDate
+    invoiceNumber
+    status {
+      isActive
+      step
+    }
     tourPackage {
       title
       price
@@ -12,9 +16,23 @@ query tourTransactionDetail($pk: ID!) {
       tour {
         avatarS3 {
           small
+          medium
         }
         id
         title
+        endTime
+        startTime
+        destination {
+          ... on AccommodationQueryType {
+            id
+            address
+            avatarS3 {
+              small
+              medium
+              large
+            }
+          }
+        }
       }
     }
   }
