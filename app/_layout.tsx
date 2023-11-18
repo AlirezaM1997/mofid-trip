@@ -50,9 +50,9 @@ const MainContent = () => {
   const { syncTable: syncTableProject } = useProjectTable();
   const { syncTable: syncTableMyNGOTable } = useMyNGOTable();
 
+  const { token } = useSelector((state: RootState) => state.userSlice.loginData);
+
   useEffect(() => {
-    syncTableUserDetail();
-    syncTableSettingDetail();
     syncTableTour({
       page: {
         pageNumber: 1,
@@ -68,8 +68,13 @@ const MainContent = () => {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated && isNgo) {
-      syncTableMyNGOTable();
+    console.log("OOO", isAuthenticated, token);
+    if (isAuthenticated && token) {
+      syncTableUserDetail();
+      syncTableSettingDetail();
+      if (isNgo) {
+        syncTableMyNGOTable();
+      }
     }
   }, [isAuthenticated, isNgo]);
 

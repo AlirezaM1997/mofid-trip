@@ -2,15 +2,17 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import ImageSlider from "@modules/image-slider";
 import Stepper from "@modules/stepper";
-import { ListItem, Text, useTheme } from "@rneui/themed";
+import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import { MyNgoDetailQuery, TourTourStatusStepChoices } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import { Divider } from "@rneui/themed";
+import { View } from "react-native";
+import ComingSoon from "@modules/coming-soon";
 
 const TourDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -20,14 +22,15 @@ const TourDetailScreen = () => {
   const { tourStr } = useLocalSearchParams();
   const tour: MyNgoDetailQuery["NGODetail"]["tourSet"][0] = JSON.parse(tourStr as string);
   const steps = [tr("pending"), tr("published"), tr("End Tour")];
+  const [isVisible, setIsVisible] = useState(false);
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      [TourTourStatusStepChoices.Accept]: 1,
-      [TourTourStatusStepChoices.Request]: 2,
+      [TourTourStatusStepChoices.Request]: 1,
+      [TourTourStatusStepChoices.Accept]: 2,
       [TourTourStatusStepChoices.End]: 3,
     };
-    return lookup;
+    return lookup[tour.statusStep];
   };
 
   useEffect(() => {
@@ -63,7 +66,16 @@ const TourDetailScreen = () => {
         </Text>
       </Container>
 
-      <ListItem bottomDivider onPress={() => router.push("/comingSoon")}>
+      <ListItem
+        bottomDivider
+        onPress={() =>
+          router.push({
+            pathname: "/tour/" + tour.id,
+            params: {
+              name: tour.title,
+            },
+          })
+        }>
         <Feather name="eye" size={24} color={theme.colors.black} />
         <ListItem.Content>
           <ListItem.Title>{tr("Tour Preview")}</ListItem.Title>
@@ -74,21 +86,23 @@ const TourDetailScreen = () => {
           color={theme.colors.grey3}
         />
       </ListItem>
-      <ListItem onPress={() => router.push("/comingSoon")}>
-        <Feather name="users" size={24} color={theme.colors.black} />
-        <ListItem.Content>
-          <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>
-        </ListItem.Content>
-        <Feather
-          name={isRtl ? "chevron-left" : "chevron-right"}
-          size={24}
-          color={theme.colors.grey3}
-        />
-      </ListItem>
+      {tour.statusStep === TourTourStatusStepChoices.Accept && tour.statusActivation && (
+        <ListItem onPress={() => router.push("/comingSoon")}>
+          <Feather name="users" size={24} color={theme.colors.black} />
+          <ListItem.Content>
+            <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>
+          </ListItem.Content>
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
+        </ListItem>
+      )}
 
       <Divider thickness={8} bgColor="grey0" />
 
-      <ListItem onPress={() => router.push("/comingSoon")}>
+      <ListItem onPress={() => setIsVisible(true)}>
         <Feather name="phone" size={24} color={theme.colors.black} />
         <ListItem.Content>
           <ListItem.Title>{tr("Contact Support")}</ListItem.Title>
@@ -99,6 +113,18 @@ const TourDetailScreen = () => {
           color={theme.colors.grey3}
         />
       </ListItem>
+
+      <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
+        <ListItem>
+          <ListItem.Content>
+            <ComingSoon />
+            <WhiteSpace size={10} />
+            <Button containerStyle={{ width: "100%" }} onPress={() => setIsVisible(false)}>
+              {tr("ok")}
+            </Button>
+          </ListItem.Content>
+        </ListItem>
+      </BottomSheet>
     </ScrollView>
   );
 };

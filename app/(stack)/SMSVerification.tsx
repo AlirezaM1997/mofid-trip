@@ -10,7 +10,6 @@ import { Feather } from "@expo/vector-icons";
 import { PRIMARY_COLOR } from "@src/theme";
 import {
   useCreateLoginMutation,
-  useUserDetailLazyQuery,
   useUserGetTokenMutation,
 } from "@src/gql/generated";
 import { setLoginData, setUserDetail } from "@src/slice/user-slice";
@@ -37,18 +36,6 @@ const SMSVerificationScreen = () => {
     userCheckSmsVerificationCode,
     { loading: loadingChecking, data: dataChecking, error: errorChecking },
   ] = useUserGetTokenMutation();
-  const [
-    _,
-    {
-      loading: loadingUserDetail,
-      data: dataUserDetail,
-      error: errorUserDetail,
-      refetch,
-      networkStatus,
-    },
-  ] = useUserDetailLazyQuery({
-    notifyOnNetworkStatusChange: true,
-  });
 
   const handleCountDownTimerOnEnd = () => {
     setCanRequestCode(true);
@@ -87,6 +74,7 @@ const SMSVerificationScreen = () => {
     if (!loadingChecking && dataChecking) {
       if (dataChecking.userGetToken.statusCode === 200) {
         dispatch(setLoginData(dataChecking.userGetToken));
+        router.push(redirectToScreenAfterLogin ? redirectToScreenAfterLogin : "/");
       } else {
         Toast.show({
           type: "error",
@@ -98,21 +86,6 @@ const SMSVerificationScreen = () => {
   }, [loadingChecking, dataChecking]);
 
   useEffect(() => {
-    if (loginData?.token) refetch();
-  }, [loginData?.token]);
-
-  useEffect(() => {
-    if (networkStatus === NetworkStatus.ready && dataUserDetail) {
-      dispatch(setUserDetail(dataUserDetail.userDetail));
-      if (redirectToScreenAfterLogin) {
-        router.push(redirectToScreenAfterLogin);
-      } else {
-        router.push("/");
-      }
-    }
-  }, [networkStatus, dataUserDetail]);
-
-  useEffect(() => {
     if (!loading && data && data.createLogin.status === "OK") {
       setCanRequestCode(false);
     }
@@ -120,7 +93,7 @@ const SMSVerificationScreen = () => {
 
   return (
     <>
-      {loadingChecking || (networkStatus === NetworkStatus.loading && <LoadingIndicator />)}
+      {loadingChecking && <LoadingIndicator />}
       <View style={style.container}>
         {canRequestCode ? (
           <Text>Try resend code again</Text>

@@ -2,25 +2,24 @@ import { Feather } from "@expo/vector-icons";
 import { Button, Divider, Input } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
-import { useUserDetailQuery, useUserEditMutation } from "@src/gql/generated";
+import { useUserEditMutation } from "@src/gql/generated";
 import { SECONDARY_COLOR } from "@src/theme";
-import React, { useEffect, useRef, useState } from "react";
-import { Image, Platform, ScrollView, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Image, ScrollView, StyleSheet } from "react-native";
 import { Pressable, View } from "react-native";
 import Toast from "react-native-toast-message";
 import * as ImagePicker from "expo-image-picker";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@src/store";
-import { setUserDetail } from "@src/slice/user-slice";
 import { isBase64 } from "@src/helper/extra";
 import useTranslation from "@src/hooks/translation";
+import useUserDetailTable from "@src/hooks/db/user-detail";
 
 const Page = () => {
   const { tr } = useTranslation();
-  const dispatch = useDispatch();
   const [editProfile, { loading, data, error }] = useUserEditMutation();
   const { userDetail } = useSelector((state: RootState) => state.userSlice);
-  const { loading: loadingUserDetail, data: dataUserDetail, error: errorUserDetail, refetch } = useUserDetailQuery();
+  const { syncTable } = useUserDetailTable();
   const [userDetailTemp, setUserDetailTemp] = useState({
     firstname: "",
     lastname: "",
@@ -75,7 +74,7 @@ const Page = () => {
 
   useEffect(() => {
     if (!loading && data) {
-      refetch();
+      syncTable();
       Toast.show({
         type: "success",
         text1: tr("Successful"),
@@ -90,12 +89,6 @@ const Page = () => {
       });
     }
   }, [loading, data, error]);
-
-  useEffect(() => {
-    if (!loadingUserDetail && dataUserDetail) {
-      dispatch(setUserDetail(dataUserDetail.userDetail));
-    }
-  }, [loadingUserDetail, dataUserDetail, errorUserDetail]);
 
   return (
     <>
@@ -114,7 +107,7 @@ const Page = () => {
             <Input
               label={tr("First Name")}
               value={userDetailTemp.firstname}
-              onChangeText={(t) => {
+              onChangeText={t => {
                 setUserDetailTemp({
                   ...userDetailTemp,
                   firstname: t,
@@ -124,7 +117,7 @@ const Page = () => {
             <Input
               label={tr("Last Name")}
               value={userDetailTemp.lastname}
-              onChangeText={(t) =>
+              onChangeText={t =>
                 setUserDetailTemp({
                   ...userDetailTemp,
                   lastname: t,
@@ -137,7 +130,7 @@ const Page = () => {
               multiline={true}
               numberOfLines={4}
               style={{ textAlignVertical: "top" }}
-              onChangeText={(t) =>
+              onChangeText={t =>
                 setUserDetailTemp({
                   ...userDetailTemp,
                   bio: t,
