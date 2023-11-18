@@ -68,7 +68,6 @@ const MainContent = () => {
   }, []);
 
   useEffect(() => {
-    console.log("OOO", isAuthenticated, token);
     if (isAuthenticated && token) {
       syncTableUserDetail();
       syncTableSettingDetail();
