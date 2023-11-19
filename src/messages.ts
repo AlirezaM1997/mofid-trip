@@ -1530,7 +1530,7 @@ export const messages = {
     fa_ir: "پرداخت موفق",
     en_us: "Success Receipt",
   },
-  'tour capacity': {
+  "tour capacity": {
     ar: "قدرة الجولة",
     fa_ir: "ظرفیت تور",
     en_us: "Tour Capacity",
@@ -1560,37 +1560,37 @@ export const messages = {
     fa_ir: "امکانات",
     en_us: "Facilities",
   },
-  'tour origin': {
+  "tour origin": {
     ar: "أصل الجولة",
     fa_ir: "مبدا تور",
     en_us: "Tour Origin",
   },
-  'tour destination': {
+  "tour destination": {
     ar: "وجهة الجولة",
     fa_ir: "مقصد تور",
     en_us: "Tour Destination",
   },
-  'tour date': {
+  "tour date": {
     ar: "تاريخ الجولة",
     fa_ir: "تاریخ تور",
     en_us: "Tour Date",
   },
-  'tour images': {
+  "tour images": {
     ar: "صور الجولة",
     fa_ir: "تصاویر تور",
     en_us: "Tour Images",
   },
-  'tour price': {
+  "tour price": {
     ar: "سعر الجولة",
     fa_ir: "هزینه تور",
     en_us: "Tour Price",
   },
-  'tour title and details': {
+  "tour title and details": {
     ar: "عنوان الجولة وتفاصيلها",
     fa_ir: "عنوان و جزئیات تور",
     en_us: "Tour title and details",
   },
-  'to find a tour, address and information about a tour for travelers in nuwayside.': {
+  "to find a tour, address and information about a tour for travelers in nuwayside.": {
     ar: "لتصنيع السياحة، عنوان وشروط التورتان لمسافر بنوسيد.",
     fa_ir: "برای ایجاد تور ، عنوان و توضیحاتی از تورتان برای مسافران بنویسید.",
     en_us: "To find a tour, address and information about a tour for travelers in Nuwayside.",
@@ -1600,7 +1600,7 @@ export const messages = {
     fa_ir: "لغو",
     en_us: "Cancel",
   },
-  'tour title': {
+  "tour title": {
     ar: "عنوان الجولة",
     fa_ir: "عنوان تور",
     en_us: "Tour Title",
@@ -1610,5 +1610,29 @@ export const messages = {
     fa_ir: "عنوان اجباری است",
     en_us: "Title is required",
   },
-  
+  "capacity and gender": {
+    ar: "القدرة والجنس",
+    fa_ir: "ظرفیت و جنسیت",
+    en_us: "Capacity and Gender",
+  },
+  "select the capacity and gender of the tour passengers": {
+    ar: "حدد السعة والجنس لركاب الرحلة",
+    fa_ir: "ظرفیت و جنسیت مسافران تور را انتخاب کنید",
+    en_us: "Select the capacity and gender of the tour passengers",
+  },
+  "enter the capacity (quantity)": {
+    ar: "أدخل السعة (الكمية)",
+    fa_ir: "ظرفیت را وارد کنید ( تعداد )",
+    en_us: "Enter the capacity (quantity)",
+  },
+  "the tour is open to children under 12 years old": {
+    ar: "الجولة مفتوحة للأطفال دون سن 12 عامًا",
+    fa_ir: "تور پذیرای کودکان زیر ۱۲ سال نیز میباشد",
+    en_us: "The tour is open to children under 12 years old",
+  },
+  "capacity is required": {
+    ar: "القدرة مطلوبة",
+    fa_ir: "ظرفیت تور اجباری است",
+    en_us: "Capacity is required",
+  },
 };
