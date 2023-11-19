@@ -46,24 +46,27 @@ const TourCreateTab = ({ index }: TourCreateTabProps) => {
       onChange={handleChange}
       variant="default"
       scrollable
-      indicatorStyle={styles.indicatorStyle(theme)}>
-      <Tab.Item title={tr("Details")} />
-      <Tab.Item title={tr("Capacity")} />
-      <Tab.Item title={tr("Origin")} />
-      <Tab.Item title={tr("Destination")} />
-      <Tab.Item title={tr("Date")} />
-      <Tab.Item title={tr("Price")} />
-      <Tab.Item title={tr("Images")} />
-      <Tab.Item title={tr("Facilities")} />
+      indicatorStyle={styles.indicatorStyle}>
+      <Tab.Item style={index === 0 ? styles.tabItem(theme) : {}} title={tr("Details")} />
+      <Tab.Item style={index === 1 ? styles.tabItem(theme) : {}} title={tr("Capacity")} />
+      <Tab.Item style={index === 2 ? styles.tabItem(theme) : {}} title={tr("Origin")} />
+      <Tab.Item style={index === 3 ? styles.tabItem(theme) : {}} title={tr("Destination")} />
+      <Tab.Item style={index === 4 ? styles.tabItem(theme) : {}} title={tr("Date")} />
+      <Tab.Item style={index === 5 ? styles.tabItem(theme) : {}} title={tr("Price")} />
+      <Tab.Item style={index === 6 ? styles.tabItem(theme) : {}} title={tr("Images")} />
+      <Tab.Item style={index === 7 ? styles.tabItem(theme) : {}} title={tr("Facilities")} />
     </Tab>
   );
 };
 
 const styles = StyleSheet.create({
-  indicatorStyle: theme => ({
-    backgroundColor: theme.colors.primary,
-    height: 3,
-  })
+  indicatorStyle: {
+    display: "none",
+  },
+  tabItem: theme => ({
+    borderBottomWidth: 3,
+    borderColor: theme.colors.primary,
+  }),
 });
 
 export default TourCreateTab;
