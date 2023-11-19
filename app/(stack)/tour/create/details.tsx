@@ -4,11 +4,33 @@ import BottomButtonLayout from "@components/layout/bottom-button";
 import TourCreateTab from "@modules/virtual-tabs";
 import { Button, Input, Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
+import { setTourCreateData } from "@src/slice/tour-create-slice";
+import { RootState } from "@src/store";
 import { Formik } from "formik";
 import { StyleSheet } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
 
 const Screen = () => {
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
+  const { data } = useSelector((state: RootState) => state.tourCreateSlice);
+
+  const initialValues = { title: "", description: "" };
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required(tr("Title is required")),
+    description: Yup.string(),
+  });
+
+  const handleSubmit = values => {
+    dispatch(
+      setTourCreateData({
+        ...data,
+        ...values,
+      })
+    );
+  };
 
   return (
     <BottomButtonLayout
@@ -16,7 +38,7 @@ const Screen = () => {
         <Button type="outline" color="secondary" disabled>
           {tr("Cancel")}
         </Button>,
-        <Button>{tr("Next")}</Button>,
+        <Button onPress={handleSubmit}>{tr("Next")}</Button>,
       ]}>
       <TourCreateTab index={0} />
       <WhiteSpace size={20} />
@@ -29,20 +51,31 @@ const Screen = () => {
         </Text>
         <WhiteSpace size={20} />
         <Formik
-          initialValues={{ email: "" }}
-          validationSchema={{}}
-          onSubmit={values => console.log(values)}>
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}>
           {({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
             <>
               <Input
+                name="title"
+                placeholder={tr("Tour Title")}
                 textAlignVertical="top"
-                onChangeText={handleChange("email")}
-                onBlur={handleBlur("email")}
-                value={values.email}
-                errorMessage={errors.email}
-                renderErrorMessage={!!touched.email && !!errors.email}
+                onChangeText={handleChange("title")}
+                onBlur={handleBlur("title")}
+                value={values.title}
+                errorMessage={touched.title && errors.title}
               />
-              <Button onPress={handleSubmit}>Submit</Button>
+              <Input
+                name="description"
+                placeholder={tr("Tour Details")}
+                onChangeText={handleChange("description")}
+                onBlur={handleBlur("description")}
+                value={values.description}
+                errorMessage={touched.description && errors.description}
+                textAlignVertical="top"
+                multiline={true}
+                numberOfLines={4}
+              />
             </>
           )}
         </Formik>

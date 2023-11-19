@@ -1600,4 +1600,15 @@ export const messages = {
     fa_ir: "لغو",
     en_us: "Cancel",
   },
+  'tour title': {
+    ar: "عنوان الجولة",
+    fa_ir: "عنوان تور",
+    en_us: "Tour Title",
+  },
+  "title is required": {
+    ar: "العنوان مطلوب",
+    fa_ir: "عنوان اجباری است",
+    en_us: "Title is required",
+  },
+  
 };
