@@ -1513,7 +1513,7 @@ export const messages = {
   "tour details": {
     ar: "تفاصيل الجولة",
     fa_ir: "جزئیات تور",
-    en_us: "Tour details",
+    en_us: "Tour Details",
   },
   "view tour details": {
     ar: "عرض تفاصيل الجولة",
@@ -1599,5 +1599,60 @@ export const messages = {
     ar: "إيصال النجاح",
     fa_ir: "پرداخت موفق",
     en_us: "Success Receipt",
+  },
+  'tour capacity': {
+    ar: "قدرة الجولة",
+    fa_ir: "ظرفیت تور",
+    en_us: "Tour Capacity",
+  },
+  details: {
+    ar: "تفاصيل",
+    fa_ir: "جزئیات",
+    en_us: "Detail",
+  },
+  origin: {
+    ar: "أصل",
+    fa_ir: "مبدا",
+    en_us: "Origin",
+  },
+  destination: {
+    ar: "وجهة",
+    fa_ir: "مقصد",
+    en_us: "Destination",
+  },
+  images: {
+    ar: "الصور",
+    fa_ir: "تصاویر",
+    en_us: "Images",
+  },
+  facilities: {
+    ar: "مرافق",
+    fa_ir: "امکانات",
+    en_us: "Facilities",
+  },
+  'tour origin': {
+    ar: "أصل الجولة",
+    fa_ir: "مبدا تور",
+    en_us: "Tour Origin",
+  },
+  'tour destination': {
+    ar: "وجهة الجولة",
+    fa_ir: "مقصد تور",
+    en_us: "Tour Destination",
+  },
+  'tour date': {
+    ar: "تاريخ الجولة",
+    fa_ir: "تاریخ تور",
+    en_us: "Tour Date",
+  },
+  'tour images': {
+    ar: "صور الجولة",
+    fa_ir: "تصاویر تور",
+    en_us: "Tour Images",
+  },
+  'tour price': {
+    ar: "سعر الجولة",
+    fa_ir: "هزینه تور",
+    en_us: "Tour Price",
   },
 };

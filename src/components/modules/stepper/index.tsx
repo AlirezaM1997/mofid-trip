@@ -20,7 +20,7 @@ const Stepper = ({ steps, activeStep, isActive }) => {
             style={[
               [styles.stepCircle, themeStyles.greyColor],
               index + 1 <= activeStep &&
-                (isActive ? [themeStyles.successColor] : [themeStyles.greyColor]),
+                (isActive ? [themeStyles.successColor] : [themeStyles.errorColor]),
               index + 1 === activeStep && !isActive && [themeStyles.errorColor],
             ]}></View>
 

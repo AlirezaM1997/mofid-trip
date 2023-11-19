@@ -22,9 +22,9 @@ export const getTourRequestStatusBadgeColor: (
   tour: MyNgoDetailQuery["NGODetail"]["tourSet"][0]
 ) => keyof Colors = tour => {
   if (tour.statusStep === TourTourStatusStepChoices.Accept) {
-    return tour.statusActivation ? 'success' : 'warning'
+    return tour.statusActivation ? 'success' : 'error'
   } else if (tour.statusStep === TourTourStatusStepChoices.Request) {
-    return tour.statusActivation ? 'success' : 'warning'
+    return tour.statusActivation ? 'success' : 'error'
   }
   return 'error'
 };
