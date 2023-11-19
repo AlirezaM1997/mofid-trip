@@ -34,6 +34,16 @@ export const messages = {
     fa_ir: "بازگشت",
     en_us: "Back",
   },
+  "it is a one-day tour": {
+    ar: "إنها جولة ليوم واحد",
+    fa_ir: "تور یک روزه می‌باشد",
+    en_us: "it is a one-day tour",
+  },
+  "choose a start and end date for the tour": {
+    ar: "اختر تاريخ البدء والانتهاء للجولة",
+    fa_ir: "برای تور ، تاریخ شروع و پایان انتخاب کنید",
+    en_us: "Choose a start and end date for the tour",
+  },
   bio: {
     ar: "السيرة الذاتية (۲۰۰ حرف)",
     fa_ir: "بیوگرافی",

@@ -460,11 +460,12 @@ export const theme = isRtl =>
       CardDivider: (props, theme) => ({
         color: theme.colors.grey0,
       }),
-      Divider: ({ thickness, bgColor, style, ...props }, theme) => ({
+      Divider: ({ thickness, vertical, bgColor, style, ...props }, theme) => ({
         style: {
           borderWidth: thickness,
-          borderColor: theme.colors[bgColor as string] ?? theme.colors.grey1,
           backgroundColor: "transparent",
+          borderColor: theme.colors[bgColor as string] ?? theme.colors.grey1,
+          transform: vertical && "rotate(270deg)"
         },
       }),
       Badge: ({ type, color, ...props }, theme) => {
