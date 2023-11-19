@@ -1,7 +1,6 @@
 import "react-native-gesture-handler";
 import useIsRtl from "@src/hooks/localization";
 import Toast from "react-native-toast-message";
-import useApolloClient from "@src/hooks/apollo/client/index";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useCallback, useEffect } from "react";
 import { useFonts } from "expo-font";
@@ -20,14 +19,20 @@ import useTourTable from "@src/hooks/db/tour";
 import useUserDetailTable from "@src/hooks/db/user-detail";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
 import useProjectTable from "@src/hooks/db/project";
-import { useIsAuthenticated } from "@src/hooks/user";
+import { useConfirmAuthentication, useIsAuthenticated } from "@src/hooks/auth";
 import useMyNGOTable from "@src/hooks/db/ngo";
+import customUseApolloClient from "@src/hooks/apollo/client";
 
 SplashScreen.preventAutoHideAsync();
 
 export function PatchedApolloProvider({ children }) {
   const isRtl = useIsRtl();
-  const client = useApolloClient();
+  const client = customUseApolloClient();
+  const { confirmAuth } = useConfirmAuthentication();
+
+  useEffect(() => {
+    confirmAuth();
+  }, [client]);
 
   useEffect(() => {
     if (Platform.OS === "web") {
@@ -42,6 +47,7 @@ const MainContent = () => {
   const isRtl = useIsRtl();
   const Theme = theme(isRtl);
   const isAuthenticated = useIsAuthenticated();
+  const client = customUseApolloClient()
   const isNgo = useSelector((state: RootState) => state.userSlice?.userDetail?.isNgo || false);
 
   const { syncTable: syncTableSettingDetail } = useSettingDetailTable();
@@ -50,7 +56,7 @@ const MainContent = () => {
   const { syncTable: syncTableProject } = useProjectTable();
   const { syncTable: syncTableMyNGOTable } = useMyNGOTable();
 
-  const { token } = useSelector((state: RootState) => state.userSlice.loginData);
+  const { token } = useSelector((state: RootState) => state.authSlice.loginData);
 
   useEffect(() => {
     syncTableTour({
@@ -68,7 +74,7 @@ const MainContent = () => {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticated && token) {
+    if (isAuthenticated) {
       syncTableUserDetail();
       syncTableSettingDetail();
       if (isNgo) {

@@ -16,7 +16,7 @@ const languageCodes = {
 };
 
 const customUseApolloClient = () => {
-  const { token } = useSelector((state: RootState) => state.userSlice.loginData);
+  const { token } = useSelector((state: RootState) => state.authSlice.loginData);
   const lang = useSelector(
     (state: RootState) => state.settingDetailSlice.settingDetail.language || LanguageChoiceEnum.EnUs
   );

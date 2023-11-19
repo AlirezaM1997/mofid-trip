@@ -15,7 +15,7 @@ import { I18nManager } from "react-native";
 import { getFullName } from "@src/helper/extra";
 import useIsRtl from "@src/hooks/localization";
 import { router, useRootNavigationState } from "expo-router";
-import { useIsAuthenticated } from "@src/hooks/user";
+import { useIsAuthenticated } from "@src/hooks/auth";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
 import useMyNGOTable from "@src/hooks/db/ngo";
 

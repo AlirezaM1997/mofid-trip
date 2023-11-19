@@ -1585,4 +1585,19 @@ export const messages = {
     fa_ir: "هزینه تور",
     en_us: "Tour Price",
   },
+  'tour title and details': {
+    ar: "عنوان الجولة وتفاصيلها",
+    fa_ir: "عنوان و جزئیات تور",
+    en_us: "Tour title and details",
+  },
+  'to find a tour, address and information about a tour for travelers in nuwayside.': {
+    ar: "لتصنيع السياحة، عنوان وشروط التورتان لمسافر بنوسيد.",
+    fa_ir: "برای ایجاد تور ، عنوان و توضیحاتی از تورتان برای مسافران بنویسید.",
+    en_us: "To find a tour, address and information about a tour for travelers in Nuwayside.",
+  },
+  cancel: {
+    ar: "يلغي",
+    fa_ir: "لغو",
+    en_us: "Cancel",
+  },
 };
