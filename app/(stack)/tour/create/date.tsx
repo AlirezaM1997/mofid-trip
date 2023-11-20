@@ -1,130 +1,85 @@
+import * as Yup from "yup";
 import { useState } from "react";
+import { RootState } from "@src/store";
+import { Field, Formik } from "formik";
 import Container from "@atoms/container";
+import { Button, Divider, Text } from "@rneui/themed";
+import CustomCalender from "@modules/calender";
 import { StyleSheet, View } from "react-native";
 import TourCreateTab from "@modules/virtual-tabs";
 import useTranslation from "@src/hooks/translation";
-import { Calendar, DateData } from "react-native-calendars";
-import { useCalendarTheme } from "@src/hooks/calendar-theme";
-import { CheckBox, Divider, Text, useTheme } from "@rneui/themed";
+import { useDispatch, useSelector } from "react-redux";
+import { MarkedDates } from "react-native-calendars/src/types";
+import { setTourCreateData } from "@src/slice/tour-create-slice";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import { router } from "expo-router";
+
+const initialValues = { startDate: "", endDate: "" };
 
 const Screen = () => {
-  const { theme } = useTheme();
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const calendarTheme = useCalendarTheme();
-  const [checked, setChecked] = useState(false);
-  const today = new Date().toISOString().slice(0, 10);
 
-  const [markedDates, setMarkedDates] = useState({
-    startDate: "",
-    endDate: "",
+  const [markedDates, setMarkedDates] = useState<MarkedDates>({});
+  const { data } = useSelector((state: RootState) => state.tourCreateSlice);
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required(tr("Title is required")),
+    description: Yup.string(),
   });
 
-  const handleDayPress = (day: DateData) => {
-    if (markedDates.startDate) {
-      setMarkedDates({ ...markedDates, endDate: day.dateString });
-      return;
-    }
-
-    setMarkedDates({ ...markedDates, startDate: day.dateString });
-  };
-
-  const getMarked = () => {
-    let marked = {};
-
-    for (
-      let i = +markedDates.startDate.split("-")[2];
-      i <= +markedDates.endDate.split("-")[2];
-      i++
-    ) {
-      marked[markedDates.startDate] = {
-        disabled: true,
-        startingDay: i == +markedDates.startDate.split("-")[2],
-        endingDay: i == +markedDates.endDate.split("-")[2],
-        color: theme.colors.black,
-        textColor: theme.colors.white,
-      };
-      marked[markedDates.endDate] = {
-        disabled: true,
-        startingDay: i == +markedDates.startDate.split("-")[2],
-        endingDay: i == +markedDates.endDate.split("-")[2],
-        color: theme.colors.black,
-        textColor: theme.colors.white,
-      };
-    }
-    console.log("marked", markedDates.startDate.split("-")[2]);
-    return marked;
+  const handleSubmit = values => {
+    dispatch(
+      setTourCreateData({
+        ...data,
+        ...values,
+      })
+    );
   };
 
   return (
-    <>
-      <TourCreateTab index={4} />
-      <Container style={styles.container}>
-        <View style={styles.header}>
-          <Text heading2>{tr("tour date")}</Text>
-          <Text caption type="grey2">
-            {tr("choose a start and end date for the tour")}
-          </Text>
-        </View>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}>
+      {({ values }) => (
+        <BottomButtonLayout
+          buttons={[
+            <Button onPress={handleSubmit}>{tr("next")}</Button>,
+            <Button type="outline" onPress={() => router.back()}>
+              {tr("back")}
+            </Button>,
+          ]}>
+          <TourCreateTab index={4} />
 
-        <CheckBox
-          title={tr("it is a one-day tour")}
-          checked={checked}
-          onPress={() => setChecked(!checked)}
-        />
+          <Container style={styles.container}>
+            <View style={styles.header}>
+              <Text heading2>{tr("tour date")}</Text>
+              <Text caption type="grey2">
+                {tr("choose a start and end date for the tour")}
+              </Text>
+            </View>
 
-        <Calendar
-          minDate={today}
-          markingType="period"
-          theme={calendarTheme}
-          onDayPress={handleDayPress}
-          renderArrow={direction =>
-            direction === "left" ? <Text>{">"}</Text> : <Text>{"<"}</Text>
-          }
-          markedDates={getMarked()}
-          // markedDates={{
-          //   // "2023-11-21": { startingDay: true, color: "green" },
-          //   // "2023-11-22": {
-          //   //   color: "green",
-          //   //   selected: true,
-          //   //   endingDay: true,
-          //   //   textColor: "gray",
+            <Field
+              name="calender"
+              markedDates={markedDates}
+              component={CustomCalender}
+              setMarkedDates={setMarkedDates}
+            />
 
-          //   //   startingDay: true,
-          //   //   customStyles: {
-          //   //     container: {
-          //   //       borderRadius: 8,
-          //   //     },
-          //   //   },
-          //   // },
-          //   // "2023-11-23": { color: "green", endingDay: true },
-          //   [markedDates.startDate]: {
-          //     startingDay: true,
-          //     disableTouchEvent: true,
-          //     color: theme.colors.black,
-          //     customTextStyle: { color: theme.colors.white },
-          //   },
-          //   [markedDates.endDate]: {
-          //     selected: true,
-          //     endingDay: true,
-          //     disableTouchEvent: true,
-          //     color: theme.colors.black,
-
-          //     customStyles: {
-          //       container: {
-          //         borderRadius: 8,
-          //       },
-          //     },
-          //   },
-          // }}
-        />
-
-        <View style={styles.showDateContainer}>
-          <Text body2>{tr("beginning")}</Text>
-          <Divider vertical={true} style={styles.divider} />
-          <Text body2>{tr("end")}</Text>
-        </View>
-      </Container>
-    </>
+            <View style={styles.showDateContainer}>
+              <Text body2>
+                {tr("beginning")}: {Object.keys(markedDates)[0]}
+              </Text>
+              <Divider vertical={true} style={styles.divider} />
+              <Text body2>
+                {tr("end")}: {Object.keys(markedDates)[Object.keys(markedDates).length - 1]}
+              </Text>
+            </View>
+          </Container>
+        </BottomButtonLayout>
+      )}
+    </Formik>
   );
 };
 
@@ -132,7 +87,7 @@ const styles = StyleSheet.create({
   header: { gap: 6 },
   container: { gap: 24 },
   divider: { width: 50 },
-  showDateContainer: { flexDirection: "row", justifyContent: "space-between" },
+  showDateContainer: { flexDirection: "row", justifyContent: "space-evenly" },
 });
 
 export default Screen;
