@@ -47,7 +47,6 @@ const MainContent = () => {
   const isRtl = useIsRtl();
   const Theme = theme(isRtl);
   const isAuthenticated = useIsAuthenticated();
-  const client = customUseApolloClient()
   const isNgo = useSelector((state: RootState) => state.userSlice?.userDetail?.isNgo || false);
 
   const { syncTable: syncTableSettingDetail } = useSettingDetailTable();
@@ -55,8 +54,6 @@ const MainContent = () => {
   const { syncTable: syncTableTour } = useTourTable();
   const { syncTable: syncTableProject } = useProjectTable();
   const { syncTable: syncTableMyNGOTable } = useMyNGOTable();
-
-  const { token } = useSelector((state: RootState) => state.authSlice.loginData);
 
   useEffect(() => {
     syncTableTour({
