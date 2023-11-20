@@ -27,7 +27,7 @@ const BottomButtonLayout = ({
       </ScrollView>
       <Divider />
       {buttons.length ? (
-        <View style={styles.buttonContainer(theme)}>
+        <View style={styles.buttonContainer}>
           {buttons.map((b, i) => (
             <View key={i}>{b}</View>
           ))}
@@ -44,10 +44,9 @@ const styles = {
     flex: 1,
     height: height - 195,
   },
-  buttonContainer: theme => ({
-    backgroundColor: theme.colors.white,
-    padding: 10,
-  }),
+  buttonContainer: {
+    flex: 1,
+  },
 };
 
 export default BottomButtonLayout;

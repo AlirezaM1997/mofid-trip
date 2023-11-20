@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Platform, Pressable, PressableProps } from "react-native";
 import { WIDTH } from "./constants";
 import { View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 export const PRIMARY_COLOR = "#FF4332";
 export const SECONDARY_COLOR = "#101010";
@@ -122,6 +123,10 @@ export const theme = isRtl =>
           fontWeight: "400",
         },
       },
+      ListItemCheckBox: (props, theme) => ({
+        checkedIcon: <Ionicons name="md-checkbox" size={24} color={theme.colors.primary} />,
+        uncheckedIcon: <Ionicons name="square-outline" size={24} color={theme.colors.black} />,
+      }),
       Image: {
         placeholderStyle: {
           display: "none",
@@ -335,7 +340,7 @@ export const theme = isRtl =>
           margin: 0,
         },
       },
-      CheckBox: {
+      CheckBox: (props, theme) => ({
         Component: ({ children, ...props }: PressableProps) => (
           <View style={{ marginHorizontal: -5 }}>
             <Pressable {...props} style={[props.style, { margin: 0, padding: 0 }]}>
@@ -344,6 +349,7 @@ export const theme = isRtl =>
           </View>
         ),
         textStyle: {
+          color: theme.colors.grey3,
           ...Platform.select({
             web: {
               fontFamily:
@@ -358,7 +364,9 @@ export const theme = isRtl =>
           }),
           fontWeight: "400",
         },
-      },
+        checkedIcon: <Ionicons name="md-checkbox" size={24} color={theme.colors.primary} />,
+        uncheckedIcon: <Ionicons name="square-outline" size={24} color={theme.colors.black} />,
+      }),
       SearchBar: {
         containerStyle: {
           backgroundColor: "#fff",
