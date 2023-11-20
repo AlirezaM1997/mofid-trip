@@ -23,11 +23,6 @@ const Screen = () => {
   const [markedDates, setMarkedDates] = useState<MarkedDates>({});
   const { data } = useSelector((state: RootState) => state.tourCreateSlice);
 
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required(tr("Title is required")),
-    description: Yup.string(),
-  });
-
   const handleSubmit = values => {
     dispatch(
       setTourCreateData({
@@ -38,10 +33,7 @@ const Screen = () => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {({ values }) => (
         <BottomButtonLayout
           buttons={[
