@@ -4,7 +4,6 @@ import Container from "@atoms/container";
 import { StyleSheet, View } from "react-native";
 import { BottomSheet, Button } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { WIDTH } from "@src/constants";
 
 type PropsType = {
   isVisible: boolean;

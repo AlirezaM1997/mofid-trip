@@ -34,6 +34,16 @@ export const messages = {
     fa_ir: "بازگشت",
     en_us: "Back",
   },
+  "it is a one-day tour": {
+    ar: "إنها جولة ليوم واحد",
+    fa_ir: "تور یک روزه می‌باشد",
+    en_us: "it is a one-day tour",
+  },
+  "choose a start and end date for the tour": {
+    ar: "اختر تاريخ البدء والانتهاء للجولة",
+    fa_ir: "برای تور ، تاریخ شروع و پایان انتخاب کنید",
+    en_us: "Choose a start and end date for the tour",
+  },
   bio: {
     ar: "السيرة الذاتية (۲۰۰ حرف)",
     fa_ir: "بیوگرافی",
@@ -217,7 +227,7 @@ export const messages = {
   },
   pay: {
     ar: "يدفع",
-    fa_ir: "پرداخت کن",
+    fa_ir: "پرداخت",
     en_us: "Pay",
   },
   "cancel payment": {
@@ -351,11 +361,7 @@ export const messages = {
     fa_ir: "قیمت کل",
     en_us: "Total Price",
   },
-  total: {
-    ar: "الكلي",
-    fa_ir: "کل",
-    en_us: "Total",
-  },
+
   tour: {
     ar: "رحلة",
     fa_ir: "تور",
@@ -512,6 +518,11 @@ export const messages = {
     fa_ir: "فارسی",
     en_us: "Persian",
   },
+  confirmation: {
+    ar: "تأكيد",
+    fa_ir: "تایید",
+    en_us: "confirmation",
+  },
   accept: {
     ar: "يقبل",
     fa_ir: "تایید کنید",
@@ -547,6 +558,17 @@ export const messages = {
     fa_ir: "پرداخت",
     en_us: "payment",
   },
+  "cancel the initial request": {
+    ar: "إلغاء الطلب الأولي",
+    fa_ir: "لغو درخواست اولیه",
+    en_us: "Cancel the initial request",
+  },
+  "edit reservation information": {
+    ar: "تعديل معلومات الحجز",
+    fa_ir: "ویرایش اطلاعات رزرو",
+    en_us: "Edit reservation information",
+  },
+
   "request details": {
     ar: "تفاصيل التطبيق",
     fa_ir: "جزئیات درخواست ",
@@ -834,15 +856,30 @@ export const messages = {
     fa_ir: "اشتراک گذاری",
     en_us: "share",
   },
+  "rates to the tour": {
+    ar: "أسعار الجولة",
+    fa_ir: "امتیاز به تور",
+    en_us: "Rates to the tour",
+  },
   paypal: {
     ar: "پی پال",
     fa_ir: "پی پال",
     en_us: "Paypal",
   },
+  "the exact location of the place of movement": {
+    ar: "موقعیت مکانی دقیق مکان حرکت",
+    fa_ir: "موقعیت مکانی دقیق مکان حرکت",
+    en_us: "The exact location of the place of movement",
+  },
   "view invoices": {
     ar: "عرض الفواتير",
     fa_ir: "مشاهده فاکتورها",
     en_us: "View Invoices",
+  },
+  "view invoice": {
+    ar: "عرض الفاتورة",
+    fa_ir: "مشاهده فاکتور",
+    en_us: "View Invoice",
   },
   "pdf receipt": {
     ar: "إيصال pdf",
@@ -943,10 +980,43 @@ export const messages = {
     fa_ir: "پیام",
     en_us: "Message",
   },
+  total: {
+    ar: "المجموع",
+    fa_ir: "جمع کل",
+    en_us: "total",
+  },
+  "base price": {
+    ar: "قیمت پایه",
+    fa_ir: "قیمت پایه",
+    en_us: "base price",
+  },
   call: {
     ar: "يتصل",
     fa_ir: "شماره تماس",
     en_us: "Call",
+  },
+  "your final and recorded details for the initial tour request. the price is calculated per person.":
+    {
+      ar: "بياناتك النهائية والمسجلة لطلب الجولة الأولية. يتم احتساب السعر للشخص الواحد.",
+      fa_ir:
+        "جزئیات نهایی و ثبت شده شما برای درخواست اولیه به تور. قیمت بر اساس هر نفر محسابه می‌شود.",
+      en_us:
+        "Your final and recorded details for the initial tour request. The price is calculated per person.",
+    },
+  "final invoice": {
+    ar: "الفاتورة النهائية",
+    fa_ir: "فاکتور نهایی",
+    en_us: "Final invoice",
+  },
+  "your request canceled": {
+    ar: "تم إلغاء طلبك بنجاح",
+    fa_ir: "درخواست شما لغو شد",
+    en_us: "your request canceled",
+  },
+  cancel: {
+    ar: "يلغي",
+    fa_ir: "لغو",
+    en_us: "cancel",
   },
   "no, cancle": {
     ar: "لا، إلغاء",
@@ -1134,6 +1204,16 @@ export const messages = {
     ar: "أحد عشر",
     fa_ir: "یادهم",
     en_us: "Eleventh",
+  },
+  "by canceling the request, your reservation process will be canceled": {
+    ar: "بإلغاء الطلب، سيتم إلغاء عملية الحجز الخاصة بك",
+    fa_ir: "با لغو درخواست، فرایند رزرو شما لغو می‌گردد",
+    en_us: "By canceling the request, your reservation process will be canceled",
+  },
+  "are you sure to cancel the request?": {
+    ar: "هل أنت متأكد من إلغاء الطلب؟",
+    fa_ir: "آیا از لغو درخواست اطمینان دارید؟",
+    en_ur: "Are you sure to cancel the request?",
   },
   "cancel request": {
     ar: "إلغاء الطلب",
