@@ -227,6 +227,13 @@ const HomeLayout = () => {
           title: tr("Success Receipt"),
         }}
       />
+      <Stack.Screen
+        name="map-modal"
+        options={{
+          title: tr("Select On Map"),
+          presentation: "modal",
+        }}
+      />
     </Stack>
   );
 };

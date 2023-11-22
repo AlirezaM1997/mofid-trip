@@ -1635,4 +1635,29 @@ export const messages = {
     fa_ir: "ظرفیت تور اجباری است",
     en_us: "Capacity is required",
   },
+  "place of movement": {
+    ar: "مكان الحركة",
+    fa_ir: "مکان حرکت",
+    en_us: "Place of movement",
+  },
+  "to easily find the origin and start the tour, set the address and the map of the place of departure.": {
+    ar: "للعثور بسهولة على نقطة الانطلاق وبدء الجولة، قم بتعيين العنوان وخريطة مكان المغادرة.",
+    fa_ir: "برای راحت پیدا کردن مبدا و شروع تور ، آدرس و نقشه مکان حرکت را قرارر دهید.",
+    en_us: "To easily find the origin and start the tour, set the address and the map of the place of departure.",
+  },
+  "address is required": {
+    ar: "العنوان مطلوب",
+    fa_ir: "آدرس اجباری است",
+    en_us: "Address is required",
+  },
+  "select on map": {
+    ar: "حدد على الخريطة",
+    fa_ir: "انتخاب از روی نقشه",
+    en_us: "Select On Map",
+  },
+  "submit": {
+    ar: "يُقدِّم",
+    fa_ir: "ثبت",
+    en_us: "Submit",
+  },
 };
