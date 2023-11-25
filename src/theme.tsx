@@ -140,12 +140,18 @@ export const theme = isRtl =>
           <LinearGradient {...props} colors={["#e1e8ee", "#d1d8de", "#e1e8ee"]} />
         ),
       },
-      Chip: {
-        titleStyle: {
-          fontFamily: isRtl
-            ? "DanaNoEn"
-            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-        },
+      Chip: ({ color, ...props }, theme) => {
+        return {
+          buttonStyle: {
+            borderColor: color ? theme.colors[color] : theme.colors.primary,
+          },
+          titleStyle: {
+            color: color ? theme.colors[color] : theme.colors.primary,
+            fontFamily: isRtl
+              ? "DanaNoEn"
+              : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          },
+        };
       },
       Text: ({ bold, italic, underline, center, color, type, ...props }, theme) => {
         let style = {
@@ -473,7 +479,7 @@ export const theme = isRtl =>
           borderWidth: thickness,
           backgroundColor: "transparent",
           borderColor: theme.colors[bgColor as string] ?? theme.colors.grey1,
-          transform: vertical && "rotate(270deg)"
+          transform: vertical && "rotate(270deg)",
         },
       }),
       Badge: ({ type, color, ...props }, theme) => {

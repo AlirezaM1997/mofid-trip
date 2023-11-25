@@ -1785,4 +1785,9 @@ export const messages = {
     fa_ir: "5,000,000 تومان",
     en_us: "5,000,000 Tooman",
   },
+  'you can write and add your own tour features. note that this section is optional.': {
+    ar: "يمكنك كتابة وإضافة ميزات الجولة الخاصة بك. لاحظ أن هذا القسم اختياري.",
+    fa_ir: "شما می توانید امکانات تور خودتان را بنویسید و اضافه کنید. توجه داشته باشید این بخش اختیاری می‌باشد.",
+    en_us: "You can write and add your own tour features. Note that this section is optional.",
+  },
 };
