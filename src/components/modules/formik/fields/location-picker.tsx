@@ -17,7 +17,7 @@ const initLocation = {
 
 const markerHeight = 52
 const markerWidth = 60
-const mapHeight = 300
+const mapHeight = 200
 
 const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
   const { tr } = useTranslation();

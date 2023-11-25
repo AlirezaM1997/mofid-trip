@@ -50,7 +50,6 @@ const Screen = () => {
             </Button>,
             <Button onPress={handleSubmit}>{tr("Next")}</Button>,
           ]}>
-          {console.log(values)}
           <TourCreateTab index={2} />
           <WhiteSpace size={20} />
           <Container>
@@ -73,15 +72,12 @@ const Screen = () => {
               errorMessage={touched.address && errors.address}
             />
             <Field name="lat" component={LocationPicker} />
+            <WhiteSpace />
           </Container>
         </BottomButtonLayout>
       )}
     </Formik>
   );
 };
-
-const styles = StyleSheet.create({
-  formikContainer: {},
-});
 
 export default Screen;

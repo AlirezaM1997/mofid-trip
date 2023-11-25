@@ -1740,4 +1740,14 @@ export const messages = {
     fa_ir: "ثبت",
     en_us: "Submit",
   },
+  "the tour is one day": {
+    ar: "الجولة يوم واحد",
+    fa_ir: "تور یک روزه است",
+    en_us: "The tour is one day",
+  },
+  "start": {
+    ar: "يبدأ",
+    fa_ir: "شروع",
+    en_us: "Start",
+  },
 };
