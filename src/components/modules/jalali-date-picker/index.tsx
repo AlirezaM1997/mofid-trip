@@ -50,14 +50,7 @@ const JalaliDatePicker = ({ onDayPress, markedDays, ...props }: JalaliDatePicker
           renderItem={({ index, item }) => {
             const sameDay = markedDays && markedDays.length && findSameDay(item.date);
             return sameDay ? (
-              <Day
-                key={index}
-                {...sameDay}
-                onPress={e => {
-                  _onDayPress(item.date);
-                  sameDay.onPress(item.date);
-                }}
-              />
+              <Day key={index} {...sameDay} onPress={e => _onDayPress(item.date)} />
             ) : (
               <Day key={index} date={item.date} onPress={e => _onDayPress(item.date)} />
             );
