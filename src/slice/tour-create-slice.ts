@@ -1,8 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import {
-  TourAddInputType,
-  TourGenderEnum,
-} from "@src/gql/generated";
+import { TourAddInputType, TourGenderEnum } from "@src/gql/generated";
 
 type initialStateType = {
   data: TourAddInputType;
@@ -10,8 +7,8 @@ type initialStateType = {
 
 const initialState: initialStateType = {
   data: {
-    title: "",
-    description: "",
+    title: null,
+    description: null,
     capacity: {
       capacityNumber: 0,
       gender: TourGenderEnum.Both,

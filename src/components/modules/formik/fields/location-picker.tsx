@@ -15,9 +15,9 @@ const initLocation = {
   lng: 51.3347,
 };
 
-const markerHeight = 52
-const markerWidth = 60
-const mapHeight = 200
+const markerHeight = 52;
+const markerWidth = 60;
+const mapHeight = 200;
 
 const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
   const { tr } = useTranslation();
@@ -27,6 +27,7 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
   const isMapOpened = useRef<boolean>();
 
   const handlePress = () => {
+    form.setFieldTouched(field.name, true);
     router.push({
       pathname: "/map-modal",
       params: {
@@ -50,26 +51,29 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
   }, []);
 
   return (
-    <Pressable style={styles.container(theme)} onPress={handlePress}>
-      {form.values.lat && form.values.lng ? (
-        <>
-          <Image
-            containerStyle={{
-              width: 52,
-              height: 60,
-              position: "absolute",
-              zIndex: 1,
-              top: mapHeight / 2 - markerWidth / 2 - 40,
-              left: WIDTH / 2 - markerHeight / 2 - 26,
-            }}
-            source={require("@assets/image/marker.png")}
-          />
-          <Map lat={form.values.lat} lng={form.values.lng} style={styles.map} />
-        </>
-      ) : (
-        <Text>{tr("Select On Map")}</Text>
-      )}
-    </Pressable>
+    <>
+      <Pressable style={styles.container(theme)} onPress={handlePress}>
+        {form.values.lat && form.values.lng ? (
+          <>
+            <Image
+              containerStyle={{
+                width: 52,
+                height: 60,
+                position: "absolute",
+                zIndex: 1,
+                top: mapHeight / 2 - markerWidth / 2 - 40,
+                left: WIDTH / 2 - markerHeight / 2 - 26,
+              }}
+              source={require("@assets/image/marker.png")}
+            />
+            <Map lat={form.values.lat} lng={form.values.lng} style={styles.map} />
+          </>
+        ) : (
+          <Text>{tr("Select On Map")}</Text>
+        )}
+      </Pressable>
+      <Text>ERROR</Text>
+    </>
   );
 };
 const styles = StyleSheet.create({

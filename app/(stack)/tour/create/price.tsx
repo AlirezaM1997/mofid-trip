@@ -1,12 +1,17 @@
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
+import BottomButtonLayout from "@components/layout/bottom-button";
 import TourCreateTab from "@modules/virtual-tabs";
 import { Divider } from "@rneui/base";
+import { Button, Chip } from "@rneui/themed";
 import { Badge, Input, Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { router } from "expo-router";
+import { Formik } from "formik";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import * as Yup from "yup";
 
 const Screen = () => {
   const { tr } = useTranslation();
@@ -37,57 +42,100 @@ const Screen = () => {
     setValue2(value);
   };
 
+  const validationSchema = Yup.object().shape({
+    price: Yup.number()
+      .positive(tr("Only positive numbers acceptable"))
+      .typeError(tr("Only number acceptable"))
+      .required(tr("Required")),
+    discount: Yup.number()
+      .positive()
+      .max(100, tr("Discount can not be greater than 100"))
+      .required(),
+  });
+
+  const initialValues = {
+    price: null,
+    discount: null,
+  };
+
+  const handleSubmit = () => {};
+
   return (
-    <>
-      <TourCreateTab index={5} />
-      <WhiteSpace />
-      <Container>
-        <Text heading2 bold>
-          {tr("Tour Price")}
-        </Text>
-        <Text>
-          {tr(
-            "Choose or write the cost of your tour, you can give a discount to the original price."
-          )}
-        </Text>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}>
+      {({ values, errors, touched, handleChange, handleBlur, setFieldValue }) => (
+        <BottomButtonLayout
+          buttons={[
+            <Button onPress={handleSubmit}>{tr("next")}</Button>,
+            <Button type="outline" onPress={() => router.back()}>
+              {tr("back")}
+            </Button>,
+          ]}>
+          <TourCreateTab index={5} />
+          <WhiteSpace />
+          <Container>
+            <Text heading2 bold>
+              {tr("Tour Price")}
+            </Text>
+            <Text>
+              {tr(
+                "Choose or write the cost of your tour, you can give a discount to the original price."
+              )}
+            </Text>
 
-        <WhiteSpace />
+            <WhiteSpace />
 
-        <Input value={value} label={tr("Price") + " (" + tr("Tooman") + ")"} />
-        <View style={styles.badgeRow}>
-          {recommendedPrices.map(recom => (
-            <Badge
-              value={recom.title}
-              color="grey2"
-              type="solid"
-              containerStyle={styles.badgeContainerStyle}
-              badgeStyle={styles.badgeStyle}
-              onPress={() => handlePress(recom.value)}
+            <Input
+              value={values.price?.toString()}
+              label={tr("Price") + " (" + tr("Tooman") + ")"}
+              onChangeText={handleChange("price")}
+              onBlur={handleBlur("price")}
+              errorMessage={touched.price && (errors.price as string)}
             />
-          ))}
-        </View>
-      </Container>
+            <View style={styles.badgeRow}>
+              {recommendedPrices.map(recom => (
+                <Badge
+                  value={recom.title}
+                  color="grey2"
+                  type="solid"
+                  containerStyle={styles.badgeContainerStyle}
+                  badgeStyle={styles.badgeStyle}
+                  onPress={() => setFieldValue("price", recom.value)}
+                />
+              ))}
+            </View>
+          </Container>
 
-      <WhiteSpace />
-      <Divider />
-      <WhiteSpace />
+          <WhiteSpace />
+          <Divider />
+          <WhiteSpace />
 
-      <Container>
-        <Input value={value2} label={tr("Discount") + " (%)"} />
-        <View style={styles.badgeRow}>
-          {recommendedDiscounts.map(recom => (
-            <Badge
-              value={recom.title}
-              color="grey2"
-              type="solid"
-              containerStyle={styles.badgeContainerStyle}
-              badgeStyle={styles.badgeStyle}
-              onPress={() => handlePress2(recom.value)}
+          <Container>
+            <Input
+              value={values.discount}
+              onChangeText={handleChange("discount")}
+              onBlur={handleBlur("discount")}
+              errorMessage={touched.discount && (errors.discount as string)}
+              label={tr("Discount") + " (%)"}
             />
-          ))}
-        </View>
-      </Container>
-    </>
+            <View style={styles.badgeRow}>
+              {recommendedDiscounts.map(recom => (
+                <Badge
+                  value={recom.title}
+                  color="grey2"
+                  type="solid"
+                  containerStyle={styles.badgeContainerStyle}
+                  badgeStyle={styles.badgeStyle2}
+                  onPress={() => setFieldValue("discount", recom.value)}
+                />
+              ))}
+            </View>
+          </Container>
+        </BottomButtonLayout>
+      )}
+    </Formik>
   );
 };
 
@@ -103,9 +151,22 @@ const styles = StyleSheet.create({
   badgeContainerStyle: {
     alignItems: "center",
     justifyContent: "center",
+    padding: 0,
+    flexGrow: 1,
   },
   badgeStyle: {
-    width: WIDTH / 2 - 50,
+    minWidth: WIDTH / 2 - 85,
+    paddingHorizontal: 0,
+    alignSelf: "center",
+    flexGrow: 1,
+    width: "100%",
+  },
+  badgeStyle2: {
+    minWidth: WIDTH / 4 - 100,
+    paddingHorizontal: 0,
+    alignSelf: "center",
+    flexGrow: 1,
+    width: "100%",
   },
 });
 

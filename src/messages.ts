@@ -1760,14 +1760,15 @@ export const messages = {
     fa_ir: "تور یک روزه است",
     en_us: "The tour is one day",
   },
-  "start": {
+  start: {
     ar: "يبدأ",
     fa_ir: "شروع",
     en_us: "Start",
   },
   "choose or write the cost of your tour, you can give a discount to the original price.": {
     ar: "اختر أو اكتب تكلفة جولتك، يمكنك إعطاء خصم على السعر الأصلي.",
-    fa_ir: "هزینه تور خودتان را انتخاب کنید یا بنویسید ، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
+    fa_ir:
+      "هزینه تور خودتان را انتخاب کنید یا بنویسید ، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
     en_us: "Choose or write the cost of your tour, you can give a discount to the original price.",
   },
   Free: {
@@ -1775,34 +1776,60 @@ export const messages = {
     fa_ir: "رایگان",
     en_us: "Free",
   },
-  '100,000 tooman': {
+  "100,000 tooman": {
     ar: "100,000 تومان",
     fa_ir: "100,000 تومان",
     en_us: "100,000 Tooman",
   },
-  '500,000 tooman': {
+  "500,000 tooman": {
     ar: "500,000 تومان",
     fa_ir: "500,000 تومان",
     en_us: "500,000 Tooman",
   },
-  '1,000,000 tooman': {
+  "1,000,000 tooman": {
     ar: "1,000,000 تومان",
     fa_ir: "1,000,000 تومان",
     en_us: "1,000,000 Tooman",
   },
-  '2,000,000 tooman': {
+  "2,000,000 tooman": {
     ar: "2,000,000 تومان",
     fa_ir: "2,000,000 تومان",
     en_us: "1,000,000 Tooman",
   },
-  '5,000,000 tooman': {
+  "5,000,000 tooman": {
     ar: "5,000,000 تومان",
     fa_ir: "5,000,000 تومان",
     en_us: "5,000,000 Tooman",
   },
-  'you can write and add your own tour features. note that this section is optional.': {
+  "you can write and add your own tour features. note that this section is optional.": {
     ar: "يمكنك كتابة وإضافة ميزات الجولة الخاصة بك. لاحظ أن هذا القسم اختياري.",
-    fa_ir: "شما می توانید امکانات تور خودتان را بنویسید و اضافه کنید. توجه داشته باشید این بخش اختیاری می‌باشد.",
+    fa_ir:
+      "شما می توانید امکانات تور خودتان را بنویسید و اضافه کنید. توجه داشته باشید این بخش اختیاری می‌باشد.",
     en_us: "You can write and add your own tour features. Note that this section is optional.",
+  },
+  "discount can not be greater than 100": {
+    ar: "الخصم لا يمكن أن يكون أكثر من 100%",
+    fa_ir: "تخفیف نمی‌تواند از ۱۰۰ درصد بیشتر باشد",
+    en_us: "Discount can not be greater than 100",
+  },
+  "only number acceptable": {
+    ar: "الرقم الوحيد هو المقبول",
+    fa_ir: "فقط عدد قابل قبول است",
+    en_us: "Only number acceptable",
+  },
+  "only positive numbers acceptable": {
+    ar: "الأرقام الإيجابية فقط هي المقبولة",
+    fa_ir: "فقط اعداد مثبت قابل قبول است",
+    en_us: "Only positive numbers acceptable",
+  },
+  required: {
+    ar: "انها ضرورة",
+    fa_ir: "اجباری است",
+    en_us: "Required",
+  },
+  'select location on the map': {
+    ar: "حدد الموقع على الخريطة",
+    fa_ir: "لوکیشن را از روی نقشه انتخاب کنید",
+    en_us: "Select location on the map",
   },
 };

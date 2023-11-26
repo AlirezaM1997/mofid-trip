@@ -6,6 +6,8 @@ import { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
 import useTranslation from "@src/hooks/translation";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import { router } from "expo-router";
 
 const Screen = () => {
   const { tr } = useTranslation();
@@ -27,8 +29,16 @@ const Screen = () => {
     setChipsTitle(newChipsTitles);
   };
 
+  const handleSubmit = () => {};
+
   return (
-    <>
+    <BottomButtonLayout
+      buttons={[
+        <Button onPress={handleSubmit}>{tr("next")}</Button>,
+        <Button type="outline" onPress={() => router.back()}>
+          {tr("back")}
+        </Button>,
+      ]}>
       <TourCreateTab index={7} />
 
       <WhiteSpace />
@@ -70,7 +80,7 @@ const Screen = () => {
           ))}
         </View>
       </Container>
-    </>
+    </BottomButtonLayout>
   );
 };
 
