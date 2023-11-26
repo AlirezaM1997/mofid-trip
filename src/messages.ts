@@ -34,6 +34,19 @@ export const messages = {
     fa_ir: "بازگشت",
     en_us: "Back",
   },
+  "you can upload images related to your tour, please note that the size of the images should be less than 3 mb. note that this section is optional.":
+    {
+      ar: "يمكنك تحميل الصور المتعلقة بجولتك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
+      fa_ir:
+        "شما می توانید تصاویر مرتبط با تور خودتان را بارگذاری کنید ، توجه داشته باشید حجم تصاویر کمتر از ۳ مگابایت باشد. توجه داشته باشید این بخش اختیاری می‌باشد.",
+      en_us:
+        "You can upload images related to your tour, please note that the size of the images should be less than 3 MB. Note that this section is optional.",
+    },
+  "pictures related to the tour": {
+    ar: "صور متعلقة بالرحلة",
+    fa_ir: "تصاویر مربوط به تور",
+    en_us: "Pictures related to the tour",
+  },
   "it is a one-day tour": {
     ar: "إنها جولة ليوم واحد",
     fa_ir: "تور یک روزه می‌باشد",
@@ -1008,15 +1021,15 @@ export const messages = {
     fa_ir: "فاکتور نهایی",
     en_us: "Final invoice",
   },
+  "upload image": {
+    ar: "تحميل الصورة ",
+    fa_ir: "بارگذاری تصویر ",
+    en_us: "Upload original image",
+  },
   "your request canceled": {
     ar: "تم إلغاء طلبك بنجاح",
     fa_ir: "درخواست شما لغو شد",
     en_us: "your request canceled",
-  },
-  cancel: {
-    ar: "يلغي",
-    fa_ir: "لغو",
-    en_us: "cancel",
   },
   "no, cancle": {
     ar: "لا، إلغاء",

@@ -45,11 +45,6 @@ const Screen = () => {
   const [markedDays, setMarkedDays] = useState([]);
   const { data } = useSelector((state: RootState) => state.tourCreateSlice);
 
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required(tr("Title is required")),
-    description: Yup.string(),
-  });
-
   const handleSubmit = values => {
     dispatch(
       setTourCreateData({
@@ -122,13 +117,9 @@ const Screen = () => {
         : "";
     }
   };
-  
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {({ values, setFieldValue }) => (
         <BottomButtonLayout
           buttons={[
@@ -146,15 +137,14 @@ const Screen = () => {
           <JalaliDatePicker onDayPress={handleDayPress} markedDays={markedDays} />
 
           <Container>
-            <View style={styles.row}>
-              <View style={styles.nestedRow}>
-                <Text>{tr("Start")}</Text>
-                <Text>{getFirstDayFormatted()}</Text>
-              </View>
-              <View style={styles.nestedRow}>
-                <Text>{tr("End")}</Text>
-                <Text>{getLastDayFormatted()}</Text>
-              </View>
+            <View style={styles.showDateContainer}>
+              <Text body2>
+                {tr("beginning")}: {getFirstDayFormatted()}
+              </Text>
+              <Divider vertical={true} style={styles.divider} />
+              <Text body2>
+                {tr("end")}: {getLastDayFormatted()}
+              </Text>
             </View>
           </Container>
 
@@ -193,7 +183,7 @@ const styles = StyleSheet.create({
   header: { gap: 6 },
   container: { gap: 24 },
   divider: { width: 50 },
-  showDateContainer: { flexDirection: "row", justifyContent: "space-evenly" },
+  showDateContainer: { flexDirection: "row", justifyContent: "space-evenly", marginTop: 25 },
   startDayButtonStyle: theme => ({
     backgroundColor: theme.colors.black,
     borderTopLeftRadius: 0,
@@ -248,7 +238,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     flexGrow: 1,
-    gap: 10
+    gap: 10,
   },
 });
 
