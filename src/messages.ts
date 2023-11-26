@@ -832,7 +832,7 @@ export const messages = {
   "return to home": {
     ar: "العودة إلى المنزل",
     fa_ir: "بازگشت به خانه",
-    en_us: "return to home",
+    en_us: "Return to home",
   },
   amount: {
     ar: "كمية",
@@ -1836,5 +1836,10 @@ export const messages = {
     ar: "إنشاء مضيف",
     fa_ir: "ایجاد هاست",
     en_us: "Create Host",
+  },
+  'add facilities': {
+    ar: "أضف المرافق",
+    fa_ir: "امکانات خود را اضافه کنید",
+    en_us: "Add facilities",
   },
 };

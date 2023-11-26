@@ -55,7 +55,7 @@ const JalaliDatePicker = ({ onDayPress, markedDays, ...props }: JalaliDatePicker
               <Day key={index} date={item.date} onPress={e => _onDayPress(item.date)} />
             );
           }}
-          keyExtractor={i => i.data}
+          keyExtractor={i => i.dayOfMonth ?? Math.random()}
         />
       </View>
     </CalendarContext.Provider>

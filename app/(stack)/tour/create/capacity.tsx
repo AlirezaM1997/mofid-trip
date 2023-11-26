@@ -7,6 +7,7 @@ import { TourGenderEnum } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { setTourCreateData } from "@src/slice/tour-create-slice";
 import { RootState } from "@src/store";
+import { router } from "expo-router";
 import { Formik } from "formik";
 import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,10 +48,10 @@ const Screen = () => {
       {({ handleChange, handleBlur, setFieldValue, handleSubmit, values, touched, errors }) => (
         <BottomButtonLayout
           buttons={[
-            <Button type="outline" color="secondary" disabled>
-              {tr("Cancel")}
-            </Button>,
             <Button onPress={handleSubmit}>{tr("Next")}</Button>,
+            <Button type="outline" color="secondary" onPress={() => router.back()}>
+              {tr("back")}
+            </Button>,
           ]}>
           <TourCreateTab index={1} />
           <WhiteSpace size={20} />
