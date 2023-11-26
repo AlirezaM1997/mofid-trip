@@ -140,12 +140,18 @@ export const theme = isRtl =>
           <LinearGradient {...props} colors={["#e1e8ee", "#d1d8de", "#e1e8ee"]} />
         ),
       },
-      Chip: {
-        titleStyle: {
-          fontFamily: isRtl
-            ? "DanaNoEn"
-            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-        },
+      Chip: ({ color, ...props }, theme) => {
+        return {
+          buttonStyle: {
+            borderColor: color ? theme.colors[color] : theme.colors.primary,
+            padding: 0,
+          },
+          titleStyle: {
+            color: color ? theme.colors[color] : theme.colors.primary,
+            fontFamily:
+              'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          },
+        };
       },
       Text: ({ bold, italic, underline, center, color, type, ...props }, theme) => {
         let style = {
@@ -473,7 +479,7 @@ export const theme = isRtl =>
           borderWidth: thickness,
           backgroundColor: "transparent",
           borderColor: theme.colors[bgColor as string] ?? theme.colors.grey1,
-          transform: vertical && "rotate(270deg)"
+          transform: vertical && "rotate(270deg)",
         },
       }),
       Badge: ({ type, color, ...props }, theme) => {
@@ -484,7 +490,7 @@ export const theme = isRtl =>
           },
           badgeStyle: {
             padding: 12,
-            borderRadius: 20,
+            borderRadius: 8,
             alignSelf: "flex-end",
           },
           textStyle: Platform.select({
@@ -501,15 +507,18 @@ export const theme = isRtl =>
           }),
         };
         const c = theme.colors[color as string] ?? theme.colors.primary;
+        const color2 = theme.colors[color as string];
         if (type === "solid") {
           styles = {
             ...styles,
             badgeStyle: {
               ...styles.badgeStyle,
-              backgroundColor: c,
+              backgroundColor: c + "66",
+              borderColor: c,
             },
             textStyle: {
               ...styles.textStyle,
+              color: theme.colors.grey4,
             },
           };
         } else if (type === "outline") {
@@ -522,7 +531,7 @@ export const theme = isRtl =>
             },
             textStyle: {
               ...styles.textStyle,
-              color: c,
+              color: theme.colors.grey4,
             },
           };
         } else if (type === "clear") {

@@ -1,10 +1,64 @@
+import { Field, Formik } from "formik";
+import { RootState } from "@src/store";
+import Container from "@atoms/container";
+import { Button, Text } from "@rneui/themed";
+import { StyleSheet, View } from "react-native";
 import TourCreateTab from "@modules/virtual-tabs";
-import { Text } from "@rneui/themed";
+import useTranslation from "@src/hooks/translation";
+import CustomImagePicker from "@modules/image-picker";
+import { useDispatch, useSelector } from "react-redux";
+import { setTourCreateData } from "@src/slice/tour-create-slice";
+import BottomButtonLayout from "@components/layout/bottom-button";
+
+const initialValues = {
+  images: { main: "", first: "", sec: "", third: "", fourth: "", fifth: "", sixth: "" },
+};
 
 const Screen = () => {
-  return <>
-  <TourCreateTab index={6} />
-  </>
+  const { tr } = useTranslation();
+  const dispatch = useDispatch();
+  const { data } = useSelector((state: RootState) => state.tourCreateSlice);
+
+  const handleSubmit = values => {
+    dispatch(
+      setTourCreateData({
+        ...data,
+        ...values,
+      })
+    );
+  };
+
+  return (
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      {({ values }) => (
+        <BottomButtonLayout
+          buttons={[<Button>{tr("next")}</Button>, <Button type="outline">{tr("back")}</Button>]}>
+          <Container style={styles.container}>
+            <TourCreateTab index={6} />
+            <View style={styles.header}>
+              <Text heading2>{tr("pictures related to the tour")}</Text>
+              <Text caption type="grey2">
+                {tr(
+                  "you can upload images related to your tour, please note that the size of the images should be less than 3 mb. note that this section is optional."
+                )}
+              </Text>
+            </View>
+
+            <Field name="images" component={CustomImagePicker} />
+          </Container>
+        </BottomButtonLayout>
+      )}
+    </Formik>
+  );
 };
+
+const styles = StyleSheet.create({
+  header: {
+    gap: 8,
+  },
+  container: {
+    gap: 24,
+  },
+});
 
 export default Screen;

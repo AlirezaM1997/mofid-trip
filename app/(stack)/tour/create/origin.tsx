@@ -19,13 +19,15 @@ const Screen = () => {
   const { data } = useSelector((state: RootState) => state.tourCreateSlice);
 
   const initialValues = {
-    address: "",
-    lat: 0,
-    lng: 0,
+    address: data.origin.address,
+    lat: data.origin.lat,
+    lng: data.origin.lng,
   };
 
   const validationSchema = Yup.object().shape({
     address: Yup.string().required(tr("Address is required")),
+    lat: Yup.string().required(tr("Select location on the map")),
+    lng: Yup.string().required(tr("Select location on the map")),
   });
 
   const handleSubmit = values => {
@@ -50,7 +52,6 @@ const Screen = () => {
             </Button>,
             <Button onPress={handleSubmit}>{tr("Next")}</Button>,
           ]}>
-          {console.log(values)}
           <TourCreateTab index={2} />
           <WhiteSpace size={20} />
           <Container>
@@ -73,15 +74,13 @@ const Screen = () => {
               errorMessage={touched.address && errors.address}
             />
             <Field name="lat" component={LocationPicker} />
+            {console.log(touched , errors)}
+            <WhiteSpace />
           </Container>
         </BottomButtonLayout>
       )}
     </Formik>
   );
 };
-
-const styles = StyleSheet.create({
-  formikContainer: {},
-});
 
 export default Screen;

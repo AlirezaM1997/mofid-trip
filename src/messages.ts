@@ -34,6 +34,19 @@ export const messages = {
     fa_ir: "بازگشت",
     en_us: "Back",
   },
+  "you can upload images related to your tour, please note that the size of the images should be less than 3 mb. note that this section is optional.":
+    {
+      ar: "يمكنك تحميل الصور المتعلقة بجولتك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
+      fa_ir:
+        "شما می توانید تصاویر مرتبط با تور خودتان را بارگذاری کنید ، توجه داشته باشید حجم تصاویر کمتر از ۳ مگابایت باشد. توجه داشته باشید این بخش اختیاری می‌باشد.",
+      en_us:
+        "You can upload images related to your tour, please note that the size of the images should be less than 3 MB. Note that this section is optional.",
+    },
+  "pictures related to the tour": {
+    ar: "صور متعلقة بالرحلة",
+    fa_ir: "تصاویر مربوط به تور",
+    en_us: "Pictures related to the tour",
+  },
   "it is a one-day tour": {
     ar: "إنها جولة ليوم واحد",
     fa_ir: "تور یک روزه می‌باشد",
@@ -267,7 +280,7 @@ export const messages = {
   },
   price: {
     ar: "سعر",
-    fa_ir: "قیمت",
+    fa_ir: "هزینه",
     en_us: "Price",
   },
   "privacy and ownership: all intellectual and material rights belong to mofidtrip. safeguarding the privacy of individuals and organizations is a top priority for mofidtrip. the mofidtrip platform is committed to employing the best methods, in collaboration with a specialized technical team, to ensure the protection of individuals' and organizations' secrets. furthermore, efforts are made to develop the necessary technology to enhance the security of your use of the platform.":
@@ -1008,15 +1021,15 @@ export const messages = {
     fa_ir: "فاکتور نهایی",
     en_us: "Final invoice",
   },
+  "upload image": {
+    ar: "تحميل الصورة ",
+    fa_ir: "بارگذاری تصویر ",
+    en_us: "Upload original image",
+  },
   "your request canceled": {
     ar: "تم إلغاء طلبك بنجاح",
     fa_ir: "درخواست شما لغو شد",
     en_us: "your request canceled",
-  },
-  cancel: {
-    ar: "يلغي",
-    fa_ir: "لغو",
-    en_us: "cancel",
   },
   "no, cancle": {
     ar: "لا، إلغاء",
@@ -1720,11 +1733,13 @@ export const messages = {
     fa_ir: "مکان حرکت",
     en_us: "Place of movement",
   },
-  "to easily find the origin and start the tour, set the address and the map of the place of departure.": {
-    ar: "للعثور بسهولة على نقطة الانطلاق وبدء الجولة، قم بتعيين العنوان وخريطة مكان المغادرة.",
-    fa_ir: "برای راحت پیدا کردن مبدا و شروع تور ، آدرس و نقشه مکان حرکت را قرارر دهید.",
-    en_us: "To easily find the origin and start the tour, set the address and the map of the place of departure.",
-  },
+  "to easily find the origin and start the tour, set the address and the map of the place of departure.":
+    {
+      ar: "للعثور بسهولة على نقطة الانطلاق وبدء الجولة، قم بتعيين العنوان وخريطة مكان المغادرة.",
+      fa_ir: "برای راحت پیدا کردن مبدا و شروع تور ، آدرس و نقشه مکان حرکت را قرارر دهید.",
+      en_us:
+        "To easily find the origin and start the tour, set the address and the map of the place of departure.",
+    },
   "address is required": {
     ar: "العنوان مطلوب",
     fa_ir: "آدرس اجباری است",
@@ -1735,9 +1750,91 @@ export const messages = {
     fa_ir: "انتخاب از روی نقشه",
     en_us: "Select On Map",
   },
-  "submit": {
+  submit: {
     ar: "يُقدِّم",
     fa_ir: "ثبت",
     en_us: "Submit",
+  },
+  "the tour is one day": {
+    ar: "الجولة يوم واحد",
+    fa_ir: "تور یک روزه است",
+    en_us: "The tour is one day",
+  },
+  start: {
+    ar: "يبدأ",
+    fa_ir: "شروع",
+    en_us: "Start",
+  },
+  "choose or write the cost of your tour, you can give a discount to the original price.": {
+    ar: "اختر أو اكتب تكلفة جولتك، يمكنك إعطاء خصم على السعر الأصلي.",
+    fa_ir:
+      "هزینه تور خودتان را انتخاب کنید یا بنویسید ، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
+    en_us: "Choose or write the cost of your tour, you can give a discount to the original price.",
+  },
+  Free: {
+    ar: "مجاني",
+    fa_ir: "رایگان",
+    en_us: "Free",
+  },
+  "100,000 tooman": {
+    ar: "100,000 تومان",
+    fa_ir: "100,000 تومان",
+    en_us: "100,000 Tooman",
+  },
+  "500,000 tooman": {
+    ar: "500,000 تومان",
+    fa_ir: "500,000 تومان",
+    en_us: "500,000 Tooman",
+  },
+  "1,000,000 tooman": {
+    ar: "1,000,000 تومان",
+    fa_ir: "1,000,000 تومان",
+    en_us: "1,000,000 Tooman",
+  },
+  "2,000,000 tooman": {
+    ar: "2,000,000 تومان",
+    fa_ir: "2,000,000 تومان",
+    en_us: "1,000,000 Tooman",
+  },
+  "5,000,000 tooman": {
+    ar: "5,000,000 تومان",
+    fa_ir: "5,000,000 تومان",
+    en_us: "5,000,000 Tooman",
+  },
+  "you can write and add your own tour features. note that this section is optional.": {
+    ar: "يمكنك كتابة وإضافة ميزات الجولة الخاصة بك. لاحظ أن هذا القسم اختياري.",
+    fa_ir:
+      "شما می توانید امکانات تور خودتان را بنویسید و اضافه کنید. توجه داشته باشید این بخش اختیاری می‌باشد.",
+    en_us: "You can write and add your own tour features. Note that this section is optional.",
+  },
+  "discount can not be greater than 100": {
+    ar: "الخصم لا يمكن أن يكون أكثر من 100%",
+    fa_ir: "تخفیف نمی‌تواند از ۱۰۰ درصد بیشتر باشد",
+    en_us: "Discount can not be greater than 100",
+  },
+  "only number acceptable": {
+    ar: "الرقم الوحيد هو المقبول",
+    fa_ir: "فقط عدد قابل قبول است",
+    en_us: "Only number acceptable",
+  },
+  "only positive numbers acceptable": {
+    ar: "الأرقام الإيجابية فقط هي المقبولة",
+    fa_ir: "فقط اعداد مثبت قابل قبول است",
+    en_us: "Only positive numbers acceptable",
+  },
+  required: {
+    ar: "انها ضرورة",
+    fa_ir: "اجباری است",
+    en_us: "Required",
+  },
+  'select location on the map': {
+    ar: "حدد الموقع على الخريطة",
+    fa_ir: "لوکیشن را از روی نقشه انتخاب کنید",
+    en_us: "Select location on the map",
+  },
+  'create host': {
+    ar: "إنشاء مضيف",
+    fa_ir: "ایجاد هاست",
+    en_us: "Create Host",
   },
 };
