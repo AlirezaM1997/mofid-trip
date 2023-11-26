@@ -9,6 +9,7 @@ import CustomImagePicker from "@modules/image-picker";
 import { useDispatch, useSelector } from "react-redux";
 import { setTourCreateData } from "@src/slice/tour-create-slice";
 import BottomButtonLayout from "@components/layout/bottom-button";
+import { router } from "expo-router";
 
 const initialValues = {
   images: { main: "", first: "", sec: "", third: "", fourth: "", fifth: "", sixth: "" },
@@ -32,11 +33,16 @@ const Screen = () => {
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {({ values }) => (
         <BottomButtonLayout
-          buttons={[<Button>{tr("next")}</Button>, <Button type="outline">{tr("back")}</Button>]}>
+          buttons={[
+            <Button onPress={handleSubmit}>{tr("Next")}</Button>,
+            <Button type="outline" color="secondary" onPress={() => router.back()}>
+              {tr("back")}
+            </Button>,
+          ]}>
+          <TourCreateTab index={6} />
           <Container style={styles.container}>
-            <TourCreateTab index={6} />
             <View style={styles.header}>
-              <Text heading2>{tr("pictures related to the tour")}</Text>
+              <Text heading2>{tr("Pictures related to the tour")}</Text>
               <Text caption type="grey2">
                 {tr(
                   "you can upload images related to your tour, please note that the size of the images should be less than 3 mb. note that this section is optional."

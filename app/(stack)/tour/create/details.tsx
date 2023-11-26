@@ -43,10 +43,10 @@ const Screen = () => {
       {({ values, errors, touched, handleChange, handleBlur, setFieldValue, handleSubmit }) => (
         <BottomButtonLayout
           buttons={[
-            <Button type="outline" color="secondary" disabled>
-              {tr("Cancel")}
-            </Button>,
             <Button onPress={handleSubmit}>{tr("Next")}</Button>,
+            <Button type="outline" color="secondary" onPress={() => router.back()}>
+              {tr("back")}
+            </Button>,
           ]}>
           <TourCreateTab index={0} />
           <WhiteSpace size={20} />

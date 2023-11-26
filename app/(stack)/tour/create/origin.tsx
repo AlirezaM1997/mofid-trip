@@ -19,9 +19,9 @@ const Screen = () => {
   const { data } = useSelector((state: RootState) => state.tourCreateSlice);
 
   const initialValues = {
-    address: "",
-    lat: 0,
-    lng: 0,
+    address: data.origin.address,
+    lat: data.origin.lat,
+    lng: data.origin.lng,
   };
 
   const validationSchema = Yup.object().shape({
@@ -47,10 +47,10 @@ const Screen = () => {
       {({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
         <BottomButtonLayout
           buttons={[
-            <Button type="outline" color="secondary" disabled>
-              {tr("Cancel")}
-            </Button>,
             <Button onPress={handleSubmit}>{tr("Next")}</Button>,
+            <Button type="outline" color="secondary" onPress={() => router.back()}>
+              {tr("back")}
+            </Button>,
           ]}>
           <TourCreateTab index={2} />
           <WhiteSpace size={20} />
@@ -74,6 +74,7 @@ const Screen = () => {
               errorMessage={touched.address && errors.address}
             />
             <Field name="lat" component={LocationPicker} />
+            {console.log(touched , errors)}
             <WhiteSpace />
           </Container>
         </BottomButtonLayout>

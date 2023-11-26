@@ -123,10 +123,10 @@ const Screen = () => {
       {({ values, setFieldValue }) => (
         <BottomButtonLayout
           buttons={[
-            <Button type="outline" onPress={() => router.back()}>
+            <Button onPress={handleSubmit}>{tr("Next")}</Button>,
+            <Button type="outline" color="secondary" onPress={() => router.back()}>
               {tr("back")}
             </Button>,
-            <Button onPress={handleSubmit}>{tr("next")}</Button>,
           ]}>
           <TourCreateTab index={4} />
 
