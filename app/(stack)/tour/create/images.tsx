@@ -10,7 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTourCreateData } from "@src/slice/tour-create-slice";
 import BottomButtonLayout from "@components/layout/bottom-button";
 
-const initialValues = { images: [] };
+const initialValues = {
+  images: { main: "", first: "", sec: "", third: "", fourth: "", fifth: "", sixth: "" },
+};
 
 const Screen = () => {
   const { tr } = useTranslation();

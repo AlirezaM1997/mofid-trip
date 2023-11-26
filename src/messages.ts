@@ -280,7 +280,7 @@ export const messages = {
   },
   price: {
     ar: "سعر",
-    fa_ir: "قیمت",
+    fa_ir: "هزینه",
     en_us: "Price",
   },
   "privacy and ownership: all intellectual and material rights belong to mofidtrip. safeguarding the privacy of individuals and organizations is a top priority for mofidtrip. the mofidtrip platform is committed to employing the best methods, in collaboration with a specialized technical team, to ensure the protection of individuals' and organizations' secrets. furthermore, efforts are made to develop the necessary technology to enhance the security of your use of the platform.":
@@ -1754,5 +1754,55 @@ export const messages = {
     ar: "يُقدِّم",
     fa_ir: "ثبت",
     en_us: "Submit",
+  },
+  "the tour is one day": {
+    ar: "الجولة يوم واحد",
+    fa_ir: "تور یک روزه است",
+    en_us: "The tour is one day",
+  },
+  "start": {
+    ar: "يبدأ",
+    fa_ir: "شروع",
+    en_us: "Start",
+  },
+  "choose or write the cost of your tour, you can give a discount to the original price.": {
+    ar: "اختر أو اكتب تكلفة جولتك، يمكنك إعطاء خصم على السعر الأصلي.",
+    fa_ir: "هزینه تور خودتان را انتخاب کنید یا بنویسید ، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
+    en_us: "Choose or write the cost of your tour, you can give a discount to the original price.",
+  },
+  Free: {
+    ar: "مجاني",
+    fa_ir: "رایگان",
+    en_us: "Free",
+  },
+  '100,000 tooman': {
+    ar: "100,000 تومان",
+    fa_ir: "100,000 تومان",
+    en_us: "100,000 Tooman",
+  },
+  '500,000 tooman': {
+    ar: "500,000 تومان",
+    fa_ir: "500,000 تومان",
+    en_us: "500,000 Tooman",
+  },
+  '1,000,000 tooman': {
+    ar: "1,000,000 تومان",
+    fa_ir: "1,000,000 تومان",
+    en_us: "1,000,000 Tooman",
+  },
+  '2,000,000 tooman': {
+    ar: "2,000,000 تومان",
+    fa_ir: "2,000,000 تومان",
+    en_us: "1,000,000 Tooman",
+  },
+  '5,000,000 tooman': {
+    ar: "5,000,000 تومان",
+    fa_ir: "5,000,000 تومان",
+    en_us: "5,000,000 Tooman",
+  },
+  'you can write and add your own tour features. note that this section is optional.': {
+    ar: "يمكنك كتابة وإضافة ميزات الجولة الخاصة بك. لاحظ أن هذا القسم اختياري.",
+    fa_ir: "شما می توانید امکانات تور خودتان را بنویسید و اضافه کنید. توجه داشته باشید این بخش اختیاری می‌باشد.",
+    en_us: "You can write and add your own tour features. Note that this section is optional.",
   },
 };
