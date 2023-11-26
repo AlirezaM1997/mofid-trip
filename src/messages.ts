@@ -1819,4 +1819,9 @@ export const messages = {
     fa_ir: "لوکیشن را از روی نقشه انتخاب کنید",
     en_us: "Select location on the map",
   },
+  'create host': {
+    ar: "إنشاء مضيف",
+    fa_ir: "ایجاد هاست",
+    en_us: "Create Host",
+  },
 };

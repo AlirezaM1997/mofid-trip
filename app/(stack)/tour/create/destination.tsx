@@ -19,17 +19,19 @@ const Screen = () => {
   const { data } = useSelector((state: RootState) => state.tourCreateSlice);
 
   const initialValues = {
-    province: "",
-    city: "",
-    address: "",
-    lat: 0,
-    lng: 0,
+    province: data.destination.province,
+    city: data.destination.city,
+    address: data.destination.address,
+    lat: data.destination.lat,
+    lng: data.destination.lng,
   };
 
   const validationSchema = Yup.object().shape({
     province: Yup.string().required(tr("Province is required")),
     city: Yup.string().required(tr("City is required")),
     address: Yup.string().required(tr("Address is required")),
+    lat: Yup.string().required(tr("Select location on the map")),
+    lng: Yup.string().required(tr("Select location on the map")),
   });
 
   const handleSubmit = values => {

@@ -1,12 +1,13 @@
 import { Image, Text, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { FieldProps, useFormikContext } from "formik";
 import { useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, ViewProps } from "react-native";
 import Map from "@modules/map";
 import { View } from "react-native";
 import { WIDTH } from "@src/constants";
+import { useIsFocused } from "@react-navigation/native";
 
 export type LocationPickerProps = FieldProps & ViewProps;
 
@@ -25,6 +26,7 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
   const { lat, lng } = useLocalSearchParams();
   const { setFieldValue } = useFormikContext();
   const isMapOpened = useRef<boolean>();
+  const isFocused = useIsFocused();
 
   const handlePress = () => {
     form.setFieldTouched(field.name, true);
@@ -41,14 +43,20 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
   useEffect(() => {
     if (lat && lng) {
       if (
-        Math.abs(parseFloat(lat as string) - initLocation.lat) > 0.001 &&
-        Math.abs(parseFloat(lng as string) - initLocation.lng) > 0.001
+        Math.abs(parseFloat(lat as string) - initLocation.lat) > 0.0001 &&
+        Math.abs(parseFloat(lng as string) - initLocation.lng) > 0.0001
       ) {
         setFieldValue("lat", parseFloat(lat as string));
         setFieldValue("lng", parseFloat(lng as string));
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (isFocused && isMapOpened.current && !lat && !lng) {
+      form.setFieldError(field.name, tr("Select location on the map"));
+    }
+  }, [isFocused]);
 
   return (
     <>
@@ -72,7 +80,7 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
           <Text>{tr("Select On Map")}</Text>
         )}
       </Pressable>
-      <Text>ERROR</Text>
+      <Text type="error">{form.errors[field.name]}</Text>
     </>
   );
 };

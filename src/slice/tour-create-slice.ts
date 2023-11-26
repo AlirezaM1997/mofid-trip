@@ -16,13 +16,13 @@ const initialState: initialStateType = {
     },
     origin: {
       address: "",
-      lat: 0,
-      lng: 0,
+      lat: null,
+      lng: null,
     },
     destination: {
       address: "",
-      lat: 0,
-      lng: 0,
+      lat: null,
+      lng: null,
       province: "",
       city: "",
     },
