@@ -26,6 +26,8 @@ const Screen = () => {
 
   const validationSchema = Yup.object().shape({
     address: Yup.string().required(tr("Address is required")),
+    lat: Yup.string().required(tr("Select location on the map")),
+    lng: Yup.string().required(tr("Select location on the map")),
   });
 
   const handleSubmit = values => {

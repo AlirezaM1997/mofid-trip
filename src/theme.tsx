@@ -144,12 +144,12 @@ export const theme = isRtl =>
         return {
           buttonStyle: {
             borderColor: color ? theme.colors[color] : theme.colors.primary,
+            padding: 0,
           },
           titleStyle: {
             color: color ? theme.colors[color] : theme.colors.primary,
-            fontFamily: isRtl
-              ? "DanaNoEn"
-              : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            fontFamily:
+              'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
           },
         };
       },
@@ -490,7 +490,7 @@ export const theme = isRtl =>
           },
           badgeStyle: {
             padding: 12,
-            borderRadius: 20,
+            borderRadius: 8,
             alignSelf: "flex-end",
           },
           textStyle: Platform.select({
@@ -507,15 +507,18 @@ export const theme = isRtl =>
           }),
         };
         const c = theme.colors[color as string] ?? theme.colors.primary;
+        const color2 = theme.colors[color as string];
         if (type === "solid") {
           styles = {
             ...styles,
             badgeStyle: {
               ...styles.badgeStyle,
-              backgroundColor: c,
+              backgroundColor: c + "66",
+              borderColor: c,
             },
             textStyle: {
               ...styles.textStyle,
+              color: theme.colors.grey4,
             },
           };
         } else if (type === "outline") {
@@ -528,7 +531,7 @@ export const theme = isRtl =>
             },
             textStyle: {
               ...styles.textStyle,
-              color: c,
+              color: theme.colors.grey4,
             },
           };
         } else if (type === "clear") {
