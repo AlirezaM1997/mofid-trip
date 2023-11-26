@@ -27,9 +27,9 @@ const Screen = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    province: Yup.string().required(tr("Province is required")),
-    city: Yup.string().required(tr("City is required")),
-    address: Yup.string().required(tr("Address is required")),
+    province: Yup.string().required(tr("province is required")),
+    city: Yup.string().required(tr("city is required")),
+    address: Yup.string().required(tr("address is required")),
   });
 
   const handleSubmit = values => {

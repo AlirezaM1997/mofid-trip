@@ -7,6 +7,7 @@ import { TourGenderEnum } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { setTourCreateData } from "@src/slice/tour-create-slice";
 import { RootState } from "@src/store";
+import { router } from "expo-router";
 import { Formik } from "formik";
 import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,6 +38,7 @@ const Screen = () => {
         capacity: values,
       })
     );
+    router.push("/tour/create/origin");
   };
 
   return (

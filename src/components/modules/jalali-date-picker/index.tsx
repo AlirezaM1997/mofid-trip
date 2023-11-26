@@ -43,10 +43,10 @@ const JalaliDatePicker = ({ onDayPress, markedDays, ...props }: JalaliDatePicker
             styles.contentContainerStyle,
             styles.calendarContentContainerStyle,
           ]}
-          // columnWrapperStyle={styles.calendarColumnWrapperStyle}
-          horizontal={false}
           numColumns={7}
+          horizontal={false}
           data={daysArray}
+          columnWrapperStyle={styles.calendarColumnWrapperStyle}
           renderItem={({ index, item }) => {
             const sameDay = markedDays && markedDays.length && findSameDay(item.date);
             return sameDay ? (

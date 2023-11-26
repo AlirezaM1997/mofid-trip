@@ -123,10 +123,10 @@ const Screen = () => {
       {({ values, setFieldValue }) => (
         <BottomButtonLayout
           buttons={[
-            <Button onPress={handleSubmit}>{tr("next")}</Button>,
             <Button type="outline" onPress={() => router.back()}>
               {tr("back")}
             </Button>,
+            <Button onPress={handleSubmit}>{tr("next")}</Button>,
           ]}>
           <TourCreateTab index={4} />
 
@@ -147,32 +147,6 @@ const Screen = () => {
               </Text>
             </View>
           </Container>
-
-          {/* <Container style={styles.container}>
-            <View style={styles.header}>
-              <Text heading2>{tr("tour date")}</Text>
-              <Text caption type="grey2">
-                {tr("choose a start and end date for the tour")}
-              </Text>
-            </View>
-
-            <Field
-              name="calender"
-              markedDates={markedDates}
-              component={CustomCalender}
-              setMarkedDates={setMarkedDates}
-            />
-
-            <View style={styles.showDateContainer}>
-              <Text body2>
-                {tr("beginning")}: {Object.keys(markedDates)[0]}
-              </Text>
-              <Divider vertical={true} style={styles.divider} />
-              <Text body2>
-                {tr("end")}: {Object.keys(markedDates)[Object.keys(markedDates).length - 1]}
-              </Text>
-            </View>
-          </Container> */}
         </BottomButtonLayout>
       )}
     </Formik>

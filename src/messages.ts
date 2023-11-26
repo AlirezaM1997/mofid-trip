@@ -1728,6 +1728,16 @@ export const messages = {
     fa_ir: "ظرفیت تور اجباری است",
     en_us: "Capacity is required",
   },
+  "city is required": {
+    ar: "المدينة مطلوبة",
+    fa_ir: "شهر اجباری است",
+    en_us: "City is required",
+  },
+  "province is required": {
+    ar: "المحافظة مطلوبة",
+    fa_ir: "استان اجباری است",
+    en_us: "Province is required",
+  },
   "place of movement": {
     ar: "مكان الحركة",
     fa_ir: "مکان حرکت",
@@ -1827,7 +1837,7 @@ export const messages = {
     fa_ir: "اجباری است",
     en_us: "Required",
   },
-  'select location on the map': {
+  "select location on the map": {
     ar: "حدد الموقع على الخريطة",
     fa_ir: "لوکیشن را از روی نقشه انتخاب کنید",
     en_us: "Select location on the map",
