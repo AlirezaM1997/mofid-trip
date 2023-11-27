@@ -83,6 +83,7 @@ export const theme = isRtl =>
       error: "#E73F3F",
       warning: "#FEC30D",
       success: "#66CD6A",
+      info:"#4A8BEB"
     },
     darkColors: {
       primary: "blue",

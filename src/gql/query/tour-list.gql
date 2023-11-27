@@ -10,8 +10,13 @@ query tourList($search: String, $filter: TourFilterType, $page: PageType!) {
         id
         user {
           id
+          fullname
           phoneNumber
+          avatarS3 {
+            small
+          }
         }
+
         tourSet {
           id
           title
