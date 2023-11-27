@@ -4,10 +4,11 @@ import BottomButtonLayout from "@components/layout/bottom-button";
 import TourCreateTab from "@modules/virtual-tabs";
 import { Button, Input, Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { setTourCreateData } from "@src/slice/tour-create-slice";
+import { initialState, setTourCreateData } from "@src/slice/tour-create-slice";
 import { RootState } from "@src/store";
 import { router } from "expo-router";
 import { Formik } from "formik";
+import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
@@ -32,7 +33,18 @@ const Screen = () => {
         ...values,
       })
     );
+    router.push({
+      pathname: "tour/create/capacity",
+      params: {
+        x: -95,
+      },
+    });
   };
+
+  useEffect(() => {
+    // reset the redux
+    return () => dispatch(setTourCreateData(initialState.data));
+  }, []);
 
   return (
     <Formik

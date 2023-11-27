@@ -43,7 +43,7 @@ const Screen = () => {
   const { localizeNumber } = useLocalizedNumberFormat();
   const [markedDays, setMarkedDays] = useState([]);
   const { data } = useSelector((state: RootState) => state.tourCreateSlice);
-  const initialValues = { startTime: null, endTime: null };
+  const initialValues = { startTime: data.startTime, endTime: data.endTime };
   const validationSchema = Yup.object().shape({
     startTime: Yup.date().required(tr("Required")),
     endTime: Yup.date().required(tr("Required")),
@@ -56,6 +56,12 @@ const Screen = () => {
         ...values,
       })
     );
+    router.push({
+      pathname: "tour/create/price",
+      params: {
+        x: -95 * 6,
+      },
+    });
   };
 
   const handleCheck = () => setChecked(!checked);
@@ -154,7 +160,7 @@ const Screen = () => {
           </Container>
 
           <JalaliDatePicker onDayPress={handleDayPress} markedDays={markedDays} />
-          {console.log("v", values, touched, errors)}
+
           <Container>
             <View style={styles.showDateContainer}>
               <View style={styles.timeContainer}>
@@ -177,31 +183,6 @@ const Screen = () => {
             </View>
           </Container>
 
-          {/* <Container style={styles.container}>
-            <View style={styles.header}>
-              <Text heading2>{tr("tour date")}</Text>
-              <Text caption type="grey2">
-                {tr("choose a start and end date for the tour")}
-              </Text>
-            </View>
-
-            <Field
-              name="calender"
-              markedDates={markedDates}
-              component={CustomCalender}
-              setMarkedDates={setMarkedDates}
-            />
-
-            <View style={styles.showDateContainer}>
-              <Text body2>
-                {tr("beginning")}: {Object.keys(markedDates)[0]}
-              </Text>
-              <Divider vertical={true} style={styles.divider} />
-              <Text body2>
-                {tr("end")}: {Object.keys(markedDates)[Object.keys(markedDates).length - 1]}
-              </Text>
-            </View>
-          </Container> */}
         </BottomButtonLayout>
       )}
     </Formik>

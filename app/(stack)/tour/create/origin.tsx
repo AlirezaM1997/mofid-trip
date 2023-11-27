@@ -9,7 +9,6 @@ import { setTourCreateData } from "@src/slice/tour-create-slice";
 import { RootState } from "@src/store";
 import { router } from "expo-router";
 import { Field, Formik } from "formik";
-import { Pressable, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
@@ -37,6 +36,12 @@ const Screen = () => {
         origin: values,
       })
     );
+    router.push({
+      pathname: "tour/create/destination",
+      params: {
+        x: -95 * 3,
+      },
+    });
   };
 
   return (
@@ -74,7 +79,6 @@ const Screen = () => {
               errorMessage={touched.address && errors.address}
             />
             <Field name="lat" component={LocationPicker} />
-            {console.log(touched , errors)}
             <WhiteSpace />
           </Container>
         </BottomButtonLayout>

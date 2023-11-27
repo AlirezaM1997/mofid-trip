@@ -1,9 +1,11 @@
 import { Tab, Text, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
+import { RootState } from "@src/store";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
 
 type TourCreateTabProps = {
   index: number;
@@ -15,6 +17,9 @@ const TourCreateTab = ({ index }: TourCreateTabProps) => {
   const scrollRef = useRef(null);
   const { x: initialX } = useLocalSearchParams();
   const x = useRef(0);
+
+  const data = useSelector((state: RootState) => state.tourCreateSlice.data)
+  console.log('dd', data)
 
   useEffect(() => {
     if (scrollRef.current && initialX) {

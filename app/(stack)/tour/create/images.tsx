@@ -27,11 +27,17 @@ const Screen = () => {
         ...values,
       })
     );
+    router.push({
+      pathname: "tour/create/facilities",
+      params: {
+        x: -95 * 8,
+      },
+    });
   };
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ values }) => (
+      {({ values, handleSubmit }) => (
         <BottomButtonLayout
           buttons={[
             <Button onPress={handleSubmit}>{tr("Next")}</Button>,

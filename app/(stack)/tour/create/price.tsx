@@ -7,17 +7,21 @@ import { Button, Chip } from "@rneui/themed";
 import { Badge, Input, Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { setTourCreateData } from "@src/slice/tour-create-slice";
+import { RootState } from "@src/store";
 import { router } from "expo-router";
 import { Formik } from "formik";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
 const Screen = () => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const [value, setValue] = useState(0);
-  const [value2, setValue2] = useState(0);
+  const dispatch = useDispatch()
+  const { data } = useSelector((state: RootState) => state.tourCreateSlice);
+
   const recommendedPrices = [
     { title: localizeNumber(tr("Free")), value: 0 },
     { title: localizeNumber(tr("100,000 Tooman")), value: 100000 },
@@ -34,14 +38,6 @@ const Screen = () => {
     { title: localizeNumber("50%"), value: 50 },
   ];
 
-  const handlePress = value => {
-    setValue(value);
-  };
-
-  const handlePress2 = value => {
-    setValue2(value);
-  };
-
   const validationSchema = Yup.object().shape({
     price: Yup.number()
       .positive(tr("Only positive numbers acceptable"))
@@ -54,18 +50,31 @@ const Screen = () => {
   });
 
   const initialValues = {
-    price: null,
-    discount: null,
+    price: data.price,
+    discount: data.discount,
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = (values) => {
+    dispatch(
+      setTourCreateData({
+        ...data,
+        ...values,
+      })
+    );
+    router.push({
+      pathname: "tour/create/images",
+      params: {
+        x: -95 * 7,
+      },
+    });
+  };
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}>
-      {({ values, errors, touched, handleChange, handleBlur, setFieldValue }) => (
+      {({ values, errors, touched, handleChange, handleBlur, setFieldValue, handleSubmit }) => (
         <BottomButtonLayout
           buttons={[
             <Button onPress={handleSubmit}>{tr("Next")}</Button>,

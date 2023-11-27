@@ -5,7 +5,7 @@ type initialStateType = {
   data: TourAddInputType;
 };
 
-const initialState: initialStateType = {
+export const initialState: initialStateType = {
   data: {
     title: null,
     description: null,
