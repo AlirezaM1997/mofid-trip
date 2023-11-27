@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RootState } from "@src/store";
 import { Field, Formik } from "formik";
 import Container from "@atoms/container";
@@ -34,16 +34,20 @@ const getDaysBetween = (startDay, endDay) => {
   return betweenDays;
 };
 
-const initialValues = { startDate: "", endDate: "" };
-
 const Screen = () => {
   const { theme } = useTheme();
   const dispatch = useDispatch();
   const { tr } = useTranslation();
+  const formikInnerRef = useRef();
   const [checked, setChecked] = useState<boolean>(false);
   const { localizeNumber } = useLocalizedNumberFormat();
   const [markedDays, setMarkedDays] = useState([]);
   const { data } = useSelector((state: RootState) => state.tourCreateSlice);
+  const initialValues = { startTime: null, endTime: null };
+  const validationSchema = Yup.object().shape({
+    startTime: Yup.date().required(tr("Required")),
+    endTime: Yup.date().required(tr("Required")),
+  });
 
   const handleSubmit = values => {
     dispatch(
@@ -57,10 +61,16 @@ const Screen = () => {
   const handleCheck = () => setChecked(!checked);
 
   const handleDayPress = dayPressed => {
+    const form = formikInnerRef.current;
+    const date = moment(dayPressed).format("YYYY-MM-DD");
     if (checked) {
+      form.setFieldTouched("startTime", true);
+      form.setFieldTouched("endTime", true);
+      form.setFieldValue("startTime", date);
+      form.setFieldValue("endTime", date);
       setMarkedDays([
         {
-          date: moment(dayPressed).format("YYYY-MM-DD"),
+          date: date,
           buttonStyle: styles.startAndEndDayButtonStyle(theme),
           containerStyle: styles.startAndEndDayContainerStyle(theme),
           titleStyle: styles.startAndEndDayTitleStyle(theme),
@@ -68,15 +78,19 @@ const Screen = () => {
       ]);
     } else {
       if (markedDays.length === 0) {
+        form.setFieldTouched("startTime", true);
+        form.setFieldValue("startTime", date);
         setMarkedDays([
           {
-            date: moment(dayPressed).format("YYYY-MM-DD"),
+            date: date,
             buttonStyle: styles.startDayButtonStyle(theme),
             containerStyle: styles.startDayContainerStyle(theme),
             titleStyle: styles.startDayTitleStyle(theme),
           },
         ]);
       } else if (markedDays.length === 1) {
+        form.setFieldTouched("endTime", true);
+        form.setFieldValue("endTime", date);
         const startDay = markedDays[0].date;
         const middleDays = getDaysBetween(moment(startDay), moment(dayPressed));
         setMarkedDays([
@@ -88,13 +102,14 @@ const Screen = () => {
             titleStyle: styles.middleDayTitleStyle(theme),
           })),
           {
-            date: moment(dayPressed).format("YYYY-MM-DD"),
+            date: date,
             buttonStyle: styles.endDayButtonStyle(theme),
             containerStyle: styles.endDayContainerStyle(theme),
             titleStyle: styles.endDayTitleStyle(theme),
           },
         ]);
       } else {
+        form.resetForm();
         setMarkedDays([]);
       }
     }
@@ -119,8 +134,12 @@ const Screen = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ values, setFieldValue }) => (
+    <Formik
+      innerRef={formikInnerRef}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}>
+      {({ values, errors, touched, handleSubmit }) => (
         <BottomButtonLayout
           buttons={[
             <Button onPress={handleSubmit}>{tr("Next")}</Button>,
@@ -135,16 +154,26 @@ const Screen = () => {
           </Container>
 
           <JalaliDatePicker onDayPress={handleDayPress} markedDays={markedDays} />
-
+          {console.log("v", values, touched, errors)}
           <Container>
             <View style={styles.showDateContainer}>
-              <Text body2>
-                {tr("beginning")}: {getFirstDayFormatted()}
-              </Text>
+              <View style={styles.timeContainer}>
+                <Text body2 type={touched.startTime && errors.startTime ? "error" : "secondary"}>
+                  {tr("beginning")}: {getFirstDayFormatted()}
+                </Text>
+                {touched.startTime && errors.startTime && (
+                  <Text type="error">{touched.startTime && (errors.startTime as string)}</Text>
+                )}
+              </View>
               <Divider vertical={true} style={styles.divider} />
-              <Text body2>
-                {tr("end")}: {getLastDayFormatted()}
-              </Text>
+              <View style={styles.timeContainer}>
+                <Text body2 type={touched.endTime && errors.endTime ? "error" : "secondary"}>
+                  {tr("end")}: {getLastDayFormatted()}
+                </Text>
+                {touched.endTime && errors.endTime && (
+                  <Text type="error">{touched.endTime && (errors.endTime as string)}</Text>
+                )}
+              </View>
             </View>
           </Container>
 
@@ -239,6 +268,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexGrow: 1,
     gap: 10,
+  },
+  timeContainer: {
+    display: "flex",
   },
 });
 
