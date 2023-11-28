@@ -5,7 +5,7 @@ type initialStateType = {
   data: TourAddInputType;
 };
 
-const initialState: initialStateType = {
+export const initialState: initialStateType = {
   data: {
     title: null,
     description: null,
@@ -26,8 +26,8 @@ const initialState: initialStateType = {
       province: "",
       city: "",
     },
-    startTime: "",
-    endTime: "",
+    startTime: null,
+    endTime: null,
     price: 0,
     discount: 0,
     base64Images: [],

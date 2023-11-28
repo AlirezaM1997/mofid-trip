@@ -74,13 +74,14 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
               }}
               source={require("@assets/image/marker.png")}
             />
-            <Map lat={form.values.lat} lng={form.values.lng} style={styles.map} />
+            {/* TODO: this line raise an error on each second time rendering */}
+            {/* <Map lat={form.values.lat} lng={form.values.lng} style={styles.map} /> */}
           </>
         ) : (
           <Text>{tr("Select On Map")}</Text>
         )}
       </Pressable>
-      <Text type="error">{form.errors[field.name]}</Text>
+      <Text type="error">{form.touched[field.name] && form.errors[field.name]}</Text>
     </>
   );
 };

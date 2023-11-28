@@ -20,9 +20,9 @@ const Screen = () => {
   const { data } = useSelector((state: RootState) => state.tourCreateSlice);
 
   const initialValues = {
-    capacityNumber: null,
-    gender: TourGenderEnum.Both,
-    childAccept: false,
+    capacityNumber: data.capacity.capacityNumber,
+    gender: data.capacity.gender,
+    childAccept: data.capacity.childAccept,
   };
 
   const validationSchema = Yup.object().shape({
@@ -38,7 +38,12 @@ const Screen = () => {
         capacity: values,
       })
     );
-    router.push("/tour/create/origin");
+    router.push({
+      pathname: "tour/create/origin",
+      params: {
+        x: -95 * 2,
+      },
+    });
   };
 
   return (

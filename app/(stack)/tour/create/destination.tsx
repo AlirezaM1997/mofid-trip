@@ -38,9 +38,15 @@ const Screen = () => {
     dispatch(
       setTourCreateData({
         ...data,
-        origin: values,
+        destination: values,
       })
     );
+    router.push({
+      pathname: "tour/create/date",
+      params: {
+        x: -95 * 4,
+      },
+    });
   };
 
   return (
