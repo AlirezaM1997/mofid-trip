@@ -46,7 +46,7 @@ const Page: React.FC = ({ ...props }) => {
       });
       return;
     }
-    router.push(`/book-accommodation/${projectId}/step-1`);
+    router.push({ pathname: "host/create/capacity", params: { projectId, name } });
   };
 
   useEffect(() => {

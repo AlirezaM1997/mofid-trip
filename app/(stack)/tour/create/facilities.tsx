@@ -90,13 +90,18 @@ const Screen = () => {
       </BottomButtonLayout>
       <BottomSheet isVisible={isVisible}>
         <Container>
-        <ImageBackground
-          style={styles.rejectIcon}
-          imageStyle={{ resizeMode: "contain" }}
-          source={require("@assets/image/check.svg")}
-        />
-          <Text center heading2 bold>درخواست ایجاد تور شما با موفقیت ثبت شد</Text>
-          <Text center>کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.</Text>
+          <ImageBackground
+            style={styles.rejectIcon}
+            imageStyle={{ resizeMode: "contain" }}
+            source={require("@assets/image/check.svg")}
+          />
+          <Text center heading2 bold>
+            درخواست ایجاد تور شما با موفقیت ثبت شد
+          </Text>
+          <Text center>
+            کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران
+            نمایش داده شود.
+          </Text>
           <WhiteSpace />
           <ButtonRow>
             <Button color="secondary" type="outline">

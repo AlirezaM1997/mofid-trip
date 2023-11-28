@@ -263,6 +263,26 @@ export const messages = {
     fa_ir: "مسافر",
     en_us: "Person",
   },
+  "cancel and edit": {
+    ar: "إلغاء وتحرير",
+    fa_ir: "لغو و ویرایش",
+    en_us: "cancel and edit",
+  },
+  "submit request": {
+    ar: "تقديم الطلب",
+    fa_ir: "ارسال درخواست",
+    en_us: "submit request",
+  },
+  "your initial request will be approved or rejected by the tour after it is submitted": {
+    ar: "ستتم الموافقة على طلبك الأولي أو رفضه بواسطة الجولة بعد تقديمه",
+    fa_ir: "درخواست اولیه شما پس از ارسال ، توسط تور تایید یا رد خواهد شد",
+    en_us: "your initial request will be approved or rejected by the tour after it is submitted",
+  },
+  "are you sure to confirm the request?": {
+    ar: "هل أنت متأكد من تسجيل الطلب؟",
+    fa_ir: "آیا مطمئن به ثبت درخواست هستید؟",
+    en_us: "are you sure to confirm the request?",
+  },
   persons: {
     ar: "الاشخاص",
     fa_ir: "مسافران",
@@ -551,6 +571,7 @@ export const messages = {
     fa_ir: "ظرفیت را وارد کنید ( تعداد )",
     en_us: "Enter the capacity (quantity)",
   },
+
   "number of people": {
     ar: "عدد الاشخاص",
     fa_ir: "تعداد نفرات",
@@ -1468,6 +1489,12 @@ export const messages = {
     fa_ir: "تعداد مسافران",
     en_us: "Passengers Count",
   },
+
+  "confirm request": {
+    ar: "طلب التسجيل",
+    fa_ir: "ثبت درخواست",
+    en_us: "confirm request",
+  },
   "group leader information": {
     ar: "معلومات قائد المجموعة",
     fa_ir: "اطلاعات سرگروه",
@@ -1503,10 +1530,25 @@ export const messages = {
     fa_ir: "بدون آدرس",
     en_us: "No Address",
   },
+  "selective hosting": {
+    ar: "استضافة انتقائية",
+    fa_ir: "میزبانی انتخابی",
+    en_us: "Selective hosting",
+  },
+  "your registered details for initial host reservation": {
+    ar: "بياناتك المسجلة لطلب الاستضافة الأولي والحجز",
+    fa_ir: "جزئیات ثبت شده شما برای درخواست و رزرو اولیه میزبانی",
+    en_us: "your registered details for initial host reservation",
+  },
   authentication: {
     ar: "المصادقة",
     fa_ir: "احراز هویت",
     en_us: "Authentication",
+  },
+  "final details": {
+    ar: "التفاصيل النهائية",
+    fa_ir: "جزئیات نهایی",
+    en_us: "final details",
   },
   "final information": {
     ar: "المعلومات النهائية",
@@ -1693,6 +1735,11 @@ export const messages = {
     fa_ir: "لغو",
     en_us: "Cancel",
   },
+  "host reservation": {
+    ar: "حجز الاستضافة",
+    fa_ir: "رزرو میزبانی",
+    en_us: "host reservation",
+  },
   "tour title": {
     ar: "عنوان الجولة",
     fa_ir: "عنوان تور",
@@ -1842,12 +1889,12 @@ export const messages = {
     fa_ir: "لوکیشن را از روی نقشه انتخاب کنید",
     en_us: "Select location on the map",
   },
-  'create host': {
+  "create host": {
     ar: "إنشاء مضيف",
     fa_ir: "ایجاد هاست",
     en_us: "Create Host",
   },
-  'add facilities': {
+  "add facilities": {
     ar: "أضف المرافق",
     fa_ir: "امکانات خود را اضافه کنید",
     en_us: "Add facilities",

@@ -12,6 +12,7 @@ import settingDetailSlice from "@src/slice/setting-detail-slice";
 import myNGODetailSlice from "@src/slice/my-ngo-slice";
 import authSlice from "@src/slice/auth-slice";
 import tourCreateSlice from "@src/slice/tour-create-slice";
+import hostTransactionSlice from "@src/slice/host-transaction-slice";
 import * as Updates from "expo-updates";
 import { I18nManager } from "react-native";
 
@@ -20,21 +21,22 @@ export type AppDispatch = typeof store.dispatch;
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  blacklist: ['tourCreateSlice']
+  blacklist: ["tourCreateSlice"],
 };
 
 const appReducer = combineReducers({
   userSlice: userSlice,
-  tourTransactionSlice: tourTransactionSlice,
-  transactionListSlice: transactionListSlice,
-  projectSlice: projectSlice,
+  authSlice: authSlice,
   tourSlice: tourSlice,
   networkSlice: networkSlice,
+  projectSlice: projectSlice,
   navigationSlice: NavigationSlice,
-  settingDetailSlice: settingDetailSlice,
+  tourCreateSlice: tourCreateSlice,
   myNGODetailSlice: myNGODetailSlice,
-  authSlice: authSlice,
-  tourCreateSlice: tourCreateSlice
+  settingDetailSlice: settingDetailSlice,
+  hostTransactionSlice: hostTransactionSlice,
+  tourTransactionSlice: tourTransactionSlice,
+  transactionListSlice: transactionListSlice,
 });
 
 const clearAsyncStorage = async () => {

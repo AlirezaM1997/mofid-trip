@@ -38,6 +38,8 @@ query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterT
           lng
           avatarS3 {
             small
+            medium
+            large
           }
         }
       }

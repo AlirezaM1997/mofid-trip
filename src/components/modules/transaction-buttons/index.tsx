@@ -7,11 +7,11 @@ import { Feather } from "@expo/vector-icons";
 import RejectedDetails from "./rejectedDetails";
 import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { TourTransactionQueryType } from "@src/gql/generated";
+import { ProjectTransactionQueryType } from "@src/gql/generated";
 
 type PropsType = {
   purchaseHandler: () => void;
-  transaction: TourTransactionQueryType;
+  transaction: ProjectTransactionQueryType;
 };
 
 const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
@@ -30,7 +30,7 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
         type: "outline",
         color: "secondary",
         title: tr("request details"),
-        changeHandler: () => pressHandler(`/tour-transaction-detail/${transaction.id}`),
+        changeHandler: () => pressHandler(`/host-transaction-detail/${transaction.id}`),
       },
       ACCEPT: transaction.status.isActive
         ? {
@@ -50,8 +50,8 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
             type: "outline",
             color: "secondary",
             detailsBtn: false,
-            title: tr("tour details"),
-            changeHandler: () => pressHandler(`/tour/${transaction.id}`),
+            title: tr("host details"),
+            changeHandler: () => pressHandler(`/project/${transaction.project.id}`),
           }
         : {
             title: tr("pay"),
@@ -62,8 +62,8 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
         type: "outline",
         color: "secondary",
         detailsBtn: false,
-        title: tr("tour details"),
-        changeHandler: () => pressHandler(`/tour/${transaction.id}`),
+        title: tr("host details"),
+        changeHandler: () => pressHandler(`/project/${transaction.id}`),
       },
     };
 
@@ -80,7 +80,7 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
             color="secondary"
             title={tr("request details")}
             containerStyle={styles.button}
-            onPress={() => pressHandler(`/tour-transaction-detail/${transaction.id}`)}
+            onPress={() => pressHandler(`/host-transaction-detail/${transaction.id}`)}
           />
         )}
 

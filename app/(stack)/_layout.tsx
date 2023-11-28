@@ -76,6 +76,30 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="host/transaction/index"
+        options={{
+          title: tr("my requests"),
+        }}
+      />
+      <Stack.Screen
+        name="host/create/capacity"
+        options={{
+          title: tr("host reservation"),
+        }}
+      />
+      <Stack.Screen
+        name="host/create/date"
+        options={{
+          title: tr("host reservation"),
+        }}
+      />
+      <Stack.Screen
+        name="host/create/confirm-data"
+        options={{
+          title: tr("final details"),
+        }}
+      />
+      <Stack.Screen
         name="tour/create/details"
         options={{
           title: tr("Tour Details"),
