@@ -1,29 +1,29 @@
+import Map from "@modules/map";
+import moment from "jalali-moment";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import BottomButtonLayout from "@components/layout/bottom-button";
-import ImageSlider from "@modules/image-slider";
-import { BottomSheet, Button, ListItem, Text } from "@rneui/themed";
-import { AccommodationQueryType, TourPackageType } from "@src/gql/generated";
-import { getCapacity } from "@src/helper/tour";
-import useTourTable from "@src/hooks/db/tour";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
+import useTourTable from "@src/hooks/db/tour";
+import { getCapacity } from "@src/helper/tour";
+import ImageSlider from "@modules/image-slider";
 import { StyleSheet, View } from "react-native";
-import moment from "jalali-moment";
+import ContactCard from "@modules/contact-card";
+import SimilarTours from "@modules/similar-tours";
 import TourFacilities from "@modules/tour-facilities";
 import TitleWithAction from "@modules/title-with-action";
-import ContactCard from "@modules/contact-card";
-import Map from "@modules/map";
-import SimilarTours from "@modules/similar-tours";
 import useIsRtl, { formatPrice } from "@src/hooks/localization";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import { BottomSheet, Button, ListItem, Text } from "@rneui/themed";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
+import { AccommodationQueryType, TourPackageType } from "@src/gql/generated";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 export default () => {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
   const navigation = useNavigation();
-  const { tourId, name } = useLocalSearchParams();
   const { findById } = useTourTable();
+  const { tourId, name } = useLocalSearchParams();
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();
 

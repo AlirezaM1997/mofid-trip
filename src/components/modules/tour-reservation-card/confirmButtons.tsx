@@ -30,11 +30,9 @@ const ConfirmButton = ({ transaction }: PropsType) => {
         },
       },
     });
-    dispatch(setTourTransaction(transaction));
     router.push(data.tourPurchaseAdd.metadata?.url);
   };
-  
-  console.log('888', ZARINPAL_CALLBACK_URL)
+
   return <TransactionButtons transaction={transaction} purchaseHandler={purchaseHandler} />;
 };
 export default ConfirmButton;

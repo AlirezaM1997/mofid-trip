@@ -2,7 +2,8 @@ import NetInfo from "@react-native-community/netinfo";
 import { useUserDetailLazyQuery } from "@src/gql/generated";
 import { setUserDetail } from "@src/slice/user-slice";
 import { useDispatch } from "react-redux";
-import { useIsAuthenticated } from "../user";
+import { useIsAuthenticated } from "../auth";
+import customUseApolloClient from "../apollo/client";
 
 const useUserDetailTable = () => {
   const dispatch = useDispatch();

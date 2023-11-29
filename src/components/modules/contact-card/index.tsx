@@ -7,7 +7,7 @@ import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
 import { getFullName } from "@src/helper/extra";
-import { useIsAuthenticated } from "@src/hooks/user";
+import { useIsAuthenticated } from "@src/hooks/auth";
 import { BottomSheet, useTheme } from "@rneui/themed";
 import { Ionicons } from "@expo/vector-icons";
 import WhiteSpace from "@src/components/atoms/white-space";

@@ -74,7 +74,7 @@ const Page = () => {
 
   useEffect(() => {
     if (!loading && data) {
-      syncTable();
+      // syncTable();
       Toast.show({
         type: "success",
         text1: tr("Successful"),

@@ -20,7 +20,7 @@ const Item = ({ tour }: ItemPropsType) => {
         style={style.imageContainerStyle}
         imageStyle={style.imageStyle}
         source={{
-          uri: (tour?.destination as AccommodationQueryType)?.avatarS3?.[0].small,
+          uri: (tour?.destination as AccommodationQueryType)?.avatarS3?.[0]?.small,
         }}
       />
       <View style={style.cardTextContainer}>

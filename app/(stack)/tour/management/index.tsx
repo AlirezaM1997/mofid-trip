@@ -3,7 +3,7 @@ import WhiteSpace from "@atoms/white-space";
 import useMyNGOTable from "@src/hooks/db/ngo";
 import useTranslation from "@src/hooks/translation";
 import ComingSoon from "@modules/coming-soon";
-import { Badge, BottomSheet, Button, Card, useTheme } from "@rneui/themed";
+import { BottomSheet, Button, Card, Chip, useTheme } from "@rneui/themed";
 import { AccommodationQueryType } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
@@ -58,8 +58,8 @@ const TourManagement = () => {
                 <Feather name="edit" size={12} color={theme.colors.secondary} />
               </Button>
             </View>
-            <Badge
-              value={tour.statusStep}
+            <Chip
+              title={tour.statusStep}
               color={getTourRequestStatusBadgeColor(tour)}
               type="outline"
             />

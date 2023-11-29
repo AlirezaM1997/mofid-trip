@@ -13,18 +13,30 @@ type BottomButtonLayoutProps = {
   layoutStyle?: { [key: string]: string };
 };
 
-const BottomButtonLayout = ({ children, buttons, contentContainerStyle }: BottomButtonLayoutProps & ScrollViewProps) => {
+const BottomButtonLayout = ({
+  children,
+  buttons,
+  contentContainerStyle,
+}: BottomButtonLayoutProps & ScrollViewProps) => {
   const { theme } = useTheme();
 
   return (
     <>
-      <ScrollView contentContainerStyle={contentContainerStyle} style={styles.contentContainer}>{children}</ScrollView>
+      <ScrollView contentContainerStyle={contentContainerStyle} style={styles.contentContainer}>
+        {children}
+      </ScrollView>
       <Divider />
-      <View style={styles.buttonContainer(theme)}>
-        {buttons.map((b, i) => (
-          <View key={i}>{b}</View>
-        ))}
-      </View>
+      {buttons.length ? (
+        <View style={styles.buttonContainer(theme)}>
+          {buttons.map((b, i) => (
+            <View style={styles.button} key={i}>
+              {b}
+            </View>
+          ))}
+        </View>
+      ) : (
+        ""
+      )}
     </>
   );
 };
@@ -35,9 +47,16 @@ const styles = {
     height: height - 195,
   },
   buttonContainer: theme => ({
-    backgroundColor: theme.colors.white,
+    gap: 10,
     padding: 10,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: theme.colors.white,
   }),
+  button: {
+    flex: 1,
+  },
 };
 
 export default BottomButtonLayout;
