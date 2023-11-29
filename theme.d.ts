@@ -11,6 +11,10 @@ declare module "@rneui/themed" {
     type?: "date" | "text";
   }
 
+  export interface Colors {
+    info : string;
+  }
+
   export interface TextProps {
     heading1?: boolean;
     heading1Style?: TextStyle;
