@@ -21,10 +21,11 @@ const Screen = () => {
   const { data } = useSelector((state: RootState) => state.tourCreateSlice);
 
   const handleSubmit = values => {
+    const images = Object.values(values.images).filter(path => path);
     dispatch(
       setTourCreateData({
         ...data,
-        ...values,
+        base64Images: images as string[],
       })
     );
     router.push({

@@ -19,7 +19,6 @@ const TourCreateTab = ({ index }: TourCreateTabProps) => {
   const x = useRef(0);
 
   const data = useSelector((state: RootState) => state.tourCreateSlice.data)
-  console.log('dd', data)
 
   useEffect(() => {
     if (scrollRef.current && initialX) {

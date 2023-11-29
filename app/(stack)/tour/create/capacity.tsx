@@ -35,7 +35,10 @@ const Screen = () => {
     dispatch(
       setTourCreateData({
         ...data,
-        capacity: values,
+        capacity: {
+          ...values,
+          capacityNumber: parseInt(values.capacityNumber)
+        },
       })
     );
     router.push({

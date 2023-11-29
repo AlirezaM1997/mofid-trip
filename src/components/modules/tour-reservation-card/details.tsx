@@ -24,7 +24,7 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
         style={styles.image}
         source={{
           uri:
-            (transaction?.tourPackage.tour.destination as AccommodationQueryType).avatarS3[0]
+            (transaction?.tourPackage.tour.destination as AccommodationQueryType)?.avatarS3[0]
               .small || "",
         }}
         resizeMode="cover"
