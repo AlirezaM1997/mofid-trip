@@ -19,6 +19,11 @@ export const messages = {
     fa_ir: "افزودن مهمان",
     en_us: "Add Guest",
   },
+  "tour ngo": {
+    ar: "المرشدين السياحيين",
+    fa_ir: "مجری تور",
+    en_us: "tour ngo",
+  },
   "anywhere you want": {
     ar: "في أي مكان تريده",
     fa_ir: "جستجوی اقامتگاه ها",
@@ -130,10 +135,30 @@ export const messages = {
     fa_ir: "جزئیات وارد شده",
     en_us: "Entered Details",
   },
+  "more details": {
+    ar: "المزيد من التفاصيل",
+    fa_ir: "جزئیات بیشتر",
+    en_us: "More details",
+  },
+  "requests received for tours": {
+    ar: "الطلبات الواردة للجولات",
+    fa_ir: "درخواست های دریافت شده به تورها",
+    en_us: "Requests received for tours",
+  },
   factor: {
     ar: "عامل",
     fa_ir: "فاکتور",
     en_us: "Factor",
+  },
+  "apply to my tours": {
+    ar: "تنطبق على جولاتي",
+    fa_ir: "درخواست به تورهای من",
+    en_us: "Apply to my tours",
+  },
+  'all requests received from travelers who plan to travel with your tours': {
+    ar: "جميع الطلبات الواردة من المسافرين الذين يخططون للسفر مع جولاتك",
+    fa_ir: "تمامی درخواست های دریافت شده مسافرانی که قصد دارند با تورهای شما سفر کنند",
+    en_us: "All requests received from travelers who plan to travel with your toursor",
   },
   female: {
     ar: "المرأة",
