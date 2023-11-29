@@ -4,7 +4,7 @@ import * as Network from "expo-network";
 import useTranslation from "@src/hooks/translation";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import TransactionButtons from "@modules/host/transaction/buttons";
-import { ProjectTransactionQueryType, useTourPurchaseAddMutation } from "@src/gql/generated";
+import { ProjectTransactionQueryType, useProjectPurchaseAddMutation } from "@src/gql/generated";
 
 type PropsType = {
   transaction: ProjectTransactionQueryType;
@@ -12,7 +12,7 @@ type PropsType = {
 
 const ConfirmButton = ({ transaction }: PropsType) => {
   const { tr } = useTranslation();
-  const [addPurchase] = useTourPurchaseAddMutation();
+  const [addPurchase] = useProjectPurchaseAddMutation();
 
   const purchaseHandler = async () => {
     const ip = await Network.getIpAddressAsync();
@@ -20,14 +20,16 @@ const ConfirmButton = ({ transaction }: PropsType) => {
       variables: {
         data: {
           ip,
-          tourTransactionId: transaction.id,
-          price: transaction.project.price.toString() + transaction?.project?.tax?.toString(),
+          projectTransactionId: transaction.id,
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transaction.id}`,
           description: `${tr("buy")} ${transaction?.project.name}`,
+          price: transaction.project.price.toString() + transaction?.project?.tax?.toString(),
         },
       },
     });
-    router.push(data.tourPurchaseAdd.metadata?.url);
+    console.log(data.projectPurchaseAdd);
+
+    // router.push(data.projectPurchaseAdd.metadata?.url);
   };
 
   return <TransactionButtons transaction={transaction} purchaseHandler={purchaseHandler} />;

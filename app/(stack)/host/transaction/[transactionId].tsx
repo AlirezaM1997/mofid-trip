@@ -1,6 +1,6 @@
 import {
-  useTourPurchaseAddMutation,
   ProjectTransactionQueryType,
+  useProjectPurchaseAddMutation,
   useProjectTransactionDetailQuery,
 } from "@src/gql/generated";
 import { Button } from "@rneui/themed";
@@ -20,7 +20,7 @@ const TransactionDetailsScreen = () => {
   const { transactionId } = useLocalSearchParams();
   const [isVisible, setIsVisible] = useState(false);
 
-  const [addPurchase] = useTourPurchaseAddMutation();
+  const [addPurchase] = useProjectPurchaseAddMutation();
 
   const { data, loading } = useProjectTransactionDetailQuery({
     variables: { pk: transactionId as string },
@@ -41,13 +41,13 @@ const TransactionDetailsScreen = () => {
         data: {
           ip,
           price: project.price.toString(),
-          tourTransactionId: transactionId as string,
           description: `${tr("buy")} ${project?.name}`,
+          projectTransactionId: transactionId as string,
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}`,
         },
       },
     });
-    router.push(data.tourPurchaseAdd.metadata?.url);
+    router.push(data.projectPurchaseAdd.metadata?.url);
   };
 
   const bottomButton = () => {
