@@ -12,9 +12,9 @@ import { Avatar, Button, useTheme } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { useTourTransactionDetailQuery } from "@src/gql/generated";
 import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { AccommodationQueryType, useTourTransactionDetailQuery } from "@src/gql/generated";
 
 const CustomView = ({ children }) => {
   const { theme } = useTheme();
@@ -73,7 +73,10 @@ const Receipt = () => {
                 rounded
                 size={56}
                 containerStyle={{ backgroundColor: "#0003" }}
-                source={tourPackage.tour.avatarS3[0].small as ImageSourcePropType}
+                source={
+                  (tourPackage.tour.destination as AccommodationQueryType)?.avatarS3[0]
+                    .small as ImageSourcePropType
+                }
               />
               <View style={styles.swapIconContainer}>
                 <AntDesign name="swap" size={10} color="black" />

@@ -8,20 +8,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { PRIMARY_COLOR } from "@src/theme";
-import {
-  useCreateLoginMutation,
-  useUserDetailLazyQuery,
-  useUserGetTokenMutation,
-} from "@src/gql/generated";
-import { setLoginData, setUserDetail } from "@src/slice/user-slice";
+import { useCreateLoginMutation, useUserGetTokenMutation } from "@src/gql/generated";
 import { RootState } from "@src/store";
-import { NetworkStatus } from "@apollo/client";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import OtpInput from "@src/components/modules/otp-input";
 import { router, useLocalSearchParams } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import Toast from "react-native-toast-message";
-import useMyNGOTable from "@src/hooks/db/ngo";
+import { setLoginData } from "@src/slice/auth-slice";
 
 const SMSVerificationScreen = () => {
   const { tr } = useTranslation();
@@ -30,25 +24,11 @@ const SMSVerificationScreen = () => {
   const { phone } = useLocalSearchParams();
   const [canRequestCode, setCanRequestCode] = useState(false);
   const { redirectToScreenAfterLogin } = useSelector((state: RootState) => state.navigationSlice);
-  const { loginData } = useSelector((state: RootState) => state.userSlice);
   const [login, { loading, data, error }] = useCreateLoginMutation();
-  const { syncTable: syncTableMyNGOTable } = useMyNGOTable();
   const [
     userCheckSmsVerificationCode,
     { loading: loadingChecking, data: dataChecking, error: errorChecking },
   ] = useUserGetTokenMutation();
-  const [
-    _,
-    {
-      loading: loadingUserDetail,
-      data: dataUserDetail,
-      error: errorUserDetail,
-      refetch,
-      networkStatus,
-    },
-  ] = useUserDetailLazyQuery({
-    notifyOnNetworkStatusChange: true,
-  });
 
   const handleCountDownTimerOnEnd = () => {
     setCanRequestCode(true);
@@ -87,6 +67,7 @@ const SMSVerificationScreen = () => {
     if (!loadingChecking && dataChecking) {
       if (dataChecking.userGetToken.statusCode === 200) {
         dispatch(setLoginData(dataChecking.userGetToken));
+        router.push(redirectToScreenAfterLogin ? redirectToScreenAfterLogin : "/");
       } else {
         Toast.show({
           type: "error",
@@ -98,21 +79,6 @@ const SMSVerificationScreen = () => {
   }, [loadingChecking, dataChecking]);
 
   useEffect(() => {
-    if (loginData?.token) refetch();
-  }, [loginData?.token]);
-
-  useEffect(() => {
-    if (networkStatus === NetworkStatus.ready && dataUserDetail) {
-      dispatch(setUserDetail(dataUserDetail.userDetail));
-      if (redirectToScreenAfterLogin) {
-        router.push(redirectToScreenAfterLogin);
-      } else {
-        router.push("/");
-      }
-    }
-  }, [networkStatus, dataUserDetail]);
-
-  useEffect(() => {
     if (!loading && data && data.createLogin.status === "OK") {
       setCanRequestCode(false);
     }
@@ -120,7 +86,7 @@ const SMSVerificationScreen = () => {
 
   return (
     <>
-      {loadingChecking || (networkStatus === NetworkStatus.loading && <LoadingIndicator />)}
+      {loadingChecking && <LoadingIndicator />}
       <View style={style.container}>
         {canRequestCode ? (
           <Text>Try resend code again</Text>

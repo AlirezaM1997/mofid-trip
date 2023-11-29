@@ -32,7 +32,7 @@ query NGODetail($pk: ID!) {
       requestFrom
       tax
       description
-      status
+      statusStep
       createdTime
       capacity {
         id

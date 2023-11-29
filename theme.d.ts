@@ -11,6 +11,10 @@ declare module "@rneui/themed" {
     type?: "date" | "text";
   }
 
+  export interface Colors {
+    info : string;
+  }
+
   export interface TextProps {
     heading1?: boolean;
     heading1Style?: TextStyle;
@@ -50,9 +54,10 @@ declare module "@rneui/themed" {
     color?: ButtonProps["color"];
     type?: ButtonProps["type"];
   }
-  
+
   export interface DividerProps {
     thickness?: number;
+    vertical?: boolean;
     bgColor?: keyof Colors;
   }
 

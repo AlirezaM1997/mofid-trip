@@ -1,8 +1,10 @@
 import { createTheme } from "@rneui/themed";
 import { DefaultTheme } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Platform } from "react-native";
+import { Platform, Pressable, PressableProps } from "react-native";
 import { WIDTH } from "./constants";
+import { View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 export const PRIMARY_COLOR = "#FF4332";
 export const SECONDARY_COLOR = "#101010";
@@ -82,6 +84,7 @@ export const theme = isRtl =>
       error: "#E73F3F",
       warning: "#FEC30D",
       success: "#66CD6A",
+      info:"#4A8BEB"
     },
     darkColors: {
       primary: "blue",
@@ -121,6 +124,10 @@ export const theme = isRtl =>
           fontWeight: "400",
         },
       },
+      ListItemCheckBox: (props, theme) => ({
+        checkedIcon: <Ionicons name="md-checkbox" size={24} color={theme.colors.primary} />,
+        uncheckedIcon: <Ionicons name="square-outline" size={24} color={theme.colors.black} />,
+      }),
       Image: {
         placeholderStyle: {
           display: "none",
@@ -134,12 +141,18 @@ export const theme = isRtl =>
           <LinearGradient {...props} colors={["#e1e8ee", "#d1d8de", "#e1e8ee"]} />
         ),
       },
-      Chip: {
-        titleStyle: {
-          fontFamily: isRtl
-            ? "DanaNoEn"
-            : '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-        },
+      Chip: ({ color, ...props }, theme) => {
+        return {
+          buttonStyle: {
+            borderColor: color ? theme.colors[color] : theme.colors.primary,
+            padding: 0,
+          },
+          titleStyle: {
+            color: color ? theme.colors[color] : theme.colors.primary,
+            fontFamily:
+              'DanaNoEn, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+          },
+        };
       },
       Text: ({ bold, italic, underline, center, color, type, ...props }, theme) => {
         let style = {
@@ -334,9 +347,16 @@ export const theme = isRtl =>
           margin: 0,
         },
       },
-      CheckBox: {
-        // com
+      CheckBox: (props, theme) => ({
+        Component: ({ children, ...props }: PressableProps) => (
+          <View style={{ marginHorizontal: -5 }}>
+            <Pressable {...props} style={[props.style, { margin: 0, padding: 0 }]}>
+              {children}
+            </Pressable>
+          </View>
+        ),
         textStyle: {
+          color: theme.colors.grey3,
           ...Platform.select({
             web: {
               fontFamily:
@@ -351,7 +371,9 @@ export const theme = isRtl =>
           }),
           fontWeight: "400",
         },
-      },
+        checkedIcon: <Ionicons name="md-checkbox" size={24} color={theme.colors.primary} />,
+        uncheckedIcon: <Ionicons name="square-outline" size={24} color={theme.colors.black} />,
+      }),
       SearchBar: {
         containerStyle: {
           backgroundColor: "#fff",
@@ -453,11 +475,12 @@ export const theme = isRtl =>
       CardDivider: (props, theme) => ({
         color: theme.colors.grey0,
       }),
-      Divider: ({ thickness, bgColor, style, ...props }, theme) => ({
+      Divider: ({ thickness, vertical, bgColor, style, ...props }, theme) => ({
         style: {
           borderWidth: thickness,
-          borderColor: theme.colors[bgColor as string] ?? theme.colors.grey1,
           backgroundColor: "transparent",
+          borderColor: theme.colors[bgColor as string] ?? theme.colors.grey1,
+          transform: vertical && "rotate(270deg)",
         },
       }),
       Badge: ({ type, color, ...props }, theme) => {
@@ -468,7 +491,7 @@ export const theme = isRtl =>
           },
           badgeStyle: {
             padding: 12,
-            borderRadius: 20,
+            borderRadius: 8,
             alignSelf: "flex-end",
           },
           textStyle: Platform.select({
@@ -485,15 +508,18 @@ export const theme = isRtl =>
           }),
         };
         const c = theme.colors[color as string] ?? theme.colors.primary;
+        const color2 = theme.colors[color as string];
         if (type === "solid") {
           styles = {
             ...styles,
             badgeStyle: {
               ...styles.badgeStyle,
-              backgroundColor: c,
+              backgroundColor: c + "66",
+              borderColor: c,
             },
             textStyle: {
               ...styles.textStyle,
+              color: theme.colors.grey4,
             },
           };
         } else if (type === "outline") {
@@ -506,7 +532,7 @@ export const theme = isRtl =>
             },
             textStyle: {
               ...styles.textStyle,
-              color: c,
+              color: theme.colors.grey4,
             },
           };
         } else if (type === "clear") {

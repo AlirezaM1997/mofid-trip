@@ -6,6 +6,7 @@ import NetInfo from "@react-native-community/netinfo";
 import { setSettingDetail } from "@src/slice/setting-detail-slice";
 import { Exact, LanguageChoiceEnum, useSettingDetailLazyQuery } from "@src/gql/generated";
 import { RootState } from "@src/store";
+import { useIsAuthenticated } from "@src/hooks/auth";
 
 const useSettingDetailTable = () => {
   const dispatch = useDispatch();
@@ -13,10 +14,11 @@ const useSettingDetailTable = () => {
   const [_, { refetch, loading, data, networkStatus }] = useSettingDetailLazyQuery({
     notifyOnNetworkStatusChange: true,
   });
+  const isAuthenticated = useIsAuthenticated()
 
   const syncTable = (variables?: Partial<Exact<{ userId?: string }>>) => {
     NetInfo.fetch().then(({ isConnected }) => {
-      if (isConnected) {
+      if (isConnected && isAuthenticated) {
         refetch(variables).then(({ networkStatus, data }) => {
           if (networkStatus === NetworkStatus.ready && data) {
             const languageHasBeenChanges = data.settingDetail.language !== language;

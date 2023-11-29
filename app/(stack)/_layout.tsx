@@ -63,6 +63,12 @@ const HomeLayout = () => {
           title: tr("log in, sign up"),
         }}
       />
+       <Stack.Screen
+        name="tour/requests/toMyTours"
+        options={{
+          title: tr("apply to my tours"),
+        }}
+      />
       <Stack.Screen
         name="ngoLogin"
         options={{
@@ -73,6 +79,54 @@ const HomeLayout = () => {
         name="SMSVerification"
         options={{
           title: tr("Verification"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/details"
+        options={{
+          title: tr("Tour Details"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/capacity"
+        options={{
+          title: tr("Tour Capacity"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/origin"
+        options={{
+          title: tr("Tour Origin"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/destination"
+        options={{
+          title: tr("Tour Destination"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/date"
+        options={{
+          title: tr("Tour Date"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/price"
+        options={{
+          title: tr("Tour Price"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/images"
+        options={{
+          title: tr("Tour Images"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/facilities"
+        options={{
+          title: tr("Tour Facilities"),
         }}
       />
       <Stack.Screen
@@ -177,6 +231,13 @@ const HomeLayout = () => {
         name="successReceipt"
         options={{
           title: tr("Success Receipt"),
+        }}
+      />
+      <Stack.Screen
+        name="map-modal"
+        options={{
+          title: tr("Select On Map"),
+          presentation: "modal",
         }}
       />
     </Stack>

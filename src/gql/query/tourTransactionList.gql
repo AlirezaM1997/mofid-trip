@@ -12,6 +12,7 @@ query tourTransactionList {
       tourPackage {
         price
         tour {
+          id
           startTime
           endTime
           avatarS3 {
@@ -23,6 +24,9 @@ query tourTransactionList {
             ... on AccommodationQueryType {
               id
               address
+              avatarS3 {
+                small
+              }
             }
           }
           title
