@@ -815,6 +815,11 @@ export const messages = {
     fa_ir: "تاریخ",
     en_us: "Date",
   },
+ "hosting type": {
+   ar: "نوع الاستضافة",
+   fa_ir: "نوع میزبانی",
+   en_us: "Hosting type",
+  },
   "successful transfer": {
     ar: "نقل ناجح",
     fa_ir: "انتقال موفق",
@@ -894,6 +899,11 @@ export const messages = {
     ar: "أسعار الجولة",
     fa_ir: "امتیاز به تور",
     en_us: "Rates to the tour",
+  },
+  "rates to the host": {
+    ar: "أسعار الجولة",
+    fa_ir: "امتیاز به میزبان",
+    en_us: "Rates to the host",
   },
   paypal: {
     ar: "پی پال",
@@ -1036,6 +1046,14 @@ export const messages = {
         "جزئیات نهایی و ثبت شده شما برای درخواست اولیه به تور. قیمت بر اساس هر نفر محسابه می‌شود.",
       en_us:
         "Your final and recorded details for the initial tour request. The price is calculated per person.",
+    },
+  "your final and recorded details for the initial host request. the price is calculated per person.":
+    {
+      ar: "بياناتك النهائية والمسجلة لطلب الجولة الأولية. يتم احتساب السعر للشخص الواحد.",
+      fa_ir:
+        "جزئیات نهایی و ثبت شده شما برای درخواست اولیه به میزبان. قیمت بر اساس هر نفر محسابه می‌شود.",
+      en_us:
+        "Your final and recorded details for the initial host request. The price is calculated per person.",
     },
   "final invoice": {
     ar: "الفاتورة النهائية",
@@ -1584,6 +1602,11 @@ export const messages = {
     ar: "عرض تفاصيل الجولة",
     fa_ir: "مشاهده جزئیات تور",
     en_us: "View tour details",
+  },
+  "view host details": {
+    ar: "عرض تفاصيل الجولة",
+    fa_ir: "مشاهده جزئیات میزبان",
+    en_us: "View host details",
   },
   "tour management": {
     ar: "إدارة الرحلات",

@@ -1,18 +1,18 @@
+import { HEIGHT } from "@src/constants";
 import { NetworkStatus } from "@apollo/client";
-import { ScrollView, StyleSheet, View } from "react-native";
 import React, { useCallback, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
 import NoResult from "@src/components/organisms/no-result";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
-import ReservationCard from "@src/components/modules/tour/transaction/card";
+import ReservationCard from "@src/components/modules/host/transaction/card";
 import ReservationSkeleton from "@src/components/modules/reservation-skeleton";
-import { TourTransactionQueryType, useTourTransactionListQuery } from "@src/gql/generated";
-import { HEIGHT } from "@src/constants";
+import { ProjectTransactionQueryType, useProjectTransactionListQuery } from "@src/gql/generated";
 
-const TourReservation = () => {
+const HostTransaction = () => {
   const isFocused = useIsFocused();
-  const { data, refetch, networkStatus } = useTourTransactionListQuery({
+  const { data, refetch, networkStatus } = useProjectTransactionListQuery({
     notifyOnNetworkStatusChange: true,
   });
 
@@ -43,20 +43,20 @@ const TourReservation = () => {
 
   return (
     <ScrollView
-      contentContainerStyle={data?.tourTransactionList?.data?.length === 0 ? { flex: 1 } : {}}
+      contentContainerStyle={data?.projectTransactionList?.data?.length === 0 ? { flex: 1 } : {}}
       refreshControl={
         <RefreshControl refreshing={networkStatus !== NetworkStatus.ready} onRefresh={onRefresh} />
       }>
       <Container>
-        {data?.tourTransactionList?.data?.length === 0 && (
+        {data?.projectTransactionList?.data?.length === 0 && (
           <View style={{ height: HEIGHT - 150 }}>
             <NoResult />
           </View>
         )}
 
-        {data?.tourTransactionList?.data?.map((transaction, index) => (
+        {data?.projectTransactionList?.data?.map((transaction, index) => (
           <ReservationCard
-            transaction={transaction as TourTransactionQueryType}
+            transaction={transaction as ProjectTransactionQueryType}
             key={transaction.id}
             index={index}
           />
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
   container: { gap: 20, marginVertical: 10 },
 });
 
-export default TourReservation;
+export default HostTransaction;

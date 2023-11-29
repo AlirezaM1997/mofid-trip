@@ -3,8 +3,8 @@ import { Text } from "@rneui/themed";
 import Container from "@atoms/container";
 import { StyleSheet } from "react-native";
 import useTranslation from "@src/hooks/translation";
+import HostTransaction from "@modules/host/transaction";
 import { ifNotLoggedInRedirectTo } from "@src/hooks/auth";
-import HostTransaction from "@organisms/host-transaction";
 
 const HostTransactionScreen = () => {
   const { tr } = useTranslation();

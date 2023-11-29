@@ -12,7 +12,7 @@ import WhiteSpace from "@src/components/atoms/white-space";
 import NoResult from "@src/components/organisms/no-result";
 import SelectedFilters from "@src/components/modules/selected-filters";
 import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
-import HostCard from "@modules/host-card";
+import HostCard from "@modules/host/card";
 import { PAGE_SIZE } from "@src/settings";
 
 const SearchScreen: React.FC = () => {

@@ -52,7 +52,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="/project/[projectId]"
+        name="/host/[projectId]"
         options={{
           title: tr("Project"),
         }}
@@ -82,19 +82,19 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="host/create/capacity"
+        name="host/transaction/add/capacity"
         options={{
           title: tr("host reservation"),
         }}
       />
       <Stack.Screen
-        name="host/create/date"
+        name="host/transaction/add/date"
         options={{
           title: tr("host reservation"),
         }}
       />
       <Stack.Screen
-        name="host/create/confirm-data"
+        name="host/transaction/add/confirm-data"
         options={{
           title: tr("final details"),
         }}
@@ -178,6 +178,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="host/transaction/[transactionId]"
+        options={{
+          title: tr("Payment Detail"),
+        }}
+      />
+      <Stack.Screen
         name="pay-detail"
         options={{
           title: tr("Payment Detail"),
@@ -190,7 +196,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="tour-transaction-detail/[transactionId]"
+        name="tour/transaction-detail/[transactionId]"
         options={{
           title: tr("Tour Transaction Detail"),
         }}

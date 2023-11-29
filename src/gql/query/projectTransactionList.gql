@@ -19,6 +19,7 @@ query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterT
         isActive
       }
       guestSet {
+        id
         name
       }
       project {

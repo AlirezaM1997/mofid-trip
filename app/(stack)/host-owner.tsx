@@ -9,7 +9,7 @@ import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import HostCard from "@modules/host-card";
+import HostCard from "@modules/host/card";
 
 const height = 220;
 
