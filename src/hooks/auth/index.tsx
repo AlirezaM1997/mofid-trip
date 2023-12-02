@@ -6,8 +6,8 @@ import { gql } from "@apollo/client";
 import { setIsAuthenticated } from "@src/slice/auth-slice";
 
 export const useIsAuthenticated = () => {
-  return useSelector((state: RootState) => state.authSlice.isAuthenticated);
-};
+  return useSelector((state: RootState) => state.authSlice?.isAuthenticated);
+}
 
 export const useConfirmAuthentication = () => {
   const client = customUseApolloClient();
