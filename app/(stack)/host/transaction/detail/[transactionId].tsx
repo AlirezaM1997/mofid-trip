@@ -43,7 +43,7 @@ const TransactionDetailsScreen = () => {
           price: project.price.toString(),
           description: `${tr("buy")} ${project?.name}`,
           projectTransactionId: transactionId as string,
-          appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}`,
+          appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}&type=host`,
         },
       },
     });
@@ -53,7 +53,7 @@ const TransactionDetailsScreen = () => {
   const bottomButton = () => {
     const lookup: Record<string, ReactElement> = {
       PAYMENT: (
-        <Button onPress={() => router.push(`/successReceipt?id=${transactionId}`)}>
+        <Button onPress={() => router.push(`host/transaction/successReceipt?id=${transactionId}`)}>
           {tr("view invoice")}
         </Button>
       ),

@@ -30,7 +30,7 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
         type: "outline",
         color: "secondary",
         title: tr("request details"),
-        changeHandler: () => pressHandler(`/tour/transaction-detail/${transaction.id}`),
+        changeHandler: () => pressHandler(`/tour/transaction/detail/${transaction.id}`),
       },
       ACCEPT: transaction.status.isActive
         ? {
@@ -80,7 +80,7 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
             color="secondary"
             title={tr("request details")}
             containerStyle={styles.button}
-            onPress={() => pressHandler(`/tour/transaction-detail/${transaction.id}`)}
+            onPress={() => pressHandler(`/tour/transaction/detail/${transaction.id}`)}
           />
         )}
 

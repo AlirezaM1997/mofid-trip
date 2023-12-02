@@ -4,6 +4,7 @@ query projectTransactionDetail($pk: ID!) {
     dateEnd
     dateStart
     description
+    modifiedDate
     invoiceNumber
     createdDate
     owner {

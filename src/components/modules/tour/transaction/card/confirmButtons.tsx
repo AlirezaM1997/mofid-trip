@@ -25,7 +25,7 @@ const ConfirmButton = ({ transaction }: PropsType) => {
           ip,
           tourTransactionId: transaction.id,
           price: transaction.tourPackage.price.toString(),
-          appLink: `${ZARINPAL_CALLBACK_URL}?id=${transaction.id}`,
+          appLink: `${ZARINPAL_CALLBACK_URL}?id=${transaction.id}&type=tour`,
           description: `${tr("buy")} ${transaction?.tourPackage?.tour.title}`,
         },
       },

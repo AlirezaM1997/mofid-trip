@@ -5,7 +5,7 @@ import { Divider, Text, useTheme } from "@rneui/themed";
 import { TransactionStatusEnum } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
-import CancelTransaction from "@modules/host/transaction/cancle ";
+import CancelTransaction from "@modules/host/transaction/cancel ";
 
 const StepBaseButtons = ({ status, transactionId, name }) => {
   const { theme } = useTheme();
@@ -55,7 +55,7 @@ const StepBaseButtons = ({ status, transactionId, name }) => {
           <Divider />
           <Pressable
             style={styles.buttonContainer}
-            onPress={() => router.push(`/successReceipt?id=${transactionId}`)}>
+            onPress={() => router.push(`host/transaction/successReceipt?id=${transactionId}`)}>
             <View style={styles.buttonContent}>
               <Feather name="circle" size={13} color="black" />
               <Text>{tr("view invoice")}</Text>

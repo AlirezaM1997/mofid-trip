@@ -21,15 +21,14 @@ const ConfirmButton = ({ transaction }: PropsType) => {
         data: {
           ip,
           projectTransactionId: transaction.id,
-          appLink: `${ZARINPAL_CALLBACK_URL}?id=${transaction.id}`,
+          price: transaction.project.price.toString(),
           description: `${tr("buy")} ${transaction?.project.name}`,
-          price: transaction.project.price.toString() + transaction?.project?.tax?.toString(),
+          appLink: `${ZARINPAL_CALLBACK_URL}?id=${transaction.id}&type=host`,
         },
       },
     });
-    console.log(data.projectPurchaseAdd);
 
-    // router.push(data.projectPurchaseAdd.metadata?.url);
+    router.push(data.projectPurchaseAdd.metadata?.url);
   };
 
   return <TransactionButtons transaction={transaction} purchaseHandler={purchaseHandler} />;

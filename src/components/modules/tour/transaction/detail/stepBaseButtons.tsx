@@ -55,7 +55,7 @@ const StepBaseButtons = ({ status, transactionId, tourPackage }) => {
           <Divider />
           <Pressable
             style={styles.buttonContainer}
-            onPress={() => router.push(`/successReceipt?id=${transactionId}`)}>
+            onPress={() => router.push(`tour/transaction/successReceipt?id=${transactionId}`)}>
             <View style={styles.buttonContent}>
               <Feather name="circle" size={13} color="black" />
               <Text>{tr("view invoice")}</Text>

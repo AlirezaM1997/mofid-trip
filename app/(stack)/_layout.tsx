@@ -63,7 +63,7 @@ const HomeLayout = () => {
           title: tr("log in, sign up"),
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="tour/requests/toMyTours"
         options={{
           title: tr("apply to my tours"),
@@ -184,7 +184,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="host/transaction/[transactionId]"
+        name="host/transaction/detail/[transactionId]"
         options={{
           title: tr("Payment Detail"),
         }}
@@ -202,7 +202,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="tour/transaction-detail/[transactionId]"
+        name="tour/transaction/detail/[transactionId]"
         options={{
           title: tr("Tour Transaction Detail"),
         }}
@@ -252,13 +252,25 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="failedReceipt"
+        name="tour/transaction/failedReceipt"
         options={{
           title: tr("Unsuccessful Payment"),
         }}
       />
       <Stack.Screen
-        name="successReceipt"
+        name="host/transaction/failedReceipt"
+        options={{
+          title: tr("Unsuccessful Payment"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/transaction/successReceipt"
+        options={{
+          title: tr("Success Receipt"),
+        }}
+      />
+      <Stack.Screen
+        name="host/transaction/successReceipt"
         options={{
           title: tr("Success Receipt"),
         }}

@@ -33,9 +33,9 @@ const TourTransactionDetailScreen = () => {
       variables: {
         data: {
           ip,
-          tourTransactionId: transactionId as string,
           price: tourPackage.price.toString(),
-          appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}`,
+          tourTransactionId: transactionId as string,
+          appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}&type=tour`,
           description: `${tr("buy")} ${tourPackage?.tour.title}`,
         },
       },
@@ -46,7 +46,7 @@ const TourTransactionDetailScreen = () => {
   const bottomButton = () => {
     const lookup: Record<string, ReactElement> = {
       PAYMENT: (
-        <Button onPress={() => router.push(`/successReceipt?id=${transactionId}`)}>
+        <Button onPress={() => router.push(`tour/transaction/successReceipt?id=${transactionId}`)}>
           {tr("view invoice")}
         </Button>
       ),
