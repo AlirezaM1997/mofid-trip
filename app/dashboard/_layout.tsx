@@ -19,12 +19,12 @@ export default function AppLayout() {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { syncTable } = useProjectTable();
-  const { is_ngo: isNgo } = useSelector((state: RootState) => state.authSlice.loginData.metadata);
+  const { loginData, isAuthenticated } = useSelector((state: RootState) => state?.authSlice);
 
   const handleClose = () => setIsVisible(false);
   const handleOpen = () => setIsVisible(true);
 
-  if (!isNgo) {
+  if (!isAuthenticated || !loginData.metadata.isNgo) {
     return <Redirect href="/" />;
   }
 

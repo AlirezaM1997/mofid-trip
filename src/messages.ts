@@ -328,6 +328,16 @@ export const messages = {
     fa_ir: "هزینه",
     en_us: "Price",
   },
+  "my cards": {
+    ar: "بطاقاتي",
+    fa_ir: "کارت‌های من",
+    en_us: "my cards",
+  },
+  increase: {
+    ar: "يزيد",
+    fa_ir: "افزایش",
+    en_us: "Increase",
+  },
   "privacy and ownership: all intellectual and material rights belong to mofidtrip. safeguarding the privacy of individuals and organizations is a top priority for mofidtrip. the mofidtrip platform is committed to employing the best methods, in collaboration with a specialized technical team, to ensure the protection of individuals' and organizations' secrets. furthermore, efforts are made to develop the necessary technology to enhance the security of your use of the platform.":
     {
       ar: "الخصوصية والملكية: جميع الحقوق الفكرية والمادية مملوكة لشركة مفید. يعد حماية خصوصية الأفراد والمنظمات أولوية قصوى بالنسبة لـ مفید. تلتزم منصة مفید بتوظيف أفضل الأساليب بالتعاون مع فريق فني متخصص لضمان حماية أسرار الأفراد والمنظمات. علاوة على ذلك، يتم بذل الجهود لتطوير التكنولوجيا اللازمة لتعزيز أمان استخدامك للمنصة.",
@@ -794,6 +804,11 @@ export const messages = {
     fa_ir: "نه، لغو",
     en_us: "No, Cancel",
   },
+  "wallet balance": {
+    ar: "توازن الحقيبة",
+    fa_ir: "موجودی کیف",
+    en_us: "Wallet balance",
+  },
   "unsuccessful payment, wallet balance is not enough": {
     ar: "عملية دفع غير ناجحة، رصيد المحفظة غير كافي",
     fa_ir: "پرداخت ناموفق ، موجودی کیف پول کافی نمی‌باشد",
@@ -835,6 +850,11 @@ export const messages = {
     fa_ir: "کد رهگیری",
     en_us: "Tracking Code",
   },
+  "latest transactions": {
+    ar: "أحدث المعاملات",
+    fa_ir: "آخرین تراکنش ها",
+    en_us: "Latest transactions",
+  },
   date: {
     ar: "تاريخ",
     fa_ir: "تاریخ",
@@ -854,6 +874,37 @@ export const messages = {
     ar: "وقت",
     fa_ir: "زمان",
     en_us: "Time",
+  },
+  withdraw: {
+    ar: "محصول",
+    fa_ir: "برداشت",
+    en_us: "Withdraw ",
+  },
+  "all your recent financial transactions and for you (all transactions are in tomans)": {
+    ar: "جميع معاملاتك المالية الأخيرة ولأجلك (جميع المعاملات بالتومان)",
+    fa_ir: "تمامی تراکنش های مالی اخیر شما و برای شما ( تمامی تراکنش ها به تومان میباشد )",
+    en_us: "All your recent financial transactions and for you (all transactions are in Tomans) ",
+  },
+  "transaction history": {
+    ar: "تاريخ المعاملات",
+    fa_ir: "تاریخچه تراکنش ها",
+    en_us: "Transaction history ",
+  },
+  "management and use of inventory increase and withdrawal services, view transaction history": {
+    ar: "إدارة واستخدام خدمات زيادة وسحب المخزون، وعرض تاريخ المعاملات",
+    fa_ir: "مدیریت و استفاده از سرویس های افزایش موجودی و برداشت ، مشاهده تاریخچه تراکنش ها",
+    en_us:
+      "Management and use of inventory increase and withdrawal services, view transaction history",
+  },
+  "wallet and recent transactions": {
+    ar: "المحفظة والمعاملات الأخيرة",
+    fa_ir: "کیف پول و تراکنش های اخیر",
+    en_us: "Wallet and recent transactions",
+  },
+  wallet: {
+    ar: "محفظة",
+    fa_ir: "کیف پول",
+    en_us: "wallet",
   },
   transmitter: {
     ar: "الارسال",

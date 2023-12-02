@@ -15,9 +15,9 @@ export default function AppLayout() {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { syncTable } = useProjectTable();
-  const { is_ngo: isNgo } = useSelector((state: RootState) => state.authSlice.loginData.metadata);
+  const { loginData, isAuthenticated } = useSelector((state: RootState) => state?.authSlice);
 
-  if (isNgo) {
+  if (isAuthenticated && loginData.metadata.isNgo) {
     return <Redirect href="/dashboard" />;
   }
 
@@ -68,7 +68,9 @@ export default function AppLayout() {
         name="chat"
         options={{
           title: tr("chat"),
-          tabBarIcon: ({ color, size }) => <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="chatbox-ellipses-outline" size={size} color={color} />
+          ),
         }}
       />
       <Tabs.Screen

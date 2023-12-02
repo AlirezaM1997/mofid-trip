@@ -52,6 +52,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="wallet"
+        options={{
+          title: tr("wallet"),
+        }}
+      />
+      <Stack.Screen
         name="/host/[projectId]"
         options={{
           title: tr("Project"),
