@@ -63,6 +63,12 @@ const HomeLayout = () => {
           title: tr("log in, sign up"),
         }}
       />
+       <Stack.Screen
+        name="tour/requests/toMyTours"
+        options={{
+          title: tr("apply to my tours"),
+        }}
+      />
       <Stack.Screen
         name="ngoLogin"
         options={{

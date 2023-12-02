@@ -70,5 +70,21 @@ query myNGODetail {
         arName
       }
     }
+    tourTransactionSet {
+      id
+      status {
+        isActive
+        step
+      }
+      owner {
+        avatarS3 {
+          large
+          medium
+          small
+        }
+        id
+        fullname
+      }
+    }
   }
 }
