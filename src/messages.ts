@@ -1859,12 +1859,42 @@ export const messages = {
   },
   'create host': {
     ar: "إنشاء مضيف",
-    fa_ir: "ایجاد هاست",
+    fa_ir: "ایجاد میزبانی",
     en_us: "Create Host",
   },
   'add facilities': {
     ar: "أضف المرافق",
     fa_ir: "امکانات خود را اضافه کنید",
     en_us: "Add facilities",
+  },
+  'what do you want to create?': {
+    ar: "ماذا تريد أن تصنع؟",
+    fa_ir: "قصد ایجاد چه فرمی را دارید؟",
+    en_us: "What do you want to create?",
+  },
+  'you can create tours and hosts for your collection. choose one of the options as needed': {
+    ar: "يمكنك إنشاء جولات ومضيفين لمجموعتك. اختر أحد الخيارات حسب الحاجة",
+    fa_ir: "شما می‌توانید برای مجموعه خود ، تور و میزبانی ایجاد کنید . طبق نیاز یکی از گزینه ها را انتخاب کنید",
+    en_us: "You can create tours and hosts for your collection. Choose one of the options as needed",
+  },
+  'flows': {
+    ar: "يطفو",
+    fa_ir: "فرایند ها",
+    en_us: "Flows",
+  },
+  'manage my hosts': {
+    ar: "إدارة مضيفي",
+    fa_ir: "مدیریت میزبانی های من",
+    en_us: "Manage My Hosts",
+  },
+  'host management': {
+    ar: "إدارة المضيف",
+    fa_ir: "مدیریت میزبانی",
+    en_us: "Host Management",
+  },
+  'create': {
+    ar: "يخلق",
+    fa_ir: "ایجاد",
+    en_us: "Create",
   },
 };

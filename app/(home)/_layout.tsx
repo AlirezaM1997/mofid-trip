@@ -6,10 +6,10 @@ import useIsRtl from "@src/hooks/localization";
 import useTranslation from "@src/hooks/translation";
 import { useEffect, useState } from "react";
 import useProjectTable from "@src/hooks/db/project";
-import { View } from "react-native";
 import { router } from "expo-router";
 import ButtonRow from "@modules/button-rows";
 import Container from "@atoms/container";
+import WhiteSpace from "@atoms/white-space";
 
 export default function AppLayout() {
   const [isVisible, setIsVisible] = useState(false);
@@ -82,7 +82,7 @@ export default function AppLayout() {
         <Tabs.Screen
           name="reservation"
           options={{
-            title: tr("my requests"),
+            title: tr("My requests"),
             tabBarIcon: ({ color, size }) => <Feather name="bookmark" size={size} color={color} />,
           }}
         />
@@ -96,9 +96,12 @@ export default function AppLayout() {
       </Tabs>
       <BottomSheet isVisible={isVisible} onBackdropPress={handleClose}>
         <Container>
+          <Text heading2 bold center>{tr('What do you want to create?')}</Text>
+          <Text center>{tr('You can create tours and hosts for your collection. Choose one of the options as needed')}</Text>
+          <WhiteSpace />
           <ButtonRow>
-            <Button type="outline">{tr('Create Host')}</Button>
-            <Button >{tr('Create Tour')}</Button>
+            <Button onPress={() => router.push('/host/create')} type="outline">{tr("Create Host")}</Button>
+            <Button onPress={() => router.push('/tour/create/details')}>{tr("Create Tour")}</Button>
           </ButtonRow>
         </Container>
       </BottomSheet>
