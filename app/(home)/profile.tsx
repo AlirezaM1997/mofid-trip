@@ -97,7 +97,7 @@ const Profile: React.FC = () => {
             </View>
           </Pressable>
         </Container>
-        <WhiteSpace size={20} />
+        <WhiteSpace size={30} />
 
         <Container>
           <Text type="grey3">{tr("Account")}</Text>
@@ -115,9 +115,9 @@ const Profile: React.FC = () => {
         </ListItem>
         {userDetail?.isNgo && (
           <>
-            <WhiteSpace size={20} />
+            <WhiteSpace size={30} />
             <Container>
-              <Text type="grey3">{tr("Managements")}</Text>
+              <Text type="grey3">{tr("Flows")}</Text>
             </Container>
             <ListItem bottomDivider onPress={() => router.push("/tour/create/details")}>
               <Feather name="aperture" size={24} color="black" />
@@ -130,10 +130,37 @@ const Profile: React.FC = () => {
                 color={theme.colors.grey3}
               />
             </ListItem>
-            <ListItem onPress={() => router.push("/tour/management")}>
+            <ListItem onPress={() => router.push("/host/create")}>
+              <Feather name="aperture" size={24} color="black" />
+              <ListItem.Content>
+                <ListItem.Title style={style.label(isRtl)}>{tr("Create Host")}</ListItem.Title>
+              </ListItem.Content>
+              <Feather
+                name={isRtl ? "chevron-left" : "chevron-right"}
+                size={24}
+                color={theme.colors.grey3}
+              />
+            </ListItem>
+
+            <WhiteSpace size={30} />
+            <Container>
+              <Text type="grey3">{tr("Managements")}</Text>
+            </Container>
+            <ListItem onPress={() => router.push("/tour/management")} bottomDivider>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Tours")}</ListItem.Title>
+              </ListItem.Content>
+              <Feather
+                name={isRtl ? "chevron-left" : "chevron-right"}
+                size={24}
+                color={theme.colors.grey3}
+              />
+            </ListItem>
+            <ListItem onPress={() => router.push("/host/management")}>
+              <Feather name="aperture" size={24} color="black" />
+              <ListItem.Content>
+                <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Hosts")}</ListItem.Title>
               </ListItem.Content>
               <Feather
                 name={isRtl ? "chevron-left" : "chevron-right"}
@@ -146,7 +173,7 @@ const Profile: React.FC = () => {
 
         {!userDetail?.isNgo && (
           <>
-            <WhiteSpace size={20} />
+            <WhiteSpace size={30} />
             <Container>
               <Text type="grey3">{tr("Managements")}</Text>
             </Container>
@@ -166,7 +193,7 @@ const Profile: React.FC = () => {
           </>
         )}
 
-        <WhiteSpace size={20} />
+        <WhiteSpace size={30} />
 
         <Container>
           <Text type="grey3">{tr("Requests")}</Text>
@@ -194,7 +221,7 @@ const Profile: React.FC = () => {
           />
         </ListItem>
 
-        <WhiteSpace size={20} />
+        <WhiteSpace size={30} />
 
         <Container>
           <Text type="grey3">{tr("Other Settings")}</Text>
