@@ -33,8 +33,8 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
     router.push({
       pathname: "/map-modal",
       params: {
-        lat: initLocation.lat,
-        lng: initLocation.lng,
+        lat: form.values?.lat || initLocation.lat,
+        lng: form.values?.lng || initLocation.lng,
       },
     });
     isMapOpened.current = true;
@@ -74,8 +74,7 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
               }}
               source={require("@assets/image/marker.png")}
             />
-            {/* TODO: this line raise an error on each second time rendering */}
-            {/* <Map lat={form.values.lat} lng={form.values.lng} style={styles.map} /> */}
+            <Map lat={form.values.lat} lng={form.values.lng} style={styles.map} />
           </>
         ) : (
           <Text>{tr("Select On Map")}</Text>

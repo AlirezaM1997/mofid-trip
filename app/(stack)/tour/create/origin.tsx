@@ -9,10 +9,12 @@ import { setTourCreateData } from "@src/slice/tour-create-slice";
 import { RootState } from "@src/store";
 import { router } from "expo-router";
 import { Field, Formik } from "formik";
+import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
 const Screen = () => {
+  const innerRef = useRef();
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const { data } = useSelector((state: RootState) => state.tourCreateSlice);
@@ -28,6 +30,19 @@ const Screen = () => {
     lat: Yup.string().required(tr("Select location on the map")),
     lng: Yup.string().required(tr("Select location on the map")),
   });
+
+  const handleBlurAddress = () => {
+    innerRef.current.handleBlur("address");
+    dispatch(
+      setTourCreateData({
+        ...data,
+        origin: {
+          ...data.origin,
+          address: innerRef.current?.values?.address,
+        },
+      })
+    );
+  };
 
   const handleSubmit = values => {
     dispatch(
@@ -46,6 +61,7 @@ const Screen = () => {
 
   return (
     <Formik
+      innerRef={innerRef}
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}>
@@ -74,9 +90,9 @@ const Screen = () => {
               placeholder={tr("Address")}
               textAlignVertical="top"
               onChangeText={handleChange("address")}
-              onBlur={handleBlur("address")}
+              onBlur={handleBlurAddress}
               value={values.address}
-              errorMessage={touched.address && errors.address}
+              errorMessage={touched.address && (errors.address as string)}
             />
             <Field name="lat" component={LocationPicker} />
             <WhiteSpace />

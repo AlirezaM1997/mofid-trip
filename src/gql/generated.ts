@@ -1811,6 +1811,13 @@ export type SettingEditMutationVariables = Exact<{
 
 export type SettingEditMutation = { __typename?: 'Mutation', settingEdit?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
+export type TourAddMutationVariables = Exact<{
+  data: TourAddInputType;
+}>;
+
+
+export type TourAddMutation = { __typename?: 'Mutation', tourAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
 export type TourTransactionAddMutationVariables = Exact<{
   data: TourTransactionAddInputType;
 }>;
@@ -2102,6 +2109,42 @@ export function useSettingEditMutation(baseOptions?: Apollo.MutationHookOptions<
 export type SettingEditMutationHookResult = ReturnType<typeof useSettingEditMutation>;
 export type SettingEditMutationResult = Apollo.MutationResult<SettingEditMutation>;
 export type SettingEditMutationOptions = Apollo.BaseMutationOptions<SettingEditMutation, SettingEditMutationVariables>;
+export const TourAddDocument = gql`
+    mutation tourAdd($data: TourAddInputType!) {
+  tourAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}
+    `;
+export type TourAddMutationFn = Apollo.MutationFunction<TourAddMutation, TourAddMutationVariables>;
+
+/**
+ * __useTourAddMutation__
+ *
+ * To run a mutation, you first call `useTourAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTourAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [tourAddMutation, { data, loading, error }] = useTourAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useTourAddMutation(baseOptions?: Apollo.MutationHookOptions<TourAddMutation, TourAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<TourAddMutation, TourAddMutationVariables>(TourAddDocument, options);
+      }
+export type TourAddMutationHookResult = ReturnType<typeof useTourAddMutation>;
+export type TourAddMutationResult = Apollo.MutationResult<TourAddMutation>;
+export type TourAddMutationOptions = Apollo.BaseMutationOptions<TourAddMutation, TourAddMutationVariables>;
 export const TourTransactionAddDocument = gql`
     mutation tourTransactionAdd($data: TourTransactionAddInputType!) {
   tourTransactionAdd(data: $data) {

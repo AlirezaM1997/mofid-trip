@@ -58,7 +58,8 @@ const Screen = () => {
     dispatch(
       setTourCreateData({
         ...data,
-        ...values,
+        price: parseFloat(values.price),
+        discount: parseFloat(values.discount),
       })
     );
     router.push({

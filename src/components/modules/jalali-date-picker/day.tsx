@@ -1,8 +1,8 @@
 import { ButtonProps } from "@rneui/themed";
 import { Button } from "@rneui/themed";
 import { useLocalizedNumberFormat } from "@src/hooks/translation";
-import moment from "jalali-moment";
 import { StyleSheet } from "react-native";
+import moment from "jalali-moment";
 
 export type DayProps = ButtonProps & {
   date?: string;
@@ -13,7 +13,6 @@ const Day = ({ date, ...props }: DayProps) => {
   const jalaliDate = date ? moment(date, "YYYY-M-D").locale("fa").format("jD") : "";
 
   const _onPress = date => {
-    console.log("dd", date);
     props?.onPress?.(date);
   };
 

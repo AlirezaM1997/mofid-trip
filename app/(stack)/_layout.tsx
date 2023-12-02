@@ -106,6 +106,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="host/management"
+        options={{
+          title: tr("Host Management"),
+        }}
+      />
+      <Stack.Screen
         name="tour/create/details"
         options={{
           title: tr("Tour Details"),
