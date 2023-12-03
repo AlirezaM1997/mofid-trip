@@ -866,8 +866,10 @@ export type ProjectTransactionFilterType = {
 };
 
 export type ProjectTransactionGuestInputType = {
-  /** Gender of the guests. */
-  gender: GuestGenderEnum;
+  /** Boolean indicating if children are accepted for the tour. */
+  childAccept?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Gender of the guests in a transaction. */
+  gender: TransactionGuestGenderEnum;
   /** Number of the guests */
   guestNumber: Scalars['Int']['input'];
 };
@@ -1339,6 +1341,17 @@ export enum TourGenderEnum {
   Male = 'MALE'
 }
 
+/** Type representing tour guest images in different sizes. */
+export type TourGuestImageType = {
+  __typename?: 'TourGuestImageType';
+  /** URL of the large image. */
+  large?: Maybe<Scalars['String']['output']>;
+  /** URL of the medium image. */
+  medium?: Maybe<Scalars['String']['output']>;
+  /** URL of the small image. */
+  small?: Maybe<Scalars['String']['output']>;
+};
+
 /** Input type for providing guest information in a tour transaction. */
 export type TourGuestInputType = {
   /** Birthday of the guest. */
@@ -1360,6 +1373,8 @@ export type TourGuestInputType = {
 /** Type representing a tour guests with additional fields. */
 export type TourGuestQueryType = {
   __typename?: 'TourGuestQueryType';
+  /** Tour guest images in different sizes. */
+  avatarS3?: Maybe<Array<Maybe<TourGuestImageType>>>;
   birthday?: Maybe<Scalars['Date']['output']>;
   firstname?: Maybe<Scalars['String']['output']>;
   gender: TourTourGuestGenderChoices;
@@ -1550,6 +1565,13 @@ export type TourTransactionStatusInputType = {
   step?: InputMaybe<TransactionStatusEnum>;
 };
 
+export enum TransactionGuestGenderEnum {
+  Both = 'BOTH',
+  Child = 'CHILD',
+  Female = 'FEMALE',
+  Male = 'MALE'
+}
+
 /**
  * Represents a union of response types for dynamic outputs in query.
  *
@@ -1643,7 +1665,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -1790,12 +1812,26 @@ export type CreateLoginMutationVariables = Exact<{
 
 export type CreateLoginMutation = { __typename?: 'Mutation', createLogin?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
+export type ProjectAddMutationVariables = Exact<{
+  data: ProjectAddInputType;
+}>;
+
+
+export type ProjectAddMutation = { __typename?: 'Mutation', projectAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
 export type SettingEditMutationVariables = Exact<{
   data?: InputMaybe<SettingEditInputType>;
 }>;
 
 
 export type SettingEditMutation = { __typename?: 'Mutation', settingEdit?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
+export type TourAddMutationVariables = Exact<{
+  data: TourAddInputType;
+}>;
+
+
+export type TourAddMutation = { __typename?: 'Mutation', tourAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
 export type TourTransactionAddMutationVariables = Exact<{
   data: TourTransactionAddInputType;
@@ -1873,7 +1909,7 @@ export type NgoDetailQueryVariables = Exact<{
 }>;
 
 
-export type NgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, title: string, address?: string | null, description?: string | null, avatarS3?: { __typename?: 'NGOImageType', large?: string | null, medium?: string | null, small?: string | null } | null, user?: { __typename?: 'UserQueryType', id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string } | null> | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, tax?: number | null, description?: string | null, statusStep?: AccommodationProjectStatusStepChoices | null, createdTime?: any | null, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, female: number, child: number } | null, categories?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null, displayName?: string | null }>, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null, tourTransactionSet?: Array<{ __typename?: 'TourTransactionQueryType', id: string, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, tourPackage?: { __typename?: 'TourPackageType', tour?: { __typename?: 'TourQueryType', title: string } | null } | null, tourGuests?: Array<{ __typename?: 'TourGuestQueryType', firstname?: string | null, lastname?: string | null, phoneNumber?: string | null } | null> | null } | null> | null } | null };
+export type NgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, title: string, address?: string | null, description?: string | null, avatarS3?: { __typename?: 'NGOImageType', large?: string | null, medium?: string | null, small?: string | null } | null, user?: { __typename?: 'UserQueryType', id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string } | null> | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, tax?: number | null, description?: string | null, statusStep?: AccommodationProjectStatusStepChoices | null, createdTime?: any | null, capacity?: { __typename?: 'CapacityQueryType', id: string, male: number, female: number, child: number } | null, categories?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null, displayName?: string | null }>, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null, tourTransactionSet?: Array<{ __typename?: 'TourTransactionQueryType', id: string, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, tourPackage?: { __typename?: 'TourPackageType', tour?: { __typename?: 'TourQueryType', title: string } | null } | null, tourGuests?: Array<{ __typename?: 'TourGuestQueryType', id: string, firstname?: string | null, lastname?: string | null, phoneNumber?: string | null, avatarS3?: Array<{ __typename?: 'TourGuestImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null> | null } | null> | null } | null };
 
 export type ProjectDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
@@ -1935,12 +1971,12 @@ export type TourTransactionDetailQueryVariables = Exact<{
 }>;
 
 
-export type TourTransactionDetailQuery = { __typename?: 'Query', tourTransactionDetail?: { __typename?: 'TourTransactionQueryType', id: string, createdDate?: any | null, description?: string | null, modifiedDate?: any | null, invoiceNumber?: any | null, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', title?: string | null, price: number, id: string, tour?: { __typename?: 'TourQueryType', id: string, title: string, endTime: any, startTime: any, avatarS3?: Array<{ __typename?: 'TourImageType', small?: string | null, medium?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null, medium?: string | null, large?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null };
+export type TourTransactionDetailQuery = { __typename?: 'Query', tourTransactionDetail?: { __typename?: 'TourTransactionQueryType', id: string, createdDate?: any | null, description?: string | null, modifiedDate?: any | null, invoiceNumber?: any | null, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', title?: string | null, price: number, id: string, tour?: { __typename?: 'TourQueryType', id: string, title: string, endTime: any, startTime: any, avatarS3?: Array<{ __typename?: 'TourImageType', small?: string | null, medium?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null, medium?: string | null, large?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null };
 
 export type TourTransactionListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionList?: { __typename?: 'TourTransactionListType', count?: number | null, data?: Array<{ __typename?: 'TourTransactionQueryType', id: string, description?: string | null, invoiceNumber?: any | null, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', price: number, tour?: { __typename?: 'TourQueryType', startTime: any, endTime: any, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null> | null } | null };
+export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionList?: { __typename?: 'TourTransactionListType', count?: number | null, data?: Array<{ __typename?: 'TourTransactionQueryType', id: string, description?: string | null, invoiceNumber?: any | null, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', price: number, tour?: { __typename?: 'TourQueryType', id: string, startTime: any, endTime: any, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null> | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1986,6 +2022,42 @@ export function useCreateLoginMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateLoginMutationHookResult = ReturnType<typeof useCreateLoginMutation>;
 export type CreateLoginMutationResult = Apollo.MutationResult<CreateLoginMutation>;
 export type CreateLoginMutationOptions = Apollo.BaseMutationOptions<CreateLoginMutation, CreateLoginMutationVariables>;
+export const ProjectAddDocument = gql`
+    mutation projectAdd($data: ProjectAddInputType!) {
+  projectAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}
+    `;
+export type ProjectAddMutationFn = Apollo.MutationFunction<ProjectAddMutation, ProjectAddMutationVariables>;
+
+/**
+ * __useProjectAddMutation__
+ *
+ * To run a mutation, you first call `useProjectAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProjectAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [projectAddMutation, { data, loading, error }] = useProjectAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useProjectAddMutation(baseOptions?: Apollo.MutationHookOptions<ProjectAddMutation, ProjectAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ProjectAddMutation, ProjectAddMutationVariables>(ProjectAddDocument, options);
+      }
+export type ProjectAddMutationHookResult = ReturnType<typeof useProjectAddMutation>;
+export type ProjectAddMutationResult = Apollo.MutationResult<ProjectAddMutation>;
+export type ProjectAddMutationOptions = Apollo.BaseMutationOptions<ProjectAddMutation, ProjectAddMutationVariables>;
 export const SettingEditDocument = gql`
     mutation settingEdit($data: SettingEditInputType) {
   settingEdit(data: $data) {
@@ -2023,6 +2095,42 @@ export function useSettingEditMutation(baseOptions?: Apollo.MutationHookOptions<
 export type SettingEditMutationHookResult = ReturnType<typeof useSettingEditMutation>;
 export type SettingEditMutationResult = Apollo.MutationResult<SettingEditMutation>;
 export type SettingEditMutationOptions = Apollo.BaseMutationOptions<SettingEditMutation, SettingEditMutationVariables>;
+export const TourAddDocument = gql`
+    mutation tourAdd($data: TourAddInputType!) {
+  tourAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}
+    `;
+export type TourAddMutationFn = Apollo.MutationFunction<TourAddMutation, TourAddMutationVariables>;
+
+/**
+ * __useTourAddMutation__
+ *
+ * To run a mutation, you first call `useTourAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTourAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [tourAddMutation, { data, loading, error }] = useTourAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useTourAddMutation(baseOptions?: Apollo.MutationHookOptions<TourAddMutation, TourAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<TourAddMutation, TourAddMutationVariables>(TourAddDocument, options);
+      }
+export type TourAddMutationHookResult = ReturnType<typeof useTourAddMutation>;
+export type TourAddMutationResult = Apollo.MutationResult<TourAddMutation>;
+export type TourAddMutationOptions = Apollo.BaseMutationOptions<TourAddMutation, TourAddMutationVariables>;
 export const TourTransactionAddDocument = gql`
     mutation tourTransactionAdd($data: TourTransactionAddInputType!) {
   tourTransactionAdd(data: $data) {
@@ -2339,7 +2447,7 @@ export type BannerListLazyQueryHookResult = ReturnType<typeof useBannerListLazyQ
 export type BannerListQueryResult = Apollo.QueryResult<BannerListQuery, BannerListQueryVariables>;
 export const CategoryListDocument = gql`
     query categoryList($page: PageType, $search: String) {
-  categoryList(search: $search) {
+  categoryList(page: $page, search: $search) {
     pageCount
     count
     data {
@@ -2598,6 +2706,12 @@ export const NgoDetailDocument = gql`
         }
       }
       tourGuests {
+        avatarS3 {
+          large
+          medium
+          small
+        }
+        id
         firstname
         lastname
         phoneNumber
@@ -3128,6 +3242,8 @@ export const TourTransactionDetailDocument = gql`
         destination {
           ... on AccommodationQueryType {
             id
+            lat
+            lng
             address
             avatarS3 {
               small
@@ -3184,6 +3300,7 @@ export const TourTransactionListDocument = gql`
       tourPackage {
         price
         tour {
+          id
           startTime
           endTime
           avatarS3 {
@@ -3195,6 +3312,9 @@ export const TourTransactionListDocument = gql`
             ... on AccommodationQueryType {
               id
               address
+              avatarS3 {
+                small
+              }
             }
           }
           title

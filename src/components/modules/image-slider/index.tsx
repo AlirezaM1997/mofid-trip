@@ -1,10 +1,7 @@
-import { Text } from "@rneui/themed";
 import { TourImageType } from "@src/gql/generated";
-import { RootState } from "@src/store";
 import React, { useState } from "react";
 import { ImageBackground, Pressable, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useSelector } from "react-redux";
 
 type ImageSlider = {
   imageList?: TourImageType[];
@@ -19,7 +16,7 @@ function ImageSlider({ imageList }: ImageSlider) {
         style={style.sliderActiveSlide}
         imageStyle={style.sliderImageActiveSlide}
         source={{
-          uri: imageList?.[activeSlide].medium ?? "",
+          uri: imageList?.[activeSlide]?.medium ?? "",
         }}
       />
 

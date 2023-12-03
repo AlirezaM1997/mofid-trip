@@ -1,20 +1,21 @@
-import React from "react";
-import Stepper from "@modules/stepper";
-import Container from "@atoms/container";
-import { Image, Text } from "@rneui/themed";
-import { MaterialIcons, Feather } from "@expo/vector-icons";
+import { Button } from "@rneui/themed";
+import * as Network from "expo-network";
+import React, { ReactElement, useState } from "react";
 import useTranslation from "@src/hooks/translation";
-import { useLocalSearchParams } from "expo-router";
+import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import LoadingIndicator from "@modules/Loading-indicator";
-import { ScrollView } from "react-native-gesture-handler";
-import { Pressable, StyleSheet, View } from "react-native";
-import { AccommodationQueryType, useTourTransactionDetailQuery } from "@src/gql/generated";
-import moment from "jalali-moment";
+import { router, useLocalSearchParams } from "expo-router";
+import TourTransactionDetail from "@modules/transaction-detail";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import { useTourPurchaseAddMutation, useTourTransactionDetailQuery } from "@src/gql/generated";
+import AcceptPayment from "@modules/transaction-buttons/acceptPayment";
 
-const TourTransactionDetail = () => {
+const TourTransactionDetailScreen = () => {
   const { tr } = useTranslation();
-  const steps = [tr("pending"), tr("accepting"), tr("payment"), tr("finish the trip")];
+  const [isVisible, setIsVisible] = useState(false);
   const { transactionId } = useLocalSearchParams();
+
+  const [addPurchase] = useTourPurchaseAddMutation();
 
   const { data, loading } = useTourTransactionDetailQuery({
     variables: { pk: transactionId as string },
@@ -26,113 +27,45 @@ const TourTransactionDetail = () => {
 
   const { status, tourPackage } = data.tourTransactionDetail;
 
-  const activeStep = () => {
-    const lookup: Record<string, number> = {
-      REQUEST: 1,
-      ACCEPT: 2,
-      PAYMENT: 3,
-      SUCCESSFUL: 4,
-    };
-    return lookup[status.step || 0];
+  const purchaseHandler = async () => {
+    const ip = await Network.getIpAddressAsync();
+    const { data } = await addPurchase({
+      variables: {
+        data: {
+          ip,
+          tourTransactionId: transactionId as string,
+          price: tourPackage.price.toString(),
+          appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}`,
+          description: `${tr("buy")} ${tourPackage?.tour.title}`,
+        },
+      },
+    });
+    router.push(data.tourPurchaseAdd.metadata?.url);
   };
 
-  const formattedDate = (date: Date) => moment(date, "YYYY/MM/DD").locale("fa").format("D MMMM");
+  const bottomButton = () => {
+    const lookup: Record<string, ReactElement> = {
+      PAYMENT: (
+        <Button onPress={() => router.push(`/successReceipt?id=${transactionId}`)}>
+          {tr("view invoice")}
+        </Button>
+      ),
+      SUCCESSFUL: <Button>{tr("rates to the tour")}</Button>,
+      ACCEPT: <Button onPress={() => setIsVisible(true)}>{tr("pay")}</Button>,
+    };
+    return lookup[status.step || null];
+  };
 
   return (
-    <ScrollView>
-      <Container style={styles.container}>
-        <View style={styles.header}>
-          <Text subtitle2>{tr("at what stage is your application?")}</Text>
-          <Pressable>
-            <Text subtitle2 type="error" style={styles.headerButton}>
-              {tr("cancel request")}
-            </Text>
-          </Pressable>
-        </View>
-
-        <Stepper activeStep={activeStep()} isActive={status.isActive as boolean} steps={steps} />
-
-        <View style={styles.tourDetailContainer}>
-          <Image
-            style={styles.tourAvatar}
-            source={{
-              uri: (tourPackage.tour.destination as AccommodationQueryType)?.avatarS3[0].small,
-            }}
-          />
-
-          <View style={styles.tourDetail}>
-            <Text subtitle1>{tourPackage.title}</Text>
-
-            <Text numberOfLines={1} caption type="grey2">
-              {(tourPackage.tour.destination as AccommodationQueryType)?.address}
-            </Text>
-
-            <View style={styles.date}>
-              <Text caption type="grey2">
-                {tr("beginning")} .
-              </Text>
-              <Text caption>{formattedDate(tourPackage.tour.startTime)}</Text>
-            </View>
-
-            <View style={styles.date}>
-              <Text caption type="grey2">
-                {tr("end")} .
-              </Text>
-              <Text caption>{formattedDate(tourPackage.tour.endTime)}</Text>
-            </View>
-          </View>
-        </View>
-
-        <Pressable style={styles.showTourPageContainer}>
-          <View style={styles.showTourPage}>
-            <Feather name="circle" size={13} color="black" />
-            <Text>{tr("view tour details")}</Text>
-          </View>
-
-          <MaterialIcons name="keyboard-arrow-left" size={24} color="black" />
-        </Pressable>
-      </Container>
-    </ScrollView>
+    <BottomButtonLayout buttons={bottomButton() ? [bottomButton()] : []}>
+      <TourTransactionDetail transactionDetail={data.tourTransactionDetail} />
+      <AcceptPayment
+        purchaseHandler={purchaseHandler}
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+      />
+    </BottomButtonLayout>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    gap: 24,
-    marginTop: 24,
-  },
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  headerButton: {
-    textDecorationLine: "underline",
-  },
-  tourDetailContainer: {
-    gap: 12,
-    flexDirection: "row",
-  },
-  tourDetail: { width: 164, gap: 8, justifyContent: "center" },
-  tourAvatar: {
-    width: 154,
-    height: 104,
-    borderRadius: 12,
-  },
-  date: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  showTourPage: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-  },
-  showTourPageContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-});
-
-export default TourTransactionDetail;
+export default TourTransactionDetailScreen;

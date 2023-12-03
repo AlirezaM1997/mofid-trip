@@ -39,6 +39,29 @@ export const messages = {
     fa_ir: "بازگشت",
     en_us: "Back",
   },
+  "you can upload images related to your tour, please note that the size of the images should be less than 3 mb. note that this section is optional.":
+    {
+      ar: "يمكنك تحميل الصور المتعلقة بجولتك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
+      fa_ir:
+        "شما می توانید تصاویر مرتبط با تور خودتان را بارگذاری کنید ، توجه داشته باشید حجم تصاویر کمتر از ۳ مگابایت باشد. توجه داشته باشید این بخش اختیاری می‌باشد.",
+      en_us:
+        "You can upload images related to your tour, please note that the size of the images should be less than 3 MB. Note that this section is optional.",
+    },
+  "pictures related to the tour": {
+    ar: "صور متعلقة بالرحلة",
+    fa_ir: "تصاویر مربوط به تور",
+    en_us: "Pictures related to the tour",
+  },
+  "it is a one-day tour": {
+    ar: "إنها جولة ليوم واحد",
+    fa_ir: "تور یک روزه می‌باشد",
+    en_us: "it is a one-day tour",
+  },
+  "choose a start and end date for the tour": {
+    ar: "اختر تاريخ البدء والانتهاء للجولة",
+    fa_ir: "برای تور ، تاریخ شروع و پایان انتخاب کنید",
+    en_us: "Choose a start and end date for the tour",
+  },
   bio: {
     ar: "السيرة الذاتية (۲۰۰ حرف)",
     fa_ir: "بیوگرافی",
@@ -129,7 +152,7 @@ export const messages = {
   },
   "the request is pending review": {
     ar: "الطلب في انتظار المراجعة",
-    fa_ir: "درخواست در انتظار بررسی میباشد",
+    fa_ir: "درخواست در انتظار بررسی می باشد",
     en_us: "The request is pending review",
   },
   "edit profile": {
@@ -162,7 +185,7 @@ export const messages = {
     fa_ir: "درخواست به تورهای من",
     en_us: "Apply to my tours",
   },
-  'all requests received from travelers who plan to travel with your tours': {
+  "all requests received from travelers who plan to travel with your tours": {
     ar: "جميع الطلبات الواردة من المسافرين الذين يخططون للسفر مع جولاتك",
     fa_ir: "تمامی درخواست های دریافت شده مسافرانی که قصد دارند با تورهای شما سفر کنند",
     en_us: "All requests received from travelers who plan to travel with your toursor",
@@ -272,7 +295,7 @@ export const messages = {
   },
   pay: {
     ar: "يدفع",
-    fa_ir: "پرداخت کن",
+    fa_ir: "پرداخت",
     en_us: "Pay",
   },
   "cancel payment": {
@@ -312,7 +335,7 @@ export const messages = {
   },
   price: {
     ar: "سعر",
-    fa_ir: "قیمت",
+    fa_ir: "هزینه",
     en_us: "Price",
   },
   "privacy and ownership: all intellectual and material rights belong to mofidtrip. safeguarding the privacy of individuals and organizations is a top priority for mofidtrip. the mofidtrip platform is committed to employing the best methods, in collaboration with a specialized technical team, to ensure the protection of individuals' and organizations' secrets. furthermore, efforts are made to develop the necessary technology to enhance the security of your use of the platform.":
@@ -406,11 +429,7 @@ export const messages = {
     fa_ir: "قیمت کل",
     en_us: "Total Price",
   },
-  total: {
-    ar: "الكلي",
-    fa_ir: "کل",
-    en_us: "Total",
-  },
+
   tour: {
     ar: "رحلة",
     fa_ir: "تور",
@@ -567,6 +586,11 @@ export const messages = {
     fa_ir: "فارسی",
     en_us: "Persian",
   },
+  confirmation: {
+    ar: "تأكيد",
+    fa_ir: "تایید",
+    en_us: "confirmation",
+  },
   accept: {
     ar: "يقبل",
     fa_ir: "تایید کنید",
@@ -602,6 +626,17 @@ export const messages = {
     fa_ir: "پرداخت",
     en_us: "payment",
   },
+  "cancel the initial request": {
+    ar: "إلغاء الطلب الأولي",
+    fa_ir: "لغو درخواست اولیه",
+    en_us: "Cancel the initial request",
+  },
+  "edit reservation information": {
+    ar: "تعديل معلومات الحجز",
+    fa_ir: "ویرایش اطلاعات رزرو",
+    en_us: "Edit reservation information",
+  },
+
   "request details": {
     ar: "تفاصيل التطبيق",
     fa_ir: "جزئیات درخواست ",
@@ -857,7 +892,7 @@ export const messages = {
   "return to home": {
     ar: "العودة إلى المنزل",
     fa_ir: "بازگشت به خانه",
-    en_us: "return to home",
+    en_us: "Return to home",
   },
   amount: {
     ar: "كمية",
@@ -894,15 +929,30 @@ export const messages = {
     fa_ir: "اشتراک گذاری",
     en_us: "share",
   },
+  "rates to the tour": {
+    ar: "أسعار الجولة",
+    fa_ir: "امتیاز به تور",
+    en_us: "Rates to the tour",
+  },
   paypal: {
     ar: "پی پال",
     fa_ir: "پی پال",
     en_us: "Paypal",
   },
+  "the exact location of the place of movement": {
+    ar: "موقعیت مکانی دقیق مکان حرکت",
+    fa_ir: "موقعیت مکانی دقیق مکان حرکت",
+    en_us: "The exact location of the place of movement",
+  },
   "view invoices": {
     ar: "عرض الفواتير",
     fa_ir: "مشاهده فاکتورها",
     en_us: "View Invoices",
+  },
+  "view invoice": {
+    ar: "عرض الفاتورة",
+    fa_ir: "مشاهده فاکتور",
+    en_us: "View Invoice",
   },
   "pdf receipt": {
     ar: "إيصال pdf",
@@ -1018,6 +1068,16 @@ export const messages = {
     fa_ir: "درخواست توسط شما تایید شد",
     en_us: "The request has been approved by you",
   },
+  total: {
+    ar: "المجموع",
+    fa_ir: "جمع کل",
+    en_us: "total",
+  },
+  "base price": {
+    ar: "قیمت پایه",
+    fa_ir: "قیمت پایه",
+    en_us: "base price",
+  },
   call: {
     ar: "يتصل",
     fa_ir: "شماره تماس",
@@ -1027,6 +1087,29 @@ export const messages = {
     ar: "اتصال",
     fa_ir: "تماس",
     en_us: "Contact",
+  },
+  "your final and recorded details for the initial tour request. the price is calculated per person.":
+    {
+      ar: "بياناتك النهائية والمسجلة لطلب الجولة الأولية. يتم احتساب السعر للشخص الواحد.",
+      fa_ir:
+        "جزئیات نهایی و ثبت شده شما برای درخواست اولیه به تور. قیمت بر اساس هر نفر محسابه می‌شود.",
+      en_us:
+        "Your final and recorded details for the initial tour request. The price is calculated per person.",
+    },
+  "final invoice": {
+    ar: "الفاتورة النهائية",
+    fa_ir: "فاکتور نهایی",
+    en_us: "Final invoice",
+  },
+  "upload image": {
+    ar: "تحميل الصورة ",
+    fa_ir: "بارگذاری تصویر ",
+    en_us: "Upload original image",
+  },
+  "your request canceled": {
+    ar: "تم إلغاء طلبك بنجاح",
+    fa_ir: "درخواست شما لغو شد",
+    en_us: "your request canceled",
   },
   "no, cancle": {
     ar: "لا، إلغاء",
@@ -1214,6 +1297,16 @@ export const messages = {
     ar: "أحد عشر",
     fa_ir: "یادهم",
     en_us: "Eleventh",
+  },
+  "by canceling the request, your reservation process will be canceled": {
+    ar: "بإلغاء الطلب، سيتم إلغاء عملية الحجز الخاصة بك",
+    fa_ir: "با لغو درخواست، فرایند رزرو شما لغو می‌گردد",
+    en_us: "By canceling the request, your reservation process will be canceled",
+  },
+  "are you sure to cancel the request?": {
+    ar: "هل أنت متأكد من إلغاء الطلب؟",
+    fa_ir: "آیا از لغو درخواست اطمینان دارید؟",
+    en_ur: "Are you sure to cancel the request?",
   },
   "cancel request": {
     ar: "إلغاء الطلب",
@@ -1528,7 +1621,7 @@ export const messages = {
   "tour details": {
     ar: "تفاصيل الجولة",
     fa_ir: "جزئیات تور",
-    en_us: "Tour details",
+    en_us: "Tour Details",
   },
   "view tour details": {
     ar: "عرض تفاصيل الجولة",
@@ -1623,6 +1716,296 @@ export const messages = {
   "passengers who plan to travel with this tour. please check the submitted requests.": {
     ar: "المسافرون الذين يخططون للسفر بهذه الجولة. يرجى التحقق من الطلبات المقدمة.",
     fa_ir: "مسافرانی که قصد دارند با این تور سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",
-    en_us: "Passengers who plan to travel with this tour. Please check the submitted requests.",
+    en_us: "Passengers who plan to travel with this tour. Please check the submitted requests.",},
+  "tour capacity": {
+    ar: "قدرة الجولة",
+    fa_ir: "ظرفیت تور",
+    en_us: "Tour Capacity",
+  },
+  details: {
+    ar: "تفاصيل",
+    fa_ir: "جزئیات",
+    en_us: "Detail",
+  },
+  origin: {
+    ar: "أصل",
+    fa_ir: "مبدا",
+    en_us: "Origin",
+  },
+  destination: {
+    ar: "وجهة",
+    fa_ir: "مقصد",
+    en_us: "Destination",
+  },
+  images: {
+    ar: "الصور",
+    fa_ir: "تصاویر",
+    en_us: "Images",
+  },
+  facilities: {
+    ar: "مرافق",
+    fa_ir: "امکانات",
+    en_us: "Facilities",
+  },
+  "tour origin": {
+    ar: "أصل الجولة",
+    fa_ir: "مبدا تور",
+    en_us: "Tour Origin",
+  },
+  "tour destination": {
+    ar: "وجهة الجولة",
+    fa_ir: "مقصد تور",
+    en_us: "Tour Destination",
+  },
+  "tour date": {
+    ar: "تاريخ الجولة",
+    fa_ir: "تاریخ تور",
+    en_us: "Tour Date",
+  },
+  "tour images": {
+    ar: "صور الجولة",
+    fa_ir: "تصاویر تور",
+    en_us: "Tour Images",
+  },
+  "tour price": {
+    ar: "سعر الجولة",
+    fa_ir: "هزینه تور",
+    en_us: "Tour Price",
+  },
+  "tour title and details": {
+    ar: "عنوان الجولة وتفاصيلها",
+    fa_ir: "عنوان و جزئیات تور",
+    en_us: "Tour title and details",
+  },
+  "to find a tour, address and information about a tour for travelers in nuwayside.": {
+    ar: "لتصنيع السياحة، عنوان وشروط التورتان لمسافر بنوسيد.",
+    fa_ir: "برای ایجاد تور ، عنوان و توضیحاتی از تورتان برای مسافران بنویسید.",
+    en_us: "To find a tour, address and information about a tour for travelers in Nuwayside.",
+  },
+  cancel: {
+    ar: "يلغي",
+    fa_ir: "لغو",
+    en_us: "Cancel",
+  },
+  "tour title": {
+    ar: "عنوان الجولة",
+    fa_ir: "عنوان تور",
+    en_us: "Tour Title",
+  },
+  "title is required": {
+    ar: "العنوان مطلوب",
+    fa_ir: "عنوان اجباری است",
+    en_us: "Title is required",
+  },
+  "capacity and gender": {
+    ar: "القدرة والجنس",
+    fa_ir: "ظرفیت و جنسیت",
+    en_us: "Capacity and Gender",
+  },
+  "select the capacity and gender of the tour passengers": {
+    ar: "حدد السعة والجنس لركاب الرحلة",
+    fa_ir: "ظرفیت و جنسیت مسافران تور را انتخاب کنید",
+    en_us: "Select the capacity and gender of the tour passengers",
+  },
+  "enter the capacity (quantity)": {
+    ar: "أدخل السعة (الكمية)",
+    fa_ir: "ظرفیت را وارد کنید ( تعداد )",
+    en_us: "Enter the capacity (quantity)",
+  },
+  "the tour is open to children under 12 years old": {
+    ar: "الجولة مفتوحة للأطفال دون سن 12 عامًا",
+    fa_ir: "تور پذیرای کودکان زیر ۱۲ سال نیز میباشد",
+    en_us: "The tour is open to children under 12 years old",
+  },
+  "capacity is required": {
+    ar: "القدرة مطلوبة",
+    fa_ir: "ظرفیت تور اجباری است",
+    en_us: "Capacity is required",
+  },
+  "place of movement": {
+    ar: "مكان الحركة",
+    fa_ir: "مکان حرکت",
+    en_us: "Place of movement",
+  },
+  "to easily find the origin and start the tour, set the address and the map of the place of departure.":
+    {
+      ar: "للعثور بسهولة على نقطة الانطلاق وبدء الجولة، قم بتعيين العنوان وخريطة مكان المغادرة.",
+      fa_ir: "برای راحت پیدا کردن مبدا و شروع تور ، آدرس و نقشه مکان حرکت را قرارر دهید.",
+      en_us:
+        "To easily find the origin and start the tour, set the address and the map of the place of departure.",
+    },
+  "address is required": {
+    ar: "العنوان مطلوب",
+    fa_ir: "آدرس اجباری است",
+    en_us: "Address is required",
+  },
+  "select on map": {
+    ar: "حدد على الخريطة",
+    fa_ir: "انتخاب از روی نقشه",
+    en_us: "Select On Map",
+  },
+  submit: {
+    ar: "يُقدِّم",
+    fa_ir: "ثبت",
+    en_us: "Submit",
+  },
+  "the tour is one day": {
+    ar: "الجولة يوم واحد",
+    fa_ir: "تور یک روزه است",
+    en_us: "The tour is one day",
+  },
+  start: {
+    ar: "يبدأ",
+    fa_ir: "شروع",
+    en_us: "Start",
+  },
+  "choose or write the cost of your tour, you can give a discount to the original price.": {
+    ar: "اختر أو اكتب تكلفة جولتك، يمكنك إعطاء خصم على السعر الأصلي.",
+    fa_ir:
+      "هزینه تور خودتان را انتخاب کنید یا بنویسید ، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
+    en_us: "Choose or write the cost of your tour, you can give a discount to the original price.",
+  },
+  Free: {
+    ar: "مجاني",
+    fa_ir: "رایگان",
+    en_us: "Free",
+  },
+  "100,000 tooman": {
+    ar: "100,000 تومان",
+    fa_ir: "100,000 تومان",
+    en_us: "100,000 Tooman",
+  },
+  "500,000 tooman": {
+    ar: "500,000 تومان",
+    fa_ir: "500,000 تومان",
+    en_us: "500,000 Tooman",
+  },
+  "1,000,000 tooman": {
+    ar: "1,000,000 تومان",
+    fa_ir: "1,000,000 تومان",
+    en_us: "1,000,000 Tooman",
+  },
+  "2,000,000 tooman": {
+    ar: "2,000,000 تومان",
+    fa_ir: "2,000,000 تومان",
+    en_us: "1,000,000 Tooman",
+  },
+  "5,000,000 tooman": {
+    ar: "5,000,000 تومان",
+    fa_ir: "5,000,000 تومان",
+    en_us: "5,000,000 Tooman",
+  },
+  "you can write and add your own tour features. note that this section is optional.": {
+    ar: "يمكنك كتابة وإضافة ميزات الجولة الخاصة بك. لاحظ أن هذا القسم اختياري.",
+    fa_ir:
+      "شما می توانید امکانات تور خودتان را بنویسید و اضافه کنید. توجه داشته باشید این بخش اختیاری می‌باشد.",
+    en_us: "You can write and add your own tour features. Note that this section is optional.",
+  },
+  "discount can not be greater than 100": {
+    ar: "الخصم لا يمكن أن يكون أكثر من 100%",
+    fa_ir: "تخفیف نمی‌تواند از ۱۰۰ درصد بیشتر باشد",
+    en_us: "Discount can not be greater than 100",
+  },
+  "only number acceptable": {
+    ar: "الرقم الوحيد هو المقبول",
+    fa_ir: "فقط عدد قابل قبول است",
+    en_us: "Only number acceptable",
+  },
+  "only positive numbers acceptable": {
+    ar: "الأرقام الإيجابية فقط هي المقبولة",
+    fa_ir: "فقط اعداد مثبت قابل قبول است",
+    en_us: "Only positive numbers acceptable",
+  },
+  required: {
+    ar: "انها ضرورة",
+    fa_ir: "اجباری است",
+    en_us: "Required",
+  },
+  "select location on the map": {
+    ar: "حدد الموقع على الخريطة",
+    fa_ir: "لوکیشن را از روی نقشه انتخاب کنید",
+    en_us: "Select location on the map",
+  },
+  "create host": {
+    ar: "إنشاء مضيف",
+    fa_ir: "ایجاد میزبانی",
+    en_us: "Create Host",
+  },
+  "add facilities": {
+    ar: "أضف المرافق",
+    fa_ir: "امکانات خود را اضافه کنید",
+    en_us: "Add facilities",
+  },
+  "what do you want to create?": {
+    ar: "ماذا تريد أن تصنع؟",
+    fa_ir: "قصد ایجاد چه فرمی را دارید؟",
+    en_us: "What do you want to create?",
+  },
+  "you can create tours and hosts for your collection. choose one of the options as needed": {
+    ar: "يمكنك إنشاء جولات ومضيفين لمجموعتك. اختر أحد الخيارات حسب الحاجة",
+    fa_ir:
+      "شما می‌توانید برای مجموعه خود ، تور و میزبانی ایجاد کنید . طبق نیاز یکی از گزینه ها را انتخاب کنید",
+    en_us:
+      "You can create tours and hosts for your collection. Choose one of the options as needed",
+  },
+  flows: {
+    ar: "يطفو",
+    fa_ir: "فرایند ها",
+    en_us: "Flows",
+  },
+  "manage my hosts": {
+    ar: "إدارة مضيفي",
+    fa_ir: "مدیریت میزبانی های من",
+    en_us: "Manage My Hosts",
+  },
+  "host management": {
+    ar: "إدارة المضيف",
+    fa_ir: "مدیریت میزبانی",
+    en_us: "Host Management",
+  },
+  create: {
+    ar: "يخلق",
+    fa_ir: "ایجاد",
+    en_us: "Create",
+  },
+  "host type": {
+    ar: "نوع المضيف",
+    fa_ir: "نوع‌میزبانی",
+    en_us: "Host Type",
+  },
+  "host details": {
+    ar: "تفاصيل المضيف",
+    fa_ir: "جزئیات میزبان",
+    en_us: "Host Details",
+  },
+  "host address": {
+    ar: "عنوان المضيف",
+    fa_ir: "نشانی میزبان",
+    en_us: "Host Address",
+  },
+  "host capacity": {
+    ar: "سعة المضيف",
+    fa_ir: "ظرفیت میزبان",
+    en_us: "Host Capacity",
+  },
+  "host date": {
+    ar: "تاريخ المضيف",
+    fa_ir: "تاریخ میزبان",
+    en_us: "Host Date",
+  },
+  "host price": {
+    ar: "سعر المضيف",
+    fa_ir: "قیمت میزبان",
+    en_us: "Host Price",
+  },
+  "host images": {
+    ar: "صور المضيف",
+    fa_ir: "تصاویر میزبان",
+    en_us: "Host Images",
+  },
+  "host facilities": {
+    ar: "المرافق المضيفة",
+    fa_ir: "امکانات میزبان",
+    en_us: "Host Facilities",
   },
 };

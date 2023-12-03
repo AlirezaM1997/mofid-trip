@@ -25,6 +25,8 @@ query tourTransactionDetail($pk: ID!) {
         destination {
           ... on AccommodationQueryType {
             id
+            lat 
+            lng
             address
             avatarS3 {
               small

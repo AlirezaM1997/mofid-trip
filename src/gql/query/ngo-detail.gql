@@ -92,6 +92,12 @@ query NGODetail($pk: ID) {
         }
       }
       tourGuests {
+        avatarS3{
+          large
+          medium
+          small
+        }
+        id
         firstname
         lastname
         phoneNumber

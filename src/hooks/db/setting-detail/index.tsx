@@ -6,7 +6,7 @@ import NetInfo from "@react-native-community/netinfo";
 import { setSettingDetail } from "@src/slice/setting-detail-slice";
 import { Exact, LanguageChoiceEnum, useSettingDetailLazyQuery } from "@src/gql/generated";
 import { RootState } from "@src/store";
-import { useIsAuthenticated } from "@src/hooks/user";
+import { useIsAuthenticated } from "@src/hooks/auth";
 
 const useSettingDetailTable = () => {
   const dispatch = useDispatch();

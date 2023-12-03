@@ -54,9 +54,10 @@ declare module "@rneui/themed" {
     color?: ButtonProps["color"];
     type?: ButtonProps["type"];
   }
-  
+
   export interface DividerProps {
     thickness?: number;
+    vertical?: boolean;
     bgColor?: keyof Colors;
   }
 
