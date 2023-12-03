@@ -44,11 +44,11 @@ const Screen = () => {
   const [checked, setChecked] = useState<boolean>(false);
   const { data } = useSelector((state: RootState) => state.hostTransactionSlice);
 
-  const initialValues = { startTime: "", endTime: "" };
+  const initialValues = { dateStart: "", dateEnd: "" };
 
   const validationSchema = Yup.object().shape({
-    startTime: Yup.date().required(tr("Required")),
-    endTime: Yup.date().required(tr("Required")),
+    dateStart: Yup.date().required(tr("Required")),
+    dateEnd: Yup.date().required(tr("Required")),
   });
 
   const handleSubmit = values => {
@@ -70,10 +70,10 @@ const Screen = () => {
     const form: FormikValues = formikInnerRef.current;
     const date = moment(dayPressed).format("YYYY-MM-DD");
     if (checked) {
-      form.setFieldTouched("startTime", true);
-      form.setFieldTouched("endTime", true);
-      form.setFieldValue("startTime", date);
-      form.setFieldValue("endTime", date);
+      form.setFieldTouched("dateStart", true);
+      form.setFieldTouched("dateEnd", true);
+      form.setFieldValue("dateStart", date);
+      form.setFieldValue("dateEnd", date);
       setMarkedDays([
         {
           date: date,
@@ -84,8 +84,8 @@ const Screen = () => {
       ]);
     } else {
       if (markedDays.length === 0) {
-        form.setFieldTouched("startTime", true);
-        form.setFieldValue("startTime", date);
+        form.setFieldTouched("dateStart", true);
+        form.setFieldValue("dateStart", date);
         setMarkedDays([
           {
             date: date,
@@ -95,8 +95,8 @@ const Screen = () => {
           },
         ]);
       } else if (markedDays.length === 1) {
-        form.setFieldTouched("endTime", true);
-        form.setFieldValue("endTime", date);
+        form.setFieldTouched("dateEnd", true);
+        form.setFieldValue("dateEnd", date);
         const startDay = markedDays[0].date;
         const middleDays = getDaysBetween(moment(startDay), moment(dayPressed));
         setMarkedDays([
@@ -162,20 +162,20 @@ const Screen = () => {
           <Container>
             <View style={styles.showDateContainer}>
               <View style={styles.timeContainer}>
-                <Text body2 type={touched.startTime && errors.startTime ? "error" : "secondary"}>
+                <Text body2 type={touched.dateStart && errors.dateStart ? "error" : "secondary"}>
                   {tr("beginning")}: {getFirstDayFormatted()}
                 </Text>
-                {touched.startTime && errors.startTime && (
-                  <Text type="error">{touched.startTime && (errors.startTime as string)}</Text>
+                {touched.dateStart && errors.dateStart && (
+                  <Text type="error">{touched.dateStart && (errors.dateStart as string)}</Text>
                 )}
               </View>
               <Divider vertical={true} style={styles.divider} />
               <View style={styles.timeContainer}>
-                <Text body2 type={touched.endTime && errors.endTime ? "error" : "secondary"}>
+                <Text body2 type={touched.dateEnd && errors.dateEnd ? "error" : "secondary"}>
                   {tr("end")}: {getLastDayFormatted()}
                 </Text>
-                {touched.endTime && errors.endTime && (
-                  <Text type="error">{touched.endTime && (errors.endTime as string)}</Text>
+                {touched.dateEnd && errors.dateEnd && (
+                  <Text type="error">{touched.dateEnd && (errors.dateEnd as string)}</Text>
                 )}
               </View>
             </View>
