@@ -52,9 +52,15 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="wallet"
+        name="wallet/index"
         options={{
-          title: tr("wallet"),
+          title: tr("Wallet"),
+        }}
+      />
+      <Stack.Screen
+        name="wallet/history"
+        options={{
+          title: tr("Transaction History"),
         }}
       />
       <Stack.Screen
