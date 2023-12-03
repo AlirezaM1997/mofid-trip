@@ -1,0 +1,8 @@
+mutation projectAdd ($data: ProjectAddInputType!) {
+  projectAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}

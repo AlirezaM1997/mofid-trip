@@ -1,30 +1,31 @@
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
-import { BottomSheet, Button, Chip, Input, Text, useTheme } from "@rneui/themed";
-import { useRef, useState } from "react";
-import { Feather } from "@expo/vector-icons";
-import { ImageBackground, StyleSheet, View } from "react-native";
-import useTranslation from "@src/hooks/translation";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { router } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 import ButtonRow from "@modules/button-rows";
-import { Formik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
+import { BottomSheet, Chip, Input, Text } from "@rneui/themed";
+import { Button, useTheme } from "@rneui/themed";
+import { useProjectAddMutation, useTourAddMutation } from "@src/gql/generated";
+import useTranslation from "@src/hooks/translation";
+import { setHostCreateData } from "@src/slice/host-create-slice";
 import { RootState } from "@src/store";
-import { setTourCreateData } from "@src/slice/tour-create-slice";
-import { useTourAddMutation } from "@src/gql/generated";
+import { router } from "expo-router";
+import { Formik } from "formik";
+import { useRef, useState } from "react";
+import { ImageBackground, StyleSheet, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
-const Screen = () => {
+const HostCreateFacilitiesScreen = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const formikInnerRef = useRef();
   const [value, setValue] = useState<string | null>();
   const [isVisible, setIsVisible] = useState(false);
-  const { data } = useSelector((state: RootState) => state.tourCreateSlice);
+  const { data } = useSelector((state: RootState) => state.hostCreateSlice);
   const initialValues = data.facilities;
-  const [submit, { loading }] = useTourAddMutation();
+  const [submit, { loading }] = useProjectAddMutation();
 
   const handleChangeInput = e => {
     setValue(e.target.value);
@@ -49,7 +50,7 @@ const Screen = () => {
     const form = formikInnerRef.current;
     const done = await new Promise(resolve => {
       dispatch(
-        setTourCreateData({
+        setHostCreateData({
           ...data,
           facilities: form.values,
         })
@@ -63,7 +64,7 @@ const Screen = () => {
         },
       });
     }
-    setIsVisible(true);
+    // setIsVisible(true);
   };
 
   return (
@@ -77,7 +78,7 @@ const Screen = () => {
                 {tr("back")}
               </Button>,
             ]}>
-            <TourCreateTabs index={7} />
+            <HostCreateTabs index={7} />
 
             <WhiteSpace />
 
@@ -122,7 +123,7 @@ const Screen = () => {
               </View>
             </Container>
           </BottomButtonLayout>
-          <BottomSheet isVisible={isVisible}>
+          <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
             <Container>
               <ImageBackground
                 style={styles.rejectIcon}
@@ -138,7 +139,10 @@ const Screen = () => {
               </Text>
               <WhiteSpace />
               <ButtonRow>
-                <Button onPress={() => router.push('/tour/management')} color="secondary" type="outline">
+                <Button
+                  onPress={() => router.push("/tour/management")}
+                  color="secondary"
+                  type="outline">
                   {tr("Tour Management")}
                 </Button>
                 <Button onPress={() => router.push("/")}>{tr("Return to home")}</Button>
@@ -168,4 +172,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Screen;
+export default HostCreateFacilitiesScreen;

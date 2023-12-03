@@ -7,18 +7,18 @@ import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 
-type TourCreateTabProps = {
+type TourCreateTabsProps = {
   index: number;
 };
 
-const TourCreateTab = ({ index }: TourCreateTabProps) => {
+const TourCreateTabs = ({ index }: TourCreateTabsProps) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const scrollRef = useRef(null);
   const { x: initialX } = useLocalSearchParams();
   const x = useRef(0);
 
-  const data = useSelector((state: RootState) => state.tourCreateSlice.data)
+  const data = useSelector((state: RootState) => state.tourCreateSlice.data);
 
   useEffect(() => {
     if (scrollRef.current && initialX) {
@@ -131,4 +131,4 @@ const styles = StyleSheet.create({
   }),
 });
 
-export default TourCreateTab;
+export default TourCreateTabs;

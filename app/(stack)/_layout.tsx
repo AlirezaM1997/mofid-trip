@@ -1,10 +1,10 @@
 import React from "react";
+import useIsRtl from "@src/hooks/localization";
+import useTranslation from "@src/hooks/translation";
 import { Stack } from "expo-router";
 import { Feather } from "@expo/vector-icons";
-import useIsRtl from "@src/hooks/localization";
 import { Button, useTheme } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform } from "react-native";
 import { navigationRef } from "@src/utils/root-navigation";
 
 const HomeLayout = () => {
@@ -63,7 +63,7 @@ const HomeLayout = () => {
           title: tr("log in, sign up"),
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="tour/requests/toMyTours"
         options={{
           title: tr("apply to my tours"),
@@ -82,9 +82,51 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="host/create"
+        name="host/create/details"
         options={{
-          title: tr("Create Host"),
+          title: tr("Host Details"),
+        }}
+      />
+      <Stack.Screen
+        name="host/create/host-type"
+        options={{
+          title: tr("Host Type"),
+        }}
+      />
+      <Stack.Screen
+        name="host/create/address"
+        options={{
+          title: tr("Host Address"),
+        }}
+      />
+      <Stack.Screen
+        name="host/create/capacity"
+        options={{
+          title: tr("Host Capacity"),
+        }}
+      />
+      <Stack.Screen
+        name="host/create/date"
+        options={{
+          title: tr("Host Date"),
+        }}
+      />
+      <Stack.Screen
+        name="host/create/price"
+        options={{
+          title: tr("Host Price"),
+        }}
+      />
+      <Stack.Screen
+        name="host/create/images"
+        options={{
+          title: tr("Host Images"),
+        }}
+      />
+      <Stack.Screen
+        name="host/create/facilities"
+        options={{
+          title: tr("Host Facilities"),
         }}
       />
       <Stack.Screen
