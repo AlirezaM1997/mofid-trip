@@ -16,8 +16,9 @@ export default function AppLayout() {
   const { tr } = useTranslation();
   const { syncTable } = useProjectTable();
   const { loginData, isAuthenticated } = useSelector((state: RootState) => state?.authSlice);
+  
 
-  if (isAuthenticated && loginData.metadata.isNgo) {
+  if (isAuthenticated && loginData.metadata.is_ngo) {
     return <Redirect href="/dashboard" />;
   }
 

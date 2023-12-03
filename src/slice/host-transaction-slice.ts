@@ -1,5 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ProjectTransactionAddInputType, TourGenderEnum } from "@src/gql/generated";
+import {
+  ProjectGenderEnum,
+  ProjectTransactionAddInputType,
+  TourGenderEnum,
+} from "@src/gql/generated";
 
 type initialStateType = {
   data: ProjectTransactionAddInputType;
@@ -8,13 +12,13 @@ type initialStateType = {
 export const initialState: initialStateType = {
   data: {
     projectId: null,
-    capacity: {
-      capacityNumber: 0,
-      gender: TourGenderEnum.Both,
+    guests: {
+      guestNumber: 0,
+      gender: ProjectGenderEnum.Both,
       childAccept: false,
     },
-    endTime: null,
-    startTime: null,
+    dateEnd: null,
+    dateStart: null,
   },
 };
 
