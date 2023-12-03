@@ -1,11 +1,12 @@
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
+import ComingSoon from "@modules/coming-soon";
+import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
 import { Button, CheckBox, Input, Text, useTheme } from "@rneui/themed";
 import { TourGenderEnum } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
-import { setTourCreateData } from "@src/slice/tour-create-slice";
+import { setHostCreateData } from "@src/slice/host-create-slice";
 import { RootState } from "@src/store";
 import { router } from "expo-router";
 import { Formik } from "formik";
@@ -13,11 +14,11 @@ import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
-const Screen = () => {
+const HostCreateCapacityScreen = () => {
   const dispatch = useDispatch();
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { data } = useSelector((state: RootState) => state.tourCreateSlice);
+  const { data } = useSelector((state: RootState) => state.hostCreateSlice);
 
   const initialValues = {
     capacityNumber: data.capacity.capacityNumber,
@@ -33,18 +34,18 @@ const Screen = () => {
 
   const handleSubmit = values => {
     dispatch(
-      setTourCreateData({
+      setHostCreateData({
         ...data,
         capacity: {
           ...values,
-          capacityNumber: parseInt(values.capacityNumber)
+          capacityNumber: parseInt(values.capacityNumber),
         },
       })
     );
     router.push({
-      pathname: "tour/create/origin",
+      pathname: "host/create/date",
       params: {
-        x: -95 * 2,
+        x: -102 * 4,
       },
     });
   };
@@ -62,7 +63,7 @@ const Screen = () => {
               {tr("back")}
             </Button>,
           ]}>
-          <TourCreateTabs index={1} />
+          <HostCreateTabs index={3} />
           <WhiteSpace size={20} />
           <Container>
             <Text heading2 bold>
@@ -77,7 +78,7 @@ const Screen = () => {
               onChangeText={handleChange("capacityNumber")}
               onBlur={handleBlur("capacityNumber")}
               value={values.capacityNumber}
-              errorMessage={touched.capacityNumber && errors.capacityNumber}
+              errorMessage={touched.capacityNumber && (errors.capacityNumber as string)}
             />
 
             <CheckBox
@@ -150,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Screen;
+export default HostCreateCapacityScreen;

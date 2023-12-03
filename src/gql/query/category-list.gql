@@ -1,5 +1,5 @@
 query categoryList($page: PageType, $search: String) {
-  categoryList(search: $search) {
+  categoryList(page: $page, search: $search) {
     pageCount
     count
     data {

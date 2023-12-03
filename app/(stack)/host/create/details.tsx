@@ -1,40 +1,38 @@
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
+import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
 import { Button, Input, Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { initialState, setTourCreateData } from "@src/slice/tour-create-slice";
+import { initialState, setHostCreateData } from "@src/slice/host-create-slice";
 import { RootState } from "@src/store";
 import { router } from "expo-router";
 import { Formik } from "formik";
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
-const Screen = () => {
+const HostCreateDetailsScreen = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const { data } = useSelector((state: RootState) => state.tourCreateSlice);
-  const { title, description } = useSelector((state: RootState) => state.tourCreateSlice.data);
+  const { data } = useSelector((state: RootState) => state.hostCreateSlice);
+  const { name, description } = useSelector((state: RootState) => state.hostCreateSlice.data);
 
-  const initialValues = { title: title, description: description };
-
+  const initialValues = { name: name, description: description };
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required(tr("Title is required")),
+    name: Yup.string().required(tr("Title is required")),
     description: Yup.string().nullable(),
   });
 
   const handleSubmit = values => {
     dispatch(
-      setTourCreateData({
+      setHostCreateData({
         ...data,
         ...values,
       })
     );
     router.push({
-      pathname: "tour/create/capacity",
+      pathname: "host/create/host-type",
       params: {
         x: -95,
       },
@@ -43,7 +41,7 @@ const Screen = () => {
 
   useEffect(() => {
     // reset the redux
-    return () => dispatch(setTourCreateData(initialState.data));
+    return () => dispatch(setHostCreateData(initialState.data));
   }, []);
 
   return (
@@ -51,7 +49,7 @@ const Screen = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}>
-      {({ values, errors, touched, handleChange, handleBlur, setFieldValue, handleSubmit }) => (
+      {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
         <BottomButtonLayout
           buttons={[
             <Button onPress={handleSubmit}>{tr("Next")}</Button>,
@@ -59,7 +57,7 @@ const Screen = () => {
               {tr("back")}
             </Button>,
           ]}>
-          <TourCreateTabs index={0} />
+          <HostCreateTabs index={0} />
           <WhiteSpace size={20} />
           <Container>
             <Text heading2 bold>
@@ -73,13 +71,13 @@ const Screen = () => {
             <WhiteSpace size={20} />
 
             <Input
-              name="title"
+              name="name"
               placeholder={tr("Tour Title")}
               textAlignVertical="top"
-              onChangeText={handleChange("title")}
-              onBlur={handleBlur("title")}
-              value={values.title}
-              errorMessage={touched.title && errors.title}
+              onChangeText={handleChange("name")}
+              onBlur={handleBlur("name")}
+              value={values.name}
+              errorMessage={touched.name && (errors.name as string)}
             />
             <Input
               name="description"
@@ -87,7 +85,7 @@ const Screen = () => {
               onChangeText={handleChange("description")}
               onBlur={handleBlur("description")}
               value={values.description}
-              errorMessage={touched.description && errors.description}
+              errorMessage={touched.description && (errors.description as string)}
               textAlignVertical="top"
               multiline={true}
               numberOfLines={4}
@@ -99,8 +97,4 @@ const Screen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  formikContainer: {},
-});
-
-export default Screen;
+export default HostCreateDetailsScreen;
