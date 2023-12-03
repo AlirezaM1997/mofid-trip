@@ -48,7 +48,10 @@ const Page: React.FC = ({ ...props }) => {
       return;
     }
     dispatch(setHostTransactionData(initialState.data));
-    router.push({ pathname: "host/transaction/add/capacity", params: { projectId, name } });
+    router.push({
+      pathname: "host/transaction/add/capacity",
+      params: { projectId: projectId, name: name },
+    });
   };
 
   useEffect(() => {
@@ -106,7 +109,7 @@ const Page: React.FC = ({ ...props }) => {
         <View style={style.left}>
           <Text style={style.priceTitle}>{tr("Price")}</Text>
           <View style={style.priceContainer}>
-            <Text variant="body1" style={style.priceNumber}>
+            <Text body1 style={style.priceNumber}>
               ${localizeNumber(data.projectDetail?.price)}
             </Text>
             <Text style={style.priceText}> / {tr("Night")}</Text>

@@ -131,21 +131,30 @@ const HostCreateFacilitiesScreen = () => {
                 source={require("@assets/image/check.svg")}
               />
               <Text center heading2 bold>
-                {tr('Your hosting creation request has been successfully registered')}
+                {tr("Your hosting creation request has been successfully registered")}
               </Text>
               <Text center>
-                کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران
-                نمایش داده شود.
+                کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به
+                مسافران نمایش داده شود.
               </Text>
               <WhiteSpace />
               <ButtonRow>
                 <Button
-                  onPress={() => router.push("/tour/management")}
+                  onPress={() => {
+                    router.push("/host/management");
+                    setIsVisible(false);
+                  }}
                   color="secondary"
                   type="outline">
-                  {tr("Tour Management")}
+                  {tr("Host Management")}
                 </Button>
-                <Button onPress={() => router.push("/")}>{tr("Return to home")}</Button>
+                <Button
+                  onPress={() => {
+                    router.push("/");
+                    setIsVisible(false);
+                  }}>
+                  {tr("Return to home")}
+                </Button>
               </ButtonRow>
             </Container>
           </BottomSheet>

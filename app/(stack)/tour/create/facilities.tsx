@@ -140,12 +140,21 @@ const Screen = () => {
               <WhiteSpace />
               <ButtonRow>
                 <Button
-                  onPress={() => router.push("/tour/management")}
+                  onPress={() => {
+                    router.push("/tour/management");
+                    setIsVisible(false);
+                  }}
                   color="secondary"
                   type="outline">
                   {tr("Tour Management")}
                 </Button>
-                <Button onPress={() => router.push("/")}>{tr("Return to home")}</Button>
+                <Button
+                  onPress={() => {
+                    router.push("/");
+                    setIsVisible(false);
+                  }}>
+                  {tr("Return to home")}
+                </Button>
               </ButtonRow>
             </Container>
           </BottomSheet>
