@@ -182,7 +182,6 @@ const Screen = () => {
               </View>
             </View>
           </Container>
-
         </BottomButtonLayout>
       )}
     </Formik>

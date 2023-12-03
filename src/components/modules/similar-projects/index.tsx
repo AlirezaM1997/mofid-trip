@@ -37,7 +37,7 @@ const Item = ({ project }: ItemPropsType) => {
 };
 
 const SimilarProjects = ({ projects, currentProjectId }: PropsType) => {
-  const handlePress = (project: ProjectQueryType) => router.push(`/project/${project.id}`);
+  const handlePress = (project: ProjectQueryType) => router.push(`/host/${project.id}`);
 
   return (
     <ScrollView horizontal style={style.container}>

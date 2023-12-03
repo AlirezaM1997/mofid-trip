@@ -10,12 +10,21 @@ import BottomButtonLayout from "@components/layout/bottom-button";
 const SuccessPayment = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { id } = useLocalSearchParams();
+  const { id, type } = useLocalSearchParams();
   return (
     <BottomButtonLayout
       contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
       buttons={[
-        <Button onPress={() => router.push(`/successReceipt?id=${id}`)}>
+        <Button
+          onPress={() =>
+            router.push({
+              pathname:
+                type === "tour"
+                  ? `tour/transaction/successReceipt`
+                  : `host/transaction/successReceipt`,
+              params: { id },
+            })
+          }>
           {tr("view receipt")}
         </Button>,
       ]}>

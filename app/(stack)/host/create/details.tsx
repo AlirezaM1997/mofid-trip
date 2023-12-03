@@ -61,18 +61,18 @@ const HostCreateDetailsScreen = () => {
           <WhiteSpace size={20} />
           <Container>
             <Text heading2 bold>
-              {tr("Tour title and details")}
+              {tr("Host title and details")}
             </Text>
             <Text type="grey3">
               {tr(
-                "To find a tour, address and information about a tour for travelers in Nuwayside."
+                "To find a host, address and information about a host for travelers in Nuwayside."
               )}
             </Text>
             <WhiteSpace size={20} />
 
             <Input
               name="name"
-              placeholder={tr("Tour Title")}
+              placeholder={tr("Host Title")}
               textAlignVertical="top"
               onChangeText={handleChange("name")}
               onBlur={handleBlur("name")}
@@ -81,7 +81,7 @@ const HostCreateDetailsScreen = () => {
             />
             <Input
               name="description"
-              placeholder={tr("Tour Details")}
+              placeholder={tr("Host Details")}
               onChangeText={handleChange("description")}
               onBlur={handleBlur("description")}
               value={values.description}

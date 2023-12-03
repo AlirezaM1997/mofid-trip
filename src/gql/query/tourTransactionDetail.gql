@@ -5,6 +5,9 @@ query tourTransactionDetail($pk: ID!) {
     description
     modifiedDate
     invoiceNumber
+    tourguestSet {
+      id
+    }
     status {
       isActive
       step
@@ -25,7 +28,7 @@ query tourTransactionDetail($pk: ID!) {
         destination {
           ... on AccommodationQueryType {
             id
-            lat 
+            lat
             lng
             address
             avatarS3 {

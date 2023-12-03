@@ -288,6 +288,26 @@ export const messages = {
     fa_ir: "مسافر",
     en_us: "Person",
   },
+  "cancel and edit": {
+    ar: "إلغاء وتحرير",
+    fa_ir: "لغو و ویرایش",
+    en_us: "cancel and edit",
+  },
+  "submit request": {
+    ar: "تقديم الطلب",
+    fa_ir: "ارسال درخواست",
+    en_us: "submit request",
+  },
+  "your initial request will be approved or rejected by the tour after it is submitted": {
+    ar: "ستتم الموافقة على طلبك الأولي أو رفضه بواسطة الجولة بعد تقديمه",
+    fa_ir: "درخواست اولیه شما پس از ارسال ، توسط تور تایید یا رد خواهد شد",
+    en_us: "your initial request will be approved or rejected by the tour after it is submitted",
+  },
+  "are you sure to confirm the request?": {
+    ar: "هل أنت متأكد من تسجيل الطلب؟",
+    fa_ir: "آیا مطمئن به ثبت درخواست هستید؟",
+    en_us: "are you sure to confirm the request?",
+  },
   persons: {
     ar: "الاشخاص",
     fa_ir: "مسافران",
@@ -307,6 +327,16 @@ export const messages = {
     ar: "سعر",
     fa_ir: "هزینه",
     en_us: "Price",
+  },
+  "my cards": {
+    ar: "بطاقاتي",
+    fa_ir: "کارت‌های من",
+    en_us: "my cards",
+  },
+  increase: {
+    ar: "يزيد",
+    fa_ir: "افزایش",
+    en_us: "Increase",
   },
   "privacy and ownership: all intellectual and material rights belong to mofidtrip. safeguarding the privacy of individuals and organizations is a top priority for mofidtrip. the mofidtrip platform is committed to employing the best methods, in collaboration with a specialized technical team, to ensure the protection of individuals' and organizations' secrets. furthermore, efforts are made to develop the necessary technology to enhance the security of your use of the platform.":
     {
@@ -576,6 +606,7 @@ export const messages = {
     fa_ir: "ظرفیت را وارد کنید ( تعداد )",
     en_us: "Enter the capacity (quantity)",
   },
+
   "number of people": {
     ar: "عدد الاشخاص",
     fa_ir: "تعداد نفرات",
@@ -773,6 +804,16 @@ export const messages = {
     fa_ir: "نه، لغو",
     en_us: "No, Cancel",
   },
+  "your request has been successfully submitted": {
+    ar: "لقد تم تسجيل طلبك بنجاح",
+    fa_ir: "درخواست شما با موفقیت ثبت شد",
+    en_us: "Your request has been successfully submitted",
+  },
+  "wallet balance": {
+    ar: "توازن الحقيبة",
+    fa_ir: "موجودی کیف",
+    en_us: "Wallet balance",
+  },
   "unsuccessful payment, wallet balance is not enough": {
     ar: "عملية دفع غير ناجحة، رصيد المحفظة غير كافي",
     fa_ir: "پرداخت ناموفق ، موجودی کیف پول کافی نمی‌باشد",
@@ -814,10 +855,20 @@ export const messages = {
     fa_ir: "کد رهگیری",
     en_us: "Tracking Code",
   },
+  "latest transactions": {
+    ar: "أحدث المعاملات",
+    fa_ir: "آخرین تراکنش ها",
+    en_us: "Latest transactions",
+  },
   date: {
     ar: "تاريخ",
     fa_ir: "تاریخ",
     en_us: "Date",
+  },
+  "hosting type": {
+    ar: "نوع الاستضافة",
+    fa_ir: "نوع میزبانی",
+    en_us: "Hosting type",
   },
   "successful transfer": {
     ar: "نقل ناجح",
@@ -828,6 +879,47 @@ export const messages = {
     ar: "وقت",
     fa_ir: "زمان",
     en_us: "Time",
+  },
+  withdraw: {
+    ar: "محصول",
+    fa_ir: "برداشت",
+    en_us: "Withdraw ",
+  },
+  "increase balance": {
+    ar: "زيادة المخزون",
+    fa_ir: "افزایش موجودی",
+    en_us: "increase balance ",
+  },
+  "withdrawal from the wallet": {
+    ar: "الانسحاب من الحقيبة",
+    fa_ir: "برداشت از کیف",
+    en_us: "withdrawal from the wallet",
+  },
+  "all your recent financial transactions and for you (all transactions are in tomans)": {
+    ar: "جميع معاملاتك المالية الأخيرة ولأجلك (جميع المعاملات بالتومان)",
+    fa_ir: "تمامی تراکنش های مالی اخیر شما و برای شما ( تمامی تراکنش ها به تومان میباشد )",
+    en_us: "All your recent financial transactions and for you (all transactions are in Tomans) ",
+  },
+  "transaction history": {
+    ar: "تاريخ المعاملات",
+    fa_ir: "تاریخچه تراکنش ها",
+    en_us: "Transaction history ",
+  },
+  "management and use of inventory increase and withdrawal services, view transaction history": {
+    ar: "إدارة واستخدام خدمات زيادة وسحب المخزون، وعرض تاريخ المعاملات",
+    fa_ir: "مدیریت و استفاده از سرویس های افزایش موجودی و برداشت ، مشاهده تاریخچه تراکنش ها",
+    en_us:
+      "Management and use of inventory increase and withdrawal services, view transaction history",
+  },
+  "wallet and recent transactions": {
+    ar: "المحفظة والمعاملات الأخيرة",
+    fa_ir: "کیف پول و تراکنش های اخیر",
+    en_us: "Wallet and recent transactions",
+  },
+  wallet: {
+    ar: "محفظة",
+    fa_ir: "کیف پول",
+    en_us: "wallet",
   },
   transmitter: {
     ar: "الارسال",
@@ -898,6 +990,11 @@ export const messages = {
     ar: "أسعار الجولة",
     fa_ir: "امتیاز به تور",
     en_us: "Rates to the tour",
+  },
+  "rates to the host": {
+    ar: "أسعار الجولة",
+    fa_ir: "امتیاز به میزبان",
+    en_us: "Rates to the host",
   },
   paypal: {
     ar: "پی پال",
@@ -1040,6 +1137,14 @@ export const messages = {
         "جزئیات نهایی و ثبت شده شما برای درخواست اولیه به تور. قیمت بر اساس هر نفر محسابه می‌شود.",
       en_us:
         "Your final and recorded details for the initial tour request. The price is calculated per person.",
+    },
+  "your final and recorded details for the initial host request. the price is calculated per person.":
+    {
+      ar: "بياناتك النهائية والمسجلة لطلب الجولة الأولية. يتم احتساب السعر للشخص الواحد.",
+      fa_ir:
+        "جزئیات نهایی و ثبت شده شما برای درخواست اولیه به میزبان. قیمت بر اساس هر نفر محسابه می‌شود.",
+      en_us:
+        "Your final and recorded details for the initial host request. The price is calculated per person.",
     },
   "final invoice": {
     ar: "الفاتورة النهائية",
@@ -1493,6 +1598,12 @@ export const messages = {
     fa_ir: "تعداد مسافران",
     en_us: "Passengers Count",
   },
+
+  "confirm request": {
+    ar: "طلب التسجيل",
+    fa_ir: "ثبت درخواست",
+    en_us: "confirm request",
+  },
   "group leader information": {
     ar: "معلومات قائد المجموعة",
     fa_ir: "اطلاعات سرگروه",
@@ -1528,10 +1639,30 @@ export const messages = {
     fa_ir: "بدون آدرس",
     en_us: "No Address",
   },
+  "selective hosting": {
+    ar: "استضافة انتقائية",
+    fa_ir: "میزبانی انتخابی",
+    en_us: "Selective hosting",
+  },
+  "your registered details for initial host reservation": {
+    ar: "بياناتك المسجلة لطلب الاستضافة الأولي والحجز",
+    fa_ir: "جزئیات ثبت شده شما برای درخواست و رزرو اولیه میزبانی",
+    en_us: "your registered details for initial host reservation",
+  },
   authentication: {
     ar: "المصادقة",
     fa_ir: "احراز هویت",
     en_us: "Authentication",
+  },
+  chat: {
+    ar: "رسالة",
+    fa_ir: "پیام",
+    en_us: "chat",
+  },
+  "final details": {
+    ar: "التفاصيل النهائية",
+    fa_ir: "جزئیات نهایی",
+    en_us: "final details",
   },
   "final information": {
     ar: "المعلومات النهائية",
@@ -1567,6 +1698,11 @@ export const messages = {
     ar: "عرض تفاصيل الجولة",
     fa_ir: "مشاهده جزئیات تور",
     en_us: "View tour details",
+  },
+  "view host details": {
+    ar: "عرض تفاصيل الجولة",
+    fa_ir: "مشاهده جزئیات میزبان",
+    en_us: "View host details",
   },
   "tour management": {
     ar: "إدارة الرحلات",
@@ -1718,6 +1854,11 @@ export const messages = {
     fa_ir: "لغو",
     en_us: "Cancel",
   },
+  "host reservation": {
+    ar: "حجز الاستضافة",
+    fa_ir: "رزرو میزبانی",
+    en_us: "host reservation",
+  },
   "tour title": {
     ar: "عنوان الجولة",
     fa_ir: "عنوان تور",
@@ -1752,6 +1893,16 @@ export const messages = {
     ar: "القدرة مطلوبة",
     fa_ir: "ظرفیت تور اجباری است",
     en_us: "Capacity is required",
+  },
+  "city is required": {
+    ar: "المدينة مطلوبة",
+    fa_ir: "شهر اجباری است",
+    en_us: "City is required",
+  },
+  "province is required": {
+    ar: "المحافظة مطلوبة",
+    fa_ir: "استان اجباری است",
+    en_us: "Province is required",
   },
   "place of movement": {
     ar: "مكان الحركة",
@@ -1938,5 +2089,85 @@ export const messages = {
     ar: "المرافق المضيفة",
     fa_ir: "امکانات میزبان",
     en_us: "Host Facilities",
+  },
+  "your request to create a tour has been successfully registered": {
+    ar: "لقد تم تسجيل طلبك لإنشاء جولة بنجاح",
+    fa_ir: "درخواست ایجاد تور شما با موفقیت ثبت شد",
+    en_us: "Your request to create a tour has been successfully registered",
+  },
+  "wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.": {
+    ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل جولتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
+    fa_ir: "کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
+    en_us: "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.",
+  },
+  "your hosting creation request has been successfully registered": {
+    ar: "لقد تم تسجيل طلب إنشاء الاستضافة الخاص بك بنجاح",
+    fa_ir: "درخواست ایجاد میزبانی شما با موفقیت ثبت شد",
+    en_us: "Your hosting creation request has been successfully registered",
+  },
+  "wait less than 48 hours for your hosting to be registered by trip's helpful support and displayed to travelers.": {
+    ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل استضافتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
+    fa_ir: "کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
+    en_us: "Wait less than 48 hours for your hosting to be registered by Trip's helpful support and displayed to travelers.",
+  },
+  "pictures related to the host": {
+    ar: "الصور المتعلقة بالمضيف",
+    fa_ir: "تصاویر مربوط به میزبانی",
+    en_us: "Pictures related to the host",
+  },
+  "you can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.": {
+    ar: "يمكنك تحميل الصور المتعلقة بمضيفك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
+    fa_ir: "شما می توانید تصاویر مربوط به هاست خود را آپلود کنید، لطفا توجه داشته باشید که حجم تصاویر باید کمتر از 3 مگابایت باشد. توجه داشته باشید که این بخش اختیاری است.",
+    en_us: "You can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.",
+  },
+  "you can write and add your own host features. note that this section is optional.": {
+    ar: "يمكنك كتابة وإضافة ميزات المضيف الخاصة بك. لاحظ أن هذا القسم اختياري.",
+    fa_ir: "شما می توانید ویژگی های میزبانی خود را بنویسید و اضافه کنید. توجه داشته باشید که این بخش اختیاری است.",
+    en_us: "You can write and add your own host features. Note that this section is optional.",
+  },
+  "choose or write the cost of your host, you can give a discount to the original price.": {
+    ar: "اختر أو اكتب تكلفة مضيفك، ويمكنك تقديم خصم على السعر الأصلي.",
+    fa_ir: "هزینه میزبانی خود را انتخاب کنید یا بنویسید، می توانید به قیمت اصلی تخفیف بدهید.",
+    en_us: "Choose or write the cost of your host, you can give a discount to the original price.",
+  },
+  "the host is one day": {
+    ar: "المضيف هو يوم واحد",
+    fa_ir: "میزبانی یک روز است",
+    en_us: "The host is one day",
+  },
+  "select the capacity and gender of the host passengers": {
+    ar: "حدد سعة وجنس الركاب المضيفين",
+    fa_ir: "ظرفیت و جنسیت مسافران میزبان را انتخاب کنید",
+    en_us: "Select the capacity and gender of the host passengers",
+  },
+  "the host is open to children under 12 years old": {
+    ar: "المضيف مفتوح للأطفال دون سن 12 عامًا",
+    fa_ir: "میزبانی پذیرای کودکان زیر ۱۲ سال است.",
+    en_us: "The host is open to children under 12 years old",
+  },
+  "to easily find the origin and start the host, set the address and the map of the place of departure.": {
+    ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
+    fa_ir: "برای یافتن آسان مبدا و راه اندازی میزبانی، آدرس و نقشه محل عزیمت را تنظیم کنید.",
+    en_us: "To easily find the origin and start the host, set the address and the map of the place of departure.",
+  },
+  "host title and details": {
+    ar: "عنوان المضيف والتفاصيل",
+    fa_ir: "عنوان میزبانی و جزئیات",
+    en_us: "host title and details",
+  },
+  "to find a host, address and information about a host for travelers in nuwayside.": {
+    ar: "لإنشاء مضيف، أدخل عنوانًا ووصفًا إضافيًا.",
+    fa_ir: "برای ایجاد میزبانی، عنوان و توضیحات تکمیلی را وارد کنید.",
+    en_us: "To find a host, address and information about a host for travelers in Nuwayside.",
+  },
+  "host title": {
+    ar: "عنوان المضيف",
+    fa_ir: "عنوان میزبان",
+    en_us: "Host Title",
+  },
+  "determine the type of space and your hosting environment.": {
+    ar: "تحديد نوع المساحة وبيئة الاستضافة الخاصة بك.",
+    fa_ir: "نوع فضا و محیط میزبانی خودتان را تعیین کنید.",
+    en_us: "Determine the type of space and your hosting environment.",
   },
 };

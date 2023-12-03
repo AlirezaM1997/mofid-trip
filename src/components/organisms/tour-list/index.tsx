@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import TourCard from "@modules/tour-card";
+import TourCard from "@modules/tour/card";
 import useTourTable from "@src/hooks/db/tour";
 import React, { useEffect, useState } from "react";
 import useTranslation from "@src/hooks/translation";

@@ -3,22 +3,46 @@ query projectTransactionDetail($pk: ID!) {
     id
     dateEnd
     dateStart
+    description
+    modifiedDate
+    invoiceNumber
+    createdDate
     owner {
       id
       fullname
       firstname
     }
+    status {
+      step
+      isActive
+    }
     guestSet {
+      id
       name
     }
     project {
       id
-      tax
       name
+      tax
       price
+      description
+      categories {
+        name
+      }
+      facilities {
+        id
+        enName
+      }
       accommodation {
         id
         address
+        lat
+        lng
+        avatarS3 {
+          small
+          medium
+          large
+        }
       }
     }
   }

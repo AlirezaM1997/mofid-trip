@@ -5,7 +5,7 @@ import useProjectTable from "@src/hooks/db/project";
 import { ProjectQueryType } from "@src/gql/generated";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView, View, StyleSheet } from "react-native";
-import HostCard from "@modules/host-card";
+import HostCard from "@modules/host/card";
 import Container from "@atoms/container";
 
 function HostList() {

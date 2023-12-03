@@ -30,7 +30,7 @@ const Item = ({ tour }: ItemPropsType) => {
         <Text numberOfLines={1} style={style.projectAddress} body2>
           {(tour.destination as AccommodationQueryType)?.address}
         </Text>
-        <Text style={style.price}>${tour.prices?.[0].price.toString()}</Text>
+        <Text style={style.price}>${tour.packages[0].price.toString()}</Text>
       </View>
     </View>
   );
@@ -55,7 +55,7 @@ const SimilarTours = ({ tours, currentTourId }: PropsType) => {
 };
 
 const style = StyleSheet.create({
-  contentContainerStyle: {gap: 15, paddingVertical: 5},
+  contentContainerStyle: { gap: 15, paddingVertical: 5 },
   dummyContent: { width: 10 },
   card: {
     borderRadius: 10,

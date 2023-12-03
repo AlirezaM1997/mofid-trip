@@ -111,7 +111,7 @@ const HostCreateAddressScreen = () => {
             </Text>
             <Text type="grey3">
               {tr(
-                "To easily find the origin and start the tour, set the address and the map of the place of departure."
+                "To easily find the origin and start the host, set the address and the map of the place of departure."
               )}
             </Text>
             <WhiteSpace size={20} />
