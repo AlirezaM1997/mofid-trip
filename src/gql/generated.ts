@@ -835,13 +835,6 @@ export enum ProjectTagEnum {
   Trend = 'TREND'
 }
 
-export type ProjectTranactionGuestInputType = {
-  /** Gender of the guests. */
-  gender: GuestGenderEnum;
-  /** Number of the guests */
-  guestNumber: Scalars['Int']['input'];
-};
-
 /** Input type for adding a new project transaction. */
 export type ProjectTransactionAddInputType = {
   /** End date of the transaction. */
@@ -851,7 +844,7 @@ export type ProjectTransactionAddInputType = {
   /** Description of the transaction. */
   description?: InputMaybe<Scalars['String']['input']>;
   /** List of guest information. */
-  guests: ProjectTranactionGuestInputType;
+  guests: ProjectTransactionGuestInputType;
   /** ID of the associated project. */
   projectId: Scalars['ID']['input'];
 };
@@ -870,6 +863,13 @@ export type ProjectTransactionEditInputType = {
 export type ProjectTransactionFilterType = {
   /** Filter by transaction status step. */
   statusStep?: InputMaybe<TransactionStatusEnum>;
+};
+
+export type ProjectTransactionGuestInputType = {
+  /** Gender of the guests. */
+  gender: GuestGenderEnum;
+  /** Number of the guests */
+  guestNumber: Scalars['Int']['input'];
 };
 
 /** Type representing a page of ProjectTransactionQueryType objects. */
@@ -1536,7 +1536,7 @@ export type TourTransactionQueryType = {
   /** Status information for the transaction. */
   status?: Maybe<TourStatusQueryType>;
   /** Guest information for the transaction. */
-  tourGuests?: Maybe<TourGuestQueryType>;
+  tourGuests?: Maybe<Array<Maybe<TourGuestQueryType>>>;
   /** Tour Package associated with the transaction. */
   tourPackage?: Maybe<TourPackageType>;
   tourguestSet: Array<TourGuestQueryType>;
@@ -1643,7 +1643,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
+  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -1959,7 +1959,7 @@ export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionLi
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, fullname?: string | null, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null };
+export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, fullname?: string | null, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, wallet?: { __typename?: 'UserWalletType', balance: number, createdTime: any, id: string, modifiedTime: any, walletTransactions: Array<{ __typename?: 'WalletTransactionQueryType', action: WalletWalletTransactionActionChoices, amount: number, createdTime?: any | null, id: string, invoiceNumber: string, modifiedTime?: any | null, purchaseRefId?: number | null }>, walletCards: Array<{ __typename?: 'BackCardQueryType', id: string, title?: string | null }> } | null } | null };
 
 
 export const CreateLoginDocument = gql`
@@ -3334,6 +3334,25 @@ export const UserDetailDocument = gql`
     isNgo
     ngo {
       id
+    }
+    wallet {
+      balance
+      createdTime
+      id
+      modifiedTime
+      walletTransactions {
+        action
+        amount
+        createdTime
+        id
+        invoiceNumber
+        modifiedTime
+        purchaseRefId
+      }
+      walletCards {
+        id
+        title
+      }
     }
   }
 }

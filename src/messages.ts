@@ -880,6 +880,16 @@ export const messages = {
     fa_ir: "برداشت",
     en_us: "Withdraw ",
   },
+  "increase balance": {
+    ar: "زيادة المخزون",
+    fa_ir: "افزایش موجودی",
+    en_us: "increase balance ",
+  },
+  "withdrawal from the wallet": {
+    ar: "الانسحاب من الحقيبة",
+    fa_ir: "برداشت از کیف",
+    en_us: "withdrawal from the wallet",
+  },
   "all your recent financial transactions and for you (all transactions are in tomans)": {
     ar: "جميع معاملاتك المالية الأخيرة ولأجلك (جميع المعاملات بالتومان)",
     fa_ir: "تمامی تراکنش های مالی اخیر شما و برای شما ( تمامی تراکنش ها به تومان میباشد )",
