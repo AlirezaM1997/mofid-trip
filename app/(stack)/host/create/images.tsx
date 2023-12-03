@@ -51,10 +51,10 @@ const HostCreateImagesScreen = () => {
           <HostCreateTabs index={6} />
           <Container style={styles.container}>
             <View style={styles.header}>
-              <Text heading2>{tr("Pictures related to the tour")}</Text>
+              <Text heading2>{tr("Pictures related to the host")}</Text>
               <Text caption type="grey2">
                 {tr(
-                  "you can upload images related to your tour, please note that the size of the images should be less than 3 mb. note that this section is optional."
+                  "you can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional."
                 )}
               </Text>
             </View>

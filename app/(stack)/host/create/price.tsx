@@ -84,11 +84,11 @@ const HostCreatePriceScreen = () => {
           <WhiteSpace />
           <Container>
             <Text heading2 bold>
-              {tr("Tour Price")}
+              {tr("Host Price")}
             </Text>
             <Text>
               {tr(
-                "Choose or write the cost of your tour, you can give a discount to the original price."
+                "Choose or write the cost of your host, you can give a discount to the original price."
               )}
             </Text>
 

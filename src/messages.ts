@@ -2085,4 +2085,84 @@ export const messages = {
     fa_ir: "امکانات میزبان",
     en_us: "Host Facilities",
   },
+  "your request to create a tour has been successfully registered": {
+    ar: "لقد تم تسجيل طلبك لإنشاء جولة بنجاح",
+    fa_ir: "درخواست ایجاد تور شما با موفقیت ثبت شد",
+    en_us: "Your request to create a tour has been successfully registered",
+  },
+  "wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.": {
+    ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل جولتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
+    fa_ir: "کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
+    en_us: "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.",
+  },
+  "your hosting creation request has been successfully registered": {
+    ar: "لقد تم تسجيل طلب إنشاء الاستضافة الخاص بك بنجاح",
+    fa_ir: "درخواست ایجاد میزبانی شما با موفقیت ثبت شد",
+    en_us: "Your hosting creation request has been successfully registered",
+  },
+  "wait less than 48 hours for your hosting to be registered by trip's helpful support and displayed to travelers.": {
+    ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل استضافتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
+    fa_ir: "کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
+    en_us: "Wait less than 48 hours for your hosting to be registered by Trip's helpful support and displayed to travelers.",
+  },
+  "pictures related to the host": {
+    ar: "الصور المتعلقة بالمضيف",
+    fa_ir: "تصاویر مربوط به میزبانی",
+    en_us: "Pictures related to the host",
+  },
+  "you can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.": {
+    ar: "يمكنك تحميل الصور المتعلقة بمضيفك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
+    fa_ir: "شما می توانید تصاویر مربوط به هاست خود را آپلود کنید، لطفا توجه داشته باشید که حجم تصاویر باید کمتر از 3 مگابایت باشد. توجه داشته باشید که این بخش اختیاری است.",
+    en_us: "You can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.",
+  },
+  "you can write and add your own host features. note that this section is optional.": {
+    ar: "يمكنك كتابة وإضافة ميزات المضيف الخاصة بك. لاحظ أن هذا القسم اختياري.",
+    fa_ir: "شما می توانید ویژگی های میزبانی خود را بنویسید و اضافه کنید. توجه داشته باشید که این بخش اختیاری است.",
+    en_us: "You can write and add your own host features. Note that this section is optional.",
+  },
+  "choose or write the cost of your host, you can give a discount to the original price.": {
+    ar: "اختر أو اكتب تكلفة مضيفك، ويمكنك تقديم خصم على السعر الأصلي.",
+    fa_ir: "هزینه میزبانی خود را انتخاب کنید یا بنویسید، می توانید به قیمت اصلی تخفیف بدهید.",
+    en_us: "Choose or write the cost of your host, you can give a discount to the original price.",
+  },
+  "the host is one day": {
+    ar: "المضيف هو يوم واحد",
+    fa_ir: "میزبانی یک روز است",
+    en_us: "The host is one day",
+  },
+  "select the capacity and gender of the host passengers": {
+    ar: "حدد سعة وجنس الركاب المضيفين",
+    fa_ir: "ظرفیت و جنسیت مسافران میزبان را انتخاب کنید",
+    en_us: "Select the capacity and gender of the host passengers",
+  },
+  "the host is open to children under 12 years old": {
+    ar: "المضيف مفتوح للأطفال دون سن 12 عامًا",
+    fa_ir: "میزبانی پذیرای کودکان زیر ۱۲ سال است.",
+    en_us: "The host is open to children under 12 years old",
+  },
+  "to easily find the origin and start the host, set the address and the map of the place of departure.": {
+    ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
+    fa_ir: "برای یافتن آسان مبدا و راه اندازی میزبانی، آدرس و نقشه محل عزیمت را تنظیم کنید.",
+    en_us: "To easily find the origin and start the host, set the address and the map of the place of departure.",
+  },
+  "host title and details": {
+    ar: "عنوان المضيف والتفاصيل",
+    fa_ir: "عنوان میزبانی و جزئیات",
+    en_us: "host title and details",
+  },
+  "to find a host, address and information about a host for travelers in nuwayside.": {
+    ar: "لإنشاء مضيف، أدخل عنوانًا ووصفًا إضافيًا.",
+    fa_ir: "برای ایجاد میزبانی، عنوان و توضیحات تکمیلی را وارد کنید.",
+    en_us: "To find a host, address and information about a host for travelers in Nuwayside.",
+  },
+  "host title": {
+    ar: "عنوان المضيف",
+    fa_ir: "عنوان میزبان",
+    en_us: "Host Title",
+  },
+  "determine the type of space and your hosting environment.": {
+    ar: "تحديد نوع المساحة وبيئة الاستضافة الخاصة بك.",
+    fa_ir: "نوع فضا و محیط میزبانی خودتان را تعیین کنید.",
+    en_us: "Determine the type of space and your hosting environment.",
+  },
 };

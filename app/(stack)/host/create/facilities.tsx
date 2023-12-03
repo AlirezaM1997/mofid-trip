@@ -64,7 +64,7 @@ const HostCreateFacilitiesScreen = () => {
         },
       });
     }
-    // setIsVisible(true);
+    setIsVisible(true);
   };
 
   return (
@@ -84,11 +84,11 @@ const HostCreateFacilitiesScreen = () => {
 
             <Container>
               <Text heading2 bold>
-                {tr("Tour Facilities")}
+                {tr("Host Facilities")}
               </Text>
               <Text>
                 {tr(
-                  "You can write and add your own tour features. Note that this section is optional."
+                  "You can write and add your own host features. Note that this section is optional."
                 )}
               </Text>
 
@@ -123,7 +123,7 @@ const HostCreateFacilitiesScreen = () => {
               </View>
             </Container>
           </BottomButtonLayout>
-          <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
+          <BottomSheet isVisible={isVisible}>
             <Container>
               <ImageBackground
                 style={styles.rejectIcon}
@@ -131,10 +131,10 @@ const HostCreateFacilitiesScreen = () => {
                 source={require("@assets/image/check.svg")}
               />
               <Text center heading2 bold>
-                درخواست ایجاد تور شما با موفقیت ثبت شد
+                {tr('Your hosting creation request has been successfully registered')}
               </Text>
               <Text center>
-                کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران
+                کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران
                 نمایش داده شود.
               </Text>
               <WhiteSpace />
