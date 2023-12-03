@@ -11,7 +11,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import { Divider } from "@rneui/themed";
-import { View } from "react-native";
 import ComingSoon from "@modules/coming-soon";
 
 const TourDetailScreen = () => {
@@ -19,7 +18,7 @@ const TourDetailScreen = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const navigation = useNavigation();
-  const { tourStr } = useLocalSearchParams();
+  const { tourStr, transactionSet } = useLocalSearchParams();
   const tour: MyNgoDetailQuery["NGODetail"]["tourSet"][0] = JSON.parse(tourStr as string);
   const steps = [tr("pending"), tr("published"), tr("End Tour")];
   const [isVisible, setIsVisible] = useState(false);
@@ -86,7 +85,20 @@ const TourDetailScreen = () => {
         />
       </ListItem>
       {tour.statusStep === TourTourStatusStepChoices.Accept && tour.statusActivation && (
-        <ListItem onPress={() => router.push({pathname:"/tour/requests/toMyTours" , params:{tourName: tour.title}})}>
+        <ListItem
+          onPress={() =>
+            router.push({
+              pathname: "/tour/requests/toMyTours",
+              params: {
+                tourName: tour.title,
+                requestList: JSON.stringify(
+                  JSON.parse(transactionSet as string).filter(
+                    selectedTour => selectedTour.tourPackage.tour.title === tour.title
+                  )
+                ),
+              },
+            })
+          }>
           <Feather name="users" size={24} color={theme.colors.black} />
           <ListItem.Content>
             <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>

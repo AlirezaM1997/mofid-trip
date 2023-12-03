@@ -55,7 +55,7 @@ const HostCreateHostTypeScreen = () => {
     dispatch(
       setHostCreateData({
         ...data,
-        ...form.values
+        ...form.values,
       })
     );
     router.push({
@@ -89,6 +89,13 @@ const HostCreateHostTypeScreen = () => {
             </Button>,
           ]}>
           <HostCreateTabs index={1} />
+
+          <Container>
+            <Text heading2>{tr("Host Type")}</Text>
+            <Text type="grey3">
+              {tr("Determine the type of space and your hosting environment.")}
+            </Text>
+          </Container>
 
           {defaultValues?.map(category => (
             <>

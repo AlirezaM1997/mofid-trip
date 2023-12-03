@@ -7,16 +7,22 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import RequestList from "../../../../src/components/modules/tour-request-card/RequestList";
 import Container from "@atoms/container";
+import NoResult from "@organisms/no-result";
 
 const RequestToMyToursScreen = () => {
   const { tr } = useTranslation();
   const { data, loading } = useNgoDetailQuery();
-  const { tourName } = useLocalSearchParams();
+  const { tourName, requestList } = useLocalSearchParams();
   const navigation = useNavigation();
-
   navigation.setOptions({ title: tourName || tr("apply to my tours") });
 
   if (loading || !data) return <LoadingIndicator />;
+
+  const requestListData = requestList
+    ? JSON.parse(requestList as string)
+    : data.NGODetail.tourTransactionSet;
+
+  if (!requestListData.length) return <NoResult />;
 
   return (
     <Container style={style.container}>
@@ -33,24 +39,14 @@ const RequestToMyToursScreen = () => {
         </Text>
       </View>
       <ScrollView contentContainerStyle={style.cardList}>
-        {(tourName
-          ? data.NGODetail.tourTransactionSet.filter(
-              tour => tour.tourPackage.tour.title === tourName
-            )
-          : data.NGODetail.tourTransactionSet
-        ).map((transaction: TourTransactionQueryType, i) => (
+        {requestListData.map((transaction: TourTransactionQueryType, i) => (
           <>
             <RequestList
               key={transaction.owner.id}
               transaction={transaction}
               tourName={tourName as string}
             />
-            {tourName
-              ? data.NGODetail.tourTransactionSet.filter(
-                  tour => tour.tourPackage.tour.title === tourName
-                ).length >
-                  i + 1 && <Divider />
-              : data.NGODetail.tourTransactionSet.length > i + 1 && <Divider />}
+            {requestListData.length > i + 1 && <Divider />}
           </>
         ))}
       </ScrollView>

@@ -69,7 +69,7 @@ const HostCreateCapacityScreen = () => {
             <Text heading2 bold>
               {tr("Capacity and Gender")}
             </Text>
-            <Text type="grey3">{tr("Select the capacity and gender of the tour passengers")}</Text>
+            <Text type="grey3">{tr("Select the capacity and gender of the host passengers")}</Text>
             <WhiteSpace size={20} />
             <Input
               name="capacityNumber"
@@ -83,7 +83,7 @@ const HostCreateCapacityScreen = () => {
 
             <CheckBox
               checked={values.childAccept}
-              title={tr("The tour is open to children under 12 years old")}
+              title={tr("The host is open to children under 12 years old")}
               onPress={() => setFieldValue("childAccept", !values.childAccept)}
             />
 

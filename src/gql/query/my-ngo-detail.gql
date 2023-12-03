@@ -84,6 +84,23 @@ query myNGODetail {
         }
         id
         fullname
+        phoneNumber
+      }
+      tourPackage {
+        tour {
+          title
+        }
+      }
+      tourGuests {
+        avatarS3{
+          large
+          medium
+          small
+        }
+        id
+        firstname
+        lastname
+        phoneNumber
       }
     }
   }

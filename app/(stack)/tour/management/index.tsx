@@ -1,31 +1,40 @@
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import useMyNGOTable from "@src/hooks/db/ngo";
 import useTranslation from "@src/hooks/translation";
 import ComingSoon from "@modules/coming-soon";
 import { BottomSheet, Button, Card, Chip, useTheme } from "@rneui/themed";
-import { AccommodationQueryType } from "@src/gql/generated";
+import { AccommodationQueryType, useMyNgoDetailQuery } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { getTourRequestStatusBadgeColor } from "@src/helper/tour";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { router } from "expo-router";
+import LoadingIndicator from "@modules/Loading-indicator";
 
 const TourManagement = () => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const { get } = useMyNGOTable();
+  const [tourSet, setTourSet] = useState([]);
+  const { loading, data } = useMyNgoDetailQuery();
   const { theme } = useTheme();
-
-  const { tourSet } = get();
 
   const navigateToTourDetail = (tour: (typeof tourSet)[0]) =>
     router.push({
       pathname: `/tour/management/${tour.id}`,
       params: {
         tourStr: JSON.stringify(tour),
+        transactionSet: JSON.stringify(data.NGODetail.tourTransactionSet),
       },
     });
+
+  useEffect(() => {
+    if (!loading && data) {
+      console.log("---", data.NGODetail.tourSet);
+      setTourSet(data.NGODetail.tourSet);
+    }
+  }, [loading, data]);
+
+  if (loading) return <LoadingIndicator />;
 
   return (
     <View>

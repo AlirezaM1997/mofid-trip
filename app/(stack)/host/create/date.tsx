@@ -156,7 +156,7 @@ const HostCreateDateScreen = () => {
           <HostCreateTabs index={4} />
 
           <Container>
-            <CheckBox checked={checked} onPress={handleCheck} title={tr("The tour is one day")} />
+            <CheckBox checked={checked} onPress={handleCheck} title={tr("The host is one day")} />
           </Container>
 
           <JalaliDatePicker onDayPress={handleDayPress} markedDays={markedDays} />

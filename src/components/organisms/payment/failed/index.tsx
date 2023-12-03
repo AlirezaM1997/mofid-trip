@@ -11,13 +11,22 @@ import WhiteSpace from "@atoms/white-space";
 const FailedPayment = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { id } = useLocalSearchParams();
+  const { id, type } = useLocalSearchParams();
 
   return (
     <BottomButtonLayout
       contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
       buttons={[
-        <Button onPress={() => router.push(`/failedReceipt?id=${id}`)}>
+        <Button
+          onPress={() =>
+            router.push({
+              pathname:
+                type === "tour"
+                  ? `tour/transaction/failedReceipt`
+                  : `host/transaction/failedReceipt`,
+              params: { id },
+            })
+          }>
           {tr("view receipt")}
         </Button>,
       ]}>

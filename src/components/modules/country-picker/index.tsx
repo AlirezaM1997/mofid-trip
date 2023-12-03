@@ -38,6 +38,7 @@ const CountryPicker = ({ value, setValue, callingCode, setCallingCode, ...props 
     <>
       <View style={styles.container}>
         <Input
+        autoFocus
           leftIcon={
             <Pressable onPress={() => setIsVisible(true)} style={styles.flagButton}>
               <Text>

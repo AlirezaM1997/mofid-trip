@@ -130,18 +130,31 @@ const Screen = () => {
                 source={require("@assets/image/check.svg")}
               />
               <Text center heading2 bold>
-                درخواست ایجاد تور شما با موفقیت ثبت شد
+                {tr("Your request to create a tour has been successfully registered")}
               </Text>
               <Text center>
-                کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران
-                نمایش داده شود.
+                {tr(
+                  "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers."
+                )}
               </Text>
               <WhiteSpace />
               <ButtonRow>
-                <Button onPress={() => router.push('/tour/management')} color="secondary" type="outline">
+                <Button
+                  onPress={() => {
+                    router.push("/tour/management");
+                    setIsVisible(false);
+                  }}
+                  color="secondary"
+                  type="outline">
                   {tr("Tour Management")}
                 </Button>
-                <Button onPress={() => router.push("/")}>{tr("Return to home")}</Button>
+                <Button
+                  onPress={() => {
+                    router.push("/");
+                    setIsVisible(false);
+                  }}>
+                  {tr("Return to home")}
+                </Button>
               </ButtonRow>
             </Container>
           </BottomSheet>

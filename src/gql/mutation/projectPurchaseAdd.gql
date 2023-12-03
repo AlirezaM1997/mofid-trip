@@ -1,0 +1,8 @@
+mutation projectPurchaseAdd($data: ProjectPurchaseAddInputData!) {
+  projectPurchaseAdd(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}

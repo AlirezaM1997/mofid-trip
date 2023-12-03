@@ -9,7 +9,7 @@ import ImageSlider from "@modules/image-slider";
 import { StyleSheet, View } from "react-native";
 import ContactCard from "@modules/contact-card";
 import SimilarTours from "@modules/similar-tours";
-import TourFacilities from "@modules/tour-facilities";
+import TourFacilities from "@modules/tour/facilities";
 import TitleWithAction from "@modules/title-with-action";
 import useIsRtl, { formatPrice } from "@src/hooks/localization";
 import BottomButtonLayout from "@components/layout/bottom-button";

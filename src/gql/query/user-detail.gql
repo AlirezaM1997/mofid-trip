@@ -19,5 +19,24 @@ query userDetail {
     ngo {
       id
     }
+    wallet {
+      balance
+      createdTime
+      id
+      modifiedTime
+      walletTransactions {
+        action
+        amount
+        createdTime
+        id
+        invoiceNumber
+        modifiedTime
+        purchaseRefId
+      }
+      walletCards {
+        id
+        title
+      }
+    }
   }
 }
