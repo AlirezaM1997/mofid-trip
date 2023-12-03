@@ -2050,4 +2050,44 @@ export const messages = {
     fa_ir: "ایجاد",
     en_us: "Create",
   },
+  "host type": {
+    ar: "نوع المضيف",
+    fa_ir: "نوع‌میزبانی",
+    en_us: "Host Type",
+  },
+  "host details": {
+    ar: "تفاصيل المضيف",
+    fa_ir: "جزئیات میزبان",
+    en_us: "Host Details",
+  },
+  "host address": {
+    ar: "عنوان المضيف",
+    fa_ir: "نشانی میزبان",
+    en_us: "Host Address",
+  },
+  "host capacity": {
+    ar: "سعة المضيف",
+    fa_ir: "ظرفیت میزبان",
+    en_us: "Host Capacity",
+  },
+  "host date": {
+    ar: "تاريخ المضيف",
+    fa_ir: "تاریخ میزبان",
+    en_us: "Host Date",
+  },
+  "host price": {
+    ar: "سعر المضيف",
+    fa_ir: "قیمت میزبان",
+    en_us: "Host Price",
+  },
+  "host images": {
+    ar: "صور المضيف",
+    fa_ir: "تصاویر میزبان",
+    en_us: "Host Images",
+  },
+  "host facilities": {
+    ar: "المرافق المضيفة",
+    fa_ir: "امکانات میزبان",
+    en_us: "Host Facilities",
+  },
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { FieldArray } from "formik";
+import { FieldArray, useFormikContext } from "formik";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import useTranslation from "@src/hooks/translation";
@@ -10,6 +10,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 const CustomImagePicker = ({ field, form }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
+  const { values } = useFormikContext();
 
   const pickImage = async (item: string) => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -25,14 +26,14 @@ const CustomImagePicker = ({ field, form }) => {
     }
 
     if ("uri" in result) {
-      form.setValues({ ...form.values, images: { ...form.values.images, [item]: result.uri } });
+      form.setValues({ ...values, images: { ...values.images, [item]: result.uri } });
     }
   };
 
   const removeHandler = (item: string) => {
     form.setValues({
-      ...form.values,
-      images: { ...form.values.images, [item]: "" },
+      ...values,
+      images: { ...values.images, [item]: "" },
     });
   };
 
@@ -42,11 +43,11 @@ const CustomImagePicker = ({ field, form }) => {
         <>
           <Pressable
             onPress={() => pickImage("main")}
-            style={[styles.imageContainer(form.values.images.main), styles.mainImageSize]}>
-            {form.values.images.main ? (
+            style={[styles.imageContainer(values.images.main), styles.mainImageSize]}>
+            {values.images.main ? (
               <>
                 <Image
-                  source={{ uri: form.values.images.main }}
+                  source={{ uri: values.images.main }}
                   style={{ width: 330, height: 160 }}
                   resizeMode="cover"
                 />
@@ -67,17 +68,17 @@ const CustomImagePicker = ({ field, form }) => {
           </Pressable>
 
           <View style={styles.imagesContainer}>
-            {Object.keys(form.values.images)
+            {Object.keys(values.images)
               .slice(1)
               .map(item => (
                 <Pressable
                   key={item}
                   onPress={() => pickImage(item)}
-                  style={[styles.imageContainer(form.values.images[item]), styles.subImageSize]}>
-                  {form.values.images[item] ? (
+                  style={[styles.imageContainer(values.images[item]), styles.subImageSize]}>
+                  {values.images[item] ? (
                     <>
                       <Image
-                        source={{ uri: form.values.images[item] }}
+                        source={{ uri: values.images[item] }}
                         style={{ width: 100, height: 100 }}
                         resizeMode="cover"
                       />

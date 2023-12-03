@@ -2,10 +2,10 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import LocationPicker from "@modules/formik/fields/location-picker";
-import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
+import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
 import { Button, Input, Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { setTourCreateData } from "@src/slice/tour-create-slice";
+import { setHostCreateData } from "@src/slice/host-create-slice";
 import { RootState } from "@src/store";
 import { router } from "expo-router";
 import { Field, Formik } from "formik";
@@ -13,18 +13,18 @@ import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
-const Screen = () => {
+const HostCreateAddressScreen = () => {
   const innerRef = useRef();
   const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const { data } = useSelector((state: RootState) => state.tourCreateSlice);
+  const { data } = useSelector((state: RootState) => state.hostCreateSlice);
 
   const initialValues = {
-    province: data.destination.province,
-    city: data.destination.city,
-    address: data.destination.address,
-    lat: data.destination.lat,
-    lng: data.destination.lng,
+    province: data.accommodation.province,
+    city: data.accommodation.city,
+    address: data.accommodation.address,
+    lat: data.accommodation.lat,
+    lng: data.accommodation.lng,
   };
 
   const validationSchema = Yup.object().shape({
@@ -38,10 +38,10 @@ const Screen = () => {
   const handleBlurProvince = () => {
     innerRef.current.handleBlur("province");
     dispatch(
-      setTourCreateData({
+      setHostCreateData({
         ...data,
-        destination: {
-          ...data.destination,
+        accommodation: {
+          ...data.accommodation,
           province: innerRef.current?.values?.province,
         },
       })
@@ -51,10 +51,10 @@ const Screen = () => {
   const handleBlurCity = () => {
     innerRef.current.handleBlur("city");
     dispatch(
-      setTourCreateData({
+      setHostCreateData({
         ...data,
-        destination: {
-          ...data.destination,
+        accommodation: {
+          ...data.accommodation,
           city: innerRef.current?.values?.city,
         },
       })
@@ -64,10 +64,10 @@ const Screen = () => {
   const handleBlurAddress = () => {
     innerRef.current.handleBlur("address");
     dispatch(
-      setTourCreateData({
+      setHostCreateData({
         ...data,
-        destination: {
-          ...data.destination,
+        accommodation: {
+          ...data.accommodation,
           address: innerRef.current?.values?.address,
         },
       })
@@ -76,15 +76,15 @@ const Screen = () => {
 
   const handleSubmit = values => {
     dispatch(
-      setTourCreateData({
+      setHostCreateData({
         ...data,
-        destination: values,
+        accommodation: values,
       })
     );
     router.push({
-      pathname: "tour/create/date",
+      pathname: "host/create/capacity",
       params: {
-        x: -95 * 4,
+        x: -100 * 3,
       },
     });
   };
@@ -103,7 +103,7 @@ const Screen = () => {
               {tr("back")}
             </Button>,
           ]}>
-          <TourCreateTabs index={3} />
+          <HostCreateTabs index={2} />
           <WhiteSpace size={20} />
           <Container>
             <Text heading2 bold>
@@ -151,4 +151,4 @@ const Screen = () => {
   );
 };
 
-export default Screen;
+export default HostCreateAddressScreen;

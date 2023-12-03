@@ -1,26 +1,23 @@
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
-import { Divider } from "@rneui/base";
-import { Button, Chip } from "@rneui/themed";
-import { Badge, Input, Text } from "@rneui/themed";
+import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
+import { Badge, Divider, Input, Text, Button } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { setTourCreateData } from "@src/slice/tour-create-slice";
+import { setHostCreateData } from "@src/slice/host-create-slice";
 import { RootState } from "@src/store";
 import { router } from "expo-router";
 import { Formik } from "formik";
-import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
-const Screen = () => {
+const HostCreatePriceScreen = () => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const dispatch = useDispatch()
-  const { data } = useSelector((state: RootState) => state.tourCreateSlice);
+  const dispatch = useDispatch();
+  const { data } = useSelector((state: RootState) => state.hostCreateSlice);
 
   const recommendedPrices = [
     { title: localizeNumber(tr("Free")), value: 0 },
@@ -54,16 +51,16 @@ const Screen = () => {
     discount: data.discount,
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = values => {
     dispatch(
-      setTourCreateData({
+      setHostCreateData({
         ...data,
         price: parseFloat(values.price),
         discount: parseFloat(values.discount),
       })
     );
     router.push({
-      pathname: "tour/create/images",
+      pathname: "host/create/images",
       params: {
         x: -95 * 7,
       },
@@ -83,7 +80,7 @@ const Screen = () => {
               {tr("back")}
             </Button>,
           ]}>
-          <TourCreateTabs index={5} />
+          <HostCreateTabs index={5} />
           <WhiteSpace />
           <Container>
             <Text heading2 bold>
@@ -180,4 +177,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Screen;
+export default HostCreatePriceScreen;

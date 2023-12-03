@@ -847,12 +847,19 @@ export type ProjectTransactionFilterType = {
 };
 
 export type ProjectTransactionGuestInputType = {
+<<<<<<< HEAD
   /** Boolean indicating if children are accepted for the tour. */
   childAccept?: InputMaybe<Scalars["Boolean"]["input"]>;
   /** Gender of the guests in a transaction. */
   gender: TransactionGuestGenderEnum;
   /** Number of the guests */
   guestNumber: Scalars["Int"]["input"];
+=======
+  /** Gender of the guests. */
+  gender: GuestGenderEnum;
+  /** Number of the guests */
+  guestNumber: Scalars['Int']['input'];
+>>>>>>> origin/master
 };
 
 /** Type representing a page of ProjectTransactionQueryType objects. */
@@ -1765,6 +1772,7 @@ export type CreateLoginMutationVariables = Exact<{
   dataNgo?: InputMaybe<NgoInputType>;
 }>;
 
+<<<<<<< HEAD
 export type CreateLoginMutation = {
   __typename?: "Mutation";
   createLogin?: {
@@ -1775,6 +1783,52 @@ export type CreateLoginMutation = {
     metadata?: any | null;
   } | null;
 };
+=======
+
+export type CreateLoginMutation = { __typename?: 'Mutation', createLogin?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
+export type ProjectAddMutationVariables = Exact<{
+  data: ProjectAddInputType;
+}>;
+
+
+export type ProjectAddMutation = { __typename?: 'Mutation', projectAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
+export type SettingEditMutationVariables = Exact<{
+  data?: InputMaybe<SettingEditInputType>;
+}>;
+
+
+export type SettingEditMutation = { __typename?: 'Mutation', settingEdit?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
+export type TourAddMutationVariables = Exact<{
+  data: TourAddInputType;
+}>;
+
+
+export type TourAddMutation = { __typename?: 'Mutation', tourAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
+export type TourTransactionAddMutationVariables = Exact<{
+  data: TourTransactionAddInputType;
+}>;
+
+
+export type TourTransactionAddMutation = { __typename?: 'Mutation', tourTransactionAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
+export type TourPurchaseAddMutationVariables = Exact<{
+  data: TourPurchaseAddInputData;
+}>;
+
+
+export type TourPurchaseAddMutation = { __typename?: 'Mutation', tourPurchaseAdd?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
+
+export type ProjectTransactionEditMutationVariables = Exact<{
+  data: ProjectTransactionEditInputType;
+}>;
+
+
+export type ProjectTransactionEditMutation = { __typename?: 'Mutation', projectTransactionEdit?: { __typename: 'ResponseBase', message?: string | null, status?: string | null, statusCode?: number | null } | null };
+>>>>>>> origin/master
 
 export type ProjectTransactionAddMutationVariables = Exact<{
   data: ProjectTransactionAddInputType;
@@ -2716,6 +2770,7 @@ export function useCreateLoginMutation(
 }
 export type CreateLoginMutationHookResult = ReturnType<typeof useCreateLoginMutation>;
 export type CreateLoginMutationResult = Apollo.MutationResult<CreateLoginMutation>;
+<<<<<<< HEAD
 export type CreateLoginMutationOptions = Apollo.BaseMutationOptions<
   CreateLoginMutation,
   CreateLoginMutationVariables
@@ -2728,6 +2783,53 @@ export const ProjectTransactionAddDocument = gql`
       metadata
       statusCode
     }
+=======
+export type CreateLoginMutationOptions = Apollo.BaseMutationOptions<CreateLoginMutation, CreateLoginMutationVariables>;
+export const ProjectAddDocument = gql`
+    mutation projectAdd($data: ProjectAddInputType!) {
+  projectAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}
+    `;
+export type ProjectAddMutationFn = Apollo.MutationFunction<ProjectAddMutation, ProjectAddMutationVariables>;
+
+/**
+ * __useProjectAddMutation__
+ *
+ * To run a mutation, you first call `useProjectAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProjectAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [projectAddMutation, { data, loading, error }] = useProjectAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useProjectAddMutation(baseOptions?: Apollo.MutationHookOptions<ProjectAddMutation, ProjectAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ProjectAddMutation, ProjectAddMutationVariables>(ProjectAddDocument, options);
+      }
+export type ProjectAddMutationHookResult = ReturnType<typeof useProjectAddMutation>;
+export type ProjectAddMutationResult = Apollo.MutationResult<ProjectAddMutation>;
+export type ProjectAddMutationOptions = Apollo.BaseMutationOptions<ProjectAddMutation, ProjectAddMutationVariables>;
+export const SettingEditDocument = gql`
+    mutation settingEdit($data: SettingEditInputType) {
+  settingEdit(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+    __typename
+>>>>>>> origin/master
   }
 `;
 export type ProjectTransactionAddMutationFn = Apollo.MutationFunction<
@@ -3277,6 +3379,7 @@ export type BannerListQueryHookResult = ReturnType<typeof useBannerListQuery>;
 export type BannerListLazyQueryHookResult = ReturnType<typeof useBannerListLazyQuery>;
 export type BannerListQueryResult = Apollo.QueryResult<BannerListQuery, BannerListQueryVariables>;
 export const CategoryListDocument = gql`
+<<<<<<< HEAD
   query categoryList($page: PageType, $search: String) {
     categoryList(search: $search) {
       pageCount
@@ -3290,6 +3393,20 @@ export const CategoryListDocument = gql`
           medium
           small
         }
+=======
+    query categoryList($page: PageType, $search: String) {
+  categoryList(page: $page, search: $search) {
+    pageCount
+    count
+    data {
+      id
+      name
+      displayName
+      avatarS3 {
+        large
+        medium
+        small
+>>>>>>> origin/master
       }
       pageCount
     }
