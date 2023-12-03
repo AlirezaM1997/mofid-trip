@@ -32,7 +32,6 @@ const TourDetailScreen = () => {
     };
     return lookup[tour.statusStep];
   };
-
   useEffect(() => {
     navigation.setOptions({ title: tour.title });
   }, []);
@@ -87,7 +86,7 @@ const TourDetailScreen = () => {
         />
       </ListItem>
       {tour.statusStep === TourTourStatusStepChoices.Accept && tour.statusActivation && (
-        <ListItem onPress={() => router.push("/comingSoon")}>
+        <ListItem onPress={() => router.push({pathname:"/tour/requests/toMyTours" , params:{tourName: tour.title}})}>
           <Feather name="users" size={24} color={theme.colors.black} />
           <ListItem.Content>
             <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>

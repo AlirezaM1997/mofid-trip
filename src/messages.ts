@@ -67,6 +67,16 @@ export const messages = {
     fa_ir: "ظرفیت",
     en_us: "Capacity",
   },
+  accepted: {
+    ar: "قبلت",
+    fa_ir: "تایید شده",
+    en_us: "Accepted",
+  },
+  "awaiting review": {
+    ar: "في انتظار المراجعة",
+    fa_ir: "در انتظار بررسی",
+    en_us: "Awaiting review",
+  },
   "check-out": {
     ar: "الخروج",
     fa_ir: "خروج",
@@ -101,6 +111,26 @@ export const messages = {
     ar: "تفصيل",
     fa_ir: "شرح",
     en_us: "Description",
+  },
+  "confirm request": {
+    ar: "تأكيد الطلب",
+    fa_ir: "تایید درخواست",
+    en_us: "confirm request",
+  },
+  failed: {
+    ar: "فشل",
+    fa_ir: "رد شده",
+    en_us: "failed",
+  },
+  "accompanying passengers": {
+    ar: "الركاب المرافقين",
+    fa_ir: "مسافرین همراه",
+    en_us: "accompanying passengers",
+  },
+  "the request is pending review": {
+    ar: "الطلب في انتظار المراجعة",
+    fa_ir: "درخواست در انتظار بررسی میباشد",
+    en_us: "The request is pending review",
   },
   "edit profile": {
     ar: "حساب المستخدم",
@@ -703,6 +733,11 @@ export const messages = {
     fa_ir: "وضعیت",
     en_us: "Status",
   },
+  "request rejection": {
+    ar: "رفض الطلب",
+    fa_ir: "رد درخواست",
+    en_us: "Request rejection",
+  },
   "reason for rejecting the request": {
     ar: "سبب رفض الطلب",
     fa_ir: "دلیل رد درخواست",
@@ -967,6 +1002,21 @@ export const messages = {
     ar: "رسالة",
     fa_ir: "پیام",
     en_us: "Message",
+  },
+  "the passenger paid and the reservation was finalized": {
+    ar: "قام الراكب بالدفع وتم الانتهاء من الحجز",
+    fa_ir: "مسافر پرداخت کرد و رزرو نهایی شد",
+    en_us: "The passenger paid and the reservation was finalized",
+  },
+  "the request was rejected by you": {
+    ar: "لقد تم رفض الطلب من قبلك",
+    fa_ir: "درخواست توسط شما رد شد",
+    en_us: "The request was rejected by you",
+  },
+  "the request has been approved by you": {
+    ar: "تمت الموافقة على الطلب من قبلك",
+    fa_ir: "درخواست توسط شما تایید شد",
+    en_us: "The request has been approved by you",
   },
   call: {
     ar: "يتصل",

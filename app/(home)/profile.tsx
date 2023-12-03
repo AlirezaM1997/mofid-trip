@@ -171,7 +171,7 @@ const Profile: React.FC = () => {
         <Container>
           <Text type="grey3">{tr("Requests")}</Text>
         </Container>
-        <ListItem bottomDivider onPress={() => router.push("/comingSoon")}>
+        <ListItem bottomDivider onPress={() => router.push("/tour/requests/toMyTours") }>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("My Tours Requests")}</ListItem.Title>
