@@ -24,7 +24,7 @@ export default function AppLayout() {
   const handleClose = () => setIsVisible(false);
   const handleOpen = () => setIsVisible(true);
 
-  if (!isAuthenticated || !loginData.metadata.isNgo) {
+  if (!isAuthenticated || !loginData.metadata.is_ngo) {
     return <Redirect href="/" />;
   }
 
