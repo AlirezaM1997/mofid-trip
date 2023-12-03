@@ -779,6 +779,11 @@ export const messages = {
     fa_ir: "مالیات",
     en_us: "Tax",
   },
+  "wallet balance": {
+    ar: "رصيد المحفظة",
+    fa_ir: "موجودی کیف پول",
+    en_us: "Wallet balance",
+  },
   "invalid name": {
     ar: "اسم غير صالح",
     fa_ir: "نام نامعتبر",
@@ -804,16 +809,18 @@ export const messages = {
     fa_ir: "نه، لغو",
     en_us: "No, Cancel",
   },
+  "increase wallet balance": {
+    ar: "زيادة رصيد المحفظة",
+    fa_ir: "افزایش موجودی کیف پول",
+    en_us: "Increase wallet balance",
+  },
   "your request has been successfully submitted": {
     ar: "لقد تم تسجيل طلبك بنجاح",
     fa_ir: "درخواست شما با موفقیت ثبت شد",
     en_us: "Your request has been successfully submitted",
   },
-  "wallet balance": {
-    ar: "توازن الحقيبة",
-    fa_ir: "موجودی کیف",
-    en_us: "Wallet balance",
-  },
+ 
+  
   "unsuccessful payment, wallet balance is not enough": {
     ar: "عملية دفع غير ناجحة، رصيد المحفظة غير كافي",
     fa_ir: "پرداخت ناموفق ، موجودی کیف پول کافی نمی‌باشد",
@@ -884,6 +891,11 @@ export const messages = {
     ar: "محصول",
     fa_ir: "برداشت",
     en_us: "Withdraw ",
+  },
+  "select or enter an amount to increase your wallet balance.": {
+    ar: "حدد أو أدخل مبلغًا لزيادة رصيد محفظتك.",
+    fa_ir: "برای افزایش موجودی کیف پول، مبلغ را انتخاب یا وارد کنید.",
+    en_us: "Select or enter an amount to increase your wallet balance.",
   },
   "increase balance": {
     ar: "زيادة المخزون",
@@ -2095,34 +2107,44 @@ export const messages = {
     fa_ir: "درخواست ایجاد تور شما با موفقیت ثبت شد",
     en_us: "Your request to create a tour has been successfully registered",
   },
-  "wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.": {
-    ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل جولتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
-    fa_ir: "کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
-    en_us: "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.",
-  },
+  "wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.":
+    {
+      ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل جولتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
+      fa_ir:
+        "کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
+      en_us:
+        "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.",
+    },
   "your hosting creation request has been successfully registered": {
     ar: "لقد تم تسجيل طلب إنشاء الاستضافة الخاص بك بنجاح",
     fa_ir: "درخواست ایجاد میزبانی شما با موفقیت ثبت شد",
     en_us: "Your hosting creation request has been successfully registered",
   },
-  "wait less than 48 hours for your hosting to be registered by trip's helpful support and displayed to travelers.": {
-    ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل استضافتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
-    fa_ir: "کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
-    en_us: "Wait less than 48 hours for your hosting to be registered by Trip's helpful support and displayed to travelers.",
-  },
+  "wait less than 48 hours for your hosting to be registered by trip's helpful support and displayed to travelers.":
+    {
+      ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل استضافتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
+      fa_ir:
+        "کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
+      en_us:
+        "Wait less than 48 hours for your hosting to be registered by Trip's helpful support and displayed to travelers.",
+    },
   "pictures related to the host": {
     ar: "الصور المتعلقة بالمضيف",
     fa_ir: "تصاویر مربوط به میزبانی",
     en_us: "Pictures related to the host",
   },
-  "you can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.": {
-    ar: "يمكنك تحميل الصور المتعلقة بمضيفك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
-    fa_ir: "شما می توانید تصاویر مربوط به هاست خود را آپلود کنید، لطفا توجه داشته باشید که حجم تصاویر باید کمتر از 3 مگابایت باشد. توجه داشته باشید که این بخش اختیاری است.",
-    en_us: "You can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.",
-  },
+  "you can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.":
+    {
+      ar: "يمكنك تحميل الصور المتعلقة بمضيفك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
+      fa_ir:
+        "شما می توانید تصاویر مربوط به هاست خود را آپلود کنید، لطفا توجه داشته باشید که حجم تصاویر باید کمتر از 3 مگابایت باشد. توجه داشته باشید که این بخش اختیاری است.",
+      en_us:
+        "You can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.",
+    },
   "you can write and add your own host features. note that this section is optional.": {
     ar: "يمكنك كتابة وإضافة ميزات المضيف الخاصة بك. لاحظ أن هذا القسم اختياري.",
-    fa_ir: "شما می توانید ویژگی های میزبانی خود را بنویسید و اضافه کنید. توجه داشته باشید که این بخش اختیاری است.",
+    fa_ir:
+      "شما می توانید ویژگی های میزبانی خود را بنویسید و اضافه کنید. توجه داشته باشید که این بخش اختیاری است.",
     en_us: "You can write and add your own host features. Note that this section is optional.",
   },
   "choose or write the cost of your host, you can give a discount to the original price.": {
@@ -2145,11 +2167,13 @@ export const messages = {
     fa_ir: "میزبانی پذیرای کودکان زیر ۱۲ سال است.",
     en_us: "The host is open to children under 12 years old",
   },
-  "to easily find the origin and start the host, set the address and the map of the place of departure.": {
-    ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
-    fa_ir: "برای یافتن آسان مبدا و راه اندازی میزبانی، آدرس و نقشه محل عزیمت را تنظیم کنید.",
-    en_us: "To easily find the origin and start the host, set the address and the map of the place of departure.",
-  },
+  "to easily find the origin and start the host, set the address and the map of the place of departure.":
+    {
+      ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
+      fa_ir: "برای یافتن آسان مبدا و راه اندازی میزبانی، آدرس و نقشه محل عزیمت را تنظیم کنید.",
+      en_us:
+        "To easily find the origin and start the host, set the address and the map of the place of departure.",
+    },
   "host title and details": {
     ar: "عنوان المضيف والتفاصيل",
     fa_ir: "عنوان میزبانی و جزئیات",

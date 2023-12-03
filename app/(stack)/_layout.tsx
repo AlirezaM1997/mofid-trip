@@ -88,6 +88,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="wallet/increase"
+        options={{
+          title: tr("increase balance"),
+        }}
+      />
+      <Stack.Screen
         name="SMSVerification"
         options={{
           title: tr("Verification"),
