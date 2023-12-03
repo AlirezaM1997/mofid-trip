@@ -57,7 +57,7 @@ const confirmDataScreen = () => {
             <Text caption type="grey2">
               {tr("travel date")}
             </Text>
-            <Text body2>{moment(data.startTime).locale("fa").format("dddd . jDD jMMMM YYYY")}</Text>
+            <Text body2>{moment(data.dateStart).locale("fa").format("dddd . jDD jMMMM YYYY")}</Text>
           </View>
           <Button
             size="sm"
@@ -78,7 +78,7 @@ const confirmDataScreen = () => {
               {tr("passengers count")}
             </Text>
             <Text body2>
-              {data.capacity.capacityNumber}&nbsp;{tr("person")}
+              {data.guests.guestNumber}&nbsp;{tr("person")}
             </Text>
           </View>
           <Button

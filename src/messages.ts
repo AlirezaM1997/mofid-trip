@@ -804,6 +804,11 @@ export const messages = {
     fa_ir: "نه، لغو",
     en_us: "No, Cancel",
   },
+  "your request has been successfully submitted": {
+    ar: "لقد تم تسجيل طلبك بنجاح",
+    fa_ir: "درخواست شما با موفقیت ثبت شد",
+    en_us: "Your request has been successfully submitted",
+  },
   "wallet balance": {
     ar: "توازن الحقيبة",
     fa_ir: "موجودی کیف",

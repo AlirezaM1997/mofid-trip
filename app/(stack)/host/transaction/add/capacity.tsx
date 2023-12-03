@@ -1,6 +1,5 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { router, useLocalSearchParams } from "expo-router";
 import { RootState } from "@src/store";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
@@ -8,6 +7,7 @@ import { StyleSheet, View } from "react-native";
 import { TourGenderEnum } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { useDispatch, useSelector } from "react-redux";
+import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { Button, CheckBox, Input, Text, useTheme } from "@rneui/themed";
 import { setHostTransactionData } from "@src/slice/host-transaction-slice";
@@ -20,15 +20,13 @@ const Screen = () => {
   const { data } = useSelector((state: RootState) => state.hostTransactionSlice);
 
   const initialValues = {
-    capacityNumber: data.capacity.capacityNumber,
-    gender: data.capacity.gender,
-    childAccept: data.capacity.childAccept,
+    gender: data.guests.gender,
+    guestNumber: data.guests.guestNumber,
+    childAccept: data.guests.childAccept,
   };
 
   const validationSchema = Yup.object().shape({
-    capacityNumber: Yup.number()
-      .positive(tr("Capacity is required"))
-      .required(tr("Capacity is required")),
+    guestNumber: Yup.number().positive(tr("guest is required")).required(tr("guest is required")),
     gender: Yup.string(),
     childAccept: Yup.boolean(),
   });
@@ -37,12 +35,13 @@ const Screen = () => {
     dispatch(
       setHostTransactionData({
         ...data,
-        capacity: values,
+        guests: { ...values, guestNumber: +values.guestNumber },
       })
     );
+
     router.push({
       pathname: "host/transaction/add/date",
-      params: { projectId, name } 
+      params: { projectId, name },
     });
   };
 
@@ -62,18 +61,18 @@ const Screen = () => {
           <WhiteSpace size={20} />
           <Container>
             <Text heading2 bold>
-              {tr("Capacity and Gender")}
+              {tr("capacity and Gender")}
             </Text>
             <Text type="grey3">{tr("Select the capacity and gender of the tour passengers")}</Text>
             <WhiteSpace size={20} />
             <Input
-              name="capacityNumber"
+              name="guestNumber"
               placeholder={tr("enter the capacity (quantity)")}
               textAlignVertical="top"
-              onChangeText={handleChange("capacityNumber")}
-              onBlur={handleBlur("capacityNumber")}
-              value={values.capacityNumber}
-              errorMessage={touched.capacityNumber && errors.capacityNumber}
+              onChangeText={handleChange("guestNumber")}
+              onBlur={handleBlur("guestNumber")}
+              value={values.guestNumber}
+              errorMessage={touched.guestNumber && errors.guestNumber}
             />
 
             <CheckBox

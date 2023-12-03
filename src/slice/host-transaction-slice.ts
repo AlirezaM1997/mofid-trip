@@ -1,21 +1,18 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import {
-  ProjectGenderEnum,
-  ProjectTransactionAddInputType,
-  TourGenderEnum,
-} from "@src/gql/generated";
+import { ProjectTransactionAddInputType, TransactionGuestGenderEnum } from "@src/gql/generated";
+
+type ProjectTransactionDataWithoutId = Omit<ProjectTransactionAddInputType, "projectId">;
 
 type initialStateType = {
-  data: ProjectTransactionAddInputType;
+  data: ProjectTransactionDataWithoutId;
 };
 
 export const initialState: initialStateType = {
   data: {
-    projectId: null,
     guests: {
       guestNumber: 0,
-      gender: ProjectGenderEnum.Both,
       childAccept: false,
+      gender: TransactionGuestGenderEnum.Both,
     },
     dateEnd: null,
     dateStart: null,
@@ -26,7 +23,7 @@ export const userSlice = createSlice({
   name: "host-transaction",
   initialState,
   reducers: {
-    setHostTransactionData: (state, action: PayloadAction<ProjectTransactionAddInputType>) => {
+    setHostTransactionData: (state, action: PayloadAction<ProjectTransactionDataWithoutId>) => {
       state.data = action.payload;
     },
   },

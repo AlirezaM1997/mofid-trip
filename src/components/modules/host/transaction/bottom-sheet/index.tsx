@@ -5,13 +5,37 @@ import ButtonRow from "@modules/button-rows";
 import useTranslation from "@src/hooks/translation";
 import { Button, Text, BottomSheet } from "@rneui/themed";
 import BottomButtonLayout from "@components/layout/bottom-button";
+import { router, useLocalSearchParams } from "expo-router";
+import { RootState } from "@src/store";
+import { useSelector } from "react-redux";
+import { useProjectTransactionAddMutation } from "@src/gql/generated";
+import Toast from "react-native-toast-message";
 
 const HostTransactionBottomSheet = ({ children }) => {
   const { tr } = useTranslation();
+  const { projectId } = useLocalSearchParams();
   const [isVisible, setIsVisible] = useState(false);
+  const { data: transactionData } = useSelector((state: RootState) => state.hostTransactionSlice);
+
+  const [addHostTransaction] = useProjectTransactionAddMutation();
 
   const handleClose = () => {
     setIsVisible(false);
+  };
+
+  const handleSubmit = async () => {
+    const { data } = await addHostTransaction({
+      variables: { data: { projectId: projectId as string, ...transactionData } },
+    });
+    setIsVisible(false);
+
+    if (data.projectTransactionAdd.status === "OK") {
+      Toast.show({
+        type: "success",
+        text1: tr("your request has been successfully submitted"),
+      });
+      router.push("host/transaction");
+    }
   };
 
   return (
@@ -35,10 +59,10 @@ const HostTransactionBottomSheet = ({ children }) => {
           <WhiteSpace size={24} />
 
           <ButtonRow>
-            <Button color="secondary" type="outline">
+            <Button color="secondary" type="outline" onPress={handleClose}>
               {tr("cancel and edit")}
             </Button>
-            <Button>{tr("submit request")}</Button>
+            <Button onPress={handleSubmit}>{tr("submit request")}</Button>
           </ButtonRow>
         </Container>
       </BottomSheet>

@@ -866,8 +866,10 @@ export type ProjectTransactionFilterType = {
 };
 
 export type ProjectTransactionGuestInputType = {
-  /** Gender of the guests. */
-  gender: GuestGenderEnum;
+  /** Boolean indicating if children are accepted for the tour. */
+  childAccept?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Gender of the guests in a transaction. */
+  gender: TransactionGuestGenderEnum;
   /** Number of the guests */
   guestNumber: Scalars['Int']['input'];
 };
@@ -1339,6 +1341,17 @@ export enum TourGenderEnum {
   Male = 'MALE'
 }
 
+/** Type representing tour guest images in different sizes. */
+export type TourGuestImageType = {
+  __typename?: 'TourGuestImageType';
+  /** URL of the large image. */
+  large?: Maybe<Scalars['String']['output']>;
+  /** URL of the medium image. */
+  medium?: Maybe<Scalars['String']['output']>;
+  /** URL of the small image. */
+  small?: Maybe<Scalars['String']['output']>;
+};
+
 /** Input type for providing guest information in a tour transaction. */
 export type TourGuestInputType = {
   /** Birthday of the guest. */
@@ -1360,6 +1373,8 @@ export type TourGuestInputType = {
 /** Type representing a tour guests with additional fields. */
 export type TourGuestQueryType = {
   __typename?: 'TourGuestQueryType';
+  /** Tour guest images in different sizes. */
+  avatarS3?: Maybe<Array<Maybe<TourGuestImageType>>>;
   birthday?: Maybe<Scalars['Date']['output']>;
   firstname?: Maybe<Scalars['String']['output']>;
   gender: TourTourGuestGenderChoices;
@@ -1550,6 +1565,13 @@ export type TourTransactionStatusInputType = {
   step?: InputMaybe<TransactionStatusEnum>;
 };
 
+export enum TransactionGuestGenderEnum {
+  Both = 'BOTH',
+  Child = 'CHILD',
+  Female = 'FEMALE',
+  Male = 'MALE'
+}
+
 /**
  * Represents a union of response types for dynamic outputs in query.
  *
@@ -1643,7 +1665,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
