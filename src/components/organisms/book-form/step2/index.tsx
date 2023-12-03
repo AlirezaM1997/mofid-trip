@@ -24,7 +24,7 @@ const BookFormStep2 = ({ setStep }: BookFormStep2Props) => {
 
   const handleEditAccommodation = () => {
     router.push({
-      pathname: `project/${projectId}`,
+      pathname: `host/${projectId}`,
       params: {
         id: id,
         name: name,

@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import { NetworkStatus } from "@apollo/client";
 import { ScrollView, StyleSheet, View } from "react-native";
 import React, { useCallback, useEffect } from "react";
@@ -6,14 +5,12 @@ import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
 import NoResult from "@src/components/organisms/no-result";
 import { RefreshControl } from "react-native-gesture-handler";
-import { setTransactionList } from "@src/slice/transaction-list-slice";
-import ReservationCard from "@src/components/modules/tour-reservation-card";
+import ReservationCard from "@src/components/modules/tour/transaction/card";
 import ReservationSkeleton from "@src/components/modules/reservation-skeleton";
 import { TourTransactionQueryType, useTourTransactionListQuery } from "@src/gql/generated";
 import { HEIGHT } from "@src/constants";
 
 const TourReservation = () => {
-  const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const { data, refetch, networkStatus } = useTourTransactionListQuery({
     notifyOnNetworkStatusChange: true,
@@ -43,8 +40,6 @@ const TourReservation = () => {
         </Container>
       </ScrollView>
     );
-
-  dispatch(setTransactionList(data));
 
   return (
     <ScrollView

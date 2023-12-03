@@ -84,7 +84,7 @@ export const theme = isRtl =>
       error: "#E73F3F",
       warning: "#FEC30D",
       success: "#66CD6A",
-      info:"#4A8BEB"
+      info: "#4A8BEB",
     },
     darkColors: {
       primary: "blue",
@@ -219,6 +219,7 @@ export const theme = isRtl =>
         const { type, color, size } = props;
 
         let buttonStyle: any = {
+          gap: 8,
           borderRadius: 12,
           fontWeight: "400",
           ...Platform.select({

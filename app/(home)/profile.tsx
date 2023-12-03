@@ -171,37 +171,14 @@ const Profile: React.FC = () => {
           </>
         )}
 
-        {!userDetail?.isNgo && (
-          <>
-            <WhiteSpace size={30} />
-            <Container>
-              <Text type="grey3">{tr("Managements")}</Text>
-            </Container>
-            <ListItem onPress={() => router.push("/comingSoon")}>
-              <Feather name="aperture" size={24} color="black" />
-              <ListItem.Content>
-                <ListItem.Title style={style.label(isRtl)}>
-                  {tr("Tours and my travels")}
-                </ListItem.Title>
-              </ListItem.Content>
-              <Feather
-                name={isRtl ? "chevron-left" : "chevron-right"}
-                size={24}
-                color={theme.colors.grey3}
-              />
-            </ListItem>
-          </>
-        )}
-
         <WhiteSpace size={30} />
-
         <Container>
-          <Text type="grey3">{tr("Requests")}</Text>
+          <Text type="grey3">{tr("Managements")}</Text>
         </Container>
-        <ListItem bottomDivider onPress={() => router.push("/comingSoon")}>
+        <ListItem onPress={() => router.push("/comingSoon")}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("My Tours Requests")}</ListItem.Title>
+            <ListItem.Title style={style.label(isRtl)}>{tr("Tours and my travels")}</ListItem.Title>
           </ListItem.Content>
           <Feather
             name={isRtl ? "chevron-left" : "chevron-right"}
@@ -209,10 +186,11 @@ const Profile: React.FC = () => {
             color={theme.colors.grey3}
           />
         </ListItem>
-        <ListItem onPress={() => router.push("/comingSoon")}>
+
+        <ListItem onPress={() => router.push("/wallet")}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("My Requests")}</ListItem.Title>
+            <ListItem.Title style={style.label(isRtl)}>{tr("wallet")}</ListItem.Title>
           </ListItem.Content>
           <Feather
             name={isRtl ? "chevron-left" : "chevron-right"}

@@ -5,6 +5,9 @@ query tourTransactionList {
       id
       description
       invoiceNumber
+      tourguestSet {
+        id
+      }
       status {
         isActive
         step

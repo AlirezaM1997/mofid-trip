@@ -52,7 +52,13 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="/project/[projectId]"
+        name="wallet"
+        options={{
+          title: tr("wallet"),
+        }}
+      />
+      <Stack.Screen
+        name="/host/[projectId]"
         options={{
           title: tr("Project"),
         }}
@@ -127,6 +133,30 @@ const HomeLayout = () => {
         name="host/create/facilities"
         options={{
           title: tr("Host Facilities"),
+        }}
+      />
+      <Stack.Screen
+        name="host/transaction/index"
+        options={{
+          title: tr("my requests"),
+        }}
+      />
+      <Stack.Screen
+        name="host/transaction/add/capacity"
+        options={{
+          title: tr("host reservation"),
+        }}
+      />
+      <Stack.Screen
+        name="host/transaction/add/date"
+        options={{
+          title: tr("host reservation"),
+        }}
+      />
+      <Stack.Screen
+        name="host/transaction/add/confirm-data"
+        options={{
+          title: tr("final details"),
         }}
       />
       <Stack.Screen
@@ -214,6 +244,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="host/transaction/detail/[transactionId]"
+        options={{
+          title: tr("Payment Detail"),
+        }}
+      />
+      <Stack.Screen
         name="pay-detail"
         options={{
           title: tr("Payment Detail"),
@@ -226,7 +262,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="tour-transaction-detail/[transactionId]"
+        name="tour/transaction/detail/[transactionId]"
         options={{
           title: tr("Tour Transaction Detail"),
         }}
@@ -276,13 +312,25 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="failedReceipt"
+        name="tour/transaction/failedReceipt"
         options={{
           title: tr("Unsuccessful Payment"),
         }}
       />
       <Stack.Screen
-        name="successReceipt"
+        name="host/transaction/failedReceipt"
+        options={{
+          title: tr("Unsuccessful Payment"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/transaction/successReceipt"
+        options={{
+          title: tr("Success Receipt"),
+        }}
+      />
+      <Stack.Screen
+        name="host/transaction/successReceipt"
         options={{
           title: tr("Success Receipt"),
         }}

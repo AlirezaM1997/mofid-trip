@@ -288,6 +288,26 @@ export const messages = {
     fa_ir: "مسافر",
     en_us: "Person",
   },
+  "cancel and edit": {
+    ar: "إلغاء وتحرير",
+    fa_ir: "لغو و ویرایش",
+    en_us: "cancel and edit",
+  },
+  "submit request": {
+    ar: "تقديم الطلب",
+    fa_ir: "ارسال درخواست",
+    en_us: "submit request",
+  },
+  "your initial request will be approved or rejected by the tour after it is submitted": {
+    ar: "ستتم الموافقة على طلبك الأولي أو رفضه بواسطة الجولة بعد تقديمه",
+    fa_ir: "درخواست اولیه شما پس از ارسال ، توسط تور تایید یا رد خواهد شد",
+    en_us: "your initial request will be approved or rejected by the tour after it is submitted",
+  },
+  "are you sure to confirm the request?": {
+    ar: "هل أنت متأكد من تسجيل الطلب؟",
+    fa_ir: "آیا مطمئن به ثبت درخواست هستید؟",
+    en_us: "are you sure to confirm the request?",
+  },
   persons: {
     ar: "الاشخاص",
     fa_ir: "مسافران",
@@ -307,6 +327,16 @@ export const messages = {
     ar: "سعر",
     fa_ir: "هزینه",
     en_us: "Price",
+  },
+  "my cards": {
+    ar: "بطاقاتي",
+    fa_ir: "کارت‌های من",
+    en_us: "my cards",
+  },
+  increase: {
+    ar: "يزيد",
+    fa_ir: "افزایش",
+    en_us: "Increase",
   },
   "privacy and ownership: all intellectual and material rights belong to mofidtrip. safeguarding the privacy of individuals and organizations is a top priority for mofidtrip. the mofidtrip platform is committed to employing the best methods, in collaboration with a specialized technical team, to ensure the protection of individuals' and organizations' secrets. furthermore, efforts are made to develop the necessary technology to enhance the security of your use of the platform.":
     {
@@ -576,6 +606,7 @@ export const messages = {
     fa_ir: "ظرفیت را وارد کنید ( تعداد )",
     en_us: "Enter the capacity (quantity)",
   },
+
   "number of people": {
     ar: "عدد الاشخاص",
     fa_ir: "تعداد نفرات",
@@ -773,6 +804,11 @@ export const messages = {
     fa_ir: "نه، لغو",
     en_us: "No, Cancel",
   },
+  "wallet balance": {
+    ar: "توازن الحقيبة",
+    fa_ir: "موجودی کیف",
+    en_us: "Wallet balance",
+  },
   "unsuccessful payment, wallet balance is not enough": {
     ar: "عملية دفع غير ناجحة، رصيد المحفظة غير كافي",
     fa_ir: "پرداخت ناموفق ، موجودی کیف پول کافی نمی‌باشد",
@@ -814,10 +850,20 @@ export const messages = {
     fa_ir: "کد رهگیری",
     en_us: "Tracking Code",
   },
+  "latest transactions": {
+    ar: "أحدث المعاملات",
+    fa_ir: "آخرین تراکنش ها",
+    en_us: "Latest transactions",
+  },
   date: {
     ar: "تاريخ",
     fa_ir: "تاریخ",
     en_us: "Date",
+  },
+  "hosting type": {
+    ar: "نوع الاستضافة",
+    fa_ir: "نوع میزبانی",
+    en_us: "Hosting type",
   },
   "successful transfer": {
     ar: "نقل ناجح",
@@ -828,6 +874,47 @@ export const messages = {
     ar: "وقت",
     fa_ir: "زمان",
     en_us: "Time",
+  },
+  withdraw: {
+    ar: "محصول",
+    fa_ir: "برداشت",
+    en_us: "Withdraw ",
+  },
+  "increase balance": {
+    ar: "زيادة المخزون",
+    fa_ir: "افزایش موجودی",
+    en_us: "increase balance ",
+  },
+  "withdrawal from the wallet": {
+    ar: "الانسحاب من الحقيبة",
+    fa_ir: "برداشت از کیف",
+    en_us: "withdrawal from the wallet",
+  },
+  "all your recent financial transactions and for you (all transactions are in tomans)": {
+    ar: "جميع معاملاتك المالية الأخيرة ولأجلك (جميع المعاملات بالتومان)",
+    fa_ir: "تمامی تراکنش های مالی اخیر شما و برای شما ( تمامی تراکنش ها به تومان میباشد )",
+    en_us: "All your recent financial transactions and for you (all transactions are in Tomans) ",
+  },
+  "transaction history": {
+    ar: "تاريخ المعاملات",
+    fa_ir: "تاریخچه تراکنش ها",
+    en_us: "Transaction history ",
+  },
+  "management and use of inventory increase and withdrawal services, view transaction history": {
+    ar: "إدارة واستخدام خدمات زيادة وسحب المخزون، وعرض تاريخ المعاملات",
+    fa_ir: "مدیریت و استفاده از سرویس های افزایش موجودی و برداشت ، مشاهده تاریخچه تراکنش ها",
+    en_us:
+      "Management and use of inventory increase and withdrawal services, view transaction history",
+  },
+  "wallet and recent transactions": {
+    ar: "المحفظة والمعاملات الأخيرة",
+    fa_ir: "کیف پول و تراکنش های اخیر",
+    en_us: "Wallet and recent transactions",
+  },
+  wallet: {
+    ar: "محفظة",
+    fa_ir: "کیف پول",
+    en_us: "wallet",
   },
   transmitter: {
     ar: "الارسال",
@@ -898,6 +985,11 @@ export const messages = {
     ar: "أسعار الجولة",
     fa_ir: "امتیاز به تور",
     en_us: "Rates to the tour",
+  },
+  "rates to the host": {
+    ar: "أسعار الجولة",
+    fa_ir: "امتیاز به میزبان",
+    en_us: "Rates to the host",
   },
   paypal: {
     ar: "پی پال",
@@ -1040,6 +1132,14 @@ export const messages = {
         "جزئیات نهایی و ثبت شده شما برای درخواست اولیه به تور. قیمت بر اساس هر نفر محسابه می‌شود.",
       en_us:
         "Your final and recorded details for the initial tour request. The price is calculated per person.",
+    },
+  "your final and recorded details for the initial host request. the price is calculated per person.":
+    {
+      ar: "بياناتك النهائية والمسجلة لطلب الجولة الأولية. يتم احتساب السعر للشخص الواحد.",
+      fa_ir:
+        "جزئیات نهایی و ثبت شده شما برای درخواست اولیه به میزبان. قیمت بر اساس هر نفر محسابه می‌شود.",
+      en_us:
+        "Your final and recorded details for the initial host request. The price is calculated per person.",
     },
   "final invoice": {
     ar: "الفاتورة النهائية",
@@ -1493,6 +1593,12 @@ export const messages = {
     fa_ir: "تعداد مسافران",
     en_us: "Passengers Count",
   },
+
+  "confirm request": {
+    ar: "طلب التسجيل",
+    fa_ir: "ثبت درخواست",
+    en_us: "confirm request",
+  },
   "group leader information": {
     ar: "معلومات قائد المجموعة",
     fa_ir: "اطلاعات سرگروه",
@@ -1528,10 +1634,30 @@ export const messages = {
     fa_ir: "بدون آدرس",
     en_us: "No Address",
   },
+  "selective hosting": {
+    ar: "استضافة انتقائية",
+    fa_ir: "میزبانی انتخابی",
+    en_us: "Selective hosting",
+  },
+  "your registered details for initial host reservation": {
+    ar: "بياناتك المسجلة لطلب الاستضافة الأولي والحجز",
+    fa_ir: "جزئیات ثبت شده شما برای درخواست و رزرو اولیه میزبانی",
+    en_us: "your registered details for initial host reservation",
+  },
   authentication: {
     ar: "المصادقة",
     fa_ir: "احراز هویت",
     en_us: "Authentication",
+  },
+  chat: {
+    ar: "رسالة",
+    fa_ir: "پیام",
+    en_us: "chat",
+  },
+  "final details": {
+    ar: "التفاصيل النهائية",
+    fa_ir: "جزئیات نهایی",
+    en_us: "final details",
   },
   "final information": {
     ar: "المعلومات النهائية",
@@ -1567,6 +1693,11 @@ export const messages = {
     ar: "عرض تفاصيل الجولة",
     fa_ir: "مشاهده جزئیات تور",
     en_us: "View tour details",
+  },
+  "view host details": {
+    ar: "عرض تفاصيل الجولة",
+    fa_ir: "مشاهده جزئیات میزبان",
+    en_us: "View host details",
   },
   "tour management": {
     ar: "إدارة الرحلات",
@@ -1718,6 +1849,11 @@ export const messages = {
     fa_ir: "لغو",
     en_us: "Cancel",
   },
+  "host reservation": {
+    ar: "حجز الاستضافة",
+    fa_ir: "رزرو میزبانی",
+    en_us: "host reservation",
+  },
   "tour title": {
     ar: "عنوان الجولة",
     fa_ir: "عنوان تور",
@@ -1752,6 +1888,16 @@ export const messages = {
     ar: "القدرة مطلوبة",
     fa_ir: "ظرفیت تور اجباری است",
     en_us: "Capacity is required",
+  },
+  "city is required": {
+    ar: "المدينة مطلوبة",
+    fa_ir: "شهر اجباری است",
+    en_us: "City is required",
+  },
+  "province is required": {
+    ar: "المحافظة مطلوبة",
+    fa_ir: "استان اجباری است",
+    en_us: "Province is required",
   },
   "place of movement": {
     ar: "مكان الحركة",

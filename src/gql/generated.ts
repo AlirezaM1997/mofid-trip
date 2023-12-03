@@ -1643,7 +1643,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
+  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -1797,6 +1797,20 @@ export type ProjectAddMutationVariables = Exact<{
 
 export type ProjectAddMutation = { __typename?: 'Mutation', projectAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
+export type ProjectTransactionAddMutationVariables = Exact<{
+  data: ProjectTransactionAddInputType;
+}>;
+
+
+export type ProjectTransactionAddMutation = { __typename?: 'Mutation', projectTransactionAdd?: { __typename?: 'ResponseBase', message?: string | null, status?: string | null, metadata?: any | null, statusCode?: number | null } | null };
+
+export type ProjectPurchaseAddMutationVariables = Exact<{
+  data: ProjectPurchaseAddInputData;
+}>;
+
+
+export type ProjectPurchaseAddMutation = { __typename?: 'Mutation', projectPurchaseAdd?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
+
 export type SettingEditMutationVariables = Exact<{
   data?: InputMaybe<SettingEditInputType>;
 }>;
@@ -1831,13 +1845,6 @@ export type ProjectTransactionEditMutationVariables = Exact<{
 
 
 export type ProjectTransactionEditMutation = { __typename?: 'Mutation', projectTransactionEdit?: { __typename: 'ResponseBase', message?: string | null, status?: string | null, statusCode?: number | null } | null };
-
-export type ProjectTransactionAddMutationVariables = Exact<{
-  data: ProjectTransactionAddInputType;
-}>;
-
-
-export type ProjectTransactionAddMutation = { __typename?: 'Mutation', projectTransactionAdd?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
 export type TourTransactionEditMutationVariables = Exact<{
   data: TourTransactionEditInputType;
@@ -1910,7 +1917,7 @@ export type ProjectTransactionDetailQueryVariables = Exact<{
 }>;
 
 
-export type ProjectTransactionDetailQuery = { __typename?: 'Query', projectTransactionDetail?: { __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, firstname?: string | null } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, tax?: number | null, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null } | null } | null } | null };
+export type ProjectTransactionDetailQuery = { __typename?: 'Query', projectTransactionDetail?: { __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, description?: string | null, modifiedDate?: any | null, invoiceNumber?: any | null, createdDate?: any | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, firstname?: string | null } | null, status?: { __typename?: 'StatusQueryType', step?: string | null, isActive?: boolean | null } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', id: string, name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, tax?: number | null, price?: number | null, description?: string | null, categories?: Array<{ __typename?: 'CategoryQueryType', name?: string | null } | null> | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null, medium?: string | null, large?: string | null } | null> | null } | null } | null } | null };
 
 export type ProjectTransactionListQueryVariables = Exact<{
   page?: InputMaybe<PageType>;
@@ -1918,7 +1925,7 @@ export type ProjectTransactionListQueryVariables = Exact<{
 }>;
 
 
-export type ProjectTransactionListQuery = { __typename?: 'Query', projectTransactionList?: { __typename?: 'ProjectTransactionListType', count?: number | null, pageCount?: number | null, data?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, description?: string | null, invoiceNumber?: any | null, createdDate?: any | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, firstname?: string | null } | null, status?: { __typename?: 'StatusQueryType', step?: string | null, isActive?: boolean | null } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, tax?: number | null, price?: number | null, description?: string | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null } | null> | null } | null };
+export type ProjectTransactionListQuery = { __typename?: 'Query', projectTransactionList?: { __typename?: 'ProjectTransactionListType', count?: number | null, pageCount?: number | null, data?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, description?: string | null, modifiedDate?: any | null, invoiceNumber?: any | null, createdDate?: any | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, firstname?: string | null } | null, status?: { __typename?: 'StatusQueryType', step?: string | null, isActive?: boolean | null } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', id: string, name?: string | null } | null> | null, project?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, tax?: number | null, price?: number | null, description?: string | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null, medium?: string | null, large?: string | null } | null> | null } | null } | null } | null> | null } | null };
 
 export type SettingDetailQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -1949,17 +1956,17 @@ export type TourTransactionDetailQueryVariables = Exact<{
 }>;
 
 
-export type TourTransactionDetailQuery = { __typename?: 'Query', tourTransactionDetail?: { __typename?: 'TourTransactionQueryType', id: string, createdDate?: any | null, description?: string | null, modifiedDate?: any | null, invoiceNumber?: any | null, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', title?: string | null, price: number, id: string, tour?: { __typename?: 'TourQueryType', id: string, title: string, endTime: any, startTime: any, avatarS3?: Array<{ __typename?: 'TourImageType', small?: string | null, medium?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null, medium?: string | null, large?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null };
+export type TourTransactionDetailQuery = { __typename?: 'Query', tourTransactionDetail?: { __typename?: 'TourTransactionQueryType', id: string, createdDate?: any | null, description?: string | null, modifiedDate?: any | null, invoiceNumber?: any | null, tourguestSet: Array<{ __typename?: 'TourGuestQueryType', id: string }>, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', title?: string | null, price: number, id: string, tour?: { __typename?: 'TourQueryType', id: string, title: string, endTime: any, startTime: any, avatarS3?: Array<{ __typename?: 'TourImageType', small?: string | null, medium?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null, medium?: string | null, large?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null };
 
 export type TourTransactionListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionList?: { __typename?: 'TourTransactionListType', count?: number | null, data?: Array<{ __typename?: 'TourTransactionQueryType', id: string, description?: string | null, invoiceNumber?: any | null, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', price: number, tour?: { __typename?: 'TourQueryType', id: string, startTime: any, endTime: any, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null> | null } | null };
+export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionList?: { __typename?: 'TourTransactionListType', count?: number | null, data?: Array<{ __typename?: 'TourTransactionQueryType', id: string, description?: string | null, invoiceNumber?: any | null, tourguestSet: Array<{ __typename?: 'TourGuestQueryType', id: string }>, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', price: number, tour?: { __typename?: 'TourQueryType', id: string, startTime: any, endTime: any, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null> | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, fullname?: string | null, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null };
+export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, fullname?: string | null, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, wallet?: { __typename?: 'UserWalletType', balance: number, createdTime: any, id: string, modifiedTime: any, walletTransactions: Array<{ __typename?: 'WalletTransactionQueryType', action: WalletWalletTransactionActionChoices, amount: number, createdTime?: any | null, id: string, invoiceNumber: string, modifiedTime?: any | null, purchaseRefId?: number | null }>, walletCards: Array<{ __typename?: 'BackCardQueryType', id: string, title?: string | null }> } | null } | null };
 
 
 export const CreateLoginDocument = gql`
@@ -2036,6 +2043,78 @@ export function useProjectAddMutation(baseOptions?: Apollo.MutationHookOptions<P
 export type ProjectAddMutationHookResult = ReturnType<typeof useProjectAddMutation>;
 export type ProjectAddMutationResult = Apollo.MutationResult<ProjectAddMutation>;
 export type ProjectAddMutationOptions = Apollo.BaseMutationOptions<ProjectAddMutation, ProjectAddMutationVariables>;
+export const ProjectTransactionAddDocument = gql`
+    mutation projectTransactionAdd($data: ProjectTransactionAddInputType!) {
+  projectTransactionAdd(data: $data) {
+    message
+    status
+    metadata
+    statusCode
+  }
+}
+    `;
+export type ProjectTransactionAddMutationFn = Apollo.MutationFunction<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>;
+
+/**
+ * __useProjectTransactionAddMutation__
+ *
+ * To run a mutation, you first call `useProjectTransactionAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProjectTransactionAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [projectTransactionAddMutation, { data, loading, error }] = useProjectTransactionAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useProjectTransactionAddMutation(baseOptions?: Apollo.MutationHookOptions<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>(ProjectTransactionAddDocument, options);
+      }
+export type ProjectTransactionAddMutationHookResult = ReturnType<typeof useProjectTransactionAddMutation>;
+export type ProjectTransactionAddMutationResult = Apollo.MutationResult<ProjectTransactionAddMutation>;
+export type ProjectTransactionAddMutationOptions = Apollo.BaseMutationOptions<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>;
+export const ProjectPurchaseAddDocument = gql`
+    mutation projectPurchaseAdd($data: ProjectPurchaseAddInputData!) {
+  projectPurchaseAdd(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}
+    `;
+export type ProjectPurchaseAddMutationFn = Apollo.MutationFunction<ProjectPurchaseAddMutation, ProjectPurchaseAddMutationVariables>;
+
+/**
+ * __useProjectPurchaseAddMutation__
+ *
+ * To run a mutation, you first call `useProjectPurchaseAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProjectPurchaseAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [projectPurchaseAddMutation, { data, loading, error }] = useProjectPurchaseAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useProjectPurchaseAddMutation(baseOptions?: Apollo.MutationHookOptions<ProjectPurchaseAddMutation, ProjectPurchaseAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ProjectPurchaseAddMutation, ProjectPurchaseAddMutationVariables>(ProjectPurchaseAddDocument, options);
+      }
+export type ProjectPurchaseAddMutationHookResult = ReturnType<typeof useProjectPurchaseAddMutation>;
+export type ProjectPurchaseAddMutationResult = Apollo.MutationResult<ProjectPurchaseAddMutation>;
+export type ProjectPurchaseAddMutationOptions = Apollo.BaseMutationOptions<ProjectPurchaseAddMutation, ProjectPurchaseAddMutationVariables>;
 export const SettingEditDocument = gql`
     mutation settingEdit($data: SettingEditInputType) {
   settingEdit(data: $data) {
@@ -2217,43 +2296,6 @@ export function useProjectTransactionEditMutation(baseOptions?: Apollo.MutationH
 export type ProjectTransactionEditMutationHookResult = ReturnType<typeof useProjectTransactionEditMutation>;
 export type ProjectTransactionEditMutationResult = Apollo.MutationResult<ProjectTransactionEditMutation>;
 export type ProjectTransactionEditMutationOptions = Apollo.BaseMutationOptions<ProjectTransactionEditMutation, ProjectTransactionEditMutationVariables>;
-export const ProjectTransactionAddDocument = gql`
-    mutation projectTransactionAdd($data: ProjectTransactionAddInputType!) {
-  projectTransactionAdd(data: $data) {
-    status
-    statusCode
-    message
-    metadata
-    __typename
-  }
-}
-    `;
-export type ProjectTransactionAddMutationFn = Apollo.MutationFunction<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>;
-
-/**
- * __useProjectTransactionAddMutation__
- *
- * To run a mutation, you first call `useProjectTransactionAddMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useProjectTransactionAddMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [projectTransactionAddMutation, { data, loading, error }] = useProjectTransactionAddMutation({
- *   variables: {
- *      data: // value for 'data'
- *   },
- * });
- */
-export function useProjectTransactionAddMutation(baseOptions?: Apollo.MutationHookOptions<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>(ProjectTransactionAddDocument, options);
-      }
-export type ProjectTransactionAddMutationHookResult = ReturnType<typeof useProjectTransactionAddMutation>;
-export type ProjectTransactionAddMutationResult = Apollo.MutationResult<ProjectTransactionAddMutation>;
-export type ProjectTransactionAddMutationOptions = Apollo.BaseMutationOptions<ProjectTransactionAddMutation, ProjectTransactionAddMutationVariables>;
 export const TourTransactionEditDocument = gql`
     mutation tourTransactionEdit($data: TourTransactionEditInputType!) {
   tourTransactionEdit(data: $data) {
@@ -2837,22 +2879,46 @@ export const ProjectTransactionDetailDocument = gql`
     id
     dateEnd
     dateStart
+    description
+    modifiedDate
+    invoiceNumber
+    createdDate
     owner {
       id
       fullname
       firstname
     }
+    status {
+      step
+      isActive
+    }
     guestSet {
+      id
       name
     }
     project {
       id
-      tax
       name
+      tax
       price
+      description
+      categories {
+        name
+      }
+      facilities {
+        id
+        enName
+      }
       accommodation {
         id
         address
+        lat
+        lng
+        avatarS3 {
+          small
+          medium
+          large
+        }
       }
     }
   }
@@ -2896,6 +2962,7 @@ export const ProjectTransactionListDocument = gql`
       dateEnd
       dateStart
       description
+      modifiedDate
       invoiceNumber
       createdDate
       owner {
@@ -2908,6 +2975,7 @@ export const ProjectTransactionListDocument = gql`
         isActive
       }
       guestSet {
+        id
         name
       }
       project {
@@ -2927,6 +2995,8 @@ export const ProjectTransactionListDocument = gql`
           lng
           avatarS3 {
             small
+            medium
+            large
           }
         }
       }
@@ -3151,6 +3221,9 @@ export const TourTransactionDetailDocument = gql`
     description
     modifiedDate
     invoiceNumber
+    tourguestSet {
+      id
+    }
     status {
       isActive
       step
@@ -3222,6 +3295,9 @@ export const TourTransactionListDocument = gql`
       id
       description
       invoiceNumber
+      tourguestSet {
+        id
+      }
       status {
         isActive
         step
@@ -3301,6 +3377,25 @@ export const UserDetailDocument = gql`
     isNgo
     ngo {
       id
+    }
+    wallet {
+      balance
+      createdTime
+      id
+      modifiedTime
+      walletTransactions {
+        action
+        amount
+        createdTime
+        id
+        invoiceNumber
+        modifiedTime
+        purchaseRefId
+      }
+      walletCards {
+        id
+        title
+      }
     }
   }
 }
