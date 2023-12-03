@@ -150,19 +150,19 @@ const HomeLayout = () => {
       <Stack.Screen
         name="host/transaction/add/capacity"
         options={{
-          title: tr("host reservation"),
+          title: tr("Host Reservation"),
         }}
       />
       <Stack.Screen
         name="host/transaction/add/date"
         options={{
-          title: tr("host reservation"),
+          title: tr("Host Reservation"),
         }}
       />
       <Stack.Screen
         name="host/transaction/add/confirm-data"
         options={{
-          title: tr("final details"),
+          title: tr("Final Details"),
         }}
       />
       <Stack.Screen

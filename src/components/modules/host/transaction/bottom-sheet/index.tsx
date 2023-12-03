@@ -25,14 +25,14 @@ const HostTransactionBottomSheet = ({ children }) => {
 
   const handleSubmit = async () => {
     const { data } = await addHostTransaction({
-      variables: { data: { projectId: projectId as string, ...transactionData } },
+      variables: { data: { ...transactionData, projectId: projectId as string } },
     });
     setIsVisible(false);
 
     if (data.projectTransactionAdd.status === "OK") {
       Toast.show({
         type: "success",
-        text1: tr("your request has been successfully submitted"),
+        text1: tr("Your request has been successfully submitted"),
       });
       router.push("host/transaction");
     }

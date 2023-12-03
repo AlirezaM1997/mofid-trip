@@ -11,13 +11,13 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import HostTransactionBottomSheet from "@modules/host/transaction/bottom-sheet";
 
-const confirmDataScreen = () => {
+const ConfirmDataScreen = () => {
   const { tr } = useTranslation();
   const { projectId, name } = useLocalSearchParams();
   const { data } = useSelector((state: RootState) => state.hostTransactionSlice);
 
   const handleNavigation = (route: string) => {
-    router.push({ pathname: route, params: { projectId, name } });
+    router.push({ pathname: route, params: { projectId: projectId, name: name } });
   };
 
   return (
@@ -104,4 +104,4 @@ const styles = StyleSheet.create({
   cardContainer: { flexDirection: "row", gap: 16, alignItems: "center" },
 });
 
-export default confirmDataScreen;
+export default ConfirmDataScreen;
