@@ -835,13 +835,6 @@ export enum ProjectTagEnum {
   Trend = 'TREND'
 }
 
-export type ProjectTranactionGuestInputType = {
-  /** Gender of the guests. */
-  gender: GuestGenderEnum;
-  /** Number of the guests */
-  guestNumber: Scalars['Int']['input'];
-};
-
 /** Input type for adding a new project transaction. */
 export type ProjectTransactionAddInputType = {
   /** End date of the transaction. */
@@ -851,7 +844,7 @@ export type ProjectTransactionAddInputType = {
   /** Description of the transaction. */
   description?: InputMaybe<Scalars['String']['input']>;
   /** List of guest information. */
-  guests: ProjectTranactionGuestInputType;
+  guests: ProjectTransactionGuestInputType;
   /** ID of the associated project. */
   projectId: Scalars['ID']['input'];
 };
@@ -870,6 +863,13 @@ export type ProjectTransactionEditInputType = {
 export type ProjectTransactionFilterType = {
   /** Filter by transaction status step. */
   statusStep?: InputMaybe<TransactionStatusEnum>;
+};
+
+export type ProjectTransactionGuestInputType = {
+  /** Gender of the guests. */
+  gender: GuestGenderEnum;
+  /** Number of the guests */
+  guestNumber: Scalars['Int']['input'];
 };
 
 /** Type representing a page of ProjectTransactionQueryType objects. */
@@ -1536,7 +1536,7 @@ export type TourTransactionQueryType = {
   /** Status information for the transaction. */
   status?: Maybe<TourStatusQueryType>;
   /** Guest information for the transaction. */
-  tourGuests?: Maybe<TourGuestQueryType>;
+  tourGuests?: Maybe<Array<Maybe<TourGuestQueryType>>>;
   /** Tour Package associated with the transaction. */
   tourPackage?: Maybe<TourPackageType>;
   tourguestSet: Array<TourGuestQueryType>;
@@ -1790,6 +1790,13 @@ export type CreateLoginMutationVariables = Exact<{
 
 export type CreateLoginMutation = { __typename?: 'Mutation', createLogin?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
+export type ProjectAddMutationVariables = Exact<{
+  data: ProjectAddInputType;
+}>;
+
+
+export type ProjectAddMutation = { __typename?: 'Mutation', projectAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
 export type SettingEditMutationVariables = Exact<{
   data?: InputMaybe<SettingEditInputType>;
 }>;
@@ -1993,6 +2000,42 @@ export function useCreateLoginMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateLoginMutationHookResult = ReturnType<typeof useCreateLoginMutation>;
 export type CreateLoginMutationResult = Apollo.MutationResult<CreateLoginMutation>;
 export type CreateLoginMutationOptions = Apollo.BaseMutationOptions<CreateLoginMutation, CreateLoginMutationVariables>;
+export const ProjectAddDocument = gql`
+    mutation projectAdd($data: ProjectAddInputType!) {
+  projectAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}
+    `;
+export type ProjectAddMutationFn = Apollo.MutationFunction<ProjectAddMutation, ProjectAddMutationVariables>;
+
+/**
+ * __useProjectAddMutation__
+ *
+ * To run a mutation, you first call `useProjectAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProjectAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [projectAddMutation, { data, loading, error }] = useProjectAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useProjectAddMutation(baseOptions?: Apollo.MutationHookOptions<ProjectAddMutation, ProjectAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ProjectAddMutation, ProjectAddMutationVariables>(ProjectAddDocument, options);
+      }
+export type ProjectAddMutationHookResult = ReturnType<typeof useProjectAddMutation>;
+export type ProjectAddMutationResult = Apollo.MutationResult<ProjectAddMutation>;
+export type ProjectAddMutationOptions = Apollo.BaseMutationOptions<ProjectAddMutation, ProjectAddMutationVariables>;
 export const SettingEditDocument = gql`
     mutation settingEdit($data: SettingEditInputType) {
   settingEdit(data: $data) {
@@ -2382,7 +2425,7 @@ export type BannerListLazyQueryHookResult = ReturnType<typeof useBannerListLazyQ
 export type BannerListQueryResult = Apollo.QueryResult<BannerListQuery, BannerListQueryVariables>;
 export const CategoryListDocument = gql`
     query categoryList($page: PageType, $search: String) {
-  categoryList(search: $search) {
+  categoryList(page: $page, search: $search) {
     pageCount
     count
     data {

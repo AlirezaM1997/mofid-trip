@@ -1,40 +1,42 @@
-import { Field, Formik } from "formik";
-import { RootState } from "@src/store";
 import Container from "@atoms/container";
-import { Button, Text } from "@rneui/themed";
-import { StyleSheet, View } from "react-native";
-import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
-import useTranslation from "@src/hooks/translation";
-import CustomImagePicker from "@modules/image-picker";
-import { useDispatch, useSelector } from "react-redux";
-import { setTourCreateData } from "@src/slice/tour-create-slice";
 import BottomButtonLayout from "@components/layout/bottom-button";
+import CustomImagePicker from "@modules/image-picker";
+import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
+import { Button, Text } from "@rneui/themed";
+import useTranslation from "@src/hooks/translation";
+import { setHostCreateData } from "@src/slice/host-create-slice";
+import { RootState } from "@src/store";
 import { router } from "expo-router";
+import { Field, Formik } from "formik";
+import { StyleSheet, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 const initialValues = {
   images: { main: "", first: "", sec: "", third: "", fourth: "", fifth: "", sixth: "" },
 };
 
-const Screen = () => {
+const HostCreateImagesScreen = () => {
   const { tr } = useTranslation();
   const dispatch = useDispatch();
-  const { data } = useSelector((state: RootState) => state.tourCreateSlice);
+  const { data } = useSelector((state: RootState) => state.hostCreateSlice);
 
   const handleSubmit = values => {
     const images = Object.values(values.images).filter(path => path);
     dispatch(
-      setTourCreateData({
+      setHostCreateData({
         ...data,
         base64Images: images as string[],
       })
     );
+    console.log("data", data);
     router.push({
-      pathname: "tour/create/facilities",
+      pathname: "host/create/facilities",
       params: {
         x: -95 * 8,
       },
     });
   };
+
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
@@ -46,7 +48,7 @@ const Screen = () => {
               {tr("back")}
             </Button>,
           ]}>
-          <TourCreateTabs index={6} />
+          <HostCreateTabs index={6} />
           <Container style={styles.container}>
             <View style={styles.header}>
               <Text heading2>{tr("Pictures related to the tour")}</Text>
@@ -74,4 +76,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Screen;
+export default HostCreateImagesScreen;

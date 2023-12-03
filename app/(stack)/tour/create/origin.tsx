@@ -2,7 +2,7 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import LocationPicker from "@modules/formik/fields/location-picker";
-import TourCreateTab from "@modules/virtual-tabs";
+import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
 import { Button, Input, Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { setTourCreateData } from "@src/slice/tour-create-slice";
@@ -73,7 +73,7 @@ const Screen = () => {
               {tr("back")}
             </Button>,
           ]}>
-          <TourCreateTab index={2} />
+          <TourCreateTabs index={2} />
           <WhiteSpace size={20} />
           <Container>
             <Text heading2 bold>

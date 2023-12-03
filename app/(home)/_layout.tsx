@@ -100,7 +100,7 @@ export default function AppLayout() {
           <Text center>{tr('You can create tours and hosts for your collection. Choose one of the options as needed')}</Text>
           <WhiteSpace />
           <ButtonRow>
-            <Button onPress={() => router.push('/host/create')} type="outline">{tr("Create Host")}</Button>
+            <Button onPress={() => router.push('/host/create/details')} type="outline">{tr("Create Host")}</Button>
             <Button onPress={() => router.push('/tour/create/details')}>{tr("Create Tour")}</Button>
           </ButtonRow>
         </Container>

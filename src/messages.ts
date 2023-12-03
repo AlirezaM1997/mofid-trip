@@ -155,7 +155,7 @@ export const messages = {
     fa_ir: "درخواست به تورهای من",
     en_us: "Apply to my tours",
   },
-  'all requests received from travelers who plan to travel with your tours': {
+  "all requests received from travelers who plan to travel with your tours": {
     ar: "جميع الطلبات الواردة من المسافرين الذين يخططون للسفر مع جولاتك",
     fa_ir: "تمامی درخواست های دریافت شده مسافرانی که قصد دارند با تورهای شما سفر کنند",
     en_us: "All requests received from travelers who plan to travel with your toursor",
@@ -1852,49 +1852,91 @@ export const messages = {
     fa_ir: "اجباری است",
     en_us: "Required",
   },
-  'select location on the map': {
+  "select location on the map": {
     ar: "حدد الموقع على الخريطة",
     fa_ir: "لوکیشن را از روی نقشه انتخاب کنید",
     en_us: "Select location on the map",
   },
-  'create host': {
+  "create host": {
     ar: "إنشاء مضيف",
     fa_ir: "ایجاد میزبانی",
     en_us: "Create Host",
   },
-  'add facilities': {
+  "add facilities": {
     ar: "أضف المرافق",
     fa_ir: "امکانات خود را اضافه کنید",
     en_us: "Add facilities",
   },
-  'what do you want to create?': {
+  "what do you want to create?": {
     ar: "ماذا تريد أن تصنع؟",
     fa_ir: "قصد ایجاد چه فرمی را دارید؟",
     en_us: "What do you want to create?",
   },
-  'you can create tours and hosts for your collection. choose one of the options as needed': {
+  "you can create tours and hosts for your collection. choose one of the options as needed": {
     ar: "يمكنك إنشاء جولات ومضيفين لمجموعتك. اختر أحد الخيارات حسب الحاجة",
-    fa_ir: "شما می‌توانید برای مجموعه خود ، تور و میزبانی ایجاد کنید . طبق نیاز یکی از گزینه ها را انتخاب کنید",
-    en_us: "You can create tours and hosts for your collection. Choose one of the options as needed",
+    fa_ir:
+      "شما می‌توانید برای مجموعه خود ، تور و میزبانی ایجاد کنید . طبق نیاز یکی از گزینه ها را انتخاب کنید",
+    en_us:
+      "You can create tours and hosts for your collection. Choose one of the options as needed",
   },
-  'flows': {
+  flows: {
     ar: "يطفو",
     fa_ir: "فرایند ها",
     en_us: "Flows",
   },
-  'manage my hosts': {
+  "manage my hosts": {
     ar: "إدارة مضيفي",
     fa_ir: "مدیریت میزبانی های من",
     en_us: "Manage My Hosts",
   },
-  'host management': {
+  "host management": {
     ar: "إدارة المضيف",
     fa_ir: "مدیریت میزبانی",
     en_us: "Host Management",
   },
-  'create': {
+  create: {
     ar: "يخلق",
     fa_ir: "ایجاد",
     en_us: "Create",
+  },
+  "host type": {
+    ar: "نوع المضيف",
+    fa_ir: "نوع‌میزبانی",
+    en_us: "Host Type",
+  },
+  "host details": {
+    ar: "تفاصيل المضيف",
+    fa_ir: "جزئیات میزبان",
+    en_us: "Host Details",
+  },
+  "host address": {
+    ar: "عنوان المضيف",
+    fa_ir: "نشانی میزبان",
+    en_us: "Host Address",
+  },
+  "host capacity": {
+    ar: "سعة المضيف",
+    fa_ir: "ظرفیت میزبان",
+    en_us: "Host Capacity",
+  },
+  "host date": {
+    ar: "تاريخ المضيف",
+    fa_ir: "تاریخ میزبان",
+    en_us: "Host Date",
+  },
+  "host price": {
+    ar: "سعر المضيف",
+    fa_ir: "قیمت میزبان",
+    en_us: "Host Price",
+  },
+  "host images": {
+    ar: "صور المضيف",
+    fa_ir: "تصاویر میزبان",
+    en_us: "Host Images",
+  },
+  "host facilities": {
+    ar: "المرافق المضيفة",
+    fa_ir: "امکانات میزبان",
+    en_us: "Host Facilities",
   },
 };
