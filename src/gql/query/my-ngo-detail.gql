@@ -1,6 +1,55 @@
 query myNGODetail {
   NGODetail {
     id
+    projectSet {
+      id
+      creator {
+        id
+      }
+      accommodation {
+        id
+      }
+      name
+      description
+      dateStart
+      dateEnd
+      gender
+      requestFrom
+      price
+      discount
+      tax
+      statusStep
+      statusActivation
+      facilities {
+        id
+      }
+      tags {
+        id
+      }
+      categories {
+        id
+      }
+      createdTime
+      capacity {
+        id
+      }
+      transactionSet {
+        id
+      }
+      capacityReserved {
+        male
+        female
+        child
+        allCap
+      }
+      freeCapacity {
+        male
+        female
+        child
+        allCap
+      }
+      __typename
+    }
     tourSet {
       id
       title
@@ -18,11 +67,11 @@ query myNGODetail {
           address
           lat
           lng
-          avatarS3 {
-            large
-            medium
-            small
-          }
+          # avatarS3 {
+          #   large
+          #   medium
+          #   small
+          # }
         }
         ... on ProjectQueryType {
           id
@@ -36,22 +85,22 @@ query myNGODetail {
           address
           lat
           lng
-          avatarS3 {
-            large
-            medium
-            small
-          }
+          # avatarS3 {
+          #   large
+          #   medium
+          #   small
+          # }
         }
         ... on ProjectQueryType {
           id
         }
         __typename
       }
-      avatarS3 {
-        large
-        medium
-        small
-      }
+      # avatarS3 {
+      #   large
+      #   medium
+      #   small
+      # }
       packages {
         id
         title
