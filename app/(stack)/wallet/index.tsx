@@ -53,7 +53,7 @@ const WalletScreen = () => {
             type="outline"
             color="secondary"
             icon={<AntDesign name="arrowup" size={16} color="black" />}
-            onPress={() => router.push("wallet/increase")}>
+            onPress={() => router.push("wallet/deposit")}>
             {tr("increase")}
           </Button>
           <Button

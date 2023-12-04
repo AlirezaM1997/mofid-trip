@@ -1,0 +1,24 @@
+query walletTransactionDetail($pk: ID!) {
+  walletTransactionDetail(pk: $pk) {
+    
+      action
+      source {
+        ... on BackCardQueryType {
+          id
+          title
+          cardPan
+        }
+        ... on WalletQuryType {
+          id
+        }
+      }
+      purchaseRefId
+      modifiedTime
+      invoiceNumber
+      id
+      description
+      amount
+      statusStep
+    
+  }
+}

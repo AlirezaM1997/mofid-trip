@@ -809,6 +809,11 @@ export const messages = {
     fa_ir: "نه، لغو",
     en_us: "No, Cancel",
   },
+  "payment by card": {
+    ar: "الدفع عن طريق البطاقة",
+    fa_ir: "پرداخت از کارت",
+    en_us: "payment by card",
+  },
   "increase wallet balance": {
     ar: "زيادة رصيد المحفظة",
     fa_ir: "افزایش موجودی کیف پول",
@@ -819,8 +824,7 @@ export const messages = {
     fa_ir: "درخواست شما با موفقیت ثبت شد",
     en_us: "Your request has been successfully submitted",
   },
- 
-  
+
   "unsuccessful payment, wallet balance is not enough": {
     ar: "عملية دفع غير ناجحة، رصيد المحفظة غير كافي",
     fa_ir: "پرداخت ناموفق ، موجودی کیف پول کافی نمی‌باشد",
@@ -891,6 +895,16 @@ export const messages = {
     ar: "محصول",
     fa_ir: "برداشت",
     en_us: "Withdraw ",
+  },
+  "amount is required": {
+    ar: "محصول",
+    fa_ir: "مبلغ ضروری است",
+    en_us: "amount is required ",
+  },
+  amount: {
+    ar: "كمية",
+    fa_ir: "مبلغ",
+    en_us: "amount ",
   },
   "select or enter an amount to increase your wallet balance.": {
     ar: "حدد أو أدخل مبلغًا لزيادة رصيد محفظتك.",
@@ -963,11 +977,7 @@ export const messages = {
     fa_ir: "بازگشت به خانه",
     en_us: "Return to home",
   },
-  amount: {
-    ar: "كمية",
-    fa_ir: "میزان",
-    en_us: "Amount",
-  },
+
   "log in as an individual": {
     ar: "تسجيل الدخول كفرد",
     fa_ir: "ورود به عنوان فرد",

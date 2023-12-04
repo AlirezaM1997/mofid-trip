@@ -1804,6 +1804,13 @@ export type WalletWithdrawInputType = {
   bankCardId: Scalars['ID']['input'];
 };
 
+export type DepositWalletMutationVariables = Exact<{
+  data: DepositWalletInputType;
+}>;
+
+
+export type DepositWalletMutation = { __typename?: 'Mutation', depositWallet?: { __typename?: 'ResponseBase', message?: string | null, status?: string | null, statusCode?: number | null, metadata?: any | null } | null };
+
 export type CreateLoginMutationVariables = Exact<{
   dataUser?: InputMaybe<UserInputType>;
   dataNgo?: InputMaybe<NgoInputType>;
@@ -1990,7 +1997,50 @@ export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, fullname?: string | null, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, wallet?: { __typename?: 'UserWalletType', balance: number, createdTime: any, id: string, modifiedTime: any, walletTransactions: Array<{ __typename?: 'WalletTransactionQueryType', action: WalletWalletTransactionActionChoices, amount: number, createdTime?: any | null, id: string, invoiceNumber: string, modifiedTime?: any | null, purchaseRefId?: number | null }>, walletCards: Array<{ __typename?: 'BackCardQueryType', id: string, title?: string | null }> } | null } | null };
 
+export type WalletTransactionDetailQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+}>;
 
+
+export type WalletTransactionDetailQuery = { __typename?: 'Query', walletTransactionDetail?: { __typename?: 'WalletTransactionQueryType', action: WalletWalletTransactionActionChoices, purchaseRefId?: number | null, modifiedTime?: any | null, invoiceNumber: string, id: string, description?: string | null, amount: number, statusStep?: WalletWalletTransactionStatusStepChoices | null, source?: { __typename?: 'BackCardQueryType', id: string, title?: string | null, cardPan?: string | null } | { __typename?: 'WalletQuryType', id: string } | null } | null };
+
+
+export const DepositWalletDocument = gql`
+    mutation depositWallet($data: DepositWalletInputType!) {
+  depositWallet(data: $data) {
+    message
+    status
+    statusCode
+    metadata
+  }
+}
+    `;
+export type DepositWalletMutationFn = Apollo.MutationFunction<DepositWalletMutation, DepositWalletMutationVariables>;
+
+/**
+ * __useDepositWalletMutation__
+ *
+ * To run a mutation, you first call `useDepositWalletMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDepositWalletMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [depositWalletMutation, { data, loading, error }] = useDepositWalletMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useDepositWalletMutation(baseOptions?: Apollo.MutationHookOptions<DepositWalletMutation, DepositWalletMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DepositWalletMutation, DepositWalletMutationVariables>(DepositWalletDocument, options);
+      }
+export type DepositWalletMutationHookResult = ReturnType<typeof useDepositWalletMutation>;
+export type DepositWalletMutationResult = Apollo.MutationResult<DepositWalletMutation>;
+export type DepositWalletMutationOptions = Apollo.BaseMutationOptions<DepositWalletMutation, DepositWalletMutationVariables>;
 export const CreateLoginDocument = gql`
     mutation createLogin($dataUser: UserInputType, $dataNgo: NGOInputType) {
   createLogin(dataUser: $dataUser, dataNgo: $dataNgo) {
@@ -3449,3 +3499,55 @@ export function useUserDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type UserDetailQueryHookResult = ReturnType<typeof useUserDetailQuery>;
 export type UserDetailLazyQueryHookResult = ReturnType<typeof useUserDetailLazyQuery>;
 export type UserDetailQueryResult = Apollo.QueryResult<UserDetailQuery, UserDetailQueryVariables>;
+export const WalletTransactionDetailDocument = gql`
+    query walletTransactionDetail($pk: ID!) {
+  walletTransactionDetail(pk: $pk) {
+    action
+    source {
+      ... on BackCardQueryType {
+        id
+        title
+        cardPan
+      }
+      ... on WalletQuryType {
+        id
+      }
+    }
+    purchaseRefId
+    modifiedTime
+    invoiceNumber
+    id
+    description
+    amount
+    statusStep
+  }
+}
+    `;
+
+/**
+ * __useWalletTransactionDetailQuery__
+ *
+ * To run a query within a React component, call `useWalletTransactionDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWalletTransactionDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWalletTransactionDetailQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useWalletTransactionDetailQuery(baseOptions: Apollo.QueryHookOptions<WalletTransactionDetailQuery, WalletTransactionDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WalletTransactionDetailQuery, WalletTransactionDetailQueryVariables>(WalletTransactionDetailDocument, options);
+      }
+export function useWalletTransactionDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WalletTransactionDetailQuery, WalletTransactionDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WalletTransactionDetailQuery, WalletTransactionDetailQueryVariables>(WalletTransactionDetailDocument, options);
+        }
+export type WalletTransactionDetailQueryHookResult = ReturnType<typeof useWalletTransactionDetailQuery>;
+export type WalletTransactionDetailLazyQueryHookResult = ReturnType<typeof useWalletTransactionDetailLazyQuery>;
+export type WalletTransactionDetailQueryResult = Apollo.QueryResult<WalletTransactionDetailQuery, WalletTransactionDetailQueryVariables>;

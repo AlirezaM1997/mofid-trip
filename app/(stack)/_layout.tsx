@@ -88,7 +88,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="wallet/increase"
+        name="wallet/deposit"
         options={{
           title: tr("increase balance"),
         }}
@@ -298,7 +298,15 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="paymentStatus"
+        name="transactionPaymentStatus"
+        options={{
+          headerLeft: () => null,
+          title: tr("payment status"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/receipt/paymentStatus"
         options={{
           headerLeft: () => null,
           title: tr("payment status"),

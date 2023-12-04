@@ -1,9 +1,7 @@
 import React from "react";
 import moment from "jalali-moment";
 import { Text } from "@rneui/themed";
-import { RootState } from "@src/store";
 import Container from "@atoms/container";
-import { useSelector } from "react-redux";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import { formatPrice } from "@src/hooks/localization";
@@ -12,9 +10,15 @@ import { Avatar, Button, useTheme } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { useProjectTransactionDetailQuery } from "@src/gql/generated";
-import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
+import {
+  BackCardQueryType,
+  WalletActionTransactionEnum,
+  useWalletTransactionDetailQuery,
+} from "@src/gql/generated";
+import { Pressable, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+
+type LookUpType = Record<Exclude<WalletActionTransactionEnum, "IN_APP_PURCHASE">, string>;
 
 const CustomView = ({ children }) => {
   const { theme } = useTheme();
@@ -29,20 +33,30 @@ const Receipt = () => {
   const { tr } = useTranslation();
   const { id } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const { userDetail } = useSelector((state: RootState) => state.userSlice);
 
-  const { data, loading } = useProjectTransactionDetailQuery({
+  const { data, loading } = useWalletTransactionDetailQuery({
     variables: { pk: id as string },
   });
 
-  const totalPrice = data?.projectTransactionDetail?.project?.price || 0;
+  const totalPrice = data?.walletTransactionDetail?.amount || 0;
   const formattedTotalPrice = formatPrice(totalPrice);
 
-  if (loading || !data) {
+  if (!data || loading) {
     return <LoadingIndicator />;
   }
 
-  const { invoiceNumber, modifiedDate, project } = data.projectTransactionDetail;
+  const { invoiceNumber, modifiedTime, source, action, purchaseRefId } =
+    data?.walletTransactionDetail;
+
+  const transactionAction = () => {
+    const lookup: LookUpType = {
+      [WalletActionTransactionEnum.Deposit]: tr("increase balance"),
+      [WalletActionTransactionEnum.Withdraw]: tr("withdrawal from the wallet"),
+    };
+    return lookup[action];
+  };
+
+  const transactionActionHolder = transactionAction();
 
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(invoiceNumber);
@@ -68,26 +82,10 @@ const Receipt = () => {
       <Container style={styles.topContainer}>
         <View style={styles.topContent}>
           <View>
-            <View style={styles.avatarsContainer}>
-              <Avatar
-                rounded
-                size={56}
-                containerStyle={{ backgroundColor: "#0003" }}
-                source={project?.accommodation.avatarS3[0].small as ImageSourcePropType}
-              />
-              <View style={styles.swapIconContainer}>
-                <AntDesign name="swap" size={10} color="black" />
-              </View>
-              <Avatar
-                rounded
-                size={56}
-                containerStyle={{ backgroundColor: "#0003" }}
-                source={userDetail.avatarS3.small as ImageSourcePropType}
-              />
-            </View>
+            <Avatar rounded size={56} containerStyle={{ backgroundColor: "#0003" }} />
 
             <Pressable style={styles.tourTitleContainer} onPress={copyToClipboard}>
-              <Text subtitle2>{project.name}</Text>
+              <Text subtitle2>{transactionActionHolder}</Text>
               <View style={styles.subtitle}>
                 <Feather name="copy" size={12} color="black" />
                 <Text subtitle2 style={{ color: theme.colors.grey2 }}>
@@ -98,21 +96,22 @@ const Receipt = () => {
           </View>
 
           <Text heading1 style={styles.price}>
-            {localizeNumber(formattedTotalPrice)}
+            {localizeNumber(formattedTotalPrice)} {tr("tooman")}
           </Text>
 
           <Button
-            color={theme.colors.error}
-            titleStyle={styles.buttonTitle}
+            size="sm"
+            color={theme.colors.success}
+            style={styles.successButton}
             icon={
               <AntDesign
                 size={16}
                 color="black"
-                name="closecircle"
+                name="checkcircle"
                 style={[styles.tickIcon, { color: theme.colors.white }]}
               />
             }>
-            {tr("unsuccessful payment, wallet balance is not enough")}
+            {tr("successful transfer")}
           </Button>
         </View>
       </Container>
@@ -127,23 +126,23 @@ const Receipt = () => {
               dateStyle: "medium",
               timeStyle: "short",
               hour12: true,
-            }).format(moment(modifiedDate, "YYYY-M-DTH").toDate())}
+            }).format(moment(modifiedTime, "YYYY-M-DTH").toDate())}
           </Text>
         </CustomView>
 
         <CustomView>
-          <Text caption>{tr("transmitter")}</Text>
-          <Text caption>{userDetail.firstname}</Text>
+          <Text caption>{tr("transaction type")}</Text>
+          <Text caption>{transactionActionHolder}</Text>
         </CustomView>
 
         <CustomView>
-          <Text caption>{tr("transaction type")}</Text>
-          <Text caption>انتقال از کیف پول</Text>
+          <Text caption>{tr("payment by card")}</Text>
+          <Text caption>{(source as BackCardQueryType).cardPan}</Text>
         </CustomView>
 
         <View style={styles.issueTrackingContainer}>
-          <Text caption>{tr("initial deposit")}</Text>
-          <Text caption>کیف پول مفید تریپ</Text>
+          <Text caption>{tr("issue tracking")}</Text>
+          <Text caption>{localizeNumber(purchaseRefId)}</Text>
         </View>
       </Container>
     </BottomButtonLayout>
@@ -156,13 +155,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   topContent: { gap: 32 },
-
+  successButton: {
+    width: 130,
+    margin: "auto",
+  },
   bottomContent: {
     borderTopWidth: 1,
     marginVertical: 16,
     borderStyle: "dashed",
   },
-  buttonTitle: { fontSize: 12 },
   issueTrackingContainer: {
     display: "flex",
     paddingVertical: 12,
