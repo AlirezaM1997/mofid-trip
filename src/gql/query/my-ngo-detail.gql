@@ -8,6 +8,14 @@ query myNGODetail {
       }
       accommodation {
         id
+        address
+        province
+        city
+        avatarS3 {
+          large
+          medium
+          small
+        }
       }
       name
       description
@@ -67,11 +75,11 @@ query myNGODetail {
           address
           lat
           lng
-          # avatarS3 {
-          #   large
-          #   medium
-          #   small
-          # }
+          avatarS3 {
+            large
+            medium
+            small
+          }
         }
         ... on ProjectQueryType {
           id
@@ -85,22 +93,22 @@ query myNGODetail {
           address
           lat
           lng
-          # avatarS3 {
-          #   large
-          #   medium
-          #   small
-          # }
+          avatarS3 {
+            large
+            medium
+            small
+          }
         }
         ... on ProjectQueryType {
           id
         }
         __typename
       }
-      # avatarS3 {
-      #   large
-      #   medium
-      #   small
-      # }
+      avatarS3 {
+        large
+        medium
+        small
+      }
       packages {
         id
         title

@@ -4,10 +4,10 @@ import useMyNGOTable from "@src/hooks/db/ngo";
 import useTranslation from "@src/hooks/translation";
 import ComingSoon from "@modules/coming-soon";
 import { BottomSheet, Button, Card, Chip, useTheme } from "@rneui/themed";
-import { AccommodationQueryType, useMyNgoDetailQuery } from "@src/gql/generated";
+import { AccommodationQueryType, MyNgoDetailQuery, useMyNgoDetailQuery } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { getTourRequestStatusBadgeColor } from "@src/helper/tour";
+import { getHostRequestStatusBadgeColor } from "@src/helper/host";
 import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import LoadingIndicator from "@modules/Loading-indicator";
@@ -15,7 +15,7 @@ import LoadingIndicator from "@modules/Loading-indicator";
 const HostManagementScreen = () => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [hostSet, setHostSet] = useState([]);
+  const [hostSet, setHostSet] = useState<MyNgoDetailQuery["NGODetail"]["projectSet"]>([]);
   const { loading, data } = useMyNgoDetailQuery();
   const { theme } = useTheme();
 
@@ -35,7 +35,7 @@ const HostManagementScreen = () => {
 
   if (loading) return <LoadingIndicator />;
 
-  console.log('d', hostSet)
+  console.log("d22", hostSet);
 
   return (
     <View>
@@ -44,16 +44,16 @@ const HostManagementScreen = () => {
           <Pressable onPress={() => navigateToTourDetail(host)}>
             <Card.Image
               source={{
-                uri: host?.avatarS3?.[0]?.medium,
+                uri: host?.accommodation?.avatarS3?.[0]?.medium,
               }}
             />
             <WhiteSpace size={10} />
             <Card.Title heading1 bold caption>
-              {host?.title}
+              {host?.name}
             </Card.Title>
             <Card.FeaturedTitle caption>
-              {(host?.destination as AccommodationQueryType)?.province ?? tr("Province")},{" "}
-              {(host?.destination as AccommodationQueryType)?.city ?? tr("City")}
+              {host?.accommodation?.province ?? tr("Province")},{" "}
+              {host?.accommodation?.city ?? tr("City")}
             </Card.FeaturedTitle>
             <Card.FeaturedSubtitle numberOfLines={2} type="grey3">
               {host?.description}
@@ -70,7 +70,7 @@ const HostManagementScreen = () => {
             </View>
             <Chip
               title={host?.statusStep}
-              color={getTourRequestStatusBadgeColor(host)}
+              color={getHostRequestStatusBadgeColor(host)}
               type="outline"
             />
           </Container>
