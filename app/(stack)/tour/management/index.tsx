@@ -18,18 +18,12 @@ const TourManagement = () => {
   const { loading, data } = useMyNgoDetailQuery();
   const { theme } = useTheme();
 
-  const navigateToTourDetail = (tour: (typeof tourSet)[0]) =>
-    router.push({
-      pathname: `/tour/management/${tour.id}`,
-      params: {
-        tourStr: JSON.stringify(tour),
-        transactionSet: JSON.stringify(data.NGODetail.tourTransactionSet),
-      },
-    });
+  const navigateToTourDetail = (tourId: string) => {
+    router.push(`/tour/management/${tourId}`);
+  };
 
   useEffect(() => {
     if (!loading && data) {
-      console.log("---", data.NGODetail.tourSet);
       setTourSet(data.NGODetail.tourSet);
     }
   }, [loading, data]);
@@ -40,7 +34,7 @@ const TourManagement = () => {
     <View>
       {tourSet.map(tour => (
         <Card key={tour.id}>
-          <Pressable onPress={() => navigateToTourDetail(tour)}>
+          <Pressable onPress={() => navigateToTourDetail(tour.id)}>
             <Card.Image
               source={{
                 uri: tour.avatarS3?.[0]?.medium,
