@@ -3,7 +3,7 @@ import WhiteSpace from "@atoms/white-space";
 import useMyNGOTable from "@src/hooks/db/ngo";
 import useTranslation from "@src/hooks/translation";
 import ComingSoon from "@modules/coming-soon";
-import { BottomSheet, Button, Card, Chip, useTheme } from "@rneui/themed";
+import { BottomSheet, Button, Card, Chip, Text, useTheme } from "@rneui/themed";
 import { AccommodationQueryType, MyNgoDetailQuery, useMyNgoDetailQuery } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
@@ -11,6 +11,9 @@ import { getHostRequestStatusBadgeColor } from "@src/helper/host";
 import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { ScrollView } from "react-native-gesture-handler";
+import NoResult from "@organisms/no-result";
+import { HEIGHT } from "@src/constants";
 
 const HostManagementScreen = () => {
   const { tr } = useTranslation();
@@ -38,8 +41,13 @@ const HostManagementScreen = () => {
   console.log("d22", hostSet);
 
   return (
-    <View>
-      {hostSet.map(host => (
+    <ScrollView>
+      {!hostSet?.length && (
+        <View style={{ height: HEIGHT / 2 }}>
+          <NoResult />
+        </View>
+      )}
+      {hostSet?.map(host => (
         <Card key={host.id}>
           <Pressable onPress={() => navigateToTourDetail(host)}>
             <Card.Image
@@ -87,7 +95,7 @@ const HostManagementScreen = () => {
           </Button>
         </Container>
       </BottomSheet>
-    </View>
+    </ScrollView>
   );
 };
 
