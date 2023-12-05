@@ -166,7 +166,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="host/management"
+        name="host/management/index"
         options={{
           title: tr("Host Management"),
         }}
