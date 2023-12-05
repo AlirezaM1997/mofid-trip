@@ -16,7 +16,11 @@ const WalletScreen = () => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
   const { balance, walletTransactions } = useSelector(
-    (state: RootState) => state.userSlice.userDetail.wallet
+    (state: RootState) =>
+      state.userSlice.userDetail.wallet ?? {
+        balance: 0,
+        walletTransactions: [],
+      }
   );
 
   return (
