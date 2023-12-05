@@ -15,10 +15,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import { LtrSpecificStyles, RtlSpecificStyles } from "@src/global-style";
 import { View, Platform, StyleSheet, Appearance, I18nManager } from "react-native";
 import { Slot } from "expo-router";
-import useTourTable from "@src/hooks/db/tour";
 import useUserDetailTable from "@src/hooks/db/user-detail";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
-import useProjectTable from "@src/hooks/db/project";
 import { useConfirmAuthentication, useIsAuthenticated } from "@src/hooks/auth";
 import useMyNGOTable from "@src/hooks/db/ngo";
 import customUseApolloClient from "@src/hooks/apollo/client";
@@ -51,24 +49,7 @@ const MainContent = () => {
 
   const { syncTable: syncTableSettingDetail } = useSettingDetailTable();
   const { syncTable: syncTableUserDetail } = useUserDetailTable();
-  const { syncTable: syncTableTour } = useTourTable();
-  const { syncTable: syncTableProject } = useProjectTable();
   const { syncTable: syncTableMyNGOTable } = useMyNGOTable();
-
-  useEffect(() => {
-    syncTableTour({
-      page: {
-        pageNumber: 1,
-        pageSize: 99999,
-      },
-    });
-    syncTableProject({
-      page: {
-        pageNumber: 1,
-        pageSize: 99999,
-      },
-    });
-  }, []);
 
   useEffect(() => {
     if (isAuthenticated) {
