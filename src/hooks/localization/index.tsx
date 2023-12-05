@@ -16,7 +16,7 @@ export const formatPrice = (price: number) => {
 
   if (language === AccountSettingLanguageChoices.FaIr) {
     return (
-      price.toLocaleString("fa-IR", {
+      price?.toLocaleString("fa-IR", {
         style: "decimal",
         useGrouping: true,
       }) +
@@ -25,7 +25,7 @@ export const formatPrice = (price: number) => {
     );
   } else if (language === AccountSettingLanguageChoices.EnUs) {
     return (
-      price.toLocaleString("en-US", {
+      price?.toLocaleString("en-US", {
         style: "decimal",
         useGrouping: true,
       }) +
@@ -34,7 +34,7 @@ export const formatPrice = (price: number) => {
     );
   } else if (language === AccountSettingLanguageChoices.Ar) {
     return (
-      price.toLocaleString("ar-SA", {
+      price?.toLocaleString("ar-SA", {
         style: "decimal",
         useGrouping: true,
       }) +
