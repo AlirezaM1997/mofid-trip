@@ -95,6 +95,16 @@ export const messages = {
     fa_ir: "ظرفیت",
     en_us: "Capacity",
   },
+  accepted: {
+    ar: "قبلت",
+    fa_ir: "تایید شده",
+    en_us: "Accepted",
+  },
+  "awaiting review": {
+    ar: "في انتظار المراجعة",
+    fa_ir: "در انتظار بررسی",
+    en_us: "Awaiting review",
+  },
   "check-out": {
     ar: "الخروج",
     fa_ir: "خروج",
@@ -129,6 +139,26 @@ export const messages = {
     ar: "تفصيل",
     fa_ir: "شرح",
     en_us: "Description",
+  },
+  "confirm request": {
+    ar: "تأكيد الطلب",
+    fa_ir: "تایید درخواست",
+    en_us: "confirm request",
+  },
+  failed: {
+    ar: "فشل",
+    fa_ir: "رد شده",
+    en_us: "failed",
+  },
+  "accompanying passengers": {
+    ar: "الركاب المرافقين",
+    fa_ir: "مسافرین همراه",
+    en_us: "accompanying passengers",
+  },
+  "the request is pending review": {
+    ar: "الطلب في انتظار المراجعة",
+    fa_ir: "درخواست در انتظار بررسی می باشد",
+    en_us: "The request is pending review",
   },
   "edit profile": {
     ar: "حساب المستخدم",
@@ -784,6 +814,11 @@ export const messages = {
     fa_ir: "وضعیت",
     en_us: "Status",
   },
+  "request rejection": {
+    ar: "رفض الطلب",
+    fa_ir: "رد درخواست",
+    en_us: "Request rejection",
+  },
   "reason for rejecting the request": {
     ar: "سبب رفض الطلب",
     fa_ir: "دلیل رد درخواست",
@@ -1162,6 +1197,21 @@ export const messages = {
     fa_ir: "پیام",
     en_us: "Message",
   },
+  "the passenger paid and the reservation was finalized": {
+    ar: "قام الراكب بالدفع وتم الانتهاء من الحجز",
+    fa_ir: "مسافر پرداخت کرد و رزرو نهایی شد",
+    en_us: "The passenger paid and the reservation was finalized",
+  },
+  "the request was rejected by you": {
+    ar: "لقد تم رفض الطلب من قبلك",
+    fa_ir: "درخواست توسط شما رد شد",
+    en_us: "The request was rejected by you",
+  },
+  "the request has been approved by you": {
+    ar: "تمت الموافقة على الطلب من قبلك",
+    fa_ir: "درخواست توسط شما تایید شد",
+    en_us: "The request has been approved by you",
+  },
   total: {
     ar: "المجموع",
     fa_ir: "جمع کل",
@@ -1176,6 +1226,11 @@ export const messages = {
     ar: "يتصل",
     fa_ir: "شماره تماس",
     en_us: "Call",
+  },
+  contact: {
+    ar: "اتصال",
+    fa_ir: "تماس",
+    en_us: "Contact",
   },
   "your final and recorded details for the initial tour request. the price is calculated per person.":
     {
@@ -1645,12 +1700,6 @@ export const messages = {
     fa_ir: "تعداد مسافران",
     en_us: "Passengers Count",
   },
-
-  "confirm request": {
-    ar: "طلب التسجيل",
-    fa_ir: "ثبت درخواست",
-    en_us: "confirm request",
-  },
   "group leader information": {
     ar: "معلومات قائد المجموعة",
     fa_ir: "اطلاعات سرگروه",
@@ -1660,6 +1709,11 @@ export const messages = {
     ar: "منظر",
     fa_ir: "مشاهده",
     en_us: "View",
+  },
+  "team leader": {
+    ar: "رئيس الفريق",
+    fa_ir: "سرگروه",
+    en_us: "team leader",
   },
   duration: {
     ar: "مدة",
@@ -1801,6 +1855,11 @@ export const messages = {
     fa_ir: "باشه",
     en_us: "OK",
   },
+  "travelers who plan to travel to this host. please check the submitted requests.": {
+    ar: "المسافرون الذين يخططون للسفر إلى هذا المضيف. يرجى التحقق من الطلبات المقدمة.",
+    fa_ir: "مسافرانی که قصد دارند به این میزبانی سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",
+    en_us: "Travelers who plan to travel to this host. Please check the submitted requests.",
+  },
   published: {
     ar: "نشرت",
     fa_ir: "منتشر شده",
@@ -1831,6 +1890,10 @@ export const messages = {
     fa_ir: "پرداخت موفق",
     en_us: "Success Receipt",
   },
+  "passengers who plan to travel with this tour. please check the submitted requests.": {
+    ar: "المسافرون الذين يخططون للسفر بهذه الجولة. يرجى التحقق من الطلبات المقدمة.",
+    fa_ir: "مسافرانی که قصد دارند با این تور سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",
+    en_us: "Passengers who plan to travel with this tour. Please check the submitted requests.",},
   "tour capacity": {
     ar: "قدرة الجولة",
     fa_ir: "ظرفیت تور",
@@ -2247,4 +2310,15 @@ export const messages = {
       en_us:
         "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
     },
+
+  "last modification": {
+    ar: "اخر تعديل",
+    fa_ir: "آخرین به روز رسانی",
+    en_us: "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
+  },
+  "hour later": {
+    ar: "بعد ساعة",
+    fa_ir: "ساعت پیش",
+    en_us: "hour later",
+  },
 };

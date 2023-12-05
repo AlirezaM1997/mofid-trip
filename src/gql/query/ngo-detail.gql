@@ -1,4 +1,4 @@
-query NGODetail($pk: ID!) {
+query NGODetail($pk: ID) {
   NGODetail(pk: $pk) {
     id
     title
@@ -68,6 +68,39 @@ query NGODetail($pk: ID!) {
           medium
           small
         }
+      }
+    }
+       tourTransactionSet {
+      id
+      status {
+        isActive
+        step
+      }
+      owner {
+        avatarS3 {
+          large
+          medium
+          small
+        }
+        id
+        fullname
+        phoneNumber
+      }
+      tourPackage {
+        tour {
+          title
+        }
+      }
+      tourGuests {
+        avatarS3{
+          large
+          medium
+          small
+        }
+        id
+        firstname
+        lastname
+        phoneNumber
       }
     }
   }

@@ -221,6 +221,7 @@ export const theme = isRtl =>
         let buttonStyle: any = {
           gap: 8,
           borderRadius: 12,
+          gap:8,
           fontWeight: "400",
           ...Platform.select({
             web: {
