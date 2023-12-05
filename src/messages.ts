@@ -2254,4 +2254,14 @@ export const messages = {
     fa_ir: "میزبانی ایجاد شده در مرحله بررسی توسط پشتیبانی قرار دارد ، بعد از تایید توسط تیم پشتیبانی در لیست میزبانی های مفیدتریپ قرار خواهد گرفت.",
     en_us: "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
   },
+  "last modification": {
+    ar: "اخر تعديل",
+    fa_ir: "آخرین به روز رسانی",
+    en_us: "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
+  },
+  "hour later": {
+    ar: "بعد ساعة",
+    fa_ir: "ساعت پیش",
+    en_us: "hour later",
+  },
 };

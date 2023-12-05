@@ -8,7 +8,7 @@ import {
   MyNgoDetailQuery,
   useMyNgoDetailQuery,
 } from "@src/gql/generated";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
@@ -18,6 +18,7 @@ import { Divider } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import ComingSoon from "@modules/coming-soon";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { calculateHoursSinceGivenDate } from "@src/helper/date";
 
 const HostDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -28,6 +29,7 @@ const HostDetailScreen = () => {
   const [host, setHost] = useState<MyNgoDetailQuery["NGODetail"]["projectSet"][0]>();
   const steps = [tr("pending"), tr("published")];
   const [isVisible, setIsVisible] = useState(false);
+  const {localizeNumber} = useLocalizedNumberFormat()
 
   const { loading, data } = useMyNgoDetailQuery();
 
@@ -69,13 +71,17 @@ const HostDetailScreen = () => {
           {host?.name}
         </Text>
         <Text caption type="grey3">
-          آخرین به روز رسانی در
+          {tr("Last modification")} {localizeNumber(calculateHoursSinceGivenDate(host.modifiedDate))} {tr('hour later')}
         </Text>
         <WhiteSpace size={20} />
         <Text subtitle1 bold>
           {tr("At what stage is your application?")}
         </Text>
-        <Text>{tr("The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.")}</Text>
+        <Text>
+          {tr(
+            "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list."
+          )}
+        </Text>
 
         <Stepper
           steps={steps}
