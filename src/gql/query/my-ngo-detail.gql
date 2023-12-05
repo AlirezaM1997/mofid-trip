@@ -19,6 +19,7 @@ query myNGODetail {
       }
       name
       description
+      modifiedDate
       dateStart
       dateEnd
       gender
