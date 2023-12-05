@@ -2170,4 +2170,14 @@ export const messages = {
     fa_ir: "نوع فضا و محیط میزبانی خودتان را تعیین کنید.",
     en_us: "Determine the type of space and your hosting environment.",
   },
+  "host preview": {
+    ar: "معاينة المضيف",
+    fa_ir: "پیشنمایش میزبانی",
+    en_us: "Host Preview",
+  },
+  "end host": {
+    ar: "نهاية المضيف",
+    fa_ir: "پایان میزبانی",
+    en_us: "End Host",
+  },
 };
