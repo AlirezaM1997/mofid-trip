@@ -1,28 +1,25 @@
 import { router } from "expo-router";
 import TourCard from "@modules/tour/card";
-import useTourTable from "@src/hooks/db/tour";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView, View, StyleSheet } from "react-native";
-import { AccommodationQueryType, TourQueryType } from "@src/gql/generated";
+import { AccommodationQueryType, useTourListQuery } from "@src/gql/generated";
 import Container from "@atoms/container";
+import { Text } from "@rneui/themed";
 
 function TourList() {
   const { tr } = useTranslation();
-  const { search } = useTourTable();
-  const [list, setList] = useState<TourQueryType[]>();
+  const { data, loading } = useTourListQuery({
+    variables: {
+      page: {
+        pageNumber: 1,
+        pageSize: 9999,
+      },
+    },
+  });
 
-  useEffect(() => {
-    setList(
-      search({
-        page: {
-          pageNumber: 1,
-          pageSize: 9999,
-        },
-      })
-    );
-  }, []);
+  if (loading) return <Text>Loading Tours...</Text>;
 
   return (
     <>
@@ -40,7 +37,7 @@ function TourList() {
         contentContainerStyle={style.gap}
         style={style.listContainer}>
         <View style={style.spacer}></View>
-        {list?.map((tour, index) => (
+        {data.tourList.data?.map((tour, index) => (
           <View key={index}>
             <TourCard
               key={index}
