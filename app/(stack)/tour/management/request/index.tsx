@@ -46,7 +46,7 @@ const RequestScreen = () => {
       <ScrollView contentContainerStyle={style.requestList}>
         {transactionSet.map((transaction: TourTransactionQueryType, i) => (
           <>
-            <RequestList key={transaction.id} transaction={transaction} allRequest={true} />
+            <RequestList key={transaction.id} transaction={transaction} />
             {transactionSet.length > i + 1 ? <Divider /> : <WhiteSpace size={16} />}
           </>
         ))}

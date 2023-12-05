@@ -13,16 +13,27 @@ import Container from "@atoms/container";
 import NoResult from "@organisms/no-result";
 import RequestList from "@modules/tour-request-card/RequestList";
 import WhiteSpace from "@atoms/white-space";
+import RequestListBottomSheet from "@modules/request-list-bottomsheet";
 
 const RequestScreen = () => {
   const { tr } = useTranslation();
   const { tourId } = useLocalSearchParams();
   const navigation = useNavigation();
+  const [isVisible, setIsVisible] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState<TourTransactionQueryType>();
+
+  const handleClose = () => setIsVisible(false);
+  const handleOpen = () => setIsVisible(true);
 
   const [transactionSet, setTransactionSet] =
     useState<MyNgoDetailQuery["NGODetail"]["tourTransactionSet"]>();
 
   const { loading, data } = useMyNgoDetailQuery();
+
+  const handleRequestPress = (transaction: TourTransactionQueryType) => {
+    setSelectedTransaction(transaction);
+    handleOpen();
+  };
 
   useEffect(() => {
     if (!loading && data) {
@@ -39,22 +50,32 @@ const RequestScreen = () => {
   navigation.setOptions({ title: transactionSet[0].tourPackage.tour.title });
 
   return (
-    <Container style={style.container}>
-      <View style={style.header}>
-        <Text heading2>{tr("requests and passengers")}</Text>
-        <Text caption type="grey2">
-          {tr("passengers who plan to travel with this tour. please check the submitted requests.")}
-        </Text>
-      </View>
-      <ScrollView contentContainerStyle={style.requestList}>
-        {transactionSet.map((transaction: TourTransactionQueryType, i) => (
-          <>
-            <RequestList key={transaction.id} transaction={transaction} allRequest={false} />
-            {transactionSet.length > i + 1 ? <Divider /> : <WhiteSpace size={16} />}
-          </>
-        ))}
-      </ScrollView>
-    </Container>
+    <>
+      <Container style={style.container}>
+        <View style={style.header}>
+          <Text heading2>{tr("requests and passengers")}</Text>
+          <Text caption type="grey2">
+            {tr(
+              "passengers who plan to travel with this tour. please check the submitted requests."
+            )}
+          </Text>
+        </View>
+        <ScrollView>
+          {transactionSet.map((transaction: TourTransactionQueryType, i) => (
+            <RequestList
+              key={transaction.id}
+              transaction={transaction}
+              onPress={() => handleRequestPress(transaction)}
+            />
+          ))}
+        </ScrollView>
+      </Container>
+      <RequestListBottomSheet
+        isVisible={isVisible}
+        onBackdropPress={handleClose}
+        transaction={selectedTransaction}
+      />
+    </>
   );
 };
 
@@ -66,7 +87,6 @@ const style = StyleSheet.create({
   header: {
     gap: 4,
   },
-  requestList: { gap: 16 },
 });
 
 export default RequestScreen;
