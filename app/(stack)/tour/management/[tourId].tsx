@@ -3,26 +3,34 @@ import WhiteSpace from "@atoms/white-space";
 import ImageSlider from "@modules/image-slider";
 import Stepper from "@modules/stepper";
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
-import { MyNgoDetailQuery, TourTourStatusStepChoices } from "@src/gql/generated";
+import {
+  MyNgoDetailQuery,
+  MyNgoDetailQueryResult,
+  TourTourStatusStepChoices,
+  useMyNgoDetailQuery,
+} from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import { Divider } from "@rneui/themed";
-import { View } from "react-native";
 import ComingSoon from "@modules/coming-soon";
+import LoadingIndicator from "@modules/Loading-indicator";
 
 const TourDetailScreen = () => {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const navigation = useNavigation();
-  const { tourStr } = useLocalSearchParams();
-  const tour: MyNgoDetailQuery["NGODetail"]["tourSet"][0] = JSON.parse(tourStr as string);
+  const { tourId } = useLocalSearchParams();
   const steps = [tr("pending"), tr("published"), tr("End Tour")];
   const [isVisible, setIsVisible] = useState(false);
+  const [tour, setTour] = useState<MyNgoDetailQuery["NGODetail"]["tourSet"][0]>();
+  const transaction = useRef<MyNgoDetailQuery["NGODetail"]["tourTransactionSet"][0]>();
+
+  const { loading, data } = useMyNgoDetailQuery();
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
@@ -34,17 +42,29 @@ const TourDetailScreen = () => {
   };
 
   useEffect(() => {
-    navigation.setOptions({ title: tour.title });
-  }, []);
+    if (tour) navigation.setOptions({ title: tour?.title });
+  }, [tour]);
+
+  useEffect(() => {
+    if (!loading && data) {
+      const t = data.NGODetail.tourSet.find(t => t.id === tourId);
+      setTour(t);
+      transaction.current = data.NGODetail.tourTransactionSet.find(
+        tr => tr.tourPackage.tour.id === t.id
+      );
+    }
+  }, [loading, data]);
+
+  if (loading || !tour) return <LoadingIndicator />;
 
   return (
     <ScrollView>
       <WhiteSpace size={10} />
       <Container>
-        <ImageSlider imageList={tour.avatarS3} />
+        <ImageSlider imageList={tour?.avatarS3} />
         <WhiteSpace size={10} />
         <Text subtitle1 bold>
-          {tour.title}
+          {tour?.title}
         </Text>
         <Text caption type="grey3">
           آخرین به روز رسانی در
@@ -87,7 +107,12 @@ const TourDetailScreen = () => {
         />
       </ListItem>
       {tour.statusStep === TourTourStatusStepChoices.Accept && tour.statusActivation && (
-        <ListItem onPress={() => router.push("/comingSoon")}>
+        <ListItem
+          onPress={() => {
+            router.push({
+              pathname: "/tour/management/request/" + tour.id,
+            });
+          }}>
           <Feather name="users" size={24} color={theme.colors.black} />
           <ListItem.Content>
             <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>

@@ -9,7 +9,7 @@ import { logout } from "@src/slice/user-slice";
 import { APP_VERSION } from "@src/settings";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@src/store";
-import { LanguageChoiceEnum, useSettingEditMutation } from "@src/gql/generated";
+import { LanguageChoiceEnum, useNgoDetailQuery, useSettingEditMutation } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { I18nManager } from "react-native";
 import { getFullName } from "@src/helper/extra";
@@ -18,6 +18,7 @@ import { router, useRootNavigationState } from "expo-router";
 import { useIsAuthenticated } from "@src/hooks/auth";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
 import useMyNGOTable from "@src/hooks/db/ngo";
+import LoadingIndicator from "@modules/Loading-indicator";
 
 const Profile: React.FC = () => {
   const isRtl = useIsRtl();
@@ -54,6 +55,8 @@ const Profile: React.FC = () => {
     dispatch(logout());
     router.push("/");
   };
+
+  const handleNavigateToRequestToMyTours = () => router.push("/tour/management/request");
 
   const handleNavigateToEditProfile = () => router.push("/edit-profile");
 
@@ -198,7 +201,7 @@ const Profile: React.FC = () => {
         <Container>
           <Text type="grey3">{tr("Requests")}</Text>
         </Container>
-        <ListItem bottomDivider onPress={() => router.push("/comingSoon")}>
+        <ListItem bottomDivider onPress={handleNavigateToRequestToMyTours}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("My Tours Requests")}</ListItem.Title>
