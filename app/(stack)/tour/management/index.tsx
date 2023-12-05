@@ -1,6 +1,5 @@
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import useMyNGOTable from "@src/hooks/db/ngo";
 import useTranslation from "@src/hooks/translation";
 import ComingSoon from "@modules/coming-soon";
 import { BottomSheet, Button, Card, Chip, useTheme } from "@rneui/themed";
@@ -19,13 +18,9 @@ const TourManagement = () => {
   const { loading, data } = useMyNgoDetailQuery();
   const { theme } = useTheme();
 
-  const navigateToTourDetail = (tour: (typeof tourSet)[0]) =>
-    router.push({
-      pathname: `/tour/management/${tour.id}`,
-      params: {
-        tourStr: JSON.stringify(tour),
-      },
-    });
+  const navigateToTourDetail = (tourId: string) => {
+    router.push(`/tour/management/${tourId}`);
+  };
 
   useEffect(() => {
     if (!loading && data) {
@@ -39,7 +34,7 @@ const TourManagement = () => {
     <View>
       {tourSet.map(tour => (
         <Card key={tour.id}>
-          <Pressable onPress={() => navigateToTourDetail(tour)}>
+          <Pressable onPress={() => navigateToTourDetail(tour.id)}>
             <Card.Image
               source={{
                 uri: tour.avatarS3?.[0]?.medium,

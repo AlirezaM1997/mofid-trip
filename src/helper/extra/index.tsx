@@ -33,9 +33,9 @@ export const getFullName = user => {
 };
 
 export const convertToPersianNumbers = (text: string | number) => {
-  const t = text.toString();
+  const t = text?.toString();
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-  return t.replace(/\d/g, match => persianDigits[parseInt(match)]);
+  return t?.replace(/\d/g, match => persianDigits[parseInt(match)]);
 };
 
 export const convertToArabicNumbers = (text: string | number) => {
