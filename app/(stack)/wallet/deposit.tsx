@@ -24,7 +24,9 @@ const Increase = () => {
   const [depositWallet, { loading }] = useDepositWalletMutation();
 
   const validationSchema = Yup.object().shape({
-    amount: Yup.number().required(tr("amount is required")),
+    amount: Yup.number()
+      .min(10000, tr("amount should be at least 10000"))
+      .required(tr("amount is required")),
   });
 
   const handleSubmit = async value => {

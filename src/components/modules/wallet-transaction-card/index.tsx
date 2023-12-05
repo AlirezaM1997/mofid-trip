@@ -71,7 +71,9 @@ const WalletTransactionCard = ({ transaction }: { transaction: WalletTransaction
         <View style={styles.header}>
           <Text>{transactionActionHolder.title}</Text>
           <Text body2 type="grey2">
-            {moment(transaction.modifiedTime).locale("fa").format("jDD jMMMM , HH:mm a")}
+            {localizeNumber(
+              moment(transaction.modifiedTime).locale("fa").format("jDD jMMMM , HH:mm a")
+            )}
             {transactionActionHolder.subTitle}
           </Text>
         </View>

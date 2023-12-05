@@ -570,7 +570,17 @@ export const messages = {
     fa_ir: "اولیه",
     en_us: "Initial",
   },
-
+  "you can manage your bank cards and use them in the withdrawal process.": {
+    ar: "يمكنك إدارة بطاقاتك المصرفية واستخدامها في عملية السحب.",
+    fa_ir:
+      "کارت های بانکی خودتان را می‌توانید مدیریت کنید و در مراحل برداشت از آن ها استفاده کنید.",
+    en_us: "you can manage your bank cards and use them in the withdrawal process.",
+  },
+  "my registered cards": {
+    ar: "بطاقاتي المسجلة",
+    fa_ir: "کارت های ثبت شده من",
+    en_us: "My registered cards",
+  },
   rejected: {
     ar: "مرفوض",
     fa_ir: "رد شده",
@@ -986,6 +996,11 @@ export const messages = {
     ar: "العودة إلى المنزل",
     fa_ir: "بازگشت به خانه",
     en_us: "Return to home",
+  },
+  "amount should be at least 10000": {
+    ar: "يجب أن يكون المبلغ على الأقل 10000",
+    fa_ir: "مبلغ باید حداقل 10000 باشد",
+    en_us: "amount should be at least 10000",
   },
 
   "log in as an individual": {
@@ -2224,9 +2239,12 @@ export const messages = {
     fa_ir: "پایان میزبانی",
     en_us: "End Host",
   },
-  "the created hosting is under review by support, after approval by the support team, it will be included in mofidtrip's hosting list.": {
-    ar: "الاستضافة التي تم إنشاؤها قيد المراجعة من قبل الدعم، وبعد موافقة فريق الدعم، سيتم إدراجها في قائمة استضافة Mofidtrip.",
-    fa_ir: "میزبانی ایجاد شده در مرحله بررسی توسط پشتیبانی قرار دارد ، بعد از تایید توسط تیم پشتیبانی در لیست میزبانی های مفیدتریپ قرار خواهد گرفت.",
-    en_us: "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
-  },
+  "the created hosting is under review by support, after approval by the support team, it will be included in mofidtrip's hosting list.":
+    {
+      ar: "الاستضافة التي تم إنشاؤها قيد المراجعة من قبل الدعم، وبعد موافقة فريق الدعم، سيتم إدراجها في قائمة استضافة Mofidtrip.",
+      fa_ir:
+        "میزبانی ایجاد شده در مرحله بررسی توسط پشتیبانی قرار دارد ، بعد از تایید توسط تیم پشتیبانی در لیست میزبانی های مفیدتریپ قرار خواهد گرفت.",
+      en_us:
+        "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
+    },
 };

@@ -52,14 +52,15 @@ const WalletScreen = () => {
             size="sm"
             type="outline"
             color="secondary"
-            icon={<AntDesign name="arrowup" size={16} color="black" />}
-            onPress={() => router.push("wallet/deposit")}>
+            onPress={() => router.push("wallet/deposit")}
+            icon={<AntDesign name="arrowup" size={16} color="black" />}>
             {tr("increase")}
           </Button>
           <Button
             size="sm"
             type="outline"
             color="secondary"
+            onPress={() => router.push("wallet/cards")}
             icon={<Entypo name="credit-card" size={16} color="black" />}>
             {tr("my cards")}
           </Button>
@@ -89,9 +90,11 @@ const WalletScreen = () => {
         </Text>
         <WhiteSpace size={16} />
 
-        {walletTransactions.map((transaction: WalletTransactionQueryType) => (
-          <WalletTransactionCard key={transaction.id} transaction={transaction} />
-        ))}
+        {walletTransactions
+          .slice(walletTransactions.length - 3, walletTransactions.length)
+          .map((transaction: WalletTransactionQueryType) => (
+            <WalletTransactionCard key={transaction.id} transaction={transaction} />
+          ))}
 
         <WhiteSpace size={24} />
       </Container>

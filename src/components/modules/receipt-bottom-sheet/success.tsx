@@ -12,6 +12,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { BackCardQueryType, WalletActionTransactionEnum } from "@src/gql/generated";
+import ButtonRow from "@modules/button-rows";
 
 type LookUpType = Record<
   Exclude<WalletActionTransactionEnum, "IN_APP_PURCHASE">,
@@ -71,85 +72,77 @@ const SuccessReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => 
 
   return (
     <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
-      <BottomButtonLayout
-        buttons={[
-          <View style={styles.btnContainer}>
-            <Button containerStyle={styles.buttonStyle}>{tr("share")}</Button>
-            <Button
-              type="outline"
-              onPress={() => setIsVisible(false)}
-              containerStyle={styles.buttonStyle}>
-              {tr("back")}
-            </Button>
-          </View>,
-        ]}>
-        <Container style={styles.topContainer}>
-          <Avatar
-            rounded
-            size={56}
-            containerStyle={styles.avatar(theme)}
-            icon={transactionActionHolder.icon}
-          />
-          <WhiteSpace size={16} />
+      <Container style={styles.topContainer}>
+        <Avatar
+          rounded
+          size={56}
+          containerStyle={styles.avatar(theme)}
+          icon={transactionActionHolder.icon}
+        />
+        <WhiteSpace size={16} />
 
-          <Text center subtitle2>
-            {transactionActionHolder.title}
+        <Text center subtitle2>
+          {transactionActionHolder.title}
+        </Text>
+
+        <Pressable style={styles.tourTitleContainer} onPress={copyToClipboard}>
+          <Feather name="copy" size={12} color="black" />
+          <Text subtitle2 style={{ color: theme.colors.grey2 }}>
+            {invoiceNumber}
           </Text>
+        </Pressable>
 
-          <Pressable style={styles.tourTitleContainer} onPress={copyToClipboard}>
-            <Feather name="copy" size={12} color="black" />
-            <Text subtitle2 style={{ color: theme.colors.grey2 }}>
-              {localizeNumber(invoiceNumber)}
-            </Text>
-          </Pressable>
+        <WhiteSpace size={24} />
 
-          <WhiteSpace size={24} />
+        <Text heading1 style={styles.price}>
+          {localizeNumber(formattedTotalPrice)}
+        </Text>
 
-          <Text heading1 style={styles.price}>
-            {localizeNumber(formattedTotalPrice)}
+        <WhiteSpace size={24} />
+
+        <Chip
+          buttonStyle={styles.chip}
+          color={theme.colors.success}
+          title={tr("successful transfer")}
+          titleStyle={styles.chipTitle(theme)}
+          icon={<AntDesign size={16} name="checkcircle" color={theme.colors.white} />}
+        />
+      </Container>
+
+      <Container style={styles.centerContainer}>
+        <View style={styles.bottomContent(theme)} />
+
+        <CustomView>
+          <Text caption>{tr("time")}</Text>
+          <Text caption>
+            {localizeNumber(moment(modifiedTime).locale("fa").format("dddd jD jMMMM . HH:mm a"))}
           </Text>
+        </CustomView>
 
-          <WhiteSpace size={24} />
+        <CustomView>
+          <Text caption>{tr("transaction type")}</Text>
+          <Text caption>{transactionActionHolder.title}</Text>
+        </CustomView>
 
-          <Chip
-            buttonStyle={styles.chip}
-            color={theme.colors.success}
-            title={tr("successful transfer")}
-            titleStyle={styles.chipTitle(theme)}
-            icon={<AntDesign size={16} name="checkcircle" color={theme.colors.white} />}
-          />
-        </Container>
+        <CustomView>
+          <Text caption>{transactionActionHolder.subTitle}</Text>
+          <Text caption>{transactionActionHolder.card}</Text>
+        </CustomView>
 
-        <Container style={styles.centerContainer}>
-          <View style={styles.bottomContent(theme)} />
+        <View style={styles.issueTrackingContainer}>
+          <Text caption>{tr("issue tracking")}</Text>
+          <Text caption>{localizeNumber(purchaseRefId)}</Text>
+        </View>
+      </Container>
 
-          <CustomView>
-            <Text caption>{tr("time")}</Text>
-            <Text caption>
-              {Intl.DateTimeFormat("fa-IR", {
-                dateStyle: "medium",
-                timeStyle: "short",
-                hour12: true,
-              }).format(moment(modifiedTime, "YYYY-M-DTH").toDate())}
-            </Text>
-          </CustomView>
-
-          <CustomView>
-            <Text caption>{tr("transaction type")}</Text>
-            <Text caption>{transactionActionHolder.title}</Text>
-          </CustomView>
-
-          <CustomView>
-            <Text caption>{transactionActionHolder.subTitle}</Text>
-            <Text caption>{transactionActionHolder.card}</Text>
-          </CustomView>
-
-          <View style={styles.issueTrackingContainer}>
-            <Text caption>{tr("issue tracking")}</Text>
-            <Text caption>{localizeNumber(purchaseRefId)}</Text>
-          </View>
-        </Container>
-      </BottomButtonLayout>
+      <Container>
+        <ButtonRow>
+          <Button>{tr("share")}</Button>
+          <Button type="outline" onPress={() => setIsVisible(false)}>
+            {tr("back")}
+          </Button>
+        </ButtonRow>
+      </Container>
     </BottomSheet>
   );
 };
@@ -178,15 +171,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   centerContainer: { marginVertical: 24 },
-  btnContainer: {
-    gap: 10,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  buttonStyle: {
-    width: "50%",
-  },
   detailsContainer: {
     width: "100%",
     display: "flex",

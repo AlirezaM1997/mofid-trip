@@ -5,6 +5,7 @@ import { AntDesign } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
 import { Button, Text, useTheme } from "@rneui/themed";
 import BottomButtonLayout from "@components/layout/bottom-button";
+import { router } from "expo-router";
 
 const SuccessPayment = ({ handlePress }) => {
   const { theme } = useTheme();
@@ -13,7 +14,12 @@ const SuccessPayment = ({ handlePress }) => {
   return (
     <BottomButtonLayout
       contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
-      buttons={[<Button onPress={handlePress}>{tr("view receipt")}</Button>]}>
+      buttons={[
+        <Button onPress={handlePress}>{tr("view receipt")}</Button>,
+        <Button type="outline" onPress={() => router.push("/")}>
+          {tr("return to home")}
+        </Button>,
+      ]}>
       <Container style={styles.container}>
         <AntDesign
           size={48}

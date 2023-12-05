@@ -57,7 +57,9 @@ query userDetail {
       }
       walletCards {
         id
+        iban
         title
+        cardPan
       }
     }
   }
