@@ -1,18 +1,15 @@
-import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useTranslation from "@src/hooks/translation";
-import useProjectTable from "@src/hooks/db/project";
-import { ProjectQueryType, useProjectListQuery } from "@src/gql/generated";
 import TitleWithAction from "@modules/title-with-action";
-import { ScrollView, View, StyleSheet } from "react-native";
 import HostCard from "@modules/host/card";
 import Container from "@atoms/container";
+import { router } from "expo-router";
+import {  useProjectListQuery } from "@src/gql/generated";
+import { ScrollView, View, StyleSheet } from "react-native";
 import { Text } from "@rneui/themed";
 
 function HostList() {
   const { tr } = useTranslation();
-  const { search } = useProjectTable();
-  const [list, setList] = useState<ProjectQueryType[]>();
   const { loading, data } = useProjectListQuery({
     variables: {
       page: {
