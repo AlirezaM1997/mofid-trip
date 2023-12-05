@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import useTranslation from "@src/hooks/translation";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import TransactionButtons from "@modules/tour/transaction/buttons";
-import { setTourTransaction } from "@src/slice/tour-success-transaction";
 import { TourTransactionQueryType, useTourPurchaseAddMutation } from "@src/gql/generated";
 
 type PropsType = {
