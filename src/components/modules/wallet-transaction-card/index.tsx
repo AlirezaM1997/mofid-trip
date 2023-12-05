@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   WalletTransactionQueryType,
   WalletWalletTransactionActionChoices,
+  WalletWalletTransactionStatusStepChoices,
 } from "@src/gql/generated";
 import moment from "jalali-moment";
 import { useTheme } from "@rneui/themed";
 import WhiteSpace from "@atoms/white-space";
 import { Avatar, Text } from "@rneui/themed";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import SuccessReceiptBottomSheet from "@modules/receipt-bottom-sheet/success";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 type LookUpType = Record<
@@ -16,6 +18,7 @@ type LookUpType = Record<
   {
     title: string;
     amount: string;
+    subTitle?: string;
     color: typeof Colors;
     icon: { name: string; type: string; color: typeof Colors; size: number };
   }
@@ -24,6 +27,7 @@ type LookUpType = Record<
 const WalletTransactionCard = ({ transaction }: { transaction: WalletTransactionQueryType }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
+  const [isVisible, setIsVisible] = useState(false);
   const { localizeNumber } = useLocalizedNumberFormat();
 
   const transactionAction = () => {
@@ -34,34 +38,53 @@ const WalletTransactionCard = ({ transaction }: { transaction: WalletTransaction
         amount: `+ ${transaction.amount}`,
         color: "success",
       },
-      [WalletWalletTransactionActionChoices.Withdraw]: {
-        icon: { name: "arrowdown", type: "ant-design", color: theme.colors.black, size: 16 },
-        title: tr("withdrawal from the wallet"),
-        amount: `- ${transaction.amount}`,
-        color: "error",
-      },
+      [WalletWalletTransactionActionChoices.Withdraw]:
+        transaction.statusStep === WalletWalletTransactionStatusStepChoices.Request
+          ? {
+              icon: { name: "arrowdown", type: "ant-design", color: theme.colors.black, size: 16 },
+              title: tr("withdrawal from the wallet"),
+              subTitle: `/ ${tr("awaiting confirmation")}`,
+              amount: `- ${transaction.amount}`,
+              color: "grey2",
+            }
+          : {
+              icon: { name: "arrowdown", type: "ant-design", color: theme.colors.black, size: 16 },
+              title: tr("withdrawal from the wallet"),
+              amount: `- ${transaction.amount}`,
+              color: "error",
+            },
     };
     return lookup[transaction.action];
   };
 
+  const transactionActionHolder = transactionAction();
+
   return (
     <>
-      <View style={styles.transactionCard(theme)}>
+      <Pressable onPress={() => setIsVisible(true)} style={styles.transactionCard(theme)}>
         <Avatar
           rounded
           size={40}
-          icon={transactionAction().icon}
+          icon={transactionActionHolder.icon}
           containerStyle={styles.avatarContainer(theme)}
         />
         <View style={styles.header}>
-          <Text>{transactionAction().title}</Text>
+          <Text>{transactionActionHolder.title}</Text>
           <Text body2 type="grey2">
             {moment(transaction.modifiedTime).locale("fa").format("jDD jMMMM , HH:mm a")}
+            {transactionActionHolder.subTitle}
           </Text>
         </View>
-        <Text type={transactionAction().color}>{localizeNumber(transactionAction().amount)}</Text>
-      </View>
+        <Text type={transactionActionHolder.color}>
+          {localizeNumber(transactionActionHolder.amount)}
+        </Text>
+      </Pressable>
       <WhiteSpace size={8} />
+      <SuccessReceiptBottomSheet
+        isVisible={isVisible}
+        transaction={transaction}
+        setIsVisible={setIsVisible}
+      />
     </>
   );
 };

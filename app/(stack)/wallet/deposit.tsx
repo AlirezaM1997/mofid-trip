@@ -5,21 +5,23 @@ import { router } from "expo-router";
 import { RootState } from "@src/store";
 import * as Network from "expo-network";
 import Container from "@atoms/container";
-import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
+import { useDispatch, useSelector } from "react-redux";
 import { WALLET_ZARINPAL_CALLBACK_URL } from "@src/settings";
 import { Button, Input, Text, useTheme } from "@rneui/themed";
 import { useDepositWalletMutation } from "@src/gql/generated";
 import BottomButtonLayout from "@components/layout/bottom-button";
+import { setWalletTransactionIdData } from "@src/slice/wallet-transaction-slice";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const Increase = () => {
   const { theme } = useTheme();
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
   const { balance } = useSelector((state: RootState) => state.userSlice.userDetail.wallet);
 
-  const [depositWallet] = useDepositWalletMutation();
+  const [depositWallet, { loading }] = useDepositWalletMutation();
 
   const validationSchema = Yup.object().shape({
     amount: Yup.number().required(tr("amount is required")),
@@ -37,7 +39,11 @@ const Increase = () => {
         },
       },
     });
-    router.push(data.depositWallet.metadata?.url);
+
+    if (data.depositWallet.status === "OK") {
+      dispatch(setWalletTransactionIdData(data.depositWallet.metadata.transaction_id));
+      router.push(data.depositWallet.metadata?.url);
+    }
   };
 
   return (
@@ -47,7 +53,11 @@ const Increase = () => {
       onSubmit={handleSubmit}>
       {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
         <BottomButtonLayout
-          buttons={[<Button onPress={handleSubmit}>{tr("increase balance")}</Button>]}>
+          buttons={[
+            <Button loading={loading} onPress={handleSubmit}>
+              {tr("increase balance")}
+            </Button>,
+          ]}>
           <WhiteSpace size={24} />
           <Container>
             <Text heading2>{tr("increase balance")}</Text>

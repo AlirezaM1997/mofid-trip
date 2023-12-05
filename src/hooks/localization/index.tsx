@@ -16,7 +16,7 @@ export const formatPrice = (price: number) => {
 
   if (language === AccountSettingLanguageChoices.FaIr) {
     return (
-      price.toLocaleString("fa-IR", {
+      price?.toLocaleString("fa-IR", {
         style: "decimal",
         useGrouping: true,
       }) +

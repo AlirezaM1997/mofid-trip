@@ -1073,7 +1073,8 @@ export type QueryUserListArgs = {
 
 
 export type QueryWalletTransactionDetailArgs = {
-  pk: Scalars['ID']['input'];
+  invoiceNumber?: InputMaybe<Scalars['String']['input']>;
+  pk?: InputMaybe<Scalars['ID']['input']>;
 };
 
 
@@ -1770,6 +1771,8 @@ export type WalletTransactionQueryType = {
   modifiedTime?: Maybe<Scalars['DateTime']['output']>;
   purchaseRefId?: Maybe<Scalars['Int']['output']>;
   /** The source of the transaction. */
+  reference?: Maybe<TransactionSourceUnion>;
+  /** The source of the transaction. */
   source?: Maybe<TransactionSourceUnion>;
   statusActivation: Scalars['Boolean']['output'];
   statusStep?: Maybe<WalletWalletTransactionStatusStepChoices>;
@@ -1995,14 +1998,19 @@ export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionLi
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, fullname?: string | null, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, wallet?: { __typename?: 'UserWalletType', balance: number, createdTime: any, id: string, modifiedTime: any, walletTransactions: Array<{ __typename?: 'WalletTransactionQueryType', action: WalletWalletTransactionActionChoices, amount: number, createdTime?: any | null, id: string, invoiceNumber: string, modifiedTime?: any | null, purchaseRefId?: number | null }>, walletCards: Array<{ __typename?: 'BackCardQueryType', id: string, title?: string | null }> } | null } | null };
+export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, fullname?: string | null, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, wallet?: { __typename?: 'UserWalletType', balance: number, createdTime: any, id: string, modifiedTime: any, walletTransactions: Array<{ __typename?: 'WalletTransactionQueryType', action: WalletWalletTransactionActionChoices, purchaseRefId?: number | null, modifiedTime?: any | null, invoiceNumber: string, id: string, description?: string | null, amount: number, statusStep?: WalletWalletTransactionStatusStepChoices | null, source?: { __typename?: 'BackCardQueryType', id: string, title?: string | null, cardPan?: string | null } | { __typename?: 'WalletQuryType', id: string } | null, reference?: { __typename?: 'BackCardQueryType', id: string, cardPan?: string | null, iban?: string | null } | { __typename?: 'WalletQuryType', id: string, balance: number } | null }>, walletCards: Array<{ __typename?: 'BackCardQueryType', id: string, title?: string | null }> } | null } | null };
+
+export type WalletTransactionListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type WalletTransactionListQuery = { __typename?: 'Query', walletTransactionList?: { __typename?: 'WalletTransactionListType', data?: Array<{ __typename?: 'WalletTransactionQueryType', action: WalletWalletTransactionActionChoices, purchaseRefId?: number | null, modifiedTime?: any | null, invoiceNumber: string, id: string, description?: string | null, amount: number, statusStep?: WalletWalletTransactionStatusStepChoices | null, source?: { __typename?: 'BackCardQueryType', id: string, title?: string | null, cardPan?: string | null } | { __typename?: 'WalletQuryType', id: string } | null, reference?: { __typename?: 'BackCardQueryType', id: string, cardPan?: string | null, iban?: string | null } | { __typename?: 'WalletQuryType', id: string, balance: number } | null } | null> | null } | null };
 
 export type WalletTransactionDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
 }>;
 
 
-export type WalletTransactionDetailQuery = { __typename?: 'Query', walletTransactionDetail?: { __typename?: 'WalletTransactionQueryType', action: WalletWalletTransactionActionChoices, purchaseRefId?: number | null, modifiedTime?: any | null, invoiceNumber: string, id: string, description?: string | null, amount: number, statusStep?: WalletWalletTransactionStatusStepChoices | null, source?: { __typename?: 'BackCardQueryType', id: string, title?: string | null, cardPan?: string | null } | { __typename?: 'WalletQuryType', id: string } | null } | null };
+export type WalletTransactionDetailQuery = { __typename?: 'Query', walletTransactionDetail?: { __typename?: 'WalletTransactionQueryType', action: WalletWalletTransactionActionChoices, purchaseRefId?: number | null, modifiedTime?: any | null, invoiceNumber: string, id: string, description?: string | null, amount: number, statusStep?: WalletWalletTransactionStatusStepChoices | null, source?: { __typename?: 'BackCardQueryType', id: string, title?: string | null, cardPan?: string | null } | { __typename?: 'WalletQuryType', id: string } | null, reference?: { __typename?: 'BackCardQueryType', id: string, cardPan?: string | null, iban?: string | null } | { __typename?: 'WalletQuryType', id: string, balance: number } | null } | null };
 
 
 export const DepositWalletDocument = gql`
@@ -3457,12 +3465,34 @@ export const UserDetailDocument = gql`
       modifiedTime
       walletTransactions {
         action
-        amount
-        createdTime
-        id
-        invoiceNumber
-        modifiedTime
+        source {
+          ... on BackCardQueryType {
+            id
+            title
+            cardPan
+          }
+          ... on WalletQuryType {
+            id
+          }
+        }
+        reference {
+          ... on BackCardQueryType {
+            id
+            cardPan
+            iban
+          }
+          ... on WalletQuryType {
+            id
+            balance
+          }
+        }
         purchaseRefId
+        modifiedTime
+        invoiceNumber
+        id
+        description
+        amount
+        statusStep
       }
       walletCards {
         id
@@ -3499,6 +3529,70 @@ export function useUserDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type UserDetailQueryHookResult = ReturnType<typeof useUserDetailQuery>;
 export type UserDetailLazyQueryHookResult = ReturnType<typeof useUserDetailLazyQuery>;
 export type UserDetailQueryResult = Apollo.QueryResult<UserDetailQuery, UserDetailQueryVariables>;
+export const WalletTransactionListDocument = gql`
+    query walletTransactionList {
+  walletTransactionList {
+    data {
+      action
+      source {
+        ... on BackCardQueryType {
+          id
+          title
+          cardPan
+        }
+        ... on WalletQuryType {
+          id
+        }
+      }
+      reference {
+        ... on BackCardQueryType {
+          id
+          cardPan
+          iban
+        }
+        ... on WalletQuryType {
+          id
+          balance
+        }
+      }
+      purchaseRefId
+      modifiedTime
+      invoiceNumber
+      id
+      description
+      amount
+      statusStep
+    }
+  }
+}
+    `;
+
+/**
+ * __useWalletTransactionListQuery__
+ *
+ * To run a query within a React component, call `useWalletTransactionListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWalletTransactionListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWalletTransactionListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useWalletTransactionListQuery(baseOptions?: Apollo.QueryHookOptions<WalletTransactionListQuery, WalletTransactionListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WalletTransactionListQuery, WalletTransactionListQueryVariables>(WalletTransactionListDocument, options);
+      }
+export function useWalletTransactionListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WalletTransactionListQuery, WalletTransactionListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WalletTransactionListQuery, WalletTransactionListQueryVariables>(WalletTransactionListDocument, options);
+        }
+export type WalletTransactionListQueryHookResult = ReturnType<typeof useWalletTransactionListQuery>;
+export type WalletTransactionListLazyQueryHookResult = ReturnType<typeof useWalletTransactionListLazyQuery>;
+export type WalletTransactionListQueryResult = Apollo.QueryResult<WalletTransactionListQuery, WalletTransactionListQueryVariables>;
 export const WalletTransactionDetailDocument = gql`
     query walletTransactionDetail($pk: ID!) {
   walletTransactionDetail(pk: $pk) {
@@ -3511,6 +3605,17 @@ export const WalletTransactionDetailDocument = gql`
       }
       ... on WalletQuryType {
         id
+      }
+    }
+    reference {
+      ... on BackCardQueryType {
+        id
+        cardPan
+        iban
+      }
+      ... on WalletQuryType {
+        id
+        balance
       }
     }
     purchaseRefId

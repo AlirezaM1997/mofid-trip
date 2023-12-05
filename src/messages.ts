@@ -39,6 +39,11 @@ export const messages = {
     fa_ir: "بازگشت",
     en_us: "Back",
   },
+  "awaiting confirmation": {
+    ar: "بانتظار التأكيد",
+    fa_ir: "در انتظار تایید",
+    en_us: "awaiting confirmation",
+  },
   "you can upload images related to your tour, please note that the size of the images should be less than 3 mb. note that this section is optional.":
     {
       ar: "يمكنك تحميل الصور المتعلقة بجولتك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
@@ -808,6 +813,11 @@ export const messages = {
     ar: "لا، إلغاء",
     fa_ir: "نه، لغو",
     en_us: "No, Cancel",
+  },
+  "deposit to the account": {
+    ar: "إيداع في الحساب",
+    fa_ir: "واریز به حساب",
+    en_us: "deposit to the account",
   },
   "payment by card": {
     ar: "الدفع عن طريق البطاقة",
