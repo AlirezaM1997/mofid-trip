@@ -26,7 +26,7 @@ const HostDetailScreen = () => {
   const navigation = useNavigation();
   const { hostId } = useLocalSearchParams();
   const [host, setHost] = useState<MyNgoDetailQuery["NGODetail"]["projectSet"][0]>();
-  const steps = [tr("pending"), tr("published"), tr("End Host")];
+  const steps = [tr("pending"), tr("published")];
   const [isVisible, setIsVisible] = useState(false);
 
   const { loading, data } = useMyNgoDetailQuery();
@@ -37,18 +37,17 @@ const HostDetailScreen = () => {
     const lookup: Record<string, number> = {
       [AccommodationProjectStatusStepChoices.Request]: 1,
       [AccommodationProjectStatusStepChoices.Accept]: 2,
-      [AccommodationProjectStatusStepChoices.End]: 3,
     };
     return lookup[host.statusStep];
   };
 
   const handleGoToHost = () =>
-  router.push({
-    pathname: "/host/" + host.id,
-    params: {
-      name: host?.name,
-    },
-  })
+    router.push({
+      pathname: "/host/" + host.id,
+      params: {
+        name: host?.name,
+      },
+    });
 
   useEffect(() => {
     if (!loading && data) {
@@ -76,7 +75,7 @@ const HostDetailScreen = () => {
         <Text subtitle1 bold>
           {tr("At what stage is your application?")}
         </Text>
-        <Text>یه متن سید به ما میده که اینجا نشونش خواهیم داد</Text>
+        <Text>{tr("The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.")}</Text>
 
         <Stepper
           steps={steps}
@@ -145,7 +144,7 @@ const HostDetailScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  containerStyle: { width: "100%" }
-})
+  containerStyle: { width: "100%" },
+});
 
 export default HostDetailScreen;
