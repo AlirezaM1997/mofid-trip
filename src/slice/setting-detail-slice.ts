@@ -8,7 +8,7 @@ type initialStateType = {
 
 const initialState: initialStateType = {
   settingDetail: {
-    language: AccountSettingLanguageChoices.EnUs,
+    language: AccountSettingLanguageChoices.FaIr,
   },
 }
 
