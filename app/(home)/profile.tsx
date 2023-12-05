@@ -175,7 +175,7 @@ const Profile: React.FC = () => {
         <Container>
           <Text type="grey3">{tr("Managements")}</Text>
         </Container>
-        <ListItem onPress={() => router.push("/comingSoon")}>
+        <ListItem onPress={() => router.push("/reservation")}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("Tours and my travels")}</ListItem.Title>
