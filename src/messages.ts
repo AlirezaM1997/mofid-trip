@@ -2239,4 +2239,19 @@ export const messages = {
     fa_ir: "نوع فضا و محیط میزبانی خودتان را تعیین کنید.",
     en_us: "Determine the type of space and your hosting environment.",
   },
+  "host preview": {
+    ar: "معاينة المضيف",
+    fa_ir: "پیشنمایش میزبانی",
+    en_us: "Host Preview",
+  },
+  "end host": {
+    ar: "نهاية المضيف",
+    fa_ir: "پایان میزبانی",
+    en_us: "End Host",
+  },
+  "the created hosting is under review by support, after approval by the support team, it will be included in mofidtrip's hosting list.": {
+    ar: "الاستضافة التي تم إنشاؤها قيد المراجعة من قبل الدعم، وبعد موافقة فريق الدعم، سيتم إدراجها في قائمة استضافة Mofidtrip.",
+    fa_ir: "میزبانی ایجاد شده در مرحله بررسی توسط پشتیبانی قرار دارد ، بعد از تایید توسط تیم پشتیبانی در لیست میزبانی های مفیدتریپ قرار خواهد گرفت.",
+    en_us: "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
+  },
 };

@@ -38,8 +38,6 @@ const HostManagementScreen = () => {
 
   if (loading) return <LoadingIndicator />;
 
-  console.log("d22", hostSet);
-
   return (
     <ScrollView>
       {!hostSet?.length && (
