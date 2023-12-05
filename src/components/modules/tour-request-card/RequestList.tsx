@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Avatar, Colors, ListItem, ListItemProps, Text, useTheme } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { TourTransactionQueryType, TransactionStatusEnum } from "@src/gql/generated";
 
 type PropsType = ListItemProps & {
@@ -12,6 +12,7 @@ type LookupType = Record<string, { title: string; color: keyof Colors }>;
 const RequestList = ({ transaction, ...props }: PropsType) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const getCurrentStep = () => {
     const lookup: LookupType = {
@@ -58,7 +59,7 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
         )}
 
         <ListItem.Content style={style.requestCardTextBox}>
-          <Text subtitle2>{transaction.owner.fullname}</Text>
+          <Text subtitle2>{localizeNumber(transaction.owner.fullname)}</Text>
           <Text type={step?.color}>{`${transaction.tourPackage.tour.title} / ${step?.title}`}</Text>
         </ListItem.Content>
         <Text caption style={style.moreDetail}>

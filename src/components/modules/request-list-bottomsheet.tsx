@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { Alert, Linking, Platform, StyleSheet, View } from "react-native";
 import React, { ReactElement } from "react";
 import {
   Avatar,
@@ -9,6 +9,7 @@ import {
   Divider,
   ListItem,
   Text,
+  useTheme,
 } from "@rneui/themed";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { MyNgoDetailQuery, TourGuestQueryType, TransactionStatusEnum } from "@src/gql/generated";
@@ -36,8 +37,18 @@ const RequestListBottomSheet = ({
   ...props
 }: RequestListBottomSheetProps) => {
   const { tr } = useTranslation();
-
+  const ownerAvatar = transaction?.owner.avatarS3.small;
+  const { theme } = useTheme();
   const { localizeNumber } = useLocalizedNumberFormat();
+
+  const handlePress = num => {
+    if (num) {
+      if (Platform.OS === "web") {
+        Linking.openURL('tel:num');
+      } else {
+        Alert.alert('coming soon')
+      }
+    }}
 
   const getCurrentStep = () => {
     const lookup: LookupType = {
@@ -86,7 +97,6 @@ const RequestListBottomSheet = ({
     };
     return lookup[transaction?.status.step];
   };
-
   const step = getCurrentStep();
 
   return (
@@ -94,10 +104,23 @@ const RequestListBottomSheet = ({
       <View style={style.bottomSheet}>
         <View style={style.bottomSheetHeader}>
           <WhiteSpace />
-          <Avatar rounded size={56} source={{ uri: transaction?.owner.avatarS3.small }} />
+          {ownerAvatar ? (
+            <Avatar rounded size={56} source={{ uri: transaction?.owner.avatarS3.small }} />
+          ) : (
+            <Avatar
+              rounded
+              size={48}
+              icon={{
+                name: "user",
+                type: "feather",
+                size: 26,
+              }}
+              containerStyle={{ backgroundColor: theme.colors.grey2 }}
+            />
+          )}
           <View style={style.bottomSheetHeaderTextBox}>
             <Text subtitle2>
-              {transaction?.owner.fullname} / {tr("team leader")}
+              {localizeNumber(transaction?.owner.fullname)} / {tr("team leader")}
             </Text>
             <Text caption type="grey2">
               {localizeNumber(transaction?.owner.phoneNumber)}
@@ -112,7 +135,8 @@ const RequestListBottomSheet = ({
               icon={<Ionicons name="chatbubble-ellipses" size={18} color="black" />}
               type="outline"
               color="secondary"
-              size="sm">
+              size="sm"
+              onPress={()=>handlePress(transaction?.owner?.phoneNumber)}>
               {tr("message")}
             </Button>
             <Button
@@ -120,7 +144,8 @@ const RequestListBottomSheet = ({
               icon={<MaterialIcons name="phone-in-talk" size={18} color="black" />}
               type="outline"
               color="secondary"
-              size="sm">
+              size="sm"
+              onPress={()=>handlePress(transaction?.owner?.phoneNumber)}>
               {tr("contact")}
             </Button>
           </View>
@@ -140,7 +165,20 @@ const RequestListBottomSheet = ({
                   key={guest.id}
                   bottomDivider
                   containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}>
-                  <Avatar size={40} rounded source={{ uri: guest.avatarS3[0]?.small }} />
+                  {guest.avatarS3[0]?.small ? (
+                    <Avatar size={40} rounded source={{ uri: guest.avatarS3[0]?.small }} />
+                  ) : (
+                    <Avatar
+                      rounded
+                      size={48}
+                      icon={{
+                        name: "user",
+                        type: "feather",
+                        size: 26,
+                      }}
+                      containerStyle={{ backgroundColor: theme.colors.grey2 }}
+                    />
+                  )}
                   <ListItem.Content>
                     <Text subtitle2>
                       {guest.firstname} {guest.lastname}
