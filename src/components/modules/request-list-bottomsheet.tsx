@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import {
   Avatar,
   BottomSheet,
@@ -9,15 +9,9 @@ import {
   Divider,
   ListItem,
   Text,
-  useTheme,
 } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
-import {
-  MyNgoDetailQuery,
-  TourGuestQueryType,
-  TourTransactionQueryType,
-  TransactionStatusEnum,
-} from "@src/gql/generated";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { MyNgoDetailQuery, TourGuestQueryType, TransactionStatusEnum } from "@src/gql/generated";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import Container from "@atoms/container";
@@ -42,6 +36,8 @@ const RequestListBottomSheet = ({
   ...props
 }: RequestListBottomSheetProps) => {
   const { tr } = useTranslation();
+
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const getCurrentStep = () => {
     const lookup: LookupType = {
@@ -104,7 +100,7 @@ const RequestListBottomSheet = ({
               {transaction?.owner.fullname} / {tr("team leader")}
             </Text>
             <Text caption type="grey2">
-              {transaction?.owner.phoneNumber}
+              {localizeNumber(transaction?.owner.phoneNumber)}
             </Text>
             <Text caption type={step?.color}>
               {step?.bottomSheetTitle}
@@ -133,21 +129,24 @@ const RequestListBottomSheet = ({
         <Divider thickness={8} />
 
         <ScrollView contentContainerStyle={style.guestListScrollView}>
-          <Container style={style.guestList}>
-            <WhiteSpace size={8} />
-            <Text body2 type="grey2">{`${tr("accompanying passengers")} (${
+          <Container>
+            <WhiteSpace />
+            <Text body2 type="grey2">{`${tr("accompanying passengers")} (${localizeNumber(
               transaction?.tourGuests.length
-            } ${tr("person")})`}</Text>
+            )} ${tr("person")})`}</Text>
             {transaction?.tourGuests.map((guest: TourGuestQueryType, i) => (
               <>
-                <ListItem key={guest.id} bottomDivider  containerStyle={{ direction: "rtl" }}>
+                <ListItem
+                  key={guest.id}
+                  bottomDivider
+                  containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}>
                   <Avatar size={40} rounded source={{ uri: guest.avatarS3[0]?.small }} />
                   <ListItem.Content>
                     <Text subtitle2>
                       {guest.firstname} {guest.lastname}
                     </Text>
                     <Text caption type="grey3">
-                      {guest.phoneNumber}
+                      {localizeNumber(guest.phoneNumber)}
                     </Text>
                   </ListItem.Content>
                 </ListItem>
@@ -167,11 +166,20 @@ const style = StyleSheet.create({
     flexDirection: "row",
     gap: 16,
   },
-  bottomSheet: { height: HEIGHT - 100 },
-  bottomSheetHeader: { alignItems: "center", gap: 16 },
-  bottomSheetHeaderTextBox: { alignItems: "center", gap: 4 },
-  guestListScrollView: { flex: 1 },
-  guestList: { gap: 16 },
+  bottomSheet: {
+    maxHeight: HEIGHT - 100,
+  },
+  bottomSheetHeader: {
+    alignItems: "center",
+    gap: 16,
+  },
+  bottomSheetHeaderTextBox: {
+    alignItems: "center",
+    gap: 4,
+  },
+  guestListScrollView: {
+    flex: 1,
+  },
   button: {
     flex: 1,
   },

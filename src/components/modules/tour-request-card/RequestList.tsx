@@ -1,38 +1,13 @@
-import { StyleSheet, View } from "react-native";
-import React, { ReactElement, useState } from "react";
-import {
-  Avatar,
-  BottomSheet,
-  Button,
-  Colors,
-  Divider,
-  ListItem,
-  ListItemProps,
-  Text,
-  useTheme,
-} from "@rneui/themed";
+import { StyleSheet } from "react-native";
+import { Avatar, Colors, ListItem, ListItemProps, Text, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import {
-  TourGuestQueryType,
-  TourTransactionQueryType,
-  TransactionStatusEnum,
-} from "@src/gql/generated";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import Container from "@atoms/container";
-import WhiteSpace from "@atoms/white-space";
-import ButtonRow from "@modules/button-rows";
-import { ScrollView } from "react-native-gesture-handler";
-import { HEIGHT } from "@src/constants";
+import { TourTransactionQueryType, TransactionStatusEnum } from "@src/gql/generated";
 
 type PropsType = ListItemProps & {
   transaction: TourTransactionQueryType;
 };
 
-type LookupType = Record<
-  string,
-  { title: string; color: keyof Colors; bottomSheetTitle: string; buttonBox: ReactElement }
->;
+type LookupType = Record<string, { title: string; color: keyof Colors }>;
 
 const RequestList = ({ transaction, ...props }: PropsType) => {
   const { tr } = useTranslation();
@@ -43,48 +18,19 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
       [TransactionStatusEnum.Request]: {
         title: tr("awaiting review"),
         color: "grey3",
-        bottomSheetTitle: tr("the request is pending review"),
-        buttonBox: (
-          <ButtonRow>
-            <Button disabled type="outline">
-              {tr("request rejection")}
-            </Button>
-            <Button disabled type="solid">
-              {tr("confirm request")}
-            </Button>
-          </ButtonRow>
-        ),
       },
       [TransactionStatusEnum.Accept]: transaction.status.isActive
         ? {
             title: tr("accepted"),
             color: "success",
-            bottomSheetTitle: tr("the request has been approved by you"),
-            buttonBox: (
-              <Button containerStyle={style.button} disabled type="outline">
-                {tr("request rejection")}
-              </Button>
-            ),
           }
         : {
             title: tr("failed"),
             color: "error",
-            bottomSheetTitle: tr("the request was rejected by you"),
-            buttonBox: (
-              <Button containerStyle={style.button} disabled type="solid">
-                {tr("confirm request")}
-              </Button>
-            ),
           },
       [TransactionStatusEnum.Payment]: {
         title: tr("success receipt"),
         color: "info",
-        bottomSheetTitle: tr("the passenger paid and the reservation was finalized"),
-        buttonBox: (
-          <Button containerStyle={style.button} disabled type="outline">
-            {tr("request rejection")}
-          </Button>
-        ),
       },
     };
     return lookup[transaction.status.step];
@@ -130,10 +76,6 @@ const style = StyleSheet.create({
   },
   button: {
     flex: 1,
-  },
-  headerButtonBox: {
-    flexDirection: "row",
-    gap: 16,
   },
   ownerCard: {
     paddingHorizontal: 0,

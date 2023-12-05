@@ -1,6 +1,6 @@
 import { View, StyleSheet, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Divider, Text } from "@rneui/themed";
+import { Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import {
   TourTransactionQueryType,
@@ -12,7 +12,6 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import Container from "@atoms/container";
 import NoResult from "@organisms/no-result";
 import RequestList from "@modules/tour-request-card/RequestList";
-import WhiteSpace from "@atoms/white-space";
 import RequestListBottomSheet from "@modules/request-list-bottomsheet";
 
 const RequestScreen = () => {
@@ -25,10 +24,10 @@ const RequestScreen = () => {
   const handleClose = () => setIsVisible(false);
   const handleOpen = () => setIsVisible(true);
 
+  const { loading, data } = useMyNgoDetailQuery();
+
   const [transactionSet, setTransactionSet] =
     useState<MyNgoDetailQuery["NGODetail"]["tourTransactionSet"]>();
-
-  const { loading, data } = useMyNgoDetailQuery();
 
   const handleRequestPress = (transaction: TourTransactionQueryType) => {
     setSelectedTransaction(transaction);
