@@ -8,7 +8,7 @@ import {
   MyNgoDetailQuery,
 } from "@src/gql/generated";
 import LoadingIndicator from "@modules/Loading-indicator";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useNavigation } from "expo-router";
 import Container from "@atoms/container";
 import NoResult from "@organisms/no-result";
 import RequestList from "@modules/tour-request-card/RequestList";
@@ -16,7 +16,6 @@ import WhiteSpace from "@atoms/white-space";
 
 const RequestScreen = () => {
   const { tr } = useTranslation();
-  const { tourId } = useLocalSearchParams();
   const navigation = useNavigation();
 
   const [transactionSet, setTransactionSet] =
@@ -26,9 +25,7 @@ const RequestScreen = () => {
 
   useEffect(() => {
     if (!loading && data) {
-      setTransactionSet(
-        data.NGODetail.tourTransactionSet.filter(tr => tr.tourPackage.tour.id === tourId)
-      );
+      setTransactionSet(data.NGODetail.tourTransactionSet);
     }
   }, [loading, data]);
 
@@ -36,20 +33,20 @@ const RequestScreen = () => {
 
   if (!transactionSet.length) return <NoResult />;
 
-  navigation.setOptions({ title: transactionSet[0].tourPackage.tour.title });
+  navigation.setOptions({ title: tr("apply to my tours") });
 
   return (
     <Container style={style.container}>
       <View style={style.header}>
-        <Text heading2>{tr("requests and passengers")}</Text>
+        <Text heading2>{tr("requests received for tours")}</Text>
         <Text caption type="grey2">
-          {tr("passengers who plan to travel with this tour. please check the submitted requests.")}
+          {tr("all requests received from travelers who plan to travel with your tours")}
         </Text>
       </View>
       <ScrollView contentContainerStyle={style.requestList}>
         {transactionSet.map((transaction: TourTransactionQueryType, i) => (
           <>
-            <RequestList key={transaction.id} transaction={transaction} allRequest={false} />
+            <RequestList key={transaction.id} transaction={transaction} allRequest={true} />
             {transactionSet.length > i + 1 ? <Divider /> : <WhiteSpace size={16} />}
           </>
         ))}

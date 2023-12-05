@@ -56,11 +56,7 @@ const Profile: React.FC = () => {
     router.push("/");
   };
 
-  const handleNavigateToRequestToMyTours=() =>
-  router.push({
-    pathname: "/tour/requests/toMyTours",
-
-  })
+  const handleNavigateToRequestToMyTours = () => router.push("/tour/management/request");
 
   const handleNavigateToEditProfile = () => router.push("/edit-profile");
 
@@ -205,10 +201,7 @@ const Profile: React.FC = () => {
         <Container>
           <Text type="grey3">{tr("Requests")}</Text>
         </Container>
-        <ListItem
-          bottomDivider
-          onPress={handleNavigateToRequestToMyTours
-          }>
+        <ListItem bottomDivider onPress={handleNavigateToRequestToMyTours}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("My Tours Requests")}</ListItem.Title>

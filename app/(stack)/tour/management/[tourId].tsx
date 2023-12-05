@@ -111,9 +111,6 @@ const TourDetailScreen = () => {
           onPress={() => {
             router.push({
               pathname: "/tour/management/request/" + tour.id,
-              params: {
-                tourName: tour.title,
-              },
             });
           }}>
           <Feather name="users" size={24} color={theme.colors.black} />
