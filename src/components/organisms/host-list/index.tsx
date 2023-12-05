@@ -1,28 +1,25 @@
-import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useTranslation from "@src/hooks/translation";
-import useProjectTable from "@src/hooks/db/project";
-import { ProjectQueryType } from "@src/gql/generated";
 import TitleWithAction from "@modules/title-with-action";
-import { ScrollView, View, StyleSheet } from "react-native";
 import HostCard from "@modules/host/card";
 import Container from "@atoms/container";
+import { router } from "expo-router";
+import {  useProjectListQuery } from "@src/gql/generated";
+import { ScrollView, View, StyleSheet } from "react-native";
+import { Text } from "@rneui/themed";
 
 function HostList() {
   const { tr } = useTranslation();
-  const { search } = useProjectTable();
-  const [list, setList] = useState<ProjectQueryType[]>();
+  const { loading, data } = useProjectListQuery({
+    variables: {
+      page: {
+        pageNumber: 1,
+        pageSize: 999,
+      },
+    },
+  });
 
-  useEffect(() => {
-    setList(
-      search({
-        page: {
-          pageNumber: 1,
-          pageSize: 999,
-        },
-      })
-    );
-  }, []);
+  if (loading) return <Text>Loading hosts...</Text>;
 
   return (
     <>
@@ -40,10 +37,9 @@ function HostList() {
         contentContainerStyle={style.gap}
         style={style.listContainer}>
         <View style={style.spacer}></View>
-        {list?.map((project, index) => (
+        {data.projectList.data?.map((project, index) => (
           <View key={index}>
             <HostCard
-              key={index}
               id={project.id}
               name={project.name}
               price={project.price}

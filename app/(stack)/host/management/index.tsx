@@ -3,58 +3,66 @@ import WhiteSpace from "@atoms/white-space";
 import useMyNGOTable from "@src/hooks/db/ngo";
 import useTranslation from "@src/hooks/translation";
 import ComingSoon from "@modules/coming-soon";
-import { BottomSheet, Button, Card, Chip, useTheme } from "@rneui/themed";
-import { AccommodationQueryType, useMyNgoDetailQuery } from "@src/gql/generated";
+import { BottomSheet, Button, Card, Chip, Text, useTheme } from "@rneui/themed";
+import { AccommodationQueryType, MyNgoDetailQuery, useMyNgoDetailQuery } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { getTourRequestStatusBadgeColor } from "@src/helper/tour";
+import { getHostRequestStatusBadgeColor } from "@src/helper/host";
 import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { ScrollView } from "react-native-gesture-handler";
+import NoResult from "@organisms/no-result";
+import { HEIGHT } from "@src/constants";
 
-const TourManagement = () => {
+const HostManagementScreen = () => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [tourSet, setTourSet] = useState([]);
+  const [hostSet, setHostSet] = useState<MyNgoDetailQuery["NGODetail"]["projectSet"]>([]);
   const { loading, data } = useMyNgoDetailQuery();
   const { theme } = useTheme();
 
-  const navigateToTourDetail = (tour: (typeof tourSet)[0]) =>
+  const navigateToTourDetail = (host: (typeof hostSet)[0]) =>
     router.push({
-      pathname: `/tour/management/${tour.id}`,
+      pathname: `/host/management/${host.id}`,
       params: {
-        tourStr: JSON.stringify(tour),
+        hostStr: JSON.stringify(host),
       },
     });
 
   useEffect(() => {
     if (!loading && data) {
-      setTourSet(data.NGODetail.tourSet);
+      setHostSet(data.NGODetail.projectSet);
     }
   }, [loading, data]);
 
   if (loading) return <LoadingIndicator />;
 
   return (
-    <View>
-      {tourSet.map(tour => (
-        <Card key={tour.id}>
-          <Pressable onPress={() => navigateToTourDetail(tour)}>
+    <ScrollView>
+      {!hostSet?.length && (
+        <View style={{ height: HEIGHT / 2 }}>
+          <NoResult />
+        </View>
+      )}
+      {hostSet?.map(host => (
+        <Card key={host.id}>
+          <Pressable onPress={() => navigateToTourDetail(host)}>
             <Card.Image
               source={{
-                uri: tour.avatarS3?.[0]?.medium,
+                uri: host?.accommodation?.avatarS3?.[0]?.medium,
               }}
             />
             <WhiteSpace size={10} />
             <Card.Title heading1 bold caption>
-              {tour.title}
+              {host?.name}
             </Card.Title>
             <Card.FeaturedTitle caption>
-              {(tour.destination as AccommodationQueryType)?.province ?? tr("Province")},{" "}
-              {(tour.destination as AccommodationQueryType)?.city ?? tr("City")}
+              {host?.accommodation?.province ?? tr("Province")},{" "}
+              {host?.accommodation?.city ?? tr("City")}
             </Card.FeaturedTitle>
             <Card.FeaturedSubtitle numberOfLines={2} type="grey3">
-              {tour.description}
+              {host?.description}
             </Card.FeaturedSubtitle>
           </Pressable>
           <Container size={10} style={styles.footer}>
@@ -67,8 +75,8 @@ const TourManagement = () => {
               </Button>
             </View>
             <Chip
-              title={tour.statusStep}
-              color={getTourRequestStatusBadgeColor(tour)}
+              title={host?.statusStep}
+              color={getHostRequestStatusBadgeColor(host)}
               type="outline"
             />
           </Container>
@@ -85,7 +93,7 @@ const TourManagement = () => {
           </Button>
         </Container>
       </BottomSheet>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -98,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TourManagement;
+export default HostManagementScreen;
