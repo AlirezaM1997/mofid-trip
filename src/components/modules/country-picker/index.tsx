@@ -1,44 +1,44 @@
-import { BottomSheet, Input, ListItem, Text } from "@rneui/themed"
-import React, { useEffect, useState } from "react"
-import { Pressable, StyleSheet, View } from "react-native"
-import { CountryType, data } from "./data"
-import { ScrollView } from "react-native-gesture-handler"
-import { HEIGHT } from "@src/constants"
-import { Feather } from "@expo/vector-icons"
-import { Divider } from "@rneui/base"
-import Container from "@src/components/atoms/container"
-import WhiteSpace from "@src/components/atoms/white-space"
+import { BottomSheet, Input, ListItem, Text } from "@rneui/themed";
+import React, { useEffect, useState } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
+import { CountryType, data } from "./data";
+import { ScrollView } from "react-native-gesture-handler";
+import { HEIGHT } from "@src/constants";
+import { Feather } from "@expo/vector-icons";
+import { Divider } from "@rneui/base";
+import Container from "@src/components/atoms/container";
+import WhiteSpace from "@src/components/atoms/white-space";
 
 const CountryPicker = ({ value, setValue, callingCode, setCallingCode, ...props }) => {
-  const [isVisible, setIsVisible] = useState(false)
-  const [country, setCountry] = useState(data[239])
-  const [inputValue, setInputValue] = useState("")
-  const [tempData, setTempData] = useState(data)
-  const [searchText, setSearchText] = useState()
+  const [isVisible, setIsVisible] = useState(false);
+  const [country, setCountry] = useState(data[239]);
+  const [inputValue, setInputValue] = useState("");
+  const [tempData, setTempData] = useState(data);
+  const [searchText, setSearchText] = useState();
 
   const handleSelectCountry = (c: CountryType) => {
-    setCallingCode(c.callingCode)
-    setIsVisible(false)
-    setCountry(c)
-  }
+    setCallingCode(c.callingCode);
+    setIsVisible(false);
+    setCountry(c);
+  };
 
   useEffect(() => {
     if (searchText) {
-      setTempData(data.filter((c) => c?.name.toLowerCase().includes(searchText.toLowerCase())))
+      setTempData(data.filter(c => c?.name.toLowerCase().includes(searchText.toLowerCase())));
     } else {
-      setTempData(data)
+      setTempData(data);
     }
-  }, [searchText])
+  }, [searchText]);
 
   useEffect(() => {
-    setValue(inputValue)
-  }, [inputValue])
+    setValue(inputValue);
+  }, [inputValue]);
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={[styles.container, { direction: "ltr" }]}>
         <Input
-        autoFocus
+          autoFocus
           leftIcon={
             <Pressable onPress={() => setIsVisible(true)} style={styles.flagButton}>
               <Text>
@@ -63,9 +63,13 @@ const CountryPicker = ({ value, setValue, callingCode, setCallingCode, ...props 
         <ScrollView style={styles.scrollView}>
           <Container>
             <WhiteSpace size={10} />
-            <Input onChangeText={setSearchText} style={{ outline: "none" }} placeholder="Search Country ..." />
+            <Input
+              onChangeText={setSearchText}
+              style={{ outline: "none" }}
+              placeholder="Search Country ..."
+            />
           </Container>
-          {tempData.map((c) => (
+          {tempData.map(c => (
             <ListItem key={c.countryCode} bottomDivider onPress={() => handleSelectCountry(c)}>
               <ListItem.Content>
                 <ListItem.Title>
@@ -77,8 +81,8 @@ const CountryPicker = ({ value, setValue, callingCode, setCallingCode, ...props 
         </ScrollView>
       </BottomSheet>
     </>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -107,6 +111,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     borderWidth: 0,
     height: 58,
+    textAlign: 'left'
   },
   close: {
     display: "flex",
@@ -119,6 +124,6 @@ const styles = StyleSheet.create({
   },
   scrollView: { height: HEIGHT - 50 },
   bottomSheetContainer: { backgroundColor: "#fff" },
-})
+});
 
-export default CountryPicker
+export default CountryPicker;

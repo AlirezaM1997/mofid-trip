@@ -51,7 +51,7 @@ const RequestListBottomSheet = ({
   const handlePress = num => {
     if (num) {
       if (Platform.OS === "web") {
-        Linking.openURL("sms:num");
+        Linking.openURL(`sms:${num}`);
       } else {
         Alert.alert("coming soon");
       }

@@ -1969,6 +1969,13 @@ export type TagListQueryVariables = Exact<{
 
 export type TagListQuery = { __typename?: 'Query', tagList?: { __typename?: 'TagListType', count?: number | null, pageCount?: number | null, data?: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null, displayName?: string | null } | null> | null } | null };
 
+export type TourDetailQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+}>;
+
+
+export type TourDetailQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, NGO: { __typename?: 'NGOQueryType', id: string, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: number } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null };
+
 export type TourListQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<TourFilterType>;
@@ -1993,7 +2000,7 @@ export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionLi
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, fullname?: string | null, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, wallet?: { __typename?: 'UserWalletType', balance: number, createdTime: any, id: string, modifiedTime: any, walletTransactions: Array<{ __typename?: 'WalletTransactionQueryType', action: WalletWalletTransactionActionChoices, amount: number, createdTime?: any | null, id: string, invoiceNumber: string, modifiedTime?: any | null, purchaseRefId?: number | null }>, walletCards: Array<{ __typename?: 'BackCardQueryType', id: string, title?: string | null }> } | null } | null };
+export type UserDetailQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, username: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, email: string, bio?: string | null, phoneNumber?: string | null, isNgo?: boolean | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null, setting?: { __typename?: 'SettingDetailType', language: AccountSettingLanguageChoices } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, wallet?: { __typename?: 'UserWalletType', balance: number, createdTime: any, id: string, modifiedTime: any, walletTransactions: Array<{ __typename?: 'WalletTransactionQueryType', action: WalletWalletTransactionActionChoices, amount: number, createdTime?: any | null, id: string, invoiceNumber: string, modifiedTime?: any | null, purchaseRefId?: number | null }>, walletCards: Array<{ __typename?: 'BackCardQueryType', id: string, title?: string | null }> } | null } | null };
 
 
 export const CreateLoginDocument = gql`
@@ -3288,6 +3295,108 @@ export function useTagListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ta
 export type TagListQueryHookResult = ReturnType<typeof useTagListQuery>;
 export type TagListLazyQueryHookResult = ReturnType<typeof useTagListLazyQuery>;
 export type TagListQueryResult = Apollo.QueryResult<TagListQuery, TagListQueryVariables>;
+export const TourDetailDocument = gql`
+    query tourDetail($pk: ID!) {
+  tourDetail(pk: $pk) {
+    id
+    title
+    description
+    startTime
+    endTime
+    NGO {
+      id
+      user {
+        id
+        fullname
+        phoneNumber
+        avatarS3 {
+          small
+        }
+        ngo {
+          id
+        }
+      }
+      tourSet {
+        id
+        title
+        packages {
+          id
+          title
+          price
+        }
+        destination {
+          ... on AccommodationQueryType {
+            address
+            avatarS3 {
+              large
+              medium
+              small
+            }
+          }
+        }
+      }
+    }
+    capacity {
+      id
+      male
+      female
+      child
+    }
+    facilities {
+      id
+      enName
+      faName
+      arName
+    }
+    destination {
+      ... on AccommodationQueryType {
+        id
+        address
+        lat
+        lng
+      }
+    }
+    packages {
+      id
+      title
+      price
+    }
+    avatarS3 {
+      medium
+      large
+      small
+    }
+  }
+}
+    `;
+
+/**
+ * __useTourDetailQuery__
+ *
+ * To run a query within a React component, call `useTourDetailQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTourDetailQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTourDetailQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useTourDetailQuery(baseOptions: Apollo.QueryHookOptions<TourDetailQuery, TourDetailQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TourDetailQuery, TourDetailQueryVariables>(TourDetailDocument, options);
+      }
+export function useTourDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TourDetailQuery, TourDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TourDetailQuery, TourDetailQueryVariables>(TourDetailDocument, options);
+        }
+export type TourDetailQueryHookResult = ReturnType<typeof useTourDetailQuery>;
+export type TourDetailLazyQueryHookResult = ReturnType<typeof useTourDetailLazyQuery>;
+export type TourDetailQueryResult = Apollo.QueryResult<TourDetailQuery, TourDetailQueryVariables>;
 export const TourListDocument = gql`
     query tourList($search: String, $filter: TourFilterType, $page: PageType!) {
   tourList(search: $search, filter: $filter, page: $page) {
@@ -3540,6 +3649,7 @@ export const UserDetailDocument = gql`
     id
     username
     firstname
+    lastname
     fullname
     email
     bio

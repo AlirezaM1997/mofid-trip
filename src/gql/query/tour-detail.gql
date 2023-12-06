@@ -1,0 +1,72 @@
+query tourDetail($pk: ID!) {
+  tourDetail(pk: $pk) {
+    id
+    title
+    description
+    startTime
+    endTime
+    NGO {
+      id
+      user {
+        id
+        fullname
+        phoneNumber
+        avatarS3 {
+          small
+        }
+        ngo {
+          id
+        }
+      }
+      tourSet {
+        id
+        title
+        packages {
+          id
+          title
+          price
+        }
+        destination {
+          ... on AccommodationQueryType {
+            address
+            avatarS3 {
+              large
+              medium
+              small
+            }
+          }
+        }
+      }
+    }
+    capacity {
+      id
+      male
+      female
+      child
+    }
+    facilities {
+      id
+      enName
+      faName
+      arName
+    }
+    destination {
+      ... on AccommodationQueryType {
+        id
+        address
+        lat
+        lng
+      }
+    }
+    packages {
+      id
+      title
+      price
+    }
+    avatarS3 {
+      medium
+      large
+      small
+    }
+  }
+}

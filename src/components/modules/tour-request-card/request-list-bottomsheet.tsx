@@ -54,7 +54,7 @@ const RequestListBottomSheet = ({
   const handlePressPhoneIcon = num => {
     if (num) {
       if (Platform.OS === "web") {
-        Linking.openURL("tel:num");
+        Linking.openURL(`tel:${num}`);
       } else {
         Alert.alert("coming soon");
       }
@@ -63,7 +63,7 @@ const RequestListBottomSheet = ({
   const handlePressTextIcon = num => {
     if (num) {
       if (Platform.OS === "web") {
-        Linking.openURL("sms:num");
+        Linking.openURL(`sms:${num}`);
       } else {
         Alert.alert("coming soon");
       }

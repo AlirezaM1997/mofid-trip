@@ -15,10 +15,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { LtrSpecificStyles, RtlSpecificStyles } from "@src/global-style";
 import { View, Platform, StyleSheet, Appearance, I18nManager } from "react-native";
 import { Slot } from "expo-router";
-import useUserDetailTable from "@src/hooks/db/user-detail";
-import useSettingDetailTable from "@src/hooks/db/setting-detail";
 import { useConfirmAuthentication, useIsAuthenticated } from "@src/hooks/auth";
-import useMyNGOTable from "@src/hooks/db/ngo";
 import customUseApolloClient from "@src/hooks/apollo/client";
 
 SplashScreen.preventAutoHideAsync();
@@ -44,22 +41,6 @@ export function PatchedApolloProvider({ children }) {
 const MainContent = () => {
   const isRtl = useIsRtl();
   const Theme = theme(isRtl);
-  const isAuthenticated = useIsAuthenticated();
-  const isNgo = useSelector((state: RootState) => state.userSlice?.userDetail?.isNgo || false);
-
-  const { syncTable: syncTableSettingDetail } = useSettingDetailTable();
-  const { syncTable: syncTableUserDetail } = useUserDetailTable();
-  const { syncTable: syncTableMyNGOTable } = useMyNGOTable();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      syncTableUserDetail();
-      syncTableSettingDetail();
-      if (isNgo) {
-        syncTableMyNGOTable();
-      }
-    }
-  }, [isAuthenticated, isNgo]);
 
   I18nManager.allowRTL(I18nManager.isRTL);
 

@@ -6,7 +6,7 @@ import TitleWithAction from "@modules/title-with-action";
 import { ScrollView, View, StyleSheet } from "react-native";
 import { AccommodationQueryType, useTourListQuery } from "@src/gql/generated";
 import Container from "@atoms/container";
-import { Text } from "@rneui/themed";
+import { Skeleton, Text } from "@rneui/themed";
 
 function TourList() {
   const { tr } = useTranslation();
@@ -14,12 +14,10 @@ function TourList() {
     variables: {
       page: {
         pageNumber: 1,
-        pageSize: 9999,
+        pageSize: 8,
       },
     },
   });
-
-  if (loading) return <Text>Loading Tours...</Text>;
 
   return (
     <>
@@ -37,18 +35,30 @@ function TourList() {
         contentContainerStyle={style.gap}
         style={style.listContainer}>
         <View style={style.spacer}></View>
-        {data.tourList.data?.map((tour, index) => (
-          <View key={index}>
-            <TourCard
-              key={index}
-              id={tour.id}
-              name={tour.title}
-              avatarS3={tour.avatarS3}
-              price={tour.packages?.[0]?.price}
-              address={(tour?.destination as AccommodationQueryType)?.address || tr("No Address")}
-            />
-          </View>
-        ))}
+        {loading
+          ? [1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+              <Skeleton
+                key={i}
+                animation="pulse"
+                width={328}
+                height={300}
+                style={{ borderRadius: 10 }}
+              />
+            ))
+          : data.tourList.data?.map((tour, index) => (
+              <View key={index}>
+                <TourCard
+                  key={index}
+                  id={tour.id}
+                  name={tour.title}
+                  avatarS3={tour.avatarS3}
+                  price={tour.packages?.[0]?.price}
+                  address={
+                    (tour?.destination as AccommodationQueryType)?.address || tr("No Address")
+                  }
+                />
+              </View>
+            ))}
         <View style={style.spacer}></View>
       </ScrollView>
     </>
