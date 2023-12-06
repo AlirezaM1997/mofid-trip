@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Button, Divider, useTheme } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
@@ -14,12 +14,15 @@ import { Feather } from "@expo/vector-icons";
 import {
   AccountSettingLanguageChoices,
   GuestGenderEnum,
+  TourDetailQuery,
   TourPackageType,
+  useTourDetailQuery,
 } from "@src/gql/generated";
 import Input from "@atoms/input";
 import { Text } from "@rneui/themed";
 import useTourTable from "@src/hooks/db/tour";
-import { formatPrice } from "@src/hooks/localization";
+import { useFormatPrice } from "@src/hooks/localization";
+import LoadingIndicator from "@modules/Loading-indicator";
 
 const defaultGuest = {
   firstname: "",
@@ -87,13 +90,27 @@ export default () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { tourId, tourPackage } = useLocalSearchParams();
-  const { findById } = useTourTable();
-  const tour = findById(tourId as string);
+  const { formatPrice } = useFormatPrice();
   const tourPackageObj: TourPackageType = JSON.parse(tourPackage as string);
   const { localizeNumber } = useLocalizedNumberFormat();
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
+  const [tour, setTour] = useState<TourDetailQuery["tourDetail"]>();
+
+  const { loading, data } = useTourDetailQuery({
+    variables: {
+      pk: tourId as string,
+    },
+  });
 
   const handleBack = () => router.back();
+
+  useEffect(() => {
+    if (!loading && data) {
+      setTour(data.tourDetail);
+    }
+  }, [loading, data]);
+
+  if (loading || !tour) return <LoadingIndicator />;
 
   return (
     <>
@@ -114,7 +131,6 @@ export default () => {
         }}
         onSubmit={values => {
           // Handle form submission with values
-          console.log(values);
           router.push({
             pathname: `/tour/${tour.id}/reservation/step-2`,
             params: {
@@ -142,8 +158,8 @@ export default () => {
 
                 <Text bold>{tr("Your selected package")}</Text>
                 <View style={style.row}>
-                  <Text>{tourPackageObj.title}</Text>
-                  <Text>{localizeNumber(formatPrice(tourPackageObj.price))}</Text>
+                  <Text>{tourPackageObj?.title}</Text>
+                  <Text>{localizeNumber(formatPrice(tourPackageObj?.price))}</Text>
                 </View>
 
                 <View>

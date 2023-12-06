@@ -18,14 +18,14 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
     });
   };
 
+  console.log("0s0", transaction?.tourPackage.tour);
+
   return (
     <Pressable style={styles.container} onPress={handleNavigate}>
       <Image
         style={styles.image}
         source={{
-          uri:
-            (transaction?.tourPackage.tour.destination as AccommodationQueryType)?.avatarS3[0]
-              .small || "",
+          uri: transaction?.tourPackage.tour?.avatarS3?.[0]?.small || "",
         }}
         resizeMode="cover"
       />

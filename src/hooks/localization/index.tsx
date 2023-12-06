@@ -10,36 +10,39 @@ const useIsRtl = () => {
 };
 export default useIsRtl;
 
-export const formatPrice = (price: number) => {
+export const useFormatPrice = () => {
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
   const { tr } = useTranslation();
 
-  if (language === AccountSettingLanguageChoices.FaIr) {
-    return (
-      price?.toLocaleString("fa-IR", {
-        style: "decimal",
-        useGrouping: true,
-      }) +
-      " " +
-      tr("tooman")
-    );
-  } else if (language === AccountSettingLanguageChoices.EnUs) {
-    return (
-      price?.toLocaleString("en-US", {
-        style: "decimal",
-        useGrouping: true,
-      }) +
-      " " +
-      tr("tooman")
-    );
-  } else if (language === AccountSettingLanguageChoices.Ar) {
-    return (
-      price?.toLocaleString("ar-SA", {
-        style: "decimal",
-        useGrouping: true,
-      }) +
-      " " +
-      tr("tooman")
-    );
-  }
+  const formatPrice = (price: number) => {
+    if (language === AccountSettingLanguageChoices.FaIr) {
+      return (
+        price?.toLocaleString("fa-IR", {
+          style: "decimal",
+          useGrouping: true,
+        }) +
+        " " +
+        tr("tooman")
+      );
+    } else if (language === AccountSettingLanguageChoices.EnUs) {
+      return (
+        price?.toLocaleString("en-US", {
+          style: "decimal",
+          useGrouping: true,
+        }) +
+        " " +
+        tr("tooman")
+      );
+    } else if (language === AccountSettingLanguageChoices.Ar) {
+      return (
+        price?.toLocaleString("ar-SA", {
+          style: "decimal",
+          useGrouping: true,
+        }) +
+        " " +
+        tr("tooman")
+      );
+    }
+  };
+  return { formatPrice };
 };
