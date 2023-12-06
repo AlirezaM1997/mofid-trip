@@ -300,7 +300,6 @@ const HomeLayout = () => {
       <Stack.Screen
         name="transactionPaymentStatus"
         options={{
-          headerLeft: () => null,
           title: tr("payment status"),
           headerBackButtonMenuEnabled: false,
         }}
@@ -308,8 +307,21 @@ const HomeLayout = () => {
       <Stack.Screen
         name="wallet/receipt/paymentStatus"
         options={{
-          headerLeft: () => null,
           title: tr("payment status"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/cards/index"
+        options={{
+          title: tr("my cards"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/cards/add/index"
+        options={{
+          title: tr("add card"),
           headerBackButtonMenuEnabled: false,
         }}
       />

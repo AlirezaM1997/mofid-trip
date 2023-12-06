@@ -623,6 +623,8 @@ export type NgoQueryType = {
   lng?: Maybe<Scalars['Float']['output']>;
   /** List of projects associated with the NGO. */
   projectSet?: Maybe<Array<Maybe<ProjectQueryType>>>;
+  /** List of transactions associated with the project. */
+  projectTransactionSet?: Maybe<Array<Maybe<ProjectTransactionQueryType>>>;
   title: Scalars['String']['output'];
   /** List of tours associated with the NGO. */
   tourSet?: Maybe<Array<Maybe<TourQueryType>>>;
@@ -814,8 +816,7 @@ export type ProjectQueryType = {
   statusStep?: Maybe<AccommodationProjectStatusStepChoices>;
   tags: Array<TagQueryType>;
   tax?: Maybe<Scalars['Int']['output']>;
-  /** List of transactions associated with the project. */
-  transactionSet?: Maybe<Array<Maybe<ProjectTransactionQueryType>>>;
+  transactionSet: Array<ProjectTransactionQueryType>;
 };
 
 export enum ProjectStatusEnum {
@@ -1808,6 +1809,13 @@ export type WalletWithdrawInputType = {
   bankCardId: Scalars['ID']['input'];
 };
 
+export type BankCardAddMutationVariables = Exact<{
+  data: AddCardType;
+}>;
+
+
+export type BankCardAddMutation = { __typename?: 'Mutation', bankCardAdd?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
+
 export type DepositWalletMutationVariables = Exact<{
   data: DepositWalletInputType;
 }>;
@@ -1920,7 +1928,7 @@ export type CategoryListQuery = { __typename?: 'Query', categoryList?: { __typen
 export type MyNgoDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyNgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, projectSet?: Array<{ __typename: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusStep?: AccommodationProjectStatusStepChoices | null, statusActivation: boolean, createdTime?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, capacity?: { __typename?: 'CapacityQueryType', id: string } | null, transactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string } | null> | null, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, child?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, child?: number | null, allCap?: number | null } | null } | null> | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusStep?: TourTourStatusStepChoices | null, statusActivation: boolean, createdDate?: any | null, origin?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: number } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null } | null> | null, tourTransactionSet?: Array<{ __typename?: 'TourTransactionQueryType', id: string, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, tourPackage?: { __typename?: 'TourPackageType', tour?: { __typename?: 'TourQueryType', id: string, title: string } | null } | null, tourGuests?: Array<{ __typename?: 'TourGuestQueryType', id: string, firstname?: string | null, lastname?: string | null, phoneNumber?: string | null, avatarS3?: Array<{ __typename?: 'TourGuestImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null> | null } | null> | null } | null };
+export type MyNgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, projectSet?: Array<{ __typename: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusStep?: AccommodationProjectStatusStepChoices | null, statusActivation: boolean, createdTime?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, capacity?: { __typename?: 'CapacityQueryType', id: string } | null, transactionSet: Array<{ __typename?: 'ProjectTransactionQueryType', id: string }>, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, child?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, child?: number | null, allCap?: number | null } | null } | null> | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusStep?: TourTourStatusStepChoices | null, statusActivation: boolean, createdDate?: any | null, origin?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: number } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null } | null> | null, tourTransactionSet?: Array<{ __typename?: 'TourTransactionQueryType', id: string, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, tourPackage?: { __typename?: 'TourPackageType', tour?: { __typename?: 'TourQueryType', id: string, title: string } | null } | null, tourGuests?: Array<{ __typename?: 'TourGuestQueryType', id: string, firstname?: string | null, lastname?: string | null, phoneNumber?: string | null, avatarS3?: Array<{ __typename?: 'TourGuestImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null> | null } | null> | null } | null };
 
 export type NgoDetailQueryVariables = Exact<{
   pk?: InputMaybe<Scalars['ID']['input']>;
@@ -2014,6 +2022,42 @@ export type WalletTransactionDetailQueryVariables = Exact<{
 export type WalletTransactionDetailQuery = { __typename?: 'Query', walletTransactionDetail?: { __typename?: 'WalletTransactionQueryType', action: WalletWalletTransactionActionChoices, purchaseRefId?: number | null, modifiedTime?: any | null, invoiceNumber: string, id: string, description?: string | null, amount: number, statusStep?: WalletWalletTransactionStatusStepChoices | null, source?: { __typename?: 'BackCardQueryType', id: string, title?: string | null, cardPan?: string | null } | { __typename?: 'WalletQuryType', id: string } | null, reference?: { __typename?: 'BackCardQueryType', id: string, cardPan?: string | null, iban?: string | null } | { __typename?: 'WalletQuryType', id: string, balance: number } | null } | null };
 
 
+export const BankCardAddDocument = gql`
+    mutation bankCardAdd($data: AddCardType!) {
+  bankCardAdd(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}
+    `;
+export type BankCardAddMutationFn = Apollo.MutationFunction<BankCardAddMutation, BankCardAddMutationVariables>;
+
+/**
+ * __useBankCardAddMutation__
+ *
+ * To run a mutation, you first call `useBankCardAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBankCardAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [bankCardAddMutation, { data, loading, error }] = useBankCardAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useBankCardAddMutation(baseOptions?: Apollo.MutationHookOptions<BankCardAddMutation, BankCardAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<BankCardAddMutation, BankCardAddMutationVariables>(BankCardAddDocument, options);
+      }
+export type BankCardAddMutationHookResult = ReturnType<typeof useBankCardAddMutation>;
+export type BankCardAddMutationResult = Apollo.MutationResult<BankCardAddMutation>;
+export type BankCardAddMutationOptions = Apollo.BaseMutationOptions<BankCardAddMutation, BankCardAddMutationVariables>;
 export const DepositWalletDocument = gql`
     mutation depositWallet($data: DepositWalletInputType!) {
   depositWallet(data: $data) {

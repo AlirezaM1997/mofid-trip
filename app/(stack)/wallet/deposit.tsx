@@ -6,16 +6,15 @@ import { RootState } from "@src/store";
 import * as Network from "expo-network";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
+import { Button, Input, Text } from "@rneui/themed";
 import { useDispatch, useSelector } from "react-redux";
 import { WALLET_ZARINPAL_CALLBACK_URL } from "@src/settings";
-import { Button, Input, Text, useTheme } from "@rneui/themed";
 import { useDepositWalletMutation } from "@src/gql/generated";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { setWalletTransactionIdData } from "@src/slice/wallet-transaction-slice";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const Increase = () => {
-  const { theme } = useTheme();
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();

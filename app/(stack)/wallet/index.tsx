@@ -8,7 +8,7 @@ import ButtonRow from "@modules/button-rows";
 import { Button, Text } from "@rneui/themed";
 import { Entypo, AntDesign } from "@expo/vector-icons";
 import { WalletTransactionQueryType } from "@src/gql/generated";
-import WalletTransactionCard from "@modules/wallet-transaction-card";
+import WalletTransactionCard from "@modules/wallet/transaction-card";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { ImageBackground, Pressable, ScrollView, StyleSheet } from "react-native";
 
@@ -94,11 +94,9 @@ const WalletScreen = () => {
         </Text>
         <WhiteSpace size={16} />
 
-        {walletTransactions
-          .slice(walletTransactions.length - 3, walletTransactions.length)
-          .map((transaction: WalletTransactionQueryType) => (
-            <WalletTransactionCard key={transaction.id} transaction={transaction} />
-          ))}
+        {walletTransactions.slice(0, 3).map((transaction: WalletTransactionQueryType) => (
+          <WalletTransactionCard key={transaction.id} transaction={transaction} />
+        ))}
 
         <WhiteSpace size={24} />
       </Container>

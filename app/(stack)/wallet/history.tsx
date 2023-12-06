@@ -3,7 +3,7 @@ import Container from "@atoms/container";
 import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import { WalletTransactionQueryType } from "@src/gql/generated";
-import WalletTransactionCard from "@modules/wallet-transaction-card";
+import WalletTransactionCard from "@modules/wallet/transaction-card";
 
 const TransactionHistoryScreen = () => {
   const { walletTransactions } = useSelector(

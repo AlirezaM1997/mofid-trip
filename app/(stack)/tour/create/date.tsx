@@ -171,7 +171,7 @@ const Screen = () => {
                   <Text type="error">{touched.startTime && (errors.startTime as string)}</Text>
                 )}
               </View>
-              <Divider vertical={true} style={styles.divider} />
+              <Divider orientation="vertical" style={styles.divider} />
               <View style={styles.timeContainer}>
                 <Text body2 type={touched.endTime && errors.endTime ? "error" : "secondary"}>
                   {tr("end")}: {getLastDayFormatted()}

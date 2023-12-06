@@ -135,6 +135,54 @@ export const messages = {
     fa_ir: "حذف",
     en_us: "Delete",
   },
+  "must be a number": {
+    ar: "يجب أن يكون رقما",
+    fa_ir: "لطفا عدد وارد کنید",
+    en_us: "must be a number",
+  },
+  "cardpan should be 16 character": {
+    ar: "يجب أن يتكون رقم البطاقة من 16 رقمًا",
+    fa_ir: "شماره کارت باید ۱۶ رقمی باشد",
+    en_us: "cardpan should be 16 character",
+  },
+  "card added successfully": {
+    ar: "تمت إضافة البطاقة الجديدة بنجاح",
+    fa_ir: "کارت جدید با موفقیت اضافه شد",
+    en_us: "card added successfully",
+  },
+  "cardpan is required": {
+    ar: "مطلوب بطاقة",
+    fa_ir: "شماره کارت ضروری است",
+    en_us: "cardPan is required",
+  },
+  "card name": {
+    ar: "اسم البطاقة",
+    fa_ir: "نام کارت",
+    en_us: "card name",
+  },
+  "register card": {
+    ar: "تم حفظ البطاقة",
+    fa_ir: "ثبت کارت",
+    en_us: "register card",
+  },
+  "to create a new card, write the main details of your bank card so that it is registered in this account in mofidtrip":
+    {
+      ar: "لإنشاء بطاقة جديدة، قم بكتابة التفاصيل الرئيسية لبطاقتك المصرفية بحيث يتم تسجيلها في هذا الحساب على مفید تریپ",
+      fa_ir:
+        "برای ایجاد کارت جدید، جزئیات اصلی کارت بانکی‌تان را بنویسید تا در این حساب در مفیدتریپ ثبت شود",
+      en_us:
+        "To create a new card, write the main details of your bank card so that it is registered in this account in Mofidtrip",
+    },
+  "add a new card": {
+    ar: "أضف بطاقة جديدة",
+    fa_ir: "افزودن کارت جدید",
+    en_us: "Add a new card",
+  },
+  "add card": {
+    ar: "أضف بطاقة",
+    fa_ir: "افزودن کارت",
+    en_us: "Add card",
+  },
   description: {
     ar: "تفصيل",
     fa_ir: "شرح",
@@ -1710,6 +1758,21 @@ export const messages = {
     fa_ir: "مشاهده",
     en_us: "View",
   },
+  iban: {
+    ar: "رقم شابا",
+    fa_ir: "شماره شبا",
+    en_us: "iban",
+  },
+  cardpan: {
+    ar: "رقم البطاقة",
+    fa_ir: "شماره کارت",
+    en_us: "cardPan",
+  },
+  "edit card": {
+    ar: "تحرير البطاقة",
+    fa_ir: "ویرایش کارت",
+    en_us: "edit card",
+  },
   "team leader": {
     ar: "رئيس الفريق",
     fa_ir: "سرگروه",
@@ -1857,7 +1920,8 @@ export const messages = {
   },
   "travelers who plan to travel to this host. please check the submitted requests.": {
     ar: "المسافرون الذين يخططون للسفر إلى هذا المضيف. يرجى التحقق من الطلبات المقدمة.",
-    fa_ir: "مسافرانی که قصد دارند به این میزبانی سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",
+    fa_ir:
+      "مسافرانی که قصد دارند به این میزبانی سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",
     en_us: "Travelers who plan to travel to this host. Please check the submitted requests.",
   },
   published: {
@@ -1893,7 +1957,8 @@ export const messages = {
   "passengers who plan to travel with this tour. please check the submitted requests.": {
     ar: "المسافرون الذين يخططون للسفر بهذه الجولة. يرجى التحقق من الطلبات المقدمة.",
     fa_ir: "مسافرانی که قصد دارند با این تور سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",
-    en_us: "Passengers who plan to travel with this tour. Please check the submitted requests.",},
+    en_us: "Passengers who plan to travel with this tour. Please check the submitted requests.",
+  },
   "tour capacity": {
     ar: "قدرة الجولة",
     fa_ir: "ظرفیت تور",
@@ -2314,7 +2379,8 @@ export const messages = {
   "last modification": {
     ar: "اخر تعديل",
     fa_ir: "آخرین به روز رسانی",
-    en_us: "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
+    en_us:
+      "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
   },
   "hour later": {
     ar: "بعد ساعة",

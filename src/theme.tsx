@@ -221,7 +221,7 @@ export const theme = isRtl =>
         let buttonStyle: any = {
           gap: 8,
           borderRadius: 12,
-          gap:8,
+          gap: 8,
           fontWeight: "400",
           ...Platform.select({
             web: {
@@ -477,12 +477,12 @@ export const theme = isRtl =>
       CardDivider: (props, theme) => ({
         color: theme.colors.grey0,
       }),
-      Divider: ({ thickness, vertical, bgColor, style, ...props }, theme) => ({
+      Divider: ({ thickness,borderStyle, bgColor, style, ...props }, theme) => ({
         style: {
           borderWidth: thickness,
           backgroundColor: "transparent",
           borderColor: theme.colors[bgColor as string] ?? theme.colors.grey1,
-          transform: vertical && "rotate(270deg)",
+          borderStyle: borderStyle,
         },
       }),
       Badge: ({ type, color, ...props }, theme) => {

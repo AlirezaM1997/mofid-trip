@@ -12,7 +12,7 @@ declare module "@rneui/themed" {
   }
 
   export interface Colors {
-    info : string;
+    info: string;
   }
 
   export interface TextProps {
@@ -57,7 +57,7 @@ declare module "@rneui/themed" {
 
   export interface DividerProps {
     thickness?: number;
-    vertical?: boolean;
+    borderStyle?: "solid" | "dotted" | "dashed";
     bgColor?: keyof Colors;
   }
 
