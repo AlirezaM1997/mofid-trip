@@ -9,7 +9,12 @@ import { logout } from "@src/slice/user-slice";
 import { APP_VERSION } from "@src/settings";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@src/store";
-import { LanguageChoiceEnum, useSettingEditMutation } from "@src/gql/generated";
+import {
+  LanguageChoiceEnum,
+  useSettingEditMutation,
+  useUserDetailLazyQuery,
+  useUserDetailQuery,
+} from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { I18nManager } from "react-native";
 import { getFullName } from "@src/helper/extra";
@@ -18,6 +23,9 @@ import { router, useRootNavigationState } from "expo-router";
 import { useIsAuthenticated } from "@src/hooks/auth";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
 import useMyNGOTable from "@src/hooks/db/ngo";
+import LoadingIndicator from "@modules/Loading-indicator";
+import { useIsFocused } from "@react-navigation/native";
+import { NetworkStatus } from "@apollo/client";
 
 const Profile: React.FC = () => {
   const isRtl = useIsRtl();
@@ -27,7 +35,17 @@ const Profile: React.FC = () => {
   const isAuthenticated = useIsAuthenticated();
   const [isVisible, setIsVisible] = useState(false);
   const rootNavigationState = useRootNavigationState();
-  const { userDetail } = useSelector((state: RootState) => state.userSlice);
+  const [
+    _,
+    {
+      refetch: refetchUserDetail,
+      loading: loadingUserDetail,
+      data: dataUserDetail,
+      networkStatus: networkStatusUserDetail,
+    },
+  ] = useUserDetailLazyQuery({
+    notifyOnNetworkStatusChange: true,
+  });
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
   const userId = useSelector((state: RootState) => state.userSlice?.loginData?.metadata?.id);
   const [settingEdit] = useSettingEditMutation({
@@ -36,6 +54,8 @@ const Profile: React.FC = () => {
   const { syncTable } = useSettingDetailTable();
   const [isVisibleLogout, setIsVisibleLogout] = useState(false);
   const { localizeNumber } = useLocalizedNumberFormat();
+
+  const isFocused = useIsFocused();
 
   I18nManager.allowRTL(true);
 
@@ -76,6 +96,14 @@ const Profile: React.FC = () => {
       }
     });
   };
+
+  useEffect(() => {
+    refetchUserDetail();
+  }, [isFocused]);
+
+  if (!dataUserDetail) return <LoadingIndicator />;
+
+  const userDetail = dataUserDetail.userDetail;
 
   return (
     <>

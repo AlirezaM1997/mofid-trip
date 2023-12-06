@@ -11,27 +11,36 @@ import ContactCard from "@modules/contact-card";
 import SimilarTours from "@modules/similar-tours";
 import TourFacilities from "@modules/tour/facilities";
 import TitleWithAction from "@modules/title-with-action";
-import useIsRtl, { formatPrice } from "@src/hooks/localization";
+import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { BottomSheet, Button, ListItem, Text } from "@rneui/themed";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import { AccommodationQueryType, TourPackageType } from "@src/gql/generated";
+import {
+  AccommodationQueryType,
+  TourDetailQuery,
+  TourPackageType,
+  useTourDetailQuery,
+  useTourListQuery,
+} from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import LoadingIndicator from "@modules/Loading-indicator";
+import { useSelector } from "react-redux";
+import { RootState } from "@src/store";
 
 export default () => {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
   const navigation = useNavigation();
-  const { findById } = useTourTable();
+  const { formatPrice } = useFormatPrice();
   const { tourId, name } = useLocalSearchParams();
+  const [tour, setTour] = useState<TourDetailQuery["tourDetail"]>();
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();
-
-  useEffect(() => {
-    navigation.setOptions({ title: name });
-  }, [name]);
-
-  const tour = findById(tourId as string);
+  const { loading, data } = useTourDetailQuery({
+    variables: {
+      pk: tourId as string,
+    },
+  });
 
   const handleBottomSheet = () => {
     setIsVisible(true);
@@ -51,11 +60,23 @@ export default () => {
   const startTime = moment(tour?.startTime).locale("fa").format("MMMM D");
   const endTime = moment(tour?.endTime).locale("fa").format("MMMM D");
 
+  useEffect(() => {
+    navigation.setOptions({ title: name });
+  }, [name]);
+
+  useEffect(() => {
+    if (!loading && data) {
+      setTour(data.tourDetail);
+    }
+  }, [loading, data]);
+
+  if (loading || !tour) return <LoadingIndicator />;
+
   return (
     <BottomButtonLayout buttons={[<Button onPress={handleBottomSheet}>{tr("Reserve")}</Button>]}>
       <Container>
         <WhiteSpace size={10} />
-        <ImageSlider imageList={tour.avatarS3} />
+        <ImageSlider imageList={tour?.avatarS3} />
 
         <WhiteSpace size={20} />
 
