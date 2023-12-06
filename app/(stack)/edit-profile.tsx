@@ -2,24 +2,21 @@ import { Feather } from "@expo/vector-icons";
 import { Button, Divider, Input } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
-import { useUserEditMutation } from "@src/gql/generated";
+import { useUserDetailQuery, useUserEditMutation } from "@src/gql/generated";
 import { SECONDARY_COLOR } from "@src/theme";
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet } from "react-native";
 import { Pressable, View } from "react-native";
 import Toast from "react-native-toast-message";
 import * as ImagePicker from "expo-image-picker";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@src/store";
 import { isBase64 } from "@src/helper/extra";
 import useTranslation from "@src/hooks/translation";
-import useUserDetailTable from "@src/hooks/db/user-detail";
+import LoadingIndicator from "@modules/Loading-indicator";
 
 const Page = () => {
   const { tr } = useTranslation();
   const [editProfile, { loading, data, error }] = useUserEditMutation();
-  const { userDetail } = useSelector((state: RootState) => state.userSlice);
-  const { syncTable } = useUserDetailTable();
+  const { loading: loadingUserDetail, data: dataUserDetail } = useUserDetailQuery();
   const [userDetailTemp, setUserDetailTemp] = useState({
     firstname: "",
     lastname: "",
@@ -65,6 +62,7 @@ const Page = () => {
         base64Image: userDetailTemp.base64Image ?? "",
       };
     }
+    console.log('8s8s', tempData)
     editProfile({
       variables: {
         data: tempData,
@@ -89,6 +87,10 @@ const Page = () => {
       });
     }
   }, [loading, data, error]);
+
+  if (loadingUserDetail) return <LoadingIndicator />
+
+  const userDetail = dataUserDetail.userDetail;
 
   return (
     <>

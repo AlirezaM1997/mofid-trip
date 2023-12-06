@@ -6,7 +6,6 @@ import Container from "@atoms/container";
 import { useSelector } from "react-redux";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
-import { formatPrice } from "@src/hooks/localization";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Avatar, Button, useTheme } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
@@ -15,6 +14,7 @@ import BottomButtonLayout from "@components/layout/bottom-button";
 import { useProjectTransactionDetailQuery } from "@src/gql/generated";
 import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { useFormatPrice } from "@src/hooks/localization";
 
 const Receipt = () => {
   const { theme } = useTheme();
@@ -22,6 +22,7 @@ const Receipt = () => {
   const { id } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
   const { userDetail } = useSelector((state: RootState) => state.userSlice);
+  const { formatPrice } = useFormatPrice();
 
   const { data, loading } = useProjectTransactionDetailQuery({
     variables: { pk: id as string },

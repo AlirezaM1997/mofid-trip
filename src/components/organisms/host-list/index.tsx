@@ -4,9 +4,9 @@ import TitleWithAction from "@modules/title-with-action";
 import HostCard from "@modules/host/card";
 import Container from "@atoms/container";
 import { router } from "expo-router";
-import {  useProjectListQuery } from "@src/gql/generated";
+import { useProjectListQuery } from "@src/gql/generated";
 import { ScrollView, View, StyleSheet } from "react-native";
-import { Text } from "@rneui/themed";
+import { Skeleton, Text } from "@rneui/themed";
 
 function HostList() {
   const { tr } = useTranslation();
@@ -14,12 +14,10 @@ function HostList() {
     variables: {
       page: {
         pageNumber: 1,
-        pageSize: 999,
+        pageSize: 8,
       },
     },
   });
-
-  if (loading) return <Text>Loading hosts...</Text>;
 
   return (
     <>
@@ -37,17 +35,27 @@ function HostList() {
         contentContainerStyle={style.gap}
         style={style.listContainer}>
         <View style={style.spacer}></View>
-        {data.projectList.data?.map((project, index) => (
-          <View key={index}>
-            <HostCard
-              id={project.id}
-              name={project.name}
-              price={project.price}
-              address={project.accommodation.address}
-              avatarS3={project.accommodation.avatarS3}
-            />
-          </View>
-        ))}
+        {loading
+          ? [1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+              <Skeleton
+                key={i}
+                animation="pulse"
+                width={328}
+                height={300}
+                style={{ borderRadius: 10 }}
+              />
+            ))
+          : data.projectList.data?.map((project, index) => (
+              <View key={index}>
+                <HostCard
+                  id={project.id}
+                  name={project.name}
+                  price={project.price}
+                  address={project.accommodation.address}
+                  avatarS3={project.accommodation.avatarS3}
+                />
+              </View>
+            ))}
         <View style={style.spacer}></View>
       </ScrollView>
     </>
