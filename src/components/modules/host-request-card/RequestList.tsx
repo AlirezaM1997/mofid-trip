@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
 import { Avatar, Colors, ListItem, ListItemProps, Text, useTheme } from "@rneui/themed";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { TourTransactionQueryType, TransactionStatusEnum } from "@src/gql/generated";
+import { MyNgoDetailQuery, TourTransactionQueryType, TransactionStatusEnum } from "@src/gql/generated";
 
 type PropsType = ListItemProps & {
-  transaction: TourTransactionQueryType;
+  transaction: MyNgoDetailQuery["NGODetail"]["projectTransactionSet"][number];
 };
 
 type LookupType = Record<string, { title: string; color: keyof Colors }>;

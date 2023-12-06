@@ -135,11 +135,6 @@ export const messages = {
     fa_ir: "شرح",
     en_us: "Description",
   },
-  "confirm request": {
-    ar: "تأكيد الطلب",
-    fa_ir: "تایید درخواست",
-    en_us: "confirm request",
-  },
   failed: {
     ar: "فشل",
     fa_ir: "رد شده",
@@ -179,6 +174,22 @@ export const messages = {
     ar: "عامل",
     fa_ir: "فاکتور",
     en_us: "Factor",
+  },
+  "management of requests received from users who intend to experience your hosting.": {
+    ar: "إدارة الطلبات الواردة من المستخدمين الذين يرغبون في تجربة استضافتك.",
+    fa_ir:
+      "مدیریت درخواست های دریافت شده از سوی کاربرانی که قصد دارند به میزبانی های شما را تجربه کنند.",
+    en_us: "Management of requests received from users who intend to experience your hosting.",
+  },
+  "requests received": {
+    ar: "الطلبات الواردة",
+    fa_ir: "درخواست های دریافت شده",
+    en_us: "Requests received",
+  },
+  "apply to my hosts": {
+    ar: "تنطبق على مضيفي",
+    fa_ir: "درخواست به میزبانی های من",
+    en_us: "Apply to my hosts",
   },
   "apply to my tours": {
     ar: "تنطبق على جولاتي",
@@ -1653,8 +1664,12 @@ export const messages = {
     fa_ir: "تعداد مسافران",
     en_us: "Passengers Count",
   },
-
   "confirm request": {
+    ar: "طلب التسجيل",
+    fa_ir: "تایید درخواست",
+    en_us: "confirm request",
+  },
+  "record request": {
     ar: "طلب التسجيل",
     fa_ir: "ثبت درخواست",
     en_us: "confirm request",
@@ -1814,9 +1829,30 @@ export const messages = {
     fa_ir: "باشه",
     en_us: "OK",
   },
+  "time of travel": {
+    ar: "وقت السفر",
+    fa_ir: "زمان سفر",
+    en_us: "time of travel",
+  },
+  "on-demand hosting": {
+    ar: "استضافة حسب الطلب",
+    fa_ir: "میزبانی درخواستی",
+    en_us: "On-demand hosting",
+  },
+  "send message": {
+    ar: "أرسل رسالة",
+    fa_ir: "ارسال پیام",
+    en_us: "send Message",
+  },
+  "the ngo is paid and the reservation is finalized": {
+    ar: "تم دفع التحصيل وإتمام الحجز",
+    fa_ir: "مجموعه پرداخت کرد و رزرو نهایی شد",
+    en_us: "The ngo is paid and the reservation is finalized",
+  },
   "travelers who plan to travel to this host. please check the submitted requests.": {
     ar: "المسافرون الذين يخططون للسفر إلى هذا المضيف. يرجى التحقق من الطلبات المقدمة.",
-    fa_ir: "مسافرانی که قصد دارند به این میزبانی سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",
+    fa_ir:
+      "مسافرانی که قصد دارند به این میزبانی سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",
     en_us: "Travelers who plan to travel to this host. Please check the submitted requests.",
   },
   published: {
@@ -1852,7 +1888,8 @@ export const messages = {
   "passengers who plan to travel with this tour. please check the submitted requests.": {
     ar: "المسافرون الذين يخططون للسفر بهذه الجولة. يرجى التحقق من الطلبات المقدمة.",
     fa_ir: "مسافرانی که قصد دارند با این تور سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",
-    en_us: "Passengers who plan to travel with this tour. Please check the submitted requests.",},
+    en_us: "Passengers who plan to travel with this tour. Please check the submitted requests.",
+  },
   "tour capacity": {
     ar: "قدرة الجولة",
     fa_ir: "ظرفیت تور",
@@ -2164,34 +2201,44 @@ export const messages = {
     fa_ir: "درخواست ایجاد تور شما با موفقیت ثبت شد",
     en_us: "Your request to create a tour has been successfully registered",
   },
-  "wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.": {
-    ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل جولتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
-    fa_ir: "کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
-    en_us: "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.",
-  },
+  "wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.":
+    {
+      ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل جولتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
+      fa_ir:
+        "کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
+      en_us:
+        "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.",
+    },
   "your hosting creation request has been successfully registered": {
     ar: "لقد تم تسجيل طلب إنشاء الاستضافة الخاص بك بنجاح",
     fa_ir: "درخواست ایجاد میزبانی شما با موفقیت ثبت شد",
     en_us: "Your hosting creation request has been successfully registered",
   },
-  "wait less than 48 hours for your hosting to be registered by trip's helpful support and displayed to travelers.": {
-    ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل استضافتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
-    fa_ir: "کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
-    en_us: "Wait less than 48 hours for your hosting to be registered by Trip's helpful support and displayed to travelers.",
-  },
+  "wait less than 48 hours for your hosting to be registered by trip's helpful support and displayed to travelers.":
+    {
+      ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل استضافتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
+      fa_ir:
+        "کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
+      en_us:
+        "Wait less than 48 hours for your hosting to be registered by Trip's helpful support and displayed to travelers.",
+    },
   "pictures related to the host": {
     ar: "الصور المتعلقة بالمضيف",
     fa_ir: "تصاویر مربوط به میزبانی",
     en_us: "Pictures related to the host",
   },
-  "you can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.": {
-    ar: "يمكنك تحميل الصور المتعلقة بمضيفك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
-    fa_ir: "شما می توانید تصاویر مربوط به هاست خود را آپلود کنید، لطفا توجه داشته باشید که حجم تصاویر باید کمتر از 3 مگابایت باشد. توجه داشته باشید که این بخش اختیاری است.",
-    en_us: "You can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.",
-  },
+  "you can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.":
+    {
+      ar: "يمكنك تحميل الصور المتعلقة بمضيفك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
+      fa_ir:
+        "شما می توانید تصاویر مربوط به هاست خود را آپلود کنید، لطفا توجه داشته باشید که حجم تصاویر باید کمتر از 3 مگابایت باشد. توجه داشته باشید که این بخش اختیاری است.",
+      en_us:
+        "You can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.",
+    },
   "you can write and add your own host features. note that this section is optional.": {
     ar: "يمكنك كتابة وإضافة ميزات المضيف الخاصة بك. لاحظ أن هذا القسم اختياري.",
-    fa_ir: "شما می توانید ویژگی های میزبانی خود را بنویسید و اضافه کنید. توجه داشته باشید که این بخش اختیاری است.",
+    fa_ir:
+      "شما می توانید ویژگی های میزبانی خود را بنویسید و اضافه کنید. توجه داشته باشید که این بخش اختیاری است.",
     en_us: "You can write and add your own host features. Note that this section is optional.",
   },
   "choose or write the cost of your host, you can give a discount to the original price.": {
@@ -2214,11 +2261,13 @@ export const messages = {
     fa_ir: "میزبانی پذیرای کودکان زیر ۱۲ سال است.",
     en_us: "The host is open to children under 12 years old",
   },
-  "to easily find the origin and start the host, set the address and the map of the place of departure.": {
-    ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
-    fa_ir: "برای یافتن آسان مبدا و راه اندازی میزبانی، آدرس و نقشه محل عزیمت را تنظیم کنید.",
-    en_us: "To easily find the origin and start the host, set the address and the map of the place of departure.",
-  },
+  "to easily find the origin and start the host, set the address and the map of the place of departure.":
+    {
+      ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
+      fa_ir: "برای یافتن آسان مبدا و راه اندازی میزبانی، آدرس و نقشه محل عزیمت را تنظیم کنید.",
+      en_us:
+        "To easily find the origin and start the host, set the address and the map of the place of departure.",
+    },
   "host title and details": {
     ar: "عنوان المضيف والتفاصيل",
     fa_ir: "عنوان میزبانی و جزئیات",
@@ -2249,15 +2298,19 @@ export const messages = {
     fa_ir: "پایان میزبانی",
     en_us: "End Host",
   },
-  "the created hosting is under review by support, after approval by the support team, it will be included in mofidtrip's hosting list.": {
-    ar: "الاستضافة التي تم إنشاؤها قيد المراجعة من قبل الدعم، وبعد موافقة فريق الدعم، سيتم إدراجها في قائمة استضافة Mofidtrip.",
-    fa_ir: "میزبانی ایجاد شده در مرحله بررسی توسط پشتیبانی قرار دارد ، بعد از تایید توسط تیم پشتیبانی در لیست میزبانی های مفیدتریپ قرار خواهد گرفت.",
-    en_us: "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
-  },
+  "the created hosting is under review by support, after approval by the support team, it will be included in mofidtrip's hosting list.":
+    {
+      ar: "الاستضافة التي تم إنشاؤها قيد المراجعة من قبل الدعم، وبعد موافقة فريق الدعم، سيتم إدراجها في قائمة استضافة Mofidtrip.",
+      fa_ir:
+        "میزبانی ایجاد شده در مرحله بررسی توسط پشتیبانی قرار دارد ، بعد از تایید توسط تیم پشتیبانی در لیست میزبانی های مفیدتریپ قرار خواهد گرفت.",
+      en_us:
+        "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
+    },
   "last modification": {
     ar: "اخر تعديل",
     fa_ir: "آخرین به روز رسانی",
-    en_us: "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
+    en_us:
+      "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
   },
   "hour later": {
     ar: "بعد ساعة",

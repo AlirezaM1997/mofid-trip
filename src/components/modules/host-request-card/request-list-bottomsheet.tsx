@@ -7,23 +7,27 @@ import {
   Button,
   Colors,
   Divider,
-  ListItem,
   Text,
   useTheme,
 } from "@rneui/themed";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { MyNgoDetailQuery, TourGuestQueryType, TransactionStatusEnum } from "@src/gql/generated";
+import {
+  MyNgoDetailQuery,
+  TransactionStatusEnum,
+  useProjectTransactionEditMutation,
+} from "@src/gql/generated";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
-import { ScrollView } from "react-native-gesture-handler";
 import { HEIGHT } from "@src/constants";
+import moment from "jalali-moment";
 
 export type RequestListBottomSheetProps = BottomSheetProps & {
   isVisible: boolean;
-  transaction: MyNgoDetailQuery["NGODetail"]["tourTransactionSet"][0];
+  transaction: MyNgoDetailQuery["NGODetail"]["projectTransactionSet"][number];
+  refetch: () => void;
+  handleClose: () => void;
 };
 
 type LookupType = Record<
@@ -34,21 +38,41 @@ type LookupType = Record<
 const RequestListBottomSheet = ({
   isVisible,
   transaction,
+  refetch,
+  handleClose,
   ...props
 }: RequestListBottomSheetProps) => {
   const { tr } = useTranslation();
   const ownerAvatar = transaction?.owner.avatarS3.small;
   const { theme } = useTheme();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const [projectTransactionEdit, { loading }] = useProjectTransactionEditMutation();
 
   const handlePress = num => {
     if (num) {
       if (Platform.OS === "web") {
-        Linking.openURL('tel:num');
+        Linking.openURL("sms:num");
       } else {
-        Alert.alert('coming soon')
+        Alert.alert("coming soon");
       }
-    }}
+    }
+  };
+  const submitHandler = async type => {
+    const { data } = await projectTransactionEdit({
+      variables: {
+        data: {
+          purchaseRefId: NaN,
+          transactionId: transaction.id,
+          status: { isActive: type, step: TransactionStatusEnum.Accept },
+        },
+      },
+    });
+
+    if (data.projectTransactionEdit.status === "OK") {
+      refetch();
+      handleClose();
+    }
+  };
 
   const getCurrentStep = () => {
     const lookup: LookupType = {
@@ -57,10 +81,10 @@ const RequestListBottomSheet = ({
         bottomSheetTitle: tr("the request is pending review"),
         buttonBox: (
           <ButtonRow>
-            <Button disabled type="outline">
+            <Button loading={loading} onPress={() => submitHandler(false)} type="outline">
               {tr("request rejection")}
             </Button>
-            <Button disabled type="solid">
+            <Button loading={loading} onPress={() => submitHandler(true)} type="solid">
               {tr("confirm request")}
             </Button>
           </ButtonRow>
@@ -80,14 +104,14 @@ const RequestListBottomSheet = ({
             color: "error",
             bottomSheetTitle: tr("the request was rejected by you"),
             buttonBox: (
-              <Button containerStyle={style.button} disabled type="solid">
+              <Button disabled containerStyle={style.button} type="solid">
                 {tr("confirm request")}
               </Button>
             ),
           },
       [TransactionStatusEnum.Payment]: {
         color: "info",
-        bottomSheetTitle: tr("the passenger paid and the reservation was finalized"),
+        bottomSheetTitle: tr("the ngo is paid and the reservation is finalized"),
         buttonBox: (
           <Button containerStyle={style.button} disabled type="outline">
             {tr("request rejection")}
@@ -97,8 +121,13 @@ const RequestListBottomSheet = ({
     };
     return lookup[transaction?.status.step];
   };
+  const startDate = localizeNumber(
+    moment(transaction?.dateStart).locale("fa").format("jDD jMMMM ")
+  );
+  const endDate = localizeNumber(
+    moment(transaction?.dateEnd).locale("fa").format("jDD jMMMM jYYYY")
+  );
   const step = getCurrentStep();
-
   return (
     <BottomSheet isVisible={isVisible} {...props}>
       <View style={style.bottomSheet}>
@@ -119,12 +148,7 @@ const RequestListBottomSheet = ({
             />
           )}
           <View style={style.bottomSheetHeaderTextBox}>
-            <Text subtitle2>
-              {localizeNumber(transaction?.owner.fullname)} / {tr("team leader")}
-            </Text>
-            <Text caption type="grey2">
-              {localizeNumber(transaction?.owner.phoneNumber)}
-            </Text>
+            <Text subtitle2>{localizeNumber(transaction?.owner.fullname)}</Text>
             <Text caption type={step?.color}>
               {step?.bottomSheetTitle}
             </Text>
@@ -136,62 +160,38 @@ const RequestListBottomSheet = ({
               type="outline"
               color="secondary"
               size="sm"
-              onPress={()=>handlePress(transaction?.owner?.phoneNumber)}>
-              {tr("message")}
-            </Button>
-            <Button
-              iconPosition="right"
-              icon={<MaterialIcons name="phone-in-talk" size={18} color="black" />}
-              type="outline"
-              color="secondary"
-              size="sm"
-              onPress={()=>handlePress(transaction?.owner?.phoneNumber)}>
-              {tr("contact")}
-            </Button>
+              title={tr("send Message")}
+              onPress={() => handlePress(transaction?.owner?.phoneNumber)}></Button>
           </View>
           <WhiteSpace />
         </View>
         <Divider thickness={8} />
 
-        <ScrollView contentContainerStyle={style.guestListScrollView}>
-          <Container>
-            <WhiteSpace />
-            <Text body2 type="grey2">{`${tr("accompanying passengers")} (${localizeNumber(
-              transaction?.tourGuests.length
-            )} ${tr("person")})`}</Text>
-            {transaction?.tourGuests.map((guest: TourGuestQueryType, i) => (
-              <>
-                <ListItem
-                  key={guest.id}
-                  bottomDivider
-                  containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}>
-                  {guest.avatarS3[0]?.small ? (
-                    <Avatar size={40} rounded source={{ uri: guest.avatarS3[0]?.small }} />
-                  ) : (
-                    <Avatar
-                      rounded
-                      size={48}
-                      icon={{
-                        name: "user",
-                        type: "feather",
-                        size: 26,
-                      }}
-                      containerStyle={{ backgroundColor: theme.colors.grey2 }}
-                    />
-                  )}
-                  <ListItem.Content>
-                    <Text subtitle2>
-                      {guest.firstname} {guest.lastname}
-                    </Text>
-                    <Text caption type="grey3">
-                      {localizeNumber(guest.phoneNumber)}
-                    </Text>
-                  </ListItem.Content>
-                </ListItem>
-              </>
-            ))}
-          </Container>
-        </ScrollView>
+        <Container>
+          <WhiteSpace size={24} />
+          <View style={{ gap: 16 }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+              <Text body2>{transaction?.project?.name}</Text>
+              <Text body2 type="grey2">
+                {tr("on-demand hosting")}
+              </Text>
+            </View>
+            <Divider />
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+              <Text body2>{`${startDate} - ${endDate}`}</Text>
+              <Text body2 type="grey2">
+                {tr("time of travel")}
+              </Text>
+            </View>
+            <Divider />
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+              <Text body2>{localizeNumber(transaction?.guestSet.length)}</Text>
+              <Text body2 type="grey2">
+                {tr("passengers count")}
+              </Text>
+            </View>
+          </View>
+        </Container>
         <WhiteSpace size={24} />
         <Container>{step?.buttonBox}</Container>
       </View>
@@ -214,9 +214,6 @@ const style = StyleSheet.create({
   bottomSheetHeaderTextBox: {
     alignItems: "center",
     gap: 4,
-  },
-  guestListScrollView: {
-    flex: 1,
   },
   button: {
     flex: 1,
