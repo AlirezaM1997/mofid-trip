@@ -56,7 +56,7 @@ const Screen = () => {
         ...values,
       })
     );
-    router.push({
+    router.replace({
       pathname: "tour/create/price",
       params: {
         x: -95 * 6,

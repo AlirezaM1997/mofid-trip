@@ -13,7 +13,7 @@ import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
-const Screen = () => {
+const DetailsTab = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const { data } = useSelector((state: RootState) => state.tourCreateSlice);
@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
   formikContainer: {},
 });
 
-export default Screen;
+export default DetailsTab;

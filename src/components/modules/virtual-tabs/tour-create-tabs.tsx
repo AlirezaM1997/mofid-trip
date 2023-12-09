@@ -26,75 +26,6 @@ const TourCreateTabs = ({ index }: TourCreateTabsProps) => {
     }
   }, []);
 
-  const handleChange = newIndex => {
-    switch (newIndex) {
-      case 0:
-        router.push({
-          pathname: "/tour/create/details",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 1:
-        router.push({
-          pathname: "/tour/create/capacity",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 2:
-        router.push({
-          pathname: "/tour/create/origin",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 3:
-        router.push({
-          pathname: "/tour/create/destination",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 4:
-        router.push({
-          pathname: "/tour/create/date",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 5:
-        router.push({
-          pathname: "/tour/create/price",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 6:
-        router.push({
-          pathname: "/tour/create/images",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 7:
-        router.push({
-          pathname: "/tour/create/facilities",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-    }
-  };
-
   return (
     <ScrollView
       ref={scrollRef}
@@ -102,20 +33,45 @@ const TourCreateTabs = ({ index }: TourCreateTabsProps) => {
       onScroll={event => {
         const { contentOffset } = event.nativeEvent;
         x.current = contentOffset.x;
-      }}>
+      }}
+      style={{ overflow: "hidden" }}>
       <Tab
         value={index}
-        onChange={handleChange}
+        // onChange={handleChange}
         variant="default"
         indicatorStyle={styles.indicatorStyle}>
-        <Tab.Item style={index === 0 ? styles.tabItem(theme) : {}} title={tr("Details")} />
-        <Tab.Item style={index === 1 ? styles.tabItem(theme) : {}} title={tr("Capacity")} />
-        <Tab.Item style={index === 2 ? styles.tabItem(theme) : {}} title={tr("Origin")} />
-        <Tab.Item style={index === 3 ? styles.tabItem(theme) : {}} title={tr("Destination")} />
-        <Tab.Item style={index === 4 ? styles.tabItem(theme) : {}} title={tr("Date")} />
-        <Tab.Item style={index === 5 ? styles.tabItem(theme) : {}} title={tr("Price")} />
-        <Tab.Item style={index === 6 ? styles.tabItem(theme) : {}} title={tr("Images")} />
-        <Tab.Item style={index === 7 ? styles.tabItem(theme) : {}} title={tr("Facilities")} />
+        <Tab.Item
+          style={index >= 1 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Details")}
+        />
+        <Tab.Item
+          style={index >= 2 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Capacity")}
+        />
+        <Tab.Item
+          style={index >= 3 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Origin")}
+        />
+        <Tab.Item
+          style={index >= 4 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Destination")}
+        />
+        <Tab.Item
+          style={index >= 5 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Date")}
+        />
+        <Tab.Item
+          style={index >= 6 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Price")}
+        />
+        <Tab.Item
+          style={index >= 7 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Images")}
+        />
+        <Tab.Item
+          style={index >= 8 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Facilities")}
+        />
       </Tab>
     </ScrollView>
   );
@@ -128,6 +84,10 @@ const styles = StyleSheet.create({
   tabItem: theme => ({
     borderBottomWidth: 3,
     borderColor: theme.colors.primary,
+  }),
+  deactiveTabItem: theme => ({
+    borderBottomWidth: 3,
+    borderColor: theme.colors.grey2,
   }),
 });
 

@@ -148,7 +148,7 @@ const Profile: React.FC = () => {
             <Container>
               <Text type="grey3">{tr("Flows")}</Text>
             </Container>
-            <ListItem bottomDivider onPress={() => router.push("/tour/create/details")}>
+            <ListItem bottomDivider onPress={() => router.push("/tour/create")}>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Create Tour")}</ListItem.Title>
