@@ -5,12 +5,12 @@ import Stepper from "@modules/stepper";
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import {
   AccommodationProjectStatusStepChoices,
-  MyNgoDetailQuery,
-  useMyNgoDetailQuery,
+  MyNgoDetailProjectSetQuery,
+  useMyNgoDetailProjectSetQuery,
 } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
@@ -19,6 +19,7 @@ import { StyleSheet, View } from "react-native";
 import ComingSoon from "@modules/coming-soon";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { calculateHoursSinceGivenDate } from "@src/helper/date";
+import Share from "@modules/share";
 
 const HostDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -26,12 +27,12 @@ const HostDetailScreen = () => {
   const { theme } = useTheme();
   const navigation = useNavigation();
   const { hostId } = useLocalSearchParams();
-  const [host, setHost] = useState<MyNgoDetailQuery["NGODetail"]["projectSet"][0]>();
+  const [host, setHost] = useState<MyNgoDetailProjectSetQuery["NGODetail"]["projectSet"][0]>();
   const steps = [tr("pending"), tr("published")];
   const [isVisible, setIsVisible] = useState(false);
-  const {localizeNumber} = useLocalizedNumberFormat()
+  const { localizeNumber } = useLocalizedNumberFormat();
 
-  const { loading, data } = useMyNgoDetailQuery();
+  const { loading, data } = useMyNgoDetailProjectSetQuery();
 
   const handleClose = () => setIsVisible(false);
 
@@ -50,12 +51,15 @@ const HostDetailScreen = () => {
         name: host?.name,
       },
     });
+  const handleNavigateToRequest = () => {
+    router.push("/host/management/request/" + host.id);
+  };
 
   useEffect(() => {
     if (!loading && data) {
       const h = data.NGODetail.projectSet.find(host => host.id === hostId);
       setHost(h);
-      navigation.setOptions({ title: h?.name });
+      navigation.setOptions({ title: h?.name, headerRight: () => <Share /> });
     }
   }, [loading, data]);
 
@@ -71,7 +75,8 @@ const HostDetailScreen = () => {
           {host?.name}
         </Text>
         <Text caption type="grey3">
-          {tr("Last modification")} {localizeNumber(calculateHoursSinceGivenDate(host.modifiedDate))} {tr('hour later')}
+          {tr("Last modification")}{" "}
+          {localizeNumber(calculateHoursSinceGivenDate(host.modifiedDate))} {tr("hour later")}
         </Text>
         <WhiteSpace size={20} />
         <Text subtitle1 bold>
@@ -107,7 +112,7 @@ const HostDetailScreen = () => {
       </ListItem>
       {host.statusStep === AccommodationProjectStatusStepChoices.Accept &&
         host.statusActivation && (
-          <ListItem onPress={() => router.push("/comingSoon")}>
+          <ListItem onPress={handleNavigateToRequest}>
             <Feather name="users" size={24} color={theme.colors.black} />
             <ListItem.Content>
               <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>

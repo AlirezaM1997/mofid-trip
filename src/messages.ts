@@ -188,15 +188,55 @@ export const messages = {
     fa_ir: "شرح",
     en_us: "Description",
   },
-  "confirm request": {
-    ar: "تأكيد الطلب",
-    fa_ir: "تایید درخواست",
-    en_us: "confirm request",
-  },
   failed: {
     ar: "فشل",
     fa_ir: "رد شده",
     en_us: "failed",
+  },
+  telegram: {
+    ar: "تلگرام",
+    fa_ir: "تلگرام",
+    en_us: "Telegram",
+  },
+  twitter: {
+    ar: "تویيتر",
+    fa_ir: "تویيتر",
+    en_us: "Twitter",
+  },
+  whatsapp: {
+    ar: "واتساپ",
+    fa_ir: "واتساپ",
+    en_us: "Whatsapp",
+  },
+  email: {
+    ar: "ایمیل",
+    fa_ir: "ایمیل",
+    en_us: "E-mail",
+  },
+  "or share the link": {
+    ar: "أو مشاركة الرابط",
+    fa_ir: "یا اشتراک لینک",
+    en_us: "Or share the link",
+  },
+  "you can republish the details of this hosting to your friends so that they also know about the existence of this hosting": {
+    ar: "يمكنك إعادة نشر تفاصيل هذه الاستضافة لأصدقائك حتى يعلموا أيضًا بوجود هذه الاستضافة",
+    fa_ir: "شما می توانید جزئیات این میزبانی را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این میزبانی مطلع شوند",
+    en_us: "You can republish the details of this hosting to your friends so that they also know about the existence of this hosting",
+  },
+  "you can republish the details of this tour to your friends so that they also know about the existence of this tour": {
+    ar: "يمكنك إعادة نشر تفاصيل هذه الجولة لأصدقائك حتى يعرفوا أيضًا بوجود هذه الجولة",
+    fa_ir: "شما می توانید جزئیات این تور را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این تور مطلع شوند",
+    en_us: "You can republish the details of this tour to your friends so that they also know about the existence of this tour",
+  },
+  "are you sure about shared hosting?": {
+    ar: "هل أنت متأكد من الاستضافة المشتركة؟",
+    fa_ir: "آیا مطمئن به اشتراک میزبانی هستید؟",
+    en_us: "Are you sure about shared hosting?",
+  },
+  "are you sure about the tour subscription?": {
+    ar: "هل أنت متأكد من اشتراك الجولة؟",
+    fa_ir: "آیا مطمئن به اشتراک تور هستید؟",
+    en_us: "Are you sure about the tour subscription?",
   },
   "accompanying passengers": {
     ar: "الركاب المرافقين",
@@ -232,6 +272,22 @@ export const messages = {
     ar: "عامل",
     fa_ir: "فاکتور",
     en_us: "Factor",
+  },
+  "management of requests received from users who intend to experience your hosting.": {
+    ar: "إدارة الطلبات الواردة من المستخدمين الذين يرغبون في تجربة استضافتك.",
+    fa_ir:
+      "مدیریت درخواست های دریافت شده از سوی کاربرانی که قصد دارند به میزبانی های شما را تجربه کنند.",
+    en_us: "Management of requests received from users who intend to experience your hosting.",
+  },
+  "requests received": {
+    ar: "الطلبات الواردة",
+    fa_ir: "درخواست های دریافت شده",
+    en_us: "Requests received",
+  },
+  "apply to my hosts": {
+    ar: "تنطبق على مضيفي",
+    fa_ir: "درخواست به میزبانی های من",
+    en_us: "Apply to my hosts",
   },
   "apply to my tours": {
     ar: "تنطبق على جولاتي",
@@ -1235,11 +1291,7 @@ export const messages = {
     en_us:
       "You can contact the owner of the place through the following social networks or directly",
   },
-  whatsapp: {
-    ar: "واتس اب",
-    fa_ir: "واتساپ",
-    en_us: "Whatsapp",
-  },
+
   message: {
     ar: "رسالة",
     fa_ir: "پیام",
@@ -1748,6 +1800,16 @@ export const messages = {
     fa_ir: "تعداد مسافران",
     en_us: "Passengers Count",
   },
+  "confirm request": {
+    ar: "طلب التسجيل",
+    fa_ir: "تایید درخواست",
+    en_us: "confirm request",
+  },
+  "record request": {
+    ar: "طلب التسجيل",
+    fa_ir: "ثبت درخواست",
+    en_us: "confirm request",
+  },
   "group leader information": {
     ar: "معلومات قائد المجموعة",
     fa_ir: "اطلاعات سرگروه",
@@ -1917,6 +1979,26 @@ export const messages = {
     ar: "نعم",
     fa_ir: "باشه",
     en_us: "OK",
+  },
+  "time of travel": {
+    ar: "وقت السفر",
+    fa_ir: "زمان سفر",
+    en_us: "time of travel",
+  },
+  "on-demand hosting": {
+    ar: "استضافة حسب الطلب",
+    fa_ir: "میزبانی درخواستی",
+    en_us: "On-demand hosting",
+  },
+  "send message": {
+    ar: "أرسل رسالة",
+    fa_ir: "ارسال پیام",
+    en_us: "send Message",
+  },
+  "the ngo is paid and the reservation is finalized": {
+    ar: "تم دفع التحصيل وإتمام الحجز",
+    fa_ir: "مجموعه پرداخت کرد و رزرو نهایی شد",
+    en_us: "The ngo is paid and the reservation is finalized",
   },
   "travelers who plan to travel to this host. please check the submitted requests.": {
     ar: "المسافرون الذين يخططون للسفر إلى هذا المضيف. يرجى التحقق من الطلبات المقدمة.",

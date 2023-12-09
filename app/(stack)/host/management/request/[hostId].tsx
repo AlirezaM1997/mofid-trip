@@ -3,38 +3,40 @@ import React, { useEffect, useState } from "react";
 import { Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import {
-  TourTransactionQueryType,
-  MyNgoDetailTourTransactionSetQuery,
-  useMyNgoDetailTourTransactionSetQuery,
+  useMyNgoDetailProjectTransactionSetQuery,
+  MyNgoDetailProjectTransactionSetQuery,
 } from "@src/gql/generated";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import Container from "@atoms/container";
 import NoResult from "@organisms/no-result";
-import RequestList from "@modules/tour-request-card/RequestList";
-import RequestListBottomSheet from "@modules/tour-request-card/request-list-bottomsheet";
+import RequestList from "@modules/host-request-card/RequestList";
+import RequestListBottomSheet from "@modules/host-request-card/request-list-bottomsheet";
 import { useIsFocused } from "@react-navigation/native";
 
 const RequestScreen = () => {
   const { tr } = useTranslation();
-  const { tourId } = useLocalSearchParams();
-  const isFocused = useIsFocused();
+  const { hostId } = useLocalSearchParams();
   const navigation = useNavigation();
-
+  const isFocused = useIsFocused();
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState<TourTransactionQueryType>();
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number]>();
 
   const handleClose = () => setIsVisible(false);
   const handleOpen = () => setIsVisible(true);
 
-  const { loading, data, refetch, networkStatus } = useMyNgoDetailTourTransactionSetQuery({
+  const { loading, data, refetch } = useMyNgoDetailProjectTransactionSetQuery({
     notifyOnNetworkStatusChange: true,
   });
 
-  const [transactionSet, setTransactionSet] =
-    useState<MyNgoDetailTourTransactionSetQuery["NGODetail"]["tourTransactionSet"]>();
+  const [transactionSet, setTransactionSet] = useState<
+    MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"]
+  >([]);
 
-  const handleRequestPress = (transaction: TourTransactionQueryType) => {
+  const handleRequestPress = (
+    transaction: MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number]
+  ) => {
     setSelectedTransaction(transaction);
     handleOpen();
   };
@@ -48,7 +50,7 @@ const RequestScreen = () => {
   useEffect(() => {
     if (!loading && data) {
       setTransactionSet(
-        data.NGODetail.tourTransactionSet.filter(tr => tr.tourPackage.tour.id === tourId)
+        data.NGODetail.projectTransactionSet.filter(pr => pr.project.id === hostId)
       );
     }
   }, [loading, data]);
@@ -57,7 +59,9 @@ const RequestScreen = () => {
 
   if (!transactionSet.length) return <NoResult />;
 
-  navigation.setOptions({ title: transactionSet[0].tourPackage.tour.title });
+  navigation.setOptions({ title: transactionSet[0].project.name });
+
+  console.log("transactionSet", transactionSet);
 
   return (
     <>
@@ -65,19 +69,22 @@ const RequestScreen = () => {
         <View style={style.header}>
           <Text heading2>{tr("requests and passengers")}</Text>
           <Text caption type="grey2">
-            {tr(
-              "passengers who plan to travel with this tour. please check the submitted requests."
-            )}
+            {tr("travelers who plan to travel to this host. please check the submitted requests.")}
           </Text>
         </View>
         <ScrollView>
-          {transactionSet.map((transaction: TourTransactionQueryType, i) => (
-            <RequestList
-              key={transaction.id}
-              transaction={transaction}
-              onPress={() => handleRequestPress(transaction)}
-            />
-          ))}
+          {transactionSet?.map(
+            (
+              transaction: MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number],
+              i
+            ) => (
+              <RequestList
+                key={transaction.id}
+                transaction={transaction}
+                onPress={() => handleRequestPress(transaction)}
+              />
+            )
+          )}
         </ScrollView>
       </Container>
       <RequestListBottomSheet

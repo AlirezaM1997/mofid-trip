@@ -3,16 +3,15 @@ import React, { useEffect, useState } from "react";
 import { Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import {
-  TourTransactionQueryType,
-  MyNgoDetailTourTransactionSetQuery,
-  useMyNgoDetailTourTransactionSetQuery,
+  MyNgoDetailProjectTransactionSetQuery,
+  useMyNgoDetailProjectTransactionSetQuery,
 } from "@src/gql/generated";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { useNavigation } from "expo-router";
 import Container from "@atoms/container";
 import NoResult from "@organisms/no-result";
-import RequestList from "@modules/tour-request-card/RequestList";
-import RequestListBottomSheet from "@modules/tour-request-card/request-list-bottomsheet";
+import RequestList from "@modules/host-request-card/RequestList";
+import RequestListBottomSheet from "@modules/host-request-card/request-list-bottomsheet";
 import { useIsFocused } from "@react-navigation/native";
 
 const RequestScreen = () => {
@@ -21,18 +20,21 @@ const RequestScreen = () => {
   const isFocused = useIsFocused();
 
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState<TourTransactionQueryType>();
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number]>();
   const [transactionSet, setTransactionSet] =
-    useState<MyNgoDetailTourTransactionSetQuery["NGODetail"]["tourTransactionSet"]>();
+    useState<MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"]>();
 
   const handleOpen = () => setIsVisible(true);
   const handleClose = () => setIsVisible(false);
-  const handleRequestPress = (transaction: TourTransactionQueryType) => {
+  const handleRequestPress = (
+    transaction: MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number]
+  ) => {
     setSelectedTransaction(transaction);
     handleOpen();
   };
 
-  const { loading, data, refetch, networkStatus } = useMyNgoDetailTourTransactionSetQuery({
+  const { loading, data, refetch, networkStatus } = useMyNgoDetailProjectTransactionSetQuery({
     notifyOnNetworkStatusChange: true,
   });
 
@@ -44,7 +46,7 @@ const RequestScreen = () => {
 
   useEffect(() => {
     if (!loading && data) {
-      setTransactionSet(data.NGODetail.tourTransactionSet);
+      setTransactionSet(data.NGODetail.projectTransactionSet);
     }
   }, [loading, data]);
 
@@ -52,25 +54,32 @@ const RequestScreen = () => {
 
   if (!transactionSet.length) return <NoResult />;
 
-  navigation.setOptions({ title: tr("apply to my tours") });
+  navigation.setOptions({ title: tr("apply to my hosts") });
 
   return (
     <>
       <Container style={style.container}>
         <View style={style.header}>
-          <Text heading2>{tr("requests received for tours")}</Text>
+          <Text heading2>{tr("requests received")}</Text>
           <Text caption type="grey2">
-            {tr("all requests received from travelers who plan to travel with your tours")}
+            {tr(
+              "management of requests received from users who intend to experience your hosting."
+            )}
           </Text>
         </View>
         <ScrollView>
-          {transactionSet.map((transaction: TourTransactionQueryType, i) => (
-            <RequestList
-              key={transaction.id}
-              transaction={transaction}
-              onPress={() => handleRequestPress(transaction)}
-            />
-          ))}
+          {transactionSet.map(
+            (
+              transaction: MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number],
+              i
+            ) => (
+              <RequestList
+                key={transaction.id}
+                transaction={transaction}
+                onPress={() => handleRequestPress(transaction)}
+              />
+            )
+          )}
         </ScrollView>
       </Container>
       <RequestListBottomSheet
