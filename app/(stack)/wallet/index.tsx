@@ -1,27 +1,24 @@
 import React from "react";
 import { router } from "expo-router";
-import { RootState } from "@src/store";
 import Container from "@atoms/container";
-import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
 import { Button, Text } from "@rneui/themed";
 import { Entypo, AntDesign } from "@expo/vector-icons";
-import { WalletTransactionQueryType } from "@src/gql/generated";
+import LoadingIndicator from "@modules/Loading-indicator";
 import WalletTransactionCard from "@modules/wallet/transaction-card";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { ImageBackground, Pressable, ScrollView, StyleSheet } from "react-native";
+import { WalletTransactionQueryType, useUserDetailQuery } from "@src/gql/generated";
 
 const WalletScreen = () => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const { balance, walletTransactions } = useSelector(
-    (state: RootState) =>
-      state.userSlice.userDetail.wallet ?? {
-        balance: 0,
-        walletTransactions: [],
-      }
-  );
+  const { data, loading } = useUserDetailQuery();
+
+  if (!data || loading) return <LoadingIndicator />;
+
+  const { balance, walletTransactions } = data.userDetail.wallet;
 
   return (
     <ScrollView>
