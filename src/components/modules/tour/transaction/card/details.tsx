@@ -18,8 +18,6 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
     });
   };
 
-  console.log("0s0", transaction?.tourPackage.tour);
-
   return (
     <Pressable style={styles.container} onPress={handleNavigate}>
       <Image
