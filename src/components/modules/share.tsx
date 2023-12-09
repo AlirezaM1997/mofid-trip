@@ -1,4 +1,4 @@
-import { Alert, Linking, Platform, StyleSheet, View } from "react-native";
+import { Alert, Linking, Platform, Pressable, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
@@ -11,6 +11,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useURL } from "expo-linking";
 import * as Clipboard from "expo-clipboard";
 import useTranslation from "@src/hooks/translation";
+import { WIDTH } from "@src/constants";
 
 const Share = () => {
   const { theme } = useTheme();
@@ -126,17 +127,12 @@ const Share = () => {
             <Text body2 type="grey3">
               {tr("or share the link")}
             </Text>
-            <Button type="outline">
-              <Text type="grey3" caption>
+            <Pressable onPress={handlePressCopy} style={style.copyButton(theme)}>
+              <Text numberOfLines={1} type="grey3" caption>
                 {url}
               </Text>
-              <FontAwesome
-                onPress={handlePressCopy}
-                name="copy"
-                size={16}
-                color={theme.colors.error}
-              />
-            </Button>
+              <FontAwesome name="copy" size={16} color={theme.colors.error} />
+            </Pressable>
           </View>
         </Container>
       </BottomSheet>
@@ -160,6 +156,17 @@ const style = StyleSheet.create({
     alignItems: "center",
     gap: 5,
   },
+  copyButton: theme => ({
+    maxWidth: WIDTH - 50,
+    borderRadius: 8,
+    backgroundColor: theme.colors.grey0,
+    paddingVertical: 9,
+    paddingHorizontal: 16,
+    display: "flex",
+    flex: 1,
+    flexDirection: "row",
+    gap: 10,
+  }),
 });
 
 export default Share;
