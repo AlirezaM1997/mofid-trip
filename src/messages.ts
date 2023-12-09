@@ -48,7 +48,7 @@ export const messages = {
     {
       ar: "يمكنك تحميل الصور المتعلقة بجولتك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
       fa_ir:
-        "شما می توانید تصاویر مرتبط با تور خودتان را بارگذاری کنید ، توجه داشته باشید حجم تصاویر کمتر از ۳ مگابایت باشد. توجه داشته باشید این بخش اختیاری می‌باشد.",
+        "شما می توانید تصاویر مرتبط با تور خودتان را بارگذاری کنید، توجه داشته باشید حجم تصاویر کمتر از ۳ مگابایت باشد. توجه داشته باشید این بخش اختیاری می‌باشد.",
       en_us:
         "You can upload images related to your tour, please note that the size of the images should be less than 3 MB. Note that this section is optional.",
     },
@@ -64,7 +64,7 @@ export const messages = {
   },
   "choose a start and end date for the tour": {
     ar: "اختر تاريخ البدء والانتهاء للجولة",
-    fa_ir: "برای تور ، تاریخ شروع و پایان انتخاب کنید",
+    fa_ir: "برای تور، تاریخ شروع و پایان انتخاب کنید",
     en_us: "Choose a start and end date for the tour",
   },
   bio: {
@@ -210,7 +210,7 @@ export const messages = {
   },
   "edit profile": {
     ar: "حساب المستخدم",
-    fa_ir: "ویرایش نمایه",
+    fa_ir: "ویرایش پروفایل",
     en_us: "Edit Profile",
   },
   "entered details": {
@@ -383,7 +383,7 @@ export const messages = {
   },
   "your initial request will be approved or rejected by the tour after it is submitted": {
     ar: "ستتم الموافقة على طلبك الأولي أو رفضه بواسطة الجولة بعد تقديمه",
-    fa_ir: "درخواست اولیه شما پس از ارسال ، توسط تور تایید یا رد خواهد شد",
+    fa_ir: "درخواست اولیه شما پس از ارسال، توسط تور تایید یا رد خواهد شد",
     en_us: "your initial request will be approved or rejected by the tour after it is submitted",
   },
   "are you sure to confirm the request?": {
@@ -707,7 +707,7 @@ export const messages = {
   },
   "to request and reserve hosting, choose the number and gender of your people": {
     ar: "لطلب وحجز الاستضافة، اختر عدد الأشخاص وجنسهم",
-    fa_ir: "برای درخواست و رزرو اولیه میزبانی ، تعداد و جنسیت نفرات خودتان را  انتخاب کنید",
+    fa_ir: "برای درخواست و رزرو اولیه میزبانی، تعداد و جنسیت نفرات خودتان را  انتخاب کنید",
     en_us: "To request and reserve hosting, choose the number and gender of your people",
   },
   "finish the trip": {
@@ -930,14 +930,14 @@ export const messages = {
 
   "unsuccessful payment, wallet balance is not enough": {
     ar: "عملية دفع غير ناجحة، رصيد المحفظة غير كافي",
-    fa_ir: "پرداخت ناموفق ، موجودی کیف پول کافی نمی‌باشد",
+    fa_ir: "پرداخت ناموفق، موجودی کیف پول کافی نمی‌باشد",
     en_us: "Unsuccessful payment, wallet balance is not enough",
   },
   "your payment has been successfully completed, to continue the process and view receipt click the return button.":
     {
       ar: "لقد تم إتمام عملية الدفع بنجاح، لمواصلة العملية والعرض استلام انقر فوق زر العودة.",
       fa_ir:
-        "پرداخت شما با موفقیت انجام شد ، برای ادامه فرایند و مشاهده رسید روی دکمه مشاهده رسید کلیک کنید.",
+        "پرداخت شما با موفقیت انجام شد، برای ادامه فرایند و مشاهده رسید روی دکمه مشاهده رسید کلیک کنید.",
       en_us:
         "Your payment has been successfully completed, to continue the process and view Receipt Click the Return button.",
     },
@@ -1036,7 +1036,7 @@ export const messages = {
   },
   "management and use of inventory increase and withdrawal services, view transaction history": {
     ar: "إدارة واستخدام خدمات زيادة وسحب المخزون، وعرض تاريخ المعاملات",
-    fa_ir: "مدیریت و استفاده از سرویس های افزایش موجودی و برداشت ، مشاهده تاریخچه تراکنش ها",
+    fa_ir: "مدیریت و استفاده از سرویس های افزایش موجودی و برداشت، مشاهده تاریخچه تراکنش ها",
     en_us:
       "Management and use of inventory increase and withdrawal services, view transaction history",
   },
@@ -1093,12 +1093,12 @@ export const messages = {
   },
   "log in, register as a collection": {
     ar: "تسجيل الدخول، سجل كمجموعة",
-    fa_ir: "ورود ، ثبت نام به عنوان مجموعه",
+    fa_ir: "ورود، ثبت نام به عنوان مجموعه",
     en_us: "Log in, register as a collection",
   },
   "enter your mobile number to log in and create an account on mofidtrip": {
     ar: "أدخل رقم هاتفك المحمول لتسجيل الدخول وإنشاء حساب على Mofidtrip.",
-    fa_ir: "برای ورود و ایجاد حساب در مفیدتریپ ، شماره همراه خودتان را وارد کنید.",
+    fa_ir: "برای ورود و ایجاد حساب در مفیدتریپ، شماره همراه خودتان را وارد کنید.",
     en_us: "Enter your mobile number to log in and create an account on Mofidtrip",
   },
   "sign in as an organization": {
@@ -1107,8 +1107,8 @@ export const messages = {
     en_us: "Sign in as an organization",
   },
   "log in, sign up": {
-    ar: "الدخول ، التسجيل فى الموقع",
-    fa_ir: "ورود ، ثبت نام",
+    ar: "الدخول، التسجيل فى الموقع",
+    fa_ir: "ورود، ثبت نام",
     en_us: "Log in, Sign up",
   },
   share: {
@@ -2021,7 +2021,7 @@ export const messages = {
   },
   "to find a tour, address and information about a tour for travelers in nuwayside.": {
     ar: "لتصنيع السياحة، عنوان وشروط التورتان لمسافر بنوسيد.",
-    fa_ir: "برای ایجاد تور ، عنوان و توضیحاتی از تورتان برای مسافران بنویسید.",
+    fa_ir: "برای ایجاد تور، عنوان و توضیحاتی از تورتان برای مسافران بنویسید.",
     en_us: "To find a tour, address and information about a tour for travelers in Nuwayside.",
   },
   cancel: {
@@ -2087,7 +2087,7 @@ export const messages = {
   "to easily find the origin and start the tour, set the address and the map of the place of departure.":
     {
       ar: "للعثور بسهولة على نقطة الانطلاق وبدء الجولة، قم بتعيين العنوان وخريطة مكان المغادرة.",
-      fa_ir: "برای راحت پیدا کردن مبدا و شروع تور ، آدرس و نقشه مکان حرکت را قرارر دهید.",
+      fa_ir: "برای راحت پیدا کردن مبدا و شروع تور، آدرس و نقشه مکان حرکت را قرارر دهید.",
       en_us:
         "To easily find the origin and start the tour, set the address and the map of the place of departure.",
     },
@@ -2118,8 +2118,7 @@ export const messages = {
   },
   "choose or write the cost of your tour, you can give a discount to the original price.": {
     ar: "اختر أو اكتب تكلفة جولتك، يمكنك إعطاء خصم على السعر الأصلي.",
-    fa_ir:
-      "هزینه تور خودتان را انتخاب کنید یا بنویسید ، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
+    fa_ir: "هزینه تور خودتان را انتخاب کنید یا بنویسید، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
     en_us: "Choose or write the cost of your tour, you can give a discount to the original price.",
   },
   Free: {
@@ -2201,7 +2200,7 @@ export const messages = {
   "you can create tours and hosts for your collection. choose one of the options as needed": {
     ar: "يمكنك إنشاء جولات ومضيفين لمجموعتك. اختر أحد الخيارات حسب الحاجة",
     fa_ir:
-      "شما می‌توانید برای مجموعه خود ، تور و میزبانی ایجاد کنید . طبق نیاز یکی از گزینه ها را انتخاب کنید",
+      "شما می‌توانید برای مجموعه خود، تور و میزبانی ایجاد کنید . طبق نیاز یکی از گزینه ها را انتخاب کنید",
     en_us:
       "You can create tours and hosts for your collection. Choose one of the options as needed",
   },
@@ -2375,7 +2374,6 @@ export const messages = {
       en_us:
         "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
     },
-
   "last modification": {
     ar: "اخر تعديل",
     fa_ir: "آخرین به روز رسانی",
@@ -2386,5 +2384,22 @@ export const messages = {
     ar: "بعد ساعة",
     fa_ir: "ساعت پیش",
     en_us: "hour later",
+  },
+  "verification code has been sent, enter it. if you do not receive the code, hit send again": {
+    ar: "تم إرسال رمز التحقق، أدخله. إذا لم تستلم الرمز، اضغط على إرسال مرة أخرى",
+    fa_ir:
+      "کد تأیید ارسال شده است، آن را وارد کنید. اگر کد را دریافت نکردید، دوباره ارسال را بزنید",
+    en_us:
+      "Verification code has been sent, enter it. If you do not receive the code, hit send again",
+  },
+  "resend the code": {
+    ar: "إعادة إرسال الرمز",
+    fa_ir: "ارسال مجدد کد",
+    en_us: "Resend the code",
+  },
+  loading: {
+    ar: "تحميل",
+    fa_ir: "در حال بارگزاری",
+    en_us: "Loading",
   },
 };

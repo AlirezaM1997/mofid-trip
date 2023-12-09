@@ -13,7 +13,7 @@ import { RootState } from "@src/store";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import OtpInput from "@src/components/modules/otp-input";
 import { router, useLocalSearchParams } from "expo-router";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import Toast from "react-native-toast-message";
 import { setLoginData } from "@src/slice/auth-slice";
 
@@ -25,6 +25,7 @@ const SMSVerificationScreen = () => {
   const [canRequestCode, setCanRequestCode] = useState(false);
   const { redirectToScreenAfterLogin } = useSelector((state: RootState) => state.navigationSlice);
   const [login, { loading, data, error }] = useCreateLoginMutation();
+  const { localizeNumber } = useLocalizedNumberFormat();
   const [
     userCheckSmsVerificationCode,
     { loading: loadingChecking, data: dataChecking, error: errorChecking },
@@ -88,25 +89,22 @@ const SMSVerificationScreen = () => {
     <>
       {loadingChecking && <LoadingIndicator />}
       <View style={style.container}>
-        {canRequestCode ? (
-          <Text>Try resend code again</Text>
-        ) : (
-          <CountDownTimer
-            onEnd={handleCountDownTimerOnEnd}
-            ref={countDownTimerRef}
-            initialValue={120}
-            style={style.timerText}
-          />
-        )}
+        <CountDownTimer
+          onEnd={handleCountDownTimerOnEnd}
+          ref={countDownTimerRef}
+          initialValue={120}
+          style={style.timerText}
+        />
         <WhiteSpace size={20} />
         <Container size={10}>
-          <Text style={style.text} variant="caption">
-            Verification code has been sent, enter it. If you do not receive the code, hit send
-            again
+          <Text center type="grey2">
+            {tr(
+              "Verification code has been sent, enter it. If you do not receive the code, hit send again"
+            )}
           </Text>
           <WhiteSpace size={10} />
           <Button type="clear" disabled={!canRequestCode} onPress={handleRequestAgain}>
-            Resend the code
+            {tr("Resend the code")}
           </Button>
           <WhiteSpace size={10} />
         </Container>
@@ -130,7 +128,7 @@ const SMSVerificationScreen = () => {
         <Pressable style={style.editContainer} onPress={handleBack}>
           <Feather name="edit" size={20} color={PRIMARY_COLOR} />
           <Text style={style.phone} variant="body1">
-            {phone}
+            {localizeNumber(phone)}
           </Text>
         </Pressable>
       </View>

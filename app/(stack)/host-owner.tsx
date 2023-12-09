@@ -5,11 +5,13 @@ import { Avatar, Image, useTheme } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import { useNgoDetailQuery } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import { View } from "react-native";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import HostCard from "@modules/host/card";
+import { useEffect } from "react";
+import LoadingIndicator from "@modules/Loading-indicator";
 
 const height = 220;
 
@@ -17,9 +19,18 @@ export default () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const { ngoId } = useLocalSearchParams();
+  const navigation = useNavigation();
   const { loading, data } = useNgoDetailQuery({ variables: { pk: ngoId as string } });
 
-  if (loading) return <ActivityIndicator size="large" color={theme.colors.primary} />;
+  useEffect(() => {
+    if (!loading && data) {
+      navigation.setOptions({
+        title: data.NGODetail.title,
+      });
+    }
+  }, [loading, data]);
+
+  if (loading) return <LoadingIndicator />;
 
   return (
     <ScrollView>
@@ -29,16 +40,34 @@ export default () => {
           uri: "https://visitiran.ir/visitPic/de2e_standard/public/2019-01/DSCF3742.jpg",
         }}
       />
-      <Avatar
-        size={80}
-        rounded
-        source={{ uri: data.NGODetail.avatarS3.small }}
-        containerStyle={styles.avatarContainerStyle(theme)}
-      />
+      {data.NGODetail.avatarS3.small ? (
+        <Avatar
+          size={80}
+          rounded
+          source={{ uri: data.NGODetail.avatarS3.small }}
+          containerStyle={styles.avatarContainerStyle(theme)}
+        />
+      ) : (
+        <Avatar
+          rounded
+          size={80}
+          icon={{
+            name: "user",
+            type: "feather",
+            size: 40,
+          }}
+          containerStyle={[
+            styles.avatarContainerStyle(theme),
+            { backgroundColor: theme.colors.grey2 },
+          ]}
+        />
+      )}
 
       <WhiteSpace size={50} />
       <Container>
-        <Text heading2 bold>{data.NGODetail.title}</Text>
+        <Text heading2 bold>
+          {data.NGODetail.title}
+        </Text>
         <Text caption>{data.NGODetail.address}</Text>
         <WhiteSpace size={10} />
         <Text>{data.NGODetail.description}</Text>

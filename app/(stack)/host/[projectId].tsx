@@ -1,28 +1,30 @@
-import { Button } from "@rneui/themed";
+import { BottomSheet, Button } from "@rneui/themed";
 import { Divider } from "@rneui/themed";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Map from "@src/components/modules/map";
-import { Text } from "@rneui/themed";
 import Toast from "react-native-toast-message";
-import { getCapacity } from "@src/helper/tour";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { useDispatch } from "react-redux";
-import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
-import { ScrollView } from "react-native-gesture-handler";
-import { useProjectDetailQuery } from "@src/gql/generated";
-import { StyleSheet, View } from "react-native";
 import WhiteSpace from "@src/components/atoms/white-space";
-import { setProjectDetail } from "@src/slice/project-slice";
 import ProjectTags from "@src/components/modules/host/tags";
 import ContactCard from "@src/components/modules/contact-card";
 import SimilarProjects from "@src/components/modules/similar-projects";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import ProjectFacilities from "@src/components/modules/host/facilities";
 import ProjectBoldFeatures from "@src/components/modules/host/bold-features";
 import ImageSlider from "@modules/image-slider";
+import ProjectFacilities from "@src/components/modules/host/facilities";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { Text } from "@rneui/themed";
+import { getCapacity } from "@src/helper/tour";
+import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
+import { ScrollView } from "react-native-gesture-handler";
+import { useProjectDetailQuery } from "@src/gql/generated";
+import { ImageBackground, StyleSheet, View } from "react-native";
+import { setProjectDetail } from "@src/slice/project-slice";
 import { initialState, setHostTransactionData } from "@src/slice/host-transaction-slice";
+import ButtonRow from "@modules/button-rows";
+import { RootState } from "@src/store";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
@@ -31,6 +33,8 @@ const Page: React.FC = ({ ...props }) => {
   const navigation = useNavigation();
   const { projectId, name } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const [isVisible, setIsVisible] = useState<boolean>();
+  const isNgo = useSelector((state: RootState) => state.userSlice.userDetail.isNgo);
 
   const { loading, data } = useProjectDetailQuery({
     variables: {
@@ -38,7 +42,13 @@ const Page: React.FC = ({ ...props }) => {
     },
   });
 
+  const handleClose = () => setIsVisible(false);
+
   const handlePress = () => {
+    if (!isNgo) {
+      setIsVisible(true);
+      return;
+    }
     if (getCapacity(data?.projectDetail?.capacity) === 0) {
       Toast.show({
         type: "error",
@@ -119,6 +129,22 @@ const Page: React.FC = ({ ...props }) => {
           {tr("Book Now")}
         </Button>
       </View>
+
+      <BottomSheet isVisible={isVisible} onBackdropPress={handleClose}>
+        <Container>
+          <ImageBackground
+            style={style.rejectIcon}
+            imageStyle={{ resizeMode: "contain" }}
+            source={require("@assets/image/rejectIcon.svg")}
+          />
+          <Text heading1 center>
+            محدودیت دسترسی
+          </Text>
+          <Text center>رزرو هاست تنها برای تشکل ها امکان پذیر است</Text>
+          <WhiteSpace />
+          <Button onPress={handleClose}>{tr("Ok")}</Button>
+        </Container>
+      </BottomSheet>
     </>
   );
 };
@@ -152,6 +178,11 @@ const style = StyleSheet.create({
   },
   right: {
     flex: 2,
+  },
+  rejectIcon: {
+    margin: "auto",
+    width: 56,
+    height: 56,
   },
 });
 

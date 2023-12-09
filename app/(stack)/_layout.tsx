@@ -226,9 +226,9 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="/tour/[tourId]"
+        name="tour/[tourId]/index"
         options={{
-          title: tr("Tour"),
+          title: tr("Loading"),
         }}
       />
       <Stack.Screen
@@ -334,7 +334,7 @@ const HomeLayout = () => {
       <Stack.Screen
         name="host-owner"
         options={{
-          title: tr("Host Owner"),
+          title: tr("Loading"),
         }}
       />
       <Stack.Screen

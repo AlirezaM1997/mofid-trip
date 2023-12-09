@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import Container from "@src/components/atoms/container";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
@@ -14,22 +14,33 @@ import PressablePreview from "@modules/pressable-preview";
 import { getCapacity } from "@src/helper/tour";
 import useTourTable from "@src/hooks/db/tour";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { TourPackageType, useTourTransactionAddMutation } from "@src/gql/generated";
+import {
+  TourDetailQuery,
+  TourPackageType,
+  useTourDetailQuery,
+  useTourTransactionAddMutation,
+} from "@src/gql/generated";
 import useIsRtl from "@src/hooks/localization";
+import LoadingIndicator from "@modules/Loading-indicator";
 
 export default () => {
-  const isRtl = useIsRtl()
+  const isRtl = useIsRtl();
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
   const { userDetail } = useSelector((state: RootState) => state.userSlice);
   const { tourId, guests, tourPackage } = useLocalSearchParams();
-  const { findById } = useTourTable();
-  const tour = findById(tourId as string);
   const guestsObj = JSON.parse(guests as string);
   const tourPackageObj: TourPackageType = JSON.parse(tourPackage as string);
+  const [tour, setTour] = useState<TourDetailQuery["tourDetail"]>();
 
-  const [tourTransactionAdd, { loading }] = useTourTransactionAddMutation();
+  const [tourTransactionAdd, {}] = useTourTransactionAddMutation();
+
+  const { loading, data } = useTourDetailQuery({
+    variables: {
+      pk: tourId as string,
+    },
+  });
 
   const handleSubmit = () => {
     tourTransactionAdd({
@@ -39,10 +50,18 @@ export default () => {
           guests: guestsObj,
         },
       },
-    }).then(({data, errors}) => {
-      if (!errors?.length) router.push('/reservation')
-    })
+    }).then(({ data, errors }) => {
+      if (!errors?.length) router.push("/reservation");
+    });
   };
+
+  useEffect(() => {
+    if (!loading && data) {
+      setTour(data.tourDetail);
+    }
+  }, [loading, data]);
+
+  if (loading || !tour) return <LoadingIndicator />;
 
   return (
     <>
@@ -70,15 +89,21 @@ export default () => {
                 color="secondary"
                 type="outline"
                 size="sm"
-                onPress={() => router.push({
-                  pathname: `/tour/${tourId}`,
-                  params: {
-                    name: tour.title
-                  }
-                })}
+                onPress={() =>
+                  router.push({
+                    pathname: `/tour/${tourId}`,
+                    params: {
+                      name: tour.title,
+                    },
+                  })
+                }
                 style={style.btn}>
                 {tr("View")}
-                <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.black} />
+                <Feather
+                  name={isRtl ? "chevron-left" : "chevron-right"}
+                  size={24}
+                  color={theme.colors.black}
+                />
               </Button>
             }
           />
@@ -95,7 +120,11 @@ export default () => {
                 onPress={() => router.back()}
                 style={style.btn}>
                 {tr("Edit")}
-                <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.black} />
+                <Feather
+                  name={isRtl ? "chevron-left" : "chevron-right"}
+                  size={24}
+                  color={theme.colors.black}
+                />
               </Button>
             }
           />
@@ -112,7 +141,11 @@ export default () => {
                 onPress={() => router.back()}
                 style={style.btn}>
                 {tr("Edit")}
-                <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={24} color={theme.colors.black} />
+                <Feather
+                  name={isRtl ? "chevron-left" : "chevron-right"}
+                  size={24}
+                  color={theme.colors.black}
+                />
               </Button>
             }
           />
