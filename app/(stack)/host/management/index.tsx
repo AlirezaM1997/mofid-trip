@@ -4,7 +4,7 @@ import useMyNGOTable from "@src/hooks/db/ngo";
 import useTranslation from "@src/hooks/translation";
 import ComingSoon from "@modules/coming-soon";
 import { BottomSheet, Button, Card, Chip, Text, useTheme } from "@rneui/themed";
-import { AccommodationQueryType, MyNgoDetailQuery, useMyNgoDetailQuery } from "@src/gql/generated";
+import { AccommodationQueryType, MyNgoDetailQuery, useMyNgoDetailProjectSetQuery, useMyNgoDetailQuery } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { getHostRequestStatusBadgeColor } from "@src/helper/host";
@@ -19,7 +19,7 @@ const HostManagementScreen = () => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [hostSet, setHostSet] = useState<MyNgoDetailQuery["NGODetail"]["projectSet"]>([]);
-  const { loading, data } = useMyNgoDetailQuery();
+  const { loading, data } = useMyNgoDetailProjectSetQuery();
   const { theme } = useTheme();
 
   const navigateToTourDetail = (host: (typeof hostSet)[0]) =>

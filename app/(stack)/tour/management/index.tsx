@@ -3,7 +3,11 @@ import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
 import ComingSoon from "@modules/coming-soon";
 import { BottomSheet, Button, Card, Chip, useTheme } from "@rneui/themed";
-import { AccommodationQueryType, useMyNgoDetailQuery } from "@src/gql/generated";
+import {
+  AccommodationQueryType,
+  useMyNgoDetailQuery,
+  useMyNgoDetailTourSetQuery,
+} from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { getTourRequestStatusBadgeColor } from "@src/helper/tour";
@@ -15,7 +19,7 @@ const TourManagement = () => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [tourSet, setTourSet] = useState([]);
-  const { loading, data } = useMyNgoDetailQuery();
+  const { loading, data } = useMyNgoDetailTourSetQuery();
   const { theme } = useTheme();
 
   const navigateToTourDetail = (tourId: string) => {

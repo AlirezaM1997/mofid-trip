@@ -178,6 +178,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="host/management/[hostId]"
+        options={{
+          title: tr("Loading"),
+        }}
+      />
+      <Stack.Screen
         name="host/management/request/[hostId]"
         options={{
           title: tr("Loading"),

@@ -6,6 +6,7 @@ import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import {
   AccommodationProjectStatusStepChoices,
   MyNgoDetailQuery,
+  useMyNgoDetailProjectSetQuery,
   useMyNgoDetailQuery,
 } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
@@ -31,7 +32,7 @@ const HostDetailScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { localizeNumber } = useLocalizedNumberFormat();
 
-  const { loading, data } = useMyNgoDetailQuery();
+  const { loading, data } = useMyNgoDetailProjectSetQuery();
 
   const handleClose = () => setIsVisible(false);
 
@@ -62,7 +63,7 @@ const HostDetailScreen = () => {
     }
   }, [loading, data]);
 
-  console.log('111', loading , host)
+  console.log("111", loading, host);
   if (loading || !host) return <LoadingIndicator />;
 
   return (
