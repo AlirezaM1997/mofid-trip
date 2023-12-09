@@ -9,7 +9,13 @@ import { logout } from "@src/slice/user-slice";
 import { APP_VERSION } from "@src/settings";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@src/store";
-import { LanguageChoiceEnum, useNgoDetailQuery, useSettingEditMutation } from "@src/gql/generated";
+import {
+  LanguageChoiceEnum,
+  UserDetailQuery,
+  useNgoDetailQuery,
+  useSettingEditMutation,
+  useUserDetailQuery,
+} from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { I18nManager } from "react-native";
 import { getFullName } from "@src/helper/extra";
@@ -17,8 +23,9 @@ import useIsRtl from "@src/hooks/localization";
 import { router, useRootNavigationState } from "expo-router";
 import { useIsAuthenticated } from "@src/hooks/auth";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
-import useMyNGOTable from "@src/hooks/db/ngo";
+import { useIsFocused } from "@react-navigation/native";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { NetworkStatus } from "@apollo/client";
 
 const Profile: React.FC = () => {
   const isRtl = useIsRtl();
@@ -28,7 +35,6 @@ const Profile: React.FC = () => {
   const isAuthenticated = useIsAuthenticated();
   const [isVisible, setIsVisible] = useState(false);
   const rootNavigationState = useRootNavigationState();
-  const { userDetail } = useSelector((state: RootState) => state.userSlice);
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
   const userId = useSelector((state: RootState) => state.userSlice?.loginData?.metadata?.id);
   const [settingEdit] = useSettingEditMutation({
@@ -37,6 +43,11 @@ const Profile: React.FC = () => {
   const { syncTable } = useSettingDetailTable();
   const [isVisibleLogout, setIsVisibleLogout] = useState(false);
   const { localizeNumber } = useLocalizedNumberFormat();
+  const { loading, data, refetch, networkStatus } = useUserDetailQuery({
+    notifyOnNetworkStatusChange: true,
+  });
+  const [userDetail, setUserDetail] = useState<UserDetailQuery["userDetail"]>();
+  const isFocused = useIsFocused();
 
   I18nManager.allowRTL(true);
 
@@ -79,6 +90,21 @@ const Profile: React.FC = () => {
       }
     });
   };
+
+  useEffect(() => {
+    if (isFocused && userDetail?.id) {
+      refetch();
+    }
+  }, [isFocused, userDetail]);
+
+  useEffect(() => {
+    if (!loading && data) {
+      setUserDetail(data.userDetail);
+    }
+  }, [loading, data]);
+
+  if (loading || !userDetail || networkStatus === NetworkStatus.refetch)
+    return <LoadingIndicator />;
 
   return (
     <>
