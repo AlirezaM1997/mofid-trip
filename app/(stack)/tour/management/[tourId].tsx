@@ -17,7 +17,6 @@ import useIsRtl from "@src/hooks/localization";
 import { Divider } from "@rneui/themed";
 import ComingSoon from "@modules/coming-soon";
 import LoadingIndicator from "@modules/Loading-indicator";
-import Share from "@modules/share";
 
 const TourDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -43,7 +42,7 @@ const TourDetailScreen = () => {
     router.push("/tour/management/request/" + tour.id);
   };
   useEffect(() => {
-    if (tour) navigation.setOptions({ title: tour?.title ,headerRight: () => <Share/>, });
+    if (tour) navigation.setOptions({ title: tour?.title  });
   }, [tour]);
 
   useEffect(() => {
