@@ -29,7 +29,7 @@ const WalletCardDetailBottomSheet = ({ card }) => {
           containerStyle={{ backgroundColor: !bankDetail.icon && theme.colors.grey1 }}
         />
         <View style={styles.cardData}>
-          <Text>{bankDetail.title}</Text>
+          <Text>{card.title || bankDetail.title}</Text>
           <Text>{card.cardPan}</Text>
         </View>
         <Entypo name="chevron-small-left" size={24} color="black" />

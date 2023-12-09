@@ -1,25 +1,29 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { router } from "expo-router";
-import { RootState } from "@src/store";
 import Container from "@atoms/container";
-import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import NoResult from "@organisms/no-result";
 import { AntDesign } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
+import { useIsFocused } from "@react-navigation/core";
 import { Button, Text, useTheme } from "@rneui/themed";
-import BottomButtonLayout from "@components/layout/bottom-button";
-import WalletCardDetailBottomSheet from "@modules/wallet/card-detail-bottom-sheet";
 import { useUserDetailQuery } from "@src/gql/generated";
 import LoadingIndicator from "@modules/Loading-indicator";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import WalletCardDetailBottomSheet from "@modules/wallet/card-detail-bottom-sheet";
 
 const walletCardsScreen = () => {
-  const { tr } = useTranslation();
   const { theme } = useTheme();
+  const { tr } = useTranslation();
+  const isFocused = useIsFocused();
 
   const { data, loading, refetch } = useUserDetailQuery();
 
   if (!data || loading) return <LoadingIndicator />;
+
+  if (isFocused) {
+    refetch();
+  }
 
   const { walletCards } = data.userDetail.wallet;
 
@@ -44,7 +48,7 @@ const walletCardsScreen = () => {
 
         <WhiteSpace size={24} />
 
-        {!walletCards ? (
+        {!walletCards.length ? (
           <NoResult />
         ) : (
           walletCards?.map(card => <WalletCardDetailBottomSheet key={card.id} card={card} />)

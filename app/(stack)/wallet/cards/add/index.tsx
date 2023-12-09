@@ -3,7 +3,6 @@ import { Formik } from "formik";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import Container from "@atoms/container";
-import { useDispatch } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import { Image, Input } from "@rneui/themed";
 import { Button, Text } from "@rneui/themed";
@@ -18,7 +17,6 @@ const initialValues = { title: "", iban: "", cardPan: "" };
 
 const AddCardScreen = () => {
   const { tr } = useTranslation();
-  const dispatch = useDispatch();
   const [bankIcon, setBankIcon] = useState<string>("");
 
   const [bankCardAdd, { loading }] = useBankCardAddMutation();
@@ -27,7 +25,15 @@ const AddCardScreen = () => {
     cardPan: Yup.number()
       .typeError(tr("must be a number"))
       .min(1000000000000000, tr("cardpan should be 16 character"))
-      .required(tr("cardPan is required")),
+      .required(tr("cardPan is required"))
+      .test("startsWithValidId", tr("this cardpan does not exist"), value => {
+        if (value) {
+          const stringValue = value.toString();
+          const first6Chars = stringValue.substring(0, 6);
+          return BANKES_DATA.some(item => item.cardPan.toString().startsWith(first6Chars));
+        }
+        return false;
+      }),
   });
 
   const handleSubmit = async value => {
