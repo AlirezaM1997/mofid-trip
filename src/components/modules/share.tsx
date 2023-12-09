@@ -65,7 +65,7 @@ const Share = () => {
 
   return (
     <>
-      <Feather style={style.iconStyle} name="share-2" size={24} onPress={handleOpen} />
+      <Feather style={style.iconStyle} name="share-2" size={22} onPress={handleOpen} />
 
       <BottomSheet onBackdropPress={handleClose} isVisible={isVisible}>
         <Container>
