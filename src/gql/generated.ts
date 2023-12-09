@@ -1668,7 +1668,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -1916,10 +1916,20 @@ export type MyNgoDetailProjectSetQueryVariables = Exact<{ [key: string]: never; 
 
 export type MyNgoDetailProjectSetQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, projectSet?: Array<{ __typename: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusStep?: AccommodationProjectStatusStepChoices | null, statusActivation: boolean, createdTime?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, capacity?: { __typename?: 'CapacityQueryType', id: string } | null, transactionSet: Array<{ __typename?: 'ProjectTransactionQueryType', id: string }>, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, child?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, child?: number | null, allCap?: number | null } | null } | null> | null } | null };
 
+export type MyNgoDetailProjectTransactionSetQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyNgoDetailProjectTransactionSetQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, projectTransactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', dateEnd?: any | null, dateStart?: any | null, id: string, owner?: { __typename?: 'UserQueryType', phoneNumber?: string | null, fullname?: string | null, id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, guestSet?: Array<{ __typename?: 'GuestQueryType', id: string } | null> | null, project?: { __typename?: 'ProjectQueryType', name?: string | null, id: string } | null, status?: { __typename?: 'StatusQueryType', isActive?: boolean | null, step?: string | null } | null } | null> | null } | null };
+
 export type MyNgoDetailTourSetQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MyNgoDetailTourSetQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusStep?: TourTourStatusStepChoices | null, statusActivation: boolean, createdDate?: any | null, origin?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: number } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null } | null> | null } | null };
+
+export type MyNgoDetailTourTransactionSetQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyNgoDetailTourTransactionSetQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, tourTransactionSet?: Array<{ __typename?: 'TourTransactionQueryType', id: string, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, tourPackage?: { __typename?: 'TourPackageType', tour?: { __typename?: 'TourQueryType', id: string, title: string } | null } | null, tourGuests?: Array<{ __typename?: 'TourGuestQueryType', id: string, firstname?: string | null, lastname?: string | null, phoneNumber?: string | null, avatarS3?: Array<{ __typename?: 'TourGuestImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null> | null } | null> | null } | null };
 
 export type MyNgoDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2649,6 +2659,66 @@ export function useMyNgoDetailProjectSetLazyQuery(baseOptions?: Apollo.LazyQuery
 export type MyNgoDetailProjectSetQueryHookResult = ReturnType<typeof useMyNgoDetailProjectSetQuery>;
 export type MyNgoDetailProjectSetLazyQueryHookResult = ReturnType<typeof useMyNgoDetailProjectSetLazyQuery>;
 export type MyNgoDetailProjectSetQueryResult = Apollo.QueryResult<MyNgoDetailProjectSetQuery, MyNgoDetailProjectSetQueryVariables>;
+export const MyNgoDetailProjectTransactionSetDocument = gql`
+    query myNGODetailProjectTransactionSet {
+  NGODetail {
+    id
+    projectTransactionSet {
+      dateEnd
+      dateStart
+      id
+      owner {
+        phoneNumber
+        fullname
+        id
+        avatarS3 {
+          large
+          medium
+          small
+        }
+      }
+      guestSet {
+        id
+      }
+      project {
+        name
+        id
+      }
+      status {
+        isActive
+        step
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useMyNgoDetailProjectTransactionSetQuery__
+ *
+ * To run a query within a React component, call `useMyNgoDetailProjectTransactionSetQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyNgoDetailProjectTransactionSetQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyNgoDetailProjectTransactionSetQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyNgoDetailProjectTransactionSetQuery(baseOptions?: Apollo.QueryHookOptions<MyNgoDetailProjectTransactionSetQuery, MyNgoDetailProjectTransactionSetQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyNgoDetailProjectTransactionSetQuery, MyNgoDetailProjectTransactionSetQueryVariables>(MyNgoDetailProjectTransactionSetDocument, options);
+      }
+export function useMyNgoDetailProjectTransactionSetLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyNgoDetailProjectTransactionSetQuery, MyNgoDetailProjectTransactionSetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyNgoDetailProjectTransactionSetQuery, MyNgoDetailProjectTransactionSetQueryVariables>(MyNgoDetailProjectTransactionSetDocument, options);
+        }
+export type MyNgoDetailProjectTransactionSetQueryHookResult = ReturnType<typeof useMyNgoDetailProjectTransactionSetQuery>;
+export type MyNgoDetailProjectTransactionSetLazyQueryHookResult = ReturnType<typeof useMyNgoDetailProjectTransactionSetLazyQuery>;
+export type MyNgoDetailProjectTransactionSetQueryResult = Apollo.QueryResult<MyNgoDetailProjectTransactionSetQuery, MyNgoDetailProjectTransactionSetQueryVariables>;
 export const MyNgoDetailTourSetDocument = gql`
     query myNGODetailTourSet {
   NGODetail {
@@ -2752,6 +2822,74 @@ export function useMyNgoDetailTourSetLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type MyNgoDetailTourSetQueryHookResult = ReturnType<typeof useMyNgoDetailTourSetQuery>;
 export type MyNgoDetailTourSetLazyQueryHookResult = ReturnType<typeof useMyNgoDetailTourSetLazyQuery>;
 export type MyNgoDetailTourSetQueryResult = Apollo.QueryResult<MyNgoDetailTourSetQuery, MyNgoDetailTourSetQueryVariables>;
+export const MyNgoDetailTourTransactionSetDocument = gql`
+    query myNGODetailTourTransactionSet {
+  NGODetail {
+    id
+    tourTransactionSet {
+      id
+      status {
+        isActive
+        step
+      }
+      owner {
+        avatarS3 {
+          large
+          medium
+          small
+        }
+        id
+        fullname
+        phoneNumber
+      }
+      tourPackage {
+        tour {
+          id
+          title
+        }
+      }
+      tourGuests {
+        avatarS3 {
+          large
+          medium
+          small
+        }
+        id
+        firstname
+        lastname
+        phoneNumber
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useMyNgoDetailTourTransactionSetQuery__
+ *
+ * To run a query within a React component, call `useMyNgoDetailTourTransactionSetQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyNgoDetailTourTransactionSetQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyNgoDetailTourTransactionSetQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyNgoDetailTourTransactionSetQuery(baseOptions?: Apollo.QueryHookOptions<MyNgoDetailTourTransactionSetQuery, MyNgoDetailTourTransactionSetQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyNgoDetailTourTransactionSetQuery, MyNgoDetailTourTransactionSetQueryVariables>(MyNgoDetailTourTransactionSetDocument, options);
+      }
+export function useMyNgoDetailTourTransactionSetLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyNgoDetailTourTransactionSetQuery, MyNgoDetailTourTransactionSetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyNgoDetailTourTransactionSetQuery, MyNgoDetailTourTransactionSetQueryVariables>(MyNgoDetailTourTransactionSetDocument, options);
+        }
+export type MyNgoDetailTourTransactionSetQueryHookResult = ReturnType<typeof useMyNgoDetailTourTransactionSetQuery>;
+export type MyNgoDetailTourTransactionSetLazyQueryHookResult = ReturnType<typeof useMyNgoDetailTourTransactionSetLazyQuery>;
+export type MyNgoDetailTourTransactionSetQueryResult = Apollo.QueryResult<MyNgoDetailTourTransactionSetQuery, MyNgoDetailTourTransactionSetQueryVariables>;
 export const MyNgoDetailDocument = gql`
     query myNGODetail {
   NGODetail {

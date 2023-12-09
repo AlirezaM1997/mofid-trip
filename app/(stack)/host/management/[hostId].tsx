@@ -5,13 +5,12 @@ import Stepper from "@modules/stepper";
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import {
   AccommodationProjectStatusStepChoices,
-  MyNgoDetailQuery,
+  MyNgoDetailProjectSetQuery,
   useMyNgoDetailProjectSetQuery,
-  useMyNgoDetailQuery,
 } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
@@ -27,7 +26,7 @@ const HostDetailScreen = () => {
   const { theme } = useTheme();
   const navigation = useNavigation();
   const { hostId } = useLocalSearchParams();
-  const [host, setHost] = useState<MyNgoDetailQuery["NGODetail"]["projectSet"][0]>();
+  const [host, setHost] = useState<MyNgoDetailProjectSetQuery["NGODetail"]["projectSet"][0]>();
   const steps = [tr("pending"), tr("published")];
   const [isVisible, setIsVisible] = useState(false);
   const { localizeNumber } = useLocalizedNumberFormat();
