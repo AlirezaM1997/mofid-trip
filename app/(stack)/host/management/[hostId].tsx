@@ -29,7 +29,7 @@ const HostDetailScreen = () => {
   const [host, setHost] = useState<MyNgoDetailQuery["NGODetail"]["projectSet"][0]>();
   const steps = [tr("pending"), tr("published")];
   const [isVisible, setIsVisible] = useState(false);
-  const {localizeNumber} = useLocalizedNumberFormat()
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { loading, data } = useMyNgoDetailQuery();
 
@@ -50,6 +50,9 @@ const HostDetailScreen = () => {
         name: host?.name,
       },
     });
+  const handleNavigateToRequest = () => {
+    router.push("/host/management/request/" + host.id);
+  };
 
   useEffect(() => {
     if (!loading && data) {
@@ -71,7 +74,8 @@ const HostDetailScreen = () => {
           {host?.name}
         </Text>
         <Text caption type="grey3">
-          {tr("Last modification")} {localizeNumber(calculateHoursSinceGivenDate(host.modifiedDate))} {tr('hour later')}
+          {tr("Last modification")}{" "}
+          {localizeNumber(calculateHoursSinceGivenDate(host.modifiedDate))} {tr("hour later")}
         </Text>
         <WhiteSpace size={20} />
         <Text subtitle1 bold>
@@ -107,7 +111,7 @@ const HostDetailScreen = () => {
       </ListItem>
       {host.statusStep === AccommodationProjectStatusStepChoices.Accept &&
         host.statusActivation && (
-          <ListItem onPress={() => router.push("/comingSoon")}>
+          <ListItem onPress={handleNavigateToRequest}>
             <Feather name="users" size={24} color={theme.colors.black} />
             <ListItem.Content>
               <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>

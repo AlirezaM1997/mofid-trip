@@ -12,7 +12,7 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import Container from "@atoms/container";
 import NoResult from "@organisms/no-result";
 import RequestList from "@modules/tour-request-card/RequestList";
-import RequestListBottomSheet from "@modules/request-list-bottomsheet";
+import RequestListBottomSheet from "@modules/tour-request-card/request-list-bottomsheet";
 
 const RequestScreen = () => {
   const { tr } = useTranslation();
@@ -24,7 +24,7 @@ const RequestScreen = () => {
   const handleClose = () => setIsVisible(false);
   const handleOpen = () => setIsVisible(true);
 
-  const { loading, data } = useMyNgoDetailQuery();
+  const { loading, data, refetch } = useMyNgoDetailQuery();
 
   const [transactionSet, setTransactionSet] =
     useState<MyNgoDetailQuery["NGODetail"]["tourTransactionSet"]>();
@@ -72,7 +72,9 @@ const RequestScreen = () => {
       <RequestListBottomSheet
         isVisible={isVisible}
         onBackdropPress={handleClose}
+        handleClose={handleClose}
         transaction={selectedTransaction}
+        refetch={refetch}
       />
     </>
   );

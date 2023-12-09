@@ -40,7 +40,7 @@ const HostTransactionBottomSheet = ({ children }) => {
 
   return (
     <BottomButtonLayout
-      buttons={[<Button onPress={() => setIsVisible(true)}>{tr("confirm request")}</Button>]}>
+      buttons={[<Button onPress={() => setIsVisible(true)}>{tr("record request")}</Button>]}>
       {children}
       <BottomSheet isVisible={isVisible} onBackdropPress={handleClose}>
         <Container>

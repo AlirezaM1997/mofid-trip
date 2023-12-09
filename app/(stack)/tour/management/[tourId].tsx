@@ -5,7 +5,6 @@ import Stepper from "@modules/stepper";
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import {
   MyNgoDetailQuery,
-  MyNgoDetailQueryResult,
   TourTourStatusStepChoices,
   useMyNgoDetailQuery,
 } from "@src/gql/generated";
@@ -40,7 +39,9 @@ const TourDetailScreen = () => {
     };
     return lookup[tour.statusStep];
   };
-
+  const handleNavigateToRequest = () => {
+    router.push("/tour/management/request/" + tour.id);
+  };
   useEffect(() => {
     if (tour) navigation.setOptions({ title: tour?.title });
   }, [tour]);
@@ -107,12 +108,7 @@ const TourDetailScreen = () => {
         />
       </ListItem>
       {tour.statusStep === TourTourStatusStepChoices.Accept && tour.statusActivation && (
-        <ListItem
-          onPress={() => {
-            router.push({
-              pathname: "/tour/management/request/" + tour.id,
-            });
-          }}>
+        <ListItem onPress={handleNavigateToRequest}>
           <Feather name="users" size={24} color={theme.colors.black} />
           <ListItem.Content>
             <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>
