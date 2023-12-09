@@ -25,9 +25,6 @@ const HostManagementScreen = () => {
   const navigateToTourDetail = (host: (typeof hostSet)[0]) =>
     router.push({
       pathname: `/host/management/${host.id}`,
-      params: {
-        hostStr: JSON.stringify(host),
-      },
     });
 
   useEffect(() => {

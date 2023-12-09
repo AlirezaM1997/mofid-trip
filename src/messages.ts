@@ -140,6 +140,51 @@ export const messages = {
     fa_ir: "رد شده",
     en_us: "failed",
   },
+  telegram: {
+    ar: "تلگرام",
+    fa_ir: "تلگرام",
+    en_us: "Telegram",
+  },
+  twitter: {
+    ar: "تویيتر",
+    fa_ir: "تویيتر",
+    en_us: "Twitter",
+  },
+  whatsapp: {
+    ar: "واتساپ",
+    fa_ir: "واتساپ",
+    en_us: "Whatsapp",
+  },
+  email: {
+    ar: "ایمیل",
+    fa_ir: "ایمیل",
+    en_us: "E-mail",
+  },
+  "or share the link": {
+    ar: "أو مشاركة الرابط",
+    fa_ir: "یا اشتراک لینک",
+    en_us: "Or share the link",
+  },
+  "you can republish the details of this hosting to your friends so that they also know about the existence of this hosting": {
+    ar: "يمكنك إعادة نشر تفاصيل هذه الاستضافة لأصدقائك حتى يعلموا أيضًا بوجود هذه الاستضافة",
+    fa_ir: "شما می توانید جزئیات این میزبانی را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این میزبانی مطلع شوند",
+    en_us: "You can republish the details of this hosting to your friends so that they also know about the existence of this hosting",
+  },
+  "you can republish the details of this tour to your friends so that they also know about the existence of this tour": {
+    ar: "يمكنك إعادة نشر تفاصيل هذه الجولة لأصدقائك حتى يعرفوا أيضًا بوجود هذه الجولة",
+    fa_ir: "شما می توانید جزئیات این تور را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این تور مطلع شوند",
+    en_us: "You can republish the details of this tour to your friends so that they also know about the existence of this tour",
+  },
+  "are you sure about shared hosting?": {
+    ar: "هل أنت متأكد من الاستضافة المشتركة؟",
+    fa_ir: "آیا مطمئن به اشتراک میزبانی هستید؟",
+    en_us: "Are you sure about shared hosting?",
+  },
+  "are you sure about the tour subscription?": {
+    ar: "هل أنت متأكد من اشتراك الجولة؟",
+    fa_ir: "آیا مطمئن به اشتراک تور هستید؟",
+    en_us: "Are you sure about the tour subscription?",
+  },
   "accompanying passengers": {
     ar: "الركاب المرافقين",
     fa_ir: "مسافرین همراه",
@@ -2049,8 +2094,7 @@ export const messages = {
   },
   "choose or write the cost of your tour, you can give a discount to the original price.": {
     ar: "اختر أو اكتب تكلفة جولتك، يمكنك إعطاء خصم على السعر الأصلي.",
-    fa_ir:
-      "هزینه تور خودتان را انتخاب کنید یا بنویسید، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
+    fa_ir: "هزینه تور خودتان را انتخاب کنید یا بنویسید، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
     en_us: "Choose or write the cost of your tour, you can give a discount to the original price.",
   },
   Free: {
@@ -2319,15 +2363,17 @@ export const messages = {
   },
   "verification code has been sent, enter it. if you do not receive the code, hit send again": {
     ar: "تم إرسال رمز التحقق، أدخله. إذا لم تستلم الرمز، اضغط على إرسال مرة أخرى",
-    fa_ir: "کد تأیید ارسال شده است، آن را وارد کنید. اگر کد را دریافت نکردید، دوباره ارسال را بزنید",
-    en_us: "Verification code has been sent, enter it. If you do not receive the code, hit send again",
+    fa_ir:
+      "کد تأیید ارسال شده است، آن را وارد کنید. اگر کد را دریافت نکردید، دوباره ارسال را بزنید",
+    en_us:
+      "Verification code has been sent, enter it. If you do not receive the code, hit send again",
   },
   "resend the code": {
     ar: "إعادة إرسال الرمز",
     fa_ir: "ارسال مجدد کد",
     en_us: "Resend the code",
   },
-  "loading": {
+  loading: {
     ar: "تحميل",
     fa_ir: "در حال بارگزاری",
     en_us: "Loading",

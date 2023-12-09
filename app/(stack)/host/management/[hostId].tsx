@@ -19,6 +19,7 @@ import { StyleSheet, View } from "react-native";
 import ComingSoon from "@modules/coming-soon";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { calculateHoursSinceGivenDate } from "@src/helper/date";
+import Share from "@modules/share";
 
 const HostDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -58,7 +59,7 @@ const HostDetailScreen = () => {
     if (!loading && data) {
       const h = data.NGODetail.projectSet.find(host => host.id === hostId);
       setHost(h);
-      navigation.setOptions({ title: h?.name });
+      navigation.setOptions({ title: h?.name, headerRight: () => <Share /> });
     }
   }, [loading, data]);
 

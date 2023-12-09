@@ -10,13 +10,14 @@ import {
 } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import { Divider } from "@rneui/themed";
 import ComingSoon from "@modules/coming-soon";
 import LoadingIndicator from "@modules/Loading-indicator";
+import Share from "@modules/share";
 
 const TourDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -43,7 +44,7 @@ const TourDetailScreen = () => {
     router.push("/tour/management/request/" + tour.id);
   };
   useEffect(() => {
-    if (tour) navigation.setOptions({ title: tour?.title });
+    if (tour) navigation.setOptions({ title: tour?.title ,headerRight: () => <Share/>, });
   }, [tour]);
 
   useEffect(() => {
