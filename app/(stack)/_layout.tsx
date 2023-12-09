@@ -45,6 +45,12 @@ const HomeLayout = () => {
           />
         ),
       })}>
+        <Stack.Screen
+        name="search"
+        options={{
+          title: tr("Search"),
+        }}
+      />
       <Stack.Screen
         name="tour"
         options={{
@@ -169,6 +175,12 @@ const HomeLayout = () => {
         name="host/management/index"
         options={{
           title: tr("Host Management"),
+        }}
+      />
+      <Stack.Screen
+        name="host/management/request/[hostId]"
+        options={{
+          title: tr("Loading"),
         }}
       />
       <Stack.Screen
