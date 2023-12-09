@@ -34,7 +34,7 @@ const Page: React.FC = ({ ...props }) => {
   const { projectId, name } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisible, setIsVisible] = useState<boolean>();
-  const isNgo = useSelector((state: RootState) => state.userSlice.userDetail.isNgo);
+  const isNgo = useSelector((state: RootState) => state.authSlice.loginData.metadata.is_ngo);
 
   const { loading, data } = useProjectDetailQuery({
     variables: {

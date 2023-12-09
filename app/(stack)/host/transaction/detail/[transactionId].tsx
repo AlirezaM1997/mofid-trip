@@ -7,7 +7,7 @@ import { Button } from "@rneui/themed";
 import * as Network from "expo-network";
 import useTranslation from "@src/hooks/translation";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import LoadingIndicator from "@modules/Loading-indicator";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import HostTransactionDetail from "@modules/host/transaction/detail ";
@@ -19,6 +19,8 @@ const TransactionDetailsScreen = () => {
   const navigation = useNavigation();
   const { transactionId } = useLocalSearchParams();
   const [isVisible, setIsVisible] = useState(false);
+  const [project, setProject] = useState<ProjectTransactionQueryType["project"]>();
+  const [status, setStatus] = useState<ProjectTransactionQueryType["status"]>();
 
   const [addPurchase] = useProjectPurchaseAddMutation();
 
@@ -29,10 +31,6 @@ const TransactionDetailsScreen = () => {
   if (!data || loading) {
     return <LoadingIndicator />;
   }
-
-  const { status, project } = data.projectTransactionDetail;
-
-  navigation.setOptions({ title: project.name });
 
   const purchaseHandler = async () => {
     const ip = await Network.getIpAddressAsync();
@@ -62,6 +60,16 @@ const TransactionDetailsScreen = () => {
     };
     return lookup[status.step || null];
   };
+
+  useEffect(() => {
+    if (!loading && data) {
+      setProject(data.projectTransactionDetail.project);
+      setStatus(data.projectTransactionDetail.status);
+      navigation.setOptions({ title: data.projectTransactionDetail.project.name });
+    }
+  }, [loading, data]);
+
+  if (loading || !project || !status) return <LoadingIndicator />;
 
   return (
     <BottomButtonLayout buttons={bottomButton() ? [bottomButton()] : []}>

@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import {
-  TourTransactionQueryType,
-  useMyNgoDetailQuery,
-  MyNgoDetailQuery,
+  useMyNgoDetailProjectTransactionSetQuery,
+  MyNgoDetailProjectTransactionSetQuery,
 } from "@src/gql/generated";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { useLocalSearchParams, useNavigation } from "expo-router";
@@ -13,29 +12,40 @@ import Container from "@atoms/container";
 import NoResult from "@organisms/no-result";
 import RequestList from "@modules/host-request-card/RequestList";
 import RequestListBottomSheet from "@modules/host-request-card/request-list-bottomsheet";
+import { useIsFocused } from "@react-navigation/native";
 
 const RequestScreen = () => {
   const { tr } = useTranslation();
   const { hostId } = useLocalSearchParams();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const [isVisible, setIsVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] =
-    useState<MyNgoDetailQuery["NGODetail"]["projectTransactionSet"][number]>();
+    useState<MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number]>();
 
   const handleClose = () => setIsVisible(false);
   const handleOpen = () => setIsVisible(true);
 
-  const { loading, data, refetch } = useMyNgoDetailQuery();
+  const { loading, data, refetch, networkStatus } = useMyNgoDetailProjectTransactionSetQuery({
+    notifyOnNetworkStatusChange: true,
+  });
 
-  const [transactionSet, setTransactionSet] =
-    useState<MyNgoDetailQuery["NGODetail"]["projectTransactionSet"]>();
+  const [transactionSet, setTransactionSet] = useState<
+    MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"]
+  >([]);
 
   const handleRequestPress = (
-    transaction: MyNgoDetailQuery["NGODetail"]["projectTransactionSet"][number]
+    transaction: MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number]
   ) => {
     setSelectedTransaction(transaction);
     handleOpen();
   };
+
+  useEffect(() => {
+    if (isFocused) {
+      refetch();
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     if (!loading && data) {
@@ -51,6 +61,8 @@ const RequestScreen = () => {
 
   navigation.setOptions({ title: transactionSet[0].project.name });
 
+  console.log("transactionSet", transactionSet);
+
   return (
     <>
       <Container style={style.container}>
@@ -61,8 +73,11 @@ const RequestScreen = () => {
           </Text>
         </View>
         <ScrollView>
-          {transactionSet.map(
-            (transaction: MyNgoDetailQuery["NGODetail"]["projectTransactionSet"][number], i) => (
+          {transactionSet?.map(
+            (
+              transaction: MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number],
+              i
+            ) => (
               <RequestList
                 key={transaction.id}
                 transaction={transaction}

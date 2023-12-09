@@ -2,34 +2,47 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { useMyNgoDetailQuery, MyNgoDetailQuery } from "@src/gql/generated";
+import {
+  MyNgoDetailProjectTransactionSetQuery,
+  useMyNgoDetailProjectTransactionSetQuery,
+} from "@src/gql/generated";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { useNavigation } from "expo-router";
 import Container from "@atoms/container";
 import NoResult from "@organisms/no-result";
 import RequestList from "@modules/host-request-card/RequestList";
 import RequestListBottomSheet from "@modules/host-request-card/request-list-bottomsheet";
+import { useIsFocused } from "@react-navigation/native";
 
 const RequestScreen = () => {
   const { tr } = useTranslation();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   const [isVisible, setIsVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] =
-    useState<MyNgoDetailQuery["NGODetail"]["projectTransactionSet"][number]>();
+    useState<MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number]>();
   const [transactionSet, setTransactionSet] =
-    useState<MyNgoDetailQuery["NGODetail"]["projectTransactionSet"]>();
+    useState<MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"]>();
 
   const handleOpen = () => setIsVisible(true);
   const handleClose = () => setIsVisible(false);
   const handleRequestPress = (
-    transaction: MyNgoDetailQuery["NGODetail"]["projectTransactionSet"][number]
+    transaction: MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number]
   ) => {
     setSelectedTransaction(transaction);
     handleOpen();
   };
 
-  const { loading, data ,refetch} = useMyNgoDetailQuery();
+  const { loading, data, refetch, networkStatus } = useMyNgoDetailProjectTransactionSetQuery({
+    notifyOnNetworkStatusChange: true,
+  });
+
+  useEffect(() => {
+    if (isFocused) {
+      refetch();
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     if (!loading && data) {
@@ -56,7 +69,10 @@ const RequestScreen = () => {
         </View>
         <ScrollView>
           {transactionSet.map(
-            (transaction: MyNgoDetailQuery["NGODetail"]["projectTransactionSet"][number], i) => (
+            (
+              transaction: MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number],
+              i
+            ) => (
               <RequestList
                 key={transaction.id}
                 transaction={transaction}

@@ -4,9 +4,9 @@ import ImageSlider from "@modules/image-slider";
 import Stepper from "@modules/stepper";
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import {
-  MyNgoDetailQuery,
+  MyNgoDetailTourSetQuery,
   TourTourStatusStepChoices,
-  useMyNgoDetailQuery,
+  useMyNgoDetailTourSetQuery,
 } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
@@ -27,10 +27,9 @@ const TourDetailScreen = () => {
   const { tourId } = useLocalSearchParams();
   const steps = [tr("pending"), tr("published"), tr("End Tour")];
   const [isVisible, setIsVisible] = useState(false);
-  const [tour, setTour] = useState<MyNgoDetailQuery["NGODetail"]["tourSet"][0]>();
-  const transaction = useRef<MyNgoDetailQuery["NGODetail"]["tourTransactionSet"][0]>();
+  const [tour, setTour] = useState<MyNgoDetailTourSetQuery["NGODetail"]["tourSet"][0]>();
 
-  const { loading, data } = useMyNgoDetailQuery();
+  const { loading, data } = useMyNgoDetailTourSetQuery();
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
@@ -51,9 +50,6 @@ const TourDetailScreen = () => {
     if (!loading && data) {
       const t = data.NGODetail.tourSet.find(t => t.id === tourId);
       setTour(t);
-      transaction.current = data.NGODetail.tourTransactionSet.find(
-        tr => tr.tourPackage.tour.id === t.id
-      );
     }
   }, [loading, data]);
 
