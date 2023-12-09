@@ -1,25 +1,25 @@
-import React from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { router } from "expo-router";
-import { Input } from "@rneui/themed";
+import React, { useState } from "react";
 import Container from "@atoms/container";
+import { useDispatch } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
+import { Image, Input } from "@rneui/themed";
 import { Button, Text } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
-import BottomButtonLayout from "@components/layout/bottom-button";
-import { useBankCardAddMutation } from "@src/gql/generated";
 import Toast from "react-native-toast-message";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserDetail } from "@src/slice/user-slice";
-import { RootState } from "@src/store";
+import { BANKES_DATA } from "@src/constant/banks";
+import { ImageSourcePropType } from "react-native";
+import useTranslation from "@src/hooks/translation";
+import { useBankCardAddMutation } from "@src/gql/generated";
+import BottomButtonLayout from "@components/layout/bottom-button";
 
 const initialValues = { title: "", iban: "", cardPan: "" };
 
 const AddCardScreen = () => {
   const { tr } = useTranslation();
   const dispatch = useDispatch();
-  const { userDetail } = useSelector((state: RootState) => state.userSlice);
+  const [bankIcon, setBankIcon] = useState<string>("");
 
   const [bankCardAdd, { loading }] = useBankCardAddMutation();
 
@@ -31,24 +31,29 @@ const AddCardScreen = () => {
   });
 
   const handleSubmit = async value => {
-    const { data } = await bankCardAdd({ variables: { data: value } });
+    const { data } = await bankCardAdd({
+      variables: {
+        data: {
+          title: value.title,
+          cardPan: value.cardPan,
+          ...(value.iban ? { iban: value.iban } : {}),
+        },
+      },
+    });
 
     if (data.bankCardAdd.status === "OK") {
       Toast.show({
         type: "success",
         text1: tr("card added successfully"),
       });
-      dispatch(
-        setUserDetail({
-          ...userDetail,
-          wallet: {
-            ...userDetail.wallet,
-            walletCards: [...userDetail.wallet.walletCards, value],
-          },
-        })
-      );
+
       router.push("wallet/cards");
     }
+  };
+
+  const handleIcon = e => {
+    const icon = BANKES_DATA.find(item => e.target.value.includes(item.cardPan))?.icon;
+    icon && setBankIcon(icon);
   };
 
   return (
@@ -106,6 +111,10 @@ const AddCardScreen = () => {
               value={values.cardPan}
               onBlur={handleBlur("cardPan")}
               placeholder={`${tr("cardPan")}`}
+              leftIcon={
+                <Image source={bankIcon as ImageSourcePropType} style={{ width: 18, height: 18 }} />
+              }
+              onChange={handleIcon}
               onChangeText={handleChange("cardPan")}
               errorMessage={touched.cardPan && (errors.cardPan as string)}
             />

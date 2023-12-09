@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import WhiteSpace from "@atoms/white-space";
 import { Entypo } from "@expo/vector-icons";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -6,18 +6,30 @@ import { Avatar, BottomSheet, Button, Divider, Text, useTheme } from "@rneui/the
 import useTranslation from "@src/hooks/translation";
 import ButtonRow from "@modules/button-rows";
 import Container from "@atoms/container";
+import { BANKES_DATA } from "@src/constant/banks";
 
 const WalletCardDetailBottomSheet = ({ card }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
+  const [bankDetail, setBankDetail] = useState({ title: card.title, icon: card.icon });
+
+  useEffect(() => {
+    const cardDetail = BANKES_DATA.find(item => card.cardPan.includes(item.cardPan));
+    cardDetail && setBankDetail({ icon: cardDetail?.icon, title: cardDetail?.faName });
+  }, []);
 
   return (
     <>
       <Pressable onPress={() => setIsVisible(true)} style={styles.card}>
-        <Avatar rounded size={40} containerStyle={{ backgroundColor: theme.colors.grey1 }} />
+        <Avatar
+          rounded
+          size={40}
+          source={bankDetail?.icon}
+          containerStyle={{ backgroundColor: !bankDetail.icon && theme.colors.grey1 }}
+        />
         <View style={styles.cardData}>
-          <Text>{card.title}</Text>
+          <Text>{bankDetail.title}</Text>
           <Text>{card.cardPan}</Text>
         </View>
         <Entypo name="chevron-small-left" size={24} color="black" />
@@ -26,11 +38,16 @@ const WalletCardDetailBottomSheet = ({ card }) => {
 
       <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
         <Container>
-          <Avatar rounded size={40} containerStyle={styles.avatar(theme)} />
+          <Avatar
+            rounded
+            size={40}
+            source={bankDetail?.icon}
+            containerStyle={styles.avatar(theme)}
+          />
 
           <WhiteSpace size={16} />
 
-          <Text center>{card.title}</Text>
+          <Text center>{bankDetail.title}</Text>
 
           <WhiteSpace size={24} />
           <Divider borderStyle="dashed" orientation="vertical" />
@@ -79,7 +96,7 @@ const styles = StyleSheet.create({
   cardData: {
     flex: 1,
   },
-  avatar: theme => ({ backgroundColor: theme.colors.grey1, margin: "auto" }),
+  avatar: theme => ({ margin: "auto" }),
   cardDetail: {
     flexDirection: "row",
     alignItems: "center",

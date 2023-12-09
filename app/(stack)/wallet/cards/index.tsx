@@ -1,20 +1,27 @@
-import React from "react";
-import { Button, Text, useTheme } from "@rneui/themed";
+import React, { useEffect } from "react";
+import { router } from "expo-router";
 import { RootState } from "@src/store";
 import Container from "@atoms/container";
 import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
+import NoResult from "@organisms/no-result";
 import { AntDesign } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
+import { Button, Text, useTheme } from "@rneui/themed";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import WalletCardDetailBottomSheet from "@modules/wallet/card-detail-bottom-sheet";
-import { router } from "expo-router";
+import { useUserDetailQuery } from "@src/gql/generated";
+import LoadingIndicator from "@modules/Loading-indicator";
 
 const walletCardsScreen = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
 
-  const { walletCards } = useSelector((state: RootState) => state.userSlice.userDetail.wallet);
+  const { data, loading, refetch } = useUserDetailQuery();
+
+  if (!data || loading) return <LoadingIndicator />;
+
+  const { walletCards } = data.userDetail.wallet;
 
   return (
     <BottomButtonLayout
@@ -37,9 +44,11 @@ const walletCardsScreen = () => {
 
         <WhiteSpace size={24} />
 
-        {walletCards.map(card => (
-          <WalletCardDetailBottomSheet key={card.id} card={card} />
-        ))}
+        {!walletCards ? (
+          <NoResult />
+        ) : (
+          walletCards?.map(card => <WalletCardDetailBottomSheet key={card.id} card={card} />)
+        )}
       </Container>
     </BottomButtonLayout>
   );

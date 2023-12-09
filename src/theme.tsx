@@ -306,6 +306,10 @@ export const theme = isRtl =>
             fontFamily: "DanaNoEn",
           },
         }),
+        leftIconContainerStyle: {
+          position: "absolute",
+          left: 10,
+        },
         labelStyle: {
           marginBottom: 5,
           ...Platform.select({
@@ -474,10 +478,19 @@ export const theme = isRtl =>
           borderTopRightRadius: 12,
         },
       },
+      Avatar: {
+        avatarStyle: {
+          // left: "50%",
+          // top: "50%",
+          // transform: "translate(-50%, -50%)",
+          width: "100%",
+          height: "100%",
+        },
+      },
       CardDivider: (props, theme) => ({
         color: theme.colors.grey0,
       }),
-      Divider: ({ thickness,borderStyle, bgColor, style, ...props }, theme) => ({
+      Divider: ({ thickness, borderStyle, bgColor, style, ...props }, theme) => ({
         style: {
           borderWidth: thickness,
           backgroundColor: "transparent",
