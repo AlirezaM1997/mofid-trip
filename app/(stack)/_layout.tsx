@@ -94,6 +94,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="wallet/deposit"
+        options={{
+          title: tr("increase balance"),
+        }}
+      />
+      <Stack.Screen
         name="SMSVerification"
         options={{
           title: tr("Verification"),
@@ -310,10 +316,30 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="paymentStatus"
+        name="transactionPaymentStatus"
         options={{
-          headerLeft: () => null,
           title: tr("payment status"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/receipt/paymentStatus"
+        options={{
+          title: tr("payment status"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/cards/index"
+        options={{
+          title: tr("my cards"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/cards/add/index"
+        options={{
+          title: tr("add card"),
           headerBackButtonMenuEnabled: false,
         }}
       />

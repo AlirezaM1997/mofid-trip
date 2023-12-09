@@ -26,7 +26,7 @@ const RequestScreen = () => {
   const handleClose = () => setIsVisible(false);
   const handleOpen = () => setIsVisible(true);
 
-  const { loading, data, refetch, networkStatus } = useMyNgoDetailProjectTransactionSetQuery({
+  const { loading, data, refetch } = useMyNgoDetailProjectTransactionSetQuery({
     notifyOnNetworkStatusChange: true,
   });
 

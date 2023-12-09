@@ -19,8 +19,6 @@ const TransactionDetailsScreen = () => {
   const navigation = useNavigation();
   const { transactionId } = useLocalSearchParams();
   const [isVisible, setIsVisible] = useState(false);
-  const [project, setProject] = useState<ProjectTransactionQueryType["project"]>();
-  const [status, setStatus] = useState<ProjectTransactionQueryType["status"]>();
 
   const [addPurchase] = useProjectPurchaseAddMutation();
 
@@ -31,6 +29,12 @@ const TransactionDetailsScreen = () => {
   if (!data || loading) {
     return <LoadingIndicator />;
   }
+
+  const { status, project } = data.projectTransactionDetail;
+
+  useEffect(() => {
+    navigation.setOptions({ title: project.name });
+  }, []);
 
   const purchaseHandler = async () => {
     const ip = await Network.getIpAddressAsync();
@@ -60,16 +64,6 @@ const TransactionDetailsScreen = () => {
     };
     return lookup[status.step || null];
   };
-
-  useEffect(() => {
-    if (!loading && data) {
-      setProject(data.projectTransactionDetail.project);
-      setStatus(data.projectTransactionDetail.status);
-      navigation.setOptions({ title: data.projectTransactionDetail.project.name });
-    }
-  }, [loading, data]);
-
-  if (loading || !project || !status) return <LoadingIndicator />;
 
   return (
     <BottomButtonLayout buttons={bottomButton() ? [bottomButton()] : []}>

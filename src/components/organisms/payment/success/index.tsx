@@ -2,30 +2,22 @@ import React from "react";
 import Container from "@atoms/container";
 import { StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { Button, Text, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { router, useLocalSearchParams } from "expo-router";
+import { Button, Text, useTheme } from "@rneui/themed";
 import BottomButtonLayout from "@components/layout/bottom-button";
+import { router } from "expo-router";
 
-const SuccessPayment = () => {
+const SuccessPayment = ({ handlePress }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { id, type } = useLocalSearchParams();
+
   return (
     <BottomButtonLayout
       contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
       buttons={[
-        <Button
-          onPress={() =>
-            router.push({
-              pathname:
-                type === "tour"
-                  ? `tour/transaction/successReceipt`
-                  : `host/transaction/successReceipt`,
-              params: { id },
-            })
-          }>
-          {tr("view receipt")}
+        <Button onPress={handlePress}>{tr("view receipt")}</Button>,
+        <Button type="outline" onPress={() => router.push("/")}>
+          {tr("return to home")}
         </Button>,
       ]}>
       <Container style={styles.container}>

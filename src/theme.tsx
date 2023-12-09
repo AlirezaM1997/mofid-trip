@@ -221,7 +221,7 @@ export const theme = isRtl =>
         let buttonStyle: any = {
           gap: 8,
           borderRadius: 12,
-          gap:8,
+          gap: 8,
           fontWeight: "400",
           ...Platform.select({
             web: {
@@ -306,6 +306,10 @@ export const theme = isRtl =>
             fontFamily: "DanaNoEn",
           },
         }),
+        leftIconContainerStyle: {
+          position: "absolute",
+          left: 10,
+        },
         labelStyle: {
           marginBottom: 5,
           ...Platform.select({
@@ -474,15 +478,21 @@ export const theme = isRtl =>
           borderTopRightRadius: 12,
         },
       },
+      Avatar: {
+        avatarStyle: {
+          width: "100%",
+          height: "100%",
+        },
+      },
       CardDivider: (props, theme) => ({
         color: theme.colors.grey0,
       }),
-      Divider: ({ thickness, vertical, bgColor, style, ...props }, theme) => ({
+      Divider: ({ thickness, borderStyle, bgColor, style, ...props }, theme) => ({
         style: {
           borderWidth: thickness,
           backgroundColor: "transparent",
           borderColor: theme.colors[bgColor as string] ?? theme.colors.grey1,
-          transform: vertical && "rotate(270deg)",
+          borderStyle: borderStyle,
         },
       }),
       Badge: ({ type, color, ...props }, theme) => {

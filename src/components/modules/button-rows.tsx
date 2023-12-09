@@ -9,7 +9,9 @@ const ButtonRow = ({ children, ...props }: ButtonRowProps) => {
   return (
     <View style={styles.row}>
       {children.map((button, i) => (
-        <View  key={i} style={styles.child}>{button}</View>
+        <View key={i} style={styles.child}>
+          {button}
+        </View>
       ))}
     </View>
   );
@@ -21,9 +23,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 10,
   },
-  child:{
-    flexGrow: 1
-  }
+  child: {
+    flexGrow: 1,
+  },
 });
 
 export default ButtonRow;

@@ -39,6 +39,11 @@ export const messages = {
     fa_ir: "بازگشت",
     en_us: "Back",
   },
+  "awaiting confirmation": {
+    ar: "بانتظار التأكيد",
+    fa_ir: "در انتظار تایید",
+    en_us: "awaiting confirmation",
+  },
   "you can upload images related to your tour, please note that the size of the images should be less than 3 mb. note that this section is optional.":
     {
       ar: "يمكنك تحميل الصور المتعلقة بجولتك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
@@ -129,6 +134,54 @@ export const messages = {
     ar: "حذف",
     fa_ir: "حذف",
     en_us: "Delete",
+  },
+  "must be a number": {
+    ar: "يجب أن يكون رقما",
+    fa_ir: "لطفا عدد وارد کنید",
+    en_us: "must be a number",
+  },
+  "cardpan should be 16 character": {
+    ar: "يجب أن يتكون رقم البطاقة من 16 رقمًا",
+    fa_ir: "شماره کارت باید ۱۶ رقمی باشد",
+    en_us: "cardpan should be 16 character",
+  },
+  "card added successfully": {
+    ar: "تمت إضافة البطاقة الجديدة بنجاح",
+    fa_ir: "کارت جدید با موفقیت اضافه شد",
+    en_us: "card added successfully",
+  },
+  "cardpan is required": {
+    ar: "مطلوب بطاقة",
+    fa_ir: "شماره کارت ضروری است",
+    en_us: "cardPan is required",
+  },
+  "card name": {
+    ar: "اسم البطاقة",
+    fa_ir: "نام کارت",
+    en_us: "card name",
+  },
+  "register card": {
+    ar: "تم حفظ البطاقة",
+    fa_ir: "ثبت کارت",
+    en_us: "register card",
+  },
+  "to create a new card, write the main details of your bank card so that it is registered in this account in mofidtrip":
+    {
+      ar: "لإنشاء بطاقة جديدة، قم بكتابة التفاصيل الرئيسية لبطاقتك المصرفية بحيث يتم تسجيلها في هذا الحساب على مفید تریپ",
+      fa_ir:
+        "برای ایجاد کارت جدید، جزئیات اصلی کارت بانکی‌تان را بنویسید تا در این حساب در مفیدتریپ ثبت شود",
+      en_us:
+        "To create a new card, write the main details of your bank card so that it is registered in this account in Mofidtrip",
+    },
+  "add a new card": {
+    ar: "أضف بطاقة جديدة",
+    fa_ir: "افزودن کارت جدید",
+    en_us: "Add a new card",
+  },
+  "add card": {
+    ar: "أضف بطاقة",
+    fa_ir: "افزودن کارت",
+    en_us: "Add card",
   },
   description: {
     ar: "تفصيل",
@@ -651,7 +704,17 @@ export const messages = {
     fa_ir: "اولیه",
     en_us: "Initial",
   },
-
+  "you can manage your bank cards and use them in the withdrawal process.": {
+    ar: "يمكنك إدارة بطاقاتك المصرفية واستخدامها في عملية السحب.",
+    fa_ir:
+      "کارت های بانکی خودتان را می‌توانید مدیریت کنید و در مراحل برداشت از آن ها استفاده کنید.",
+    en_us: "you can manage your bank cards and use them in the withdrawal process.",
+  },
+  "my registered cards": {
+    ar: "بطاقاتي المسجلة",
+    fa_ir: "کارت های ثبت شده من",
+    en_us: "My registered cards",
+  },
   rejected: {
     ar: "مرفوض",
     fa_ir: "رد شده",
@@ -870,6 +933,11 @@ export const messages = {
     fa_ir: "مالیات",
     en_us: "Tax",
   },
+  "wallet balance": {
+    ar: "رصيد المحفظة",
+    fa_ir: "موجودی کیف پول",
+    en_us: "Wallet balance",
+  },
   "invalid name": {
     ar: "اسم غير صالح",
     fa_ir: "نام نامعتبر",
@@ -895,16 +963,27 @@ export const messages = {
     fa_ir: "نه، لغو",
     en_us: "No, Cancel",
   },
+  "deposit to the account": {
+    ar: "إيداع في الحساب",
+    fa_ir: "واریز به حساب",
+    en_us: "deposit to the account",
+  },
+  "payment by card": {
+    ar: "الدفع عن طريق البطاقة",
+    fa_ir: "پرداخت از کارت",
+    en_us: "payment by card",
+  },
+  "increase wallet balance": {
+    ar: "زيادة رصيد المحفظة",
+    fa_ir: "افزایش موجودی کیف پول",
+    en_us: "Increase wallet balance",
+  },
   "your request has been successfully submitted": {
     ar: "لقد تم تسجيل طلبك بنجاح",
     fa_ir: "درخواست شما با موفقیت ثبت شد",
     en_us: "Your request has been successfully submitted",
   },
-  "wallet balance": {
-    ar: "توازن الحقيبة",
-    fa_ir: "موجودی کیف",
-    en_us: "Wallet balance",
-  },
+
   "unsuccessful payment, wallet balance is not enough": {
     ar: "عملية دفع غير ناجحة، رصيد المحفظة غير كافي",
     fa_ir: "پرداخت ناموفق، موجودی کیف پول کافی نمی‌باشد",
@@ -976,6 +1055,21 @@ export const messages = {
     fa_ir: "برداشت",
     en_us: "Withdraw ",
   },
+  "amount is required": {
+    ar: "محصول",
+    fa_ir: "مبلغ ضروری است",
+    en_us: "amount is required ",
+  },
+  amount: {
+    ar: "كمية",
+    fa_ir: "مبلغ",
+    en_us: "amount ",
+  },
+  "select or enter an amount to increase your wallet balance.": {
+    ar: "حدد أو أدخل مبلغًا لزيادة رصيد محفظتك.",
+    fa_ir: "برای افزایش موجودی کیف پول، مبلغ را انتخاب یا وارد کنید.",
+    en_us: "Select or enter an amount to increase your wallet balance.",
+  },
   "increase balance": {
     ar: "زيادة المخزون",
     fa_ir: "افزایش موجودی",
@@ -1042,11 +1136,12 @@ export const messages = {
     fa_ir: "بازگشت به خانه",
     en_us: "Return to home",
   },
-  amount: {
-    ar: "كمية",
-    fa_ir: "میزان",
-    en_us: "Amount",
+  "amount should be at least 10000": {
+    ar: "يجب أن يكون المبلغ على الأقل 10000",
+    fa_ir: "مبلغ باید حداقل 10000 باشد",
+    en_us: "amount should be at least 10000",
   },
+
   "log in as an individual": {
     ar: "تسجيل الدخول كفرد",
     fa_ir: "ورود به عنوان فرد",
@@ -1196,11 +1291,7 @@ export const messages = {
     en_us:
       "You can contact the owner of the place through the following social networks or directly",
   },
-  whatsapp: {
-    ar: "واتس اب",
-    fa_ir: "واتساپ",
-    en_us: "Whatsapp",
-  },
+
   message: {
     ar: "رسالة",
     fa_ir: "پیام",
@@ -1728,6 +1819,21 @@ export const messages = {
     ar: "منظر",
     fa_ir: "مشاهده",
     en_us: "View",
+  },
+  iban: {
+    ar: "رقم شابا",
+    fa_ir: "شماره شبا",
+    en_us: "iban",
+  },
+  cardpan: {
+    ar: "رقم البطاقة",
+    fa_ir: "شماره کارت",
+    en_us: "cardPan",
+  },
+  "edit card": {
+    ar: "تحرير البطاقة",
+    fa_ir: "ویرایش کارت",
+    en_us: "edit card",
   },
   "team leader": {
     ar: "رئيس الفريق",
@@ -2377,5 +2483,10 @@ export const messages = {
     ar: "تحميل",
     fa_ir: "در حال بارگزاری",
     en_us: "Loading",
+  },
+  "this cardpan does not exist": {
+    ar: "رقم البطاقة هذا غير موجود",
+    fa_ir: "این شماره کارت موجود نمیباشد",
+    en_us: "this cardpan does not exist",
   },
 };

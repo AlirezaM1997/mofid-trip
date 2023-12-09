@@ -63,7 +63,6 @@ const HostDetailScreen = () => {
     }
   }, [loading, data]);
 
-  console.log("111", loading, host);
   if (loading || !host) return <LoadingIndicator />;
 
   return (
