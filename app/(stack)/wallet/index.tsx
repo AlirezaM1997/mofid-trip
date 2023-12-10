@@ -1,22 +1,26 @@
 import React from "react";
+import { router } from "expo-router";
 import { RootState } from "@src/store";
 import Container from "@atoms/container";
 import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
 import { Button, Text } from "@rneui/themed";
-import { ImageBackground, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { Entypo, AntDesign } from "@expo/vector-icons";
 import { WalletTransactionQueryType } from "@src/gql/generated";
-import WalletTransactionCard from "@modules/wallet-transaction-card";
+import WalletTransactionCard from "@modules/wallet/transaction-card";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { router } from "expo-router";
+import { ImageBackground, Pressable, ScrollView, StyleSheet } from "react-native";
 
 const WalletScreen = () => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
   const { balance, walletTransactions } = useSelector(
-    (state: RootState) => state.userSlice.userDetail.wallet
+    (state: RootState) =>
+      state.userSlice.userDetail.wallet ?? {
+        balance: 0,
+        walletTransactions: [],
+      }
   );
 
   return (
@@ -52,6 +56,7 @@ const WalletScreen = () => {
             size="sm"
             type="outline"
             color="secondary"
+            onPress={() => router.push("wallet/deposit")}
             icon={<AntDesign name="arrowup" size={16} color="black" />}>
             {tr("increase")}
           </Button>
@@ -59,6 +64,7 @@ const WalletScreen = () => {
             size="sm"
             type="outline"
             color="secondary"
+            onPress={() => router.push("wallet/cards")}
             icon={<Entypo name="credit-card" size={16} color="black" />}>
             {tr("my cards")}
           </Button>
@@ -73,7 +79,7 @@ const WalletScreen = () => {
 
         <WhiteSpace size={32} />
 
-        <Pressable style={styles.transactionHistory} onPress={() => router.push('/wallet/history')}>
+        <Pressable style={styles.transactionHistory} onPress={() => router.push("/wallet/history")}>
           <Text heading2>{tr("latest transactions")}</Text>
           <Text body2 type="primary">
             {tr("transaction history")}
@@ -88,7 +94,7 @@ const WalletScreen = () => {
         </Text>
         <WhiteSpace size={16} />
 
-        {walletTransactions.map((transaction: WalletTransactionQueryType) => (
+        {walletTransactions.slice(0, 3).map((transaction: WalletTransactionQueryType) => (
           <WalletTransactionCard key={transaction.id} transaction={transaction} />
         ))}
 

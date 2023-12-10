@@ -12,7 +12,12 @@ import {
   useTheme,
 } from "@rneui/themed";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { MyNgoDetailQuery, TourGuestQueryType, TransactionStatusEnum } from "@src/gql/generated";
+import {
+  MyNgoDetailQuery,
+  TourGuestQueryType,
+  TransactionStatusEnum,
+  useTourTransactionEditMutation,
+} from "@src/gql/generated";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import Container from "@atoms/container";
@@ -24,6 +29,8 @@ import { HEIGHT } from "@src/constants";
 export type RequestListBottomSheetProps = BottomSheetProps & {
   isVisible: boolean;
   transaction: MyNgoDetailQuery["NGODetail"]["tourTransactionSet"][0];
+  refetch: () => void;
+  handleClose: () => void;
 };
 
 type LookupType = Record<
@@ -34,21 +41,49 @@ type LookupType = Record<
 const RequestListBottomSheet = ({
   isVisible,
   transaction,
+  refetch,
+  handleClose,
   ...props
 }: RequestListBottomSheetProps) => {
   const { tr } = useTranslation();
   const ownerAvatar = transaction?.owner.avatarS3.small;
   const { theme } = useTheme();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const [tourTransactionEdit, { loading }] = useTourTransactionEditMutation();
 
-  const handlePress = num => {
+  const handlePressPhoneIcon = num => {
     if (num) {
       if (Platform.OS === "web") {
-        Linking.openURL('tel:num');
+        Linking.openURL(`tel:${num}`);
       } else {
-        Alert.alert('coming soon')
+        Alert.alert("coming soon");
       }
-    }}
+    }
+  };
+  const handlePressTextIcon = num => {
+    if (num) {
+      if (Platform.OS === "web") {
+        Linking.openURL(`sms:${num}`);
+      } else {
+        Alert.alert("coming soon");
+      }
+    }
+  };
+  const submitHandler = async type => {
+    const { data } = await tourTransactionEdit({
+      variables: {
+        data: {
+          transactionId: transaction.id,
+          status: { isActive: type, step: TransactionStatusEnum.Accept },
+        },
+      },
+    });
+
+    if (data.tourTransactionEdit.status === "OK") {
+      refetch();
+      handleClose();
+    }
+  };
 
   const getCurrentStep = () => {
     const lookup: LookupType = {
@@ -57,10 +92,10 @@ const RequestListBottomSheet = ({
         bottomSheetTitle: tr("the request is pending review"),
         buttonBox: (
           <ButtonRow>
-            <Button disabled type="outline">
+            <Button loading={loading} onPress={() => submitHandler(false)} type="outline">
               {tr("request rejection")}
             </Button>
-            <Button disabled type="solid">
+            <Button loading={loading} onPress={() => submitHandler(true)} type="solid">
               {tr("confirm request")}
             </Button>
           </ButtonRow>
@@ -136,7 +171,7 @@ const RequestListBottomSheet = ({
               type="outline"
               color="secondary"
               size="sm"
-              onPress={()=>handlePress(transaction?.owner?.phoneNumber)}>
+              onPress={() => handlePressTextIcon(transaction?.owner?.phoneNumber)}>
               {tr("message")}
             </Button>
             <Button
@@ -145,7 +180,7 @@ const RequestListBottomSheet = ({
               type="outline"
               color="secondary"
               size="sm"
-              onPress={()=>handlePress(transaction?.owner?.phoneNumber)}>
+              onPress={() => handlePressPhoneIcon(transaction?.owner?.phoneNumber)}>
               {tr("contact")}
             </Button>
           </View>

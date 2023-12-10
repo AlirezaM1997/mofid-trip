@@ -162,5 +162,31 @@ query myNGODetail {
         phoneNumber
       }
     }
+    projectTransactionSet {
+      dateEnd
+      dateStart
+      id
+      owner {
+        phoneNumber
+        fullname
+        id
+        avatarS3 {
+          large
+          medium
+          small
+        }
+      }
+       guestSet {
+        id
+      }
+      project {
+        name
+        id
+      }
+      status {
+        isActive
+        step
+      }
+    }
   }
 }

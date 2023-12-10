@@ -16,6 +16,14 @@ import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormatPrice } from "@src/hooks/localization";
 
+const CustomView = ({ children }) => {
+  const { theme } = useTheme();
+
+  return (
+    <View style={[{ borderColor: theme.colors.grey0 }, styles.detailsContainer]}>{children}</View>
+  );
+};
+
 const Receipt = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
@@ -36,14 +44,6 @@ const Receipt = () => {
   }
 
   const { invoiceNumber, modifiedDate, project } = data.projectTransactionDetail;
-
-  const CustomView = ({ children }) => {
-    const { theme } = useTheme();
-
-    return (
-      <View style={[{ borderColor: theme.colors.grey0 }, styles.detailsContainer]}>{children}</View>
-    );
-  };
 
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(invoiceNumber);
