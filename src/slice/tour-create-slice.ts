@@ -2,10 +2,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { TourAddInputType, TourGenderEnum } from "@src/gql/generated";
 
 type initialStateType = {
+  activeStep: number
   data: TourAddInputType;
 };
 
 export const initialState: initialStateType = {
+  activeStep: 1,
   data: {
     title: null,
     description: null,

@@ -20,20 +20,10 @@ import { Feather } from "@expo/vector-icons";
 const Screen = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const { data } = useSelector((state: RootState) => state.tourCreateSlice);
-  const { title, description } = useSelector((state: RootState) => state.tourCreateSlice.data);
   const [index, setIndex] = useState<number>(1);
   const [isVisible, setIsVisible] = useState(false);
-  const [exitElement, setExitElement] = useState();
-
+  const [exitElement, setExitElement] = useState<"HardwareBackButton" | "BackButton">();
   const navigation = useNavigation();
-
-  const initialValues = { title: title, description: description };
-
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required(tr("Title is required")),
-    description: Yup.string().nullable(),
-  });
 
   const handleOpen = () => setIsVisible(true);
   const handleClose = () => setIsVisible(false);
@@ -55,26 +45,28 @@ const Screen = () => {
   };
 
   const handleExit = () => {
-    console.log(1);
-    navigation.goBack();
-    router.back();
+    if (exitElement === "BackButton") {
+      router.back();
+      router.back();
+    } else {
+      router.back();
+    }
   };
 
   const handleHeaderBackButtonPress = () => {
     handleOpen();
     navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    setExitElement("A");
+    setExitElement("BackButton");
   };
 
   const beforeRemoveHandler = e => {
     e.preventDefault();
     window.history.pushState(null, "", "/tour/create");
     navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    setExitElement("B");
+    setExitElement("HardwareBackButton");
     handleOpen();
   };
 
-  // Effect
   useEffect(() => {
     navigation.addListener("beforeRemove", beforeRemoveHandler);
     return () => {
@@ -115,7 +107,9 @@ const Screen = () => {
         ]}>
         <TourCreateTabs index={index} />
         <WhiteSpace />
+
         <Container>{index === 1 && <DetailsTab />}</Container>
+
         <BottomSheet isVisible={isVisible} onBackdropPress={handleClose}>
           <Container>
             <ImageBackground
