@@ -1,0 +1,8 @@
+mutation bankCardAdd($data: AddCardType!) {
+  bankCardAdd(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}

@@ -1,0 +1,8 @@
+mutation depositWallet($data: DepositWalletInputType!) {
+  depositWallet(data: $data) {
+    message
+    status
+    statusCode
+    metadata
+  }
+}

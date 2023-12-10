@@ -60,7 +60,7 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
 
         <ListItem.Content style={style.requestCardTextBox}>
           <Text subtitle2>{localizeNumber(transaction.owner.fullname)}</Text>
-          <Text type={step?.color}>{`${transaction.tourPackage.tour.title} / ${step?.title}`}</Text>
+          <Text type={step?.color}>{step?.title}</Text>
         </ListItem.Content>
         <Text caption style={style.moreDetail}>
           {tr("more details")}

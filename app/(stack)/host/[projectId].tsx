@@ -25,6 +25,7 @@ import { setProjectDetail } from "@src/slice/project-slice";
 import { initialState, setHostTransactionData } from "@src/slice/host-transaction-slice";
 import ButtonRow from "@modules/button-rows";
 import { RootState } from "@src/store";
+import Share from "@modules/share";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const Page: React.FC = ({ ...props }) => {
   const { projectId, name } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisible, setIsVisible] = useState<boolean>();
-  const isNgo = useSelector((state: RootState) => state.userSlice.userDetail.isNgo);
+  const isNgo = useSelector((state: RootState) => state.authSlice.loginData.metadata.is_ngo);
 
   const { loading, data } = useProjectDetailQuery({
     variables: {
@@ -70,7 +71,7 @@ const Page: React.FC = ({ ...props }) => {
     }
   }, [loading, data]);
 
-  navigation.setOptions({ title: name });
+  navigation.setOptions({ title: name,headerRight: () => <Share/>, });
 
   if (loading) return <LoadingIndicator />;
 

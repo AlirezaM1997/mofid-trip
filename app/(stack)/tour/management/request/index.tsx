@@ -4,24 +4,26 @@ import { Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import {
   TourTransactionQueryType,
-  useMyNgoDetailQuery,
-  MyNgoDetailQuery,
+  MyNgoDetailTourTransactionSetQuery,
+  useMyNgoDetailTourTransactionSetQuery,
 } from "@src/gql/generated";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { useNavigation } from "expo-router";
 import Container from "@atoms/container";
 import NoResult from "@organisms/no-result";
 import RequestList from "@modules/tour-request-card/RequestList";
-import RequestListBottomSheet from "@modules/request-list-bottomsheet";
+import RequestListBottomSheet from "@modules/tour-request-card/request-list-bottomsheet";
+import { useIsFocused } from "@react-navigation/native";
 
 const RequestScreen = () => {
   const { tr } = useTranslation();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   const [isVisible, setIsVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState<TourTransactionQueryType>();
   const [transactionSet, setTransactionSet] =
-    useState<MyNgoDetailQuery["NGODetail"]["tourTransactionSet"]>();
+    useState<MyNgoDetailTourTransactionSetQuery["NGODetail"]["tourTransactionSet"]>();
 
   const handleOpen = () => setIsVisible(true);
   const handleClose = () => setIsVisible(false);
@@ -30,7 +32,15 @@ const RequestScreen = () => {
     handleOpen();
   };
 
-  const { loading, data } = useMyNgoDetailQuery();
+  const { loading, data, refetch, networkStatus } = useMyNgoDetailTourTransactionSetQuery({
+    notifyOnNetworkStatusChange: true,
+  });
+
+  useEffect(() => {
+    if (isFocused) {
+      refetch();
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     if (!loading && data) {
@@ -66,7 +76,9 @@ const RequestScreen = () => {
       <RequestListBottomSheet
         isVisible={isVisible}
         onBackdropPress={handleClose}
+        handleClose={handleClose}
         transaction={selectedTransaction}
+        refetch={refetch}
       />
     </>
   );

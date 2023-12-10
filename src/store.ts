@@ -1,3 +1,4 @@
+import walletTransactionIdSlice from "@src/slice/wallet-transaction-slice";
 import transactionListSlice from "./slice/transaction-list-slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistStore, persistReducer } from "redux-persist";
@@ -22,7 +23,7 @@ export type AppDispatch = typeof store.dispatch;
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  blacklist: ['tourCreateSlice', 'hostCreateSlice', 'hostTransactionSlice']
+  blacklist: ["tourCreateSlice", "hostCreateSlice", "hostTransactionSlice"],
 };
 
 const appReducer = combineReducers({
@@ -39,6 +40,7 @@ const appReducer = combineReducers({
   hostTransactionSlice: hostTransactionSlice,
   tourTransactionSlice: tourTransactionSlice,
   transactionListSlice: transactionListSlice,
+  walletTransactionIdSlice: walletTransactionIdSlice,
 });
 
 const clearAsyncStorage = async () => {
