@@ -2,25 +2,27 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { router } from "expo-router";
-import { RootState } from "@src/store";
 import * as Network from "expo-network";
 import Container from "@atoms/container";
+import { useDispatch } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import { Button, Input, Text } from "@rneui/themed";
-import { useDispatch, useSelector } from "react-redux";
+import LoadingIndicator from "@modules/Loading-indicator";
 import { WALLET_ZARINPAL_CALLBACK_URL } from "@src/settings";
-import { useDepositWalletMutation } from "@src/gql/generated";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { setWalletTransactionIdData } from "@src/slice/wallet-transaction-slice";
+import { useDepositWalletMutation, useUserDetailQuery } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const Increase = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const { balance } = useSelector((state: RootState) => state.userSlice.userDetail.wallet);
 
-  const [depositWallet, { loading }] = useDepositWalletMutation();
+  const { data, loading } = useUserDetailQuery();
+  const [depositWallet, { loading: submitLoading }] = useDepositWalletMutation();
+
+  if (!data || loading) return <LoadingIndicator />;
 
   const validationSchema = Yup.object().shape({
     amount: Yup.number()
@@ -55,7 +57,7 @@ const Increase = () => {
       {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
         <BottomButtonLayout
           buttons={[
-            <Button loading={loading} onPress={handleSubmit}>
+            <Button loading={submitLoading} onPress={handleSubmit}>
               {tr("increase balance")}
             </Button>,
           ]}>
@@ -76,7 +78,7 @@ const Increase = () => {
             <WhiteSpace />
 
             <Text center>
-              {localizeNumber(balance)} {tr("tooman")}
+              {localizeNumber(data.userDetail.wallet.balance)} {tr("tooman")}
             </Text>
 
             <WhiteSpace size={32} />

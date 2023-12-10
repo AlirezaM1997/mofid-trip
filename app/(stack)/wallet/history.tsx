@@ -1,19 +1,18 @@
-import { RootState } from "@src/store";
 import Container from "@atoms/container";
-import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
-import { WalletTransactionQueryType } from "@src/gql/generated";
+import LoadingIndicator from "@modules/Loading-indicator";
 import WalletTransactionCard from "@modules/wallet/transaction-card";
+import { WalletTransactionQueryType, useUserDetailQuery } from "@src/gql/generated";
 
 const TransactionHistoryScreen = () => {
-  const { walletTransactions } = useSelector(
-    (state: RootState) => state.userSlice.userDetail.wallet
-  );
+  const { data, loading } = useUserDetailQuery();
+
+  if (!data || loading) return <LoadingIndicator />;
 
   return (
     <Container>
       <WhiteSpace size={32} />
-      {walletTransactions.map((transaction: WalletTransactionQueryType) => (
+      {data.userDetail.wallet.walletTransactions.map((transaction: WalletTransactionQueryType) => (
         <WalletTransactionCard key={transaction.id} transaction={transaction} />
       ))}
     </Container>

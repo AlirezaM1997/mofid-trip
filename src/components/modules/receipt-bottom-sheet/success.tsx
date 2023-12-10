@@ -5,11 +5,10 @@ import * as Clipboard from "expo-clipboard";
 import WhiteSpace from "@atoms/white-space";
 import Toast from "react-native-toast-message";
 import { BottomSheet, Chip, Text } from "@rneui/themed";
-import { formatPrice } from "@src/hooks/localization";
+import { useFormatPrice } from "@src/hooks/localization";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Avatar, Button, useTheme } from "@rneui/themed";
 import { Pressable, StyleSheet, View } from "react-native";
-import BottomButtonLayout from "@components/layout/bottom-button";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { BackCardQueryType, WalletActionTransactionEnum } from "@src/gql/generated";
 import ButtonRow from "@modules/button-rows";
@@ -34,6 +33,7 @@ const CustomView = ({ children }) => {
 
 const SuccessReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => {
   const { theme } = useTheme();
+  const { formatPrice } = useFormatPrice();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
 
