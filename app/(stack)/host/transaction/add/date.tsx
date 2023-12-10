@@ -169,7 +169,7 @@ const Screen = () => {
                   <Text type="error">{touched.dateStart && (errors.dateStart as string)}</Text>
                 )}
               </View>
-              <Divider orientation="vertical" style={styles.divider} />
+              <Divider orientation="vertical" />
               <View style={styles.timeContainer}>
                 <Text body2 type={touched.dateEnd && errors.dateEnd ? "error" : "secondary"}>
                   {tr("end")}: {getLastDayFormatted()}
@@ -190,7 +190,6 @@ const styles = StyleSheet.create({
   header: { gap: 6 },
   checkbox: { marginTop: 32 },
   container: { gap: 24 },
-  divider: { width: 50 },
   showDateContainer: { flexDirection: "row", justifyContent: "space-evenly", marginTop: 25 },
   startDayButtonStyle: theme => ({
     backgroundColor: theme.colors.black,

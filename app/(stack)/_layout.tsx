@@ -17,6 +17,7 @@ const HomeLayout = () => {
       ref={navigationRef}
       screenOptions={({ navigation }) => ({
         headerTitleAlign: "center",
+
         contentStyle: { backgroundColor: theme.colors.white },
         headerTitleStyle: Platform.select({
           web: {
@@ -45,7 +46,7 @@ const HomeLayout = () => {
           />
         ),
       })}>
-        <Stack.Screen
+      <Stack.Screen
         name="search"
         options={{
           title: tr("Search"),

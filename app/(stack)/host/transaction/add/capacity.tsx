@@ -26,7 +26,9 @@ const Screen = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    guestNumber: Yup.number().positive(tr("guest is required")).required(tr("guest is required")),
+    guestNumber: Yup.number()
+      .positive(tr("capacity is required"))
+      .required(tr("capacity is required")),
     gender: Yup.string(),
     childAccept: Yup.boolean(),
   });

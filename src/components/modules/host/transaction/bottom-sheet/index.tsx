@@ -1,22 +1,24 @@
+import { RootState } from "@src/store";
 import React, { useState } from "react";
 import Container from "@atoms/container";
+import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
+import Toast from "react-native-toast-message";
 import useTranslation from "@src/hooks/translation";
 import { Button, Text, BottomSheet } from "@rneui/themed";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { router, useLocalSearchParams } from "expo-router";
-import { RootState } from "@src/store";
-import { useSelector } from "react-redux";
 import { useProjectTransactionAddMutation } from "@src/gql/generated";
-import Toast from "react-native-toast-message";
+import { CommonActions } from "@react-navigation/native";
+import { Platform } from "react-native";
 
 const HostTransactionBottomSheet = ({ children }) => {
   const { tr } = useTranslation();
+  const navigation = useNavigation();
   const { projectId } = useLocalSearchParams();
   const [isVisible, setIsVisible] = useState(false);
   const { data: transactionData } = useSelector((state: RootState) => state.hostTransactionSlice);
-
   const [addHostTransaction] = useProjectTransactionAddMutation();
 
   const handleClose = () => {
@@ -34,7 +36,19 @@ const HostTransactionBottomSheet = ({ children }) => {
         type: "success",
         text1: tr("Your request has been successfully submitted"),
       });
-      router.push("host/transaction");
+
+      if (Platform.OS === "web") {
+        let currentUrl = "/";
+        history.replaceState({ url: currentUrl }, document.title, currentUrl);
+        router.push("host/transaction");
+      } else {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ key: "host/transaction/index", name: "host/transaction/index" }],
+          })
+        );
+      }
     }
   };
 
