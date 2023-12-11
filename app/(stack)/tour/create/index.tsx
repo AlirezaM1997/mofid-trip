@@ -192,7 +192,7 @@ const Screen = () => {
       {({ values, errors, handleSubmit }) => (
         <BottomButtonLayout
           buttons={[
-            <Button onPress={activeStep === 8 ? handleSubmit : handleNext}>
+            <Button onPress={activeStep === 8 ? handleSubmit : handleNext} disabled={loading} loading={loading}>
               {activeStep === 8 ? tr("Submit") : tr("Next")}
             </Button>,
             <Button
@@ -205,8 +205,6 @@ const Screen = () => {
           ]}>
           <TourCreateTabs />
           <WhiteSpace />
-
-          {console.log("v", values, errors)}
 
           <Container>
             {activeStep === 1 && <DetailsTab />}

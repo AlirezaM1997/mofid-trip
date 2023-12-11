@@ -11,7 +11,6 @@ const FacilitiesTab = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const [value, setValue] = useState<string | null>();
-  const [submit, {}] = useTourAddMutation();
   const { values, setFieldValue } = useFormikContext<TourAddInputType>();
 
   const handleChangeInput = e => {

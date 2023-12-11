@@ -2500,4 +2500,9 @@ export const messages = {
     fa_ir: "این شماره کارت موجود نمیباشد",
     en_us: "this cardpan does not exist",
   },
+  stay: {
+    ar: "یبقی",
+    fa_ir: "ماندن",
+    en_us: "Stay",
+  },
 };
