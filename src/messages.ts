@@ -2490,14 +2490,14 @@ export const messages = {
     fa_ir: "در حال بارگزاری",
     en_us: "Loading",
   },
-  "this cardpan does not exist": {
-    ar: "رقم البطاقة هذا غير موجود",
-    fa_ir: "این شماره کارت موجود نمیباشد",
-    en_us: "this cardpan does not exist",
-  },
   previous: {
     ar: "سابق",
     fa_ir: "قبلی",
     en_us: "Previous",
+  },
+  "this cardpan does not exist": {
+    ar: "رقم البطاقة هذا غير موجود",
+    fa_ir: "این شماره کارت موجود نمیباشد",
+    en_us: "this cardpan does not exist",
   },
 };
