@@ -2284,4 +2284,9 @@ export const messages = {
     fa_ir: "قبلی",
     en_us: "Previous",
   },
+  "stay": {
+    ar: "یبقی",
+    fa_ir: "ماندن",
+    en_us: "Stay",
+  },
 };
