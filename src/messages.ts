@@ -520,6 +520,31 @@ export const messages = {
     fa_ir: "جستجو",
     en_us: "Search",
   },
+  or: {
+    ar: "أو",
+    fa_ir: "و یا",
+    en_us: "or",
+  },
+  enter: {
+    ar: "يدخل",
+    fa_ir: "وارد‌شوید",
+    en_us: "enter",
+  },
+  "and booking them in mofidtrip": {
+    ar: "وحجزهم في مفیدتریپ",
+    fa_ir: " و رزرو آن ها در مفیدتریپ",
+    en_us: "and booking them in Mofidtrip",
+  },
+  "to access more possibilities to create tours or hosts": {
+    ar: "للوصول إلى المزيد من الإمكانيات لإنشاء جولات أو مضيفين",
+    fa_ir: "برای دسترسی به امکانات بیشتر برای ایجاد تور یا هاست",
+    en_us: "To access more possibilities to create tours or hosts",
+  },
+  "login or register": {
+    ar: "تسجيل الدخول أو التسجيل",
+    fa_ir: "ورود یا ثبت نام",
+    en_us: "Login or register",
+  },
   "see all": {
     ar: "اظهار الكل",
     fa_ir: "بیشتر",
@@ -1274,6 +1299,11 @@ export const messages = {
     ar: "تسجيل الدخول",
     fa_ir: "وارد شدن",
     en_us: "Login",
+  },
+  do: {
+    ar: "يفعل",
+    fa_ir: "کنید",
+    en_us: "do",
   },
   Register: {
     ar: "يسجل",
