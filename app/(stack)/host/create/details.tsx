@@ -31,6 +31,7 @@ const HostCreateDetailsScreen = () => {
         ...values,
       })
     );
+
     router.push({
       pathname: "host/create/host-type",
       params: {

@@ -3,14 +3,15 @@ import { Formik } from "formik";
 import { RootState } from "@src/store";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import { TourGenderEnum } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { useDispatch, useSelector } from "react-redux";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { Button, CheckBox, Input, Text, useTheme } from "@rneui/themed";
+import { Button, CheckBox, Text, useTheme } from "@rneui/themed";
 import { setHostTransactionData } from "@src/slice/host-transaction-slice";
+import Input from "@atoms/input";
 
 const Screen = () => {
   const { theme } = useTheme();
@@ -21,7 +22,7 @@ const Screen = () => {
 
   const initialValues = {
     gender: data.guests.gender,
-    guestNumber: data.guests.guestNumber,
+    guestNumber: data.guests.guestNumber || "",
     childAccept: data.guests.childAccept,
   };
 
@@ -74,7 +75,7 @@ const Screen = () => {
               onChangeText={handleChange("guestNumber")}
               onBlur={handleBlur("guestNumber")}
               value={values.guestNumber}
-              errorMessage={touched.guestNumber && errors.guestNumber}
+              errorMessage={touched.guestNumber && (errors.guestNumber as string)}
             />
 
             <CheckBox
@@ -128,7 +129,7 @@ const Screen = () => {
 };
 
 const styles = StyleSheet.create({
-  checkboxContainerStyle: theme => ({
+  checkboxContainerStyle: (theme => ({
     backgroundColor: theme.colors.grey0,
     borderColor: theme.colors.grey1,
     borderWidth: 2,
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 8,
     flex: 1,
-  }),
+  })) as ViewStyle,
   checkboxListContainer: {
     display: "flex",
     flexDirection: "row",
