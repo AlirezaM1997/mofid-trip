@@ -135,6 +135,16 @@ export const messages = {
     fa_ir: "حذف",
     en_us: "Delete",
   },
+  "phone number": {
+    ar: "رقم التليفون",
+    fa_ir: "شماره تماس",
+    en_us: "Phone number",
+  },
+  "host name": {
+    ar: "اسم المجموعة",
+    fa_ir: "نام مجموعه",
+    en_us: "Host name",
+  },
   "must be a number": {
     ar: "يجب أن يكون رقما",
     fa_ir: "لطفا عدد وارد کنید",
@@ -218,16 +228,22 @@ export const messages = {
     fa_ir: "یا اشتراک لینک",
     en_us: "Or share the link",
   },
-  "you can republish the details of this hosting to your friends so that they also know about the existence of this hosting": {
-    ar: "يمكنك إعادة نشر تفاصيل هذه الاستضافة لأصدقائك حتى يعلموا أيضًا بوجود هذه الاستضافة",
-    fa_ir: "شما می توانید جزئیات این میزبانی را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این میزبانی مطلع شوند",
-    en_us: "You can republish the details of this hosting to your friends so that they also know about the existence of this hosting",
-  },
-  "you can republish the details of this tour to your friends so that they also know about the existence of this tour": {
-    ar: "يمكنك إعادة نشر تفاصيل هذه الجولة لأصدقائك حتى يعرفوا أيضًا بوجود هذه الجولة",
-    fa_ir: "شما می توانید جزئیات این تور را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این تور مطلع شوند",
-    en_us: "You can republish the details of this tour to your friends so that they also know about the existence of this tour",
-  },
+  "you can republish the details of this hosting to your friends so that they also know about the existence of this hosting":
+    {
+      ar: "يمكنك إعادة نشر تفاصيل هذه الاستضافة لأصدقائك حتى يعلموا أيضًا بوجود هذه الاستضافة",
+      fa_ir:
+        "شما می توانید جزئیات این میزبانی را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این میزبانی مطلع شوند",
+      en_us:
+        "You can republish the details of this hosting to your friends so that they also know about the existence of this hosting",
+    },
+  "you can republish the details of this tour to your friends so that they also know about the existence of this tour":
+    {
+      ar: "يمكنك إعادة نشر تفاصيل هذه الجولة لأصدقائك حتى يعرفوا أيضًا بوجود هذه الجولة",
+      fa_ir:
+        "شما می توانید جزئیات این تور را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این تور مطلع شوند",
+      en_us:
+        "You can republish the details of this tour to your friends so that they also know about the existence of this tour",
+    },
   "are you sure about shared hosting?": {
     ar: "هل أنت متأكد من الاستضافة المشتركة؟",
     fa_ir: "آیا مطمئن به اشتراک میزبانی هستید؟",
@@ -510,10 +526,15 @@ export const messages = {
     fa_ir: "رزرو",
     en_us: "Reservation",
   },
-  save: {
+  confirm: {
     ar: "يحفظ",
     fa_ir: "ثبت",
-    en_us: "Save",
+    en_us: "confirm",
+  },
+  save: {
+    ar: "يحفظ",
+    fa_ir: "ذخیره",
+    en_us: "confirm",
   },
   search: {
     ar: "يبحث",
