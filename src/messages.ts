@@ -218,16 +218,22 @@ export const messages = {
     fa_ir: "یا اشتراک لینک",
     en_us: "Or share the link",
   },
-  "you can republish the details of this hosting to your friends so that they also know about the existence of this hosting": {
-    ar: "يمكنك إعادة نشر تفاصيل هذه الاستضافة لأصدقائك حتى يعلموا أيضًا بوجود هذه الاستضافة",
-    fa_ir: "شما می توانید جزئیات این میزبانی را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این میزبانی مطلع شوند",
-    en_us: "You can republish the details of this hosting to your friends so that they also know about the existence of this hosting",
-  },
-  "you can republish the details of this tour to your friends so that they also know about the existence of this tour": {
-    ar: "يمكنك إعادة نشر تفاصيل هذه الجولة لأصدقائك حتى يعرفوا أيضًا بوجود هذه الجولة",
-    fa_ir: "شما می توانید جزئیات این تور را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این تور مطلع شوند",
-    en_us: "You can republish the details of this tour to your friends so that they also know about the existence of this tour",
-  },
+  "you can republish the details of this hosting to your friends so that they also know about the existence of this hosting":
+    {
+      ar: "يمكنك إعادة نشر تفاصيل هذه الاستضافة لأصدقائك حتى يعلموا أيضًا بوجود هذه الاستضافة",
+      fa_ir:
+        "شما می توانید جزئیات این میزبانی را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این میزبانی مطلع شوند",
+      en_us:
+        "You can republish the details of this hosting to your friends so that they also know about the existence of this hosting",
+    },
+  "you can republish the details of this tour to your friends so that they also know about the existence of this tour":
+    {
+      ar: "يمكنك إعادة نشر تفاصيل هذه الجولة لأصدقائك حتى يعرفوا أيضًا بوجود هذه الجولة",
+      fa_ir:
+        "شما می توانید جزئیات این تور را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این تور مطلع شوند",
+      en_us:
+        "You can republish the details of this tour to your friends so that they also know about the existence of this tour",
+    },
   "are you sure about shared hosting?": {
     ar: "هل أنت متأكد من الاستضافة المشتركة؟",
     fa_ir: "آیا مطمئن به اشتراک میزبانی هستید؟",
@@ -379,7 +385,7 @@ export const messages = {
   },
   next: {
     ar: "التالی",
-    fa_ir: "بعد",
+    fa_ir: "بعدی",
     en_us: "Next",
   },
   "no result": {
@@ -2488,5 +2494,10 @@ export const messages = {
     ar: "رقم البطاقة هذا غير موجود",
     fa_ir: "این شماره کارت موجود نمیباشد",
     en_us: "this cardpan does not exist",
+  },
+  previous: {
+    ar: "سابق",
+    fa_ir: "قبلی",
+    en_us: "Previous",
   },
 };

@@ -10,7 +10,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import Container from "@atoms/container";
 
-export type LocationPickerProps = FieldProps & ViewProps;
+export type LocationPickerDestinationProps = FieldProps & ViewProps;
 
 const MemoizedMap = memo(({ lat, lng, style, onMoveEnd }) => {
   return (
@@ -23,12 +23,11 @@ const MemoizedMap = memo(({ lat, lng, style, onMoveEnd }) => {
   );
 });
 
-
 const markerHeight = 52;
 const markerWidth = 60;
 const mapHeight = 200;
 
-const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
+const LocationPickerDestination = ({ field, form, ...props }: LocationPickerDestinationProps) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const { setFieldValue } = useFormikContext();
@@ -40,17 +39,20 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
 
   const { setFieldTouched } = useFormikContext();
 
+  const initLocation = useMemo(
+    () => ({
+      lat: 35.7219,
+      lng: 51.3347,
+    }),
+    []
+  );
+
   const handleOpen = () => setIsVisible(true);
   const handleClose = () => setIsVisible(false);
 
-  const initLocation = useMemo(() => ({
-    lat: 35.7219,
-    lng: 51.3347,
-  }), []);
-
   const handlePress = () => {
-    setFieldTouched("origin.lat", true);
-    setFieldTouched("origin.lng", true);
+    setFieldTouched("destination.lat", true);
+    setFieldTouched("destination.lng", true);
     handleOpen();
     isMapOpened.current = true;
   };
@@ -63,15 +65,15 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
   }, [location]);
 
   const handleSubmit = () => {
-    setFieldValue("origin.lat", lat);
-    setFieldValue("origin.lng", lng);
+    setFieldValue("destination.lat", lat);
+    setFieldValue("destination.lng", lng);
     handleClose();
   };
 
   return (
     <>
       <Pressable style={styles.container(theme)} onPress={handlePress}>
-        {form.values.origin.lat && form.values.origin.lng ? (
+        {form.values.destination.lat && form.values.destination.lng ? (
           <>
             <Image
               containerStyle={{
@@ -84,7 +86,11 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
               }}
               source={require("@assets/image/marker.png")}
             />
-            <MemoizedMap lat={form.values.origin.lat} lng={form.values.origin.lng} style={styles.map} />
+            <MemoizedMap
+              lat={form.values.destination.lat}
+              lng={form.values.destination.lng}
+              style={styles.map}
+            />
           </>
         ) : (
           <Text>{tr("Select On Map")}</Text>
@@ -127,8 +133,8 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
         </View>
         <View style={styles.mapMarkerCentered} />
         <MemoizedMap
-          lat={initLocation.lat}
-          lng={initLocation.lng}
+          lat={lat ?? initLocation.lat}
+          lng={lng ?? initLocation.lng}
           style={styles.root}
           onMoveEnd={setLocation}
         />
@@ -175,4 +181,4 @@ const styles = StyleSheet.create({
     // transition: "all 0.4s ease",
   },
 });
-export default LocationPicker;
+export default LocationPickerDestination;
