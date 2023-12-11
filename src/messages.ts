@@ -270,7 +270,7 @@ export const messages = {
   },
   next: {
     ar: "التالی",
-    fa_ir: "بعد",
+    fa_ir: "بعدی",
     en_us: "Next",
   },
   "no result": {
@@ -2278,5 +2278,10 @@ export const messages = {
     ar: "تحميل",
     fa_ir: "در حال بارگزاری",
     en_us: "Loading",
+  },
+  "previous": {
+    ar: "سابق",
+    fa_ir: "قبلی",
+    en_us: "Previous",
   },
 };

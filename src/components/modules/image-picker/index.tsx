@@ -6,11 +6,13 @@ import useTranslation from "@src/hooks/translation";
 import { Image, Text, useTheme } from "@rneui/themed";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import WhiteSpace from "@atoms/white-space";
+import { TourAddInputType } from "@src/gql/generated";
 
-const CustomImagePicker = ({ field, form }) => {
+const CustomImagePicker = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { values } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext<TourAddInputType>();
 
   const pickImage = async (item: string) => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -26,86 +28,75 @@ const CustomImagePicker = ({ field, form }) => {
     }
 
     if ("uri" in result) {
-      form.setValues({ ...values, images: { ...values.images, [item]: result.uri } });
+      setFieldValue("base64Images", [...values.base64Images, result.uri]);
     }
   };
 
-  const removeHandler = (item: string) => {
-    form.setValues({
-      ...values,
-      images: { ...values.images, [item]: "" },
-    });
+  const removeHandler = (targetIndex: string) => {
+    setFieldValue("base64Images", values.base64Images.filter((i, index) => index.toString() !== targetIndex));
   };
 
   return (
-    <FieldArray name={field.name}>
-      {() => (
-        <>
+    <>
+      <Pressable
+        onPress={() => pickImage("main")}
+        style={[styles.imageContainer(values.base64Images?.[0]), styles.mainImageSize]}>
+        {values.base64Images?.[0] ? (
+          <>
+            <Image
+              source={{ uri: values.base64Images?.[0] }}
+              style={{ width: 330, height: 160 }}
+              resizeMode="cover"
+            />
+            <Ionicons
+              size={19}
+              color={theme.colors.primary}
+              style={[styles.deleteIcon(theme), styles.mainDeleteIconPosition]}
+              name="trash-outline"
+              onPress={() => removeHandler('0')}
+            />
+          </>
+        ) : (
+          <View style={styles.placeHolder}>
+            <MaterialCommunityIcons name="image-plus" size={24} color={theme.colors.black} />
+            <Text>{tr("upload image")}</Text>
+          </View>
+        )}
+      </Pressable>
+
+      <WhiteSpace />
+
+      <View style={styles.imagesContainer}>
+        {Object.keys([0, 1, 2, 3, 4, 5]).map(item => (
           <Pressable
-            onPress={() => pickImage("main")}
-            style={[styles.imageContainer(values.images.main), styles.mainImageSize]}>
-            {values.images.main ? (
+            key={item}
+            onPress={() => pickImage(item)}
+            style={[styles.imageContainer(true), styles.subImageSize]}>
+            {values.base64Images?.[item] ? (
               <>
                 <Image
-                  source={{ uri: values.images.main }}
-                  style={{ width: 330, height: 160 }}
+                  source={{ uri: values.base64Images?.[item] }}
+                  style={{ width: 100, height: 100 }}
                   resizeMode="cover"
                 />
                 <Ionicons
                   size={19}
                   color={theme.colors.primary}
-                  style={[styles.deleteIcon(theme), styles.mainDeleteIconPosition]}
+                  style={[styles.deleteIcon(theme), styles.subDeleteIconPosition]}
                   name="trash-outline"
-                  onPress={() => removeHandler("main")}
+                  onPress={() => removeHandler(item)}
                 />
               </>
             ) : (
               <View style={styles.placeHolder}>
-                <MaterialCommunityIcons name="image-plus" size={24} color={theme.colors.black} />
-                <Text>{tr("upload image")}</Text>
+                <MaterialCommunityIcons size={19} name="image-plus" color={theme.colors.black} />
+                <Text body2>{tr("upload image")}</Text>
               </View>
             )}
           </Pressable>
-
-          <View style={styles.imagesContainer}>
-            {Object.keys(values.images)
-              .slice(1)
-              .map(item => (
-                <Pressable
-                  key={item}
-                  onPress={() => pickImage(item)}
-                  style={[styles.imageContainer(values.images[item]), styles.subImageSize]}>
-                  {values.images[item] ? (
-                    <>
-                      <Image
-                        source={{ uri: values.images[item] }}
-                        style={{ width: 100, height: 100 }}
-                        resizeMode="cover"
-                      />
-                      <Ionicons
-                        size={19}
-                        color={theme.colors.primary}
-                        style={[styles.deleteIcon(theme), styles.subDeleteIconPosition]}
-                        name="trash-outline"
-                        onPress={() => removeHandler(item)}
-                      />
-                    </>
-                  ) : (
-                    <View style={styles.placeHolder}>
-                      <MaterialCommunityIcons
-                        size={19}
-                        name="image-plus"
-                        color={theme.colors.black}
-                      />
-                      <Text body2>{tr("upload image")}</Text>
-                    </View>
-                  )}
-                </Pressable>
-              ))}
-          </View>
-        </>
-      )}
-    </FieldArray>
+        ))}
+      </View>
+    </>
   );
 };
 
@@ -117,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderStyle: "dashed",
     justifyContent: "center",
-    borderWidth: image ? 0 : 2,
+    borderWidth: 2,
   }),
 
   mainImageSize: {

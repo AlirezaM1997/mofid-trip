@@ -38,7 +38,7 @@ query myNGODetail {
       categories {
         id
       }
-      createdTime
+      createdDate
       capacity {
         id
       }

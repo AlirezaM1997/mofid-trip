@@ -118,7 +118,7 @@ export default function AppLayout() {
             <Button onPress={() => router.push("/host/create/details")} type="outline">
               {tr("Create Host")}
             </Button>
-            <Button onPress={() => router.push("/tour/create/details")}>{tr("Create Tour")}</Button>
+            <Button onPress={() => router.push("/tour/create")}>{tr("Create Tour")}</Button>
           </ButtonRow>
         </Container>
       </BottomSheet>

@@ -62,7 +62,7 @@ const Screen = () => {
         discount: parseFloat(values.discount),
       })
     );
-    router.push({
+    router.replace({
       pathname: "tour/create/images",
       params: {
         x: -95 * 7,
