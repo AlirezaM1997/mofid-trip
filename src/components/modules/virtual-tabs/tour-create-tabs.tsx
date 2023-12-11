@@ -11,20 +11,19 @@ type TourCreateTabsProps = {
   index: number;
 };
 
-const TourCreateTabs = ({ index }: TourCreateTabsProps) => {
+const TourCreateTabs = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const scrollRef = useRef(null);
-  const { x: initialX } = useLocalSearchParams();
   const x = useRef(0);
 
-  const data = useSelector((state: RootState) => state.tourCreateSlice.data);
+  const { activeStep } = useSelector((state: RootState) => state.tourCreateSlice);
 
   useEffect(() => {
-    if (scrollRef.current && initialX) {
-      scrollRef.current.scrollTo({ x: parseInt(initialX as string), animated: false });
+    if (activeStep) {
+      scrollRef.current.scrollTo({ x: -(activeStep - 1) * 95, animated: true });
     }
-  }, []);
+  }, [activeStep]);
 
   return (
     <ScrollView
@@ -34,42 +33,43 @@ const TourCreateTabs = ({ index }: TourCreateTabsProps) => {
         const { contentOffset } = event.nativeEvent;
         x.current = contentOffset.x;
       }}
-      style={{ overflow: "hidden" }}>
+      style={{ overflow: "hidden" }}
+    >
       <Tab
-        value={index}
+        value={activeStep}
         // onChange={handleChange}
         variant="default"
         indicatorStyle={styles.indicatorStyle}>
         <Tab.Item
-          style={index >= 1 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          style={activeStep >= 1 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
           title={tr("Details")}
         />
         <Tab.Item
-          style={index >= 2 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          style={activeStep >= 2 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
           title={tr("Capacity")}
         />
         <Tab.Item
-          style={index >= 3 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          style={activeStep >= 3 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
           title={tr("Origin")}
         />
         <Tab.Item
-          style={index >= 4 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          style={activeStep >= 4 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
           title={tr("Destination")}
         />
         <Tab.Item
-          style={index >= 5 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          style={activeStep >= 5 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
           title={tr("Date")}
         />
         <Tab.Item
-          style={index >= 6 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          style={activeStep >= 6 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
           title={tr("Price")}
         />
         <Tab.Item
-          style={index >= 7 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          style={activeStep >= 7 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
           title={tr("Images")}
         />
         <Tab.Item
-          style={index >= 8 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          style={activeStep >= 8 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
           title={tr("Facilities")}
         />
       </Tab>
