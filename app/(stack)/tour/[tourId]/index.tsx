@@ -26,6 +26,7 @@ import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation
 import LoadingIndicator from "@modules/Loading-indicator";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/store";
+import Share from "@modules/share";
 
 export default () => {
   const isRtl = useIsRtl();
@@ -61,7 +62,7 @@ export default () => {
   const endTime = moment(tour?.endTime).locale("fa").format("MMMM D");
 
   useEffect(() => {
-    navigation.setOptions({ title: name });
+    navigation.setOptions({ title: name,headerRight: () => <Share/>, });
   }, [name]);
 
   useEffect(() => {

@@ -1,0 +1,39 @@
+query myNGODetailTourTransactionSet {
+  NGODetail {
+    id
+    tourTransactionSet {
+      id
+      status {
+        isActive
+        step
+      }
+      owner {
+        avatarS3 {
+          large
+          medium
+          small
+        }
+        id
+        fullname
+        phoneNumber
+      }
+      tourPackage {
+        tour {
+          id
+          title
+        }
+      }
+      tourGuests {
+        avatarS3{
+          large
+          medium
+          small
+        }
+        id
+        firstname
+        lastname
+        phoneNumber
+      }
+    }
+  }
+}

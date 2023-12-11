@@ -39,6 +39,11 @@ export const messages = {
     fa_ir: "بازگشت",
     en_us: "Back",
   },
+  "awaiting confirmation": {
+    ar: "بانتظار التأكيد",
+    fa_ir: "در انتظار تایید",
+    en_us: "awaiting confirmation",
+  },
   "you can upload images related to your tour, please note that the size of the images should be less than 3 mb. note that this section is optional.":
     {
       ar: "يمكنك تحميل الصور المتعلقة بجولتك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
@@ -130,20 +135,114 @@ export const messages = {
     fa_ir: "حذف",
     en_us: "Delete",
   },
+  "must be a number": {
+    ar: "يجب أن يكون رقما",
+    fa_ir: "لطفا عدد وارد کنید",
+    en_us: "must be a number",
+  },
+  "cardpan should be 16 character": {
+    ar: "يجب أن يتكون رقم البطاقة من 16 رقمًا",
+    fa_ir: "شماره کارت باید ۱۶ رقمی باشد",
+    en_us: "cardpan should be 16 character",
+  },
+  "card added successfully": {
+    ar: "تمت إضافة البطاقة الجديدة بنجاح",
+    fa_ir: "کارت جدید با موفقیت اضافه شد",
+    en_us: "card added successfully",
+  },
+  "cardpan is required": {
+    ar: "مطلوب بطاقة",
+    fa_ir: "شماره کارت ضروری است",
+    en_us: "cardPan is required",
+  },
+  "card name": {
+    ar: "اسم البطاقة",
+    fa_ir: "نام کارت",
+    en_us: "card name",
+  },
+  "register card": {
+    ar: "تم حفظ البطاقة",
+    fa_ir: "ثبت کارت",
+    en_us: "register card",
+  },
+  "to create a new card, write the main details of your bank card so that it is registered in this account in mofidtrip":
+    {
+      ar: "لإنشاء بطاقة جديدة، قم بكتابة التفاصيل الرئيسية لبطاقتك المصرفية بحيث يتم تسجيلها في هذا الحساب على مفید تریپ",
+      fa_ir:
+        "برای ایجاد کارت جدید، جزئیات اصلی کارت بانکی‌تان را بنویسید تا در این حساب در مفیدتریپ ثبت شود",
+      en_us:
+        "To create a new card, write the main details of your bank card so that it is registered in this account in Mofidtrip",
+    },
+  "add a new card": {
+    ar: "أضف بطاقة جديدة",
+    fa_ir: "افزودن کارت جدید",
+    en_us: "Add a new card",
+  },
+  "add card": {
+    ar: "أضف بطاقة",
+    fa_ir: "افزودن کارت",
+    en_us: "Add card",
+  },
   description: {
     ar: "تفصيل",
     fa_ir: "شرح",
     en_us: "Description",
   },
-  "confirm request": {
-    ar: "تأكيد الطلب",
-    fa_ir: "تایید درخواست",
-    en_us: "confirm request",
-  },
   failed: {
     ar: "فشل",
     fa_ir: "رد شده",
     en_us: "failed",
+  },
+  telegram: {
+    ar: "تلگرام",
+    fa_ir: "تلگرام",
+    en_us: "Telegram",
+  },
+  twitter: {
+    ar: "تویيتر",
+    fa_ir: "تویيتر",
+    en_us: "Twitter",
+  },
+  whatsapp: {
+    ar: "واتساپ",
+    fa_ir: "واتساپ",
+    en_us: "Whatsapp",
+  },
+  email: {
+    ar: "ایمیل",
+    fa_ir: "ایمیل",
+    en_us: "E-mail",
+  },
+  "or share the link": {
+    ar: "أو مشاركة الرابط",
+    fa_ir: "یا اشتراک لینک",
+    en_us: "Or share the link",
+  },
+  "you can republish the details of this hosting to your friends so that they also know about the existence of this hosting":
+    {
+      ar: "يمكنك إعادة نشر تفاصيل هذه الاستضافة لأصدقائك حتى يعلموا أيضًا بوجود هذه الاستضافة",
+      fa_ir:
+        "شما می توانید جزئیات این میزبانی را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این میزبانی مطلع شوند",
+      en_us:
+        "You can republish the details of this hosting to your friends so that they also know about the existence of this hosting",
+    },
+  "you can republish the details of this tour to your friends so that they also know about the existence of this tour":
+    {
+      ar: "يمكنك إعادة نشر تفاصيل هذه الجولة لأصدقائك حتى يعرفوا أيضًا بوجود هذه الجولة",
+      fa_ir:
+        "شما می توانید جزئیات این تور را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این تور مطلع شوند",
+      en_us:
+        "You can republish the details of this tour to your friends so that they also know about the existence of this tour",
+    },
+  "are you sure about shared hosting?": {
+    ar: "هل أنت متأكد من الاستضافة المشتركة؟",
+    fa_ir: "آیا مطمئن به اشتراک میزبانی هستید؟",
+    en_us: "Are you sure about shared hosting?",
+  },
+  "are you sure about the tour subscription?": {
+    ar: "هل أنت متأكد من اشتراك الجولة؟",
+    fa_ir: "آیا مطمئن به اشتراک تور هستید؟",
+    en_us: "Are you sure about the tour subscription?",
   },
   "accompanying passengers": {
     ar: "الركاب المرافقين",
@@ -179,6 +278,22 @@ export const messages = {
     ar: "عامل",
     fa_ir: "فاکتور",
     en_us: "Factor",
+  },
+  "management of requests received from users who intend to experience your hosting.": {
+    ar: "إدارة الطلبات الواردة من المستخدمين الذين يرغبون في تجربة استضافتك.",
+    fa_ir:
+      "مدیریت درخواست های دریافت شده از سوی کاربرانی که قصد دارند به میزبانی های شما را تجربه کنند.",
+    en_us: "Management of requests received from users who intend to experience your hosting.",
+  },
+  "requests received": {
+    ar: "الطلبات الواردة",
+    fa_ir: "درخواست های دریافت شده",
+    en_us: "Requests received",
+  },
+  "apply to my hosts": {
+    ar: "تنطبق على مضيفي",
+    fa_ir: "درخواست به میزبانی های من",
+    en_us: "Apply to my hosts",
   },
   "apply to my tours": {
     ar: "تنطبق على جولاتي",
@@ -595,7 +710,17 @@ export const messages = {
     fa_ir: "اولیه",
     en_us: "Initial",
   },
-
+  "you can manage your bank cards and use them in the withdrawal process.": {
+    ar: "يمكنك إدارة بطاقاتك المصرفية واستخدامها في عملية السحب.",
+    fa_ir:
+      "کارت های بانکی خودتان را می‌توانید مدیریت کنید و در مراحل برداشت از آن ها استفاده کنید.",
+    en_us: "you can manage your bank cards and use them in the withdrawal process.",
+  },
+  "my registered cards": {
+    ar: "بطاقاتي المسجلة",
+    fa_ir: "کارت های ثبت شده من",
+    en_us: "My registered cards",
+  },
   rejected: {
     ar: "مرفوض",
     fa_ir: "رد شده",
@@ -814,6 +939,11 @@ export const messages = {
     fa_ir: "مالیات",
     en_us: "Tax",
   },
+  "wallet balance": {
+    ar: "رصيد المحفظة",
+    fa_ir: "موجودی کیف پول",
+    en_us: "Wallet balance",
+  },
   "invalid name": {
     ar: "اسم غير صالح",
     fa_ir: "نام نامعتبر",
@@ -839,16 +969,27 @@ export const messages = {
     fa_ir: "نه، لغو",
     en_us: "No, Cancel",
   },
+  "deposit to the account": {
+    ar: "إيداع في الحساب",
+    fa_ir: "واریز به حساب",
+    en_us: "deposit to the account",
+  },
+  "payment by card": {
+    ar: "الدفع عن طريق البطاقة",
+    fa_ir: "پرداخت از کارت",
+    en_us: "payment by card",
+  },
+  "increase wallet balance": {
+    ar: "زيادة رصيد المحفظة",
+    fa_ir: "افزایش موجودی کیف پول",
+    en_us: "Increase wallet balance",
+  },
   "your request has been successfully submitted": {
     ar: "لقد تم تسجيل طلبك بنجاح",
     fa_ir: "درخواست شما با موفقیت ثبت شد",
     en_us: "Your request has been successfully submitted",
   },
-  "wallet balance": {
-    ar: "توازن الحقيبة",
-    fa_ir: "موجودی کیف",
-    en_us: "Wallet balance",
-  },
+
   "unsuccessful payment, wallet balance is not enough": {
     ar: "عملية دفع غير ناجحة، رصيد المحفظة غير كافي",
     fa_ir: "پرداخت ناموفق، موجودی کیف پول کافی نمی‌باشد",
@@ -920,6 +1061,21 @@ export const messages = {
     fa_ir: "برداشت",
     en_us: "Withdraw ",
   },
+  "amount is required": {
+    ar: "محصول",
+    fa_ir: "مبلغ ضروری است",
+    en_us: "amount is required ",
+  },
+  amount: {
+    ar: "كمية",
+    fa_ir: "مبلغ",
+    en_us: "amount ",
+  },
+  "select or enter an amount to increase your wallet balance.": {
+    ar: "حدد أو أدخل مبلغًا لزيادة رصيد محفظتك.",
+    fa_ir: "برای افزایش موجودی کیف پول، مبلغ را انتخاب یا وارد کنید.",
+    en_us: "Select or enter an amount to increase your wallet balance.",
+  },
   "increase balance": {
     ar: "زيادة المخزون",
     fa_ir: "افزایش موجودی",
@@ -986,11 +1142,12 @@ export const messages = {
     fa_ir: "بازگشت به خانه",
     en_us: "Return to home",
   },
-  amount: {
-    ar: "كمية",
-    fa_ir: "میزان",
-    en_us: "Amount",
+  "amount should be at least 10000": {
+    ar: "يجب أن يكون المبلغ على الأقل 10000",
+    fa_ir: "مبلغ باید حداقل 10000 باشد",
+    en_us: "amount should be at least 10000",
   },
+
   "log in as an individual": {
     ar: "تسجيل الدخول كفرد",
     fa_ir: "ورود به عنوان فرد",
@@ -1140,11 +1297,7 @@ export const messages = {
     en_us:
       "You can contact the owner of the place through the following social networks or directly",
   },
-  whatsapp: {
-    ar: "واتس اب",
-    fa_ir: "واتساپ",
-    en_us: "Whatsapp",
-  },
+
   message: {
     ar: "رسالة",
     fa_ir: "پیام",
@@ -1653,8 +1806,12 @@ export const messages = {
     fa_ir: "تعداد مسافران",
     en_us: "Passengers Count",
   },
-
   "confirm request": {
+    ar: "طلب التسجيل",
+    fa_ir: "تایید درخواست",
+    en_us: "confirm request",
+  },
+  "record request": {
     ar: "طلب التسجيل",
     fa_ir: "ثبت درخواست",
     en_us: "confirm request",
@@ -1668,6 +1825,21 @@ export const messages = {
     ar: "منظر",
     fa_ir: "مشاهده",
     en_us: "View",
+  },
+  iban: {
+    ar: "رقم شابا",
+    fa_ir: "شماره شبا",
+    en_us: "iban",
+  },
+  cardpan: {
+    ar: "رقم البطاقة",
+    fa_ir: "شماره کارت",
+    en_us: "cardPan",
+  },
+  "edit card": {
+    ar: "تحرير البطاقة",
+    fa_ir: "ویرایش کارت",
+    en_us: "edit card",
   },
   "team leader": {
     ar: "رئيس الفريق",
@@ -1814,9 +1986,30 @@ export const messages = {
     fa_ir: "باشه",
     en_us: "OK",
   },
+  "time of travel": {
+    ar: "وقت السفر",
+    fa_ir: "زمان سفر",
+    en_us: "time of travel",
+  },
+  "on-demand hosting": {
+    ar: "استضافة حسب الطلب",
+    fa_ir: "میزبانی درخواستی",
+    en_us: "On-demand hosting",
+  },
+  "send message": {
+    ar: "أرسل رسالة",
+    fa_ir: "ارسال پیام",
+    en_us: "send Message",
+  },
+  "the ngo is paid and the reservation is finalized": {
+    ar: "تم دفع التحصيل وإتمام الحجز",
+    fa_ir: "مجموعه پرداخت کرد و رزرو نهایی شد",
+    en_us: "The ngo is paid and the reservation is finalized",
+  },
   "travelers who plan to travel to this host. please check the submitted requests.": {
     ar: "المسافرون الذين يخططون للسفر إلى هذا المضيف. يرجى التحقق من الطلبات المقدمة.",
-    fa_ir: "مسافرانی که قصد دارند به این میزبانی سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",
+    fa_ir:
+      "مسافرانی که قصد دارند به این میزبانی سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",
     en_us: "Travelers who plan to travel to this host. Please check the submitted requests.",
   },
   published: {
@@ -1852,7 +2045,8 @@ export const messages = {
   "passengers who plan to travel with this tour. please check the submitted requests.": {
     ar: "المسافرون الذين يخططون للسفر بهذه الجولة. يرجى التحقق من الطلبات المقدمة.",
     fa_ir: "مسافرانی که قصد دارند با این تور سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",
-    en_us: "Passengers who plan to travel with this tour. Please check the submitted requests.",},
+    en_us: "Passengers who plan to travel with this tour. Please check the submitted requests.",
+  },
   "tour capacity": {
     ar: "قدرة الجولة",
     fa_ir: "ظرفیت تور",
@@ -2012,8 +2206,7 @@ export const messages = {
   },
   "choose or write the cost of your tour, you can give a discount to the original price.": {
     ar: "اختر أو اكتب تكلفة جولتك، يمكنك إعطاء خصم على السعر الأصلي.",
-    fa_ir:
-      "هزینه تور خودتان را انتخاب کنید یا بنویسید، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
+    fa_ir: "هزینه تور خودتان را انتخاب کنید یا بنویسید، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
     en_us: "Choose or write the cost of your tour, you can give a discount to the original price.",
   },
   Free: {
@@ -2164,34 +2357,44 @@ export const messages = {
     fa_ir: "درخواست ایجاد تور شما با موفقیت ثبت شد",
     en_us: "Your request to create a tour has been successfully registered",
   },
-  "wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.": {
-    ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل جولتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
-    fa_ir: "کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
-    en_us: "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.",
-  },
+  "wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.":
+    {
+      ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل جولتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
+      fa_ir:
+        "کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
+      en_us:
+        "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.",
+    },
   "your hosting creation request has been successfully registered": {
     ar: "لقد تم تسجيل طلب إنشاء الاستضافة الخاص بك بنجاح",
     fa_ir: "درخواست ایجاد میزبانی شما با موفقیت ثبت شد",
     en_us: "Your hosting creation request has been successfully registered",
   },
-  "wait less than 48 hours for your hosting to be registered by trip's helpful support and displayed to travelers.": {
-    ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل استضافتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
-    fa_ir: "کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
-    en_us: "Wait less than 48 hours for your hosting to be registered by Trip's helpful support and displayed to travelers.",
-  },
+  "wait less than 48 hours for your hosting to be registered by trip's helpful support and displayed to travelers.":
+    {
+      ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل استضافتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
+      fa_ir:
+        "کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
+      en_us:
+        "Wait less than 48 hours for your hosting to be registered by Trip's helpful support and displayed to travelers.",
+    },
   "pictures related to the host": {
     ar: "الصور المتعلقة بالمضيف",
     fa_ir: "تصاویر مربوط به میزبانی",
     en_us: "Pictures related to the host",
   },
-  "you can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.": {
-    ar: "يمكنك تحميل الصور المتعلقة بمضيفك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
-    fa_ir: "شما می توانید تصاویر مربوط به هاست خود را آپلود کنید، لطفا توجه داشته باشید که حجم تصاویر باید کمتر از 3 مگابایت باشد. توجه داشته باشید که این بخش اختیاری است.",
-    en_us: "You can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.",
-  },
+  "you can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.":
+    {
+      ar: "يمكنك تحميل الصور المتعلقة بمضيفك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
+      fa_ir:
+        "شما می توانید تصاویر مربوط به هاست خود را آپلود کنید، لطفا توجه داشته باشید که حجم تصاویر باید کمتر از 3 مگابایت باشد. توجه داشته باشید که این بخش اختیاری است.",
+      en_us:
+        "You can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.",
+    },
   "you can write and add your own host features. note that this section is optional.": {
     ar: "يمكنك كتابة وإضافة ميزات المضيف الخاصة بك. لاحظ أن هذا القسم اختياري.",
-    fa_ir: "شما می توانید ویژگی های میزبانی خود را بنویسید و اضافه کنید. توجه داشته باشید که این بخش اختیاری است.",
+    fa_ir:
+      "شما می توانید ویژگی های میزبانی خود را بنویسید و اضافه کنید. توجه داشته باشید که این بخش اختیاری است.",
     en_us: "You can write and add your own host features. Note that this section is optional.",
   },
   "choose or write the cost of your host, you can give a discount to the original price.": {
@@ -2214,11 +2417,13 @@ export const messages = {
     fa_ir: "میزبانی پذیرای کودکان زیر ۱۲ سال است.",
     en_us: "The host is open to children under 12 years old",
   },
-  "to easily find the origin and start the host, set the address and the map of the place of departure.": {
-    ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
-    fa_ir: "برای یافتن آسان مبدا و راه اندازی میزبانی، آدرس و نقشه محل عزیمت را تنظیم کنید.",
-    en_us: "To easily find the origin and start the host, set the address and the map of the place of departure.",
-  },
+  "to easily find the origin and start the host, set the address and the map of the place of departure.":
+    {
+      ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
+      fa_ir: "برای یافتن آسان مبدا و راه اندازی میزبانی، آدرس و نقشه محل عزیمت را تنظیم کنید.",
+      en_us:
+        "To easily find the origin and start the host, set the address and the map of the place of departure.",
+    },
   "host title and details": {
     ar: "عنوان المضيف والتفاصيل",
     fa_ir: "عنوان میزبانی و جزئیات",
@@ -2249,15 +2454,19 @@ export const messages = {
     fa_ir: "پایان میزبانی",
     en_us: "End Host",
   },
-  "the created hosting is under review by support, after approval by the support team, it will be included in mofidtrip's hosting list.": {
-    ar: "الاستضافة التي تم إنشاؤها قيد المراجعة من قبل الدعم، وبعد موافقة فريق الدعم، سيتم إدراجها في قائمة استضافة Mofidtrip.",
-    fa_ir: "میزبانی ایجاد شده در مرحله بررسی توسط پشتیبانی قرار دارد، بعد از تایید توسط تیم پشتیبانی در لیست میزبانی های مفیدتریپ قرار خواهد گرفت.",
-    en_us: "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
-  },
+  "the created hosting is under review by support, after approval by the support team, it will be included in mofidtrip's hosting list.":
+    {
+      ar: "الاستضافة التي تم إنشاؤها قيد المراجعة من قبل الدعم، وبعد موافقة فريق الدعم، سيتم إدراجها في قائمة استضافة Mofidtrip.",
+      fa_ir:
+        "میزبانی ایجاد شده در مرحله بررسی توسط پشتیبانی قرار دارد ، بعد از تایید توسط تیم پشتیبانی در لیست میزبانی های مفیدتریپ قرار خواهد گرفت.",
+      en_us:
+        "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
+    },
   "last modification": {
     ar: "اخر تعديل",
     fa_ir: "آخرین به روز رسانی",
-    en_us: "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
+    en_us:
+      "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
   },
   "hour later": {
     ar: "بعد ساعة",
@@ -2266,22 +2475,29 @@ export const messages = {
   },
   "verification code has been sent, enter it. if you do not receive the code, hit send again": {
     ar: "تم إرسال رمز التحقق، أدخله. إذا لم تستلم الرمز، اضغط على إرسال مرة أخرى",
-    fa_ir: "کد تأیید ارسال شده است، آن را وارد کنید. اگر کد را دریافت نکردید، دوباره ارسال را بزنید",
-    en_us: "Verification code has been sent, enter it. If you do not receive the code, hit send again",
+    fa_ir:
+      "کد تأیید ارسال شده است، آن را وارد کنید. اگر کد را دریافت نکردید، دوباره ارسال را بزنید",
+    en_us:
+      "Verification code has been sent, enter it. If you do not receive the code, hit send again",
   },
   "resend the code": {
     ar: "إعادة إرسال الرمز",
     fa_ir: "ارسال مجدد کد",
     en_us: "Resend the code",
   },
-  "loading": {
+  loading: {
     ar: "تحميل",
     fa_ir: "در حال بارگزاری",
     en_us: "Loading",
   },
-  "previous": {
+  previous: {
     ar: "سابق",
     fa_ir: "قبلی",
     en_us: "Previous",
+  },
+  "this cardpan does not exist": {
+    ar: "رقم البطاقة هذا غير موجود",
+    fa_ir: "این شماره کارت موجود نمیباشد",
+    en_us: "this cardpan does not exist",
   },
 };

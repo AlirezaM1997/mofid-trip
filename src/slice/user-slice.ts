@@ -20,6 +20,8 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUserDetail: (state, action) => {
+      console.log("action.payload", action.payload);
+
       state.userDetail = action.payload;
     },
     logout: () => {},

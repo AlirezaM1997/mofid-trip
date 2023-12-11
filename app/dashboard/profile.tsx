@@ -69,6 +69,8 @@ const Profile: React.FC = () => {
 
   const handleNavigateToRequestToMyTours = () => router.push("/tour/management/request");
 
+  const handleNavigateToRequestToMyHost = () => router.push("/host/management/request");
+
   const handleNavigateToEditProfile = () => router.push("/edit-profile");
 
   const handleNavigateToComingSoon = () => router.push("/comingSoon");
@@ -231,6 +233,17 @@ const Profile: React.FC = () => {
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("My Tours Requests")}</ListItem.Title>
+          </ListItem.Content>
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
+        </ListItem>
+        <ListItem bottomDivider onPress={handleNavigateToRequestToMyHost}>
+          <Feather name="aperture" size={24} color="black" />
+          <ListItem.Content>
+            <ListItem.Title style={style.label(isRtl)}>{tr("apply to my hosts")}</ListItem.Title>
           </ListItem.Content>
           <Feather
             name={isRtl ? "chevron-left" : "chevron-right"}

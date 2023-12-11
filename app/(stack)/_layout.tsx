@@ -45,6 +45,12 @@ const HomeLayout = () => {
           />
         ),
       })}>
+        <Stack.Screen
+        name="search"
+        options={{
+          title: tr("Search"),
+        }}
+      />
       <Stack.Screen
         name="tour"
         options={{
@@ -85,6 +91,12 @@ const HomeLayout = () => {
         name="ngoLogin"
         options={{
           title: tr("log in, sign up"),
+        }}
+      />
+      <Stack.Screen
+        name="wallet/deposit"
+        options={{
+          title: tr("increase balance"),
         }}
       />
       <Stack.Screen
@@ -169,6 +181,18 @@ const HomeLayout = () => {
         name="host/management/index"
         options={{
           title: tr("Host Management"),
+        }}
+      />
+      <Stack.Screen
+        name="host/management/[hostId]"
+        options={{
+          title: tr("Loading"),
+        }}
+      />
+      <Stack.Screen
+        name="host/management/request/[hostId]"
+        options={{
+          title: tr("Loading"),
         }}
       />
       <Stack.Screen
@@ -292,10 +316,30 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="paymentStatus"
+        name="transactionPaymentStatus"
         options={{
-          headerLeft: () => null,
           title: tr("payment status"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/receipt/paymentStatus"
+        options={{
+          title: tr("payment status"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/cards/index"
+        options={{
+          title: tr("my cards"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/cards/add/index"
+        options={{
+          title: tr("add card"),
           headerBackButtonMenuEnabled: false,
         }}
       />

@@ -27,16 +27,40 @@ query userDetail {
       modifiedTime
       walletTransactions {
         action
-        amount
-        createdTime
-        id
-        invoiceNumber
-        modifiedTime
+        source {
+          ... on BackCardQueryType {
+            id
+            title
+            cardPan
+          }
+          ... on WalletQuryType {
+            id
+          }
+        }
+        reference {
+          ... on BackCardQueryType {
+            id
+            cardPan
+            iban
+          }
+          ... on WalletQuryType {
+            id
+            balance
+          }
+        }
         purchaseRefId
+        modifiedTime
+        invoiceNumber
+        id
+        description
+        amount
+        statusStep
       }
       walletCards {
         id
+        iban
         title
+        cardPan
       }
     }
   }
