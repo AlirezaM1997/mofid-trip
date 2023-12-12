@@ -51,7 +51,7 @@ const Screen = () => {
         origin: values,
       })
     );
-    router.push({
+    router.replace({
       pathname: "tour/create/destination",
       params: {
         x: -95 * 3,
