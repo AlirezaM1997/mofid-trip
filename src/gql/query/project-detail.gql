@@ -4,6 +4,8 @@ query projectDetail($pk: ID!) {
     name
     price
     gender
+    dateEnd
+    dateStart
     description
     tags {
       id
@@ -21,6 +23,10 @@ query projectDetail($pk: ID!) {
       faName
       arName
     }
+    categories {
+      name
+      id
+    }
     creator {
       id
       fullname
@@ -29,6 +35,7 @@ query projectDetail($pk: ID!) {
       ngo {
         id
       }
+
       avatarS3 {
         small
       }

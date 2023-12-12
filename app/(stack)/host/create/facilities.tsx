@@ -63,7 +63,10 @@ const HostCreateFacilitiesScreen = () => {
     if (done) {
       submit({
         variables: {
-          data: data,
+          data: {
+            ...data,
+            facilities: form.values,
+          },
         },
       });
     }
