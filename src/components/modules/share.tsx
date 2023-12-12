@@ -1,7 +1,7 @@
 import { Alert, Linking, Platform, Pressable, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
-import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
+import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
@@ -13,7 +13,7 @@ import * as Clipboard from "expo-clipboard";
 import useTranslation from "@src/hooks/translation";
 import { WIDTH } from "@src/constants";
 
-const Share = () => {
+const Share = ({ closeMoreDetails }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
@@ -61,12 +61,24 @@ const Share = () => {
 
   const [isVisible, setIsVisible] = useState(false);
 
-  const handleOpen = () => setIsVisible(true);
-  const handleClose = () => setIsVisible(false);
+  const handleOpen = () => {
+    setIsVisible(true);
+    closeMoreDetails();
+  };
+  const handleClose = () => {
+    setIsVisible(false);
+  };
 
   return (
     <>
-      <Feather style={style.iconStyle} name="share-2" size={22} onPress={handleOpen} />
+      <ListItem
+        onPress={handleOpen}
+        containerStyle={{ direction: "rtl", paddingVertical: 10, borderTopRightRadius: 8 }}>
+        <Feather name="share-2" size={16} />
+        <Text numberOfLines={1} body2>
+          {tr("share")}
+        </Text>
+      </ListItem>
 
       <BottomSheet onBackdropPress={handleClose} isVisible={isVisible}>
         <Container>
@@ -141,9 +153,6 @@ const Share = () => {
 };
 
 const style = StyleSheet.create({
-  iconStyle: {
-    paddingLeft: 12,
-  },
   bottomSheetHeader: {
     alignItems: "center",
     gap: 8,

@@ -3,7 +3,6 @@ import moment from "jalali-moment";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import { useEffect, useState } from "react";
-import useTourTable from "@src/hooks/db/tour";
 import { getCapacity } from "@src/helper/tour";
 import ImageSlider from "@modules/image-slider";
 import { StyleSheet, View } from "react-native";
@@ -20,13 +19,10 @@ import {
   TourDetailQuery,
   TourPackageType,
   useTourDetailQuery,
-  useTourListQuery,
 } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
-import { useSelector } from "react-redux";
-import { RootState } from "@src/store";
-import Share from "@modules/share";
+import ShareReportDropDown from "@modules/share&reportDropDown";
 
 export default () => {
   const isRtl = useIsRtl();
@@ -62,7 +58,7 @@ export default () => {
   const endTime = moment(tour?.endTime).locale("fa").format("MMMM D");
 
   useEffect(() => {
-    navigation.setOptions({ title: name,headerRight: () => <Share/>, });
+    navigation.setOptions({ title: name, headerRight: () => <ShareReportDropDown /> });
   }, [name]);
 
   useEffect(() => {

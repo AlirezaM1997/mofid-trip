@@ -23,9 +23,8 @@ import { useProjectDetailQuery } from "@src/gql/generated";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import { setProjectDetail } from "@src/slice/project-slice";
 import { initialState, setHostTransactionData } from "@src/slice/host-transaction-slice";
-import ButtonRow from "@modules/button-rows";
 import { RootState } from "@src/store";
-import Share from "@modules/share";
+import ShareReportDropDown from "@modules/share&reportDropDown";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
@@ -71,7 +70,14 @@ const Page: React.FC = ({ ...props }) => {
     }
   }, [loading, data]);
 
-  navigation.setOptions({ title: name,headerRight: () => <Share/>, });
+  console.log("====================================");
+  console.log(name);
+  console.log("========================4============");
+
+  navigation.setOptions({
+    title: name,
+    headerRight: () => <ShareReportDropDown name={data?.projectDetail?.accommodation?.name} />,
+  });
 
   if (loading) return <LoadingIndicator />;
 
@@ -80,28 +86,28 @@ const Page: React.FC = ({ ...props }) => {
       <ScrollView style={style.scrollView}>
         <WhiteSpace size={10} />
         <Container style={style.container}>
-          <ImageSlider imageList={data.projectDetail.accommodation.avatarS3} />
+          <ImageSlider imageList={data?.projectDetail?.accommodation?.avatarS3} />
 
           <ProjectTags tags={data?.projectDetail?.tags ?? []} />
 
           <View style={style.infoContainer}>
-            <Text variant="heading1">{data.projectDetail?.accommodation?.name}</Text>
-            <Text variant="heading2">{data.projectDetail?.accommodation?.address}</Text>
+            <Text variant="heading1">{data?.projectDetail?.accommodation?.name}</Text>
+            <Text variant="heading2">{data?.projectDetail?.accommodation?.address}</Text>
           </View>
 
           <ProjectBoldFeatures capacity={data?.projectDetail?.capacity ?? 0} />
 
           <View style={style.infoContainer}>
             <Text variant="heading1">{tr("Description")}</Text>
-            <Text variant="body1">{data.projectDetail?.accommodation?.description}</Text>
+            <Text variant="body1">{data?.projectDetail?.accommodation?.description}</Text>
           </View>
 
-          <ProjectFacilities facilities={data.projectDetail?.facilities} />
+          <ProjectFacilities facilities={data?.projectDetail?.facilities} />
 
           {isFocused && (
             <Map
-              lat={data.projectDetail?.accommodation?.lat}
-              lng={data.projectDetail?.accommodation?.lng}
+              lat={data?.projectDetail?.accommodation?.lat}
+              lng={data?.projectDetail?.accommodation?.lng}
             />
           )}
 
@@ -109,7 +115,7 @@ const Page: React.FC = ({ ...props }) => {
 
           <SimilarProjects
             currentProjectId={projectId}
-            projects={data.projectDetail?.creator?.projectSet}
+            projects={data?.projectDetail?.creator?.projectSet}
           />
         </Container>
         <WhiteSpace size={10} />
@@ -121,7 +127,7 @@ const Page: React.FC = ({ ...props }) => {
           <Text style={style.priceTitle}>{tr("Price")}</Text>
           <View style={style.priceContainer}>
             <Text body1 style={style.priceNumber}>
-              ${localizeNumber(data.projectDetail?.price)}
+              ${localizeNumber(data?.projectDetail?.price)}
             </Text>
             <Text style={style.priceText}> / {tr("Night")}</Text>
           </View>
