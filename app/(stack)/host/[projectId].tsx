@@ -43,7 +43,6 @@ const Page: React.FC = ({ ...props }) => {
   navigation.setOptions({ title: name, headerRight: () => <Share /> });
 
   if (loading) return <LoadingIndicator />;
-  console.log('>>>', data.projectDetail);
 
   const {
     tags,
