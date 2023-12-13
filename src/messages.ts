@@ -395,7 +395,7 @@ export const messages = {
   },
   next: {
     ar: "التالی",
-    fa_ir: "بعد",
+    fa_ir: "بعدی",
     en_us: "Next",
   },
   "no result": {
@@ -2535,9 +2535,19 @@ export const messages = {
     fa_ir: "در حال بارگزاری",
     en_us: "Loading",
   },
+  previous: {
+    ar: "سابق",
+    fa_ir: "قبلی",
+    en_us: "Previous",
+  },
   "this cardpan does not exist": {
     ar: "رقم البطاقة هذا غير موجود",
     fa_ir: "این شماره کارت موجود نمیباشد",
     en_us: "this cardpan does not exist",
+  },
+  stay: {
+    ar: "یبقی",
+    fa_ir: "ماندن",
+    en_us: "Stay",
   },
 };

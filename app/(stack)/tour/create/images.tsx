@@ -28,7 +28,7 @@ const Screen = () => {
         base64Images: images as string[],
       })
     );
-    router.push({
+    router.replace({
       pathname: "tour/create/facilities",
       params: {
         x: -95 * 8,
