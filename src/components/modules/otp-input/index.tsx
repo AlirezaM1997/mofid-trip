@@ -3,6 +3,7 @@ import { useTheme } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import Input from "@atoms/input";
 import { TextInput } from "react-native-gesture-handler";
+import parseText from "@src/helper/number-input";
 
 type OtpInputPropsType = {
   onComplete: (t: string) => void;
@@ -27,6 +28,7 @@ const OtpInput = ({ onComplete }: OtpInputPropsType) => {
     if (value.length === 4) {
       onComplete(value);
     }
+    console.log(value);
   }, [value]);
 
   useEffect(() => {
@@ -38,10 +40,10 @@ const OtpInput = ({ onComplete }: OtpInputPropsType) => {
       {[0, 1, 2, 3].map(i => (
         <Input
           key={i}
-          value={value?.[i]}
+          value={parseText(value?.[i])}
           keyboardType="number-pad"
           ref={inputs[i] as Ref<TextInput>}
-          onChangeText={t => setValue(value + t)}
+          onChangeText={t => setValue(parseText(value + t))}
           containerStyle={styles.inputContainerStyle}
           onKeyPress={({ nativeEvent }) => handleKeyPress(nativeEvent, i)}
           inputStyle={[styles.input, styles.getActiveInputStyle(theme, value.length === i)]}

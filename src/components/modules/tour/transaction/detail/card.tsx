@@ -2,7 +2,7 @@ import React from "react";
 import moment from "jalali-moment";
 import { router } from "expo-router";
 import { Image, Text } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 import { AccommodationQueryType } from "@src/gql/generated";
@@ -10,7 +10,7 @@ import { AccommodationQueryType } from "@src/gql/generated";
 const TransactionDetailCard = ({ tourPackage }) => {
   const { tr } = useTranslation();
   const formattedDate = (date: Date) => moment(date, "YYYY/MM/DD").locale("fa").format("D MMMM");
-
+  const { localizeNumber } = useLocalizedNumberFormat();
   return (
     <Pressable
       style={styles.routeToTourPageContainer}
@@ -19,12 +19,14 @@ const TransactionDetailCard = ({ tourPackage }) => {
         <Image
           style={styles.tourAvatar}
           source={{
-            uri: (tourPackage.tour.destination as AccommodationQueryType)?.avatarS3[0].small,
+            uri: (tourPackage.tour.destination as AccommodationQueryType)?.avatarS3[0]?.small,
           }}
         />
 
         <View style={styles.tourDetail}>
-          <Text subtitle1>{tourPackage.tour.title}</Text>
+          <Text subtitle1 numberOfLines={1}>
+            {tourPackage.tour.title}
+          </Text>
 
           <Text numberOfLines={1} caption type="grey2">
             {(tourPackage.tour.destination as AccommodationQueryType)?.address}
@@ -34,14 +36,14 @@ const TransactionDetailCard = ({ tourPackage }) => {
             <Text caption type="grey2">
               {tr("beginning")} .
             </Text>
-            <Text caption>{formattedDate(tourPackage.tour.startTime)}</Text>
+            <Text caption>{localizeNumber(formattedDate(tourPackage.tour.startTime))}</Text>
           </View>
 
           <View style={styles.date}>
             <Text caption type="grey2">
               {tr("end")} .
             </Text>
-            <Text caption>{formattedDate(tourPackage.tour.endTime)}</Text>
+            <Text caption>{localizeNumber(formattedDate(tourPackage.tour.endTime))}</Text>
           </View>
         </View>
       </View>

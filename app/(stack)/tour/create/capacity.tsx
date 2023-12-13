@@ -37,7 +37,7 @@ const Screen = () => {
         ...data,
         capacity: {
           ...values,
-          capacityNumber: parseInt(values.capacityNumber)
+          capacityNumber: parseInt(values.capacityNumber),
         },
       })
     );
@@ -77,6 +77,7 @@ const Screen = () => {
               onChangeText={handleChange("capacityNumber")}
               onBlur={handleBlur("capacityNumber")}
               value={values.capacityNumber}
+              keyboardType="number-pad"
               errorMessage={touched.capacityNumber && errors.capacityNumber}
             />
 

@@ -62,7 +62,7 @@ export default () => {
   const endTime = moment(tour?.endTime).locale("fa").format("MMMM D");
 
   useEffect(() => {
-    navigation.setOptions({ title: name,headerRight: () => <Share/>, });
+    navigation.setOptions({ title: name, headerRight: () => <Share /> });
   }, [name]);
 
   useEffect(() => {
@@ -110,6 +110,7 @@ export default () => {
         <WhiteSpace size={20} />
 
         <TitleWithAction
+          size="subtitle1"
           title={tr("Tour Facilities")}
           actionTitle={tr("See All")}
           onActionPress={() => router.push("/search")}

@@ -23,8 +23,8 @@ const HostCreateAddressScreen = () => {
     province: data.accommodation.province,
     city: data.accommodation.city,
     address: data.accommodation.address,
-    lat: data.accommodation.lat,
-    lng: data.accommodation.lng,
+    lat: data?.accommodation.lat,
+    lng: data?.accommodation.lng,
   };
 
   const validationSchema = Yup.object().shape({

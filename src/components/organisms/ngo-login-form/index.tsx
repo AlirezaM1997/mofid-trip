@@ -14,12 +14,13 @@ const NgoLoginForm = () => {
   const [phone, setPhone] = useState("");
   const [callingCode, setCallingCode] = useState("+98");
   const [login, { loading, data, error }] = useCreateLoginMutation();
+  const sendToApiPhone = phone[0] === "0" ? phone.substring(1) : phone;
 
   const handlePress = () => {
     login({
       variables: {
         dataNgo: {
-          phoneNumber: callingCode + phone,
+          phoneNumber: callingCode + sendToApiPhone,
         },
       },
     });
@@ -30,7 +31,7 @@ const NgoLoginForm = () => {
       router.push({
         pathname: "/SMSVerification",
         params: {
-          phone: callingCode + phone,
+          phone: callingCode + sendToApiPhone,
         },
       });
     }
