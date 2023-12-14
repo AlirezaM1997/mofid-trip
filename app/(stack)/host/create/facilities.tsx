@@ -4,27 +4,29 @@ import BottomButtonLayout from "@components/layout/bottom-button";
 import { Feather } from "@expo/vector-icons";
 import ButtonRow from "@modules/button-rows";
 import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
+import { CommonActions } from "@react-navigation/routers";
 import { BottomSheet, Chip, Input, Text } from "@rneui/themed";
 import { Button, useTheme } from "@rneui/themed";
-import { useProjectAddMutation, useTourAddMutation } from "@src/gql/generated";
+import { useProjectAddMutation, ProjectAddInputType, useTourAddMutation } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { setHostCreateData } from "@src/slice/host-create-slice";
 import { RootState } from "@src/store";
-import { router } from "expo-router";
-import { Formik } from "formik";
-import { useRef, useState } from "react";
-import { ImageBackground, StyleSheet, View } from "react-native";
+import { router, useNavigation } from "expo-router";
+import { Formik, FormikProps, FormikValues } from "formik";
+import { Ref, useRef, useState } from "react";
+import { ImageBackground, Platform, StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 const HostCreateFacilitiesScreen = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const { theme } = useTheme();
-  const formikInnerRef = useRef();
+  const formikInnerRef: Ref<FormikProps<string[]>> & FormikValues = useRef();
   const [value, setValue] = useState<string | null>();
   const [isVisible, setIsVisible] = useState(false);
   const { data } = useSelector((state: RootState) => state.hostCreateSlice);
   const initialValues = data.facilities;
+  const navigation = useNavigation();
   const [submit, { loading }] = useProjectAddMutation();
 
   const handleChangeInput = e => {
@@ -35,6 +37,7 @@ const HostCreateFacilitiesScreen = () => {
     const form = formikInnerRef.current;
     if (value) {
       form.setValues([...form.values, value]);
+
       setValue("");
     }
   };
@@ -46,8 +49,8 @@ const HostCreateFacilitiesScreen = () => {
   };
 
   const handleSubmit = async () => {
-    // ... do something
     const form = formikInnerRef.current;
+
     const done = await new Promise(resolve => {
       dispatch(
         setHostCreateData({
@@ -60,16 +63,34 @@ const HostCreateFacilitiesScreen = () => {
     if (done) {
       submit({
         variables: {
-          data: data,
+          data: {
+            ...data,
+            facilities: form.values,
+          },
         },
       });
     }
     setIsVisible(true);
   };
 
+  const routeHandler = route => {
+    if (Platform.OS === "web") {
+      let currentUrl = "/";
+      history.replaceState({ url: currentUrl }, document.title, currentUrl);
+      router.push(route);
+    } else {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ key: `${route}/index`, name: `${route}/index` }],
+        })
+      );
+    }
+  };
+
   return (
     <Formik innerRef={formikInnerRef} initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ values, errors, touched, handleSubmit }) => (
+      {({ values, handleSubmit }) => (
         <>
           <BottomButtonLayout
             buttons={[
@@ -123,6 +144,7 @@ const HostCreateFacilitiesScreen = () => {
               </View>
             </Container>
           </BottomButtonLayout>
+
           <BottomSheet isVisible={isVisible}>
             <Container>
               <ImageBackground
@@ -141,8 +163,8 @@ const HostCreateFacilitiesScreen = () => {
               <ButtonRow>
                 <Button
                   onPress={() => {
-                    router.push("/host/management");
                     setIsVisible(false);
+                    routeHandler("/host/management");
                   }}
                   color="secondary"
                   type="outline">
@@ -150,7 +172,7 @@ const HostCreateFacilitiesScreen = () => {
                 </Button>
                 <Button
                   onPress={() => {
-                    router.push("/");
+                    routeHandler("/");
                     setIsVisible(false);
                   }}>
                   {tr("Return to home")}

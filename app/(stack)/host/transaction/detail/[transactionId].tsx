@@ -7,7 +7,7 @@ import { Button } from "@rneui/themed";
 import * as Network from "expo-network";
 import useTranslation from "@src/hooks/translation";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import LoadingIndicator from "@modules/Loading-indicator";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import HostTransactionDetail from "@modules/host/transaction/detail ";
@@ -32,9 +32,7 @@ const TransactionDetailsScreen = () => {
 
   const { status, project } = data.projectTransactionDetail;
 
-  useEffect(() => {
-    navigation.setOptions({ title: project.name });
-  }, []);
+  navigation.setOptions({ title: project.name });
 
   const purchaseHandler = async () => {
     const ip = await Network.getIpAddressAsync();
@@ -49,7 +47,10 @@ const TransactionDetailsScreen = () => {
         },
       },
     });
-    router.push(data.projectPurchaseAdd.metadata?.url);
+
+    if (data.projectPurchaseAdd.status === "OK") {
+      router.push(data.projectPurchaseAdd.metadata?.url);
+    }
   };
 
   const bottomButton = () => {

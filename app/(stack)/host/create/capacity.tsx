@@ -1,9 +1,10 @@
 import Container from "@atoms/container";
+import Input from "@atoms/input";
 import WhiteSpace from "@atoms/white-space";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import ComingSoon from "@modules/coming-soon";
 import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
-import { Button, CheckBox, Input, Text, useTheme } from "@rneui/themed";
+import { Button, CheckBox, Text, useTheme } from "@rneui/themed";
 import { TourGenderEnum } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { setHostCreateData } from "@src/slice/host-create-slice";
@@ -26,6 +27,7 @@ const HostCreateCapacityScreen = () => {
     childAccept: data.capacity.childAccept,
   };
 
+  //TODO: the capacity number should accept persian number
   const validationSchema = Yup.object().shape({
     capacityNumber: Yup.number().positive().required(tr("Capacity is required")),
     gender: Yup.string(),

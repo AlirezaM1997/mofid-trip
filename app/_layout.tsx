@@ -58,8 +58,10 @@ export default function App() {
   const colorScheme = Appearance.getColorScheme();
   const isDarkMode = colorScheme === "dark";
   const [fontsLoaded] = useFonts({
-    DanaNoEn: require("../assets/fonts/dana/DanaNoEn-Regular.ttf"),
-    DanaNoEnDemiBold: require("../assets/fonts/dana/DanaNoEn-DemiBold.ttf"),
+    DanaNoEn: require("@assets/fonts/dana/DanaNoEn-Regular.ttf"),
+    DanaNoEnDemiBold: require("@assets/fonts/dana/DanaNoEn-DemiBold.ttf"),
+    DanaFaNum: require("@assets/fonts/dana/farsi-numerical/DanaFaNum-Regular.ttf"),
+    DanaFaNumDemiBold: require("@assets/fonts/dana/farsi-numerical/DanaFaNum-DemiBold.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {

@@ -58,7 +58,7 @@ const HostDetailScreen = () => {
     if (!loading && data) {
       const h = data.NGODetail.projectSet.find(host => host.id === hostId);
       setHost(h);
-      navigation.setOptions({ title: h?.name});
+      navigation.setOptions({ title: h?.name });
     }
   }, [loading, data]);
 
@@ -74,7 +74,7 @@ const HostDetailScreen = () => {
           {host?.name}
         </Text>
         <Text caption type="grey3">
-          {tr("Last modification")}{" "}
+          {tr("Last modification")}
           {localizeNumber(calculateHoursSinceGivenDate(host.modifiedDate))} {tr("hour later")}
         </Text>
         <WhiteSpace size={20} />

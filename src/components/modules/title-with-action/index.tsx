@@ -10,7 +10,7 @@ type TitleWithActionPropsType = {
 const TitleWithAction = ({ title, actionTitle, onActionPress }: TitleWithActionPropsType) => {
   return (
     <View style={style.container}>
-      <Text heading2 bold>
+      <Text subtitle1 bold>
         {title}
       </Text>
       <Pressable onPress={onActionPress}>
@@ -26,7 +26,6 @@ const style = StyleSheet.create({
   container: {
     width: "100%",
     display: "flex",
-    marginBottom: 18,
     flexDirection: "row",
     alignItems: "baseline",
     justifyContent: "space-between",

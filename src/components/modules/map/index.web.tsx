@@ -15,6 +15,7 @@ type MapPropsType = ViewProps & {
 
 const Map = ({ lat, lng, mapMarkers, onMoveEnd, ...props }: MapPropsType) => {
   if (!lat && !lng) return;
+
   return (
     <>
       <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="StyleSheet" />
@@ -72,10 +73,15 @@ const Map = ({ lat, lng, mapMarkers, onMoveEnd, ...props }: MapPropsType) => {
 };
 const style = StyleSheet.create({
   container: {
+    height: 158,
+    width: "100%",
+    borderRadius: 12,
+    overflow: "hidden",
     position: "relative",
   },
   map: {
-    height: 280,
+    height: 158,
+    width: "100%",
     zIndex: 1,
   },
 });

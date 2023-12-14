@@ -16,6 +16,10 @@ const Stepper = ({ steps, activeStep, isActive }) => {
     <View style={styles.container}>
       {steps.map((step: string, index: number) => (
         <View key={index} style={styles.stepContainer}>
+          <Text numberOfLines={1} caption type={index + 1 <= activeStep ? (isActive ? "success" : "error") : "black"}>
+            {step}
+          </Text>
+
           <View
             style={[
               [styles.stepCircle, themeStyles.greyColor],
@@ -23,8 +27,6 @@ const Stepper = ({ steps, activeStep, isActive }) => {
                 (isActive ? [themeStyles.successColor] : [themeStyles.errorColor]),
               index + 1 === activeStep && !isActive && [themeStyles.errorColor],
             ]}></View>
-
-          <Text style={styles.stepLabel}>{step}</Text>
         </View>
       ))}
     </View>
@@ -33,25 +35,21 @@ const Stepper = ({ steps, activeStep, isActive }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
     marginVertical: 13,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 8,
   },
   stepContainer: {
-    alignItems: "center",
-    flexGrow: 0.2,
+    gap: 4,
+    flex: 1,
   },
   stepCircle: {
     width: "100%",
     height: 8,
     justifyContent: "center",
     alignItems: "center",
-  },
-
-  stepLabel: {
-    marginTop: 4,
-    textAlign: "center",
   },
 });
 

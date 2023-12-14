@@ -37,18 +37,15 @@ const HostCreatePriceScreen = () => {
 
   const validationSchema = Yup.object().shape({
     price: Yup.number()
-      .positive(tr("Only positive numbers acceptable"))
+      .min(0, tr("Only positive numbers acceptable"))
       .typeError(tr("Only number acceptable"))
       .required(tr("Required")),
-    discount: Yup.number()
-      .positive()
-      .max(100, tr("Discount can not be greater than 100"))
-      .required(),
+    discount: Yup.number().required().max(100, tr("Discount can not be greater than 100")),
   });
 
   const initialValues = {
     price: data.price,
-    discount: data.discount,
+    discount: data.discount || 0,
   };
 
   const handleSubmit = values => {

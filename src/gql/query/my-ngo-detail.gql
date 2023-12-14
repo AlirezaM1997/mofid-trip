@@ -151,7 +151,7 @@ query myNGODetail {
         }
       }
       tourGuests {
-        avatarS3{
+        avatarS3 {
           large
           medium
           small
@@ -176,7 +176,7 @@ query myNGODetail {
           small
         }
       }
-       guestSet {
+      guestSet {
         id
       }
       project {

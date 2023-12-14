@@ -7,10 +7,10 @@ import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation
 import { setHostCreateData } from "@src/slice/host-create-slice";
 import { RootState } from "@src/store";
 import { router } from "expo-router";
-import { Formik } from "formik";
+import { Formik, FormikProps, FormikValues } from "formik";
 import moment from "jalali-moment";
-import { useRef, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Ref, useRef, useState } from "react";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 
@@ -38,7 +38,7 @@ const HostCreateDateScreen = () => {
   const { theme } = useTheme();
   const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const formikInnerRef = useRef();
+  const formikInnerRef: Ref<FormikProps<any>> & FormikValues = useRef();
   const [checked, setChecked] = useState<boolean>(false);
   const { localizeNumber } = useLocalizedNumberFormat();
   const [markedDays, setMarkedDays] = useState([]);
@@ -171,7 +171,7 @@ const HostCreateDateScreen = () => {
                   <Text type="error">{touched.dateStart && (errors.dateStart as string)}</Text>
                 )}
               </View>
-              <Divider orientation="vertical" style={styles.divider} />
+              <Divider orientation="vertical" />
               <View style={styles.timeContainer}>
                 <Text body2 type={touched.dateEnd && errors.dateEnd ? "error" : "secondary"}>
                   {tr("end")}: {getLastDayFormatted()}
@@ -191,53 +191,52 @@ const HostCreateDateScreen = () => {
 const styles = StyleSheet.create({
   header: { gap: 6 },
   container: { gap: 24 },
-  divider: { width: 50 },
   showDateContainer: { flexDirection: "row", justifyContent: "space-evenly", marginTop: 25 },
-  startDayButtonStyle: theme => ({
+  startDayButtonStyle: (theme => ({
     backgroundColor: theme.colors.black,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
-  }),
-  startDayContainerStyle: theme => ({
+  })) as ViewStyle,
+  startDayContainerStyle: (theme => ({
     width: 45,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
-  }),
-  startDayTitleStyle: theme => ({
+  })) as ViewStyle,
+  startDayTitleStyle: (theme => ({
     color: theme.colors.white,
-  }),
-  middleDayButtonStyle: theme => ({
+  })) as ViewStyle,
+  middleDayButtonStyle: (theme => ({
     backgroundColor: theme.colors.grey1,
     borderRadius: 0,
-  }),
-  middleDayContainerStyle: theme => ({
+  })) as ViewStyle,
+  middleDayContainerStyle: (theme => ({
     width: 45,
     borderRadius: 0,
-  }),
-  middleDayTitleStyle: theme => ({
+  })) as ViewStyle,
+  middleDayTitleStyle: (theme => ({
     color: theme.colors.grey5,
-  }),
-  endDayButtonStyle: theme => ({
+  })) as ViewStyle,
+  endDayButtonStyle: (theme => ({
     backgroundColor: theme.colors.black,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
-  }),
-  endDayContainerStyle: theme => ({
+  })) as ViewStyle,
+  endDayContainerStyle: (theme => ({
     width: 45,
     borderRadius: 0,
-  }),
-  endDayTitleStyle: theme => ({
+  })) as ViewStyle,
+  endDayTitleStyle: (theme => ({
     color: theme.colors.white,
-  }),
-  startAndEndDayButtonStyle: theme => ({
+  })) as ViewStyle,
+  startAndEndDayButtonStyle: (theme => ({
     backgroundColor: theme.colors.black,
-  }),
-  startAndEndDayContainerStyle: theme => ({
+  })) as ViewStyle,
+  startAndEndDayContainerStyle: (theme => ({
     width: 45,
-  }),
-  startAndEndDayTitleStyle: theme => ({
+  })) as ViewStyle,
+  startAndEndDayTitleStyle: (theme => ({
     color: theme.colors.white,
-  }),
+  })) as ViewStyle,
   row: {
     display: "flex",
     flexDirection: "row",

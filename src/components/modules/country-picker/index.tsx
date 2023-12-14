@@ -1,4 +1,4 @@
-import { BottomSheet, Input, ListItem, Text } from "@rneui/themed";
+import { BottomSheet, ListItem, Text } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { CountryType, data } from "./data";
@@ -8,13 +8,14 @@ import { Feather } from "@expo/vector-icons";
 import { Divider } from "@rneui/base";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
+import Input from "@atoms/input";
 
 const CountryPicker = ({ value, setValue, callingCode, setCallingCode, ...props }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [country, setCountry] = useState(data[239]);
   const [inputValue, setInputValue] = useState("");
   const [tempData, setTempData] = useState(data);
-  const [searchText, setSearchText] = useState();
+  const [searchText, setSearchText] = useState("");
 
   const handleSelectCountry = (c: CountryType) => {
     setCallingCode(c.callingCode);
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     borderWidth: 0,
     height: 58,
-    textAlign: 'left'
+    textAlign: "left",
   },
   close: {
     display: "flex",
