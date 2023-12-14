@@ -27,7 +27,8 @@ query myNGODetailProjectSet {
       price
       discount
       tax
-      statusStep
+      # TODO: comment this out as soon as possible
+      # statusStep
       statusActivation
       facilities {
         id
@@ -38,7 +39,7 @@ query myNGODetailProjectSet {
       categories {
         id
       }
-      createdTime
+      createdDate
       capacity {
         id
       }
@@ -48,13 +49,11 @@ query myNGODetailProjectSet {
       capacityReserved {
         male
         female
-        child
         allCap
       }
       freeCapacity {
         male
         female
-        child
         allCap
       }
       __typename

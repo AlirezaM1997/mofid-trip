@@ -48,13 +48,11 @@ query myNGODetail {
       capacityReserved {
         male
         female
-        child
         allCap
       }
       freeCapacity {
         male
         female
-        child
         allCap
       }
       __typename

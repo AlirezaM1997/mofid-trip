@@ -26,6 +26,7 @@ import { initialState, setHostTransactionData } from "@src/slice/host-transactio
 import ButtonRow from "@modules/button-rows";
 import { RootState } from "@src/store";
 import Share from "@modules/share";
+import { useFormatPrice } from "@src/hooks/localization";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const Page: React.FC = ({ ...props }) => {
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisible, setIsVisible] = useState<boolean>();
   const isNgo = useSelector((state: RootState) => state.authSlice.loginData.metadata.is_ngo);
+  const { formatPrice } = useFormatPrice();
 
   const { loading, data } = useProjectDetailQuery({
     variables: {
@@ -71,7 +73,7 @@ const Page: React.FC = ({ ...props }) => {
     }
   }, [loading, data]);
 
-  navigation.setOptions({ title: name,headerRight: () => <Share/>, });
+  navigation.setOptions({ title: name, headerRight: () => <Share /> });
 
   if (loading) return <LoadingIndicator />;
 
@@ -121,7 +123,7 @@ const Page: React.FC = ({ ...props }) => {
           <Text style={style.priceTitle}>{tr("Price")}</Text>
           <View style={style.priceContainer}>
             <Text body1 style={style.priceNumber}>
-              ${localizeNumber(data.projectDetail?.price)}
+              {localizeNumber(formatPrice(data.projectDetail?.price))}
             </Text>
             <Text style={style.priceText}> / {tr("Night")}</Text>
           </View>
