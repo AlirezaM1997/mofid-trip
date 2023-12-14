@@ -1,5 +1,4 @@
 import WhiteSpace from "@atoms/white-space";
-import LocationPicker from "@modules/formik/fields/location-picker";
 import LocationPickerDestination from "@modules/formik/fields/location-picker-destination";
 import { Input, Text } from "@rneui/themed";
 import { TourAddInputType } from "@src/gql/generated";

@@ -48,13 +48,11 @@ query myNGODetail {
       capacityReserved {
         male
         female
-        child
         allCap
       }
       freeCapacity {
         male
         female
-        child
         allCap
       }
       __typename
@@ -151,7 +149,7 @@ query myNGODetail {
         }
       }
       tourGuests {
-        avatarS3{
+        avatarS3 {
           large
           medium
           small
@@ -176,7 +174,7 @@ query myNGODetail {
           small
         }
       }
-       guestSet {
+      guestSet {
         id
       }
       project {

@@ -1,48 +1,24 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ProjectAddInputType, ProjectGenderEnum } from "@src/gql/generated";
 
 type initialStateType = {
-  data: ProjectAddInputType;
+  activeStep: number;
 };
 
 export const initialState: initialStateType = {
-  data: {
-    name: null,
-    description: null,
-    dateStart: null,
-    dateEnd: null,
-    accommodation: {
-      province: null,
-      city: null,
-      address: null,
-      lat: null,
-      lng: null,
-      base64Images: null,
-    },
-    capacity: {
-      capacityNumber: null,
-      gender: ProjectGenderEnum.Both,
-      childAccept: false,
-    },
-    price: null,
-    discount: null,
-    base64Images: null,
-    categories: [],
-    facilities: [],
-  },
+  activeStep: 1,
 };
 
 export const userSlice = createSlice({
-  name: "host-create",
+  name: "tabs",
   initialState,
   reducers: {
-    setHostCreateData: (state, action: PayloadAction<ProjectAddInputType>) => {
-      state.data = action.payload;
+    setHostCreateActiveStep: (state, action: PayloadAction<number>) => {
+      state.activeStep = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setHostCreateData } = userSlice.actions;
+export const { setHostCreateActiveStep } = userSlice.actions;
 
 export default userSlice.reducer;

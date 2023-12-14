@@ -70,7 +70,7 @@ query NGODetail($pk: ID) {
         }
       }
     }
-       tourTransactionSet {
+    tourTransactionSet {
       id
       status {
         isActive
@@ -92,7 +92,7 @@ query NGODetail($pk: ID) {
         }
       }
       tourGuests {
-        avatarS3{
+        avatarS3 {
           large
           medium
           small

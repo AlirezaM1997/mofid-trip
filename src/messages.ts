@@ -1041,6 +1041,21 @@ export const messages = {
     fa_ir: "تاریخ",
     en_us: "Date",
   },
+  "host address": {
+    ar: "عنوان المضيف",
+    fa_ir: "آدرس میزبانی",
+    en_us: "Host address",
+  },
+  "hosting facilities": {
+    ar: "مرافق الاستضافة",
+    fa_ir: "امکانات میزبانی",
+    en_us: "hosting facilities",
+  },
+  "hosting date": {
+    ar: "تاريخ المضيف",
+    fa_ir: "تاریخ میزبانی",
+    en_us: "host date",
+  },
   "hosting type": {
     ar: "نوع الاستضافة",
     fa_ir: "نوع میزبانی",
@@ -2157,6 +2172,11 @@ export const messages = {
     fa_ir: "ظرفیت تور اجباری است",
     en_us: "Capacity is required",
   },
+  "about host": {
+    ar: "درباره میزبانی",
+    fa_ir: "درباره میزبانی",
+    en_us: "About host",
+  },
   "city is required": {
     ar: "المدينة مطلوبة",
     fa_ir: "شهر اجباری است",
@@ -2322,11 +2342,7 @@ export const messages = {
     fa_ir: "جزئیات میزبان",
     en_us: "Host Details",
   },
-  "host address": {
-    ar: "عنوان المضيف",
-    fa_ir: "نشانی میزبان",
-    en_us: "Host Address",
-  },
+
   "host capacity": {
     ar: "سعة المضيف",
     fa_ir: "ظرفیت میزبان",
@@ -2341,6 +2357,11 @@ export const messages = {
     ar: "سعر المضيف",
     fa_ir: "قیمت میزبان",
     en_us: "Host Price",
+  },
+  "daily capacity": {
+    ar: "القدرة اليومية",
+    fa_ir: "ظرفیت روزانه",
+    en_us: "Daily capacity",
   },
   "host images": {
     ar: "صور المضيف",

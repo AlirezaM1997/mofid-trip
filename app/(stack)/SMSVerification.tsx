@@ -127,8 +127,8 @@ const SMSVerificationScreen = () => {
         <WhiteSpace size={10} />
         <Pressable style={style.editContainer} onPress={handleBack}>
           <Feather name="edit" size={20} color={PRIMARY_COLOR} />
-          <Text style={style.phone} variant="body1">
-            {localizeNumber(phone)}
+          <Text style={style.phone} body1>
+            {localizeNumber(phone as string)}
           </Text>
         </Pressable>
       </View>
