@@ -1,15 +1,10 @@
-import { Tab, Text, useTheme } from "@rneui/themed";
+import { Tab, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { RootState } from "@src/store";
-import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
-
-type TourCreateTabsProps = {
-  index: number;
-};
 
 const TourCreateTabs = () => {
   const { tr } = useTranslation();
@@ -33,8 +28,7 @@ const TourCreateTabs = () => {
         const { contentOffset } = event.nativeEvent;
         x.current = contentOffset.x;
       }}
-      style={{ overflow: "hidden" }}
-    >
+      style={{ overflow: "hidden" }}>
       <Tab
         value={activeStep}
         // onChange={handleChange}
