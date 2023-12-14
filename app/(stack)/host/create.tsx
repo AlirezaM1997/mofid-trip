@@ -101,45 +101,6 @@ const Screen = () => {
     discount: Yup.number().required().max(100, tr("Discount can not be greater than 100")),
   });
 
-  // const validationSchema = Yup.object().shape({
-  //   capacity: Yup.object().shape({
-  //     capacityNumber: Yup.number()
-  //       .positive("Capacity is required")
-  //       .required("Capacity is required"),
-  //     gender: Yup.string(),
-  //     childAccept: Yup.boolean(),
-  //   }),
-
-  //   startTime: Yup.date().required(tr("Required")),
-  //   endTime: Yup.date().required(tr("Required")),
-
-  //   destination: Yup.object().shape({
-  //     province: Yup.string().required(tr("Province is required")),
-  //     city: Yup.string().required(tr("City is required")),
-  //     address: Yup.string().required(tr("Address is required")),
-  //     lat: Yup.string().required(tr("Select location on the map")),
-  //     lng: Yup.string().required(tr("Select location on the map")),
-  //   }),
-
-  //   title: Yup.string().required(tr("Title is required")),
-  //   description: Yup.string().nullable(),
-
-  //   origin: Yup.object().shape({
-  //     address: Yup.string().required(tr("Address is required")),
-  //     lat: Yup.string().required(tr("Select location on the map")),
-  //     lng: Yup.string().required(tr("Select location on the map")),
-  //   }),
-
-  //   price: Yup.number()
-  //     .positive(tr("Only positive numbers acceptable"))
-  //     .typeError(tr("Only number acceptable"))
-  //     .required(tr("Required")),
-  //   discount: Yup.number()
-  //     .positive()
-  //     .max(100, tr("Discount can not be greater than 100"))
-  //     .required(),
-  // });
-
   const handleOpen = () => setIsVisibleExit(true);
   const handleClose = () => setIsVisibleExit(false);
 
@@ -311,7 +272,7 @@ const Screen = () => {
               <ButtonRow>
                 <Button
                   onPress={() => {
-                    setIsVisible(false);
+                    setIsVisibleFinish(false);
                     routeHandler("/host/management");
                   }}
                   color="secondary"
@@ -321,7 +282,7 @@ const Screen = () => {
                 <Button
                   onPress={() => {
                     routeHandler("/");
-                    setIsVisible(false);
+                    setIsVisibleFinish(false);
                   }}>
                   {tr("Return to home")}
                 </Button>

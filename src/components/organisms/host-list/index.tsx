@@ -6,7 +6,7 @@ import Container from "@atoms/container";
 import { router } from "expo-router";
 import { useProjectListQuery } from "@src/gql/generated";
 import { ScrollView, View, StyleSheet } from "react-native";
-import { Skeleton, Text } from "@rneui/themed";
+import { Skeleton } from "@rneui/themed";
 
 function HostList() {
   const { tr } = useTranslation();
