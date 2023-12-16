@@ -281,7 +281,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="/host/[projectId]"
+        name="host/[projectId]"
         options={{
           title: tr("Loading"),
         }}
