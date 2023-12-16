@@ -161,7 +161,7 @@ const Profile: React.FC = () => {
                 color={theme.colors.grey3}
               />
             </ListItem>
-            <ListItem onPress={() => router.push("/host/create/details")}>
+            <ListItem onPress={() => router.push("/host/create")}>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Create Host")}</ListItem.Title>

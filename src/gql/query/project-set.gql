@@ -1,9 +1,5 @@
-query projectList(
-  $search: String
-  $filter: ProjectFilterType
-  $page: PageType!
-) {
-  projectList(search: $search, filter: $filter, page: $page) {
+query projectList($search: String, $sort: SortType, $filter: ProjectFilterType, $page: PageType!) {
+  projectList(search: $search, sort: $sort, filter: $filter, page: $page) {
     pageCount
     count
     data {

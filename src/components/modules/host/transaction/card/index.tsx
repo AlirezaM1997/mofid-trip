@@ -24,7 +24,7 @@ const ReservationCard = ({ transaction, index }: PropsType) => {
       PAYMENT: 3,
       SUCCESSFUL: 4,
     };
-    return lookup[transaction.status.step || 0];
+    return lookup[transaction?.status?.step || 0];
   };
 
   return (

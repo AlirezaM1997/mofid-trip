@@ -18,7 +18,7 @@ const HostManagementScreen = () => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [hostSet, setHostSet] = useState<MyNgoDetailProjectSetQuery["NGODetail"]["projectSet"]>([]);
-  const { loading, data } = useMyNgoDetailProjectSetQuery();
+  const { loading, data } = useMyNgoDetailProjectSetQuery({fetchPolicy: "network-only",});
   const { theme } = useTheme();
 
   const navigateToTourDetail = (host: (typeof hostSet)[0]) =>
@@ -33,6 +33,8 @@ const HostManagementScreen = () => {
   }, [loading, data]);
 
   if (loading) return <LoadingIndicator />;
+
+  console.log('@@@@@@@@@@2', data)
 
   return (
     <ScrollView>

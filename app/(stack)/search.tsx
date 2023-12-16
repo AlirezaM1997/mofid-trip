@@ -4,7 +4,7 @@ import { Divider, useTheme } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
 import useProjectTable from "@src/hooks/db/project";
 import useTranslation from "@src/hooks/translation";
-import { ProjectListQuery } from "@src/gql/generated";
+import { ProjectListQuery, useProjectListLazyQuery } from "@src/gql/generated";
 import Container from "@src/components/atoms/container";
 import { ScrollView } from "react-native-gesture-handler";
 import SearchBar from "@src/components/modules/search-bar";
@@ -20,31 +20,55 @@ const SearchScreen: React.FC = () => {
   const { theme } = useTheme();
   const [searchText, setSearchText] = useState("");
   const [list, setList] = useState<ProjectListQuery | undefined[]>([]);
-  const { search, syncTable, networkStatus } = useProjectTable();
+  const [_, { networkStatus }] = useProjectListLazyQuery({
+    notifyOnNetworkStatusChange: false,
+  });
   const [pageNumber, setPageNumber] = useState(1);
 
   const handleChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setSearchText(e);
   };
 
-  const onRefresh = () => {
-    syncTable({
-      page: {
-        pageNumber: 1,
-        pageSize: 99999998,
-      },
-    });
-  };
-
   useEffect(() => {
-    const res = search({ search: searchText, page: { pageNumber: 1, pageSize: 10 } });
-    setList(res);
-    setPageNumber(1)
+    const getResult = async () => {
+      const { data } = await _({
+        variables: {
+          sort: {
+            descending: false,
+          },
+          search: searchText,
+          page: { pageNumber: 1, pageSize: 10 },
+        },
+      });
+      return data?.projectList?.data;
+    };
+
+    getResult().then(res => {
+      setList(res);
+      setPageNumber(1);
+    });
   }, [searchText]);
 
   useEffect(() => {
-    const res = search({ search: searchText, page: { pageNumber: pageNumber, pageSize: 10 } });
-    setList([...list, ...res]);
+    if (pageNumber > 1) {
+      const getResult = async () => {
+        const { data } = await _({
+          variables: {
+            search: searchText,
+            sort: {
+              descending: false,
+            },
+            page: { pageNumber: pageNumber, pageSize: 10 },
+          },
+        });
+        return data?.projectList?.data;
+      };
+      getResult().then(res => {
+        setList(res);
+        console.log(list, res);
+        // setList([...list, ...res]);
+      });
+    }
   }, [pageNumber]);
 
   return (
@@ -52,12 +76,7 @@ const SearchScreen: React.FC = () => {
       <SearchBar onChangeText={handleChange} value={searchText} />
       <Divider />
       <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={networkStatus === NetworkStatus.refetch}
-            onRefresh={onRefresh}
-          />
-        }>
+        refreshControl={<RefreshControl refreshing={networkStatus === NetworkStatus.refetch} />}>
         <WhiteSpace size={10} />
         <SelectedFilters />
         <WhiteSpace size={10} />

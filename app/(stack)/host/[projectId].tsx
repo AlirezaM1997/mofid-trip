@@ -43,7 +43,6 @@ const Page: React.FC = ({ ...props }) => {
   navigation.setOptions({ title: name, headerRight: () => <Share /> });
 
   if (loading) return <LoadingIndicator />;
-  console.log(data);
 
   const {
     tags,
@@ -76,7 +75,7 @@ const Page: React.FC = ({ ...props }) => {
             dateEnd={dateEnd}
             dateStart={dateStart}
             capacity={capacity ?? 0}
-            category={categories[0].name}
+            category={categories?.[0]?.name}
           />
 
           {description && (

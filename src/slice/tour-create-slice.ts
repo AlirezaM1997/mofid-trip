@@ -4,7 +4,6 @@ import { TourAddInputType, TourGenderEnum } from "@src/gql/generated";
 type initialStateType = {
   activeStep: number;
   forms: Record<number, { errors: [] }>;
-  data: TourAddInputType;
 };
 
 export const initialState: initialStateType = {

@@ -60,7 +60,7 @@ const Screen = () => {
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [exitElement, setExitElement] = useState<"HardwareBackButton" | "BackButton">();
   const navigation = useNavigation();
-  const { activeStep, data } = useSelector((state: RootState) => state.tourCreateSlice);
+  const { activeStep } = useSelector((state: RootState) => state.tourCreateSlice);
   const [submit, { loading }] = useTourAddMutation();
 
   const validationSchema = Yup.object().shape({
@@ -192,7 +192,10 @@ const Screen = () => {
       {({ values, errors, handleSubmit }) => (
         <BottomButtonLayout
           buttons={[
-            <Button onPress={activeStep === 8 ? handleSubmit : handleNext} disabled={loading} loading={loading}>
+            <Button
+              onPress={activeStep === 8 ? handleSubmit : handleNext}
+              disabled={loading}
+              loading={loading}>
               {activeStep === 8 ? tr("Submit") : tr("Next")}
             </Button>,
             <Button
