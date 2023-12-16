@@ -59,7 +59,7 @@ export const messages = {
   },
   "it is a one-day tour": {
     ar: "إنها جولة ليوم واحد",
-    fa_ir: "تور یک روزه می‌باشد",
+    fa_ir: "یک روزه می‌باشد",
     en_us: "it is a one-day tour",
   },
   "choose a start and end date for the tour": {
@@ -2216,7 +2216,7 @@ export const messages = {
   },
   "the tour is one day": {
     ar: "الجولة يوم واحد",
-    fa_ir: "تور یک روزه است",
+    fa_ir: "یک روزه است",
     en_us: "The tour is one day",
   },
   start: {

@@ -2,7 +2,7 @@ import React from "react";
 import moment from "jalali-moment";
 import { router } from "expo-router";
 import { Image, Text } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 import { ProjectTransactionQueryType } from "@src/gql/generated";
@@ -14,6 +14,7 @@ const TransactionDetailCard = ({
 }) => {
   const { tr } = useTranslation();
   const formattedDate = (date: Date) => moment(date, "YYYY/MM/DD").locale("fa").format("D MMMM");
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   return (
     <Pressable
@@ -50,7 +51,7 @@ const TransactionDetailCard = ({
             <Text caption type="grey2">
               {tr("date")} .
             </Text>
-            <Text caption>{formattedDate(transactionDetail.dateStart)}</Text>
+            <Text caption>{localizeNumber(formattedDate(transactionDetail.dateStart))}</Text>
           </View>
         </View>
       </View>

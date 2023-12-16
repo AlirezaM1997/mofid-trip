@@ -32,7 +32,7 @@ const AcceptPayment = ({ isVisible, setIsVisible, purchaseHandler }: PropsType) 
           <Button type="outline" onPress={() => setIsVisible(false)}>
             {tr("cancel payment")}
           </Button>
-          <Button onPress={() => purchaseHandler()}>{tr("pay")}</Button>
+          <Button onPress={purchaseHandler}>{tr("pay")}</Button>
         </ButtonRow>
       </Container>
     </BottomSheet>
