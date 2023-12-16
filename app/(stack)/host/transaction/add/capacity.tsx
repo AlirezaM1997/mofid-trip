@@ -12,6 +12,7 @@ import BottomButtonLayout from "@components/layout/bottom-button";
 import { Button, CheckBox, Text, useTheme } from "@rneui/themed";
 import { setHostTransactionData } from "@src/slice/host-transaction-slice";
 import Input from "@atoms/input";
+import parseText from "@src/helper/number-input";
 
 const Screen = () => {
   const { theme } = useTheme();
@@ -72,7 +73,7 @@ const Screen = () => {
               name="guestNumber"
               placeholder={tr("enter the capacity (quantity)")}
               textAlignVertical="top"
-              onChangeText={handleChange("guestNumber")}
+              onChangeText={text => setFieldValue("guestNumber", parseText(text))}
               onBlur={handleBlur("guestNumber")}
               value={values.guestNumber}
               errorMessage={touched.guestNumber && (errors.guestNumber as string)}

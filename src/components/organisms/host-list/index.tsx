@@ -7,6 +7,7 @@ import { router } from "expo-router";
 import { useProjectListQuery } from "@src/gql/generated";
 import { ScrollView, View, StyleSheet } from "react-native";
 import { Skeleton } from "@rneui/themed";
+import WhiteSpace from "@atoms/white-space";
 
 function HostList() {
   const { tr } = useTranslation();
@@ -28,6 +29,8 @@ function HostList() {
           onActionPress={() => router.push("/search")}
         />
       </Container>
+
+      <WhiteSpace size={16} />
 
       <ScrollView
         horizontal
