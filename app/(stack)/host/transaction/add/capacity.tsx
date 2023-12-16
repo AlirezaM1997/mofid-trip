@@ -67,7 +67,7 @@ const Screen = () => {
             <Text heading2 bold>
               {tr("capacity and Gender")}
             </Text>
-            <Text type="grey3">{tr("Select the capacity and gender of the tour passengers")}</Text>
+            <Text type="grey3">{tr("Select the capacity and gender of passengers")}</Text>
             <WhiteSpace size={20} />
             <Input
               name="guestNumber"
@@ -81,7 +81,7 @@ const Screen = () => {
 
             <CheckBox
               checked={values.childAccept}
-              title={tr("The tour is open to children under 12 years old")}
+              title={tr("Is open to children under 12 years old")}
               onPress={() => setFieldValue("childAccept", !values.childAccept)}
             />
 

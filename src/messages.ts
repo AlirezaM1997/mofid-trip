@@ -2152,24 +2152,24 @@ export const messages = {
     fa_ir: "ظرفیت و جنسیت",
     en_us: "Capacity and Gender",
   },
-  "select the capacity and gender of the tour passengers": {
+  "select the capacity and gender of passengers": {
     ar: "حدد السعة والجنس لركاب الرحلة",
-    fa_ir: "ظرفیت و جنسیت مسافران تور را انتخاب کنید",
-    en_us: "Select the capacity and gender of the tour passengers",
+    fa_ir: "ظرفیت و جنسیت مسافران را انتخاب کنید",
+    en_us: "Select the capacity and gender of passengers",
   },
   "enter the capacity (quantity)": {
     ar: "أدخل السعة (الكمية)",
     fa_ir: "ظرفیت را وارد کنید ( تعداد )",
     en_us: "Enter the capacity (quantity)",
   },
-  "the tour is open to children under 12 years old": {
+  "is open to children under 12 years old": {
     ar: "الجولة مفتوحة للأطفال دون سن 12 عامًا",
-    fa_ir: "تور پذیرای کودکان زیر ۱۲ سال نیز میباشد",
-    en_us: "The tour is open to children under 12 years old",
+    fa_ir: "پذیرای کودکان زیر ۱۲ سال نیز میباشد",
+    en_us: "Is open to children under 12 years old",
   },
   "capacity is required": {
     ar: "القدرة مطلوبة",
-    fa_ir: "ظرفیت تور اجباری است",
+    fa_ir: "ظرفیت اجباری است",
     en_us: "Capacity is required",
   },
   "about host": {
