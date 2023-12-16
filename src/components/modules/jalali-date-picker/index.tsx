@@ -10,8 +10,11 @@ import { CalendarContext } from "./context";
 import moment from "jalali-moment";
 
 type JalaliDatePickerProps = {
-  onDayPress: ({ dayPressed }) => void;
-  markedDays: DayProps[];
+  onDayPress?: ({ dayPressed }) => void;
+  markedDays?: DayProps[];
+  disableDaysAfter?: moment.Moment; // gregorian based
+  disableDaysBefore?: moment.Moment; // gregorian based
+  disableDaysIn?: moment.Moment[]; // gregorian based
 };
 
 const JalaliDatePicker = ({ onDayPress, markedDays, ...props }: JalaliDatePickerProps) => {
@@ -19,13 +22,20 @@ const JalaliDatePicker = ({ onDayPress, markedDays, ...props }: JalaliDatePicker
   const [cursor, setCursor] = useState(0);
   const { daysArray } = getAllDaysInMonth(cursor);
 
-  function findSameDay(date) {
+  function findMarkedDay(date: moment.Moment) {
     for (let i = 0; i < markedDays.length; i++) {
       if (moment(markedDays[i].date, "YYYY-MM-DD").isSame(date)) {
         return markedDays[i]; // Return the object if found
       }
     }
     return null; // Return null if the object is not found
+  }
+
+  function shouldDisable(date: moment.Moment) {
+    return (
+      props.disableDaysAfter?.isBefore(date) || props.disableDaysBefore?.isAfter(date)
+      || props.disableDaysIn?.find(disableDate => moment(disableDate).isSame(date))
+    );
   }
 
   const _onDayPress = date => {
@@ -48,11 +58,15 @@ const JalaliDatePicker = ({ onDayPress, markedDays, ...props }: JalaliDatePicker
           data={daysArray}
           columnWrapperStyle={styles.calendarColumnWrapperStyle}
           renderItem={({ index, item }) => {
-            const sameDay = markedDays && markedDays.length && findSameDay(item.date);
-            return sameDay ? (
-              <Day key={index} {...sameDay} onPress={e => _onDayPress(item.date)} />
-            ) : (
-              <Day key={index} date={item.date} onPress={e => _onDayPress(item.date)} />
+            const markedDay = markedDays && markedDays.length && findMarkedDay(item.date);
+            return (
+              <Day
+                key={index}
+                date={item.date}
+                onPress={e => _onDayPress(item.date)}
+                disabled={shouldDisable(item.date)}
+                {...markedDay}
+              />
             );
           }}
           keyExtractor={i => i.dayOfMonth ?? Math.random()}

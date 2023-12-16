@@ -27,7 +27,8 @@ query myNGODetailProjectSet {
       price
       discount
       tax
-      statusStep
+      # TODO: comment this out as soon as possible
+      # statusStep
       statusActivation
       facilities {
         id

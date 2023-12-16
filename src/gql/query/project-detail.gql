@@ -38,6 +38,8 @@ query projectDetail($pk: ID!) {
 
       avatarS3 {
         small
+        medium
+        large
       }
       projectSet {
         id

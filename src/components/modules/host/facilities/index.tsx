@@ -24,7 +24,11 @@ const ProjectFacilities = ({ facilities }) => {
 
   return (
     <View style={style.container}>
-      <TitleWithAction title={tr("hosting facilities")} actionTitle={tr("See All")} />
+      <TitleWithAction
+        size="subtitle1"
+        actionTitle={tr("See All")}
+        title={tr("hosting facilities")}
+      />
       {facilities?.map((facility, index) => (
         <Item key={index} facility={facility} />
       ))}

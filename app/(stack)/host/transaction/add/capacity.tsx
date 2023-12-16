@@ -12,6 +12,7 @@ import BottomButtonLayout from "@components/layout/bottom-button";
 import { Button, CheckBox, Text, useTheme } from "@rneui/themed";
 import { setHostTransactionData } from "@src/slice/host-transaction-slice";
 import Input from "@atoms/input";
+import parseText from "@src/helper/number-input";
 
 const Screen = () => {
   const { theme } = useTheme();
@@ -66,13 +67,13 @@ const Screen = () => {
             <Text heading2 bold>
               {tr("capacity and Gender")}
             </Text>
-            <Text type="grey3">{tr("Select the capacity and gender of the tour passengers")}</Text>
+            <Text type="grey3">{tr("Select the capacity and gender of passengers")}</Text>
             <WhiteSpace size={20} />
             <Input
               name="guestNumber"
               placeholder={tr("enter the capacity (quantity)")}
               textAlignVertical="top"
-              onChangeText={handleChange("guestNumber")}
+              onChangeText={text => setFieldValue("guestNumber", parseText(text))}
               onBlur={handleBlur("guestNumber")}
               value={values.guestNumber}
               errorMessage={touched.guestNumber && (errors.guestNumber as string)}
@@ -80,7 +81,7 @@ const Screen = () => {
 
             <CheckBox
               checked={values.childAccept}
-              title={tr("The tour is open to children under 12 years old")}
+              title={tr("Is open to children under 12 years old")}
               onPress={() => setFieldValue("childAccept", !values.childAccept)}
             />
 

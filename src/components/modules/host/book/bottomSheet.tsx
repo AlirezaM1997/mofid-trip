@@ -13,6 +13,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { initialState, setHostTransactionData } from "@src/slice/host-transaction-slice";
+import { useFormatPrice } from "@src/hooks/localization";
 
 const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { tr } = useTranslation();
@@ -22,6 +23,7 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisible, setIsVisible] = useState<boolean>();
   const isNgo = useSelector((state: RootState) => state.authSlice.loginData.metadata.is_ngo);
+  const { formatPrice } = useFormatPrice();
 
   const handlePress = () => {
     if (!isNgo) {
@@ -50,7 +52,7 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
           <Text>{tr("Price")}</Text>
           <View style={style.priceContainer}>
             <Text body1 style={style.priceNumber}>
-              ${localizeNumber(project.price)}
+              {localizeNumber(formatPrice(project.price))}
             </Text>
             <Text style={style.priceText}> / {tr("Night")}</Text>
           </View>

@@ -25,7 +25,7 @@ export default function Index() {
           <Banner name="home-1" />
         </Container>
 
-        <WhiteSpace size={20} />
+        <WhiteSpace size={32} />
         <TourList />
 
         <WhiteSpace size={32} />
@@ -33,7 +33,8 @@ export default function Index() {
         <Container>
           <Banner name="home-2" />
         </Container>
-        <WhiteSpace size={20} />
+
+        <WhiteSpace size={32} />
 
         <HostList />
 
