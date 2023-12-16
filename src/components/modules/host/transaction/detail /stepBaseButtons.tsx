@@ -2,21 +2,62 @@ import React from "react";
 import { router } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import { Divider, Text, useTheme } from "@rneui/themed";
-import { TransactionStatusEnum } from "@src/gql/generated";
+import {
+  AccommodationGuestGenderChoices,
+  ProjectTransactionQueryType,
+  StatusQueryType,
+  TransactionGuestGenderEnum,
+  TransactionStatusEnum,
+} from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 import CancelTransaction from "@modules/host/transaction/cancel ";
 
-const StepBaseButtons = ({ status, transactionId, name }) => {
+const StepBaseButtons = ({
+  status,
+  transaction,
+}: {
+  status: StatusQueryType;
+  transaction: ProjectTransactionQueryType;
+}) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
-  const editReservationHandler = () => {
+  const { project, guestSet } = transaction;
+
+  const countOFGenders = guestSet.reduce(
+    (acc, item) => {
+      const gender =
+        item.gender === AccommodationGuestGenderChoices.Female
+          ? TransactionGuestGenderEnum.Female
+          : item.gender === AccommodationGuestGenderChoices.Male
+          ? TransactionGuestGenderEnum.Male
+          : TransactionGuestGenderEnum.Both;
+
+      acc[gender]++;
+      return acc;
+    },
+    {
+      [TransactionGuestGenderEnum.Female]: 0,
+      [TransactionGuestGenderEnum.Male]: 0,
+      [TransactionGuestGenderEnum.Both]: 0,
+    }
+  );
+
+  const gender =
+    countOFGenders[TransactionGuestGenderEnum.Female] === guestSet.length
+      ? TransactionGuestGenderEnum.Female
+      : countOFGenders[TransactionGuestGenderEnum.Male] === guestSet.length
+      ? TransactionGuestGenderEnum.Male
+      : TransactionGuestGenderEnum.Both;
+
+  const editReservationHandler = async () => {
     router.push({
-      pathname: `/host/transaction/add/confirm-data`,
+      pathname: `/host/transaction/add`,
       params: {
-        projectId: transactionId,
-        name: JSON.stringify(name),
+        projectId: transaction.id,
+        name: JSON.stringify(project.name),
+        edit: true,
       },
     });
   };
@@ -55,7 +96,7 @@ const StepBaseButtons = ({ status, transactionId, name }) => {
           <Divider />
           <Pressable
             style={styles.buttonContainer}
-            onPress={() => router.push(`host/transaction/successReceipt?id=${transactionId}`)}>
+            onPress={() => router.push(`host/transaction/successReceipt?id=${transaction.id}`)}>
             <View style={styles.buttonContent}>
               <Feather name="circle" size={13} color="black" />
               <Text>{tr("view invoice")}</Text>

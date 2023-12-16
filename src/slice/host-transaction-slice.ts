@@ -4,18 +4,16 @@ import { ProjectTransactionAddInputType, TransactionGuestGenderEnum } from "@src
 type ProjectTransactionDataWithoutId = Omit<ProjectTransactionAddInputType, "projectId">;
 
 type initialStateType = {
-  data: ProjectTransactionDataWithoutId;
+  activeStep: number;
+  forms: Record<number, { errors: [] }>;
 };
 
 export const initialState: initialStateType = {
-  data: {
-    guests: {
-      guestNumber: 0,
-      childAccept: false,
-      gender: TransactionGuestGenderEnum.Both,
-    },
-    dateEnd: null,
-    dateStart: null,
+  activeStep: 1,
+  forms: {
+    1: { errors: [] },
+    2: { errors: [] },
+    3: { errors: [] },
   },
 };
 
@@ -23,8 +21,8 @@ export const userSlice = createSlice({
   name: "host-transaction",
   initialState,
   reducers: {
-    setHostTransactionData: (state, action: PayloadAction<ProjectTransactionDataWithoutId>) => {
-      state.data = action.payload;
+    setHostTransactionData: (state, action: PayloadAction<number>) => {
+      state.activeStep = action.payload;
     },
   },
 });

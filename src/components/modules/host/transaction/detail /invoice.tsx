@@ -20,11 +20,13 @@ const Invoice = ({ transactionDetail }: { transactionDetail: ProjectTransactionQ
 
       <View style={styles.priceContainer}>
         <Text caption>{tr("base price")}</Text>
-        <Text caption>{localizeNumber(transactionDetail.project.price)}&nbsp;{tr("tooman")}</Text>
+        <Text caption>
+          {localizeNumber(transactionDetail.project.price)}&nbsp;{tr("tooman")}
+        </Text>
       </View>
       <View style={styles.priceContainer}>
         <Text caption>
-          {transactionDetail.project.price} x {tr("person")}
+          {localizeNumber(transactionDetail.project.price)} x {tr("person")}
         </Text>
         <Text caption>
           {localizeNumber(transactionDetail.project.price * transactionDetail.guestSet.length)}

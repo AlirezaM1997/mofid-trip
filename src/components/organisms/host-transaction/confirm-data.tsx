@@ -1,8 +1,6 @@
 import React from "react";
 import moment from "jalali-moment";
-import { RootState } from "@src/store";
 import Container from "@atoms/container";
-import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import { Button, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
@@ -10,15 +8,18 @@ import useTranslation from "@src/hooks/translation";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import HostTransactionBottomSheet from "@modules/host/transaction/bottom-sheet";
+import { ProjectTransactionAddInputType } from "@src/gql/generated";
+import { useFormikContext } from "formik";
 
-const ConfirmDataScreen = () => {
+const HostTransactionConfirmData = () => {
   const { tr } = useTranslation();
-  const { projectId, name } = useLocalSearchParams();
-  const { data } = useSelector((state: RootState) => state.hostTransactionSlice);
+  const { projectId, name, edit } = useLocalSearchParams();
 
   const handleNavigation = (route: string) => {
     router.push({ pathname: route, params: { projectId: projectId, name: name } });
   };
+
+  const { values } = useFormikContext<ProjectTransactionAddInputType>();
 
   return (
     <HostTransactionBottomSheet>
@@ -57,7 +58,9 @@ const ConfirmDataScreen = () => {
             <Text caption type="grey2">
               {tr("travel date")}
             </Text>
-            <Text body2>{moment(data.dateStart).locale("fa").format("dddd . jDD jMMMM YYYY")}</Text>
+            <Text body2>
+              {moment(values.dateStart).locale("fa").format("dddd . jDD jMMMM YYYY")}
+            </Text>
           </View>
           <Button
             size="sm"
@@ -78,7 +81,7 @@ const ConfirmDataScreen = () => {
               {tr("passengers count")}
             </Text>
             <Text body2>
-              {data.guests.guestNumber}&nbsp;{tr("person")}
+              {values.guests.guestNumber}&nbsp;{tr("person")}
             </Text>
           </View>
           <Button
@@ -104,4 +107,4 @@ const styles = StyleSheet.create({
   cardContainer: { flexDirection: "row", gap: 16, alignItems: "center" },
 });
 
-export default ConfirmDataScreen;
+export default HostTransactionConfirmData;

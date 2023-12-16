@@ -212,6 +212,18 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="tour/management/request/index"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="host/management/request/index"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
         name="tour/[tourId]/reservation/step-1"
         options={{
           title: tr("Tour Reservation"),
@@ -341,23 +353,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="host/transaction/add/capacity"
+        name="host/transaction/add/index"
         options={{
           title: tr("Host Reservation"),
         }}
       />
-      <Stack.Screen
-        name="host/transaction/add/date"
-        options={{
-          title: tr("Host Reservation"),
-        }}
-      />
-      <Stack.Screen
-        name="host/transaction/add/confirm-data"
-        options={{
-          title: tr("Final Details"),
-        }}
-      />
+
       <Stack.Screen
         name="host/management/index"
         options={{

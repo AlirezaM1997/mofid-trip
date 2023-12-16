@@ -1,7 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
 import { Text } from "@rneui/themed";
-import { Project_Category } from "@src/gql/generated";
-import { capitalizeFLetter } from "@src/helper/extra";
 import { setProjectSetArguments } from "@src/slice/project-slice";
 import { RootState } from "@src/store";
 import { PRIMARY_COLOR } from "@src/theme";

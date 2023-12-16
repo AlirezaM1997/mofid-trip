@@ -2219,6 +2219,11 @@ export const messages = {
     fa_ir: "تور یک روزه است",
     en_us: "The tour is one day",
   },
+  "it is a one-day trip or visit": {
+    ar: "إنها رحلة أو زيارة ليوم واحد",
+    fa_ir: "سفر یا بازدید یک روزه میباشد",
+    en_us: "it is a one-day trip or visit",
+  },
   start: {
     ar: "يبدأ",
     fa_ir: "شروع",

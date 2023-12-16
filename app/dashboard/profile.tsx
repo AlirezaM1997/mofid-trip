@@ -12,7 +12,6 @@ import { RootState } from "@src/store";
 import {
   LanguageChoiceEnum,
   UserDetailQuery,
-  useNgoDetailQuery,
   useSettingEditMutation,
   useUserDetailQuery,
 } from "@src/gql/generated";
@@ -38,7 +37,7 @@ const Profile: React.FC = () => {
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
   const userId = useSelector((state: RootState) => state.userSlice?.loginData?.metadata?.id);
   const [settingEdit] = useSettingEditMutation({
-    notifyOnNetworkStatusChange: true,
+    // notifyOnNetworkStatusChange: true,
   });
   const { syncTable } = useSettingDetailTable();
   const [isVisibleLogout, setIsVisibleLogout] = useState(false);
