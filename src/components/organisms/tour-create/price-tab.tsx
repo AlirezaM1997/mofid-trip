@@ -47,7 +47,7 @@ const PriceTab = () => {
       <Input
         value={values.price?.toString()}
         label={tr("Price") + " (" + tr("Tooman") + ")"}
-        onChangeText={handleChange("price")}
+        onChangeText={price => setFieldValue("price", parseInt(price))}
         onBlur={handleBlur("price")}
         errorMessage={touched.price && (errors.price as string)}
       />

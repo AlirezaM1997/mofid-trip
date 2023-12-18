@@ -233,7 +233,6 @@ const Screen = () => {
             {activeStep === 7 && <TabImage />}
             {activeStep === 8 && <TabFaclities />}
           </Container>
-          {console.log('vv', values, errors)}
 
           <BottomSheet isVisible={isVisibleExit} onBackdropPress={handleClose}>
             <Container>
