@@ -1,19 +1,17 @@
 import React from "react";
 import moment from "jalali-moment";
-import Container from "@atoms/container";
+import { useFormikContext } from "formik";
 import WhiteSpace from "@atoms/white-space";
 import { Button, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
-import HostTransactionBottomSheet from "@modules/host/transaction/bottom-sheet";
 import { ProjectTransactionAddInputType } from "@src/gql/generated";
-import { useFormikContext } from "formik";
 
-const HostTransactionConfirmData = () => {
+const HostTransactionConfirmData = ({ setActiveStep }) => {
   const { tr } = useTranslation();
-  const { projectId, name, edit } = useLocalSearchParams();
+  const { projectId, name } = useLocalSearchParams();
 
   const handleNavigation = (route: string) => {
     router.push({ pathname: route, params: { projectId: projectId, name: name } });
@@ -22,81 +20,80 @@ const HostTransactionConfirmData = () => {
   const { values } = useFormikContext<ProjectTransactionAddInputType>();
 
   return (
-    <HostTransactionBottomSheet>
-      <Container style={styles.container}>
-        <View>
-          <Text heading2>{tr("final information")}</Text>
-          <WhiteSpace size={4} />
+    <View style={styles.container}>
+      <View>
+        <Text heading2>{tr("final information")}</Text>
+        <WhiteSpace size={4} />
+        <Text caption type="grey2">
+          {tr("your registered details for initial host reservation")}
+        </Text>
+      </View>
+
+      <View style={styles.cardContainer}>
+        <AntDesign name="home" size={15} color="black" />
+        <View style={styles.detail}>
           <Text caption type="grey2">
-            {tr("your registered details for initial host reservation")}
+            {tr("selective hosting")}
+          </Text>
+          <Text body2>{name}</Text>
+        </View>
+        <Button
+          size="sm"
+          type="outline"
+          color="secondary"
+          iconPosition="right"
+          titleStyle={styles.buttonTitle}
+          onPress={() => handleNavigation(`host/${projectId}`)}
+          icon={<AntDesign name="left" size={16} color="black" />}>
+          {tr("view")}
+        </Button>
+      </View>
+
+      <View style={styles.cardContainer}>
+        <AntDesign name="calendar" size={15} color="black" />
+        <View style={styles.detail}>
+          <Text caption type="grey2">
+            {tr("travel date")}
+          </Text>
+          <Text body2>
+            {values?.dateStart &&
+              moment(values?.dateStart)?.locale("fa")?.format("dddd . jDD jMMMM YYYY")}
           </Text>
         </View>
+        <Button
+          size="sm"
+          type="outline"
+          color="secondary"
+          iconPosition="right"
+          titleStyle={styles.buttonTitle}
+          onPress={() => setActiveStep(activeStep => activeStep - 1)}
+          icon={<AntDesign name="left" size={16} color="black" />}>
+          {tr("edit")}
+        </Button>
+      </View>
 
-        <View style={styles.cardContainer}>
-          <AntDesign name="home" size={15} color="black" />
-          <View style={styles.detail}>
-            <Text caption type="grey2">
-              {tr("selective hosting")}
-            </Text>
-            <Text body2>{name}</Text>
-          </View>
-          <Button
-            size="sm"
-            type="outline"
-            color="secondary"
-            iconPosition="right"
-            titleStyle={styles.buttonTitle}
-            onPress={() => handleNavigation(`host/${projectId}`)}
-            icon={<AntDesign name="left" size={16} color="black" />}>
-            {tr("view")}
-          </Button>
+      <View style={styles.cardContainer}>
+        <Ionicons name="people-outline" size={15} color="black" />
+        <View style={styles.detail}>
+          <Text caption type="grey2">
+            {tr("passengers count")}
+          </Text>
+          <Text body2>
+            {values.guests.guestNumber}&nbsp;{tr("person")}
+          </Text>
         </View>
-
-        <View style={styles.cardContainer}>
-          <AntDesign name="calendar" size={15} color="black" />
-          <View style={styles.detail}>
-            <Text caption type="grey2">
-              {tr("travel date")}
-            </Text>
-            <Text body2>
-              {moment(values.dateStart).locale("fa").format("dddd . jDD jMMMM YYYY")}
-            </Text>
-          </View>
-          <Button
-            size="sm"
-            type="outline"
-            color="secondary"
-            iconPosition="right"
-            titleStyle={styles.buttonTitle}
-            onPress={() => handleNavigation("host/transaction/add/date")}
-            icon={<AntDesign name="left" size={16} color="black" />}>
-            {tr("edit")}
-          </Button>
-        </View>
-
-        <View style={styles.cardContainer}>
-          <Ionicons name="people-outline" size={15} color="black" />
-          <View style={styles.detail}>
-            <Text caption type="grey2">
-              {tr("passengers count")}
-            </Text>
-            <Text body2>
-              {values.guests.guestNumber}&nbsp;{tr("person")}
-            </Text>
-          </View>
-          <Button
-            size="sm"
-            type="outline"
-            color="secondary"
-            iconPosition="right"
-            titleStyle={styles.buttonTitle}
-            onPress={() => handleNavigation("host/transaction/add/capacity")}
-            icon={<AntDesign name="left" size={16} color="black" />}>
-            {tr("edit")}
-          </Button>
-        </View>
-      </Container>
-    </HostTransactionBottomSheet>
+        <Button
+          size="sm"
+          type="outline"
+          color="secondary"
+          iconPosition="right"
+          titleStyle={styles.buttonTitle}
+          onPress={() => setActiveStep(activeStep => activeStep - 2)}
+          icon={<AntDesign name="left" size={16} color="black" />}>
+          {tr("edit")}
+        </Button>
+      </View>
+    </View>
   );
 };
 

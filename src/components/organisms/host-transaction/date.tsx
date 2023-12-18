@@ -1,6 +1,5 @@
 import { useState } from "react";
 import moment from "jalali-moment";
-import Container from "@atoms/container";
 import { useFormikContext } from "formik";
 import { StyleSheet, View } from "react-native";
 import JalaliDatePicker from "@modules/jalali-date-picker";
@@ -113,44 +112,39 @@ const HostTransactionDateTab = () => {
 
   return (
     <>
-      <Container style={styles.checkbox}>
-        <CheckBox
-          checked={checked}
-          onPress={handleCheck}
-          title={tr("it is a one-day trip or visit")}
-        />
-      </Container>
+      <CheckBox
+        checked={checked}
+        onPress={handleCheck}
+        title={tr("it is a one-day trip or visit")}
+      />
 
       <JalaliDatePicker onDayPress={handleDayPress} markedDays={markedDays} />
 
-      <Container>
-        <View style={styles.showDateContainer}>
-          <View style={styles.timeContainer}>
-            <Text body2 type={touched.dateStart && errors.dateStart ? "error" : "secondary"}>
-              {tr("beginning")}: {getFirstDayFormatted()}
-            </Text>
-            {touched.dateStart && errors.dateStart && (
-              <Text type="error">{touched.dateStart && (errors.dateStart as string)}</Text>
-            )}
-          </View>
-          <Divider orientation="vertical" />
-          <View style={styles.timeContainer}>
-            <Text body2 type={touched.dateEnd && errors.dateEnd ? "error" : "secondary"}>
-              {tr("end")}: {getLastDayFormatted()}
-            </Text>
-            {touched.dateEnd && errors.dateEnd && (
-              <Text type="error">{touched.dateEnd && (errors.dateEnd as string)}</Text>
-            )}
-          </View>
+      <View style={styles.showDateContainer}>
+        <View style={styles.timeContainer}>
+          <Text body2 type={touched.dateStart && errors.dateStart ? "error" : "secondary"}>
+            {tr("beginning")}: {getFirstDayFormatted()}
+          </Text>
+          {touched.dateStart && errors.dateStart && (
+            <Text type="error">{touched.dateStart && (errors.dateStart as string)}</Text>
+          )}
         </View>
-      </Container>
+        <Divider orientation="vertical" />
+        <View style={styles.timeContainer}>
+          <Text body2 type={touched.dateEnd && errors.dateEnd ? "error" : "secondary"}>
+            {tr("end")}: {getLastDayFormatted()}
+          </Text>
+          {touched.dateEnd && errors.dateEnd && (
+            <Text type="error">{touched.dateEnd && (errors.dateEnd as string)}</Text>
+          )}
+        </View>
+      </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
   header: { gap: 6 },
-  checkbox: { marginTop: 32 },
   container: { gap: 24 },
   showDateContainer: { flexDirection: "row", justifyContent: "space-evenly", marginTop: 25 },
   startDayButtonStyle: theme => ({

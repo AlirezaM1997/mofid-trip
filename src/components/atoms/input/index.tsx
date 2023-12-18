@@ -24,12 +24,7 @@ const Input = forwardRef((props: InputProps, ref: Ref<TextInput>) => {
   return props.type === "date" ? (
     <InputWithDate ref={ref} {...props} />
   ) : (
-    <NativeInput
-      ref={ref}
-      {...props}
-      style={styles.input(language)}
-      // value={handleValue(props.value)}
-    />
+    <NativeInput ref={ref} {...props} style={styles.input(language)} />
   );
 });
 

@@ -3,11 +3,9 @@ import { router } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import { Divider, Text, useTheme } from "@rneui/themed";
 import {
-  AccommodationGuestGenderChoices,
-  ProjectTransactionQueryType,
   StatusQueryType,
-  TransactionGuestGenderEnum,
   TransactionStatusEnum,
+  ProjectTransactionQueryType,
 } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
@@ -23,41 +21,14 @@ const StepBaseButtons = ({
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
-  const { project, guestSet } = transaction;
-
-  const countOFGenders = guestSet.reduce(
-    (acc, item) => {
-      const gender =
-        item.gender === AccommodationGuestGenderChoices.Female
-          ? TransactionGuestGenderEnum.Female
-          : item.gender === AccommodationGuestGenderChoices.Male
-          ? TransactionGuestGenderEnum.Male
-          : TransactionGuestGenderEnum.Both;
-
-      acc[gender]++;
-      return acc;
-    },
-    {
-      [TransactionGuestGenderEnum.Female]: 0,
-      [TransactionGuestGenderEnum.Male]: 0,
-      [TransactionGuestGenderEnum.Both]: 0,
-    }
-  );
-
-  const gender =
-    countOFGenders[TransactionGuestGenderEnum.Female] === guestSet.length
-      ? TransactionGuestGenderEnum.Female
-      : countOFGenders[TransactionGuestGenderEnum.Male] === guestSet.length
-      ? TransactionGuestGenderEnum.Male
-      : TransactionGuestGenderEnum.Both;
+  const { project } = transaction;
 
   const editReservationHandler = async () => {
     router.push({
-      pathname: `/host/transaction/add`,
+      pathname: `/host/transaction/edit`,
       params: {
         projectId: transaction.id,
         name: JSON.stringify(project.name),
-        edit: true,
       },
     });
   };

@@ -110,7 +110,7 @@ const Screen = () => {
   const handleSubmit = async values => {
     const { data } = await submit({
       variables: {
-        data: values,
+        data: { ...values, capacity: +values.capacity },
       },
     });
     if (data.projectAdd.status === "OK") {
@@ -233,7 +233,7 @@ const Screen = () => {
             {activeStep === 7 && <TabImage />}
             {activeStep === 8 && <TabFaclities />}
           </Container>
-          {console.log('vv', values, errors)}
+          {console.log("vv", values, errors)}
 
           <BottomSheet isVisible={isVisibleExit} onBackdropPress={handleClose}>
             <Container>

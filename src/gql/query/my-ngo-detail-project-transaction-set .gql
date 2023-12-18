@@ -15,8 +15,10 @@ query myNGODetailProjectTransactionSet {
           small
         }
       }
-       guestSet {
-        id
+      guest {
+        guestNumber
+        gender
+        childAccept
       }
       project {
         name

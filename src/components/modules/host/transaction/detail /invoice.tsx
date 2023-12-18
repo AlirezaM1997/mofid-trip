@@ -29,14 +29,14 @@ const Invoice = ({ transactionDetail }: { transactionDetail: ProjectTransactionQ
           {localizeNumber(transactionDetail.project.price)} x {tr("person")}
         </Text>
         <Text caption>
-          {localizeNumber(transactionDetail.project.price * transactionDetail.guestSet.length)}
+          {localizeNumber(transactionDetail.project.price * transactionDetail.guest.guestNumber)}
           &nbsp;{tr("tooman")}
         </Text>
       </View>
       <View style={styles.priceContainer}>
         <Text caption>{tr("total")}</Text>
         <Text caption>
-          {localizeNumber(transactionDetail.project.price * transactionDetail.guestSet.length)}
+          {localizeNumber(transactionDetail.project.price * transactionDetail.guest.guestNumber)}
           &nbsp;{tr("tooman")}
         </Text>
       </View>

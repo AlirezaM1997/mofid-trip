@@ -8,7 +8,7 @@ const convertPersianNumToLatin = value => {
   }
 
   // Remove non-numeric characters
-  value = value?.replace(/[^\d]/g, '');
+  value = value?.replace(/[^\d]/g, "");
 
   return value;
 };

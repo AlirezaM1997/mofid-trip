@@ -4,32 +4,42 @@ import { Button } from "@rneui/themed";
 import Container from "@atoms/container";
 import { useEffect, useState } from "react";
 import WhiteSpace from "@atoms/white-space";
-import { useNavigation } from "expo-router";
-import { TourGenderEnum } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
+import LoadingIndicator from "@modules/Loading-indicator";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
+import { useProjectTransactionDetailQuery } from "@src/gql/generated";
 import HostTransactionDateTab from "@organisms/host-transaction/date";
 import HostTransactionTab from "@modules/virtual-tabs/host-transaction-tabs";
 import HostTransactionCapacityTab from "@organisms/host-transaction/capacity";
 import HostTransactionConfirmData from "@organisms/host-transaction/confirm-data";
 import HostTransactionExitBottomSheet from "@organisms/host-transaction/exitBottomSheet";
-import HostTransactionSubmitBottomSheet from "@organisms/host-transaction/submitBottomSheet";
+import HostTransactionEditSubmitBottomSheet from "@organisms/host-transaction/editSubmitBottomSheet";
 
-const initialValues = {
-  guests: {
-    guestNumber: null,
-    childAccept: false,
-    gender: TourGenderEnum.Both,
-  },
-  dateStart: "",
-  dateEnd: "",
-};
-
-const Screen = () => {
+const HostTransactionEditScreen = () => {
   const { tr } = useTranslation();
   const navigation = useNavigation();
+  const { projectId } = useLocalSearchParams();
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(3);
+
+  const { data, loading } = useProjectTransactionDetailQuery({
+    variables: { pk: projectId as string },
+  });
+
+  if (!data || loading) return <LoadingIndicator />;
+
+  const { id, status, guest, dateEnd, dateStart } = data.projectTransactionDetail;
+
+  const initialValues = {
+    guests: {
+      gender: guest.gender,
+      guestNumber: guest.guestNumber,
+      childAccept: guest.childAccept,
+    },
+    dateStart,
+    dateEnd,
+  };
 
   const validationSchema = Yup.object().shape({
     dateStart: Yup.date().required(tr("Required")),
@@ -86,7 +96,9 @@ const Screen = () => {
             {activeStep === 3 && <HostTransactionConfirmData setActiveStep={setActiveStep} />}
           </Container>
 
-          <HostTransactionSubmitBottomSheet
+          <HostTransactionEditSubmitBottomSheet
+            status={status}
+            transactionId={id}
             isVisible={isVisibleFinish}
             setIsVisible={setIsVisibleFinish}
           />
@@ -97,4 +109,4 @@ const Screen = () => {
   );
 };
 
-export default Screen;
+export default HostTransactionEditScreen;

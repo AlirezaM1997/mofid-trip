@@ -1,9 +1,9 @@
-import { InputProps, Input as NativeInput, Overlay } from "@rneui/themed";
-import { useCalendarTheme } from "@src/hooks/calendar-theme";
 import { FieldProps } from "formik";
-import React, { useRef, useState } from "react";
 import { View } from "react-native";
+import React, { useRef, useState } from "react";
 import { Calendar } from "react-native-calendars";
+import { useCalendarTheme } from "@src/hooks/calendar-theme";
+import { InputProps, Input as NativeInput, Overlay } from "@rneui/themed";
 
 type InputWithDateProps = InputProps & {
   form?: FieldProps["form"] | undefined;
@@ -15,13 +15,13 @@ const InputWithDate = ({ form, field, ...props }: InputWithDateProps) => {
   const calendarTheme = useCalendarTheme();
   const today = new Date().toISOString().slice(0, 10);
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const inputRef = useRef(null)
+  const inputRef = useRef(null);
 
   const toggleOverlay = () => setIsVisible(!isVisible);
 
   const _onFocus = e => {
     if (props.onFocus) props.onFocus(e);
-    inputRef?.current?.input?.blur()
+    inputRef?.current?.input?.blur();
     setIsVisible(true);
   };
 

@@ -16,10 +16,10 @@ query projectTransactionDetail($pk: ID!) {
       step
       isActive
     }
-    guestSet {
-      id
+    guest {
+      guestNumber
       gender
-      name
+      childAccept
     }
     project {
       id

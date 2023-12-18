@@ -458,6 +458,11 @@ export const messages = {
     fa_ir: "مسافران",
     en_us: "Persons",
   },
+  "your initial request will be approved or rejected by the host after submission": {
+    ar: "سيتم الموافقة على طلبك الأولي أو رفضه من قبل المضيف بعد تقديمه",
+    fa_ir: "درخواست اولیه شما پس از ارسال ، توسط میزبان تایید یا رد خواهد شد",
+    en_us: "your initial request will be approved or rejected by the host after submission",
+  },
   "place category": {
     ar: "فئة المكان",
     fa_ir: "دسته بندی",

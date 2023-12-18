@@ -1,18 +1,16 @@
-import { Tab, useTheme } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
 import { RootState } from "@src/store";
 import { useEffect, useRef } from "react";
-import { StyleSheet, TextStyle } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
+import { Tab, useTheme } from "@rneui/themed";
+import useTranslation from "@src/hooks/translation";
+import { StyleSheet, TextStyle, ViewStyle } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
-const HostTransactionTab = () => {
+const HostTransactionTab = ({ activeStep }) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const scrollRef = useRef(null);
   const x = useRef(0);
-
-  const { activeStep } = useSelector((state: RootState) => state.hostTransactionSlice);
 
   useEffect(() => {
     if (activeStep) {
@@ -28,11 +26,13 @@ const HostTransactionTab = () => {
         const { contentOffset } = event.nativeEvent;
         x.current = contentOffset.x;
       }}
-      style={{ overflow: "hidden" }}>
+      style={styles.scrollViewStyle}
+      contentContainerStyle={styles.container}>
       <Tab
         value={activeStep}
         // onChange={handleChange}
         variant="default"
+        style={styles.container}
         indicatorStyle={styles.indicatorStyle}>
         <Tab.Item
           style={activeStep >= 1 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
@@ -56,17 +56,23 @@ const styles = StyleSheet.create({
   indicatorStyle: {
     display: "none",
   },
+  scrollViewStyle: {
+    overflow: "hidden",
+  },
+  container: {
+    width: "100%",
+  },
   titleStyle: {
     textWrap: "nowrap",
   } as TextStyle,
-  tabItem: theme => ({
+  tabItem: (theme => ({
     borderBottomWidth: 3,
     borderColor: theme.colors.primary,
-  }),
-  deactiveTabItem: theme => ({
+  })) as ViewStyle,
+  deactiveTabItem: (theme => ({
     borderBottomWidth: 3,
     borderColor: theme.colors.grey2,
-  }),
+  })) as ViewStyle,
 });
 
 export default HostTransactionTab;
