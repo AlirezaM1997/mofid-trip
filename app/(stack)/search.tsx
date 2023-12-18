@@ -1,10 +1,10 @@
 import { Button } from "@rneui/themed";
+import HostCard from "@modules/host/card";
+import { PAGE_SIZE } from "@src/settings";
 import { NetworkStatus } from "@apollo/client";
 import { Divider, useTheme } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
-import useProjectTable from "@src/hooks/db/project";
 import useTranslation from "@src/hooks/translation";
-import { ProjectListQuery, useProjectListLazyQuery } from "@src/gql/generated";
 import Container from "@src/components/atoms/container";
 import { ScrollView } from "react-native-gesture-handler";
 import SearchBar from "@src/components/modules/search-bar";
@@ -12,22 +12,17 @@ import WhiteSpace from "@src/components/atoms/white-space";
 import NoResult from "@src/components/organisms/no-result";
 import SelectedFilters from "@src/components/modules/selected-filters";
 import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
-import HostCard from "@modules/host/card";
-import { PAGE_SIZE } from "@src/settings";
+import { ProjectListQuery, useProjectListLazyQuery } from "@src/gql/generated";
 
 const SearchScreen: React.FC = () => {
-  const { tr } = useTranslation();
   const { theme } = useTheme();
+  const { tr } = useTranslation();
   const [searchText, setSearchText] = useState("");
-  const [list, setList] = useState<ProjectListQuery | undefined[]>([]);
+  const [list, setList] = useState<ProjectListQuery[] | undefined[]>([]);
   const [_, { networkStatus }] = useProjectListLazyQuery({
     notifyOnNetworkStatusChange: false,
   });
   const [pageNumber, setPageNumber] = useState(1);
-
-  const handleChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setSearchText(e);
-  };
 
   useEffect(() => {
     const getResult = async () => {
@@ -44,7 +39,7 @@ const SearchScreen: React.FC = () => {
     };
 
     getResult().then(res => {
-      setList(res);
+      setList(res as []);
       setPageNumber(1);
     });
   }, [searchText]);
@@ -64,8 +59,7 @@ const SearchScreen: React.FC = () => {
         return data?.projectList?.data;
       };
       getResult().then(res => {
-        setList(res);
-        console.log(list, res);
+        setList(res as []);
         // setList([...list, ...res]);
       });
     }
@@ -73,7 +67,7 @@ const SearchScreen: React.FC = () => {
 
   return (
     <>
-      <SearchBar onChangeText={handleChange} value={searchText} />
+      <SearchBar onChangeText={e => setSearchText(e)} value={searchText} />
       <Divider />
       <ScrollView
         refreshControl={<RefreshControl refreshing={networkStatus === NetworkStatus.refetch} />}>

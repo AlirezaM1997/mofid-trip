@@ -9,6 +9,7 @@ import {
 } from "@src/gql/generated";
 import { useFormikContext } from "formik";
 import { StyleSheet, View } from "react-native";
+import parseText from "@src/helper/number-input";
 
 const CapacityTab = () => {
   const { theme } = useTheme();
@@ -31,7 +32,7 @@ const CapacityTab = () => {
         textAlignVertical="top"
         onChangeText={capacity => {
           try {
-            setFieldValue("capacity.capacityNumber", parseInt(capacity));
+            setFieldValue("capacity.capacityNumber", parseText(capacity));
           } catch (error) {
             console.log(error);
           }

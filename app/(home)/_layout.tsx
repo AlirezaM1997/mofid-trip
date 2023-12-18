@@ -3,12 +3,12 @@ import { Redirect } from "expo-router";
 import { RootState } from "@src/store";
 import { Tabs } from "expo-router/tabs";
 import { useSelector } from "react-redux";
-import { Feather, Ionicons } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import useProjectTable from "@src/hooks/db/project";
 import { Platform, StyleSheet } from "react-native";
+import { Feather, Ionicons } from "@expo/vector-icons";
 
 export default function AppLayout() {
   const isRtl = useIsRtl();
@@ -16,7 +16,6 @@ export default function AppLayout() {
   const { tr } = useTranslation();
   const { syncTable } = useProjectTable();
   const { loginData, isAuthenticated } = useSelector((state: RootState) => state?.authSlice);
-  
 
   if (isAuthenticated && loginData.metadata.is_ngo) {
     return <Redirect href="/dashboard" />;

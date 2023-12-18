@@ -12,12 +12,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { initialState, setHostTransactionData } from "@src/slice/host-transaction-slice";
 import { useFormatPrice } from "@src/hooks/localization";
 
 const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { tr } = useTranslation();
-  const dispatch = useDispatch();
   const handleClose = () => setIsVisible(false);
   const { projectId, name } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
@@ -30,6 +28,7 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
       setIsVisible(true);
       return;
     }
+
     if (getCapacity(project.capacity) === 0) {
       Toast.show({
         type: "error",
@@ -38,9 +37,9 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
       });
       return;
     }
-    dispatch(setHostTransactionData(initialState.data));
+
     router.push({
-      pathname: "host/transaction/add/capacity",
+      pathname: "host/transaction/add",
       params: { projectId: projectId, name: name },
     });
   };

@@ -468,6 +468,11 @@ export const messages = {
     fa_ir: "مسافران",
     en_us: "Persons",
   },
+  "your initial request will be approved or rejected by the host after submission": {
+    ar: "سيتم الموافقة على طلبك الأولي أو رفضه من قبل المضيف بعد تقديمه",
+    fa_ir: "درخواست اولیه شما پس از ارسال ، توسط میزبان تایید یا رد خواهد شد",
+    en_us: "your initial request will be approved or rejected by the host after submission",
+  },
   "place category": {
     ar: "فئة المكان",
     fa_ir: "دسته بندی",
@@ -2263,6 +2268,11 @@ export const messages = {
     ar: "الجولة يوم واحد",
     fa_ir: "یک روزه است",
     en_us: "The tour is one day",
+  },
+  "it is a one-day trip or visit": {
+    ar: "إنها رحلة أو زيارة ليوم واحد",
+    fa_ir: "سفر یا بازدید یک روزه میباشد",
+    en_us: "it is a one-day trip or visit",
   },
   start: {
     ar: "يبدأ",

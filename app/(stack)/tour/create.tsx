@@ -56,12 +56,12 @@ const initialValues = {
 const Screen = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
+  const navigation = useNavigation();
+  const [submit, { loading }] = useTourAddMutation();
   const [isVisibleExit, setIsVisibleExit] = useState(false);
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [exitElement, setExitElement] = useState<"HardwareBackButton" | "BackButton">();
-  const navigation = useNavigation();
   const { activeStep } = useSelector((state: RootState) => state.tourCreateSlice);
-  const [submit, { loading }] = useTourAddMutation();
 
   const validationSchema = Yup.object().shape({
     capacity: Yup.object().shape({
@@ -111,7 +111,7 @@ const Screen = () => {
   const handleSubmit = async values => {
     const { data } = await submit({
       variables: {
-        data: values,
+        data: { ...values, capacity: +values.capacity },
       },
     });
     if (data.tourAdd.status === "OK") {

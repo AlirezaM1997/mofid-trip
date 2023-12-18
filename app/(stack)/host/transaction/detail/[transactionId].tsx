@@ -13,6 +13,7 @@ import BottomButtonLayout from "@components/layout/bottom-button";
 import HostTransactionDetail from "@modules/host/transaction/detail ";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import AcceptPayment from "@modules/host/transaction/buttons/acceptPayment";
+import { totalPrice } from "@src/helper/totalPrice";
 
 const TransactionDetailsScreen = () => {
   const { tr } = useTranslation();
@@ -30,7 +31,7 @@ const TransactionDetailsScreen = () => {
     return <LoadingIndicator />;
   }
 
-  const { status, project } = data.projectTransactionDetail;
+  const { status, project, dateEnd, dateStart, guest } = data.projectTransactionDetail;
 
   navigation.setOptions({ title: project.name });
 
@@ -40,7 +41,12 @@ const TransactionDetailsScreen = () => {
       variables: {
         data: {
           ip,
-          price: project.price.toString(),
+          price: totalPrice({
+            endDate: dateEnd,
+            startDate: dateStart,
+            price: project.price,
+            capacity: guest.guestNumber,
+          }),
           description: `${tr("buy")} ${project?.name}`,
           projectTransactionId: transactionId as string,
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}&type=host`,

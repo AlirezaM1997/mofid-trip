@@ -5,6 +5,7 @@ import useTranslation from "@src/hooks/translation";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import TransactionButtons from "@modules/host/transaction/buttons";
 import { ProjectTransactionQueryType, useProjectPurchaseAddMutation } from "@src/gql/generated";
+import { totalPrice } from "@src/helper/totalPrice";
 import Toast from "react-native-toast-message";
 
 type PropsType = {
@@ -22,14 +23,19 @@ const ConfirmButton = ({ transaction }: PropsType) => {
         data: {
           ip,
           projectTransactionId: transaction.id,
-          price: transaction.project.price.toString(),
+          price: totalPrice({
+            endDate: transaction.dateEnd,
+            startDate: transaction.dateStart,
+            price: transaction.project.price,
+            capacity: transaction.guest?.guestNumber,
+          }),
           description: `${tr("buy")} ${transaction?.project.name}`,
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transaction.id}&type=host`,
         },
       },
     });
-    
-    const error = data.projectPurchaseAdd.metadata?.service_error
+
+    const error = data.projectPurchaseAdd.metadata?.service_error;
     if (error) {
       Toast.show({
         type: "error",
