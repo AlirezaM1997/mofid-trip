@@ -2175,7 +2175,11 @@ export type CategoryListQuery = { __typename?: 'Query', categoryList?: { __typen
 export type MyNgoDetailProjectSetQueryVariables = Exact<{ [key: string]: never; }>;
 
 
+<<<<<<< HEAD
 export type MyNgoDetailProjectSetQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, projectSet?: Array<{ __typename: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusStep?: ProjectStatusEnum | null, statusActivation?: boolean | null, createdDate?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, capacity?: { __typename?: 'CapacityQueryType', id: string } | null, transactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string } | null> | null, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null } | null> | null } | null };
+=======
+export type MyNgoDetailProjectSetQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, projectSet?: Array<{ __typename: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusActivation: boolean, createdDate?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, capacity?: { __typename?: 'CapacityQueryType', id: string } | null, transactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string } | null> | null, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null } | null> | null } | null };
+>>>>>>> origin/master
 
 export type MyNgoDetailProjectTransactionSetQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2943,7 +2947,6 @@ export const MyNgoDetailProjectSetDocument = gql`
       price
       discount
       tax
-      statusStep
       statusActivation
       facilities {
         id

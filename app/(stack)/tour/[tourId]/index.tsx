@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import useTourTable from "@src/hooks/db/tour";
 import { getCapacity } from "@src/helper/tour";
 import ImageSlider from "@modules/image-slider";
-import { StyleSheet, View } from "react-native";
+import { ImageBackground, StyleSheet, View } from "react-native";
 import ContactCard from "@modules/contact-card";
 import SimilarTours from "@modules/similar-tours";
 import TourFacilities from "@modules/tour/facilities";
@@ -37,6 +37,8 @@ export default () => {
   const [tour, setTour] = useState<TourDetailQuery["tourDetail"]>();
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
+  const isNgo = useSelector((state: RootState) => state.authSlice.loginData.metadata.is_ngo);
   const { loading, data } = useTourDetailQuery({
     variables: {
       pk: tourId as string,
@@ -44,7 +46,11 @@ export default () => {
   });
 
   const handleBottomSheet = () => {
-    setIsVisible(true);
+    if (isNgo) {
+      setIsVisiblePrevent(true);
+    } else {
+      setIsVisible(true);
+    }
   };
 
   const handleNavigateToReserve = (tourPackage: TourPackageType) => {
@@ -159,6 +165,21 @@ export default () => {
           </ListItem>
         ))}
       </BottomSheet>
+      <BottomSheet isVisible={isVisiblePrevent} onBackdropPress={() => setIsVisiblePrevent(false)}>
+        <Container>
+          <ImageBackground
+            style={styles.rejectIcon}
+            imageStyle={{ resizeMode: "contain" }}
+            source={require("@assets/image/rejectIcon.svg")}
+          />
+          <Text heading1 center>
+            محدودیت دسترسی
+          </Text>
+          <Text center>رزرو تور برای تشکل ها امکان پذیر نیست</Text>
+          <WhiteSpace />
+          <Button onPress={() => setIsVisiblePrevent(false)}>{tr("Ok")}</Button>
+        </Container>
+      </BottomSheet>
     </BottomButtonLayout>
   );
 };
@@ -179,5 +200,10 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  rejectIcon: {
+    margin: "auto",
+    width: 56,
+    height: 56,
   },
 });

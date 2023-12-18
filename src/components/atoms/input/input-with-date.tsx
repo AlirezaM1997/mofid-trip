@@ -1,9 +1,7 @@
+import JalaliDatePicker from "@modules/jalali-date-picker";
+import { InputProps, Input as NativeInput, Overlay } from "@rneui/themed";
 import { FieldProps } from "formik";
 import { View } from "react-native";
-import React, { useRef, useState } from "react";
-import { Calendar } from "react-native-calendars";
-import { useCalendarTheme } from "@src/hooks/calendar-theme";
-import { InputProps, Input as NativeInput, Overlay } from "@rneui/themed";
 
 type InputWithDateProps = InputProps & {
   form?: FieldProps["form"] | undefined;
@@ -12,8 +10,6 @@ type InputWithDateProps = InputProps & {
 };
 
 const InputWithDate = ({ form, field, ...props }: InputWithDateProps) => {
-  const calendarTheme = useCalendarTheme();
-  const today = new Date().toISOString().slice(0, 10);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const inputRef = useRef(null);
 
@@ -26,20 +22,14 @@ const InputWithDate = ({ form, field, ...props }: InputWithDateProps) => {
   };
 
   const handleDayPress = day => {
-    form.setFieldValue(field.name, day.dateString);
+    form.setFieldValue(field.name, day.format("YYYY-MM-DD"));
     setIsVisible(false);
   };
 
   return (
     <View>
       <Overlay isVisible={isVisible} onBackdropPress={toggleOverlay}>
-        <Calendar
-          onDayPress={handleDayPress}
-          markedDates={{
-            [today]: { selected: true, disableTouchEvent: true },
-          }}
-          theme={calendarTheme}
-        />
+        <JalaliDatePicker onDayPress={handleDayPress} />
       </Overlay>
       <NativeInput {...props} ref={inputRef} value={field.value} onFocus={_onFocus} />
     </View>

@@ -13,6 +13,7 @@ const convertPersianNumToLatin = value => {
   return value;
 };
 
+// TODO: change function name to something more meaningful
 const parseText = value => {
   const parsedValue = convertPersianNumToLatin(value);
 

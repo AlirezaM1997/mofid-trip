@@ -2,7 +2,7 @@ import React from "react";
 import { router } from "expo-router";
 import { Divider } from "@rneui/themed";
 import { Text } from "@rneui/themed";
-import useIsRtl from "@src/hooks/localization";
+import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { ProjectQueryType } from "@src/gql/generated";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
@@ -21,6 +21,7 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const { formatPrice } = useFormatPrice();
 
   const handlePress = () => {
     router.push({
@@ -69,7 +70,7 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
         <View style={style.bottom}>
           <View style={style.bottomStyle}>
             <Text subtitle1 bold>
-              ${localizeNumber(price.toString())}
+              {localizeNumber(formatPrice(price))}
             </Text>
             <Text>/ {tr("night")}</Text>
           </View>

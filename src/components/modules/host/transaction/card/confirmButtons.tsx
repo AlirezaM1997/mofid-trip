@@ -6,6 +6,7 @@ import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import TransactionButtons from "@modules/host/transaction/buttons";
 import { ProjectTransactionQueryType, useProjectPurchaseAddMutation } from "@src/gql/generated";
 import { totalPrice } from "@src/helper/totalPrice";
+import Toast from "react-native-toast-message";
 
 type PropsType = {
   transaction: ProjectTransactionQueryType;
@@ -33,7 +34,17 @@ const ConfirmButton = ({ transaction }: PropsType) => {
         },
       },
     });
-    if (data.projectPurchaseAdd.status === "OK") router.push(data.projectPurchaseAdd.metadata?.url);
+
+    const error = data.projectPurchaseAdd.metadata?.service_error;
+    if (error) {
+      Toast.show({
+        type: "error",
+        text1: tr("Error"),
+        text2: error,
+      });
+    } else {
+      router.push(data.projectPurchaseAdd.metadata?.url);
+    }
   };
 
   return <TransactionButtons transaction={transaction} purchaseHandler={purchaseHandler} />;

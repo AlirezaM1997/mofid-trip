@@ -293,7 +293,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="/host/[projectId]"
+        name="host/[projectId]"
         options={{
           title: tr("Loading"),
         }}
@@ -367,6 +367,12 @@ const HomeLayout = () => {
       />
       <Stack.Screen
         name="host/management/[hostId]"
+        options={{
+          title: tr("Loading"),
+        }}
+      />
+      <Stack.Screen
+        name="host/management/request/index"
         options={{
           title: tr("Loading"),
         }}

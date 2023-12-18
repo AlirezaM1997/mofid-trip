@@ -14,6 +14,7 @@ const TitleWithAction = ({
   size = "heading2",
   onActionPress,
 }: TitleWithActionPropsType) => {
+  // TODO: remove getTextStyle and add TextProps
   const getTextStyle = size => {
     const obj = {
       heading1: { heading1: true },

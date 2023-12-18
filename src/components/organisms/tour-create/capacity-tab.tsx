@@ -14,7 +14,7 @@ import parseText from "@src/helper/number-input";
 const CapacityTab = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { handleChange, handleBlur, setFieldValue, values, touched, errors } =
+  const {  handleBlur, setFieldValue, values, touched, errors } =
     useFormikContext<TourAddInputType>();
 
   console.log("a", values, values?.capacity, values?.capacity?.capacityNumber);
@@ -24,7 +24,7 @@ const CapacityTab = () => {
       <Text heading2 bold>
         {tr("Capacity and Gender")}
       </Text>
-      <Text type="grey3">{tr("Select the capacity and gender of the tour passengers")}</Text>
+      <Text type="grey3">{tr("Select the capacity and gender of passengers")}</Text>
       <WhiteSpace size={20} />
       <Input
         name="capacityNumber"
@@ -46,7 +46,7 @@ const CapacityTab = () => {
 
       <CheckBox
         checked={values.capacity?.childAccept}
-        title={tr("The tour is open to children under 12 years old")}
+        title={tr("Is open to children under 12 years old")}
         onPress={() => setFieldValue("capacity.childAccept", !values.capacity?.childAccept)}
       />
 
