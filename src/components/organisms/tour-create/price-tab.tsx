@@ -1,11 +1,13 @@
 import WhiteSpace from "@atoms/white-space";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { Divider } from "@rneui/base";
-import { Badge, Input, Text } from "@rneui/themed";
+import { Badge, Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import { useFormikContext } from "formik";
 import { StyleSheet, View } from "react-native";
 import { TourAddInputType } from "@src/gql/generated";
+import Input from "@atoms/input";
+import parseText from "@src/helper/number-input";
 
 const PriceTab = () => {
   const { tr } = useTranslation();
@@ -47,7 +49,7 @@ const PriceTab = () => {
       <Input
         value={values.price?.toString()}
         label={tr("Price") + " (" + tr("Tooman") + ")"}
-        onChangeText={price => setFieldValue("price", parseInt(price))}
+        onChangeText={price => setFieldValue("price", parseText(price))}
         onBlur={handleBlur("price")}
         errorMessage={touched.price && (errors.price as string)}
       />
