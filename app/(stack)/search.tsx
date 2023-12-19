@@ -89,11 +89,11 @@ const SearchScreen: React.FC = () => {
                 avatarS3={project.accommodation.avatarS3}
               />
             ))}
-            {list?.length && list?.length === pageNumber * PAGE_SIZE && (
+            {list?.length && list?.length === pageNumber * PAGE_SIZE ? (
               <Button type="outline" onPress={() => setPageNumber(pageNumber + 1)}>
                 {tr("Fetch More")}
               </Button>
-            )}
+            ) : null}
             {!list?.length ? <NoResult /> : ""}
           </Container>
         )}

@@ -23,7 +23,6 @@ const MemoizedMap = memo(({ lat, lng, style, onMoveEnd }) => {
   );
 });
 
-
 const markerHeight = 52;
 const markerWidth = 60;
 const mapHeight = 200;
@@ -43,10 +42,13 @@ const LocationPickerHost = ({ field, form, ...props }: LocationPickerHostProps) 
   const handleOpen = () => setIsVisible(true);
   const handleClose = () => setIsVisible(false);
 
-  const initLocation = useMemo(() => ({
-    lat: 35.7219,
-    lng: 51.3347,
-  }), []);
+  const initLocation = useMemo(
+    () => ({
+      lat: 35.7219,
+      lng: 51.3347,
+    }),
+    []
+  );
 
   const handlePress = () => {
     setFieldTouched("accommodation.lat", true);
@@ -84,7 +86,11 @@ const LocationPickerHost = ({ field, form, ...props }: LocationPickerHostProps) 
               }}
               source={require("@assets/image/marker.png")}
             />
-            <MemoizedMap lat={form.values.accommodation.lat} lng={form.values.accommodation.lng} style={styles.map} />
+            <MemoizedMap
+              lat={form.values.accommodation.lat}
+              lng={form.values.accommodation.lng}
+              style={styles.map}
+            />
           </>
         ) : (
           <Text>{tr("Select On Map")}</Text>
@@ -92,6 +98,7 @@ const LocationPickerHost = ({ field, form, ...props }: LocationPickerHostProps) 
       </Pressable>
       <Text type="error">{form.touched[field.name] && form.errors[field.name]}</Text>
 
+      {/* TODO: استایل ها از اینلاین در بیان */}
       <BottomSheet
         isVisible={isVisible}
         onBackdropPress={handleClose}
@@ -99,7 +106,6 @@ const LocationPickerHost = ({ field, form, ...props }: LocationPickerHostProps) 
           height: HEIGHT,
           borderTopLeftRadius: 0,
           borderTopRightRadius: 0,
-          backgroundColor: "red",
           display: "flex",
           justifyContent: "center",
         }}>
