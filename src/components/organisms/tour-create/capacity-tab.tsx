@@ -1,10 +1,11 @@
 import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
-import { CheckBox, Input, Text, useTheme } from "@rneui/themed";
+import { CheckBox, Text, useTheme } from "@rneui/themed";
 import { TourAddInputType, TourGenderEnum } from "@src/gql/generated";
 import { useFormikContext } from "formik";
 import { StyleSheet, View } from "react-native";
 import parseText from "@src/helper/number-input";
+import Input from "@atoms/input";
 
 const CapacityTab = () => {
   const { theme } = useTheme();

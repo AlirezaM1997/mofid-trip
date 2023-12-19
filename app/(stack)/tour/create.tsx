@@ -48,7 +48,7 @@ const initialValues = {
   startTime: null,
   endTime: null,
   price: null,
-  discount: null,
+  discount: 0,
   base64Images: [],
   facilities: [],
 };
@@ -66,8 +66,8 @@ const Screen = () => {
   const validationSchema = Yup.object().shape({
     capacity: Yup.object().shape({
       capacityNumber: Yup.number()
-        .positive("Capacity is required")
-        .required("Capacity is required"),
+        .positive(tr("Capacity is required"))
+        .required(tr("Capacity is required")),
       gender: Yup.string(),
       childAccept: Yup.boolean(),
     }),
@@ -93,13 +93,13 @@ const Screen = () => {
     }),
 
     price: Yup.number()
-      .positive(tr("Only positive numbers acceptable"))
+      .min(0, tr("Only positive numbers acceptable"))
       .typeError(tr("Only number acceptable"))
       .required(tr("Required")),
     discount: Yup.number()
-      .positive()
+      .min(0, tr("Only positive numbers acceptable"))
       .max(100, tr("Discount can not be greater than 100"))
-      .required(),
+      .required(tr("Required")),
   });
 
   const handleOpen = () => setIsVisibleExit(true);
@@ -111,7 +111,12 @@ const Screen = () => {
   const handleSubmit = async values => {
     const { data } = await submit({
       variables: {
-        data: { ...values, capacity: +values.capacity },
+        data: {
+          ...values,
+          price: +values.price,
+          discount: +values.discount,
+          capacity: { ...values.capacity, capacityNumber: +values.capacity.capacityNumber },
+        },
       },
     });
     if (data.tourAdd.status === "OK") {

@@ -53,7 +53,7 @@ const initialValues = {
     childAccept: false,
   },
   price: null,
-  discount: null,
+  discount: 0,
   categories: [],
   facilities: [],
 };
@@ -98,7 +98,9 @@ const Screen = () => {
       .min(0, tr("Only positive numbers acceptable"))
       .typeError(tr("Only number acceptable"))
       .required(tr("Required")),
-    discount: Yup.number().required().max(100, tr("Discount can not be greater than 100")),
+    discount: Yup.number()
+      .required(tr("Required"))
+      .max(100, tr("Discount can not be greater than 100")),
   });
 
   const handleOpen = () => setIsVisibleExit(true);
@@ -110,7 +112,12 @@ const Screen = () => {
   const handleSubmit = async values => {
     const { data } = await submit({
       variables: {
-        data: { ...values },
+        data: {
+          ...values,
+          price: +values.price,
+          discount: +values.discount,
+          capacity: { ...values.capacity, capacityNumber: +values.capacity.capacityNumber },
+        },
       },
     });
     if (data.projectAdd.status === "OK") {

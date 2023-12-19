@@ -19,10 +19,10 @@ export const messages = {
     fa_ir: "افزودن مهمان",
     en_us: "Add Guest",
   },
-  "tour ngo": {
-    ar: "المرشدين السياحيين",
-    fa_ir: "مجری تور",
-    en_us: "tour ngo",
+  "ngo details": {
+    ar: "الملف الشخصي للمؤدي",
+    fa_ir: "مشخصات مجری",
+    en_us: "ngo details",
   },
   "anywhere you want": {
     ar: "في أي مكان تريده",
