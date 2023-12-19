@@ -7,7 +7,7 @@ import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 import { SECONDARY_COLOR } from "@src/theme";
 import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import Container from "@atoms/container";
 
@@ -26,19 +26,24 @@ const Authentication = () => {
   return (
     <Container style={style.container}>
       <Text heading2>{tr("login or register")}</Text>
-      <WhiteSpace />
-      <Text caption type='grey2'>
-        {tr("to access more possibilities to create tours or hosts")}
-      </Text>
-      <Text caption type="grey2">
-        {tr("and booking them in mofidtrip")} <Text caption>{tr("enter")}</Text>{" "}
-        <Text caption type='grey2'>
-          {tr("or")}
-        </Text>{" "}
-        <Text caption>{tr("Register")}</Text> <Text caption>{tr("do")}</Text>
-      </Text>
-      <WhiteSpace size={24} />
-      <Button containerStyle={{width:'100%'}}  type="solid" onPress={() => handleLogin("userLogin")}>
+      <Pressable onPress={() => handleLogin("userLogin")}>
+        <WhiteSpace />
+        <Text caption type="grey2">
+          {tr("to access more possibilities to create tours or hosts")}
+        </Text>
+        <Text caption type="grey2">
+          {tr("and booking them in mofidtrip")} <Text caption>{tr("enter")}</Text>{" "}
+          <Text caption type="grey2">
+            {tr("or")}
+          </Text>{" "}
+          <Text caption>{tr("Register")}</Text> <Text caption>{tr("do")}</Text>
+        </Text>
+        <WhiteSpace size={24} />
+      </Pressable>
+      <Button
+        containerStyle={{ width: "100%" }}
+        type="solid"
+        onPress={() => handleLogin("userLogin")}>
         {tr("log in, sign up")}
       </Button>
     </Container>

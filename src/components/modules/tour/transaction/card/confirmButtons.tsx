@@ -26,7 +26,7 @@ const ConfirmButton = ({ transaction }: PropsType) => {
           tourTransactionId: transaction.id,
           price: totalPrice({
             price: transaction.tourPackage.price,
-            capacity: transaction.tourGuests.length,
+            capacity: transaction.tourguestSet.length,
             endDate: transaction.tourPackage.tour.endTime,
             startDate: transaction.tourPackage.tour.startTime,
           }),
