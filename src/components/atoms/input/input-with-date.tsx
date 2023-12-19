@@ -1,6 +1,7 @@
 import JalaliDatePicker from "@modules/jalali-date-picker";
 import { InputProps, Input as NativeInput, Overlay } from "@rneui/themed";
 import { FieldProps } from "formik";
+import { useRef, useState } from "react";
 import { View } from "react-native";
 
 type InputWithDateProps = InputProps & {

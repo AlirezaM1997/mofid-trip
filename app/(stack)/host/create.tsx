@@ -110,7 +110,7 @@ const Screen = () => {
   const handleSubmit = async values => {
     const { data } = await submit({
       variables: {
-        data: { ...values, capacity: +values.capacity },
+        data: { ...values },
       },
     });
     if (data.projectAdd.status === "OK") {

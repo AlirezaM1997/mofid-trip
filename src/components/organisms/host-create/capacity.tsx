@@ -24,7 +24,9 @@ const TabCapacity = () => {
         name="capacityNumber"
         placeholder={tr("enter the capacity (quantity)")}
         textAlignVertical="top"
-        onChangeText={text => setFieldValue("capacity.capacityNumber", parseText(text))}
+        onChangeText={text => {
+          setFieldValue("capacity.capacityNumber", +parseText(text));
+        }}
         onBlur={handleBlur("capacity.capacityNumber")}
         value={values.capacity.capacityNumber?.toString()}
         errorMessage={
