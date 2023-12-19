@@ -98,6 +98,7 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
       </Pressable>
       <Text type="error">{form.touched[field.name] && form.errors[field.name]}</Text>
 
+      {/* TODO: استایل ها از اینلاین در بیان */}
       <BottomSheet
         isVisible={isVisible}
         onBackdropPress={handleClose}
@@ -105,7 +106,6 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
           height: HEIGHT,
           borderTopLeftRadius: 0,
           borderTopRightRadius: 0,
-          backgroundColor: "red",
           display: "flex",
           justifyContent: "center",
         }}>

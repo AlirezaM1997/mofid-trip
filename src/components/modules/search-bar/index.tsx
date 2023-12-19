@@ -17,11 +17,11 @@ const SearchBar = ({ onFocus, onChange, onChangeText, value }) => {
   const isFocused = useIsFocused();
   const inputRef = useRef(null);
 
-  useEffect(() => {
-    // if (pathName === "/search") {
-    //   inputRef.current.focus();
-    // }
-  }, [isFocused]);
+  // useEffect(() => {
+  //   // if (pathName === "/search") {
+  //   //   inputRef.current.focus();
+  //   // }
+  // }, [isFocused]);
 
   const right = { right: 35 };
   const left = Platform.select({

@@ -36,7 +36,7 @@ const HostTransactionCapacityTab = () => {
 
       <CheckBox
         checked={values.guests.childAccept}
-        title={tr("The tour is open to children under 12 years old")}
+        title={tr("Is open to children under 12 years old")}
         onPress={() => setFieldValue("guests.childAccept", !values.guests.childAccept)}
       />
 
