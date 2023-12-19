@@ -1,12 +1,7 @@
 import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
 import { CheckBox, Input, Text, useTheme } from "@rneui/themed";
-import {
-  TourAddInputType,
-  TourAddMutation,
-  TourGenderEnum,
-  TourListQuery,
-} from "@src/gql/generated";
+import { TourAddInputType, TourGenderEnum } from "@src/gql/generated";
 import { useFormikContext } from "formik";
 import { StyleSheet, View } from "react-native";
 import parseText from "@src/helper/number-input";
@@ -14,10 +9,8 @@ import parseText from "@src/helper/number-input";
 const CapacityTab = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const {  handleBlur, setFieldValue, values, touched, errors } =
+  const { handleBlur, setFieldValue, values, touched, errors } =
     useFormikContext<TourAddInputType>();
-
-  console.log("a", values, values?.capacity, values?.capacity?.capacityNumber);
 
   return (
     <>

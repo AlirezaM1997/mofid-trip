@@ -67,7 +67,6 @@ const SMSVerificationScreen = () => {
   useEffect(() => {
     if (!loadingChecking && dataChecking) {
       if (dataChecking.userGetToken.statusCode === 200) {
-        console.log('====', dataChecking.userGetToken)
         dispatch(setLoginData(dataChecking.userGetToken));
         router.push(redirectToScreenAfterLogin ? redirectToScreenAfterLogin : "/");
       } else {

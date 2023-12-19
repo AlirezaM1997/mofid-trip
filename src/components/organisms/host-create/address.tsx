@@ -31,7 +31,6 @@ const TabAddress = () => {
         value={values.accommodation.province}
         errorMessage={touched?.accommodation?.province && (errors?.accommodation.province as string)}
       />
-      {console.log('===', touched)}
       <Input
         name="city"
         placeholder={tr("City")}
