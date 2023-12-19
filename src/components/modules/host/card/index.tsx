@@ -63,7 +63,9 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
           </Text>
         </View>
       </View>
+      
       <Divider />
+      
       <View>
         <View style={style.bottom}>
           <View style={style.bottomStyle}>

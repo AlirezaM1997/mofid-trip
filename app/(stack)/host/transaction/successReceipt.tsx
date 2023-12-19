@@ -74,7 +74,7 @@ const Receipt = () => {
                 rounded
                 size={56}
                 containerStyle={{ backgroundColor: "#0003" }}
-                source={project.accommodation?.avatarS3[0].small as ImageSourcePropType}
+                source={project.accommodation?.avatarS3?.[0]?.small as ImageSourcePropType}
               />
               <View style={styles.swapIconContainer}>
                 <AntDesign name="swap" size={10} color="black" />
@@ -83,7 +83,7 @@ const Receipt = () => {
                 rounded
                 size={56}
                 containerStyle={{ backgroundColor: "#0003" }}
-                source={userDetail.avatarS3.small as ImageSourcePropType}
+                source={userDetail?.avatarS3?.small as ImageSourcePropType}
               />
             </View>
 

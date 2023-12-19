@@ -140,6 +140,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="edit-ngo-profile"
+        options={{
+          title: tr("account"),
+        }}
+      />
+      <Stack.Screen
         name="tour"
         options={{
           title: tr("Tour"),
@@ -209,6 +215,12 @@ const HomeLayout = () => {
         name="tour/management/index"
         options={{
           title: tr("Tour Management"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/management/request/index"
+        options={{
+          title: tr("loading"),
         }}
       />
       <Stack.Screen
@@ -341,23 +353,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="host/transaction/add/capacity"
+        name="host/transaction/add/index"
         options={{
           title: tr("Host Reservation"),
         }}
       />
-      <Stack.Screen
-        name="host/transaction/add/date"
-        options={{
-          title: tr("Host Reservation"),
-        }}
-      />
-      <Stack.Screen
-        name="host/transaction/add/confirm-data"
-        options={{
-          title: tr("Final Details"),
-        }}
-      />
+
       <Stack.Screen
         name="host/management/index"
         options={{

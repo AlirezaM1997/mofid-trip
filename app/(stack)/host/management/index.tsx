@@ -34,8 +34,6 @@ const HostManagementScreen = () => {
 
   if (loading) return <LoadingIndicator />;
 
-  console.log('@@@@@@@@@@2', data)
-
   return (
     <ScrollView>
       {!hostSet?.length && (
@@ -72,11 +70,11 @@ const HostManagementScreen = () => {
                 <Feather name="edit" size={12} color={theme.colors.secondary} />
               </Button>
             </View>
-            <Chip
+            {/* <Chip
               title={host?.statusStep}
               color={getHostRequestStatusBadgeColor(host)}
               type="outline"
-            />
+            /> */}
           </Container>
           <WhiteSpace size={10} />
         </Card>

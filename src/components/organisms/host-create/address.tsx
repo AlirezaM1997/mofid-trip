@@ -1,5 +1,4 @@
 import WhiteSpace from "@atoms/white-space";
-import LocationPicker from "@modules/formik/fields/location-picker";
 import useTranslation from "@src/hooks/translation";
 import { Input, Text } from "@rneui/themed";
 import { ProjectAddInputType } from "@src/gql/generated";
@@ -28,10 +27,11 @@ const TabAddress = () => {
         textAlignVertical="top"
         onChangeText={handleChange("accommodation.province")}
         onBlur={handleBlur("accommodation.province")}
-        value={values.accommodation.province}
-        errorMessage={touched?.accommodation?.province && (errors?.accommodation.province as string)}
+        value={values?.accommodation?.province}
+        errorMessage={
+          touched?.accommodation?.province && (errors?.accommodation?.province as string)
+        }
       />
-      {console.log('===', touched)}
       <Input
         name="city"
         placeholder={tr("City")}

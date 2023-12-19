@@ -6,9 +6,10 @@ import { useIsAuthenticated } from "@src/hooks/auth";
 import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 import { SECONDARY_COLOR } from "@src/theme";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect } from "react";
-import { ImageBackground, StyleSheet, View } from "react-native";
+import React from "react";
+import { Pressable, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
+import Container from "@atoms/container";
 
 const Authentication = () => {
   const { tr } = useTranslation();
@@ -23,48 +24,36 @@ const Authentication = () => {
   }
 
   return (
-    <View style={style.container}>
-      <ImageBackground
-        style={style.imageBackground2}
-        source={require("@assets/image/user-with-phone.jpg")}
-      />
-      <WhiteSpace size={10} />
-      <Text heading1 style={{ textAlign: "center" }}>
-        {tr("let's start and login to mofid trip")}
-      </Text>
-      <Text body2 style={{ textAlign: "center" }}>
-        {tr(
-          "To reserve the places and use the application, you must log in or register in the first step, otherwise you will not be able to do any activity."
-        )}
-      </Text>
-      <WhiteSpace size={10} />
-      <View style={style.buttonContainer}>
-        <Button
-          size="lg"
-          color="secondary"
-          containerStyle={style.buttonItem}
-          onPress={() => handleLogin("userLogin")}>
-          {tr("Login")}
-        </Button>
-        <Button
-          size="lg"
-          color="secondary"
-          type="outline"
-          containerStyle={[style.buttonItem]}
-          onPress={() => handleLogin("userLogin")}>
-          {tr("Register")}
-        </Button>
-      </View>
-    </View>
+    <Container style={style.container}>
+      <Text heading2>{tr("login or register")}</Text>
+      <Pressable onPress={() => handleLogin("userLogin")}>
+        <WhiteSpace />
+        <Text caption type="grey2">
+          {tr("to access more possibilities to create tours or hosts")}
+        </Text>
+        <Text caption type="grey2">
+          {tr("and booking them in mofidtrip")} <Text caption>{tr("enter")}</Text>{" "}
+          <Text caption type="grey2">
+            {tr("or")}
+          </Text>{" "}
+          <Text caption>{tr("Register")}</Text> <Text caption>{tr("do")}</Text>
+        </Text>
+        <WhiteSpace size={24} />
+      </Pressable>
+      <Button
+        containerStyle={{ width: "100%" }}
+        type="solid"
+        onPress={() => handleLogin("userLogin")}>
+        {tr("log in, sign up")}
+      </Button>
+    </Container>
   );
 };
 
 const style = StyleSheet.create({
   container: {
-    flex: 1,
+    margin: "auto",
     alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: 8,
   },
   imageBackground2: {
     width: 174,

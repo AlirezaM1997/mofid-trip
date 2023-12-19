@@ -11,15 +11,12 @@ query NGODetail($pk: ID) {
     }
     user {
       id
+      phoneNumber
       avatarS3 {
         large
         medium
         small
       }
-    }
-    tourSet {
-      id
-      title
     }
     projectSet {
       id

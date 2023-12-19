@@ -1,38 +1,32 @@
 import { Feather } from "@expo/vector-icons";
-import { Button, Divider, Input } from "@rneui/themed";
+import { Button, Divider, Input, Text, useTheme } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
-import { useUserDetailQuery, useUserEditMutation } from "@src/gql/generated";
-import { SECONDARY_COLOR } from "@src/theme";
+import { useNgoDetailQuery, useNgoEditMutation } from "@src/gql/generated";
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet } from "react-native";
 import { Pressable, View } from "react-native";
 import Toast from "react-native-toast-message";
 import * as ImagePicker from "expo-image-picker";
 import { isBase64 } from "@src/helper/extra";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useIsFocused } from "@react-navigation/native";
 
-const Page = () => {
+const EditNgoProfile = () => {
   const { tr } = useTranslation();
-  const [editProfile, { loading, data, error }] = useUserEditMutation();
-  const { loading: loadingUserDetail, data: dataUserDetail } = useUserDetailQuery();
-  const [userDetailTemp, setUserDetailTemp] = useState({
-    firstname: "",
-    lastname: "",
-    bio: "",
+  const { theme } = useTheme();
+  const { localizeNumber } = useLocalizedNumberFormat();
+  const isFocused = useIsFocused();
+  const [editNgoProfile, { loading, data, error }] = useNgoEditMutation();
+  const { loading: loadingNgoDetail, data: dataNgoDetail, refetch } = useNgoDetailQuery();
+
+  const [ngoDetailTemp, setNgoDetailTemp] = useState({
+    title: "",
     base64Image: "",
   });
-
-  useEffect(() => {
-    setUserDetailTemp({
-      firstname: userDetail?.firstname ?? "",
-      lastname: userDetail?.lastname ?? "",
-      bio: userDetail?.bio ?? "",
-      base64Image: userDetail?.avatarS3?.small ?? "",
-    });
-  }, [userDetail]);
 
   const handleUploadImage = async () => {
     let result = await ImagePicker.launchCameraAsync({
@@ -44,40 +38,52 @@ const Page = () => {
     });
 
     if (!result.canceled) {
-      setUserDetailTemp({
-        ...userDetailTemp,
-        base64Image: `data:image/jpg;base64,${result.assets[0].base64}`,
+      setNgoDetailTemp({
+        ...ngoDetailTemp,
+        base64Image: `data:image/jpg;base64,${result?.assets[0]?.base64}`,
       });
     }
   };
 
   const handleSave = () => {
     let tempData = {
-      firstname: userDetailTemp?.firstname ?? "",
-      lastname: userDetailTemp?.lastname ?? "",
-      bio: userDetailTemp?.bio ?? "",
+      title: ngoDetailTemp?.title ?? "",
+      lat: 1.5,
+      lng: 1.5,
     };
-    if (userDetailTemp?.base64Image && isBase64(userDetailTemp.base64Image)) {
+    if (ngoDetailTemp?.base64Image && isBase64(ngoDetailTemp?.base64Image)) {
       tempData = {
         ...tempData,
-        base64Image: userDetailTemp.base64Image ?? "",
+        base64Image: ngoDetailTemp?.base64Image ?? "",
       };
     }
-    editProfile({
+    editNgoProfile({
       variables: {
         data: tempData,
       },
     });
   };
+  useEffect(() => {
+    if (isFocused) {
+      refetch();
+    }
+  }, [isFocused]);
+
+  useEffect(() => {
+    setNgoDetailTemp({
+      title: dataNgoDetail?.NGODetail?.title ?? "",
+      base64Image: dataNgoDetail?.NGODetail?.user?.avatarS3?.small ?? "",
+    });
+  }, [loadingNgoDetail]);
 
   useEffect(() => {
     if (!loading && data) {
-      // syncTable();
       Toast.show({
         type: "success",
         text1: tr("Successful"),
         text2: tr("Profile saved successfully"),
       });
+      router.push("dashboard/profile");
     }
     if (error) {
       Toast.show({
@@ -87,56 +93,38 @@ const Page = () => {
       });
     }
   }, [loading, data, error]);
-
-  if (loadingUserDetail) return <LoadingIndicator />;
-
-  const userDetail = dataUserDetail.userDetail;
+  if (loadingNgoDetail || !dataNgoDetail) return <LoadingIndicator />;
 
   return (
     <>
       <WhiteSpace size={20} />
       <ScrollView contentContainerStyle={style.container}>
-        <Pressable style={style.imagePicker} onPress={handleUploadImage}>
-          {userDetailTemp?.base64Image ? (
-            <Image style={style.imageStyle} source={{ uri: userDetailTemp?.base64Image }} />
+        <Pressable style={style.imagePicker(theme)} onPress={handleUploadImage}>
+          {ngoDetailTemp?.base64Image ? (
+            <Image style={style.imageStyle} source={{ uri: ngoDetailTemp?.base64Image }} />
           ) : (
-            <Feather name="camera" size={45} color="#ccc" />
+            <Feather name="camera" size={45} color={theme.colors.grey2} />
           )}
         </Pressable>
 
         <View style={style.containerContainer}>
           <Container>
             <Input
-              label={tr("First Name")}
-              value={userDetailTemp.firstname}
+              label={tr("host name")}
+              value={ngoDetailTemp.title}
               onChangeText={t => {
-                setUserDetailTemp({
-                  ...userDetailTemp,
-                  firstname: t,
+                setNgoDetailTemp({
+                  ...ngoDetailTemp,
+                  title: t,
                 });
               }}
             />
             <Input
-              label={tr("Last Name")}
-              value={userDetailTemp.lastname}
-              onChangeText={t =>
-                setUserDetailTemp({
-                  ...userDetailTemp,
-                  lastname: t,
-                })
-              }
-            />
-            <Input
-              label={tr("Bio")}
-              value={userDetailTemp.bio}
-              multiline={true}
-              numberOfLines={4}
-              style={{ textAlignVertical: "top" }}
-              onChangeText={t =>
-                setUserDetailTemp({
-                  ...userDetailTemp,
-                  bio: t,
-                })
+              label={tr("phone number")}
+              value={localizeNumber(dataNgoDetail.NGODetail.user.phoneNumber)}
+              disabled
+              leftIcon={
+                <Ionicons name="shield-checkmark-outline" size={24} color={theme.colors.success} />
               }
             />
           </Container>
@@ -151,7 +139,7 @@ const Page = () => {
           size="lg"
           disabled={loading}
           loading={loading}>
-          {tr("confirm")}
+          {tr("Save")}
         </Button>
       </View>
     </>
@@ -174,10 +162,9 @@ const style = StyleSheet.create({
     flex: 1,
     gap: 20,
   },
-  textStyle: { color: SECONDARY_COLOR },
-  imagePicker: {
-    borderColor: "#ccc",
-    backgroundColor: "#F3F3F3",
+  imagePicker: theme => ({
+    borderColor: theme.colors.grey3,
+    backgroundColor: theme.colors.grey0,
     width: 105,
     height: 105,
     borderRadius: 50,
@@ -186,10 +173,7 @@ const style = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  },
-  uploadText: {
-    color: "#ccc",
-  },
+  }),
   imageStyle: {
     width: 100,
     height: 100,
@@ -201,4 +185,4 @@ const style = StyleSheet.create({
   containerContainer: { width: "100%" },
 });
 
-export default Page;
+export default EditNgoProfile;

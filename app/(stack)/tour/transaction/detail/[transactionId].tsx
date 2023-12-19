@@ -9,6 +9,7 @@ import BottomButtonLayout from "@components/layout/bottom-button";
 import TourTransactionDetail from "@modules/tour/transaction/detail";
 import AcceptPayment from "@modules/tour/transaction/buttons/acceptPayment";
 import { useTourPurchaseAddMutation, useTourTransactionDetailQuery } from "@src/gql/generated";
+import { totalPrice } from "@src/helper/totalPrice";
 
 const TourTransactionDetailScreen = () => {
   const { tr } = useTranslation();
@@ -25,7 +26,7 @@ const TourTransactionDetailScreen = () => {
     return <LoadingIndicator />;
   }
 
-  const { status, tourPackage } = data.tourTransactionDetail;
+  const { status, tourPackage, tourGuests } = data.tourTransactionDetail;
 
   const purchaseHandler = async () => {
     const ip = await Network.getIpAddressAsync();
@@ -33,7 +34,12 @@ const TourTransactionDetailScreen = () => {
       variables: {
         data: {
           ip,
-          price: tourPackage.price.toString(),
+          price: totalPrice({
+            price: tourPackage.price,
+            capacity: tourGuests.length,
+            endDate: tourPackage.tour.endTime,
+            startDate: tourPackage.tour.startTime,
+          }),
           tourTransactionId: transactionId as string,
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}&type=tour`,
           description: `${tr("buy")} ${tourPackage?.tour.title}`,

@@ -174,8 +174,10 @@ query myNGODetail {
           small
         }
       }
-      guestSet {
-        id
+      guest {
+        guestNumber
+        gender
+        childAccept
       }
       project {
         name

@@ -1,47 +1,43 @@
+import Input from "@atoms/input";
+import { useFormikContext } from "formik";
 import WhiteSpace from "@atoms/white-space";
+import parseText from "@src/helper/number-input";
 import useTranslation from "@src/hooks/translation";
 import { CheckBox, Text, useTheme } from "@rneui/themed";
-import { TourAddInputType, TourGenderEnum } from "@src/gql/generated";
-import { useFormikContext } from "formik";
-import { StyleSheet, View } from "react-native";
-import parseText from "@src/helper/number-input";
-import Input from "@atoms/input";
+import { StyleSheet, View, ViewStyle } from "react-native";
+import {
+  ProjectGenderEnum,
+  TransactionGuestGenderEnum,
+  ProjectTransactionAddInputType,
+} from "@src/gql/generated";
 
-const CapacityTab = () => {
+const HostTransactionCapacityTab = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { handleBlur, setFieldValue, values, touched, errors } =
-    useFormikContext<TourAddInputType>();
+    useFormikContext<ProjectTransactionAddInputType>();
 
   return (
     <>
       <Text heading2 bold>
-        {tr("Capacity and Gender")}
+        {tr("capacity and Gender")}
       </Text>
-      <Text type="grey3">{tr("Select the capacity and gender of passengers")}</Text>
+      <Text type="grey3">{tr("Select the capacity and gender of the tour passengers")}</Text>
       <WhiteSpace size={20} />
       <Input
-        name="capacityNumber"
+        name="guests.guestNumber"
         placeholder={tr("enter the capacity (quantity)")}
         textAlignVertical="top"
-        onChangeText={capacity => {
-          try {
-            setFieldValue("capacity.capacityNumber", parseText(capacity));
-          } catch (error) {
-            console.log(error);
-          }
-        }}
-        onBlur={handleBlur("capacity.capacityNumber")}
-        value={values.capacity?.capacityNumber?.toString()}
-        errorMessage={
-          touched?.capacity?.capacityNumber && (errors?.capacity?.capacityNumber as string)
-        }
+        onChangeText={text => setFieldValue("guests.guestNumber", parseText(text))}
+        onBlur={handleBlur("guests.guestNumber")}
+        value={values?.guests?.guestNumber?.toString()}
+        errorMessage={touched?.guests?.guestNumber && errors?.guests?.guestNumber}
       />
 
       <CheckBox
-        checked={values.capacity?.childAccept}
-        title={tr("Is open to children under 12 years old")}
-        onPress={() => setFieldValue("capacity.childAccept", !values.capacity?.childAccept)}
+        checked={values.guests.childAccept}
+        title={tr("The tour is open to children under 12 years old")}
+        onPress={() => setFieldValue("guests.childAccept", !values.guests.childAccept)}
       />
 
       <WhiteSpace size={10} />
@@ -50,9 +46,9 @@ const CapacityTab = () => {
         <View style={styles.checkboxContainerStyle(theme)}>
           <CheckBox
             containerStyle={styles.checkbox}
-            checked={values.capacity?.gender === TourGenderEnum.Both}
+            checked={values.guests.gender === TransactionGuestGenderEnum.Both}
             title={tr("both")}
-            onPress={() => setFieldValue("capacity.gender", TourGenderEnum.Both)}
+            onPress={() => setFieldValue("guests.gender", ProjectGenderEnum.Both)}
             iconType="material-community"
             checkedIcon="radiobox-marked"
             uncheckedIcon="radiobox-blank"
@@ -61,9 +57,9 @@ const CapacityTab = () => {
         <View style={styles.checkboxContainerStyle(theme)}>
           <CheckBox
             containerStyle={styles.checkbox}
-            checked={values.capacity?.gender === TourGenderEnum.Male}
+            checked={values.guests.gender === TransactionGuestGenderEnum.Male}
             title={tr("male")}
-            onPress={() => setFieldValue("capacity.gender", TourGenderEnum.Male)}
+            onPress={() => setFieldValue("guests.gender", ProjectGenderEnum.Male)}
             iconType="material-community"
             checkedIcon="radiobox-marked"
             uncheckedIcon="radiobox-blank"
@@ -72,9 +68,9 @@ const CapacityTab = () => {
         <View style={styles.checkboxContainerStyle(theme)}>
           <CheckBox
             containerStyle={styles.checkbox}
-            checked={values.capacity?.gender === TourGenderEnum.Female}
+            checked={values.guests.gender === TransactionGuestGenderEnum.Female}
             title={tr("female")}
-            onPress={() => setFieldValue("capacity.gender", TourGenderEnum.Female)}
+            onPress={() => setFieldValue("guests.gender", ProjectGenderEnum.Female)}
             iconType="material-community"
             checkedIcon="radiobox-marked"
             uncheckedIcon="radiobox-blank"
@@ -86,23 +82,23 @@ const CapacityTab = () => {
 };
 
 const styles = StyleSheet.create({
-  checkboxContainerStyle: theme => ({
-    backgroundColor: theme.colors.grey0,
-    borderColor: theme.colors.grey1,
+  checkboxContainerStyle: (theme => ({
+    flex: 1,
     borderWidth: 2,
+    borderRadius: 8,
     paddingVertical: 7,
     paddingHorizontal: 10,
-    borderRadius: 8,
-    flex: 1,
-  }),
+    borderColor: theme.colors.grey1,
+    backgroundColor: theme.colors.grey0,
+  })) as ViewStyle,
   checkboxListContainer: {
+    gap: 5,
     display: "flex",
     flexDirection: "row",
-    gap: 5,
   },
   checkbox: {
     backgroundColor: "transparent",
   },
 });
 
-export default CapacityTab;
+export default HostTransactionCapacityTab;
