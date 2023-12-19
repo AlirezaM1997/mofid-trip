@@ -42,10 +42,8 @@ const TabHostType = () => {
 
   return (
     <>
-      <Container>
-        <Text heading2>{tr("Host Type")}</Text>
-        <Text type="grey3">{tr("Determine the type of space and your hosting environment.")}</Text>
-      </Container>
+      <Text heading2>{tr("Host Type")}</Text>
+      <Text type="grey3">{tr("Determine the type of space and your hosting environment.")}</Text>
 
       {defaultValues?.map(category => (
         <>

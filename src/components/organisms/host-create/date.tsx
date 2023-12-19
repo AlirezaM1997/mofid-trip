@@ -120,33 +120,29 @@ const TabDate = () => {
 
   return (
     <>
-      <Container>
-        <CheckBox checked={checked} onPress={handleCheck} title={tr("The host is one day")} />
-      </Container>
+      <CheckBox checked={checked} onPress={handleCheck} title={tr("The host is one day")} />
 
       <JalaliDatePicker onDayPress={handleDayPress} markedDays={markedDays} />
 
-      <Container>
-        <View style={styles.showDateContainer}>
-          <View style={styles.timeContainer}>
-            <Text body2 type={touched.dateStart && errors.dateStart ? "error" : "secondary"}>
-              {tr("beginning")}: {getFirstDayFormatted()}
-            </Text>
-            {touched.dateStart && errors.dateStart && (
-              <Text type="error">{touched.dateStart && (errors.dateStart as string)}</Text>
-            )}
-          </View>
-          <Divider orientation="vertical" />
-          <View style={styles.timeContainer}>
-            <Text body2 type={touched.dateEnd && errors.dateEnd ? "error" : "secondary"}>
-              {tr("end")}: {getLastDayFormatted()}
-            </Text>
-            {touched.dateEnd && errors.dateEnd && (
-              <Text type="error">{touched.dateEnd && (errors.dateEnd as string)}</Text>
-            )}
-          </View>
+      <View style={styles.showDateContainer}>
+        <View style={styles.timeContainer}>
+          <Text body2 type={touched.dateStart && errors.dateStart ? "error" : "secondary"}>
+            {tr("beginning")}: {getFirstDayFormatted()}
+          </Text>
+          {touched.dateStart && errors.dateStart && (
+            <Text type="error">{touched.dateStart && (errors.dateStart as string)}</Text>
+          )}
         </View>
-      </Container>
+        <Divider orientation="vertical" />
+        <View style={styles.timeContainer}>
+          <Text body2 type={touched.dateEnd && errors.dateEnd ? "error" : "secondary"}>
+            {tr("end")}: {getLastDayFormatted()}
+          </Text>
+          {touched.dateEnd && errors.dateEnd && (
+            <Text type="error">{touched.dateEnd && (errors.dateEnd as string)}</Text>
+          )}
+        </View>
+      </View>
     </>
   );
 };

@@ -1,8 +1,10 @@
 import Container from "@atoms/container";
+import Input from "@atoms/input";
 import WhiteSpace from "@atoms/white-space";
-import { Badge, Divider, Input, Text } from "@rneui/themed";
+import { Badge, Divider, Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import { ProjectAddInputType } from "@src/gql/generated";
+import parseText from "@src/helper/number-input";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormikContext } from "formik";
 import { StyleSheet, View } from "react-native";
@@ -31,64 +33,60 @@ const TabPrice = () => {
 
   return (
     <>
-      <Container>
-        <Text heading2 bold>
-          {tr("Host Price")}
-        </Text>
-        <Text>
-          {tr(
-            "Choose or write the cost of your host, you can give a discount to the original price."
-          )}
-        </Text>
+      <Text heading2 bold>
+        {tr("Host Price")}
+      </Text>
+      <Text>
+        {tr(
+          "Choose or write the cost of your host, you can give a discount to the original price."
+        )}
+      </Text>
 
-        <WhiteSpace />
+      <WhiteSpace />
 
-        <Input
-          value={values.price?.toString()}
-          label={tr("Price") + " (" + tr("Tooman") + ")"}
-          onChangeText={text => setFieldValue("price", parseInt(text))}
-          onBlur={handleBlur("price")}
-          errorMessage={touched.price && (errors.price as string)}
-        />
-        <View style={styles.badgeRow}>
-          {recommendedPrices.map(recom => (
-            <Badge
-              value={recom.title}
-              color="grey2"
-              type="solid"
-              containerStyle={styles.badgeContainerStyle}
-              badgeStyle={styles.badgeStyle}
-              onPress={() => setFieldValue("price", parseInt(recom.value))}
-            />
-          ))}
-        </View>
-      </Container>
+      <Input
+        value={values.price?.toString()}
+        label={tr("Price") + " (" + tr("Tooman") + ")"}
+        onChangeText={text => setFieldValue("price", parseText(text))}
+        onBlur={handleBlur("price")}
+        errorMessage={touched.price && (errors.price as string)}
+      />
+      <View style={styles.badgeRow}>
+        {recommendedPrices.map(recom => (
+          <Badge
+            value={recom.title}
+            color="grey2"
+            type="solid"
+            containerStyle={styles.badgeContainerStyle}
+            badgeStyle={styles.badgeStyle}
+            onPress={() => setFieldValue("price", parseInt(recom.value))}
+          />
+        ))}
+      </View>
 
       <WhiteSpace />
       <Divider />
       <WhiteSpace />
 
-      <Container>
-        <Input
-          value={values.discount}
-          onChangeText={text => setFieldValue("discount", parseInt(text))}
-          onBlur={handleBlur("discount")}
-          errorMessage={touched.discount && (errors.discount as string)}
-          label={tr("Discount") + " (%)"}
-        />
-        <View style={styles.badgeRow}>
-          {recommendedDiscounts.map(recom => (
-            <Badge
-              value={recom.title}
-              color="grey2"
-              type="solid"
-              containerStyle={styles.badgeContainerStyle}
-              badgeStyle={styles.badgeStyle2}
-              onPress={() => setFieldValue("discount", parseInt(recom.value))}
-            />
-          ))}
-        </View>
-      </Container>
+      <Input
+        value={values.discount?.toString() }
+        onChangeText={text => setFieldValue("discount", parseText(text))}
+        onBlur={handleBlur("discount")}
+        errorMessage={touched.discount && (errors.discount as string)}
+        label={tr("Discount") + " (%)"}
+      />
+      <View style={styles.badgeRow}>
+        {recommendedDiscounts.map(recom => (
+          <Badge
+            value={recom.title}
+            color="grey2"
+            type="solid"
+            containerStyle={styles.badgeContainerStyle}
+            badgeStyle={styles.badgeStyle2}
+            onPress={() => setFieldValue("discount", parseInt(recom.value))}
+          />
+        ))}
+      </View>
     </>
   );
 };

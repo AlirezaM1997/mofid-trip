@@ -28,10 +28,12 @@ const TabAddress = () => {
         textAlignVertical="top"
         onChangeText={handleChange("accommodation.province")}
         onBlur={handleBlur("accommodation.province")}
-        value={values.accommodation.province}
-        errorMessage={touched?.accommodation?.province && (errors?.accommodation.province as string)}
+        value={values?.accommodation?.province}
+        errorMessage={
+          touched?.accommodation?.province && (errors?.accommodation?.province as string)
+        }
       />
-      {console.log('===', touched)}
+      {console.log("===", touched)}
       <Input
         name="city"
         placeholder={tr("City")}

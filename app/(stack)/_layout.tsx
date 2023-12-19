@@ -223,12 +223,7 @@ const HomeLayout = () => {
           title: tr("loading"),
         }}
       />
-      <Stack.Screen
-        name="host/management/request/index"
-        options={{
-          title: tr("loading"),
-        }}
-      />
+
       <Stack.Screen
         name="tour/[tourId]/reservation/step-1"
         options={{
