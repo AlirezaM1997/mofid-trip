@@ -1,0 +1,9 @@
+mutation ngoEdit($data: NGOEditInputType) {
+  ngoEdit(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+    __typename
+  }
+}

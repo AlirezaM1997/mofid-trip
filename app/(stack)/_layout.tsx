@@ -140,6 +140,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="edit-ngo-profile"
+        options={{
+          title: tr("account"),
+        }}
+      />
+      <Stack.Screen
         name="tour"
         options={{
           title: tr("Tour"),
