@@ -28,7 +28,6 @@ const OtpInput = ({ onComplete }: OtpInputPropsType) => {
     if (value.length === 4) {
       onComplete(value);
     }
-    console.log(value);
   }, [value]);
 
   useEffect(() => {

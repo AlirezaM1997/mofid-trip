@@ -21,7 +21,7 @@ const SMSVerificationScreen = () => {
   const { tr } = useTranslation();
   const dispatch = useDispatch();
   const countDownTimerRef = useRef();
-  const { phone } = useLocalSearchParams();
+  const { phone, isNgo } = useLocalSearchParams();
   const [canRequestCode, setCanRequestCode] = useState(false);
   const { redirectToScreenAfterLogin } = useSelector((state: RootState) => state.navigationSlice);
   const [login, { loading, data, error }] = useCreateLoginMutation();
@@ -67,8 +67,9 @@ const SMSVerificationScreen = () => {
   useEffect(() => {
     if (!loadingChecking && dataChecking) {
       if (dataChecking.userGetToken.statusCode === 200) {
-        console.log('====', dataChecking.userGetToken)
         dispatch(setLoginData(dataChecking.userGetToken));
+
+        if (!dataChecking.userGetToken.metadata.firstname) return router.push("loginDetails");
         router.push(redirectToScreenAfterLogin ? redirectToScreenAfterLogin : "/");
       } else {
         Toast.show({

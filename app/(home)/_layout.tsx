@@ -81,7 +81,7 @@ export default function AppLayout() {
         }}
       />
       <Tabs.Screen
-        name="profile2"
+        name="profile"
         options={{
           title: tr("Profile"),
           tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
