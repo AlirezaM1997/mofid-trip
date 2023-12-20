@@ -1,5 +1,4 @@
 import WhiteSpace from "@atoms/white-space";
-import LocationPicker from "@modules/formik/fields/location-picker";
 import useTranslation from "@src/hooks/translation";
 import { Input, Text } from "@rneui/themed";
 import { ProjectAddInputType } from "@src/gql/generated";
@@ -33,7 +32,6 @@ const TabAddress = () => {
           touched?.accommodation?.province && (errors?.accommodation?.province as string)
         }
       />
-      {console.log("===", touched)}
       <Input
         name="city"
         placeholder={tr("City")}
