@@ -5,6 +5,7 @@ import { Badge, Divider, Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import { ProjectAddInputType } from "@src/gql/generated";
 import parseText from "@src/helper/number-input";
+import { useFormatPrice } from "@src/hooks/localization";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormikContext } from "formik";
 import { StyleSheet, View } from "react-native";
@@ -14,6 +15,7 @@ const TabPrice = () => {
   const { localizeNumber } = useLocalizedNumberFormat();
   const { values, errors, touched, setFieldValue, handleChange, handleBlur } =
     useFormikContext<ProjectAddInputType>();
+  const { formatPrice } = useFormatPrice();
 
   const recommendedPrices = [
     { title: localizeNumber(tr("Free")), value: 0 },
@@ -69,7 +71,7 @@ const TabPrice = () => {
       <WhiteSpace />
 
       <Input
-        value={values.discount?.toString() }
+        value={values.discount?.toString()}
         onChangeText={text => setFieldValue("discount", parseText(text))}
         onBlur={handleBlur("discount")}
         errorMessage={touched.discount && (errors.discount as string)}
@@ -86,6 +88,20 @@ const TabPrice = () => {
             onPress={() => setFieldValue("discount", parseInt(recom.value))}
           />
         ))}
+      </View>
+      <WhiteSpace />
+      <View style={styles.row}>
+        <View style={styles.row}>
+          <Text>تخفیف {localizeNumber(values.discount)}%</Text>
+          <Text>+</Text>
+          <Text>قیمت پایه {localizeNumber(formatPrice(values.price ?? 0))}</Text>
+        </View>
+        <Text>=</Text>
+        <Text>
+          {values.discount
+            ? formatPrice(values.price - ((values.price || 0) * values.discount) / 100)
+            : 0}
+        </Text>
       </View>
     </>
   );
@@ -119,6 +135,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     flexGrow: 1,
     width: "100%",
+  },
+  row: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 3,
   },
 });
 
