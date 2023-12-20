@@ -22,6 +22,7 @@ export default () => {
   const navigation = useNavigation();
   const { loading, data } = useNgoDetailQuery({ variables: { pk: ngoId as string } });
 
+  
   useEffect(() => {
     if (!loading && data) {
       navigation.setOptions({
@@ -29,9 +30,9 @@ export default () => {
       });
     }
   }, [loading, data]);
-
+  
   if (loading) return <LoadingIndicator />;
-
+  
   return (
     <ScrollView>
       <Image
@@ -40,11 +41,11 @@ export default () => {
           uri: "https://visitiran.ir/visitPic/de2e_standard/public/2019-01/DSCF3742.jpg",
         }}
       />
-      {data.NGODetail.user.avatarS3?.small ? (
+      {data?.NGODetail?.user?.avatarS3?.small ? (
         <Avatar
           size={80}
           rounded
-          source={{ uri: data.NGODetail.user.avatarS3.small }}
+          source={{ uri: data?.NGODetail?.user?.avatarS3.small }}
           containerStyle={styles.avatarContainerStyle(theme)}
         />
       ) : (
