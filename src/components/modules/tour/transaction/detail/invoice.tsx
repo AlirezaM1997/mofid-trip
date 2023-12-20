@@ -4,9 +4,11 @@ import { Text } from "@rneui/themed";
 import { StyleSheet } from "react-native";
 import { TourTransactionQueryType } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { useFormatPrice } from "@src/hooks/localization";
 
 const Invoice = ({ transactionDetail }: { transactionDetail: TourTransactionQueryType }) => {
   const { tr } = useTranslation();
+  const { formatPrice } = useFormatPrice();
   const { localizeNumber } = useLocalizedNumberFormat();
 
   return (
@@ -21,16 +23,21 @@ const Invoice = ({ transactionDetail }: { transactionDetail: TourTransactionQuer
       <View style={styles.priceContainer}>
         <Text caption>{tr("base price")}</Text>
         <Text caption>
-          {localizeNumber(transactionDetail.tourPackage.price)}&nbsp;{tr("tooman")}
+          {localizeNumber(formatPrice(transactionDetail.tourPackage.price))}&nbsp;{tr("tooman")}
         </Text>
       </View>
       <View style={styles.priceContainer}>
-        <Text caption>
-          {localizeNumber(transactionDetail.tourPackage.price)} x {tr("person")}
-        </Text>
+        <View style={styles.rowTextContainer}>
+          <Text caption>{localizeNumber(transactionDetail.tourPackage.price)} x </Text>
+          <Text caption>
+            {localizeNumber(`${transactionDetail.tourGuests.length} ${tr("person")}`)}
+          </Text>
+        </View>
         <Text caption>
           {localizeNumber(
-            transactionDetail.tourPackage.price * transactionDetail.tourguestSet.length
+            formatPrice(
+              +transactionDetail.tourPackage.price * +transactionDetail.tourguestSet.length
+            )
           )}
           &nbsp;{tr("tooman")}
         </Text>
@@ -39,7 +46,9 @@ const Invoice = ({ transactionDetail }: { transactionDetail: TourTransactionQuer
         <Text caption>{tr("total")}</Text>
         <Text caption>
           {localizeNumber(
-            transactionDetail.tourPackage.price * transactionDetail.tourguestSet.length
+            formatPrice(
+              +transactionDetail.tourPackage.price * +transactionDetail.tourguestSet.length
+            )
           )}
           &nbsp;{tr("tooman")}
         </Text>
@@ -54,6 +63,10 @@ const styles = StyleSheet.create({
   },
   priceContainer: {
     flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  rowTextContainer: {
+    flexDirection: "row-reverse",
     justifyContent: "space-between",
   },
 });

@@ -17,9 +17,9 @@ const TourReservation = () => {
     variables: {
       page: {
         pageSize: 999,
-        pageNumber: 1
-      }
-    }
+        pageNumber: 1,
+      },
+    },
   });
 
   const onRefresh = useCallback(() => {
@@ -46,8 +46,6 @@ const TourReservation = () => {
         </Container>
       </ScrollView>
     );
-
-    console.log('--->', data)
 
   return (
     <ScrollView
