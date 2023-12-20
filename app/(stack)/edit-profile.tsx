@@ -12,6 +12,7 @@ import * as ImagePicker from "expo-image-picker";
 import { isBase64 } from "@src/helper/extra";
 import useTranslation from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { router } from "expo-router";
 
 const Page = () => {
   const { tr } = useTranslation();
@@ -62,7 +63,6 @@ const Page = () => {
         base64Image: userDetailTemp.base64Image ?? "",
       };
     }
-    console.log('8s8s', tempData)
     editProfile({
       variables: {
         data: tempData,
@@ -88,7 +88,7 @@ const Page = () => {
     }
   }, [loading, data, error]);
 
-  if (loadingUserDetail) return <LoadingIndicator />
+  if (loadingUserDetail) return <LoadingIndicator />;
 
   const userDetail = dataUserDetail.userDetail;
 
@@ -151,7 +151,7 @@ const Page = () => {
           size="lg"
           disabled={loading}
           loading={loading}>
-          {tr("Save")}
+          {tr("confirm")}
         </Button>
       </View>
     </>

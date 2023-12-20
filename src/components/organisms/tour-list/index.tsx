@@ -7,6 +7,7 @@ import { ScrollView, View, StyleSheet } from "react-native";
 import { AccommodationQueryType, useTourListQuery } from "@src/gql/generated";
 import Container from "@atoms/container";
 import { Skeleton, Text } from "@rneui/themed";
+import WhiteSpace from "@atoms/white-space";
 
 function TourList() {
   const { tr } = useTranslation();
@@ -28,6 +29,8 @@ function TourList() {
           onActionPress={() => router.push("/search")}
         />
       </Container>
+
+      <WhiteSpace size={16} />
 
       <ScrollView
         horizontal
@@ -67,7 +70,7 @@ function TourList() {
 
 const style = StyleSheet.create({
   listContainer: {
-    minHeight: 370,
+    minHeight: 342,
     display: "flex",
     flexDirection: "row",
   },

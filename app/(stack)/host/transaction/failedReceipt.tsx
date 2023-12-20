@@ -11,7 +11,7 @@ import { Avatar, Button, useTheme } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { useProjectTransactionDetailQuery } from "@src/gql/generated";
+import { useProjectTransactionDetailQuery, useUserDetailQuery } from "@src/gql/generated";
 import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormatPrice } from "@src/hooks/localization";
@@ -29,8 +29,8 @@ const Receipt = () => {
   const { tr } = useTranslation();
   const { id } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const { userDetail } = useSelector((state: RootState) => state.userSlice);
   const { formatPrice } = useFormatPrice();
+  const { loading: loadingUserDetail, data: dataUserDetail } = useUserDetailQuery();
 
   const { data, loading } = useProjectTransactionDetailQuery({
     variables: { pk: id as string },
@@ -39,9 +39,11 @@ const Receipt = () => {
   const totalPrice = data?.projectTransactionDetail?.project?.price || 0;
   const formattedTotalPrice = formatPrice(totalPrice);
 
-  if (loading || !data) {
+  if (loading || !data || loadingUserDetail || !dataUserDetail) {
     return <LoadingIndicator />;
   }
+
+  const userDetail = dataUserDetail.userDetail
 
   const { invoiceNumber, modifiedDate, project } = data.projectTransactionDetail;
 
@@ -83,7 +85,7 @@ const Receipt = () => {
                 rounded
                 size={56}
                 containerStyle={{ backgroundColor: "#0003" }}
-                source={userDetail.avatarS3.small as ImageSourcePropType}
+                source={userDetail?.avatarS3?.small as ImageSourcePropType}
               />
             </View>
 
@@ -134,7 +136,7 @@ const Receipt = () => {
 
         <CustomView>
           <Text caption>{tr("transmitter")}</Text>
-          <Text caption>{userDetail.firstname}</Text>
+          <Text caption>{userDetail.firstname} {userDetail.lastname}</Text>
         </CustomView>
 
         <CustomView>

@@ -3,7 +3,7 @@ import WhiteSpace from "@atoms/white-space";
 import { Entypo } from "@expo/vector-icons";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Avatar, BottomSheet, Button, Divider, Text, useTheme } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import ButtonRow from "@modules/button-rows";
 import Container from "@atoms/container";
 import { BANKES_DATA } from "@src/constant/banks";
@@ -13,6 +13,7 @@ const WalletCardDetailBottomSheet = ({ card }) => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [bankDetail, setBankDetail] = useState({ title: card.title, icon: card.icon });
+  const {localizeNumber} = useLocalizedNumberFormat()
 
   useEffect(() => {
     const cardDetail = BANKES_DATA.find(item => card.cardPan.includes(item.cardPan));
@@ -30,7 +31,7 @@ const WalletCardDetailBottomSheet = ({ card }) => {
         />
         <View style={styles.cardData}>
           <Text>{card.title || bankDetail.title}</Text>
-          <Text>{card.cardPan}</Text>
+          <Text>{localizeNumber(card.cardPan)}</Text>
         </View>
         <Entypo name="chevron-small-left" size={24} color="black" />
       </Pressable>
@@ -55,7 +56,7 @@ const WalletCardDetailBottomSheet = ({ card }) => {
 
           <View style={styles.cardDetail}>
             <Text body2 type="info">
-              {card.iban}
+              {localizeNumber(card.iban)}
             </Text>
             <Text body2 type="grey2">
               {tr("iban")}
@@ -68,7 +69,7 @@ const WalletCardDetailBottomSheet = ({ card }) => {
 
           <View style={styles.cardDetail}>
             <Text body2 type="info">
-              {card.cardPan}
+              {localizeNumber(card.cardPan)}
             </Text>
             <Text body2 type="grey2">
               {tr("cardPan")}

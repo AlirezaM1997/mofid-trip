@@ -1,10 +1,10 @@
-import { TourImageType } from "@src/gql/generated";
+import { AccommodationImageType, TourImageType } from "@src/gql/generated";
 import React, { useState } from "react";
 import { ImageBackground, Pressable, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 type ImageSlider = {
-  imageList?: TourImageType[];
+  imageList?: (AccommodationImageType | TourImageType)[];
 };
 
 function ImageSlider({ imageList }: ImageSlider) {

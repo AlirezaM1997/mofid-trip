@@ -14,6 +14,12 @@ const TourReservation = () => {
   const isFocused = useIsFocused();
   const { data, refetch, networkStatus } = useTourTransactionListQuery({
     notifyOnNetworkStatusChange: true,
+    variables: {
+      page: {
+        pageSize: 999,
+        pageNumber: 1
+      }
+    }
   });
 
   const onRefresh = useCallback(() => {
@@ -40,6 +46,8 @@ const TourReservation = () => {
         </Container>
       </ScrollView>
     );
+
+    console.log('--->', data)
 
   return (
     <ScrollView

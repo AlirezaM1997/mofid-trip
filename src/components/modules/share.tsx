@@ -71,6 +71,7 @@ const Share = ({ closeMoreDetails }) => {
 
   return (
     <>
+<<<<<<< HEAD
       <ListItem
         onPress={handleOpen}
         containerStyle={{ direction: "rtl", paddingVertical: 10, borderTopRightRadius: 8 }}>
@@ -79,6 +80,9 @@ const Share = ({ closeMoreDetails }) => {
           {tr("share")}
         </Text>
       </ListItem>
+=======
+      <Feather style={style.iconStyle} name="share-2" size={20} onPress={handleOpen} />
+>>>>>>> master
 
       <BottomSheet onBackdropPress={handleClose} isVisible={isVisible}>
         <Container>
@@ -91,7 +95,7 @@ const Share = ({ closeMoreDetails }) => {
                   : "are you sure about shared hosting?"
               )}
             </Text>
-            <Text body2 type="grey3">
+            <Text body2 type="grey3" center>
               {tr(
                 tour
                   ? "you can republish the details of this tour to your friends so that they also know about the existence of this tour"
@@ -104,32 +108,32 @@ const Share = ({ closeMoreDetails }) => {
             <View style={style.bottunShare}>
               <Button
                 onPress={handlePressTelegram}
-                type="outline"
-                icon={<FontAwesome5 name="telegram-plane" size={24} color="black" />}
+                type="clear"
+                icon={<FontAwesome5 name="telegram-plane" size={24} color={theme.colors.grey5} />}
               />
               <Text caption>{tr("telegram")}</Text>
             </View>
             <View style={style.bottunShare}>
               <Button
                 onPress={handlePressTwitter}
-                type="outline"
-                icon={<Feather name="twitter" size={24} />}
+                type="clear"
+                icon={<Feather name="twitter" size={24} color={theme.colors.grey5} />}
               />
               <Text caption>{tr("twitter")}</Text>
             </View>
             <View style={style.bottunShare}>
               <Button
                 onPress={handlePressWhatsapp}
-                type="outline"
-                icon={<FontAwesome name="whatsapp" size={24} />}
+                type="clear"
+                icon={<FontAwesome name="whatsapp" size={24} color={theme.colors.grey5} />}
               />
               <Text caption>{tr("whatsapp")}</Text>
             </View>
             <View style={style.bottunShare}>
               <Button
                 onPress={handlePressEmail}
-                type="outline"
-                icon={<MaterialIcons name="alternate-email" size={24} />}
+                type="clear"
+                icon={<MaterialIcons name="alternate-email" size={24} color={theme.colors.grey5} />}
               />
               <Text caption>{tr("email")}</Text>
             </View>
@@ -140,10 +144,10 @@ const Share = ({ closeMoreDetails }) => {
               {tr("or share the link")}
             </Text>
             <Pressable onPress={handlePressCopy} style={style.copyButton(theme)}>
+              <FontAwesome name="copy" size={16} color={theme.colors.error} />
               <Text numberOfLines={1} type="grey3" caption>
                 {url}
               </Text>
-              <FontAwesome name="copy" size={16} color={theme.colors.error} />
             </Pressable>
           </View>
         </Container>

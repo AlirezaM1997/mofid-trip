@@ -17,6 +17,7 @@ const HomeLayout = () => {
       ref={navigationRef}
       screenOptions={({ navigation }) => ({
         headerTitleAlign: "center",
+
         contentStyle: { backgroundColor: theme.colors.white },
         headerTitleStyle: Platform.select({
           web: {
@@ -45,16 +46,211 @@ const HomeLayout = () => {
           />
         ),
       })}>
-        <Stack.Screen
+      <Stack.Screen
         name="search"
         options={{
           title: tr("Search"),
         }}
       />
       <Stack.Screen
+        name="landing-page"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="invoice/[transactionId]"
+        options={{
+          title: tr("Factor"),
+        }}
+      />
+      <Stack.Screen
+        name="pay-detail"
+        options={{
+          title: tr("Payment Detail"),
+        }}
+      />
+      <Stack.Screen
+        name="edit-profile"
+        options={{
+          title: tr("Edit Profile"),
+        }}
+      />
+      <Stack.Screen
+        name="terms-of-services"
+        options={{
+          title: tr("Terms of Services"),
+        }}
+      />
+      <Stack.Screen
+        name="comingSoon"
+        options={{
+          title: tr("Coming Soon"),
+        }}
+      />
+      <Stack.Screen
+        name="transactionPaymentStatus"
+        options={{
+          title: tr("payment status"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="receipt"
+        options={{
+          title: tr("receipt"),
+        }}
+      />
+      <Stack.Screen
+        name="host-owner"
+        options={{
+          title: tr("Loading"),
+        }}
+      />
+      <Stack.Screen
+        name="authentication"
+        options={{
+          title: tr("Authentication"),
+        }}
+      />
+      <Stack.Screen
+        name="map-modal"
+        options={{
+          title: tr("Select On Map"),
+          presentation: "modal",
+        }}
+      />
+      <Stack.Screen
+        name="userLogin"
+        options={{
+          title: tr("log in, sign up"),
+        }}
+      />
+
+      <Stack.Screen
+        name="ngoLogin"
+        options={{
+          title: tr("log in, sign up"),
+        }}
+      />
+      <Stack.Screen
+        name="SMSVerification"
+        options={{
+          title: tr("Verification"),
+        }}
+      />
+      <Stack.Screen
+        name="edit-ngo-profile"
+        options={{
+          title: tr("account"),
+        }}
+      />
+      <Stack.Screen
         name="tour"
         options={{
           title: tr("Tour"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/[tourId]/index"
+        options={{
+          title: tr("Loading"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/requests/toMyTours"
+        options={{
+          title: tr("apply to my tours"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/details"
+        options={{
+          title: tr("Tour Details"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/capacity"
+        options={{
+          title: tr("Tour Capacity"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/origin"
+        options={{
+          title: tr("Tour Origin"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/destination"
+        options={{
+          title: tr("Tour Destination"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/date"
+        options={{
+          title: tr("Tour Date"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/price"
+        options={{
+          title: tr("Tour Price"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/images"
+        options={{
+          title: tr("Tour Images"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/create/facilities"
+        options={{
+          title: tr("Tour Facilities"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/management/index"
+        options={{
+          title: tr("Tour Management"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/management/request/index"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/[tourId]/reservation/step-1"
+        options={{
+          title: tr("Tour Reservation"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/[tourId]/reservation/step-2"
+        options={{
+          title: tr("Tour Reservation"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/transaction/detail/[transactionId]"
+        options={{
+          title: tr("Tour Transaction Detail"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/transaction/failedReceipt"
+        options={{
+          title: tr("Unsuccessful Payment"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/transaction/successReceipt"
+        options={{
+          title: tr("Success Receipt"),
         }}
       />
       <Stack.Screen
@@ -70,39 +266,36 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="/host/[projectId]"
-        options={{
-          title: tr("Project"),
-        }}
-      />
-      <Stack.Screen
-        name="userLogin"
-        options={{
-          title: tr("log in, sign up"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/requests/toMyTours"
-        options={{
-          title: tr("apply to my tours"),
-        }}
-      />
-      <Stack.Screen
-        name="ngoLogin"
-        options={{
-          title: tr("log in, sign up"),
-        }}
-      />
-      <Stack.Screen
         name="wallet/deposit"
         options={{
           title: tr("increase balance"),
         }}
       />
       <Stack.Screen
-        name="SMSVerification"
+        name="wallet/receipt/paymentStatus"
         options={{
-          title: tr("Verification"),
+          title: tr("payment status"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/cards/index"
+        options={{
+          title: tr("my cards"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/cards/add/index"
+        options={{
+          title: tr("add card"),
+          headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="host/[projectId]"
+        options={{
+          title: tr("Loading"),
         }}
       />
       <Stack.Screen
@@ -160,23 +353,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="host/transaction/add/capacity"
+        name="host/transaction/add/index"
         options={{
           title: tr("Host Reservation"),
         }}
       />
-      <Stack.Screen
-        name="host/transaction/add/date"
-        options={{
-          title: tr("Host Reservation"),
-        }}
-      />
-      <Stack.Screen
-        name="host/transaction/add/confirm-data"
-        options={{
-          title: tr("Final Details"),
-        }}
-      />
+
       <Stack.Screen
         name="host/management/index"
         options={{
@@ -190,87 +372,15 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="host/management/request/index"
+        options={{
+          title: tr("Loading"),
+        }}
+      />
+      <Stack.Screen
         name="host/management/request/[hostId]"
         options={{
           title: tr("Loading"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/create/details"
-        options={{
-          title: tr("Tour Details"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/create/capacity"
-        options={{
-          title: tr("Tour Capacity"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/create/origin"
-        options={{
-          title: tr("Tour Origin"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/create/destination"
-        options={{
-          title: tr("Tour Destination"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/create/date"
-        options={{
-          title: tr("Tour Date"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/create/price"
-        options={{
-          title: tr("Tour Price"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/create/images"
-        options={{
-          title: tr("Tour Images"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/create/facilities"
-        options={{
-          title: tr("Tour Facilities"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/[tourId]/index"
-        options={{
-          title: tr("Loading"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/management/index"
-        options={{
-          title: tr("Tour Management"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/[tourId]/reservation/step-1"
-        options={{
-          title: tr("Tour Reservation"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/[tourId]/reservation/step-2"
-        options={{
-          title: tr("Tour Reservation"),
-        }}
-      />
-      <Stack.Screen
-        name="landing-page"
-        options={{
-          headerShown: false,
         }}
       />
       <Stack.Screen
@@ -280,116 +390,16 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="pay-detail"
-        options={{
-          title: tr("Payment Detail"),
-        }}
-      />
-      <Stack.Screen
-        name="invoice/[transactionId]"
-        options={{
-          title: tr("Factor"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/transaction/detail/[transactionId]"
-        options={{
-          title: tr("Tour Transaction Detail"),
-        }}
-      />
-      <Stack.Screen
-        name="edit-profile"
-        options={{
-          title: tr("Edit Profile"),
-        }}
-      />
-      <Stack.Screen
-        name="terms-of-services"
-        options={{
-          title: tr("Terms of Services"),
-        }}
-      />
-      <Stack.Screen
-        name="comingSoon"
-        options={{
-          title: tr("Coming Soon"),
-        }}
-      />
-      <Stack.Screen
-        name="transactionPaymentStatus"
-        options={{
-          title: tr("payment status"),
-          headerBackButtonMenuEnabled: false,
-        }}
-      />
-      <Stack.Screen
-        name="wallet/receipt/paymentStatus"
-        options={{
-          title: tr("payment status"),
-          headerBackButtonMenuEnabled: false,
-        }}
-      />
-      <Stack.Screen
-        name="wallet/cards/index"
-        options={{
-          title: tr("my cards"),
-          headerBackButtonMenuEnabled: false,
-        }}
-      />
-      <Stack.Screen
-        name="wallet/cards/add/index"
-        options={{
-          title: tr("add card"),
-          headerBackButtonMenuEnabled: false,
-        }}
-      />
-      <Stack.Screen
-        name="receipt"
-        options={{
-          title: tr("receipt"),
-        }}
-      />
-      <Stack.Screen
-        name="host-owner"
-        options={{
-          title: tr("Loading"),
-        }}
-      />
-      <Stack.Screen
-        name="authentication"
-        options={{
-          title: tr("Authentication"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/transaction/failedReceipt"
-        options={{
-          title: tr("Unsuccessful Payment"),
-        }}
-      />
-      <Stack.Screen
         name="host/transaction/failedReceipt"
         options={{
           title: tr("Unsuccessful Payment"),
         }}
       />
-      <Stack.Screen
-        name="tour/transaction/successReceipt"
-        options={{
-          title: tr("Success Receipt"),
-        }}
-      />
+
       <Stack.Screen
         name="host/transaction/successReceipt"
         options={{
           title: tr("Success Receipt"),
-        }}
-      />
-      <Stack.Screen
-        name="map-modal"
-        options={{
-          title: tr("Select On Map"),
-          presentation: "modal",
         }}
       />
     </Stack>

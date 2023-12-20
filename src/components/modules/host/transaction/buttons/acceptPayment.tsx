@@ -4,6 +4,7 @@ import Container from "@atoms/container";
 import { StyleSheet, View } from "react-native";
 import { BottomSheet, Button } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
+import ButtonRow from "@modules/button-rows";
 
 type PropsType = {
   isVisible: boolean;
@@ -27,14 +28,12 @@ const AcceptPayment = ({ isVisible, setIsVisible, purchaseHandler }: PropsType) 
           <Text caption>{tr("After paying the tour fee, your reservation will be finalized")}</Text>
         </View>
 
-        <View style={styles.btnContainer}>
-          <Button type="outline" onPress={() => setIsVisible(false)} containerStyle={styles.button}>
+        <ButtonRow>
+          <Button type="outline" onPress={() => setIsVisible(false)}>
             {tr("cancel payment")}
           </Button>
-          <Button onPress={() => purchaseHandler()} containerStyle={styles.button}>
-            {tr("pay")}
-          </Button>
-        </View>
+          <Button onPress={purchaseHandler}>{tr("pay")}</Button>
+        </ButtonRow>
       </Container>
     </BottomSheet>
   );
@@ -45,14 +44,6 @@ const styles = StyleSheet.create({
   textContainer: { gap: 8 },
   headerText: { textAlign: "center" },
   container: { margin: "auto", gap: 24 },
-  btnContainer: {
-    gap: 7,
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
   button: { width: "50%" },
 });
 

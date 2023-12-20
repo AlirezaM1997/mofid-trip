@@ -23,7 +23,7 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
       <Image
         style={styles.image}
         source={{
-          uri: transaction?.project?.accommodation.avatarS3?.[0].small || "",
+          uri: transaction?.project?.accommodation?.avatarS3?.[0]?.small || "",
         }}
         resizeMode="cover"
       />
@@ -32,7 +32,7 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
         <Text>{transaction?.project.name}</Text>
 
         <Text caption type="grey2">
-          {transaction?.project.accommodation.address}
+          {transaction?.project.accommodation?.address}
         </Text>
       </View>
     </Pressable>

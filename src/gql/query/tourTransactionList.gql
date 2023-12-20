@@ -1,5 +1,5 @@
-query tourTransactionList {
-  tourTransactionList {
+query tourTransactionList ($page: PageType) {
+  tourTransactionList (page: $page) {
     count
     data {
       id

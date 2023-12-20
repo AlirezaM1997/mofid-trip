@@ -1,63 +1,71 @@
-import React, { useEffect, useState } from "react"
-import { Input, useTheme } from "@rneui/themed"
-import { StyleSheet, View } from "react-native"
+import React, { Ref, useEffect, useState } from "react";
+import { useTheme } from "@rneui/themed";
+import { StyleSheet, View } from "react-native";
+import Input from "@atoms/input";
+import { TextInput } from "react-native-gesture-handler";
+import parseText from "@src/helper/number-input";
 
 type OtpInputPropsType = {
-  onComplete: () => void
-}
+  onComplete: (t: string) => void;
+};
 
 const OtpInput = ({ onComplete }: OtpInputPropsType) => {
-  const { theme } = useTheme()
-  const [value, setValue] = useState("")
-  const inputs = [React.createRef(), React.createRef(), React.createRef(), React.createRef()]
+  const { theme } = useTheme();
+  const [value, setValue] = useState("");
+  const inputs = [React.createRef(), React.createRef(), React.createRef(), React.createRef()];
 
   const handleKeyPress = (nativeEvent, index) => {
     if (nativeEvent.key === "Backspace") {
-      setValue(value.slice(0, -1))
-      inputs[index - 1]?.current?.focus()
+      setValue(value.slice(0, -1));
+      (inputs[index - 1]?.current as TextInput)?.focus();
     }
-  }
+  };
 
   useEffect(() => {
     if (value.length < 4) {
-      inputs[value.length].current?.focus()
+      (inputs[value.length].current as TextInput)?.focus();
     }
     if (value.length === 4) {
-      onComplete(value)
+      onComplete(value);
     }
-  }, [value])
+    console.log(value);
+  }, [value]);
 
   useEffect(() => {
-    inputs[0].current?.focus()
-  }, [])
+    (inputs[0].current as TextInput)?.focus();
+  }, []);
 
   return (
     <View style={styles.container}>
-      {[0, 1, 2, 3].map((i) => (
+      {[0, 1, 2, 3].map(i => (
         <Input
           key={i}
-          ref={inputs[i]}
+          value={parseText(value?.[i])}
           keyboardType="number-pad"
-          onKeyPress={({ nativeEvent }) => handleKeyPress(nativeEvent, i)}
-          onChangeText={(t) => setValue(value + t)}
+          ref={inputs[i] as Ref<TextInput>}
+          onChangeText={t => setValue(parseText(value + t))}
           containerStyle={styles.inputContainerStyle}
+          onKeyPress={({ nativeEvent }) => handleKeyPress(nativeEvent, i)}
           inputStyle={[styles.input, styles.getActiveInputStyle(theme, value.length === i)]}
-          value={value?.[i]}
         />
       ))}
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
-    flexDirection: "row",
     gap: 10,
+    display: "flex",
+    flexDirection: "row-reverse",
   },
   inputContainerStyle: { width: 60 },
   input: { textAlign: "center", width: 60 },
-  getActiveInputStyle: (theme, isActive) => ({ borderColor: isActive ? theme.colors.primary : theme.colors.grey2, borderWidth: 1 }),
-})
+  getActiveInputStyle: (theme, isActive) => ({
+    borderColor: isActive ? theme.colors.secondary : theme.colors.grey2,
+    borderWidth: 1,
+    outline: theme.colors.secondary,
+  }),
+});
 
-export default OtpInput
+export default OtpInput;

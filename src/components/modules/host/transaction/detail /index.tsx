@@ -7,7 +7,6 @@ import TransactionDetailCard from "./card";
 import { Divider, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import StepBaseButtons from "./stepBaseButtons";
-import { useLocalSearchParams } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import { ScrollView } from "react-native-gesture-handler";
 import CancelTransaction from "@modules/host/transaction/cancel ";
@@ -19,7 +18,6 @@ const HostTransactionDetail = ({
   transactionDetail: ProjectTransactionQueryType;
 }) => {
   const { tr } = useTranslation();
-  const { transactionId } = useLocalSearchParams();
   const steps = [tr("pending"), tr("accepting"), tr("payment"), tr("finish the trip")];
 
   const { status, project } = transactionDetail;
@@ -67,7 +65,7 @@ const HostTransactionDetail = ({
       <Container style={styles.container}>
         <Invoice transactionDetail={transactionDetail} />
 
-        <StepBaseButtons status={status} name={project.name} transactionId={transactionId} />
+        <StepBaseButtons status={status} transaction={transactionDetail} />
       </Container>
     </ScrollView>
   );

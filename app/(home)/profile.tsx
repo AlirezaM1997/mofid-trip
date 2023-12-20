@@ -147,7 +147,7 @@ const Profile: React.FC = () => {
             <Container>
               <Text type="grey3">{tr("Flows")}</Text>
             </Container>
-            <ListItem bottomDivider onPress={() => router.push("/tour/create/details")}>
+            <ListItem bottomDivider onPress={() => router.push("/tour/create")}>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Create Tour")}</ListItem.Title>
@@ -158,7 +158,7 @@ const Profile: React.FC = () => {
                 color={theme.colors.grey3}
               />
             </ListItem>
-            <ListItem onPress={() => router.push("/host/create/details")}>
+            <ListItem onPress={() => router.push("/host/create")}>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Create Host")}</ListItem.Title>

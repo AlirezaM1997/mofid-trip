@@ -18,7 +18,7 @@ const HostManagementScreen = () => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [hostSet, setHostSet] = useState<MyNgoDetailProjectSetQuery["NGODetail"]["projectSet"]>([]);
-  const { loading, data } = useMyNgoDetailProjectSetQuery();
+  const { loading, data } = useMyNgoDetailProjectSetQuery({fetchPolicy: "network-only",});
   const { theme } = useTheme();
 
   const navigateToTourDetail = (host: (typeof hostSet)[0]) =>
@@ -70,11 +70,11 @@ const HostManagementScreen = () => {
                 <Feather name="edit" size={12} color={theme.colors.secondary} />
               </Button>
             </View>
-            <Chip
+            {/* <Chip
               title={host?.statusStep}
               color={getHostRequestStatusBadgeColor(host)}
               type="outline"
-            />
+            /> */}
           </Container>
           <WhiteSpace size={10} />
         </Card>

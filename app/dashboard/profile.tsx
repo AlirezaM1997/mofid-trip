@@ -12,7 +12,6 @@ import { RootState } from "@src/store";
 import {
   LanguageChoiceEnum,
   UserDetailQuery,
-  useNgoDetailQuery,
   useSettingEditMutation,
   useUserDetailQuery,
 } from "@src/gql/generated";
@@ -38,7 +37,7 @@ const Profile: React.FC = () => {
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
   const userId = useSelector((state: RootState) => state.userSlice?.loginData?.metadata?.id);
   const [settingEdit] = useSettingEditMutation({
-    notifyOnNetworkStatusChange: true,
+    // notifyOnNetworkStatusChange: true,
   });
   const { syncTable } = useSettingDetailTable();
   const [isVisibleLogout, setIsVisibleLogout] = useState(false);
@@ -72,6 +71,8 @@ const Profile: React.FC = () => {
   const handleNavigateToRequestToMyHost = () => router.push("/host/management/request");
 
   const handleNavigateToEditProfile = () => router.push("/edit-profile");
+
+  const handleNavigateToEditNgoProfile = () => router.push("/edit-ngo-profile");
 
   const handleNavigateToComingSoon = () => router.push("/comingSoon");
 
@@ -133,7 +134,7 @@ const Profile: React.FC = () => {
         <Container>
           <Text type="grey3">{tr("Account")}</Text>
         </Container>
-        <ListItem onPress={handleNavigateToEditProfile}>
+        <ListItem onPress={handleNavigateToEditNgoProfile}>
           <Feather name="user" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("Account Detail")}</ListItem.Title>
@@ -150,7 +151,7 @@ const Profile: React.FC = () => {
             <Container>
               <Text type="grey3">{tr("Flows")}</Text>
             </Container>
-            <ListItem bottomDivider onPress={() => router.push("/tour/create/details")}>
+            <ListItem bottomDivider onPress={() => router.push("/tour/create")}>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Create Tour")}</ListItem.Title>
@@ -161,7 +162,7 @@ const Profile: React.FC = () => {
                 color={theme.colors.grey3}
               />
             </ListItem>
-            <ListItem onPress={() => router.push("/host/create/details")}>
+            <ListItem onPress={() => router.push("/host/create")}>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Create Host")}</ListItem.Title>

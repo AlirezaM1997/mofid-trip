@@ -1,22 +1,22 @@
 import "react-native-gesture-handler";
-import useIsRtl from "@src/hooks/localization";
-import Toast from "react-native-toast-message";
-import * as SplashScreen from "expo-splash-screen";
-import React, { useCallback, useEffect } from "react";
-import { useFonts } from "expo-font";
 import { theme } from "@src/theme";
+import { Slot } from "expo-router";
+import { useFonts } from "expo-font";
+import { Provider } from "react-redux";
 import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "@rneui/themed";
+import { persistor, store } from "@src/store";
+import useIsRtl from "@src/hooks/localization";
+import Toast from "react-native-toast-message";
 import { toastConfig } from "@src/toast-config";
 import { ApolloProvider } from "@apollo/client";
-import { Provider, useSelector } from "react-redux";
-import { RootState, persistor, store } from "@src/store";
+import * as SplashScreen from "expo-splash-screen";
+import React, { useCallback, useEffect } from "react";
+import { useConfirmAuthentication } from "@src/hooks/auth";
+import customUseApolloClient from "@src/hooks/apollo/client";
 import { PersistGate } from "redux-persist/integration/react";
 import { LtrSpecificStyles, RtlSpecificStyles } from "@src/global-style";
 import { View, Platform, StyleSheet, Appearance, I18nManager } from "react-native";
-import { Slot } from "expo-router";
-import { useConfirmAuthentication, useIsAuthenticated } from "@src/hooks/auth";
-import customUseApolloClient from "@src/hooks/apollo/client";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -58,8 +58,10 @@ export default function App() {
   const colorScheme = Appearance.getColorScheme();
   const isDarkMode = colorScheme === "dark";
   const [fontsLoaded] = useFonts({
-    DanaNoEn: require("../assets/fonts/dana/DanaNoEn-Regular.ttf"),
-    DanaNoEnDemiBold: require("../assets/fonts/dana/DanaNoEn-DemiBold.ttf"),
+    DanaNoEn: require("@assets/fonts/dana/DanaNoEn-Regular.ttf"),
+    DanaNoEnDemiBold: require("@assets/fonts/dana/DanaNoEn-DemiBold.ttf"),
+    DanaFaNum: require("@assets/fonts/dana/farsi-numerical/DanaFaNum-Regular.ttf"),
+    DanaFaNumDemiBold: require("@assets/fonts/dana/farsi-numerical/DanaFaNum-DemiBold.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {
