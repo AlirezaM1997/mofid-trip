@@ -35,7 +35,7 @@ const Profile: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const rootNavigationState = useRootNavigationState();
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
-  const userId = useSelector((state: RootState) => state.userSlice?.loginData?.metadata?.id);
+  const userId = useSelector((state: RootState) => state.userSlice?.userDetail?.id);
   const [settingEdit] = useSettingEditMutation({
     // notifyOnNetworkStatusChange: true,
   });

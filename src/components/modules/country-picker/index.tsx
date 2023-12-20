@@ -53,6 +53,7 @@ const CountryPicker = ({ value, setValue, callingCode, setCallingCode, ...props 
           inputStyle={[styles.inputStyle, { outline: "none" }]}
           onChangeText={text => setInputValue(parseText(text))}
           value={inputValue}
+          maxLength={20}
         />
       </View>
       <BottomSheet containerStyle={styles.bottomSheetContainer} isVisible={isVisible}>
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
   inputStyle: {
     borderWidth: 0,
     height: 58,
+    paddingLeft: 100,
     textAlign: "left",
   },
   close: {
