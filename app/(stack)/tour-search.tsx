@@ -12,18 +12,17 @@ import NoResult from "@src/components/organisms/no-result";
 import SelectedFilters from "@src/components/modules/selected-filters";
 import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
 import { TourListQuery, useTourListLazyQuery } from "@src/gql/generated";
-import { Feather } from "@expo/vector-icons";
-import Input from "@atoms/input";
+import TourSearchBar from "@modules/search-bar/tour-search-bar";
 
-const SearchScreen: React.FC = () => {
+const TourSearch: React.FC = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const [searchText, setSearchText] = useState("");
-  const [list, setList] = useState<TourListQuery[] | undefined[]>([]);
+  const [list, setList] = useState<TourListQuery | undefined[]>([]);
   const [_, { networkStatus }] = useTourListLazyQuery({
     notifyOnNetworkStatusChange: false,
   });
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   useEffect(() => {
     const getResult = async () => {
@@ -41,12 +40,12 @@ const SearchScreen: React.FC = () => {
 
     getResult().then(res => {
       setList(res as []);
-      setPageNumber(1);
+      setPageSize(10);
     });
   }, [searchText]);
 
   useEffect(() => {
-    if (pageNumber > 1) {
+    if (pageSize > 1) {
       const getResult = async () => {
         const { data } = await _({
           variables: {
@@ -54,7 +53,7 @@ const SearchScreen: React.FC = () => {
             sort: {
               descending: false,
             },
-            page: { pageNumber: pageNumber, pageSize: 10 },
+            page: { pageNumber: 1, pageSize: pageSize },
           },
         });
         return data?.tourList?.data;
@@ -63,18 +62,11 @@ const SearchScreen: React.FC = () => {
         setList(res as []);
       });
     }
-  }, [pageNumber]);
+  }, [pageSize]);
 
   return (
     <>
-      <Container style={{ paddingBottom: 14, paddingTop: 24 }}>
-        <Input
-          rightIcon={<Feather name="search" size={24} color="black" />}
-          placeholder={tr("search for tours")}
-          value={searchText}
-          onChangeText={text => setSearchText(text)}
-        />
-      </Container>
+      <TourSearchBar onChangeText={e => setSearchText(e)} value={searchText} />
       <Divider />
       <ScrollView
         refreshControl={<RefreshControl refreshing={networkStatus === NetworkStatus.refetch} />}>
@@ -98,8 +90,8 @@ const SearchScreen: React.FC = () => {
                   avatarS3={tour?.avatarS3}
                 />
               ))}
-            {list?.length && list?.length === pageNumber * PAGE_SIZE ? (
-              <Button type="outline" onPress={() => setPageNumber(pageNumber + 1)}>
+            {list?.length && list?.length === PAGE_SIZE ? (
+              <Button type="outline" onPress={() => setPageSize(pageSize + 10)}>
                 {tr("Fetch More")}
               </Button>
             ) : null}
@@ -117,4 +109,4 @@ const styles = StyleSheet.create({
   resultContainer: { gap: 20 },
 });
 
-export default SearchScreen;
+export default TourSearch;

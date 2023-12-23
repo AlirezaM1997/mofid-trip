@@ -26,7 +26,7 @@ function TourList() {
         <TitleWithAction
           title={tr("available tours")}
           actionTitle={tr("See All")}
-          onActionPress={() => router.push("/tourList")}
+          onActionPress={() => router.push("/tour-search")}
         />
       </Container>
 

@@ -53,9 +53,9 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="tourList"
+        name="tour-search"
         options={{
-          title: tr("list of tours"),
+          title: tr("search for tours"),
         }}
       />
       <Stack.Screen
