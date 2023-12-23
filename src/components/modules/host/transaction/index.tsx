@@ -30,7 +30,7 @@ const HostTransaction = () => {
     }
   }, [isFocused]);
 
-  if (networkStatus === NetworkStatus.loading)
+  if (networkStatus === NetworkStatus.loading || !data)
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <Container>

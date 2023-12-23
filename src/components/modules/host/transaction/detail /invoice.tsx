@@ -4,10 +4,12 @@ import { Text } from "@rneui/themed";
 import { StyleSheet } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { ProjectQueryType, ProjectTransactionQueryType } from "@src/gql/generated";
+import { useFormatPrice } from "@src/hooks/localization";
 
 const Invoice = ({ transactionDetail }: { transactionDetail: ProjectTransactionQueryType }) => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const {formatPrice} = useFormatPrice()
 
   return (
     <View style={styles.container}>
@@ -20,22 +22,20 @@ const Invoice = ({ transactionDetail }: { transactionDetail: ProjectTransactionQ
 
       <View style={styles.priceContainer}>
         <Text caption>{tr("base price")}</Text>
-        <Text caption>{localizeNumber(transactionDetail.project.price)}&nbsp;{tr("tooman")}</Text>
+        <Text caption>{localizeNumber(formatPrice(transactionDetail.project.price))}</Text>
       </View>
       <View style={styles.priceContainer}>
         <Text caption>
-          {transactionDetail.project.price} x {tr("person")}
+          {localizeNumber(transactionDetail.project.price)} x {tr("person")}
         </Text>
         <Text caption>
-          {localizeNumber(transactionDetail.project.price * transactionDetail.guestSet.length)}
-          &nbsp;{tr("tooman")}
+          {localizeNumber(formatPrice(transactionDetail.project.price * transactionDetail.guest.guestNumber))}
         </Text>
       </View>
       <View style={styles.priceContainer}>
         <Text caption>{tr("total")}</Text>
         <Text caption>
-          {localizeNumber(transactionDetail.project.price * transactionDetail.guestSet.length)}
-          &nbsp;{tr("tooman")}
+          {localizeNumber(formatPrice(transactionDetail.project.price * transactionDetail.guest.guestNumber))}
         </Text>
       </View>
     </View>

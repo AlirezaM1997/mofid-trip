@@ -19,10 +19,10 @@ export const messages = {
     fa_ir: "افزودن مهمان",
     en_us: "Add Guest",
   },
-  "tour ngo": {
-    ar: "المرشدين السياحيين",
-    fa_ir: "مجری تور",
-    en_us: "tour ngo",
+  "ngo details": {
+    ar: "الملف الشخصي للمؤدي",
+    fa_ir: "مشخصات مجری",
+    en_us: "ngo details",
   },
   "anywhere you want": {
     ar: "في أي مكان تريده",
@@ -59,7 +59,7 @@ export const messages = {
   },
   "it is a one-day tour": {
     ar: "إنها جولة ليوم واحد",
-    fa_ir: "تور یک روزه می‌باشد",
+    fa_ir: "یک روزه می‌باشد",
     en_us: "it is a one-day tour",
   },
   "choose a start and end date for the tour": {
@@ -395,7 +395,7 @@ export const messages = {
   },
   next: {
     ar: "التالی",
-    fa_ir: "بعد",
+    fa_ir: "بعدی",
     en_us: "Next",
   },
   "no result": {
@@ -467,6 +467,11 @@ export const messages = {
     ar: "الاشخاص",
     fa_ir: "مسافران",
     en_us: "Persons",
+  },
+  "your initial request will be approved or rejected by the host after submission": {
+    ar: "سيتم الموافقة على طلبك الأولي أو رفضه من قبل المضيف بعد تقديمه",
+    fa_ir: "درخواست اولیه شما پس از ارسال ، توسط میزبان تایید یا رد خواهد شد",
+    en_us: "your initial request will be approved or rejected by the host after submission",
   },
   "place category": {
     ar: "فئة المكان",
@@ -540,6 +545,31 @@ export const messages = {
     ar: "يبحث",
     fa_ir: "جستجو",
     en_us: "Search",
+  },
+  or: {
+    ar: "أو",
+    fa_ir: "و یا",
+    en_us: "or",
+  },
+  enter: {
+    ar: "يدخل",
+    fa_ir: "وارد‌شوید",
+    en_us: "enter",
+  },
+  "and booking them in mofidtrip": {
+    ar: "وحجزهم في مفیدتریپ",
+    fa_ir: " و رزرو آن ها در مفیدتریپ",
+    en_us: "and booking them in Mofidtrip",
+  },
+  "to access more possibilities to create tours or hosts": {
+    ar: "للوصول إلى المزيد من الإمكانيات لإنشاء جولات أو مضيفين",
+    fa_ir: "برای دسترسی به امکانات بیشتر برای ایجاد تور یا هاست",
+    en_us: "To access more possibilities to create tours or hosts",
+  },
+  "login or register": {
+    ar: "تسجيل الدخول أو التسجيل",
+    fa_ir: "ورود یا ثبت نام",
+    en_us: "Login or register",
   },
   "see all": {
     ar: "اظهار الكل",
@@ -1056,6 +1086,21 @@ export const messages = {
     fa_ir: "تاریخ",
     en_us: "Date",
   },
+  "host address": {
+    ar: "عنوان المضيف",
+    fa_ir: "آدرس میزبانی",
+    en_us: "Host address",
+  },
+  "hosting facilities": {
+    ar: "مرافق الاستضافة",
+    fa_ir: "امکانات میزبانی",
+    en_us: "hosting facilities",
+  },
+  "hosting date": {
+    ar: "تاريخ المضيف",
+    fa_ir: "تاریخ میزبانی",
+    en_us: "host date",
+  },
   "hosting type": {
     ar: "نوع الاستضافة",
     fa_ir: "نوع میزبانی",
@@ -1295,6 +1340,11 @@ export const messages = {
     ar: "تسجيل الدخول",
     fa_ir: "وارد شدن",
     en_us: "Login",
+  },
+  do: {
+    ar: "يفعل",
+    fa_ir: "کنید",
+    en_us: "do",
   },
   Register: {
     ar: "يسجل",
@@ -2152,25 +2202,30 @@ export const messages = {
     fa_ir: "ظرفیت و جنسیت",
     en_us: "Capacity and Gender",
   },
-  "select the capacity and gender of the tour passengers": {
+  "select the capacity and gender of passengers": {
     ar: "حدد السعة والجنس لركاب الرحلة",
-    fa_ir: "ظرفیت و جنسیت مسافران تور را انتخاب کنید",
-    en_us: "Select the capacity and gender of the tour passengers",
+    fa_ir: "ظرفیت و جنسیت مسافران را انتخاب کنید",
+    en_us: "Select the capacity and gender of passengers",
   },
   "enter the capacity (quantity)": {
     ar: "أدخل السعة (الكمية)",
     fa_ir: "ظرفیت را وارد کنید ( تعداد )",
     en_us: "Enter the capacity (quantity)",
   },
-  "the tour is open to children under 12 years old": {
+  "is open to children under 12 years old": {
     ar: "الجولة مفتوحة للأطفال دون سن 12 عامًا",
-    fa_ir: "تور پذیرای کودکان زیر ۱۲ سال نیز میباشد",
-    en_us: "The tour is open to children under 12 years old",
+    fa_ir: "پذیرای کودکان زیر ۱۲ سال نیز میباشد",
+    en_us: "Is open to children under 12 years old",
   },
   "capacity is required": {
     ar: "القدرة مطلوبة",
-    fa_ir: "ظرفیت تور اجباری است",
+    fa_ir: "ظرفیت اجباری است",
     en_us: "Capacity is required",
+  },
+  "about host": {
+    ar: "درباره میزبانی",
+    fa_ir: "درباره میزبانی",
+    en_us: "About host",
   },
   "city is required": {
     ar: "المدينة مطلوبة",
@@ -2211,8 +2266,13 @@ export const messages = {
   },
   "the tour is one day": {
     ar: "الجولة يوم واحد",
-    fa_ir: "تور یک روزه است",
+    fa_ir: "یک روزه است",
     en_us: "The tour is one day",
+  },
+  "it is a one-day trip or visit": {
+    ar: "إنها رحلة أو زيارة ليوم واحد",
+    fa_ir: "سفر یا بازدید یک روزه میباشد",
+    en_us: "it is a one-day trip or visit",
   },
   start: {
     ar: "يبدأ",
@@ -2337,11 +2397,7 @@ export const messages = {
     fa_ir: "جزئیات میزبان",
     en_us: "Host Details",
   },
-  "host address": {
-    ar: "عنوان المضيف",
-    fa_ir: "نشانی میزبان",
-    en_us: "Host Address",
-  },
+
   "host capacity": {
     ar: "سعة المضيف",
     fa_ir: "ظرفیت میزبان",
@@ -2356,6 +2412,11 @@ export const messages = {
     ar: "سعر المضيف",
     fa_ir: "قیمت میزبان",
     en_us: "Host Price",
+  },
+  "daily capacity": {
+    ar: "القدرة اليومية",
+    fa_ir: "ظرفیت روزانه",
+    en_us: "Daily capacity",
   },
   "host images": {
     ar: "صور المضيف",
@@ -2505,9 +2566,19 @@ export const messages = {
     fa_ir: "در حال بارگزاری",
     en_us: "Loading",
   },
+  previous: {
+    ar: "سابق",
+    fa_ir: "قبلی",
+    en_us: "Previous",
+  },
   "this cardpan does not exist": {
     ar: "رقم البطاقة هذا غير موجود",
     fa_ir: "این شماره کارت موجود نمیباشد",
     en_us: "this cardpan does not exist",
+  },
+  stay: {
+    ar: "یبقی",
+    fa_ir: "ماندن",
+    en_us: "Stay",
   },
 };

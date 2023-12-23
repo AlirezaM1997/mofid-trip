@@ -21,12 +21,12 @@ const Invoice = ({ transactionDetail }: { transactionDetail: TourTransactionQuer
       <View style={styles.priceContainer}>
         <Text caption>{tr("base price")}</Text>
         <Text caption>
-          {transactionDetail.tourPackage.price}&nbsp;{tr("tooman")}
+          {localizeNumber(transactionDetail.tourPackage.price)}&nbsp;{tr("tooman")}
         </Text>
       </View>
       <View style={styles.priceContainer}>
         <Text caption>
-          {transactionDetail.tourPackage.price} x {tr("person")}
+          {localizeNumber(transactionDetail.tourPackage.price)} x {tr("person")}
         </Text>
         <Text caption>
           {localizeNumber(

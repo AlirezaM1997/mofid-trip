@@ -30,7 +30,7 @@ query NGODetail($pk: ID) {
       tax
       description
       statusStep
-      createdTime
+      createdDate
       capacity {
         id
         male
@@ -65,6 +65,39 @@ query NGODetail($pk: ID) {
           medium
           small
         }
+      }
+    }
+    tourTransactionSet {
+      id
+      status {
+        isActive
+        step
+      }
+      owner {
+        avatarS3 {
+          large
+          medium
+          small
+        }
+        id
+        fullname
+        phoneNumber
+      }
+      tourPackage {
+        tour {
+          title
+        }
+      }
+      tourGuests {
+        avatarS3 {
+          large
+          medium
+          small
+        }
+        id
+        firstname
+        lastname
+        phoneNumber
       }
     }
   }

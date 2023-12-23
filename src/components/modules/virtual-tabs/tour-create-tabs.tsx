@@ -1,99 +1,24 @@
-import { Tab, Text, useTheme } from "@rneui/themed";
+import { Tab, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { RootState } from "@src/store";
-import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useRef } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 
-type TourCreateTabsProps = {
-  index: number;
-};
-
-const TourCreateTabs = ({ index }: TourCreateTabsProps) => {
+const TourCreateTabs = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const scrollRef = useRef(null);
-  const { x: initialX } = useLocalSearchParams();
   const x = useRef(0);
 
-  const data = useSelector((state: RootState) => state.tourCreateSlice.data);
+  const { activeStep } = useSelector((state: RootState) => state.tourCreateSlice);
 
   useEffect(() => {
-    if (scrollRef.current && initialX) {
-      scrollRef.current.scrollTo({ x: parseInt(initialX as string), animated: false });
+    if (activeStep) {
+      scrollRef.current.scrollTo({ x: -(activeStep - 1) * 95, animated: true });
     }
-  }, []);
-
-  const handleChange = newIndex => {
-    switch (newIndex) {
-      case 0:
-        router.push({
-          pathname: "/tour/create/details",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 1:
-        router.push({
-          pathname: "/tour/create/capacity",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 2:
-        router.push({
-          pathname: "/tour/create/origin",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 3:
-        router.push({
-          pathname: "/tour/create/destination",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 4:
-        router.push({
-          pathname: "/tour/create/date",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 5:
-        router.push({
-          pathname: "/tour/create/price",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 6:
-        router.push({
-          pathname: "/tour/create/images",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-      case 7:
-        router.push({
-          pathname: "/tour/create/facilities",
-          params: {
-            x: x.current,
-          },
-        });
-        break;
-    }
-  };
+  }, [activeStep]);
 
   return (
     <ScrollView
@@ -102,20 +27,45 @@ const TourCreateTabs = ({ index }: TourCreateTabsProps) => {
       onScroll={event => {
         const { contentOffset } = event.nativeEvent;
         x.current = contentOffset.x;
-      }}>
+      }}
+      style={{ overflow: "hidden" }}>
       <Tab
-        value={index}
-        onChange={handleChange}
+        value={activeStep}
+        // onChange={handleChange}
         variant="default"
         indicatorStyle={styles.indicatorStyle}>
-        <Tab.Item style={index === 0 ? styles.tabItem(theme) : {}} title={tr("Details")} />
-        <Tab.Item style={index === 1 ? styles.tabItem(theme) : {}} title={tr("Capacity")} />
-        <Tab.Item style={index === 2 ? styles.tabItem(theme) : {}} title={tr("Origin")} />
-        <Tab.Item style={index === 3 ? styles.tabItem(theme) : {}} title={tr("Destination")} />
-        <Tab.Item style={index === 4 ? styles.tabItem(theme) : {}} title={tr("Date")} />
-        <Tab.Item style={index === 5 ? styles.tabItem(theme) : {}} title={tr("Price")} />
-        <Tab.Item style={index === 6 ? styles.tabItem(theme) : {}} title={tr("Images")} />
-        <Tab.Item style={index === 7 ? styles.tabItem(theme) : {}} title={tr("Facilities")} />
+        <Tab.Item
+          style={activeStep >= 1 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Details")}
+        />
+        <Tab.Item
+          style={activeStep >= 2 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Capacity")}
+        />
+        <Tab.Item
+          style={activeStep >= 3 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Origin")}
+        />
+        <Tab.Item
+          style={activeStep >= 4 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Destination")}
+        />
+        <Tab.Item
+          style={activeStep >= 5 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Date")}
+        />
+        <Tab.Item
+          style={activeStep >= 6 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Price")}
+        />
+        <Tab.Item
+          style={activeStep >= 7 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Images")}
+        />
+        <Tab.Item
+          style={activeStep >= 8 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
+          title={tr("Facilities")}
+        />
       </Tab>
     </ScrollView>
   );
@@ -128,6 +78,10 @@ const styles = StyleSheet.create({
   tabItem: theme => ({
     borderBottomWidth: 3,
     borderColor: theme.colors.primary,
+  }),
+  deactiveTabItem: theme => ({
+    borderBottomWidth: 3,
+    borderColor: theme.colors.grey2,
   }),
 });
 

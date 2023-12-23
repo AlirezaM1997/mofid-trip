@@ -43,7 +43,7 @@ const ContactCard = ({ user }) => {
             )}
             <View style={style.nameBox}>
               <Text caption type="grey3">
-                {tr("tour ngo")}
+                {tr("ngo details")}
               </Text>
               <Text subtitle2>{user.fullname}</Text>
             </View>

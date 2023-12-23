@@ -7,12 +7,13 @@ import { Button } from "@rneui/themed";
 import * as Network from "expo-network";
 import useTranslation from "@src/hooks/translation";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import LoadingIndicator from "@modules/Loading-indicator";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import HostTransactionDetail from "@modules/host/transaction/detail ";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import AcceptPayment from "@modules/host/transaction/buttons/acceptPayment";
+import { totalPrice } from "@src/helper/totalPrice";
 
 const TransactionDetailsScreen = () => {
   const { tr } = useTranslation();
@@ -30,11 +31,9 @@ const TransactionDetailsScreen = () => {
     return <LoadingIndicator />;
   }
 
-  const { status, project } = data.projectTransactionDetail;
+  const { status, project, dateEnd, dateStart, guest } = data.projectTransactionDetail;
 
-  useEffect(() => {
-    navigation.setOptions({ title: project.name });
-  }, []);
+  navigation.setOptions({ title: project.name });
 
   const purchaseHandler = async () => {
     const ip = await Network.getIpAddressAsync();
@@ -42,14 +41,22 @@ const TransactionDetailsScreen = () => {
       variables: {
         data: {
           ip,
-          price: project.price.toString(),
+          price: totalPrice({
+            endDate: dateEnd,
+            startDate: dateStart,
+            price: project.price,
+            capacity: guest.guestNumber,
+          }),
           description: `${tr("buy")} ${project?.name}`,
           projectTransactionId: transactionId as string,
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}&type=host`,
         },
       },
     });
-    router.push(data.projectPurchaseAdd.metadata?.url);
+
+    if (data.projectPurchaseAdd.status === "OK") {
+      router.push(data.projectPurchaseAdd.metadata?.url);
+    }
   };
 
   const bottomButton = () => {

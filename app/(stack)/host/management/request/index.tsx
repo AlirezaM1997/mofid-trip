@@ -57,7 +57,7 @@ const RequestScreen = () => {
   navigation.setOptions({ title: tr("apply to my hosts") });
 
   return (
-    <>
+    <ScrollView>
       <Container style={style.container}>
         <View style={style.header}>
           <Text heading2>{tr("requests received")}</Text>
@@ -89,7 +89,7 @@ const RequestScreen = () => {
         transaction={selectedTransaction}
         refetch={refetch}
       />
-    </>
+    </ScrollView>
   );
 };
 

@@ -1,7 +1,8 @@
+import React from "react";
 import { Text } from "@rneui/themed";
 import { ProjectQueryType } from "@src/gql/generated";
+import { useFormatPrice } from "@src/hooks/localization";
 import { router } from "expo-router";
-import React from "react";
 import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 type PropsType = {
@@ -14,6 +15,8 @@ type ItemPropsType = {
 };
 
 const Item = ({ project }: ItemPropsType) => {
+  const { formatPrice } = useFormatPrice();
+
   return (
     <View style={style.card}>
       <ImageBackground
@@ -24,25 +27,26 @@ const Item = ({ project }: ItemPropsType) => {
         }}
       />
       <View style={style.cardTextContainer}>
-        <Text numberOfLines={1} style={style.projectTitle} variant="body1">
+        <Text numberOfLines={1} style={style.projectTitle} body1>
           {project.name}
         </Text>
-        <Text numberOfLines={1} style={style.projectAddress} variant="body2">
+        <Text numberOfLines={1} style={style.projectAddress} body2>
           {project.accommodation.address}
         </Text>
-        <Text style={style.price}>${project.price.toString()}</Text>
+        <Text style={style.price}>{formatPrice(project.price)}</Text>
       </View>
     </View>
   );
 };
 
 const SimilarProjects = ({ projects, currentProjectId }: PropsType) => {
-  const handlePress = (project: ProjectQueryType) => router.push(`/host/${project.id}`);
+  const handlePress = (project: ProjectQueryType) =>
+    router.push({ pathname: `/host/${project.id}`, params: { name: project.name } });
 
   return (
     <ScrollView horizontal style={style.container}>
       {projects
-        ?.filter((p) => p.id !== currentProjectId)
+        ?.filter(p => p.id !== currentProjectId)
         .map((p, index) => (
           <Pressable
             key={index}

@@ -2,21 +2,33 @@ import React from "react";
 import { router } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import { Divider, Text, useTheme } from "@rneui/themed";
-import { TransactionStatusEnum } from "@src/gql/generated";
+import {
+  StatusQueryType,
+  TransactionStatusEnum,
+  ProjectTransactionQueryType,
+} from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 import CancelTransaction from "@modules/host/transaction/cancel ";
 
-const StepBaseButtons = ({ status, transactionId, name }) => {
+const StepBaseButtons = ({
+  status,
+  transaction,
+}: {
+  status: StatusQueryType;
+  transaction: ProjectTransactionQueryType;
+}) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
-  const editReservationHandler = () => {
+  const { project } = transaction;
+
+  const editReservationHandler = async () => {
     router.push({
-      pathname: `/host/transaction/add/confirm-data`,
+      pathname: `/host/transaction/edit`,
       params: {
-        projectId: transactionId,
-        name: JSON.stringify(name),
+        projectId: transaction.id,
+        name: JSON.stringify(project.name),
       },
     });
   };
@@ -55,7 +67,7 @@ const StepBaseButtons = ({ status, transactionId, name }) => {
           <Divider />
           <Pressable
             style={styles.buttonContainer}
-            onPress={() => router.push(`host/transaction/successReceipt?id=${transactionId}`)}>
+            onPress={() => router.push(`host/transaction/successReceipt?id=${transaction.id}`)}>
             <View style={styles.buttonContent}>
               <Feather name="circle" size={13} color="black" />
               <Text>{tr("view invoice")}</Text>
