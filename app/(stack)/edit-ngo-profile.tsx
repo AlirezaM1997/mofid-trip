@@ -48,8 +48,6 @@ const EditNgoProfile = () => {
   const handleSave = () => {
     let tempData = {
       title: ngoDetailTemp?.title ?? "",
-      lat: 1.5,
-      lng: 1.5,
     };
     if (ngoDetailTemp?.base64Image && isBase64(ngoDetailTemp?.base64Image)) {
       tempData = {

@@ -53,6 +53,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="tourList"
+        options={{
+          title: tr("list of tours"),
+        }}
+      />
+      <Stack.Screen
         name="landing-page"
         options={{
           headerShown: false,

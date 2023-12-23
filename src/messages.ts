@@ -95,6 +95,16 @@ export const messages = {
     fa_ir: "ظرفیت",
     en_us: "Capacity",
   },
+  "search for tours": {
+    ar: "البحث عن الجولات",
+    fa_ir: "جستجوی تورها",
+    en_us: "Search for tours",
+  },
+  "list of tours": {
+    ar: "قائمة الجولات",
+    fa_ir: "لیست تورها",
+    en_us: "List of tours",
+  },
   accepted: {
     ar: "قبلت",
     fa_ir: "تایید شده",
