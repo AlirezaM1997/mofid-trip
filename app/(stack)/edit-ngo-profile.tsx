@@ -26,6 +26,8 @@ const EditNgoProfile = () => {
   const [ngoDetailTemp, setNgoDetailTemp] = useState({
     title: "",
     base64Image: "",
+    address: "",
+    phoneNumber: "",
   });
 
   const handleUploadImage = async () => {
@@ -48,8 +50,8 @@ const EditNgoProfile = () => {
   const handleSave = () => {
     let tempData = {
       title: ngoDetailTemp?.title ?? "",
-      lat: 1.5,
-      lng: 1.5,
+      address: ngoDetailTemp.address,
+      phoneNumber: ngoDetailTemp.phoneNumber,
     };
     if (ngoDetailTemp?.base64Image && isBase64(ngoDetailTemp?.base64Image)) {
       tempData = {
@@ -73,6 +75,8 @@ const EditNgoProfile = () => {
     setNgoDetailTemp({
       title: dataNgoDetail?.NGODetail?.title ?? "",
       base64Image: dataNgoDetail?.NGODetail?.user?.avatarS3?.small ?? "",
+      address: dataNgoDetail?.NGODetail?.address,
+      phoneNumber: dataNgoDetail?.NGODetail?.user?.phoneNumber,
     });
   }, [loadingNgoDetail]);
 
@@ -121,7 +125,7 @@ const EditNgoProfile = () => {
             />
             <Input
               label={tr("phone number")}
-              value={localizeNumber(dataNgoDetail.NGODetail.user.phoneNumber)}
+              value={localizeNumber(dataNgoDetail?.NGODetail?.user?.phoneNumber)}
               disabled
               leftIcon={
                 <Ionicons name="shield-checkmark-outline" size={24} color={theme.colors.success} />
