@@ -993,6 +993,14 @@ export type ProjectTransactionAddInputType = {
 
 /** Input type for editing a project transaction. */
 export type ProjectTransactionEditInputType = {
+  /** End date of the transaction. */
+  dateEnd?: InputMaybe<Scalars['String']['input']>;
+  /** Start date of the transaction. */
+  dateStart?: InputMaybe<Scalars['String']['input']>;
+  /** Description of the transaction. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** List of guest information. */
+  guests?: InputMaybe<ProjectTransactionGuestInputType>;
   /** Reference ID of the transaction purchase. */
   purchaseRefId?: InputMaybe<Scalars['Int']['input']>;
   /** Updated status information. */
@@ -1465,7 +1473,7 @@ export type TourAddInputType = {
   /** Details of the destination for the tour. */
   destination: AccommodationAddInputType;
   /** Discount applied to the tour. */
-  discount: Scalars['Int']['input'];
+  discount?: InputMaybe<Scalars['Int']['input']>;
   /** End date and time of the tour. */
   endTime: Scalars['String']['input'];
   /** List of associated facility names for the tour. */
@@ -1762,6 +1770,8 @@ export type TourTransactionAddInputType = {
 
 /** Input type for editing a tour transaction. */
 export type TourTransactionEditInputType = {
+  /** List of guests in the transaction. */
+  guests?: InputMaybe<Array<InputMaybe<TourGuestInputType>>>;
   /** Reference ID of the transaction purchase. */
   purchaseRefId?: InputMaybe<Scalars['ID']['input']>;
   /** New status information for the transaction. */
@@ -1852,6 +1862,8 @@ export type UserEditInputType = {
   base64Image?: InputMaybe<Scalars['String']['input']>;
   /** User's biography. */
   bio?: InputMaybe<Scalars['String']['input']>;
+  /** Display name of the user. */
+  displayName?: InputMaybe<Scalars['String']['input']>;
   /** First name of the user. */
   firstname?: InputMaybe<Scalars['String']['input']>;
   /** Last name of the user. */
@@ -1900,6 +1912,7 @@ export type UserQueryType = {
   avatarS3?: Maybe<UserImageType>;
   bio?: Maybe<Scalars['String']['output']>;
   commentSet: Array<CommentType>;
+  displayName?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   firstname?: Maybe<Scalars['String']['output']>;
   /** User fullname. */
