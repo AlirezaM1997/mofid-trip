@@ -1,5 +1,5 @@
 import { Feather } from "@expo/vector-icons";
-import { Button, Divider, Input, Text, useTheme } from "@rneui/themed";
+import { Button, Divider, Input, useTheme } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { useNgoDetailQuery, useNgoEditMutation } from "@src/gql/generated";
@@ -96,7 +96,7 @@ const EditNgoProfile = () => {
       <WhiteSpace size={20} />
       <ScrollView contentContainerStyle={style.container}>
         <Pressable style={style.imagePicker(theme)} onPress={handleUploadImage}>
-          {avatarS3?.small ? (
+          {ngoDetailTemp.base64Image ? (
             <Image style={style.imageStyle} source={{ uri: ngoDetailTemp.base64Image }} />
           ) : (
             <Feather name="camera" size={45} color={theme.colors.grey2} />
