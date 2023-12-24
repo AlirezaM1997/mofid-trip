@@ -84,7 +84,7 @@ const SearchScreen: React.FC = () => {
                 key={index}
                 id={project.id}
                 name={project.name}
-                price={project.price}
+                price={(project.price * (100 - project.discount)) / 100}
                 address={project.accommodation.address}
                 avatarS3={project.accommodation.avatarS3}
               />

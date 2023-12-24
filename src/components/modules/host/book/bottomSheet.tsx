@@ -51,7 +51,7 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
           <Text>{tr("Price")}</Text>
           <View style={style.priceContainer}>
             <Text body1 style={style.priceNumber}>
-              {localizeNumber(formatPrice(project.price))}
+              {localizeNumber(formatPrice((project.price * (100 - project.discount)) / 100))}
             </Text>
             <Text style={style.priceText}> / {tr("Night")}</Text>
           </View>
