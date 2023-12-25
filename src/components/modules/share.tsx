@@ -71,7 +71,6 @@ const Share = ({ closeMoreDetails }) => {
 
   return (
     <>
-<<<<<<< HEAD
       <ListItem
         onPress={handleOpen}
         containerStyle={{ direction: "rtl", paddingVertical: 10, borderTopRightRadius: 8 }}>
@@ -80,9 +79,6 @@ const Share = ({ closeMoreDetails }) => {
           {tr("share")}
         </Text>
       </ListItem>
-=======
-      <Feather style={style.iconStyle} name="share-2" size={20} onPress={handleOpen} />
->>>>>>> master
 
       <BottomSheet onBackdropPress={handleClose} isVisible={isVisible}>
         <Container>

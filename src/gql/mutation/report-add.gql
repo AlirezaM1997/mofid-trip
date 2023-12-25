@@ -1,0 +1,8 @@
+mutation reportAdd($data: ReportInputType!) {
+  reportAdd(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}

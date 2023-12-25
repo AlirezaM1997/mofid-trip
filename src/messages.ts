@@ -690,6 +690,11 @@ export const messages = {
     fa_ir: "ویرایش",
     en_us: "Edit",
   },
+  "if you chose other, please also write a note and explanation": {
+    ar: "إذا اخترت غير ذلك، يرجى أيضًا كتابة ملاحظة وشرح",
+    fa_ir: "اگر سایر را انتخاب کردید، لطفا نکته و توضیحی نیز بنویسید",
+    en_us: "If you chose other, please also write a note and explanation",
+  },
   night: {
     ar: "ليلة",
     fa_ir: "شب",

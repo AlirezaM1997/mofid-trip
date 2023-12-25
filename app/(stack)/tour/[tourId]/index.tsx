@@ -23,6 +23,8 @@ import {
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
 import ShareReportDropDown from "@modules/share&reportDropDown";
+import { useSelector } from "react-redux";
+import { RootState } from "@src/store";
 
 export default () => {
   const isRtl = useIsRtl();
@@ -64,11 +66,7 @@ export default () => {
   const endTime = moment(tour?.endTime).locale("fa").format("MMMM D");
 
   useEffect(() => {
-<<<<<<< HEAD
     navigation.setOptions({ title: name, headerRight: () => <ShareReportDropDown /> });
-=======
-    navigation.setOptions({ title: name, headerRight: () => <Share /> });
->>>>>>> master
   }, [name]);
 
   useEffect(() => {

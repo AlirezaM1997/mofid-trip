@@ -7,11 +7,12 @@ import { HEIGHT, WIDTH } from "@src/constants";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import { useURL } from "expo-linking";
-import { useReportCategoryListQuery } from "@src/gql/generated";
+import { useReportAddMutation, useReportCategoryListQuery } from "@src/gql/generated";
 import LoadingIndicator from "./Loading-indicator";
 import { useLocalSearchParams } from "expo-router";
 import * as Yup from "yup";
 import { FieldArray, Formik } from "formik";
+import Toast from "react-native-toast-message";
 
 const Report = ({ closeMoreDetails }) => {
   const { name } = useLocalSearchParams();
@@ -20,8 +21,12 @@ const Report = ({ closeMoreDetails }) => {
   const tour = url?.split("/")[3] === "tour";
   const [isVisible, setIsVisible] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
+  // const [tempData , setTempData] = useState();
 
-  const { loading, data } = useReportCategoryListQuery();
+  const [reportAdd, { loading, data, error }] = useReportAddMutation();
+
+  const { loading: loadingReportCapacityList, data: dataReportCapacityList } =
+    useReportCategoryListQuery();
 
   const handleOpen = () => {
     setIsVisible(true);
@@ -29,23 +34,56 @@ const Report = ({ closeMoreDetails }) => {
   };
   const handleClose = () => setIsVisible(false);
 
+  // const handleSubmit = () => {
+  //   reportAdd({
+  //     variables: {
+  //       data: tempData,
+  //     },
+  //   });
+  // };
+
   const initialValues = {
-    CheckBox:[],
-    texBox: "",
+    checkBoxList: new Array(categoryList.length).fill(false),
+    textBox: "",
   };
 
   const validationSchema = Yup.object().shape({
-    CheckBox:Yup.array(),
-    texBox: Yup.string(),
+    checkBoxList: Yup.array().test(
+      "at-least-one-true",
+      "At least one boolean must be true",
+      array => array.some(value => value)
+    ),
+    textBox: Yup.string().when("checkBoxList", {
+      is: checkBoxList => checkBoxList[checkBoxList.length - 1] === true,
+      then: () => Yup.string().required("Field is required"),
+      otherwise: () => Yup.string(),
+    }),
   });
 
-  useEffect(() => {
-    if (!loading && data) {
-      setCategoryList(data.reportCategoryList.data);
-    }
-  }, [loading, data]);
+  // useEffect(() => {
+  //   if (!loading && data) {
+  //     Toast.show({
+  //       type: "success",
+  //       text1: tr("Successful"),
+  //       text2: tr("Profile saved successfully"),
+  //     });
+  //   }
+  //   if (error) {
+  //     Toast.show({
+  //       type: "error",
+  //       text1: tr("Error"),
+  //       text2: JSON.stringify(error.message),
+  //     });
+  //   }
+  // }, [loading, data, error]);
 
-  if (loading) return <LoadingIndicator />;
+  useEffect(() => {
+    if (!loadingReportCapacityList && dataReportCapacityList) {
+      setCategoryList(dataReportCapacityList.reportCategoryList.data);
+    }
+  }, [loadingReportCapacityList, dataReportCapacityList]);
+
+  if (loadingReportCapacityList) return <LoadingIndicator />;
 
   return (
     <>
@@ -90,9 +128,9 @@ const Report = ({ closeMoreDetails }) => {
         <Divider />
         <Formik
           initialValues={initialValues}
-          // validationSchema={validationSchema}
+          validationSchema={validationSchema}
           onSubmit={values => console.log(values)}>
-          {({ handleChange, setFieldValue, handleSubmit, values }) => (
+          {({ handleSubmit, handleChange, handleBlur, values }) => (
             <>
               <ScrollView style={{ maxHeight: HEIGHT }}>
                 <Container style={{ minHeight: HEIGHT, position: "relative" }}>
@@ -108,62 +146,44 @@ const Report = ({ closeMoreDetails }) => {
                           "if you see a problem in the host, you can report this violation to the admin so that it can be addressed."
                         )}
                   </Text>
-                  <FieldArray name="checkBox">
-                    {(arrayHelpers) =>
-                      categoryList.map((category, index) => {
-                        const arrFilter = values.CheckBox.filter(
-                          p => p.date === category.date
-                        );
-                        return(<ListItem><CheckBox checked={arrFilter.length === category.arr?.length} title={category[index]}/></ListItem>)
-                      })
-                    }
+                  <FieldArray name="checkBoxList">
+                    {({ form, replace }) => {
+                      const { values } = form;
+                      const { checkBoxList } = values;
+                      return checkBoxList?.map((checked, index) => (
+                        <ListItem
+                          bottomDivider
+                          containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}
+                          key={index}>
+                          <CheckBox
+                            checked={checked}
+                            title={categoryList[index].name}
+                            name={`checkBoxList[${index}]`}
+                            onPress={() => replace(index, !checked)}
+                          />
+                        </ListItem>
+                      ));
+                    }}
                   </FieldArray>
-                  {/* <View style={{ gap: 8 }}>
-                    <CheckBox
-                      title={categoryList[0]}
-                      checked={values.s}
-                      onPress={() => setFieldValue("s", !values.s)}
-                    />
-                    <Divider />
-                    <CheckBox
-                      title={categoryList[0]}
-                      checked={values.ss}
-                      onPress={() => setFieldValue("ss", !values.ss)}
-                    />
-                    <Divider />
-                    <CheckBox
-                      title={categoryList[0]}
-                      checked={values.sss}
-                      onPress={() => setFieldValue("sss", !values.sss)}
-                    />
-                    <Divider />
-                    <CheckBox
-                      title={categoryList[0]}
-                      checked={values.ssss}
-                      onPress={() => setFieldValue("ssss", !values.ssss)}
-                    />
-                    <Divider />
-                    <CheckBox
-                      title={categoryList[0]}
-                      checked={values.sssss}
-                      onPress={() => setFieldValue("sssss", !values.sssss)}
-                    />
-                    <Divider />
-                    <CheckBox
-                      title={categoryList[0]}
-                      checked={values.ssssss}
-                      onPress={() => setFieldValue("ssssss", !values.ssssss)}
-                    />
-                  </View> */}
-                  {values.ssssss && (
-                    <View style={{ gap: 8, paddingTop: 16 }}>
-                      <Text caption>ye chizi benevis</Text>
-                      <Input
-                        placeholder="tozihat"
-                        multiline={true}
-                        onChangeText={handleChange("textBox")}
-                      />
-                    </View>
+
+                  {values.checkBoxList[5] && (
+                    <>
+                      <View style={{ gap: 16 }}>
+                        <WhiteSpace />
+                        <Text caption>
+                          {tr("if you chose other, please also write a note and explanation")}
+                        </Text>
+                        <Input
+                          name="textBox"
+                          value={values.textBox}
+                          onBlur={handleBlur("textBox")}
+                          onChangeText={handleChange("textBox")}
+                          placeholder={tr("description")}
+                          multiline={true}
+                          numberOfLines={4}
+                        />
+                      </View>
+                    </>
                   )}
                 </Container>
               </ScrollView>
