@@ -55,7 +55,8 @@ const TransactionDetailsScreen = () => {
     });
 
     if (data.projectPurchaseAdd.status === "OK") {
-      router.push(data.projectPurchaseAdd.metadata?.url);
+      console.log('==', data.projectPurchaseAdd.metadata?.url)
+      // router.push(data.projectPurchaseAdd.metadata?.url);
     }
   };
 
