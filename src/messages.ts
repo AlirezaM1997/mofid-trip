@@ -2612,4 +2612,14 @@ export const messages = {
     fa_ir: "ماندن",
     en_us: "Stay",
   },
+  "access denied": {
+    ar: "تم الرفض",
+    fa_ir: "دسترسی ندارید!",
+    en_us: "Access Denied",
+  },
+  "it appears that you do not have permission to access this page. access the system administrator for access.": {
+    ar: "يبدو أنه ليس لديك إذن للوصول إلى هذه الصفحة. الوصول إلى مسؤول النظام للوصول.",
+    fa_ir: "به نظر می رسد که شما اجازه دسترسی به این صفحه را ندارید.",
+    en_us: "It appears that you do not have permission to access this page. Access the system administrator for access.",
+  },
 };
