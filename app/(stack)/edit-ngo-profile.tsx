@@ -1,5 +1,5 @@
 import { Feather } from "@expo/vector-icons";
-import { Button, Divider, Input, Text, useTheme } from "@rneui/themed";
+import { Button, Divider, Input, useTheme } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { useNgoDetailQuery, useNgoEditMutation } from "@src/gql/generated";
@@ -8,7 +8,6 @@ import { Image, ScrollView, StyleSheet } from "react-native";
 import { Pressable, View } from "react-native";
 import Toast from "react-native-toast-message";
 import * as ImagePicker from "expo-image-picker";
-import { isBase64 } from "@src/helper/extra";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,7 +19,7 @@ const EditNgoProfile = () => {
   const { theme } = useTheme();
   const { localizeNumber } = useLocalizedNumberFormat();
   const isFocused = useIsFocused();
-  const [editNgoProfile, { loading, data, error }] = useNgoEditMutation();
+  const [editNgoProfile, { loading, error }] = useNgoEditMutation();
   const { loading: loadingNgoDetail, data: dataNgoDetail, refetch } = useNgoDetailQuery();
 
   const [ngoDetailTemp, setNgoDetailTemp] = useState({
@@ -45,22 +44,34 @@ const EditNgoProfile = () => {
     }
   };
 
-  const handleSave = () => {
-    let tempData = {
-      title: ngoDetailTemp?.title ?? "",
-    };
-    if (ngoDetailTemp?.base64Image && isBase64(ngoDetailTemp?.base64Image)) {
-      tempData = {
-        ...tempData,
-        base64Image: ngoDetailTemp?.base64Image ?? "",
-      };
-    }
-    editNgoProfile({
+  const handleSave = async () => {
+    const { errors } = await editNgoProfile({
       variables: {
-        data: tempData,
+        data: {
+          title: ngoDetailTemp.title,
+          base64Image: ngoDetailTemp?.base64Image,
+          address: dataNgoDetail.NGODetail.address,
+          phoneNumber: dataNgoDetail.NGODetail.user.phoneNumber,
+        },
       },
     });
+    if (errors?.length) {
+      Toast.show({
+        type: "error",
+        text1: tr("Error"),
+        text2: JSON.stringify(error.message),
+      });
+    } else {
+      Toast.show({
+        type: "success",
+        text1: tr("Successful"),
+        text2: tr("Profile saved successfully"),
+      });
+      router.back();
+    }
   };
+
+  // TODO: بعد از حل مشکل projectStatusEnum این useEffect حذف شود
   useEffect(() => {
     if (isFocused) {
       refetch();
@@ -68,38 +79,25 @@ const EditNgoProfile = () => {
   }, [isFocused]);
 
   useEffect(() => {
-    setNgoDetailTemp({
-      title: dataNgoDetail?.NGODetail?.title ?? "",
-      base64Image: dataNgoDetail?.NGODetail?.user?.avatarS3?.small ?? "",
-    });
-  }, [loadingNgoDetail]);
+    if (!loadingNgoDetail && dataNgoDetail) {
+      setNgoDetailTemp({
+        title: dataNgoDetail?.NGODetail?.title ?? "",
+        base64Image: dataNgoDetail?.NGODetail?.avatarS3?.small ?? "",
+      });
+    }
+  }, [loadingNgoDetail, dataNgoDetail]);
 
-  useEffect(() => {
-    if (!loading && data) {
-      Toast.show({
-        type: "success",
-        text1: tr("Successful"),
-        text2: tr("Profile saved successfully"),
-      });
-      router.push("dashboard/profile");
-    }
-    if (error) {
-      Toast.show({
-        type: "error",
-        text1: tr("Error"),
-        text2: JSON.stringify(error.message),
-      });
-    }
-  }, [loading, data, error]);
   if (loadingNgoDetail || !dataNgoDetail) return <LoadingIndicator />;
+
+  const { title, user, avatarS3 } = dataNgoDetail?.NGODetail;
 
   return (
     <>
       <WhiteSpace size={20} />
       <ScrollView contentContainerStyle={style.container}>
         <Pressable style={style.imagePicker(theme)} onPress={handleUploadImage}>
-          {ngoDetailTemp?.base64Image ? (
-            <Image style={style.imageStyle} source={{ uri: ngoDetailTemp?.base64Image }} />
+          {ngoDetailTemp.base64Image ? (
+            <Image style={style.imageStyle} source={{ uri: ngoDetailTemp.base64Image }} />
           ) : (
             <Feather name="camera" size={45} color={theme.colors.grey2} />
           )}
@@ -119,7 +117,7 @@ const EditNgoProfile = () => {
             />
             <Input
               label={tr("phone number")}
-              value={localizeNumber(dataNgoDetail.NGODetail.user.phoneNumber)}
+              value={localizeNumber(user?.phoneNumber)}
               disabled
               leftIcon={
                 <Ionicons name="shield-checkmark-outline" size={24} color={theme.colors.success} />

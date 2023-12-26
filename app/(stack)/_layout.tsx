@@ -65,6 +65,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="loginDetails"
+        options={{
+          title: tr("personal information"),
+        }}
+      />
+      <Stack.Screen
         name="invoice/[transactionId]"
         options={{
           title: tr("Factor"),

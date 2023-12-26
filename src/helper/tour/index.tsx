@@ -11,8 +11,8 @@ export const getGender = (capacity: TourCapacityType | CapacityQueryType) => {
   if (capacity?.male > 0) {
     res.push("Male");
   }
-  if (capacity?.child > 0) {
-    res.push("Children");
+  if (capacity?.both > 0) {
+    res.push("Both");
   }
   if (capacity?.female > 0) {
     res.push("Female");
@@ -21,7 +21,7 @@ export const getGender = (capacity: TourCapacityType | CapacityQueryType) => {
 };
 
 export const getCapacity = (capacity: TourCapacityType | CapacityQueryType) =>
-  capacity?.male ?? 0 + capacity?.female ?? 0 + capacity?.child ?? 0;
+  capacity?.male || 0 + capacity?.female || 0 + capacity?.both || 0;
 
 export const getTourRequestStatusBadgeColor: (
   tour: MyNgoDetailQuery["NGODetail"]["tourSet"][0]

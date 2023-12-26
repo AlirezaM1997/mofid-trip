@@ -1561,10 +1561,16 @@ export const messages = {
     fa_ir: "تاریخ تولد",
     en_us: "Birth Date",
   },
-  "phone number": {
-    ar: "رقم التليفون",
-    fa_ir: "شماره تلفن",
-    en_us: "Phone Number",
+  "submit and enter": {
+    ar: "التسجيل وتسجيل الدخول",
+    fa_ir: "ثبت و ورود",
+    en_us: "submit and enter",
+  },
+  "by clicking the registration and login button, you agree to mofidtrip rules and regulations.": {
+    ar: "بالنقر فوق زر التسجيل وتسجيل الدخول، فإنك توافق على قواعد ولوائح مفید تریپ.",
+    fa_ir: "شما با زدن دکمه ثبت و ورود ، موافقت خود را با قوانین و مقررات  مفیدتریپ اعلام می کنید.",
+    en_us:
+      "by clicking the registration and login button, you agree to Mofidtrip rules and regulations.",
   },
   "identify number": {
     ar: "تحديد الرقم",
@@ -1991,6 +1997,16 @@ export const messages = {
     fa_ir: "تومان",
     en_us: "Tooman",
   },
+  "personal information": {
+    ar: "الملف الشخصي الفردي",
+    fa_ir: "مشخصات فردی",
+    en_us: "personal information",
+  },
+  "choose a display name for yourself to create an account on mofidtrip": {
+    ar: "اختر اسم العرض لنفسك لإنشاء حساب على مفید تریپ",
+    fa_ir: "برای ایجاد حساب در مفیدتریپ ، نام نمایشی برای خودتان انتخاب کنید",
+    en_us: "choose a display name for yourself to create an account on mofidtrip",
+  },
   "tour details": {
     ar: "تفاصيل الجولة",
     fa_ir: "جزئیات تور",
@@ -2015,6 +2031,11 @@ export const messages = {
     ar: "الإسم الأول مطلوب",
     fa_ir: "لطفا نام را وارد کنید",
     en_us: "First name is required",
+  },
+  "display name is required": {
+    ar: "الإسم الأول مطلوب",
+    fa_ir: "لطفا نام نمایشی را وارد کنید",
+    en_us: "display name is required",
   },
   "last name is required": {
     ar: "إسم العائلة مطلوب",
@@ -2045,6 +2066,11 @@ export const messages = {
     ar: "مقاطعة",
     fa_ir: "استان",
     en_us: "Province",
+  },
+  "display name": {
+    ar: "اسم نمايشی",
+    fa_ir: "نام نمایشی",
+    en_us: "display name",
   },
   city: {
     ar: "مدينة",
@@ -2413,6 +2439,11 @@ export const messages = {
     fa_ir: "تاریخ میزبان",
     en_us: "Host Date",
   },
+  "write a screen name for yourself": {
+    ar: "اكتب اسم الشاشة لنفسك",
+    fa_ir: "نام نمایشی برای خودتان بنویسید",
+    en_us: "write a screen name for yourself",
+  },
   "host price": {
     ar: "سعر المضيف",
     fa_ir: "قیمت میزبان",
@@ -2585,5 +2616,15 @@ export const messages = {
     ar: "یبقی",
     fa_ir: "ماندن",
     en_us: "Stay",
+  },
+  "access denied": {
+    ar: "تم الرفض",
+    fa_ir: "دسترسی ندارید!",
+    en_us: "Access Denied",
+  },
+  "it appears that you do not have permission to access this page. access the system administrator for access.": {
+    ar: "يبدو أنه ليس لديك إذن للوصول إلى هذه الصفحة. الوصول إلى مسؤول النظام للوصول.",
+    fa_ir: "به نظر می رسد که شما اجازه دسترسی به این صفحه را ندارید.",
+    en_us: "It appears that you do not have permission to access this page. Access the system administrator for access.",
   },
 };

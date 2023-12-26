@@ -20,7 +20,9 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { projectId, name } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisible, setIsVisible] = useState<boolean>();
-  const isNgo = useSelector((state: RootState) => state.authSlice.loginData.metadata.is_ngo);
+  const isNgo = useSelector(
+    (state: RootState) => state.authSlice?.loginData?.metadata?.is_ngo || false
+  );
   const { formatPrice } = useFormatPrice();
 
   const handlePress = () => {

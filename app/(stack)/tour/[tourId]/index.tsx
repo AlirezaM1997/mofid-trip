@@ -3,7 +3,6 @@ import moment from "jalali-moment";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import { useEffect, useState } from "react";
-import useTourTable from "@src/hooks/db/tour";
 import { getCapacity } from "@src/helper/tour";
 import ImageSlider from "@modules/image-slider";
 import { ImageBackground, StyleSheet, View } from "react-native";
@@ -20,13 +19,13 @@ import {
   TourDetailQuery,
   TourPackageType,
   useTourDetailQuery,
-  useTourListQuery,
 } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/store";
 import Share from "@modules/share";
+import { useIsAuthenticated } from "@src/hooks/auth";
 
 export default () => {
   const isRtl = useIsRtl();
@@ -38,7 +37,8 @@ export default () => {
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
-  const isNgo = useSelector((state: RootState) => state.authSlice.loginData.metadata.is_ngo);
+  const isAuthenticated = useIsAuthenticated()
+  const isNgo = useSelector((state: RootState) => state.authSlice?.loginData?.metadata?.is_ngo || false);
   const { loading, data } = useTourDetailQuery({
     variables: {
       pk: tourId as string,
@@ -63,6 +63,14 @@ export default () => {
       },
     });
   };
+
+  const handleBuy = (p) => {
+    if (isAuthenticated) {
+      handleNavigateToReserve(p)
+    } else {
+      setIsVisiblePrevent(true)
+    }
+  }
 
   const startTime = moment(tour?.startTime).locale("fa").format("MMMM D");
   const endTime = moment(tour?.endTime).locale("fa").format("MMMM D");
@@ -150,14 +158,14 @@ export default () => {
           <ListItem
             key={index}
             bottomDivider={index !== tour.packages.length - 1}
-            onPress={() => handleNavigateToReserve(p)}>
+            onPress={() => handleBuy(p)}>
             <ListItem.Content>
               <View style={styles.priceItem(isRtl)}>
                 <View>
                   <Text>{p.title}</Text>
                   <Text>{localizeNumber(formatPrice(p.price))}</Text>
                 </View>
-                <Button size="sm" type="outline" onPress={() => handleNavigateToReserve(p)}>
+                <Button size="sm" type="outline" onPress={() => handleBuy(p)}>
                   {tr("Buy")}
                 </Button>
               </View>
