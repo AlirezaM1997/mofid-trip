@@ -1,9 +1,9 @@
-import { Button, Text } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import TourCard from "@modules/tour/card";
 import { PAGE_SIZE } from "@src/settings";
 import { NetworkStatus } from "@apollo/client";
 import { Divider, useTheme } from "@rneui/themed";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import { ScrollView } from "react-native-gesture-handler";
@@ -11,7 +11,7 @@ import WhiteSpace from "@src/components/atoms/white-space";
 import NoResult from "@src/components/organisms/no-result";
 import SelectedFilters from "@src/components/modules/selected-filters";
 import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
-import { TourListQuery, useTourListLazyQuery, useTourListQuery } from "@src/gql/generated";
+import { useTourListQuery } from "@src/gql/generated";
 import TourSearchBar from "@modules/search-bar/tour-search-bar";
 
 const TourSearch: React.FC = () => {
@@ -20,7 +20,7 @@ const TourSearch: React.FC = () => {
   const [list, setList] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
-  const { data, loading, networkStatus, fetchMore, refetch } = useTourListQuery({
+  const { data, networkStatus } = useTourListQuery({
     notifyOnNetworkStatusChange: true,
     variables: {
       sort: {
@@ -55,19 +55,16 @@ const TourSearch: React.FC = () => {
             {list
               .filter(tour => tour.title.includes(searchText))
               .map((tour, index) => (
-                <>
-                  <TourCard
-                    key={index}
-                    id={tour?.id}
-                    name={tour?.title}
-                    price={tour?.packages[0]?.price}
-                    address={tour?.destination?.address}
-                    avatarS3={tour?.avatarS3}
-                  />
-                  <Text>{index}</Text>
-                </>
+                <TourCard
+                  key={index}
+                  id={tour?.id}
+                  name={tour?.title}
+                  price={tour?.packages[0]?.price}
+                  address={tour?.destination?.address}
+                  avatarS3={tour?.avatarS3}
+                />
               ))}
-            {list?.length === PAGE_SIZE * pageNumber ? (
+            {list?.length === PAGE_SIZE * pageNumber || networkStatus !== NetworkStatus.ready ? (
               <Button
                 type="outline"
                 onPress={handleFetchMore}
