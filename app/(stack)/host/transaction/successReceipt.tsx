@@ -1,9 +1,7 @@
 import React from "react";
 import moment from "jalali-moment";
 import { Text } from "@rneui/themed";
-import { RootState } from "@src/store";
 import Container from "@atoms/container";
-import { useSelector } from "react-redux";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -11,10 +9,11 @@ import { Avatar, Button, useTheme } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { useProjectTransactionDetailQuery } from "@src/gql/generated";
+import { useProjectTransactionDetailQuery, useUserDetailQuery } from "@src/gql/generated";
 import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormatPrice } from "@src/hooks/localization";
+import { totalPrice } from "@src/helper/totalPrice";
 
 const CustomView = ({ children }) => {
   const { theme } = useTheme();
@@ -29,21 +28,28 @@ const Receipt = () => {
   const { tr } = useTranslation();
   const { id } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const { userDetail } = useSelector((state: RootState) => state.userSlice);
   const { formatPrice } = useFormatPrice();
 
   const { data, loading } = useProjectTransactionDetailQuery({
     variables: { pk: id as string },
   });
 
-  const totalPrice = data?.projectTransactionDetail?.project?.price || 0;
-  const formattedTotalPrice = formatPrice(totalPrice);
+  const { data: userDetail } = useUserDetailQuery();
+
+  const formattedTotalPrice = formatPrice(
+    +totalPrice({
+      endDate: data?.projectTransactionDetail.dateEnd,
+      startDate: data?.projectTransactionDetail.dateStart,
+      price: data?.projectTransactionDetail?.project?.price,
+      capacity: data?.projectTransactionDetail.guest.guestNumber,
+    })
+  );
 
   if (!data || loading) {
     return <LoadingIndicator />;
   }
 
-  const { invoiceNumber, modifiedDate, project } = data?.projectTransactionDetail;
+  const { invoiceNumber, modifiedDate, project, purchaseRefId } = data?.projectTransactionDetail;
 
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(invoiceNumber);
@@ -83,7 +89,7 @@ const Receipt = () => {
                 rounded
                 size={56}
                 containerStyle={{ backgroundColor: "#0003" }}
-                source={userDetail?.avatarS3?.small as ImageSourcePropType}
+                source={userDetail?.userDetail?.avatarS3?.small as ImageSourcePropType}
               />
             </View>
 
@@ -92,7 +98,7 @@ const Receipt = () => {
               <View style={styles.subtitle}>
                 <Feather name="copy" size={12} color="black" />
                 <Text subtitle2 style={{ color: theme.colors.grey2 }}>
-                  {localizeNumber(invoiceNumber)}
+                  {invoiceNumber}
                 </Text>
               </View>
             </Pressable>
@@ -135,7 +141,7 @@ const Receipt = () => {
 
         <CustomView>
           <Text caption>{tr("transmitter")}</Text>
-          <Text caption>{userDetail.firstname}</Text>
+          <Text caption>{userDetail?.userDetail?.firstname}</Text>
         </CustomView>
 
         <CustomView>
@@ -150,7 +156,7 @@ const Receipt = () => {
 
         <View style={styles.issueTrackingContainer}>
           <Text caption>{tr("issue tracking")}</Text>
-          <Text caption>{localizeNumber(invoiceNumber)}</Text>
+          <Text caption>{localizeNumber(purchaseRefId)}</Text>
         </View>
       </Container>
     </BottomButtonLayout>

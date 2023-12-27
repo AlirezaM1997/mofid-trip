@@ -5,7 +5,8 @@ query tourTransactionDetail($pk: ID!) {
     description
     modifiedDate
     invoiceNumber
-    tourGuests{
+    purchaseRefId
+    tourGuests {
       id
     }
     tourguestSet {

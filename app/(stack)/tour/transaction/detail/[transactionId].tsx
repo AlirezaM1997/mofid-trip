@@ -37,8 +37,6 @@ const TourTransactionDetailScreen = () => {
           price: totalPrice({
             price: tourPackage.price,
             capacity: tourGuests.length,
-            endDate: tourPackage.tour.endTime,
-            startDate: tourPackage.tour.startTime,
           }),
           tourTransactionId: transactionId as string,
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}&type=tour`,

@@ -6,13 +6,15 @@ import * as Network from "expo-network";
 import Container from "@atoms/container";
 import { useDispatch } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
-import { Button, Input, Text } from "@rneui/themed";
+import { Button, Text } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { WALLET_ZARINPAL_CALLBACK_URL } from "@src/settings";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { setWalletTransactionIdData } from "@src/slice/wallet-transaction-slice";
 import { useDepositWalletMutation, useUserDetailQuery } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import Input from "@atoms/input";
+import parseText from "@src/helper/number-input";
 
 const Increase = () => {
   const dispatch = useDispatch();
@@ -54,7 +56,7 @@ const Increase = () => {
       initialValues={{ amount: "" }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}>
-      {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+      {({ values, errors, touched, setFieldValue, handleBlur, handleSubmit }) => (
         <BottomButtonLayout
           buttons={[
             <Button loading={submitLoading} onPress={handleSubmit}>
@@ -87,7 +89,7 @@ const Increase = () => {
               name="amount"
               value={values.amount}
               onBlur={handleBlur("amount")}
-              onChangeText={handleChange("amount")}
+              onChangeText={text => setFieldValue("amount", parseText(text))}
               placeholder={`${tr("amount")} (${tr("tooman")})`}
               errorMessage={touched.amount && (errors.amount as string)}
             />

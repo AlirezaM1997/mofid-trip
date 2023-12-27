@@ -2,16 +2,16 @@ import React from "react";
 import moment from "jalali-moment";
 import Container from "@atoms/container";
 import * as Clipboard from "expo-clipboard";
-import Toast from "react-native-toast-message";
-import { BottomSheet, Chip, Text } from "@rneui/themed";
-import { useFormatPrice } from "@src/hooks/localization";
-import { AntDesign, Feather } from "@expo/vector-icons";
-import { Avatar, Button, useTheme } from "@rneui/themed";
-import { Pressable, StyleSheet, View } from "react-native";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { BackCardQueryType, WalletActionTransactionEnum } from "@src/gql/generated";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
+import Toast from "react-native-toast-message";
+import { AntDesign, Feather } from "@expo/vector-icons";
+import { BottomSheet, Chip, Text } from "@rneui/themed";
+import { useFormatPrice } from "@src/hooks/localization";
+import { Avatar, Button, useTheme } from "@rneui/themed";
+import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { BackCardQueryType, WalletActionTransactionEnum } from "@src/gql/generated";
 
 type LookUpType = Record<
   Exclude<WalletActionTransactionEnum, "IN_APP_PURCHASE">,
@@ -34,8 +34,8 @@ const CustomView = ({ children }) => {
 const FailedReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { localizeNumber } = useLocalizedNumberFormat();
   const { formatPrice } = useFormatPrice();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const totalPrice = transaction?.amount || 0;
   const formattedTotalPrice = formatPrice(totalPrice);
@@ -157,13 +157,13 @@ const styles = StyleSheet.create({
     margin: "auto",
   },
   chip: { padding: 8, gap: 8 },
-  chipTitle: theme => ({ color: theme.colors.white }),
-  bottomContent: theme => ({
+  chipTitle: (theme => ({ color: theme.colors.white })) as ViewStyle,
+  bottomContent: (theme => ({
     borderTopWidth: 1,
     marginBottom: 16,
     borderStyle: "dashed",
     borderColor: theme.colors.grey0,
-  }),
+  })) as ViewStyle,
   issueTrackingContainer: {
     display: "flex",
     paddingVertical: 12,
@@ -180,10 +180,10 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
     justifyContent: "space-between",
   },
-  avatar: theme => ({
+  avatar: (theme => ({
     margin: "auto",
     backgroundColor: theme.colors.grey0,
-  }),
+  })) as ViewStyle,
   swapIconContainer: {
     zIndex: 2,
     top: "50%",

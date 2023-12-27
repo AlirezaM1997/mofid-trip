@@ -19,7 +19,7 @@ const TransactionDetailCard = ({ tourPackage }) => {
         <Image
           style={styles.tourAvatar}
           source={{
-            uri: (tourPackage.tour.destination as AccommodationQueryType)?.avatarS3[0]?.small,
+            uri: tourPackage.tour?.avatarS3[0]?.small,
           }}
         />
 
