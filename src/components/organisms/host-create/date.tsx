@@ -41,7 +41,7 @@ const TabDate = () => {
   const [checked, setChecked] = useState<boolean>(false);
   const { localizeNumber } = useLocalizedNumberFormat();
   const [markedDays, setMarkedDays] = useState([]);
-  const { errors, touched, setFieldTouched, setFieldValue } =
+  const { errors, touched, setFieldTouched, setFieldValue, resetForm } =
     useFormikContext<ProjectAddInputType>();
 
   const handleCheck = () => setChecked(!checked);

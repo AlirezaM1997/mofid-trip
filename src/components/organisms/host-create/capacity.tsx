@@ -48,7 +48,7 @@ const TabCapacity = () => {
             containerStyle={styles.checkbox}
             checked={values.capacity.gender === ProjectGenderEnum.Both}
             title={tr("both")}
-            onPress={() => setFieldValue("gender", ProjectGenderEnum.Both)}
+            onPress={() => setFieldValue("capacity.gender", ProjectGenderEnum.Both)}
             iconType="material-community"
             checkedIcon="radiobox-marked"
             uncheckedIcon="radiobox-blank"
@@ -59,7 +59,7 @@ const TabCapacity = () => {
             containerStyle={styles.checkbox}
             checked={values.capacity.gender === ProjectGenderEnum.Male}
             title={tr("male")}
-            onPress={() => setFieldValue("gender", ProjectGenderEnum.Male)}
+            onPress={() => setFieldValue("capacity.gender", ProjectGenderEnum.Male)}
             iconType="material-community"
             checkedIcon="radiobox-marked"
             uncheckedIcon="radiobox-blank"
@@ -70,7 +70,7 @@ const TabCapacity = () => {
             containerStyle={styles.checkbox}
             checked={values.capacity.gender === ProjectGenderEnum.Female}
             title={tr("female")}
-            onPress={() => setFieldValue("gender", ProjectGenderEnum.Female)}
+            onPress={() => setFieldValue("capacity.gender", ProjectGenderEnum.Female)}
             iconType="material-community"
             checkedIcon="radiobox-marked"
             uncheckedIcon="radiobox-blank"

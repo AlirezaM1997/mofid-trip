@@ -16,6 +16,7 @@ query projectDetail($pk: ID!) {
       id
       male
       child
+      both
       female
     }
     facilities {

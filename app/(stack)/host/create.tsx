@@ -33,6 +33,8 @@ import TabPrice from "@organisms/host-create/price";
 import TabImage from "@organisms/host-create/images";
 import { CommonActions } from "@react-navigation/routers";
 import TabFaclities from "@organisms/host-create/facilities";
+import { useIsAuthenticated } from "@src/hooks/auth";
+import AccessDenied from "@modules/access-denied";
 
 const initialValues = {
   name: "",
@@ -67,7 +69,10 @@ const Screen = () => {
   const navigation = useNavigation();
   const { activeStep } = useSelector((state: RootState) => state.hostCreateSlice);
   const [submit, { loading }] = useProjectAddMutation();
-  const [isVisible, setIsVisible] = useState(false);
+  const isAuthenticated = useIsAuthenticated();
+  const isNgo = useSelector(
+    (state: RootState) => state.authSlice?.loginData?.metadata?.is_ngo || false
+  );
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required(tr("Title is required")),
@@ -204,6 +209,10 @@ const Screen = () => {
       headerTitle: headerTitle,
     });
   }, [activeStep]);
+
+  if (!isAuthenticated || !isNgo) {
+    return <AccessDenied />;
+  }
 
   return (
     <Formik
