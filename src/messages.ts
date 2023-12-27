@@ -95,6 +95,11 @@ export const messages = {
     fa_ir: "ظرفیت",
     en_us: "Capacity",
   },
+  "search for tours": {
+    ar: "البحث عن الجولات",
+    fa_ir: "جستجوی تورها",
+    en_us: "Search for tours",
+  },
   accepted: {
     ar: "قبلت",
     fa_ir: "تایید شده",
@@ -2611,5 +2616,15 @@ export const messages = {
     ar: "یبقی",
     fa_ir: "ماندن",
     en_us: "Stay",
+  },
+  "access denied": {
+    ar: "تم الرفض",
+    fa_ir: "دسترسی ندارید!",
+    en_us: "Access Denied",
+  },
+  "it appears that you do not have permission to access this page. access the system administrator for access.": {
+    ar: "يبدو أنه ليس لديك إذن للوصول إلى هذه الصفحة. الوصول إلى مسؤول النظام للوصول.",
+    fa_ir: "به نظر می رسد که شما اجازه دسترسی به این صفحه را ندارید.",
+    en_us: "It appears that you do not have permission to access this page. Access the system administrator for access.",
   },
 };

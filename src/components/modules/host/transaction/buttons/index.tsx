@@ -23,6 +23,9 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
   const pressHandler = (pathname: string) => {
     router.push(pathname);
   };
+  const handlePressNavigateToHostDetail = (pathname: string, params: object) => {
+    router.push({ pathname: pathname, params: params });
+  };
 
   const buttonType = () => {
     const lookup = {
@@ -51,7 +54,11 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
             color: "secondary",
             detailsBtn: false,
             title: tr("host details"),
-            changeHandler: () => pressHandler(`/host/${transaction.project.id}`),
+            changeHandler: () =>
+              handlePressNavigateToHostDetail(`/host/${transaction.project.id}`, {
+                id: transaction.project.id,
+                name: transaction.project.name,
+              }),
           }
         : {
             title: tr("pay"),
