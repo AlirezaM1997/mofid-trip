@@ -4,7 +4,7 @@ import Container from "@atoms/container";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import { BottomSheet, Chip, Text } from "@rneui/themed";
-import { formatPrice } from "@src/hooks/localization";
+import { useFormatPrice } from "@src/hooks/localization";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Avatar, Button, useTheme } from "@rneui/themed";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -35,6 +35,7 @@ const FailedReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const { formatPrice } = useFormatPrice();
 
   const totalPrice = transaction?.amount || 0;
   const formattedTotalPrice = formatPrice(totalPrice);
@@ -114,9 +115,7 @@ const FailedReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => {
         <CustomView>
           <Text caption>{tr("time")}</Text>
           <Text caption>
-            {localizeNumber(
-              moment(modifiedTime).locale("fa").format("dddd jD jMMMM . HH:mm a")
-            )}
+            {localizeNumber(moment(modifiedTime).locale("fa").format("dddd jD jMMMM . HH:mm a"))}
           </Text>
         </CustomView>
 
