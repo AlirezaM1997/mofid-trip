@@ -63,14 +63,14 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
           </Text>
         </View>
       </View>
-      
+
       <Divider />
-      
+
       <View>
         <View style={style.bottom}>
           <View style={style.bottomStyle}>
             <Text subtitle1 bold>
-              {localizeNumber(formatPrice(price))}
+              {price > 0 ? localizeNumber(formatPrice(price)) : tr("free")}
             </Text>
             <Text>/ {tr("night")}</Text>
           </View>

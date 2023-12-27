@@ -8,6 +8,7 @@ query projectList($search: String, $sort: SortType, $filter: ProjectFilterType, 
       price
       dateStart
       dateEnd
+      discount
       capacity {
         id
         male
