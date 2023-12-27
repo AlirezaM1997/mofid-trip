@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 import { useLocalSearchParams } from "expo-router";
 import FailedPayment from "@organisms/payment/failed";
 import SuccessPayment from "@organisms/payment/success";
+import LoadingIndicator from "@modules/Loading-indicator";
+import { useWalletTransactionDetailQuery } from "@src/gql/generated";
 import FailedReceiptBottomSheet from "@modules/receipt-bottom-sheet/failed";
 import SuccessReceiptBottomSheet from "@modules/receipt-bottom-sheet/success";
-import { useWalletTransactionDetailQuery } from "@src/gql/generated";
-import LoadingIndicator from "@modules/Loading-indicator";
 
 const PaymentStatus = () => {
   const { status } = useLocalSearchParams();

@@ -22,9 +22,7 @@ const Invoice = ({ transactionDetail }: { transactionDetail: TourTransactionQuer
 
       <View style={styles.priceContainer}>
         <Text caption>{tr("base price")}</Text>
-        <Text caption>
-          {localizeNumber(formatPrice(transactionDetail.tourPackage.price))}&nbsp;{tr("tooman")}
-        </Text>
+        <Text caption>{localizeNumber(formatPrice(transactionDetail.tourPackage.price))}</Text>
       </View>
       <View style={styles.priceContainer}>
         <View style={styles.rowTextContainer}>
@@ -39,7 +37,6 @@ const Invoice = ({ transactionDetail }: { transactionDetail: TourTransactionQuer
               +transactionDetail.tourPackage.price * +transactionDetail.tourguestSet.length
             )
           )}
-          &nbsp;{tr("tooman")}
         </Text>
       </View>
       <View style={styles.priceContainer}>
@@ -50,7 +47,6 @@ const Invoice = ({ transactionDetail }: { transactionDetail: TourTransactionQuer
               +transactionDetail.tourPackage.price * +transactionDetail.tourguestSet.length
             )
           )}
-          &nbsp;{tr("tooman")}
         </Text>
       </View>
     </View>

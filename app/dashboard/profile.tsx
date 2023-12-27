@@ -189,10 +189,23 @@ const Profile: React.FC = () => {
                 color={theme.colors.grey3}
               />
             </ListItem>
-            <ListItem onPress={() => router.push("/host/management")}>
+
+            <ListItem onPress={() => router.push("/host/management")} bottomDivider>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Hosts")}</ListItem.Title>
+              </ListItem.Content>
+              <Feather
+                name={isRtl ? "chevron-left" : "chevron-right"}
+                size={24}
+                color={theme.colors.grey3}
+              />
+            </ListItem>
+
+            <ListItem onPress={() => router.push("/wallet")}>
+              <Feather name="aperture" size={24} color="black" />
+              <ListItem.Content>
+                <ListItem.Title style={style.label(isRtl)}>{tr("wallet")}</ListItem.Title>
               </ListItem.Content>
               <Feather
                 name={isRtl ? "chevron-left" : "chevron-right"}
