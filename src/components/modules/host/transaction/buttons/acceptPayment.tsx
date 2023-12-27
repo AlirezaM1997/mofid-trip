@@ -25,7 +25,7 @@ const AcceptPayment = ({ isVisible, setIsVisible, purchaseHandler }: PropsType) 
           <Text heading2 style={styles.headerText}>
             {tr("Are you sure about the payment?")}
           </Text>
-          <Text caption>{tr("After paying the tour fee, your reservation will be finalized")}</Text>
+          <Text caption>{tr("after paying the host fee, your reservation will be finalized")}</Text>
         </View>
 
         <ButtonRow>

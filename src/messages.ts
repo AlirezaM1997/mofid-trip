@@ -1524,10 +1524,20 @@ export const messages = {
     fa_ir: "خرید",
     en_us: "buy",
   },
+  "there is no card in your wallet": {
+    ar: "لا توجد بطاقة في محفظتك",
+    fa_ir: "کارتی در کیف‌‌‌‌‌ پول شما وجود ندارد",
+    en_us: "there is no card in your wallet",
+  },
   "after paying the tour fee, your reservation will be finalized": {
     ar: "بعد دفع رسوم الجولة، سيتم الانتهاء من حجزك",
     fa_ir: "شما بعد از پرداخت هزینه تور، رزروتان نهایی می شود",
     en_us: "After paying the tour fee, your reservation will be finalized",
+  },
+  "after paying the host fee, your reservation will be finalized": {
+    ar: "بعد دفع رسوم الجولة، سيتم الانتهاء من حجزك",
+    fa_ir: "شما بعد از پرداخت هزینه هاست، رزروتان نهایی می شود",
+    en_us: "After paying the host fee, your reservation will be finalized",
   },
   "are you sure about the payment?": {
     ar: "هل أنت متأكد من الدفع؟",
