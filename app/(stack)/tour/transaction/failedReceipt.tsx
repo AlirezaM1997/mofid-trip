@@ -1,9 +1,7 @@
 import React from "react";
 import moment from "jalali-moment";
 import { Text } from "@rneui/themed";
-import { RootState } from "@src/store";
 import Container from "@atoms/container";
-import { useSelector } from "react-redux";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -11,7 +9,11 @@ import { Avatar, Button, useTheme } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { AccommodationQueryType, useTourTransactionDetailQuery } from "@src/gql/generated";
+import {
+  AccommodationQueryType,
+  useTourTransactionDetailQuery,
+  useUserDetailQuery,
+} from "@src/gql/generated";
 import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormatPrice } from "@src/hooks/localization";
@@ -20,22 +22,25 @@ const Receipt = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { id } = useLocalSearchParams();
-  const { localizeNumber } = useLocalizedNumberFormat();
-  const { userDetail } = useSelector((state: RootState) => state.userSlice);
   const { formatPrice } = useFormatPrice();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { data, loading } = useTourTransactionDetailQuery({
     variables: { pk: id as string },
   });
 
-  const totalPrice = data?.tourTransactionDetail?.tourPackage?.price || 0;
+  const { data: userDetail } = useUserDetailQuery();
+
+  const totalPrice =
+    data?.tourTransactionDetail?.tourPackage?.price *
+      data?.tourTransactionDetail?.tourGuests?.length || 0;
   const formattedTotalPrice = formatPrice(totalPrice);
 
   if (loading || !data) {
     return <LoadingIndicator />;
   }
 
-  const { invoiceNumber, modifiedDate, tourPackage } = data.tourTransactionDetail;
+  const { invoiceNumber, modifiedDate, tourPackage } = data?.tourTransactionDetail;
 
   const CustomView = ({ children }) => {
     const { theme } = useTheme();
@@ -74,10 +79,7 @@ const Receipt = () => {
                 rounded
                 size={56}
                 containerStyle={{ backgroundColor: "#0003" }}
-                source={
-                  (tourPackage.tour.destination as AccommodationQueryType)?.avatarS3[0]
-                    .small as ImageSourcePropType
-                }
+                source={tourPackage.tour?.avatarS3[0].small as ImageSourcePropType}
               />
               <View style={styles.swapIconContainer}>
                 <AntDesign name="swap" size={10} color="black" />
@@ -86,7 +88,7 @@ const Receipt = () => {
                 rounded
                 size={56}
                 containerStyle={{ backgroundColor: "#0003" }}
-                source={userDetail.avatarS3.small as ImageSourcePropType}
+                source={userDetail?.userDetail?.avatarS3?.small as ImageSourcePropType}
               />
             </View>
 
@@ -137,7 +139,7 @@ const Receipt = () => {
 
         <CustomView>
           <Text caption>{tr("transmitter")}</Text>
-          <Text caption>{userDetail.firstname}</Text>
+          <Text caption>{userDetail?.userDetail?.firstname}</Text>
         </CustomView>
 
         <CustomView>

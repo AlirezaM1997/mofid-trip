@@ -89,8 +89,6 @@ const EditNgoProfile = () => {
 
   if (loadingNgoDetail || !dataNgoDetail) return <LoadingIndicator />;
 
-  const { title, user, avatarS3 } = dataNgoDetail?.NGODetail;
-
   return (
     <>
       <WhiteSpace size={20} />
@@ -117,7 +115,7 @@ const EditNgoProfile = () => {
             />
             <Input
               label={tr("phone number")}
-              value={localizeNumber(user?.phoneNumber)}
+              value={localizeNumber(dataNgoDetail?.NGODetail?.user?.phoneNumber)}
               disabled
               leftIcon={
                 <Ionicons name="shield-checkmark-outline" size={24} color={theme.colors.success} />

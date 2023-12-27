@@ -25,6 +25,7 @@ import useSettingDetailTable from "@src/hooks/db/setting-detail";
 import { useIsFocused } from "@react-navigation/native";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { NetworkStatus } from "@apollo/client";
+import { WIDTH } from "@src/constants";
 
 const Profile: React.FC = () => {
   const isRtl = useIsRtl();
@@ -123,9 +124,11 @@ const Profile: React.FC = () => {
               </View>
             )}
 
-            <View>
-              <Text heading2>{localizeNumber(getFullName(userDetail)) || tr("No Name")}</Text>
-              <Text center>{localizeNumber(userDetail?.username)}</Text>
+            <View style={style.userInf}>
+              <Text heading2 numberOfLines={1}>
+                {localizeNumber(getFullName(userDetail)) || tr("No Name")}
+              </Text>
+              <Text>{localizeNumber(userDetail?.username)}</Text>
             </View>
           </Pressable>
         </Container>
@@ -189,10 +192,23 @@ const Profile: React.FC = () => {
                 color={theme.colors.grey3}
               />
             </ListItem>
-            <ListItem onPress={() => router.push("/host/management")}>
+
+            <ListItem onPress={() => router.push("/host/management")} bottomDivider>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Hosts")}</ListItem.Title>
+              </ListItem.Content>
+              <Feather
+                name={isRtl ? "chevron-left" : "chevron-right"}
+                size={24}
+                color={theme.colors.grey3}
+              />
+            </ListItem>
+
+            <ListItem onPress={() => router.push("/wallet")}>
+              <Feather name="aperture" size={24} color="black" />
+              <ListItem.Content>
+                <ListItem.Title style={style.label(isRtl)}>{tr("wallet")}</ListItem.Title>
               </ListItem.Content>
               <Feather
                 name={isRtl ? "chevron-left" : "chevron-right"}
@@ -441,6 +457,7 @@ const style = StyleSheet.create({
     width: 40,
     height: 40,
   },
+  userInf:{flex:1},
   label: isRtl => ({
     fontWeight: "400",
     fontFamily: isRtl

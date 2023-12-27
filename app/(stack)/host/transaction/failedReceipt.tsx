@@ -1,9 +1,7 @@
 import React from "react";
 import moment from "jalali-moment";
 import { Text } from "@rneui/themed";
-import { RootState } from "@src/store";
 import Container from "@atoms/container";
-import { useSelector } from "react-redux";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -15,6 +13,7 @@ import { useProjectTransactionDetailQuery, useUserDetailQuery } from "@src/gql/g
 import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormatPrice } from "@src/hooks/localization";
+import { totalPrice } from "@src/helper/totalPrice";
 
 const CustomView = ({ children }) => {
   const { theme } = useTheme();
@@ -36,14 +35,20 @@ const Receipt = () => {
     variables: { pk: id as string },
   });
 
-  const totalPrice = data?.projectTransactionDetail?.project?.price || 0;
-  const formattedTotalPrice = formatPrice(totalPrice);
+  const formattedTotalPrice = formatPrice(
+    +totalPrice({
+      endDate: data?.projectTransactionDetail.dateEnd,
+      startDate: data?.projectTransactionDetail.dateStart,
+      price: data?.projectTransactionDetail?.project?.price,
+      capacity: data?.projectTransactionDetail.guest.guestNumber,
+    })
+  );
 
   if (loading || !data || loadingUserDetail || !dataUserDetail) {
     return <LoadingIndicator />;
   }
 
-  const userDetail = dataUserDetail.userDetail
+  const userDetail = dataUserDetail.userDetail;
 
   const { invoiceNumber, modifiedDate, project } = data.projectTransactionDetail;
 
@@ -94,7 +99,7 @@ const Receipt = () => {
               <View style={styles.subtitle}>
                 <Feather name="copy" size={12} color="black" />
                 <Text subtitle2 style={{ color: theme.colors.grey2 }}>
-                  {localizeNumber(invoiceNumber)}
+                  {invoiceNumber}
                 </Text>
               </View>
             </Pressable>
@@ -136,7 +141,9 @@ const Receipt = () => {
 
         <CustomView>
           <Text caption>{tr("transmitter")}</Text>
-          <Text caption>{userDetail.firstname} {userDetail.lastname}</Text>
+          <Text caption>
+            {userDetail.firstname} {userDetail.lastname}
+          </Text>
         </CustomView>
 
         <CustomView>
