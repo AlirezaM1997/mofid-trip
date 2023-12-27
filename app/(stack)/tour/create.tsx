@@ -24,6 +24,8 @@ import ImagesTab from "@organisms/tour-create/images-tab";
 import FacilitiesTab from "@organisms/tour-create/facilities-tab";
 import { TourGenderEnum, useTourAddMutation } from "@src/gql/generated";
 import { Formik } from "formik";
+import AccessDenied from "@modules/access-denied";
+import { useIsAuthenticated } from "@src/hooks/auth";
 
 const initialValues = {
   title: null,
@@ -62,6 +64,10 @@ const Screen = () => {
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [exitElement, setExitElement] = useState<"HardwareBackButton" | "BackButton">();
   const { activeStep } = useSelector((state: RootState) => state.tourCreateSlice);
+  const isAuthenticated = useIsAuthenticated();
+  const isNgo = useSelector(
+    (state: RootState) => state.authSlice?.loginData?.metadata?.is_ngo || false
+  );
 
   const validationSchema = Yup.object().shape({
     capacity: Yup.object().shape({
@@ -188,6 +194,10 @@ const Screen = () => {
       headerTitle: headerTitle,
     });
   }, [activeStep]);
+
+  if (!isAuthenticated || !isNgo) {
+    return <AccessDenied />;
+  }
 
   return (
     <Formik

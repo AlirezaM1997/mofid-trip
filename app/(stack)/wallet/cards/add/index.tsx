@@ -1,10 +1,11 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
+import Input from "@atoms/input";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import { Image, Input } from "@rneui/themed";
+import { Image } from "@rneui/themed";
 import { Button, Text } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 import { BANKES_DATA } from "@src/constant/banks";
@@ -12,6 +13,7 @@ import { ImageSourcePropType } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import { useBankCardAddMutation } from "@src/gql/generated";
 import BottomButtonLayout from "@components/layout/bottom-button";
+import parseText from "@src/helper/number-input";
 
 const initialValues = { title: "", iban: "", cardPan: "" };
 
@@ -67,7 +69,7 @@ const AddCardScreen = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}>
-      {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+      {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
         <BottomButtonLayout
           buttons={[
             <Button loading={loading} onPress={handleSubmit}>
@@ -93,8 +95,8 @@ const AddCardScreen = () => {
               name="title"
               value={values.title}
               onBlur={handleBlur("title")}
-              onChangeText={handleChange("title")}
               placeholder={`${tr("card name")}`}
+              onChangeText={text => setFieldValue("title", text)}
               errorMessage={touched.title && (errors.title as string)}
             />
 
@@ -113,6 +115,7 @@ const AddCardScreen = () => {
 
             <Input
               name="cardPan"
+              keyboardType="numeric"
               maxLength={16}
               value={values.cardPan}
               onBlur={handleBlur("cardPan")}
@@ -121,7 +124,7 @@ const AddCardScreen = () => {
                 <Image source={bankIcon as ImageSourcePropType} style={{ width: 18, height: 18 }} />
               }
               onChange={handleIcon}
-              onChangeText={handleChange("cardPan")}
+              onChangeText={text => setFieldValue("cardPan", parseText(text))}
               errorMessage={touched.cardPan && (errors.cardPan as string)}
             />
           </Container>

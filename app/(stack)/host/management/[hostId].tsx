@@ -4,7 +4,7 @@ import ImageSlider from "@modules/image-slider";
 import Stepper from "@modules/stepper";
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import {
-  AccommodationProjectStatusStepChoices,
+  ProjectStatusEnum,
   MyNgoDetailProjectSetQuery,
   useMyNgoDetailProjectSetQuery,
 } from "@src/gql/generated";
@@ -37,8 +37,8 @@ const HostDetailScreen = () => {
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      [AccommodationProjectStatusStepChoices.Request]: 1,
-      [AccommodationProjectStatusStepChoices.Accept]: 2,
+      [ProjectStatusEnum.Request]: 1,
+      [ProjectStatusEnum.Accept]: 2,
     };
     return lookup[host.statusStep];
   };
@@ -109,7 +109,7 @@ const HostDetailScreen = () => {
           color={theme.colors.grey3}
         />
       </ListItem>
-      {host.statusStep === AccommodationProjectStatusStepChoices.Accept &&
+      {host.statusStep === ProjectStatusEnum.Accept &&
         host.statusActivation && (
           <ListItem onPress={handleNavigateToRequest}>
             <Feather name="users" size={24} color={theme.colors.black} />

@@ -307,7 +307,7 @@ export const theme = isRtl =>
           },
         }),
         leftIconContainerStyle: {
-          position: "relative",
+          position: "absolute",
           left: 10,
         },
         labelStyle: {
