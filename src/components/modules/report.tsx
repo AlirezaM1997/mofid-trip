@@ -3,87 +3,85 @@ import React, { useEffect, useState } from "react";
 import { BottomSheet, Button, CheckBox, Divider, Input, ListItem, Text } from "@rneui/themed";
 import { AntDesign } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
-import { HEIGHT, WIDTH } from "@src/constants";
+import { HEIGHT } from "@src/constants";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import { useURL } from "expo-linking";
-import { useReportAddMutation, useReportCategoryListQuery } from "@src/gql/generated";
+import {
+  ReportTypeEnum,
+  useReportAddMutation,
+  useReportCategoryListQuery,
+} from "@src/gql/generated";
 import LoadingIndicator from "./Loading-indicator";
 import { useLocalSearchParams } from "expo-router";
 import * as Yup from "yup";
 import { FieldArray, Formik } from "formik";
-import Toast from "react-native-toast-message";
 
 const Report = ({ closeMoreDetails }) => {
-  const { name } = useLocalSearchParams();
+  const { name, id } = useLocalSearchParams();
   const { tr } = useTranslation();
   const url = useURL();
   const tour = url?.split("/")[3] === "tour";
   const [isVisible, setIsVisible] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
-  // const [tempData , setTempData] = useState();
 
-  const [reportAdd, { loading, data, error }] = useReportAddMutation();
+  const [reportAdd] = useReportAddMutation();
 
-  const { loading: loadingReportCapacityList, data: dataReportCapacityList } =
-    useReportCategoryListQuery();
+  const { loading, data } = useReportCategoryListQuery();
 
   const handleOpen = () => {
     setIsVisible(true);
     closeMoreDetails();
   };
+
   const handleClose = () => setIsVisible(false);
 
-  // const handleSubmit = () => {
-  //   reportAdd({
-  //     variables: {
-  //       data: tempData,
-  //     },
-  //   });
-  // };
+  const handleًReport = variables => {
+    reportAdd({
+      variables: {
+        data: {
+          objectId: +id,
+          objectType: tour ? ReportTypeEnum.Tour : ReportTypeEnum.Project,
+          types: variables.checkBoxList.filter(item => item.checked === true).map(item => item.id),
+          description: variables.checkBoxList[variables.checkBoxList.length - 1]
+            ? variables.textBox
+            : "",
+        },
+      },
+    });
+    handleClose();
+  };
 
   const initialValues = {
-    checkBoxList: new Array(categoryList.length).fill(false),
+    checkBoxList: categoryList.map(item => ({ id: item.id, checked: false })),
     textBox: "",
   };
 
   const validationSchema = Yup.object().shape({
-    checkBoxList: Yup.array().test(
-      "at-least-one-true",
-      "At least one boolean must be true",
-      array => array.some(value => value)
-    ),
+    checkBoxList: Yup.array()
+      .of(
+        Yup.object({
+          id: Yup.string(),
+          checked: Yup.boolean(),
+        })
+      )
+      .test("at-least-one-true", "یکی از گزینه های بالا را انتخاب کنید*", function (value) {
+        return value.some(obj => obj.checked === true);
+      }),
     textBox: Yup.string().when("checkBoxList", {
-      is: checkBoxList => checkBoxList[checkBoxList.length - 1] === true,
-      then: () => Yup.string().required("Field is required"),
+      is: checkBoxList => checkBoxList[checkBoxList.length - 1].checked === true,
+      then: () => Yup.string().required("توضیجی بنویسید*"),
       otherwise: () => Yup.string(),
     }),
   });
 
-  // useEffect(() => {
-  //   if (!loading && data) {
-  //     Toast.show({
-  //       type: "success",
-  //       text1: tr("Successful"),
-  //       text2: tr("Profile saved successfully"),
-  //     });
-  //   }
-  //   if (error) {
-  //     Toast.show({
-  //       type: "error",
-  //       text1: tr("Error"),
-  //       text2: JSON.stringify(error.message),
-  //     });
-  //   }
-  // }, [loading, data, error]);
-
   useEffect(() => {
-    if (!loadingReportCapacityList && dataReportCapacityList) {
-      setCategoryList(dataReportCapacityList.reportCategoryList.data);
+    if (!loading && data) {
+      setCategoryList(data.reportCategoryList.data);
     }
-  }, [loadingReportCapacityList, dataReportCapacityList]);
+  }, [loading, data]);
 
-  if (loadingReportCapacityList) return <LoadingIndicator />;
+  if (loading) return <LoadingIndicator />;
 
   return (
     <>
@@ -129,70 +127,107 @@ const Report = ({ closeMoreDetails }) => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={values => console.log(values)}>
-          {({ handleSubmit, handleChange, handleBlur, values }) => (
+          onSubmit={handleًReport}>
+          {({
+            handleSubmit,
+            handleChange,
+            handleBlur,
+            setFieldTouched,
+            touched,
+            values,
+            errors,
+          }) => (
             <>
               <ScrollView style={{ maxHeight: HEIGHT }}>
-                <Container style={{ minHeight: HEIGHT, position: "relative" }}>
-                  <WhiteSpace size={24} />
-                  <Text heading2>{tr("violation report")}</Text>
-                  <WhiteSpace />
-                  <Text caption type="grey2">
-                    {tour
-                      ? tr(
-                          "if you see a problem in the tour, you can report this violation to the admin so that it can be addressed."
-                        )
-                      : tr(
-                          "if you see a problem in the host, you can report this violation to the admin so that it can be addressed."
-                        )}
-                  </Text>
-                  <FieldArray name="checkBoxList">
-                    {({ form, replace }) => {
-                      const { values } = form;
-                      const { checkBoxList } = values;
-                      return checkBoxList?.map((checked, index) => (
-                        <ListItem
-                          bottomDivider
-                          containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}
-                          key={index}>
-                          <CheckBox
-                            checked={checked}
-                            title={categoryList[index].name}
-                            name={`checkBoxList[${index}]`}
-                            onPress={() => replace(index, !checked)}
-                          />
-                        </ListItem>
-                      ));
-                    }}
-                  </FieldArray>
-
-                  {values.checkBoxList[5] && (
-                    <>
-                      <View style={{ gap: 16 }}>
+                <View style={{ minHeight: HEIGHT, justifyContent: "space-between" }}>
+                  <Container>
+                    <WhiteSpace size={24} />
+                    <Text heading2>{tr("violation report")}</Text>
+                    <WhiteSpace />
+                    <Text caption type="grey2">
+                      {tour
+                        ? tr(
+                            "if you see a problem in the tour, you can report this violation to the admin so that it can be addressed."
+                          )
+                        : tr(
+                            "if you see a problem in the host, you can report this violation to the admin so that it can be addressed."
+                          )}
+                    </Text>
+                    <FieldArray name="checkBoxList">
+                      {({ form, replace }) => {
+                        const { values } = form;
+                        const { checkBoxList } = values;
+                        return checkBoxList?.map((obj, index) => (
+                          <ListItem
+                            bottomDivider
+                            containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}
+                            key={index}>
+                            <CheckBox
+                              checked={obj.checked}
+                              title={categoryList[index].name}
+                              name={`checkBoxList[${index}]`}
+                              onPress={() =>
+                                replace(index, {
+                                  id: categoryList[index].id,
+                                  checked: !obj.checked,
+                                })
+                              }
+                            />
+                          </ListItem>
+                        ));
+                      }}
+                    </FieldArray>
+                    {touched.checkBoxList && errors.checkBoxList && (
+                      <>
                         <WhiteSpace />
-                        <Text caption>
-                          {tr("if you chose other, please also write a note and explanation")}
+                        <Text caption type="error">
+                          {errors.checkBoxList}
                         </Text>
-                        <Input
-                          name="textBox"
-                          value={values.textBox}
-                          onBlur={handleBlur("textBox")}
-                          onChangeText={handleChange("textBox")}
-                          placeholder={tr("description")}
-                          multiline={true}
-                          numberOfLines={4}
-                        />
-                      </View>
-                    </>
-                  )}
-                </Container>
+                      </>
+                    )}
+
+                    {values.checkBoxList[5].checked && (
+                      <>
+                        <View style={{ gap: 16, paddingTop: 8 }}>
+                          <Text caption>
+                            {tr("if you chose other, please also write a note and explanation")}
+                          </Text>
+                          <Input
+                            name="textBox"
+                            value={values.textBox}
+                            onBlur={handleBlur("textBox")}
+                            onChangeText={handleChange("textBox")}
+                            placeholder={tr("description")}
+                            multiline={true}
+                            numberOfLines={4}
+                          />
+                        </View>
+                        {touched.textBox && errors.textBox && (
+                          <>
+                            <Text caption type="error">
+                              {errors.textBox}
+                            </Text>
+                            <WhiteSpace />
+                          </>
+                        )}
+                      </>
+                    )}
+                  </Container>
+                  <View style={{ gap: 16, paddingBottom: 55 }}>
+                    <Divider />
+                    <Container>
+                      <Button
+                        onPress={() => {
+                          handleSubmit();
+                          setFieldTouched("checkBoxList");
+                          setFieldTouched("textBox");
+                        }}>
+                        {tr("confirm and send")}
+                      </Button>
+                    </Container>
+                  </View>
+                </View>
               </ScrollView>
-              <View style={{ position: "absolute", bottom: 55, width: WIDTH, gap: 16 }}>
-                <Divider />
-                <Container>
-                  <Button onPress={handleSubmit}>{tr("confirm and send")}</Button>
-                </Container>
-              </View>
             </>
           )}
         </Formik>
