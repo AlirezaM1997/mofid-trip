@@ -14,7 +14,7 @@ function HostList() {
   const { loading, data } = useProjectListQuery({
     variables: {
       sort: {
-        descending: true
+        descending: true,
       },
       page: {
         pageNumber: 1,
@@ -51,7 +51,8 @@ function HostList() {
                 style={{ borderRadius: 10 }}
               />
             ))
-          : data.projectList.data?.map((project, index) => (
+          : data?.projectList?.data?.length &&
+            data.projectList.data?.map((project, index) => (
               <View key={index}>
                 <HostCard
                   id={project.id}
