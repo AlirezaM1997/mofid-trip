@@ -11,7 +11,7 @@ type TransactionDetailPropsType = {
 const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
   const handleNavigate = () => {
     router.push({
-      pathname: `/host/${transaction.project.id}`,
+      pathname: `/host/transaction/detail/${transaction.id}`,
       params: {
         name: transaction?.project.name,
       },

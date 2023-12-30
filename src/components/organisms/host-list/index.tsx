@@ -13,6 +13,9 @@ function HostList() {
   const { tr } = useTranslation();
   const { loading, data } = useProjectListQuery({
     variables: {
+      sort: {
+        descending: true
+      },
       page: {
         pageNumber: 1,
         pageSize: 8,
