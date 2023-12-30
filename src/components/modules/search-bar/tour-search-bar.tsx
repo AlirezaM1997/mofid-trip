@@ -26,7 +26,7 @@ const TourSearchBar = ({ onFocus, onChange, onChangeText, value }) => {
   return (
     <ReactNativeElementsSearchBar
       ref={inputRef}
-      placeholder={tr("Anywhere You Want")}
+      placeholder={tr("search for tours")}
       searchIcon={<Feather name="search" size={24} color="#ADAFAE" />}
       clearIcon={<></>}
       showCancel={false}
