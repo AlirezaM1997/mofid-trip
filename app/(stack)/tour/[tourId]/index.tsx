@@ -22,7 +22,7 @@ import {
 } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
-import ShareReportDropDown from "@modules/share&reportDropDown";
+import ShareReportDropDown from "@modules/share-report-dropdown";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/store";
 import { useIsAuthenticated } from "@src/hooks/auth";

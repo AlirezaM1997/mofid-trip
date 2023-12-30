@@ -1,9 +1,9 @@
 import { StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
-import Share from "@modules/share";
 import Report from "./report";
 import { HEIGHT, WIDTH } from "@src/constants";
+import ShareDropdown from "@modules/share-dropdown";
 
 const ShareReportDropDown = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -23,7 +23,7 @@ const ShareReportDropDown = () => {
       <Entypo style={styles.iconStyle} name="dots-three-vertical" size={20} onPress={handleOpen} />
       <View style={styles.backDrop(isVisible)}>
         <View style={styles.dropDown}>
-          <Share closeMoreDetails={handleClose} />
+          <ShareDropdown closeMoreDetails={handleClose} />
           <Report closeMoreDetails={handleClose} />
         </View>
       </View>
