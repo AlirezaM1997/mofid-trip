@@ -1,0 +1,8 @@
+query ReportCategoryList {
+  reportCategoryList {
+    data {
+      name
+      id
+    }
+  }
+}

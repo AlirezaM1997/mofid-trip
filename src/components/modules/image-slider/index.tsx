@@ -22,7 +22,7 @@ function ImageSlider({ imageList }: ImageSlider) {
 
       <ScrollView horizontal style={{ overflow: "scroll" }}>
         <View style={style.sliderThumbnails}>
-          {imageList.map((img, index) => (
+          {imageList?.map((img, index) => (
             <Pressable
               key={index}
               onPress={() => setActiveSlide(index)}

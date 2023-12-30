@@ -695,6 +695,11 @@ export const messages = {
     fa_ir: "ویرایش",
     en_us: "Edit",
   },
+  "if you chose other, please also write a note and explanation": {
+    ar: "إذا اخترت غير ذلك، يرجى أيضًا كتابة ملاحظة وشرح",
+    fa_ir: "اگر سایر را انتخاب کردید، لطفا نکته و توضیحی نیز بنویسید",
+    en_us: "If you chose other, please also write a note and explanation",
+  },
   night: {
     ar: "ليلة",
     fa_ir: "شب",
@@ -1303,6 +1308,16 @@ export const messages = {
     fa_ir: "خطا",
     en_us: "Error",
   },
+  "more options": {
+    ar: "المزيد من الخيارات",
+    fa_ir: "گزینه های بیشتر",
+    en_us: "More options",
+  },
+  "violation report": {
+    ar: "تقرير المخالفة",
+    fa_ir: "گزارش تخلف",
+    en_us: "Violation report",
+  },
   pending: {
     ar: "قيد الانتظار",
     fa_ir: "در حال بررسی",
@@ -1322,6 +1337,21 @@ export const messages = {
     ar: "إلى",
     fa_ir: "تا",
     en_us: "to",
+  },
+  "confirm and send": {
+    ar: "سجل وأرسل",
+    fa_ir: "ثبت و ارسال",
+    en_us: "confirm and send",
+  },
+  "if you see a problem in the tour, you can report this violation to the admin so that it can be addressed.": {
+    ar: "إذا رأيت مشكلة في الجولة، يمكنك الإبلاغ عن هذا الانتهاك إلى المسؤول حتى يتم معالجته.",
+    fa_ir: "در صورت مشاهده مشکل در تور، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
+    en_us: "If you see a problem in the tour, you can report this violation to the admin so that it can be addressed.",
+  },
+  "if you see a problem in the host, you can report this violation to the admin so that it can be addressed.": {
+    ar: "إذا رأيت مشكلة في الاستضافة، يمكنك الإبلاغ عن هذه المخالفة إلى المسؤول حتى يتم التعامل معها.",
+    fa_ir: "در صورت مشاهده مشکل در میزبانی، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
+    en_us: "If you see a problem in the host, you can report this violation to the admin so that it can be addressed.",
   },
   copied: {
     ar: "نسخ",
@@ -2310,7 +2340,16 @@ export const messages = {
     fa_ir: "شروع",
     en_us: "Start",
   },
-  "choose or write the cost of your tour, you can give a discount to the original price.": {
+  "choose one of the options above*": {
+    ar: "اختر أحد الخيارات أعلاه*",
+    fa_ir: "یکی از گزینه های بالا را انتخاب کنید*",
+    en_us: "Choose one of the options above*",
+  },
+  "write a comment*": {
+    ar: "أكتب تعليقا*",
+    fa_ir: "توضیجی بنویسید*",
+    en_us: "Write a comment*",
+  },  "choose or write the cost of your tour, you can give a discount to the original price.": {
     ar: "اختر أو اكتب تكلفة جولتك، يمكنك إعطاء خصم على السعر الأصلي.",
     fa_ir: "هزینه تور خودتان را انتخاب کنید یا بنویسید، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
     en_us: "Choose or write the cost of your tour, you can give a discount to the original price.",

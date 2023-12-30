@@ -1,4 +1,3 @@
-import Share from "@modules/share";
 import { Text } from "@rneui/themed";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -20,6 +19,7 @@ import ProjectFacilities from "@src/components/modules/host/facilities";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import ProjectBoldFeatures from "@src/components/modules/host/bold-features";
 import { ProjectQueryType, useProjectDetailQuery } from "@src/gql/generated";
+import ShareReportDropDown from "@modules/share&reportDropDown";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
@@ -40,7 +40,10 @@ const Page: React.FC = ({ ...props }) => {
     }
   }, [loading, data]);
 
-  navigation.setOptions({ title: name, headerRight: () => <Share /> });
+  navigation.setOptions({
+    title: name,
+    headerRight: () => <ShareReportDropDown />,
+  });
 
   if (loading) return <LoadingIndicator />;
 
