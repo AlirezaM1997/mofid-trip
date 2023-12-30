@@ -1,3 +1,5 @@
+import moment from "jalali-moment";
+
 export const diffDays = (start, end) => Math.ceil(Math.abs(start - end) / (1000 * 60 * 60 * 24));
 
 export const period = (startDate: Date | string, endDate: Date | string) => {
@@ -37,4 +39,29 @@ export const calculateHoursSinceGivenDate = (givenDateString: string) => {
   const roundedHours = Math.round(hoursDifference);
 
   return roundedHours;
+};
+
+export const passedTime = date => {
+  const jalaliDate = moment(date);
+
+  const now = moment();
+  const diffSeconds = now.diff(jalaliDate, "seconds");
+  const diffMinutes = now.diff(jalaliDate, "minutes");
+  const diffHours = now.diff(jalaliDate, "hours");
+  const diffDays = now.diff(jalaliDate, "days");
+  const diffWeeks = now.diff(jalaliDate, "weeks");
+  const diffMonths = now.diff(jalaliDate, "months");
+  const diffYears = now.diff(jalaliDate, "years");
+
+  let relativeTimeString;
+
+  if (diffSeconds < 60) relativeTimeString = `${diffSeconds}  ثانیه قبل`;
+  else if (diffMinutes < 60) relativeTimeString = `${diffMinutes}  دقیقه قبل`;
+  else if (diffHours < 24) relativeTimeString = `${diffHours}  ساعت قبل`;
+  else if (diffDays < 7) relativeTimeString = `${diffDays}  روز قبل`;
+  else if (diffWeeks < 4) relativeTimeString = `${diffWeeks}  هفته قبل`;
+  else if (diffMonths < 12) relativeTimeString = `${diffMonths}  ماه قبل`;
+  else relativeTimeString = `${diffYears} سال`;
+
+  return relativeTimeString;
 };

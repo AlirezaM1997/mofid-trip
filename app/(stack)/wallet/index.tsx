@@ -4,16 +4,17 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
 import { Button, Text } from "@rneui/themed";
+import useTranslation from "@src/hooks/translation";
 import { Entypo, AntDesign } from "@expo/vector-icons";
 import LoadingIndicator from "@modules/Loading-indicator";
 import WalletTransactionCard from "@modules/wallet/transaction-card";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { ImageBackground, Pressable, ScrollView, StyleSheet } from "react-native";
 import { WalletTransactionQueryType, useUserDetailQuery } from "@src/gql/generated";
+import { useFormatPrice } from "@src/hooks/localization";
 
 const WalletScreen = () => {
   const { tr } = useTranslation();
-  const { localizeNumber } = useLocalizedNumberFormat();
+  const { formatPrice } = useFormatPrice();
   const { data, loading } = useUserDetailQuery();
 
   if (!data || loading) return <LoadingIndicator />;
@@ -42,7 +43,7 @@ const WalletScreen = () => {
             {tr("wallet balance")}
           </Text>
           <Text heading1 type="white">
-            {localizeNumber(balance)} {tr("tooman")}
+            {formatPrice(balance)}
           </Text>
         </ImageBackground>
 

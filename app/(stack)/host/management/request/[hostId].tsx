@@ -57,11 +57,9 @@ const RequestScreen = () => {
 
   if (loading || !transactionSet) return <LoadingIndicator />;
 
-  if (!transactionSet.length) return <NoResult />;
+  navigation.setOptions({ title: transactionSet?.[0]?.project?.name || tr("requests") });
 
-  navigation.setOptions({ title: transactionSet[0].project.name });
-
-  console.log("transactionSet", transactionSet);
+  if (!transactionSet.length) return <NoResult title={tr("there is no request for this host")} />;
 
   return (
     <>

@@ -2,8 +2,12 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
 import ComingSoon from "@modules/coming-soon";
-import { BottomSheet, Button, Card, Chip, useTheme } from "@rneui/themed";
-import { AccommodationQueryType, useMyNgoDetailTourSetQuery } from "@src/gql/generated";
+import { BottomSheet, Button, Card, Chip, Text, useTheme } from "@rneui/themed";
+import {
+  AccommodationQueryType,
+  TourStatusEnum,
+  useMyNgoDetailTourSetQuery,
+} from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { getTourRequestStatusBadgeColor } from "@src/helper/tour";
@@ -12,11 +16,10 @@ import { router } from "expo-router";
 import LoadingIndicator from "@modules/Loading-indicator";
 
 const TourManagement = () => {
+  const { theme } = useTheme();
   const { tr } = useTranslation();
-  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [tourSet, setTourSet] = useState([]);
   const { loading, data } = useMyNgoDetailTourSetQuery();
-  const { theme } = useTheme();
 
   const navigateToTourDetail = (tourId: string) => {
     router.push(`/tour/management/${tourId}`);
@@ -33,8 +36,8 @@ const TourManagement = () => {
   return (
     <View>
       {tourSet.map(tour => (
-        <Card key={tour.id}>
-          <Pressable onPress={() => navigateToTourDetail(tour.id)}>
+        <Pressable onPress={() => navigateToTourDetail(tour.id)}>
+          <Card key={tour.id}>
             <Card.Image
               source={{
                 uri: tour.avatarS3?.[0]?.medium,
@@ -51,35 +54,26 @@ const TourManagement = () => {
             <Card.FeaturedSubtitle numberOfLines={2} type="grey3">
               {tour.description}
             </Card.FeaturedSubtitle>
-          </Pressable>
-          <Container size={10} style={styles.footer}>
-            <View style={styles.buttonContainer}>
-              <Button type="outline" color="secondary" size="sm" onPress={() => setIsVisible(true)}>
-                <Feather name="trash" size={12} color={theme.colors.secondary} />
-              </Button>
-              <Button type="outline" color="secondary" size="sm" onPress={() => setIsVisible(true)}>
-                <Feather name="edit" size={12} color={theme.colors.secondary} />
-              </Button>
-            </View>
-            <Chip
-              title={tour.statusStep}
-              color={getTourRequestStatusBadgeColor(tour)}
-              type="outline"
-            />
-          </Container>
-          <WhiteSpace size={10} />
-        </Card>
+            <Container size={10} style={styles.footer}>
+              {tour.statusStep === TourStatusEnum.Request ? (
+                <Chip
+                  title={tour.statusStep}
+                  color={getTourRequestStatusBadgeColor(tour)}
+                  type="outline"
+                />
+              ) : (
+                <>
+                  <Text type={getTourRequestStatusBadgeColor(tour)}>
+                      {tr("view and manage tour")}
+                  </Text>
+                  <Feather size={20} name={"chevron-left"} color={theme.colors.primary} />
+                </>
+              )}
+            </Container>
+            <WhiteSpace size={10} />
+          </Card>
+        </Pressable>
       ))}
-      <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
-        <Container>
-          <WhiteSpace size={10} />
-          <ComingSoon />
-          <WhiteSpace size={10} />
-          <Button size="sm" type="outline" color="secondary" onPress={() => setIsVisible(false)}>
-            {tr("ok")}
-          </Button>
-        </Container>
-      </BottomSheet>
     </View>
   );
 };

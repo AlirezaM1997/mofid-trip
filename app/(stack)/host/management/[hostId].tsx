@@ -18,7 +18,7 @@ import { Divider } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import ComingSoon from "@modules/coming-soon";
 import LoadingIndicator from "@modules/Loading-indicator";
-import { calculateHoursSinceGivenDate } from "@src/helper/date";
+import { calculateHoursSinceGivenDate, passedTime } from "@src/helper/date";
 
 const HostDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -74,8 +74,8 @@ const HostDetailScreen = () => {
           {host?.name}
         </Text>
         <Text caption type="grey3">
-          {tr("Last modification")}
-          {localizeNumber(calculateHoursSinceGivenDate(host.modifiedDate))} {tr("hour later")}
+          {tr("last modification")}
+          {passedTime(host.modifiedDate)}
         </Text>
         <WhiteSpace size={20} />
         <Text subtitle1 bold>
@@ -109,20 +109,19 @@ const HostDetailScreen = () => {
           color={theme.colors.grey3}
         />
       </ListItem>
-      {host.statusStep === ProjectStatusEnum.Accept &&
-        host.statusActivation && (
-          <ListItem onPress={handleNavigateToRequest}>
-            <Feather name="users" size={24} color={theme.colors.black} />
-            <ListItem.Content>
-              <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>
-            </ListItem.Content>
-            <Feather
-              name={isRtl ? "chevron-left" : "chevron-right"}
-              size={24}
-              color={theme.colors.grey3}
-            />
-          </ListItem>
-        )}
+      {host.statusStep === ProjectStatusEnum.Accept && host.statusActivation && (
+        <ListItem onPress={handleNavigateToRequest}>
+          <Feather name="users" size={24} color={theme.colors.black} />
+          <ListItem.Content>
+            <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>
+          </ListItem.Content>
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
+        </ListItem>
+      )}
 
       <Divider thickness={8} bgColor="grey0" />
 
