@@ -8,10 +8,12 @@ import { StyleSheet, View } from "react-native";
 import { TourAddInputType } from "@src/gql/generated";
 import Input from "@atoms/input";
 import parseText from "@src/helper/number-input";
+import { useFormatPrice } from "@src/hooks/localization";
 
 const PriceTab = () => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const { formatPrice } = useFormatPrice();
   const { values, errors, touched, handleChange, handleBlur, setFieldValue } =
     useFormikContext<TourAddInputType>();
 
@@ -89,6 +91,20 @@ const PriceTab = () => {
           />
         ))}
       </View>
+      <WhiteSpace />
+      <View style={styles.row}>
+        <View style={styles.row}>
+          <Text>تخفیف {localizeNumber(values.discount)}%</Text>
+          <Text>+</Text>
+          <Text>قیمت پایه {(formatPrice(+values.price ?? 0))}</Text>
+        </View>
+        <Text>=</Text>
+        <Text>
+          {values.discount
+            ? formatPrice(values.price - ((values.price || 0) * values.discount) / 100)
+            : formatPrice(+values.price)}
+        </Text>
+      </View>
     </>
   );
 };
@@ -121,6 +137,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     flexGrow: 1,
     width: "100%",
+  },
+  row: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 3,
   },
 });
 
