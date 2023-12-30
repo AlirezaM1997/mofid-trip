@@ -51,8 +51,8 @@ function HostList() {
                 style={{ borderRadius: 10 }}
               />
             ))
-          : data?.projectList?.data?.length &&
-            data.projectList.data?.map((project, index) => (
+          : data?.projectList?.data?.length
+          ? data.projectList.data?.map((project, index) => (
               <View key={index}>
                 <HostCard
                   id={project.id}
@@ -62,7 +62,8 @@ function HostList() {
                   avatarS3={project.accommodation.avatarS3}
                 />
               </View>
-            ))}
+            ))
+          : null}
         <View style={style.spacer}></View>
       </ScrollView>
     </>

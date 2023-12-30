@@ -14,7 +14,7 @@ function TourList() {
   const { data, loading } = useTourListQuery({
     variables: {
       sort: {
-        descending: true
+        descending: true,
       },
       page: {
         pageNumber: 1,
@@ -51,7 +51,8 @@ function TourList() {
                 style={{ borderRadius: 10 }}
               />
             ))
-          : data?.tourList?.data?.length && data.tourList.data?.map((tour, index) => (
+          : data?.tourList?.data?.length
+          ? data.tourList.data?.map((tour, index) => (
               <View key={index}>
                 <TourCard
                   key={index}
@@ -64,7 +65,8 @@ function TourList() {
                   }
                 />
               </View>
-            ))}
+            ))
+          : null}
         <View style={style.spacer}></View>
       </ScrollView>
     </>
