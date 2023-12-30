@@ -2340,7 +2340,16 @@ export const messages = {
     fa_ir: "شروع",
     en_us: "Start",
   },
-  "choose or write the cost of your tour, you can give a discount to the original price.": {
+  "choose one of the options above*": {
+    ar: "اختر أحد الخيارات أعلاه*",
+    fa_ir: "یکی از گزینه های بالا را انتخاب کنید*",
+    en_us: "Choose one of the options above*",
+  },
+  "write a comment*": {
+    ar: "أكتب تعليقا*",
+    fa_ir: "توضیجی بنویسید*",
+    en_us: "Write a comment*",
+  },  "choose or write the cost of your tour, you can give a discount to the original price.": {
     ar: "اختر أو اكتب تكلفة جولتك، يمكنك إعطاء خصم على السعر الأصلي.",
     fa_ir: "هزینه تور خودتان را انتخاب کنید یا بنویسید، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
     en_us: "Choose or write the cost of your tour, you can give a discount to the original price.",

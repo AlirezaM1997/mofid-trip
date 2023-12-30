@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { BottomSheet, Button, CheckBox, Divider, Input, ListItem, Text } from "@rneui/themed";
 import { useURL } from "expo-linking";
@@ -26,7 +26,7 @@ const Report = ({ closeMoreDetails }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
 
-  const [reportAdd , { error: errorReportAdd , data: dataReportAdd , loading: loadingReportAdd}] = useReportAddMutation();
+  const [reportAdd, { loading: loadingReportAdd, error: errorReportAdd }] = useReportAddMutation();
 
   const { loading, data } = useReportCategoryListQuery();
 
@@ -37,25 +37,41 @@ const Report = ({ closeMoreDetails }) => {
 
   const handleClose = () => setIsVisible(false);
 
-  const handleًReport = variables => {
-    if (true) {
-      reportAdd({
-        variables: {
-          data: {
-            objectId: +id,
-            objectType: tour ? ReportTypeEnum.Tour : ReportTypeEnum.Project,
-            types: variables.checkBoxList
-              .filter(item => item.checked === true)
-              .map(item => item.id),
-            description: variables.checkBoxList[variables.checkBoxList.length - 1]
-              ? variables.textBox
-              : "",
-          },
+  const handleReport = async variables => {
+    const { data } = await reportAdd({
+      variables: {
+        data: {
+          objectId: +id,
+          objectType: tour ? ReportTypeEnum.Tour : ReportTypeEnum.Project,
+          types: variables.checkBoxList.filter(item => item.checked === true).map(item => item.id),
+          description: variables.checkBoxList[variables.checkBoxList.length - 1]
+            ? variables.textBox
+            : "",
         },
+      },
+    });
+
+    if (data?.reportAdd?.status === "OK") {
+      Toast.show({
+        type: "success",
+        text1: tr("Successful"),
+        text2: tr("Profile saved successfully"),
       });
-      console.log('====================================');
-      console.log(errorReportAdd.message);
-      console.log('====================================');
+      handleClose();
+    }
+    if (!data.reportAdd) {
+      Toast.show({
+        type: "error",
+        text1: tr("Error"),
+        text2: JSON.stringify("errorReportAdd.message"),
+      });
+    }
+    if (errorReportAdd) {
+      Toast.show({
+        type: "error",
+        text1: tr("Error"),
+        text2: JSON.stringify(errorReportAdd.message),
+      });
     }
   };
 
@@ -72,33 +88,15 @@ const Report = ({ closeMoreDetails }) => {
           checked: Yup.boolean(),
         })
       )
-      .test("at-least-one-true", "یکی از گزینه های بالا را انتخاب کنید*", function (value) {
+      .test("at-least-one-true", tr("choose one of the options above*"), function (value) {
         return value.some(obj => obj.checked === true);
       }),
     textBox: Yup.string().when("checkBoxList", {
       is: checkBoxList => checkBoxList[checkBoxList.length - 1].checked === true,
-      then: () => Yup.string().required("توضیجی بنویسید*"),
+      then: () => Yup.string().required(tr("write a comment*")),
       otherwise: () => Yup.string(),
     }),
   });
-
-  useEffect(() => {
-    if (!loadingReportAdd && dataReportAdd ) {
-      Toast.show({
-        type: "success",
-        text1: tr("Successful"),
-        text2: tr("Profile saved successfully"),
-      });
-    handleClose();
-    }
-    if (errorReportAdd) {
-      Toast.show({
-        type: "error",
-        text1: tr("Error"),
-        text2: JSON.stringify(errorReportAdd.message),
-      });
-    }
-  }, [loadingReportAdd, dataReportAdd, errorReportAdd]);
 
   useEffect(() => {
     if (!loading && data) {
@@ -110,14 +108,7 @@ const Report = ({ closeMoreDetails }) => {
 
   return (
     <>
-      <ListItem
-        onPress={handleOpen}
-        containerStyle={{
-          direction: "rtl",
-          paddingVertical: 10,
-          borderBottomRightRadius: 8,
-          borderBottomLeftRadius: 8,
-        }}>
+      <ListItem onPress={handleOpen} containerStyle={styles.reportButton}>
         <AntDesign name="warning" size={16} />
         <Text numberOfLines={1} body2>
           {tr("violation report")}
@@ -127,22 +118,12 @@ const Report = ({ closeMoreDetails }) => {
       <BottomSheet
         isVisible={isVisible}
         onBackdropPress={handleClose}
-        containerStyle={{
-          height: HEIGHT,
-          borderTopLeftRadius: 0,
-          borderTopRightRadius: 0,
-          justifyContent: "flex-end",
-        }}>
-        <Container
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}>
+        containerStyle={styles.reportBottomSheet}>
+        <Container style={styles.headerBar}>
           <Text caption type="grey3">
             {name}
           </Text>
-          <View style={{ flexDirection: "row", gap: 16 }}>
+          <View style={styles.headerBarButton}>
             <Text caption>{tr("violation report")}</Text>
             <AntDesign onPress={handleClose} name="close" size={16} />
           </View>
@@ -152,7 +133,7 @@ const Report = ({ closeMoreDetails }) => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleًReport}>
+          onSubmit={handleReport}>
           {({
             handleSubmit,
             handleChange,
@@ -164,8 +145,8 @@ const Report = ({ closeMoreDetails }) => {
             errors,
           }) => (
             <>
-              <ScrollView style={{ maxHeight: HEIGHT }}>
-                <View style={{ minHeight: HEIGHT, justifyContent: "space-between" }}>
+              <ScrollView style={styles.formikScrollView}>
+                <View style={styles.formikView}>
                   <Container>
                     <WhiteSpace size={24} />
                     <Text heading2>{tr("violation report")}</Text>
@@ -191,7 +172,6 @@ const Report = ({ closeMoreDetails }) => {
                             <CheckBox
                               checked={obj.checked}
                               title={categoryList[index].name}
-                              name={`checkBoxList[${index}]`} 
                               onPress={() => {
                                 replace(index, {
                                   id: categoryList[index].id,
@@ -215,7 +195,7 @@ const Report = ({ closeMoreDetails }) => {
 
                     {values.checkBoxList[5].checked && (
                       <>
-                        <View style={{ gap: 16, paddingTop: 8 }}>
+                        <View style={styles.textBox}>
                           <Text caption>
                             {tr("if you chose other, please also write a note and explanation")}
                           </Text>
@@ -240,10 +220,11 @@ const Report = ({ closeMoreDetails }) => {
                       </>
                     )}
                   </Container>
-                  <View style={{ gap: 16, paddingBottom: 55 }}>
+                  <View style={styles.submitButton}>
                     <Divider />
                     <Container>
                       <Button
+                        loading={loadingReportAdd}
                         onPress={() => {
                           handleSubmit();
                           setFieldTouched("checkBoxList");
@@ -262,5 +243,30 @@ const Report = ({ closeMoreDetails }) => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  reportButton: {
+    direction: "rtl",
+    paddingVertical: 10,
+    borderBottomRightRadius: 8,
+    borderBottomLeftRadius: 8,
+  },
+  reportBottomSheet: {
+    height: HEIGHT,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    justifyContent: "flex-end",
+  },
+  headerBar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  headerBarButton: { flexDirection: "row", gap: 10 },
+  formikScrollView: { maxHeight: HEIGHT },
+  formikView: { minHeight: HEIGHT, justifyContent: "space-between" },
+  textBox: { gap: 16, paddingTop: 8 },
+  submitButton: { gap: 16, paddingBottom: 55 },
+});
 
 export default Report;
