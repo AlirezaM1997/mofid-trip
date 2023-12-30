@@ -13,6 +13,9 @@ function TourList() {
   const { tr } = useTranslation();
   const { data, loading } = useTourListQuery({
     variables: {
+      sort: {
+        descending: true
+      },
       page: {
         pageNumber: 1,
         pageSize: 8,
