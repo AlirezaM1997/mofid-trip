@@ -1,5 +1,6 @@
-query tourList($search: String, $filter: TourFilterType, $page: PageType!) {
-  tourList(search: $search, filter: $filter, page: $page) {
+query tourList($search: String,$sort: SortType, $filter: TourFilterType, $page: PageType!) {
+  tourList(search: $search,sort: $sort, filter: $filter, page: $page) {
+    count
     data {
       id
       title

@@ -2,7 +2,7 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import LoadingIndicator from "@modules/Loading-indicator";
 import useTranslation from "@src/hooks/translation";
-import { Card, useTheme } from "@rneui/themed";
+import { Card, CheckBox, useTheme } from "@rneui/themed";
 import { Text } from "@rneui/themed";
 import { ProjectAddInputType, useCategoryListQuery } from "@src/gql/generated";
 import { useFormikContext } from "formik";
@@ -51,12 +51,20 @@ const TabHostType = () => {
             containerStyle={
               values.categories?.includes(category.id)
                 ? styles.selectedCard(theme)
-                : styles.nonSelectedCard(theme)
+                : styles.nonSelectedCard
             }>
             <Pressable onPress={() => handlePress(category.id)}>
               <Container>
                 <WhiteSpace />
-                <Text>{category.name}</Text>
+                <CheckBox
+                  checked={values.categories?.includes(category.id)}
+                  disabled
+                  title={category.name}
+                  checkedIcon="dot-circle-o"
+                  uncheckedIcon="circle-o"
+                  checkedColor={theme.colors.black}
+                />
+                <Text color={theme.colors.grey3}>لورم ایپسوم متن ساختگی با تولید و سادگی</Text>
                 <WhiteSpace />
               </Container>
             </Pressable>
@@ -70,13 +78,12 @@ const TabHostType = () => {
 
 const styles = StyleSheet.create({
   selectedCard: theme => ({
-    borderColor: theme.colors.info,
+    borderColor: theme.colors.black,
     borderWidth: 1,
   }),
-  nonSelectedCard: theme => ({
+  nonSelectedCard: {
     borderColor: "transparent",
     borderWidth: 1,
-  }),
+  },
 });
-
 export default TabHostType;

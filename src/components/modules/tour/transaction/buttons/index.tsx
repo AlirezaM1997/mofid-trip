@@ -50,8 +50,8 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
             type: "outline",
             color: "secondary",
             detailsBtn: false,
-            title: tr("tour details"),
-            changeHandler: () => pressHandler(`/tour/${transaction.id}`),
+          title: tr("request details"),
+          changeHandler: () => pressHandler(`/tour/transaction/detail/${transaction.id}`),
           }
         : {
             title: tr("pay"),
@@ -62,8 +62,8 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
         type: "outline",
         color: "secondary",
         detailsBtn: false,
-        title: tr("tour details"),
-        changeHandler: () => pressHandler(`/tour/${transaction.id}`),
+        title: tr("request details"),
+        changeHandler: () => pressHandler(`/tour/transaction/detail/${transaction.id}`),
       },
     };
 

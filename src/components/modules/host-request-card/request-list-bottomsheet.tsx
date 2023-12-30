@@ -121,13 +121,16 @@ const RequestListBottomSheet = ({
     };
     return lookup[transaction?.status.step];
   };
+
   const startDate = localizeNumber(
-    moment(transaction?.dateStart).locale("fa").format("jDD jMMMM ")
+    moment(transaction?.dateStart)?.locale("fa")?.format("jDD jMMMM")
   );
   const endDate = localizeNumber(
-    moment(transaction?.dateEnd).locale("fa").format("jDD jMMMM jYYYY")
+    moment(transaction?.dateEnd)?.locale("fa")?.format("jDD jMMMM jYYYY")
   );
+
   const step = getCurrentStep();
+
   return (
     <BottomSheet isVisible={isVisible} {...props}>
       <View style={style.bottomSheet}>
@@ -185,7 +188,7 @@ const RequestListBottomSheet = ({
             </View>
             <Divider />
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <Text body2>{localizeNumber(transaction?.guestSet.length)}</Text>
+              <Text body2>{localizeNumber(transaction?.guest.guestNumber)}</Text>
               <Text body2 type="grey2">
                 {tr("passengers count")}
               </Text>

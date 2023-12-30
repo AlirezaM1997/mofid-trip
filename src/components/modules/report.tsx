@@ -1,12 +1,10 @@
-import { ScrollView, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { BottomSheet, Button, CheckBox, Divider, Input, ListItem, Text } from "@rneui/themed";
+import { ScrollView, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import useTranslation from "@src/hooks/translation";
-import { HEIGHT } from "@src/constants";
-import Container from "@atoms/container";
-import WhiteSpace from "@atoms/white-space";
+import { BottomSheet, Button, CheckBox, Divider, Input, ListItem, Text } from "@rneui/themed";
 import { useURL } from "expo-linking";
+import { FieldArray, Formik } from "formik";
+import * as Yup from "yup";
 import {
   ReportTypeEnum,
   useReportAddMutation,
@@ -14,8 +12,11 @@ import {
 } from "@src/gql/generated";
 import LoadingIndicator from "./Loading-indicator";
 import { useLocalSearchParams } from "expo-router";
-import * as Yup from "yup";
-import { FieldArray, Formik } from "formik";
+import Container from "@atoms/container";
+import WhiteSpace from "@atoms/white-space";
+import { HEIGHT } from "@src/constants";
+import useTranslation from "@src/hooks/translation";
+import Toast from "react-native-toast-message";
 
 const Report = ({ closeMoreDetails }) => {
   const { name, id } = useLocalSearchParams();
@@ -25,7 +26,7 @@ const Report = ({ closeMoreDetails }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
 
-  const [reportAdd] = useReportAddMutation();
+  const [reportAdd , { error: errorReportAdd , data: dataReportAdd , loading: loadingReportAdd}] = useReportAddMutation();
 
   const { loading, data } = useReportCategoryListQuery();
 
@@ -37,19 +38,25 @@ const Report = ({ closeMoreDetails }) => {
   const handleClose = () => setIsVisible(false);
 
   const handleًReport = variables => {
-    reportAdd({
-      variables: {
-        data: {
-          objectId: +id,
-          objectType: tour ? ReportTypeEnum.Tour : ReportTypeEnum.Project,
-          types: variables.checkBoxList.filter(item => item.checked === true).map(item => item.id),
-          description: variables.checkBoxList[variables.checkBoxList.length - 1]
-            ? variables.textBox
-            : "",
+    if (true) {
+      reportAdd({
+        variables: {
+          data: {
+            objectId: +id,
+            objectType: tour ? ReportTypeEnum.Tour : ReportTypeEnum.Project,
+            types: variables.checkBoxList
+              .filter(item => item.checked === true)
+              .map(item => item.id),
+            description: variables.checkBoxList[variables.checkBoxList.length - 1]
+              ? variables.textBox
+              : "",
+          },
         },
-      },
-    });
-    handleClose();
+      });
+      console.log('====================================');
+      console.log(errorReportAdd.message);
+      console.log('====================================');
+    }
   };
 
   const initialValues = {
@@ -74,6 +81,24 @@ const Report = ({ closeMoreDetails }) => {
       otherwise: () => Yup.string(),
     }),
   });
+
+  useEffect(() => {
+    if (!loadingReportAdd && dataReportAdd ) {
+      Toast.show({
+        type: "success",
+        text1: tr("Successful"),
+        text2: tr("Profile saved successfully"),
+      });
+    handleClose();
+    }
+    if (errorReportAdd) {
+      Toast.show({
+        type: "error",
+        text1: tr("Error"),
+        text2: JSON.stringify(errorReportAdd.message),
+      });
+    }
+  }, [loadingReportAdd, dataReportAdd, errorReportAdd]);
 
   useEffect(() => {
     if (!loading && data) {
@@ -133,6 +158,7 @@ const Report = ({ closeMoreDetails }) => {
             handleChange,
             handleBlur,
             setFieldTouched,
+            setFieldValue,
             touched,
             values,
             errors,
@@ -165,13 +191,14 @@ const Report = ({ closeMoreDetails }) => {
                             <CheckBox
                               checked={obj.checked}
                               title={categoryList[index].name}
-                              name={`checkBoxList[${index}]`}
-                              onPress={() =>
+                              name={`checkBoxList[${index}]`} 
+                              onPress={() => {
                                 replace(index, {
                                   id: categoryList[index].id,
                                   checked: !obj.checked,
-                                })
-                              }
+                                });
+                                if (index === categoryList.length - 1) setFieldValue("textBox", "");
+                              }}
                             />
                           </ListItem>
                         ));
@@ -181,7 +208,7 @@ const Report = ({ closeMoreDetails }) => {
                       <>
                         <WhiteSpace />
                         <Text caption type="error">
-                          {errors.checkBoxList}
+                          {errors.checkBoxList.toString()}
                         </Text>
                       </>
                     )}
@@ -205,7 +232,7 @@ const Report = ({ closeMoreDetails }) => {
                         {touched.textBox && errors.textBox && (
                           <>
                             <Text caption type="error">
-                              {errors.textBox}
+                              {errors.textBox.toString()}
                             </Text>
                             <WhiteSpace />
                           </>
