@@ -2243,6 +2243,11 @@ export const messages = {
     fa_ir: "لغو",
     en_us: "Cancel",
   },
+  "i have a child under 12 years old": {
+    ar: "لدي طفل أقل من 12 سنة",
+    fa_ir: "دارای کودک زیر ۱۲ سال می‌باشم",
+    en_us: "I have a child under 12 years old",
+  },
   "host reservation": {
     ar: "حجز الاستضافة",
     fa_ir: "رزرو میزبانی",
