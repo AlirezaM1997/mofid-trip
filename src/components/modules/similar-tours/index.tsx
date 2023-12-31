@@ -1,5 +1,6 @@
 import { Text } from "@rneui/themed";
 import { AccommodationQueryType, ProjectQueryType, TourQueryType } from "@src/gql/generated";
+import { useFormatPrice } from "@src/hooks/localization";
 import { router } from "expo-router";
 import React from "react";
 import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View } from "react-native";
@@ -14,6 +15,8 @@ type ItemPropsType = {
 };
 
 const Item = ({ tour }: ItemPropsType) => {
+  const { formatPrice } = useFormatPrice();
+
   return (
     <View style={style.card}>
       <ImageBackground
@@ -30,7 +33,7 @@ const Item = ({ tour }: ItemPropsType) => {
         <Text numberOfLines={1} style={style.projectAddress} body2>
           {(tour.destination as AccommodationQueryType)?.address}
         </Text>
-        <Text style={style.price}>${tour.packages[0].price.toString()}</Text>
+        <Text style={style.price}>{formatPrice(+tour.packages[0].price.toString())}</Text>
       </View>
     </View>
   );

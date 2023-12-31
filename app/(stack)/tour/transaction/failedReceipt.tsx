@@ -17,6 +17,8 @@ import {
 import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormatPrice } from "@src/hooks/localization";
+import ButtonRow from "@modules/button-rows";
+import ShareButton from "@modules/share-button";
 
 const Receipt = () => {
   const { theme } = useTheme();
@@ -61,15 +63,12 @@ const Receipt = () => {
   return (
     <BottomButtonLayout
       buttons={[
-        <View style={styles.btnContainer}>
-          <Button containerStyle={styles.buttonStyle}>{tr("share")}</Button>
-          <Button
-            type="outline"
-            onPress={() => router.push("/")}
-            containerStyle={styles.buttonStyle}>
+        <ButtonRow>
+          <ShareButton />
+          <Button type="outline" onPress={() => router.push("/")}>
             {tr("return to home")}
           </Button>
-        </View>,
+        </ButtonRow>,
       ]}>
       <Container style={styles.topContainer}>
         <View style={styles.topContent}>
@@ -118,7 +117,7 @@ const Receipt = () => {
                 style={[styles.tickIcon, { color: theme.colors.white }]}
               />
             }>
-            {tr("unsuccessful payment, wallet balance is not enough")}
+            {tr("unsuccessful payment")}
           </Button>
         </View>
       </Container>
@@ -176,15 +175,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   centerContainer: { marginVertical: 27 },
-  btnContainer: {
-    gap: 10,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  buttonStyle: {
-    width: "50%",
-  },
   detailsContainer: {
     width: "100%",
     display: "flex",

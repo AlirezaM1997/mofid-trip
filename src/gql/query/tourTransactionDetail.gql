@@ -11,6 +11,13 @@ query tourTransactionDetail($pk: ID!) {
     }
     tourguestSet {
       id
+      birthday
+      lastname
+      firstname
+      phoneNumber
+
+      identifyNumber
+      gender
     }
     status {
       isActive

@@ -65,7 +65,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="loginDetails"
+        name="login-details"
         options={{
           title: tr("personal information"),
         }}
@@ -170,6 +170,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="tour/management/[tourId]"
+        options={{
+          title: tr("Loading"),
+        }}
+      />
+      <Stack.Screen
         name="tour/requests/toMyTours"
         options={{
           title: tr("apply to my tours"),
@@ -236,13 +242,31 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="tour/[tourId]/reservation/step-1"
+        name="tour/management/request/[tourId]"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/[tourId]/reservation/add/step-1"
         options={{
           title: tr("Tour Reservation"),
         }}
       />
       <Stack.Screen
-        name="tour/[tourId]/reservation/step-2"
+        name="tour/[tourId]/reservation/add/step-2"
+        options={{
+          title: tr("Tour Reservation"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/[tourId]/reservation/edit/step-1"
+        options={{
+          title: tr("Tour Reservation"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/[tourId]/reservation/edit/step-2"
         options={{
           title: tr("Tour Reservation"),
         }}

@@ -22,7 +22,7 @@ import {
 } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
-import ShareReportDropDown from "@modules/share&reportDropDown";
+import ShareReportDropDown from "@modules/share-report-dropdown";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/store";
 import { useIsAuthenticated } from "@src/hooks/auth";
@@ -37,8 +37,10 @@ export default () => {
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
-  const isAuthenticated = useIsAuthenticated()
-  const isNgo = useSelector((state: RootState) => state.authSlice?.loginData?.metadata?.is_ngo || false);
+  const isAuthenticated = useIsAuthenticated();
+  const isNgo = useSelector(
+    (state: RootState) => state.authSlice?.loginData?.metadata?.is_ngo || false
+  );
   const { loading, data } = useTourDetailQuery({
     variables: {
       pk: tourId as string,
@@ -56,7 +58,7 @@ export default () => {
   const handleNavigateToReserve = (tourPackage: TourPackageType) => {
     setIsVisible(false);
     router.push({
-      pathname: `/tour/${tour.id}/reservation/step-1`,
+      pathname: `/tour/${tour.id}/reservation/add/step-1`,
       params: {
         tourId: tour.id,
         tourPackage: JSON.stringify(tourPackage),
@@ -64,13 +66,13 @@ export default () => {
     });
   };
 
-  const handleBuy = (p) => {
+  const handleBuy = p => {
     if (isAuthenticated) {
-      handleNavigateToReserve(p)
+      handleNavigateToReserve(p);
     } else {
-      setIsVisiblePrevent(true)
+      setIsVisiblePrevent(true);
     }
-  }
+  };
 
   const startTime = moment(tour?.startTime).locale("fa").format("MMMM D");
   const endTime = moment(tour?.endTime).locale("fa").format("MMMM D");

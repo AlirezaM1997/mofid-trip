@@ -49,7 +49,7 @@ const walletCardsScreen = () => {
         <WhiteSpace size={24} />
 
         {!walletCards.length ? (
-          <NoResult />
+          <NoResult title={tr("there is no card in your wallet")} />
         ) : (
           walletCards?.map(card => <WalletCardDetailBottomSheet key={card.id} card={card} />)
         )}

@@ -57,6 +57,7 @@ const HostTransactionDetail = ({
 
       <PaymentStep
         status={status}
+        creator={project?.creator}
         location={{ lat: project.accommodation.lat, lng: project.accommodation.lng }}
       />
 

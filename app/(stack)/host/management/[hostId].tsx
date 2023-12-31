@@ -2,23 +2,22 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import ImageSlider from "@modules/image-slider";
 import Stepper from "@modules/stepper";
-import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
+import { ListItem, Text, useTheme } from "@rneui/themed";
 import {
   ProjectStatusEnum,
   MyNgoDetailProjectSetQuery,
   useMyNgoDetailProjectSetQuery,
 } from "@src/gql/generated";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import useTranslation from "@src/hooks/translation";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import { Divider } from "@rneui/themed";
-import { StyleSheet, View } from "react-native";
-import ComingSoon from "@modules/coming-soon";
+import { Linking } from "react-native";
 import LoadingIndicator from "@modules/Loading-indicator";
-import { calculateHoursSinceGivenDate } from "@src/helper/date";
+import { passedTime } from "@src/helper/date";
 
 const HostDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -28,12 +27,8 @@ const HostDetailScreen = () => {
   const { hostId } = useLocalSearchParams();
   const [host, setHost] = useState<MyNgoDetailProjectSetQuery["NGODetail"]["projectSet"][0]>();
   const steps = [tr("pending"), tr("published")];
-  const [isVisible, setIsVisible] = useState(false);
-  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { loading, data } = useMyNgoDetailProjectSetQuery();
-
-  const handleClose = () => setIsVisible(false);
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
@@ -41,6 +36,10 @@ const HostDetailScreen = () => {
       [ProjectStatusEnum.Accept]: 2,
     };
     return lookup[host.statusStep];
+  };
+
+  const makePhoneCall = () => {
+    Linking.openURL("tel:09036495273");
   };
 
   const handleGoToHost = () =>
@@ -74,8 +73,8 @@ const HostDetailScreen = () => {
           {host?.name}
         </Text>
         <Text caption type="grey3">
-          {tr("Last modification")}
-          {localizeNumber(calculateHoursSinceGivenDate(host.modifiedDate))} {tr("hour later")}
+          {tr("last modification")}
+          {passedTime(host.modifiedDate)}
         </Text>
         <WhiteSpace size={20} />
         <Text subtitle1 bold>
@@ -109,24 +108,23 @@ const HostDetailScreen = () => {
           color={theme.colors.grey3}
         />
       </ListItem>
-      {host.statusStep === ProjectStatusEnum.Accept &&
-        host.statusActivation && (
-          <ListItem onPress={handleNavigateToRequest}>
-            <Feather name="users" size={24} color={theme.colors.black} />
-            <ListItem.Content>
-              <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>
-            </ListItem.Content>
-            <Feather
-              name={isRtl ? "chevron-left" : "chevron-right"}
-              size={24}
-              color={theme.colors.grey3}
-            />
-          </ListItem>
-        )}
+      {host.statusStep === ProjectStatusEnum.Accept && host.statusActivation && (
+        <ListItem onPress={handleNavigateToRequest}>
+          <Feather name="users" size={24} color={theme.colors.black} />
+          <ListItem.Content>
+            <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>
+          </ListItem.Content>
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
+        </ListItem>
+      )}
 
       <Divider thickness={8} bgColor="grey0" />
 
-      <ListItem onPress={() => setIsVisible(true)}>
+      <ListItem onPress={makePhoneCall}>
         <Feather name="phone" size={24} color={theme.colors.black} />
         <ListItem.Content>
           <ListItem.Title>{tr("Contact Support")}</ListItem.Title>
@@ -137,24 +135,8 @@ const HostDetailScreen = () => {
           color={theme.colors.grey3}
         />
       </ListItem>
-
-      <BottomSheet isVisible={isVisible} onBackdropPress={handleClose}>
-        <ListItem>
-          <ListItem.Content>
-            <ComingSoon />
-            <WhiteSpace size={10} />
-            <Button containerStyle={styles.containerStyle} onPress={handleClose}>
-              {tr("ok")}
-            </Button>
-          </ListItem.Content>
-        </ListItem>
-      </BottomSheet>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  containerStyle: { width: "100%" },
-});
 
 export default HostDetailScreen;

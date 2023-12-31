@@ -1,18 +1,21 @@
-import { router } from "expo-router";
-import TourCard from "@modules/tour/card";
 import React from "react";
+import { router } from "expo-router";
+import Container from "@atoms/container";
+import { Skeleton } from "@rneui/themed";
+import TourCard from "@modules/tour/card";
+import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView, View, StyleSheet } from "react-native";
 import { AccommodationQueryType, useTourListQuery } from "@src/gql/generated";
-import Container from "@atoms/container";
-import { Skeleton, Text } from "@rneui/themed";
-import WhiteSpace from "@atoms/white-space";
 
 function TourList() {
   const { tr } = useTranslation();
   const { data, loading } = useTourListQuery({
     variables: {
+      sort: {
+        descending: true,
+      },
       page: {
         pageNumber: 1,
         pageSize: 8,

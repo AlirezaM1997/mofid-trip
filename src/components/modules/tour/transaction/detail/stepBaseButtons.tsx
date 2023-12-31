@@ -13,9 +13,9 @@ const StepBaseButtons = ({ status, transactionId, tourPackage }) => {
 
   const editReservationHandler = () => {
     router.push({
-      pathname: `/tour/${transactionId}/reservation/step-1`,
+      pathname: `/tour/${tourPackage.tour.id}/reservation/edit/step-1`,
       params: {
-        tourId: transactionId,
+        transactionId,
         tourPackage: JSON.stringify(tourPackage),
       },
     });

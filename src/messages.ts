@@ -160,6 +160,11 @@ export const messages = {
     fa_ir: "شماره کارت باید ۱۶ رقمی باشد",
     en_us: "cardpan should be 16 character",
   },
+  "iban should be 24 character": {
+    ar: "يجب أن يتكون رقم البطاقة من ۲۴ رقمًا",
+    fa_ir: "شماره شبا باید ۲۴ رقمی باشد",
+    en_us: "iban should be 24 character",
+  },
   "card added successfully": {
     ar: "تمت إضافة البطاقة الجديدة بنجاح",
     fa_ir: "کارت جدید با موفقیت اضافه شد",
@@ -169,6 +174,11 @@ export const messages = {
     ar: "مطلوب بطاقة",
     fa_ir: "شماره کارت ضروری است",
     en_us: "cardPan is required",
+  },
+  "iban is required": {
+    ar: "مطلوب بطاقة",
+    fa_ir: "شماره شبا ضروری است",
+    en_us: "iban is required",
   },
   "card name": {
     ar: "اسم البطاقة",
@@ -1045,10 +1055,10 @@ export const messages = {
     en_us: "Your request has been successfully submitted",
   },
 
-  "unsuccessful payment, wallet balance is not enough": {
-    ar: "عملية دفع غير ناجحة، رصيد المحفظة غير كافي",
-    fa_ir: "پرداخت ناموفق، موجودی کیف پول کافی نمی‌باشد",
-    en_us: "Unsuccessful payment, wallet balance is not enough",
+  "unsuccessful payment": {
+    ar: "عملية دفع غير ناجحة",
+    fa_ir: "پرداخت ناموفق",
+    en_us: "Unsuccessful payment",
   },
   "your payment has been successfully completed, to continue the process and view receipt click the return button.":
     {
@@ -1071,11 +1081,6 @@ export const messages = {
         "your payment has been failed, to continue the process and view receipt click the return button.",
     },
 
-  "unsuccessful payment": {
-    ar: "عملية دفع غير ناجحة",
-    fa_ir: "پرداخت ناموفق",
-    en_us: "Unsuccessful payment",
-  },
   "payment status": {
     ar: "حالة السداد",
     fa_ir: "وضعیت پرداخت ",
@@ -1529,6 +1534,16 @@ export const messages = {
     fa_ir: "مدیریت ها",
     en_us: "Managements",
   },
+  "you can communicate with the host owner by calling and texting.": {
+    ar: "يمكنك إجراء حجز مع المضيف عن طريق الاتصال والرسائل النصية لقد تواصلت.",
+    fa_ir: "شما می‌توانید از طریق تماس و پیامک، با میزبان هاستی که رزرو کرده اید ارتباط برقرار کنید.",
+    en_us: "you can communicate with the host owner by calling and texting.",
+  },
+  "communication with the host": {
+    ar: "التواصل مع المضيف",
+    fa_ir: "ارتباط با میزبان",
+    en_us: "communication with the host",
+  },
   "tour transactions": {
     ar: "طلب جولة",
     fa_ir: "درخواست به تور",
@@ -1539,25 +1554,55 @@ export const messages = {
     fa_ir: "درخواست به هاست",
     en_us: "Host transactions",
   },
-  "manage your requests for hosting and trips": {
+  "manage your requests for host": {
     ar: "إدارة طلباتك للاستضافة والرحلات",
-    fa_ir: "مدیریت درخواست های شما به میزبانی ها و سفرهای انجام شده",
-    en_us: "Manage your requests for hosting and trips",
+    fa_ir: "مدیریت درخواست های شما به میزبانی ها",
+    en_us: "Manage your requests for host",
+  },
+  "view and manage tour": {
+    ar: "المشاهدة والإدارة",
+    fa_ir: "مشاهده و مدیریت تور",
+    en_us: "view and manage tour",
+  },
+  "view and manage host": {
+    ar: "المشاهدة والإدارة",
+    fa_ir: "مشاهده و مدیریت هاست",
+    en_us: "view and manage host",
   },
   requests: {
     ar: "طلبات",
     fa_ir: "درخواست ها",
     en_us: "Requests",
   },
+  "there is no request for this host": {
+    ar: "لا يوجد طلب لهؤلاء المضيفين",
+    fa_ir: "درخواستی برای این هاست وجود نداره",
+    en_us: "there is no request for this host",
+  },
+  "there is no request for this tour": {
+    ar: "لا يوجد طلب لهؤلاء المضيفين",
+    fa_ir: "درخواستی برای این تور وجود نداره",
+    en_us: "there is no request for this tour",
+  },
   buy: {
     ar: "يشتري",
     fa_ir: "خرید",
     en_us: "buy",
   },
+  "there is no card in your wallet": {
+    ar: "لا توجد بطاقة في محفظتك",
+    fa_ir: "کارتی در کیف‌‌‌‌‌ پول شما وجود ندارد",
+    en_us: "there is no card in your wallet",
+  },
   "after paying the tour fee, your reservation will be finalized": {
     ar: "بعد دفع رسوم الجولة، سيتم الانتهاء من حجزك",
     fa_ir: "شما بعد از پرداخت هزینه تور، رزروتان نهایی می شود",
     en_us: "After paying the tour fee, your reservation will be finalized",
+  },
+  "after paying the host fee, your reservation will be finalized": {
+    ar: "بعد دفع رسوم الجولة، سيتم الانتهاء من حجزك",
+    fa_ir: "شما بعد از پرداخت هزینه هاست، رزروتان نهایی می شود",
+    en_us: "After paying the host fee, your reservation will be finalized",
   },
   "are you sure about the payment?": {
     ar: "هل أنت متأكد من الدفع؟",
@@ -2183,6 +2228,11 @@ export const messages = {
     fa_ir: "جزئیات",
     en_us: "Detail",
   },
+  "it is free": {
+    ar: "إنه مجاني",
+    fa_ir: "رایگان می‌باشد",
+    en_us: "It is free",
+  },
   origin: {
     ar: "أصل",
     fa_ir: "مبدا",
@@ -2242,6 +2292,11 @@ export const messages = {
     ar: "يلغي",
     fa_ir: "لغو",
     en_us: "Cancel",
+  },
+  "i have a child under 12 years old": {
+    ar: "لدي طفل أقل من 12 سنة",
+    fa_ir: "دارای کودک زیر ۱۲ سال می‌باشم",
+    en_us: "I have a child under 12 years old",
   },
   "host reservation": {
     ar: "حجز الاستضافة",
@@ -2661,9 +2716,11 @@ export const messages = {
     fa_ir: "دسترسی ندارید!",
     en_us: "Access Denied",
   },
-  "it appears that you do not have permission to access this page. access the system administrator for access.": {
-    ar: "يبدو أنه ليس لديك إذن للوصول إلى هذه الصفحة. الوصول إلى مسؤول النظام للوصول.",
-    fa_ir: "به نظر می رسد که شما اجازه دسترسی به این صفحه را ندارید.",
-    en_us: "It appears that you do not have permission to access this page. Access the system administrator for access.",
-  },
+  "it appears that you do not have permission to access this page. access the system administrator for access.":
+    {
+      ar: "يبدو أنه ليس لديك إذن للوصول إلى هذه الصفحة. الوصول إلى مسؤول النظام للوصول.",
+      fa_ir: "به نظر می رسد که شما اجازه دسترسی به این صفحه را ندارید.",
+      en_us:
+        "It appears that you do not have permission to access this page. Access the system administrator for access.",
+    },
 };

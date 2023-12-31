@@ -8,10 +8,10 @@ import StepBaseButtons from "./stepBaseButtons";
 import { useLocalSearchParams } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import { ScrollView } from "react-native-gesture-handler";
-import CancelTransaction from "@modules/tour/transaction/cancle";
+import { TransactionStatusEnum } from "@src/gql/generated";
 import Invoice from "@modules/tour/transaction/detail/invoice";
+import CancelTransaction from "@modules/tour/transaction/cancle";
 import TransactionDetailCard from "@modules/tour/transaction/detail/card";
-import { TourPackageType, TransactionStatusEnum } from "@src/gql/generated";
 
 const TourTransactionDetail = ({ transactionDetail }) => {
   const { tr } = useTranslation();

@@ -10,6 +10,7 @@ query myNGODetailTourSet {
       statusStep
       statusActivation
       createdDate
+      modifiedDate
       origin {
         ... on AccommodationQueryType {
           id

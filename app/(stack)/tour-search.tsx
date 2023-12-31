@@ -53,7 +53,7 @@ const TourSearch: React.FC = () => {
         ) : (
           <Container size={25} style={styles.resultContainer}>
             {list
-              .filter(tour => tour.title.includes(searchText))
+              .filter(tour => tour.title.toLowerCase().includes(searchText.toLowerCase()))
               .map((tour, index) => (
                 <TourCard
                   key={index}

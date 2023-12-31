@@ -19,7 +19,7 @@ import ProjectFacilities from "@src/components/modules/host/facilities";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import ProjectBoldFeatures from "@src/components/modules/host/bold-features";
 import { ProjectQueryType, useProjectDetailQuery } from "@src/gql/generated";
-import ShareReportDropDown from "@modules/share&reportDropDown";
+import ShareReportDropDown from "@modules/share-report-dropdown";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
@@ -58,7 +58,6 @@ const Page: React.FC = ({ ...props }) => {
     description,
     accommodation,
   } = data.projectDetail;
-  console.log(accommodation.avatarS3);
 
   return (
     <BottomButtonLayout
@@ -94,7 +93,6 @@ const Page: React.FC = ({ ...props }) => {
 
           <ProjectFacilities facilities={facilities} />
 
-          <ContactCard user={creator ?? {}} />
           {/* <ContactCard user={tour.NGO.user} /> */}
 
           <View style={style.infoContainer}>

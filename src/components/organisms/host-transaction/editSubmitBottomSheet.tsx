@@ -28,6 +28,11 @@ const HostTransactionEditSubmitBottomSheet = ({
         data: {
           ...values,
           transactionId,
+          guests: {
+            gender: values.guests.gender,
+            childAccept: values.guests.childAccept,
+            guestNumber: +values.guests.guestNumber,
+          },
           status: { step: status.step, isActive: status.isActive },
         },
       },

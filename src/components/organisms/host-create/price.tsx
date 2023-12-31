@@ -94,13 +94,13 @@ const TabPrice = () => {
         <View style={styles.row}>
           <Text>تخفیف {localizeNumber(values.discount)}%</Text>
           <Text>+</Text>
-          <Text>قیمت پایه {localizeNumber(formatPrice(values.price ?? 0))}</Text>
+          <Text>قیمت پایه {(formatPrice(+values.price ?? 0))}</Text>
         </View>
         <Text>=</Text>
         <Text>
           {values.discount
             ? formatPrice(values.price - ((values.price || 0) * values.discount) / 100)
-            : 0}
+            : formatPrice(+values.price)}
         </Text>
       </View>
     </>
