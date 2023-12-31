@@ -25,6 +25,7 @@ const Report = ({ closeMoreDetails }) => {
   const tour = url?.split("/")[3] === "tour";
   const [isVisible, setIsVisible] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
+  const catList = ['هرزنامه' ,'حساب جعلی','محتوای خشونت آمیز','محتوای غیر اخلاقی','سرقت اطلاعات خصوصی اشخاص','سایر']
 
   const [reportAdd, { loading: loadingReportAdd, error: errorReportAdd }] = useReportAddMutation();
 
@@ -171,7 +172,7 @@ const Report = ({ closeMoreDetails }) => {
                             key={index}>
                             <CheckBox
                               checked={obj.checked}
-                              title={categoryList[index].name}
+                              title={catList[index]}
                               onPress={() => {
                                 replace(index, {
                                   id: categoryList[index].id,
