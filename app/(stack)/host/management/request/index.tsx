@@ -5,7 +5,6 @@ import useTranslation from "@src/hooks/translation";
 import {
   MyNgoDetailProjectTransactionSetQuery,
   MyUserDetailProjectTransactionSetQuery,
-  useMyNgoDetailProjectTransactionSetQuery,
   useMyUserDetailProjectTransactionSetQuery,
 } from "@src/gql/generated";
 import LoadingIndicator from "@modules/Loading-indicator";

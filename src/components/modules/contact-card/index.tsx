@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { Avatar, BottomSheet, Text, useTheme } from "@rneui/themed";
 import { Ionicons } from "@expo/vector-icons";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { Pressable } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -15,7 +15,7 @@ const ContactCard = ({ user }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>();
-
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   return (
     <>
@@ -45,7 +45,7 @@ const ContactCard = ({ user }) => {
               <Text caption type="grey3">
                 {tr("ngo details")}
               </Text>
-              <Text subtitle2>{user.fullname}</Text>
+              <Text subtitle2>{localizeNumber(user.fullname)}</Text>
             </View>
           </View>
         </Pressable>
