@@ -7,32 +7,27 @@ import { AccommodationQueryType, useMyNgoDetailTourSetQuery } from "@src/gql/gen
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { getTourRequestStatusBadgeColor } from "@src/helper/tour";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { router } from "expo-router";
 import LoadingIndicator from "@modules/Loading-indicator";
 
 const TourManagement = () => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [tourSet, setTourSet] = useState([]);
-  const { loading, data } = useMyNgoDetailTourSetQuery();
+  const { loading, data } = useMyNgoDetailTourSetQuery({
+    fetchPolicy: "network-only",
+  });
   const { theme } = useTheme();
 
   const navigateToTourDetail = (tourId: string) => {
     router.push(`/tour/management/${tourId}`);
   };
 
-  useEffect(() => {
-    if (!loading && data) {
-      setTourSet(data.NGODetail.tourSet);
-    }
-  }, [loading, data]);
-
   if (loading) return <LoadingIndicator />;
 
   return (
     <View>
-      {tourSet.map(tour => (
+      {data?.NGODetail?.tourSet.map(tour => (
         <Card key={tour.id}>
           <Pressable onPress={() => navigateToTourDetail(tour.id)}>
             <Card.Image
