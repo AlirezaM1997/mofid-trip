@@ -13,7 +13,7 @@ type PropsType = {
 
 const ConfirmButton = ({ transaction }: PropsType) => {
   const { tr } = useTranslation();
-  const [addPurchase] = useTourPurchaseAddMutation();
+  const [addPurchase, { loading }] = useTourPurchaseAddMutation();
 
   const purchaseHandler = async () => {
     const ip = await Network.getIpAddressAsync();
@@ -34,6 +34,12 @@ const ConfirmButton = ({ transaction }: PropsType) => {
     router.push(data.tourPurchaseAdd.metadata?.url);
   };
 
-  return <TransactionButtons transaction={transaction} purchaseHandler={purchaseHandler} />;
+  return (
+    <TransactionButtons
+      purchaseLoading={loading}
+      transaction={transaction}
+      purchaseHandler={purchaseHandler}
+    />
+  );
 };
 export default ConfirmButton;

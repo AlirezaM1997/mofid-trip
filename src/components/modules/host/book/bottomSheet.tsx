@@ -2,17 +2,18 @@ import { Text } from "@rneui/themed";
 import { RootState } from "@src/store";
 import React, { useState } from "react";
 import Container from "@atoms/container";
+import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
 import { getCapacity } from "@src/helper/tour";
 import Toast from "react-native-toast-message";
 import { BottomSheet, Button } from "@rneui/themed";
 import { ProjectQueryType } from "@src/gql/generated";
-import { useDispatch, useSelector } from "react-redux";
+import { useFormatPrice } from "@src/hooks/localization";
 import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { useFormatPrice } from "@src/hooks/localization";
+import { useIsAuthenticated } from "@src/hooks/auth";
 
 const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { tr } = useTranslation();
@@ -24,12 +25,15 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
     (state: RootState) => state.authSlice?.loginData?.metadata?.is_ngo || false
   );
   const { formatPrice } = useFormatPrice();
+  const isAuthenticated = useIsAuthenticated();
 
   const handlePress = () => {
-    if (!isNgo) {
-      setIsVisible(true);
-      return;
-    }
+    // if (!isNgo) {
+    //   setIsVisible(true);
+    //   return;
+    // }
+
+    if (!isAuthenticated) return router.push("/authentication");
 
     if (getCapacity(project.capacity) === 0) {
       Toast.show({

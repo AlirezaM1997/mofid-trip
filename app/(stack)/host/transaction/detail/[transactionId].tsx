@@ -21,7 +21,7 @@ const TransactionDetailsScreen = () => {
   const { transactionId } = useLocalSearchParams();
   const [isVisible, setIsVisible] = useState(false);
 
-  const [addPurchase] = useProjectPurchaseAddMutation();
+  const [addPurchase, { loading: purchaseLoading }] = useProjectPurchaseAddMutation();
 
   const { data, loading } = useProjectTransactionDetailQuery({
     variables: { pk: transactionId as string },
@@ -55,8 +55,7 @@ const TransactionDetailsScreen = () => {
     });
 
     if (data.projectPurchaseAdd.status === "OK") {
-      console.log('==', data.projectPurchaseAdd.metadata?.url)
-      // router.push(data.projectPurchaseAdd.metadata?.url);
+      router.push(data.projectPurchaseAdd.metadata?.url);
     }
   };
 
@@ -68,7 +67,13 @@ const TransactionDetailsScreen = () => {
         </Button>
       ),
       SUCCESSFUL: <Button>{tr("rates to the host")}</Button>,
-      ACCEPT: <Button onPress={() => setIsVisible(true)}>{tr("pay")}</Button>,
+      ACCEPT: project.price ? (
+        <Button onPress={() => setIsVisible(true)}>{tr("pay")}</Button>
+      ) : (
+        <Button loading={purchaseLoading} onPress={purchaseHandler}>
+          {tr("reservation")}
+        </Button>
+      ),
     };
     return lookup[status.step || null];
   };
@@ -79,9 +84,10 @@ const TransactionDetailsScreen = () => {
         transactionDetail={data.projectTransactionDetail as ProjectTransactionQueryType}
       />
       <AcceptPayment
-        purchaseHandler={purchaseHandler}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
+        purchaseLoading={purchaseLoading}
+        purchaseHandler={purchaseHandler}
       />
     </BottomButtonLayout>
   );

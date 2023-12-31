@@ -8,11 +8,17 @@ import ButtonRow from "@modules/button-rows";
 
 type PropsType = {
   isVisible: boolean;
-  setIsVisible: (t: boolean) => void;
+  purchaseLoading: boolean;
   purchaseHandler: () => void;
+  setIsVisible: (t: boolean) => void;
 };
 
-const AcceptPayment = ({ isVisible, setIsVisible, purchaseHandler }: PropsType) => {
+const AcceptPayment = ({
+  isVisible,
+  setIsVisible,
+  purchaseHandler,
+  purchaseLoading,
+}: PropsType) => {
   const { tr } = useTranslation();
 
   return (
@@ -25,14 +31,16 @@ const AcceptPayment = ({ isVisible, setIsVisible, purchaseHandler }: PropsType) 
           <Text heading2 style={styles.headerText}>
             {tr("Are you sure about the payment?")}
           </Text>
-          <Text caption>{tr("After paying the tour fee, your reservation will be finalized")}</Text>
+          <Text caption>{tr("after paying the host fee, your reservation will be finalized")}</Text>
         </View>
 
         <ButtonRow>
           <Button type="outline" onPress={() => setIsVisible(false)}>
             {tr("cancel payment")}
           </Button>
-          <Button onPress={purchaseHandler}>{tr("pay")}</Button>
+          <Button loading={purchaseLoading} onPress={purchaseHandler}>
+            {tr("pay")}
+          </Button>
         </ButtonRow>
       </Container>
     </BottomSheet>

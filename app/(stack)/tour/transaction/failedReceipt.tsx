@@ -118,7 +118,7 @@ const Receipt = () => {
                 style={[styles.tickIcon, { color: theme.colors.white }]}
               />
             }>
-            {tr("unsuccessful payment, wallet balance is not enough")}
+            {tr("unsuccessful payment")}
           </Button>
         </View>
       </Container>

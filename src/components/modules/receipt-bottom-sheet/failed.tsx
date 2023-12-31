@@ -104,7 +104,7 @@ const FailedReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => {
           buttonStyle={styles.chip}
           color={theme.colors.error}
           titleStyle={styles.chipTitle(theme)}
-          title={tr("unsuccessful payment, wallet balance is not enough")}
+          title={tr("unsuccessful payment")}
           icon={<AntDesign size={16} name="checkcircle" color={theme.colors.white} />}
         />
       </Container>

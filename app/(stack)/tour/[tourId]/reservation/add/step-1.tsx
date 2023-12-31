@@ -14,24 +14,11 @@ import { Feather } from "@expo/vector-icons";
 import {
   AccountSettingLanguageChoices,
   GuestGenderEnum,
-  TourDetailQuery,
   TourPackageType,
-  useTourDetailQuery,
 } from "@src/gql/generated";
 import Input from "@atoms/input";
 import { Text } from "@rneui/themed";
-import useTourTable from "@src/hooks/db/tour";
 import { useFormatPrice } from "@src/hooks/localization";
-import LoadingIndicator from "@modules/Loading-indicator";
-
-const defaultGuest = {
-  firstname: "",
-  lastname: "",
-  phoneNumber: "",
-  identifyNumber: "",
-  birthday: "",
-  gender: GuestGenderEnum.Male,
-};
 
 const numbers = [
   "First",
@@ -89,28 +76,23 @@ const numbers = [
 export default () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { tourId, tourPackage } = useLocalSearchParams();
   const { formatPrice } = useFormatPrice();
-  const tourPackageObj: TourPackageType = JSON.parse(tourPackage as string);
   const { localizeNumber } = useLocalizedNumberFormat();
-  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
-  const [tour, setTour] = useState<TourDetailQuery["tourDetail"]>();
+  const { tourId, tourPackage } = useLocalSearchParams();
+  const tourPackageObj: TourPackageType = JSON.parse(tourPackage as string);
 
-  const { loading, data } = useTourDetailQuery({
-    variables: {
-      pk: tourId as string,
-    },
-  });
+  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
+
+  const defaultGuest = {
+    birthday: "",
+    lastname: "",
+    firstname: "",
+    phoneNumber: "",
+    identifyNumber: "",
+    gender: GuestGenderEnum.Male,
+  };
 
   const handleBack = () => router.back();
-
-  useEffect(() => {
-    if (!loading && data) {
-      setTour(data.tourDetail);
-    }
-  }, [loading, data]);
-
-  if (loading || !tour) return <LoadingIndicator />;
 
   return (
     <>
@@ -132,9 +114,9 @@ export default () => {
         onSubmit={values => {
           // Handle form submission with values
           router.push({
-            pathname: `/tour/${tour.id}/reservation/step-2`,
+            pathname: `/tour/${tourId}/reservation/add/step-2`,
             params: {
-              tourId: tour.id,
+              tourId,
               guests: JSON.stringify(values.guests),
               tourPackage: tourPackage,
             },
