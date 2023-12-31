@@ -47,18 +47,6 @@ const HomeLayout = () => {
         ),
       })}>
       <Stack.Screen
-        name="search"
-        options={{
-          title: tr("Search"),
-        }}
-      />
-      <Stack.Screen
-        name="tour-search"
-        options={{
-          title: tr("search for tours"),
-        }}
-      />
-      <Stack.Screen
         name="landing-page"
         options={{
           headerShown: false,
@@ -83,12 +71,6 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="edit-profile"
-        options={{
-          title: tr("Edit Profile"),
-        }}
-      />
-      <Stack.Screen
         name="terms-of-services"
         options={{
           title: tr("Terms of Services"),
@@ -101,22 +83,9 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="transactionPaymentStatus"
-        options={{
-          title: tr("payment status"),
-          headerBackButtonMenuEnabled: false,
-        }}
-      />
-      <Stack.Screen
         name="receipt"
         options={{
           title: tr("receipt"),
-        }}
-      />
-      <Stack.Screen
-        name="host-owner"
-        options={{
-          title: tr("Loading"),
         }}
       />
       <Stack.Screen
@@ -130,19 +99,6 @@ const HomeLayout = () => {
         options={{
           title: tr("Select On Map"),
           presentation: "modal",
-        }}
-      />
-      <Stack.Screen
-        name="userLogin"
-        options={{
-          title: tr("log in, sign up"),
-        }}
-      />
-
-      <Stack.Screen
-        name="ngoLogin"
-        options={{
-          title: tr("log in, sign up"),
         }}
       />
       <Stack.Screen
@@ -164,7 +120,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="tour/[tourId]/index"
+        name="tour/[tourId]"
         options={{
           title: tr("Loading"),
         }}
@@ -224,18 +180,6 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="tour/management/index"
-        options={{
-          title: tr("Tour Management"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/management/request/index"
-        options={{
-          title: tr("loading"),
-        }}
-      />
-      <Stack.Screen
         name="tour/[tourId]/reservation/step-1"
         options={{
           title: tr("Tour Reservation"),
@@ -263,51 +207,6 @@ const HomeLayout = () => {
         name="tour/transaction/successReceipt"
         options={{
           title: tr("Success Receipt"),
-        }}
-      />
-      <Stack.Screen
-        name="wallet/index"
-        options={{
-          title: tr("Wallet"),
-        }}
-      />
-      <Stack.Screen
-        name="wallet/history"
-        options={{
-          title: tr("Transaction History"),
-        }}
-      />
-      <Stack.Screen
-        name="wallet/deposit"
-        options={{
-          title: tr("increase balance"),
-        }}
-      />
-      <Stack.Screen
-        name="wallet/receipt/paymentStatus"
-        options={{
-          title: tr("payment status"),
-          headerBackButtonMenuEnabled: false,
-        }}
-      />
-      <Stack.Screen
-        name="wallet/cards/index"
-        options={{
-          title: tr("my cards"),
-          headerBackButtonMenuEnabled: false,
-        }}
-      />
-      <Stack.Screen
-        name="wallet/cards/add/index"
-        options={{
-          title: tr("add card"),
-          headerBackButtonMenuEnabled: false,
-        }}
-      />
-      <Stack.Screen
-        name="host/[projectId]"
-        options={{
-          title: tr("Loading"),
         }}
       />
       <Stack.Screen
@@ -365,53 +264,9 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="host/transaction/add/index"
-        options={{
-          title: tr("Host Reservation"),
-        }}
-      />
-
-      <Stack.Screen
-        name="host/management/index"
-        options={{
-          title: tr("Host Management"),
-        }}
-      />
-      <Stack.Screen
-        name="host/management/[hostId]"
-        options={{
-          title: tr("Loading"),
-        }}
-      />
-      <Stack.Screen
-        name="host/management/request/index"
-        options={{
-          title: tr("Loading"),
-        }}
-      />
-      <Stack.Screen
-        name="host/management/request/[hostId]"
-        options={{
-          title: tr("Loading"),
-        }}
-      />
-      <Stack.Screen
         name="host/transaction/detail/[transactionId]"
         options={{
           title: tr("Payment Detail"),
-        }}
-      />
-      <Stack.Screen
-        name="host/transaction/failedReceipt"
-        options={{
-          title: tr("Unsuccessful Payment"),
-        }}
-      />
-
-      <Stack.Screen
-        name="host/transaction/successReceipt"
-        options={{
-          title: tr("Success Receipt"),
         }}
       />
     </Stack>

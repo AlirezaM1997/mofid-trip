@@ -13,6 +13,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormatPrice } from "@src/hooks/localization";
+import { useSession } from "@src/context/auth";
 
 const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { tr } = useTranslation();
@@ -20,9 +21,8 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { projectId, name } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisible, setIsVisible] = useState<boolean>();
-  const isNgo = useSelector(
-    (state: RootState) => state.authSlice?.loginData?.metadata?.is_ngo || false
-  );
+  const { session } = useSession();
+  const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
   const { formatPrice } = useFormatPrice();
 
   const handlePress = () => {

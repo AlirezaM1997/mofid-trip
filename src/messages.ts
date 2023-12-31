@@ -2627,4 +2627,19 @@ export const messages = {
     fa_ir: "به نظر می رسد که شما اجازه دسترسی به این صفحه را ندارید.",
     en_us: "It appears that you do not have permission to access this page. Access the system administrator for access.",
   },
+  "user login": {
+    ar: "",
+    fa_ir: "ورود کاربر",
+    en_us: "User Login",
+  },
+  "ngo login": {
+    ar: "",
+    fa_ir: "ورود تشکل",
+    en_us: "NGO Login",
+  },
+  "sms verification": {
+    ar: "",
+    fa_ir: "اعتبارسنجی پیامکی",
+    en_us: "SMS Verification",
+  },
 };

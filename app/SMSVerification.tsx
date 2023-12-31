@@ -15,11 +15,11 @@ import OtpInput from "@src/components/modules/otp-input";
 import { router, useLocalSearchParams } from "expo-router";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import Toast from "react-native-toast-message";
-import { setLoginData } from "@src/slice/auth-slice";
+import { useSession } from "@src/context/auth";
 
 const SMSVerificationScreen = () => {
+  const { signIn } = useSession();
   const { tr } = useTranslation();
-  const dispatch = useDispatch();
   const countDownTimerRef = useRef();
   const { phone, isNgo } = useLocalSearchParams();
   const [canRequestCode, setCanRequestCode] = useState(false);
@@ -67,8 +67,11 @@ const SMSVerificationScreen = () => {
   useEffect(() => {
     if (!loadingChecking && dataChecking) {
       if (dataChecking.userGetToken.statusCode === 200) {
-        dispatch(setLoginData(dataChecking.userGetToken));
-
+        signIn({
+          token: dataChecking.userGetToken.token,
+          refreshToken: dataChecking.userGetToken.refreshToken,
+          metadata: dataChecking.userGetToken.metadata,
+        });
         if (!dataChecking.userGetToken.metadata.firstname) return router.push("loginDetails");
         router.push(redirectToScreenAfterLogin ? redirectToScreenAfterLogin : "/");
       } else {

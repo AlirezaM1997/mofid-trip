@@ -4,10 +4,10 @@ mutation userGetToken($code: Int!, $phoneNumber: String!) {
     ... on ResponseWithToken {
       message
       metadata
-      refreshToken
       status
       statusCode
       token
+      refreshToken
     }
     ... on ResponseBase {
       message

@@ -32,13 +32,8 @@ const HostTransactionSubmitBottomSheet = ({ isVisible, setIsVisible }) => {
         },
       },
     });
-
     if (data.projectTransactionAdd.status === "OK") {
-      Toast.show({
-        type: "success",
-        text1: tr("Your request has been successfully submitted"),
-      });
-      router.push("host/transaction");
+      router.push(`host/transaction/${data.projectTransactionAdd.metadata.project_request_id}`);
       setIsVisible(false);
     }
   };

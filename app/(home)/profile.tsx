@@ -20,19 +20,22 @@ import { I18nManager } from "react-native";
 import { getFullName } from "@src/helper/extra";
 import useIsRtl from "@src/hooks/localization";
 import { router, useRootNavigationState } from "expo-router";
-import { useIsAuthenticated } from "@src/hooks/auth";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
 import useMyNGOTable from "@src/hooks/db/ngo";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { useIsFocused } from "@react-navigation/native";
 import { NetworkStatus } from "@apollo/client";
+import { useSession } from "@src/context/auth";
+import UserLoginForm from "@organisms/user-login-form";
+import Authentication from "@modules/authentication";
 
 const Profile: React.FC = () => {
+  const { session } = useSession();
+  const { signOut } = useSession();
   const isRtl = useIsRtl();
   const { theme } = useTheme();
   const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const isAuthenticated = useIsAuthenticated();
   const [isVisible, setIsVisible] = useState(false);
   const rootNavigationState = useRootNavigationState();
   const [
@@ -64,20 +67,13 @@ const Profile: React.FC = () => {
   // we should use this line of code to render page if navigation was ready
   if (!rootNavigationState?.key) return null;
 
-  if (!isAuthenticated)
-    return router.push({
-      pathname: "/authentication",
-      params: { protectedScreen: "/profile" },
-    });
-
-  const handleLogout = () => {
-    dispatch(logout());
-    router.push("/");
-  };
-
   const handleNavigateToEditProfile = () => router.push("/edit-profile");
 
   const handleNavigateToComingSoon = () => router.push("/comingSoon");
+
+  const handleNavigateToRequestToMyTours = () => router.push("/tour/management/request");
+
+  const handleNavigateToRequestToMyHost = () => router.push("/host/management/request");
 
   const openLanguageSetting = () => setIsVisible(true);
 
@@ -97,9 +93,16 @@ const Profile: React.FC = () => {
     });
   };
 
+  const handleSignOut = () => {
+    setIsVisibleLogout(false);
+    signOut();
+  };
+
   useEffect(() => {
     refetchUserDetail();
   }, [isFocused]);
+
+  if (!session) return <Authentication />;
 
   if (!dataUserDetail) return <LoadingIndicator />;
 
@@ -120,8 +123,10 @@ const Profile: React.FC = () => {
             )}
 
             <View style={style.userInf}>
-              <Text heading2 numberOfLines={1}>{localizeNumber(getFullName(userDetail)) || tr("No Name")}</Text>
-              <Text >{localizeNumber(userDetail?.username)}</Text>
+              <Text heading2 numberOfLines={1}>
+                {localizeNumber(getFullName(userDetail)) || tr("No Name")}
+              </Text>
+              <Text>{localizeNumber(userDetail?.username)}</Text>
             </View>
           </Pressable>
         </Container>
@@ -185,7 +190,7 @@ const Profile: React.FC = () => {
                 color={theme.colors.grey3}
               />
             </ListItem>
-            <ListItem onPress={() => router.push("/host/management")}>
+            <ListItem bottomDivider onPress={() => router.push("/host/management")}>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Hosts")}</ListItem.Title>
@@ -199,14 +204,10 @@ const Profile: React.FC = () => {
           </>
         )}
 
-        <WhiteSpace size={30} />
-        <Container>
-          <Text type="grey3">{tr("Managements")}</Text>
-        </Container>
-        <ListItem onPress={() => router.push("/reservation")}>
+        <ListItem onPress={() => router.push("/wallet")}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("Tours and my travels")}</ListItem.Title>
+            <ListItem.Title style={style.label(isRtl)}>{tr("wallet")}</ListItem.Title>
           </ListItem.Content>
           <Feather
             name={isRtl ? "chevron-left" : "chevron-right"}
@@ -215,10 +216,50 @@ const Profile: React.FC = () => {
           />
         </ListItem>
 
-        <ListItem onPress={() => router.push("/wallet")}>
+        <WhiteSpace size={30} />
+        <Container>
+          <Text type="grey3">{tr("Requests")}</Text>
+        </Container>
+
+        <ListItem bottomDivider onPress={handleNavigateToRequestToMyTours}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("wallet")}</ListItem.Title>
+            <ListItem.Title style={style.label(isRtl)}>{tr("My Tours Requests")}</ListItem.Title>
+          </ListItem.Content>
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
+        </ListItem>
+
+        <ListItem bottomDivider onPress={handleNavigateToRequestToMyHost}>
+          <Feather name="aperture" size={24} color="black" />
+          <ListItem.Content>
+            <ListItem.Title style={style.label(isRtl)}>{tr("apply to my hosts")}</ListItem.Title>
+          </ListItem.Content>
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
+        </ListItem>
+        <ListItem bottomDivider onPress={() => router.push("host/transaction")}>
+          <Feather name="aperture" size={24} color="black" />
+          <ListItem.Content>
+            <ListItem.Title style={style.label(isRtl)}>{tr("My Requests")}</ListItem.Title>
+          </ListItem.Content>
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
+        </ListItem>
+
+        <ListItem onPress={() => router.push("/reservation")}>
+          <Feather name="aperture" size={24} color="black" />
+          <ListItem.Content>
+            <ListItem.Title style={style.label(isRtl)}>{tr("Tours and my travels")}</ListItem.Title>
           </ListItem.Content>
           <Feather
             name={isRtl ? "chevron-left" : "chevron-right"}
@@ -317,7 +358,7 @@ const Profile: React.FC = () => {
           <ListItem.Content style={style.logoutContent}>
             <ListItem.Title>{tr("Are you sure you want to logout?")}</ListItem.Title>
             <View style={style.buttonContainer}>
-              <Button containerStyle={style.logoutBtn} onPress={handleLogout}>
+              <Button containerStyle={style.logoutBtn} onPress={handleSignOut}>
                 {tr("Yes, Logout")}
               </Button>
               <Button
@@ -392,7 +433,7 @@ const style = StyleSheet.create({
     width: 40,
     height: 40,
   },
-  userInf:{flex:1},
+  userInf: { flex: 1 },
   label: isRtl => ({
     fontWeight: "400",
     fontFamily: isRtl

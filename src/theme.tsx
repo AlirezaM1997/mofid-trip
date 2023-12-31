@@ -564,12 +564,3 @@ export const theme = isRtl =>
       },
     },
   });
-
-export const navigationTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: PRIMARY_COLOR,
-    background: "#fff",
-  },
-};

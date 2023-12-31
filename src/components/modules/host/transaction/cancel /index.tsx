@@ -32,7 +32,7 @@ const CancelTransaction = ({ button }) => {
         text2: tr("your request canceled"),
       });
     }
-    router.push("host/transaction");
+    router.back()
   };
 
   return (
