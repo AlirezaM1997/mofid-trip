@@ -56,10 +56,16 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
         <View>
           <Text>{tr("Price")}</Text>
           <View style={style.priceContainer}>
-            <Text body1 style={style.priceNumber}>
-              {localizeNumber(formatPrice((project.price * (100 - project.discount)) / 100))}
-            </Text>
-            <Text style={style.priceText}> / {tr("Night")}</Text>
+            {project.price <= 0 ? (
+              <Text bold >{tr("it is free")}</Text>
+            ) : (
+              <>
+                <Text body1 style={style.priceNumber}>
+                  {localizeNumber(formatPrice((project.price * (100 - project.discount)) / 100))}
+                </Text>
+                <Text bold> / {tr("Night")}</Text>
+              </>
+            )}
           </View>
         </View>
         <Button size="lg" onPress={handlePress}>
@@ -93,7 +99,6 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   priceNumber: { fontWeight: "bold", fontSize: 16 },
-  priceText: { fontWeight: "bold" },
   left: {
     flex: 1,
   },

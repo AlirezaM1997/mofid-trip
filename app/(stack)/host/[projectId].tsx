@@ -58,7 +58,6 @@ const Page: React.FC = ({ ...props }) => {
     description,
     accommodation,
   } = data.projectDetail;
-  console.log(accommodation.avatarS3);
 
   return (
     <BottomButtonLayout

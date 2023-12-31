@@ -2218,6 +2218,11 @@ export const messages = {
     fa_ir: "جزئیات",
     en_us: "Detail",
   },
+  "it is free": {
+    ar: "إنه مجاني",
+    fa_ir: "رایگان می‌باشد",
+    en_us: "It is free",
+  },
   origin: {
     ar: "أصل",
     fa_ir: "مبدا",

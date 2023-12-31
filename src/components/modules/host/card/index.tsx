@@ -33,7 +33,8 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
     });
   };
 
-  const avatar = avatarS3?.length > 0 ? avatarS3?.[0].small : "";
+  const avatar =
+    avatarS3?.length > 0 ? { uri: avatarS3?.[0].small } : require("@assets/image/defaultHost.png");
 
   return (
     <Pressable style={style.container} onPress={handlePress}>
@@ -41,9 +42,7 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
         <ImageBackground
           style={style.ImageBackground(isRtl)}
           imageStyle={style.ImageBackgroundImage}
-          source={{
-            uri: avatar,
-          }}
+          source={avatar}
         />
       </View>
       <View style={style.top}>
@@ -68,12 +67,18 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
 
       <View>
         <View style={style.bottom}>
-          <View style={style.bottomStyle}>
-            <Text subtitle1 bold>
-              {price > 0 ? localizeNumber(formatPrice(price)) : tr("free")}
-            </Text>
-            <Text>/ {tr("night")}</Text>
-          </View>
+          {price <= 0 ? (
+            <Text bold>{tr("it is free")}</Text>
+          ) : (
+            <>
+              <View style={style.bottomStyle}>
+                <Text subtitle1 bold>
+                  {localizeNumber(formatPrice(price))}
+                </Text>
+                <Text>/ {tr("night")}</Text>
+              </View>
+            </>
+          )}
           <Feather name={isRtl ? "arrow-left" : "arrow-right"} size={20} color={"red"} />
         </View>
       </View>

@@ -22,9 +22,13 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
     <Pressable style={styles.container} onPress={handleNavigate}>
       <Image
         style={styles.image}
-        source={{
-          uri: transaction?.project?.accommodation?.avatarS3?.[0]?.small || "",
-        }}
+        source={
+          transaction?.project?.accommodation?.avatarS3.length > 0
+            ? {
+                uri: transaction?.project?.accommodation?.avatarS3?.[0]?.small,
+              }
+            : require("@assets/image/defaultHost.png")
+        }
         resizeMode="cover"
       />
 
