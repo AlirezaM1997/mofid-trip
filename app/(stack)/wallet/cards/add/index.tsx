@@ -24,10 +24,7 @@ const AddCardScreen = () => {
   const [bankCardAdd, { loading }] = useBankCardAddMutation();
 
   const validationSchema = Yup.object().shape({
-    iban: Yup.string()
-      .typeError(tr("must be a number"))
-      .required(tr("iban is required"))
-      .min(24, tr("iban should be 24 character")),
+    iban: Yup.string().typeError(tr("must be a number")).min(24, tr("iban should be 24 character")),
     cardPan: Yup.string()
       .typeError(tr("must be a number"))
       .required(tr("cardPan is required"))
@@ -42,7 +39,7 @@ const AddCardScreen = () => {
       }),
   });
 
-  const handleSubmit = async value => {
+  const handleSubmit = async (value, resetForm) => {
     const { data } = await bankCardAdd({
       variables: {
         data: {
@@ -61,6 +58,7 @@ const AddCardScreen = () => {
 
       router.push("wallet/cards");
     }
+    resetForm();
   };
 
   const handleIcon = e => {
@@ -73,7 +71,7 @@ const AddCardScreen = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}>
-      {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
+      {({ values, errors, touched, handleBlur, handleSubmit, setFieldValue }) => (
         <BottomButtonLayout
           buttons={[
             <Button loading={loading} onPress={handleSubmit}>
