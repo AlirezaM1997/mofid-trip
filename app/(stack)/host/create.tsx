@@ -210,7 +210,7 @@ const Screen = () => {
     });
   }, [activeStep]);
 
-  if (!isAuthenticated || !isNgo) {
+  if (!isAuthenticated) {
     return <AccessDenied />;
   }
 

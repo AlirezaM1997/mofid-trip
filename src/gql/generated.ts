@@ -356,6 +356,18 @@ export type DepositWalletInputType = {
   ip: Scalars['String']['input'];
 };
 
+/** Input type for editing the bank card. */
+export type EditCardType = {
+  /** The Primary Account Number (PAN) of the card. */
+  cardPan?: InputMaybe<Scalars['String']['input']>;
+  /** The International Bank Account Number (IBAN) associated with the card. */
+  iban?: InputMaybe<Scalars['String']['input']>;
+  /** The id of bank card */
+  id: Scalars['ID']['input'];
+  /** The title or name associated with the bank card. */
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
 /** An enumeration. */
 export enum ExtensionReportCategoryNameChoices {
   /** هرزنامه */
@@ -454,6 +466,10 @@ export type Mutation = {
   accommodationEdit?: Maybe<ResponseBase>;
   /** Mutation for adding a bank card to a user's wallet. */
   bankCardAdd?: Maybe<ResponseBase>;
+  /** Mutation for deleting a bank card to a user's wallet. */
+  bankCardDelete?: Maybe<ResponseBase>;
+  /** Mutation for editing the bank card to a user's wallet. */
+  bankCardEdit?: Maybe<ResponseBase>;
   /** A Graphene mutation for adding comments to different types of objects like Projects, Tours, or other Comments. */
   commentAdd?: Maybe<ResponseBase>;
   /**
@@ -546,6 +562,16 @@ export type MutationAccommodationEditArgs = {
 
 export type MutationBankCardAddArgs = {
   data: AddCardType;
+};
+
+
+export type MutationBankCardDeleteArgs = {
+  pk: Scalars['Int']['input'];
+};
+
+
+export type MutationBankCardEditArgs = {
+  data: EditCardType;
 };
 
 
@@ -1923,11 +1949,13 @@ export type UserQueryType = {
   phoneNumber?: Maybe<Scalars['String']['output']>;
   /** List of projects associated with the User. */
   projectSet?: Maybe<Array<Maybe<ProjectQueryType>>>;
+  /** List of transactions associated with the project. */
+  projectTransactionSet?: Maybe<Array<Maybe<ProjectTransactionQueryType>>>;
   setting?: Maybe<SettingDetailType>;
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -2215,6 +2243,16 @@ export type MyNgoDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MyNgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, projectSet?: Array<{ __typename: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusStep?: ProjectStatusEnum | null, statusActivation?: boolean | null, createdDate?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, capacity?: { __typename?: 'CapacityQueryType', id: string } | null, transactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string } | null> | null, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null } | null> | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusStep?: TourTourStatusStepChoices | null, statusActivation: boolean, createdDate?: any | null, modifiedDate?: any | null, origin?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: boolean } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null } | null> | null, tourTransactionSet?: Array<{ __typename?: 'TourTransactionQueryType', id: string, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, tourPackage?: { __typename?: 'TourPackageType', tour?: { __typename?: 'TourQueryType', id: string, title: string } | null } | null, tourGuests?: Array<{ __typename?: 'TourGuestQueryType', id: string, firstname?: string | null, lastname?: string | null, phoneNumber?: string | null, avatarS3?: Array<{ __typename?: 'TourGuestImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null> | null } | null> | null, projectTransactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', dateEnd?: any | null, dateStart?: any | null, id: string, owner?: { __typename?: 'UserQueryType', phoneNumber?: string | null, fullname?: string | null, id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, guest?: { __typename?: 'ProjectGuestQueryType', guestNumber?: number | null, gender?: string | null, childAccept?: boolean | null } | null, project?: { __typename?: 'ProjectQueryType', name?: string | null, id: string } | null, status?: { __typename?: 'StatusQueryType', isActive?: boolean | null, step?: string | null } | null } | null> | null } | null };
+
+export type MyUserDetailProjectSetQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyUserDetailProjectSetQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, projectSet?: Array<{ __typename: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusStep?: ProjectStatusEnum | null, statusActivation?: boolean | null, createdDate?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, capacity?: { __typename?: 'CapacityQueryType', id: string } | null, transactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string } | null> | null, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null } | null> | null } | null };
+
+export type MyUserDetailProjectTransactionSetQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyUserDetailProjectTransactionSetQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, projectTransactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', dateEnd?: any | null, dateStart?: any | null, id: string, owner?: { __typename?: 'UserQueryType', phoneNumber?: string | null, fullname?: string | null, id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, guest?: { __typename?: 'ProjectGuestQueryType', guestNumber?: number | null, gender?: string | null, childAccept?: boolean | null } | null, project?: { __typename?: 'ProjectQueryType', name?: string | null, id: string } | null, status?: { __typename?: 'StatusQueryType', isActive?: boolean | null, step?: string | null } | null } | null> | null } | null };
 
 export type NgoDetailQueryVariables = Exact<{
   pk?: InputMaybe<Scalars['ID']['input']>;
@@ -3518,6 +3556,158 @@ export function useMyNgoDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type MyNgoDetailQueryHookResult = ReturnType<typeof useMyNgoDetailQuery>;
 export type MyNgoDetailLazyQueryHookResult = ReturnType<typeof useMyNgoDetailLazyQuery>;
 export type MyNgoDetailQueryResult = Apollo.QueryResult<MyNgoDetailQuery, MyNgoDetailQueryVariables>;
+export const MyUserDetailProjectSetDocument = gql`
+    query myUserDetailProjectSet {
+  userDetail {
+    id
+    projectSet {
+      id
+      creator {
+        id
+      }
+      accommodation {
+        id
+        address
+        province
+        city
+        avatarS3 {
+          large
+          medium
+          small
+        }
+      }
+      name
+      description
+      modifiedDate
+      dateStart
+      dateEnd
+      gender
+      requestFrom
+      price
+      discount
+      tax
+      statusStep
+      statusActivation
+      facilities {
+        id
+      }
+      tags {
+        id
+      }
+      categories {
+        id
+      }
+      createdDate
+      capacity {
+        id
+      }
+      transactionSet {
+        id
+      }
+      capacityReserved {
+        male
+        female
+        allCap
+      }
+      freeCapacity {
+        male
+        female
+        allCap
+      }
+      __typename
+    }
+  }
+}
+    `;
+
+/**
+ * __useMyUserDetailProjectSetQuery__
+ *
+ * To run a query within a React component, call `useMyUserDetailProjectSetQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyUserDetailProjectSetQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyUserDetailProjectSetQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyUserDetailProjectSetQuery(baseOptions?: Apollo.QueryHookOptions<MyUserDetailProjectSetQuery, MyUserDetailProjectSetQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyUserDetailProjectSetQuery, MyUserDetailProjectSetQueryVariables>(MyUserDetailProjectSetDocument, options);
+      }
+export function useMyUserDetailProjectSetLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyUserDetailProjectSetQuery, MyUserDetailProjectSetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyUserDetailProjectSetQuery, MyUserDetailProjectSetQueryVariables>(MyUserDetailProjectSetDocument, options);
+        }
+export type MyUserDetailProjectSetQueryHookResult = ReturnType<typeof useMyUserDetailProjectSetQuery>;
+export type MyUserDetailProjectSetLazyQueryHookResult = ReturnType<typeof useMyUserDetailProjectSetLazyQuery>;
+export type MyUserDetailProjectSetQueryResult = Apollo.QueryResult<MyUserDetailProjectSetQuery, MyUserDetailProjectSetQueryVariables>;
+export const MyUserDetailProjectTransactionSetDocument = gql`
+    query myUserDetailProjectTransactionSet {
+  userDetail {
+    id
+    projectTransactionSet {
+      dateEnd
+      dateStart
+      id
+      owner {
+        phoneNumber
+        fullname
+        id
+        avatarS3 {
+          large
+          medium
+          small
+        }
+      }
+      guest {
+        guestNumber
+        gender
+        childAccept
+      }
+      project {
+        name
+        id
+      }
+      status {
+        isActive
+        step
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useMyUserDetailProjectTransactionSetQuery__
+ *
+ * To run a query within a React component, call `useMyUserDetailProjectTransactionSetQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyUserDetailProjectTransactionSetQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyUserDetailProjectTransactionSetQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyUserDetailProjectTransactionSetQuery(baseOptions?: Apollo.QueryHookOptions<MyUserDetailProjectTransactionSetQuery, MyUserDetailProjectTransactionSetQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyUserDetailProjectTransactionSetQuery, MyUserDetailProjectTransactionSetQueryVariables>(MyUserDetailProjectTransactionSetDocument, options);
+      }
+export function useMyUserDetailProjectTransactionSetLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyUserDetailProjectTransactionSetQuery, MyUserDetailProjectTransactionSetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyUserDetailProjectTransactionSetQuery, MyUserDetailProjectTransactionSetQueryVariables>(MyUserDetailProjectTransactionSetDocument, options);
+        }
+export type MyUserDetailProjectTransactionSetQueryHookResult = ReturnType<typeof useMyUserDetailProjectTransactionSetQuery>;
+export type MyUserDetailProjectTransactionSetLazyQueryHookResult = ReturnType<typeof useMyUserDetailProjectTransactionSetLazyQuery>;
+export type MyUserDetailProjectTransactionSetQueryResult = Apollo.QueryResult<MyUserDetailProjectTransactionSetQuery, MyUserDetailProjectTransactionSetQueryVariables>;
 export const NgoDetailDocument = gql`
     query NGODetail($pk: ID) {
   NGODetail(pk: $pk) {

@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import {
-  useMyNgoDetailProjectTransactionSetQuery,
-  MyNgoDetailProjectTransactionSetQuery,
+  MyUserDetailProjectTransactionSetQuery,
+  useMyUserDetailProjectTransactionSetQuery,
 } from "@src/gql/generated";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { useLocalSearchParams, useNavigation } from "expo-router";
@@ -21,21 +21,23 @@ const RequestScreen = () => {
   const isFocused = useIsFocused();
   const [isVisible, setIsVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] =
-    useState<MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number]>();
+    useState<
+      MyUserDetailProjectTransactionSetQuery["userDetail"]["projectTransactionSet"][number]
+    >();
 
   const handleClose = () => setIsVisible(false);
   const handleOpen = () => setIsVisible(true);
 
-  const { loading, data, refetch } = useMyNgoDetailProjectTransactionSetQuery({
+  const { loading, data, refetch } = useMyUserDetailProjectTransactionSetQuery({
     notifyOnNetworkStatusChange: true,
   });
 
   const [transactionSet, setTransactionSet] = useState<
-    MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"]
+    MyUserDetailProjectTransactionSetQuery["userDetail"]["projectTransactionSet"]
   >([]);
 
   const handleRequestPress = (
-    transaction: MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number]
+    transaction: MyUserDetailProjectTransactionSetQuery["userDetail"]["projectTransactionSet"][number]
   ) => {
     setSelectedTransaction(transaction);
     handleOpen();
@@ -50,7 +52,7 @@ const RequestScreen = () => {
   useEffect(() => {
     if (!loading && data) {
       setTransactionSet(
-        data.NGODetail.projectTransactionSet.filter(pr => pr.project.id === hostId)
+        data.userDetail.projectTransactionSet.filter(pr => pr.project.id === hostId)
       );
     }
   }, [loading, data]);
@@ -73,7 +75,7 @@ const RequestScreen = () => {
         <ScrollView>
           {transactionSet?.map(
             (
-              transaction: MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number],
+              transaction: MyUserDetailProjectTransactionSetQuery["userDetail"]["projectTransactionSet"][number],
               i
             ) => (
               <RequestList

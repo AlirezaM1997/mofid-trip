@@ -10,11 +10,12 @@ import useTranslation from "@src/hooks/translation";
 import { TourTransactionQueryType } from "@src/gql/generated";
 
 type PropsType = {
+  purchaseLoading: boolean;
   purchaseHandler: () => void;
   transaction: TourTransactionQueryType;
 };
 
-const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
+const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: PropsType) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const [isAcceptPaymentVisible, setIsAcceptPaymentVisible] = useState(false);
@@ -34,9 +35,11 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
       },
       ACCEPT: transaction.status.isActive
         ? {
-            title: tr("pay"),
+            title: transaction.tourPackage.price ? tr("pay") : tr("reservation"),
             detailsBtn: true,
-            changeHandler: () => setIsAcceptPaymentVisible(true),
+            changeHandler: transaction.tourPackage.price
+              ? () => setIsAcceptPaymentVisible(true)
+              : purchaseHandler,
           }
         : {
             title: tr("reason for rejecting the request"),
@@ -50,8 +53,8 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
             type: "outline",
             color: "secondary",
             detailsBtn: false,
-          title: tr("request details"),
-          changeHandler: () => pressHandler(`/tour/transaction/detail/${transaction.id}`),
+            title: tr("request details"),
+            changeHandler: () => pressHandler(`/tour/transaction/detail/${transaction.id}`),
           }
         : {
             title: tr("pay"),
@@ -87,6 +90,7 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
         <Button
           size="sm"
           icon={buttonType().icon}
+          loading={purchaseLoading}
           type={buttonType()?.type}
           color={buttonType()?.color}
           title={buttonType()?.title}
@@ -97,6 +101,7 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
       </View>
 
       <AcceptPayment
+        purchaseLoading={purchaseLoading}
         purchaseHandler={purchaseHandler}
         isVisible={isAcceptPaymentVisible}
         setIsVisible={setIsAcceptPaymentVisible}

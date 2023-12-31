@@ -1,0 +1,33 @@
+query myUserDetailProjectTransactionSet {
+  userDetail {
+    id
+    projectTransactionSet {
+      dateEnd
+      dateStart
+      id
+      owner {
+        phoneNumber
+        fullname
+        id
+        avatarS3 {
+          large
+          medium
+          small
+        }
+      }
+      guest {
+        guestNumber
+        gender
+        childAccept
+      }
+      project {
+        name
+        id
+      }
+      status {
+        isActive
+        step
+      }
+    }
+  }
+}

@@ -5,16 +5,16 @@ import { useEffect, useState } from "react";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { ScrollView } from "react-native-gesture-handler";
 import HostManagementCard from "@organisms/host-management-card";
-import { MyNgoDetailProjectSetQuery, useMyNgoDetailProjectSetQuery } from "@src/gql/generated";
+import { MyNgoDetailProjectSetQuery, useMyUserDetailProjectSetQuery } from "@src/gql/generated";
 
 const HostManagementScreen = () => {
   const [hostSet, setHostSet] = useState<MyNgoDetailProjectSetQuery["NGODetail"]["projectSet"]>([]);
 
-  const { loading, data } = useMyNgoDetailProjectSetQuery({ fetchPolicy: "network-only" });
+  const { loading, data } = useMyUserDetailProjectSetQuery({ fetchPolicy: "network-only" });
 
   useEffect(() => {
     if (!loading && data) {
-      setHostSet(data.NGODetail.projectSet);
+      setHostSet(data.userDetail.projectSet);
     }
   }, [loading, data]);
 
