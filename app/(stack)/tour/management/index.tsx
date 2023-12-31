@@ -1,41 +1,34 @@
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
-import ComingSoon from "@modules/coming-soon";
-import { BottomSheet, Button, Card, Chip, Text, useTheme } from "@rneui/themed";
+import { Card, Chip, Text, useTheme } from "@rneui/themed";
 import {
   AccommodationQueryType,
-  TourStatusEnum,
+  TourTourStatusStepChoices,
   useMyNgoDetailTourSetQuery,
 } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { getTourRequestStatusBadgeColor } from "@src/helper/tour";
-import { useEffect, useState } from "react";
 import { router } from "expo-router";
 import LoadingIndicator from "@modules/Loading-indicator";
 
 const TourManagement = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const [tourSet, setTourSet] = useState([]);
-  const { loading, data } = useMyNgoDetailTourSetQuery();
+  const { loading, data } = useMyNgoDetailTourSetQuery({
+    fetchPolicy: "network-only",
+  });
 
   const navigateToTourDetail = (tourId: string) => {
     router.push(`/tour/management/${tourId}`);
   };
 
-  useEffect(() => {
-    if (!loading && data) {
-      setTourSet(data.NGODetail.tourSet);
-    }
-  }, [loading, data]);
-
   if (loading) return <LoadingIndicator />;
 
   return (
     <View>
-      {tourSet.map(tour => (
+      {data?.NGODetail?.tourSet.map(tour => (
         <Pressable onPress={() => navigateToTourDetail(tour.id)}>
           <Card key={tour.id}>
             <Card.Image
@@ -55,7 +48,7 @@ const TourManagement = () => {
               {tour.description}
             </Card.FeaturedSubtitle>
             <Container size={10} style={styles.footer}>
-              {tour.statusStep === TourStatusEnum.Request ? (
+              {tour.statusStep === TourTourStatusStepChoices.Request ? (
                 <Chip
                   title={tour.statusStep}
                   color={getTourRequestStatusBadgeColor(tour)}
@@ -64,7 +57,7 @@ const TourManagement = () => {
               ) : (
                 <>
                   <Text type={getTourRequestStatusBadgeColor(tour)}>
-                      {tr("view and manage tour")}
+                    {tr("view and manage tour")}
                   </Text>
                   <Feather size={20} name={"chevron-left"} color={theme.colors.primary} />
                 </>

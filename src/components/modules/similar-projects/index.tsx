@@ -4,6 +4,7 @@ import { ProjectQueryType } from "@src/gql/generated";
 import { useFormatPrice } from "@src/hooks/localization";
 import { router } from "expo-router";
 import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import useTranslation from "@src/hooks/translation";
 
 type PropsType = {
   projects: ProjectQueryType[];
@@ -16,15 +17,17 @@ type ItemPropsType = {
 
 const Item = ({ project }: ItemPropsType) => {
   const { formatPrice } = useFormatPrice();
+  const { tr } = useTranslation();
 
   return (
     <View style={style.card}>
       <ImageBackground
         style={style.imageContainerStyle}
         imageStyle={style.imageStyle}
-        source={{
+        source={project?.accommodation?.avatarS3.length > 0 ? {
           uri: project?.accommodation?.avatarS3[0]?.large,
-        }}
+        }:
+        require("@assets/image/defaultHost.png")}
       />
       <View style={style.cardTextContainer}>
         <Text numberOfLines={1} style={style.projectTitle} body1>
@@ -33,7 +36,7 @@ const Item = ({ project }: ItemPropsType) => {
         <Text numberOfLines={1} style={style.projectAddress} body2>
           {project.accommodation.address}
         </Text>
-        <Text style={style.price}>{formatPrice(project.price)}</Text>
+        <Text bold>{project.price <= 0 ? tr("it is free") : formatPrice(project.price)}</Text>
       </View>
     </View>
   );
@@ -105,9 +108,6 @@ const style = StyleSheet.create({
     width: 180,
     height: "auto",
     overflow: "hidden",
-  },
-  price: {
-    fontWeight: "bold",
   },
 });
 

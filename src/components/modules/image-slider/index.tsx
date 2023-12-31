@@ -15,14 +15,18 @@ function ImageSlider({ imageList }: ImageSlider) {
       <ImageBackground
         style={style.sliderActiveSlide}
         imageStyle={style.sliderImageActiveSlide}
-        source={{
-          uri: imageList?.[activeSlide]?.medium ?? "",
-        }}
+        source={
+          imageList?.[activeSlide]?.medium
+          ? {
+            uri: imageList?.[activeSlide]?.medium,
+          }
+          : require("@assets/image/defaultHost.png")
+        }
       />
 
       <ScrollView horizontal style={{ overflow: "scroll" }}>
         <View style={style.sliderThumbnails}>
-          {imageList.map((img, index) => (
+          {imageList?.map((img, index) => (
             <Pressable
               key={index}
               onPress={() => setActiveSlide(index)}
@@ -48,6 +52,7 @@ function ImageSlider({ imageList }: ImageSlider) {
 const style = StyleSheet.create({
   sliderActiveSlide: {
     height: 200,
+    width:'100%'
   },
   sliderImageActiveSlide: {
     borderRadius: 10,

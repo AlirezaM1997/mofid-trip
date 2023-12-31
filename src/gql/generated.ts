@@ -2153,6 +2153,13 @@ export type ProjectPurchaseAddMutationVariables = Exact<{
 
 export type ProjectPurchaseAddMutation = { __typename?: 'Mutation', projectPurchaseAdd?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
 
+export type ReportAddMutationVariables = Exact<{
+  data: ReportInputType;
+}>;
+
+
+export type ReportAddMutation = { __typename?: 'Mutation', reportAdd?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
+
 export type SettingEditMutationVariables = Exact<{
   data?: InputMaybe<SettingEditInputType>;
 }>;
@@ -2292,6 +2299,11 @@ export type ProjectTransactionListQueryVariables = Exact<{
 
 
 export type ProjectTransactionListQuery = { __typename?: 'Query', projectTransactionList?: { __typename?: 'ProjectTransactionListType', count?: number | null, pageCount?: number | null, data?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, description?: string | null, modifiedDate?: any | null, invoiceNumber?: any | null, createdDate?: any | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, firstname?: string | null } | null, status?: { __typename?: 'StatusQueryType', step?: string | null, isActive?: boolean | null } | null, guest?: { __typename?: 'ProjectGuestQueryType', guestNumber?: number | null, gender?: string | null, childAccept?: boolean | null } | null, project?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, tax?: number | null, price?: number | null, description?: string | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null, medium?: string | null, large?: string | null } | null> | null } | null } | null } | null> | null } | null };
+
+export type ReportCategoryListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ReportCategoryListQuery = { __typename?: 'Query', reportCategoryList?: { __typename?: 'ReportCategoryListType', data?: Array<{ __typename?: 'ReportCategoryQueryType', name: ExtensionReportCategoryNameChoices, id: string } | null> | null } | null };
 
 export type SettingDetailQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -2648,6 +2660,42 @@ export function useProjectPurchaseAddMutation(baseOptions?: Apollo.MutationHookO
 export type ProjectPurchaseAddMutationHookResult = ReturnType<typeof useProjectPurchaseAddMutation>;
 export type ProjectPurchaseAddMutationResult = Apollo.MutationResult<ProjectPurchaseAddMutation>;
 export type ProjectPurchaseAddMutationOptions = Apollo.BaseMutationOptions<ProjectPurchaseAddMutation, ProjectPurchaseAddMutationVariables>;
+export const ReportAddDocument = gql`
+    mutation reportAdd($data: ReportInputType!) {
+  reportAdd(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}
+    `;
+export type ReportAddMutationFn = Apollo.MutationFunction<ReportAddMutation, ReportAddMutationVariables>;
+
+/**
+ * __useReportAddMutation__
+ *
+ * To run a mutation, you first call `useReportAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReportAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [reportAddMutation, { data, loading, error }] = useReportAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useReportAddMutation(baseOptions?: Apollo.MutationHookOptions<ReportAddMutation, ReportAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ReportAddMutation, ReportAddMutationVariables>(ReportAddDocument, options);
+      }
+export type ReportAddMutationHookResult = ReturnType<typeof useReportAddMutation>;
+export type ReportAddMutationResult = Apollo.MutationResult<ReportAddMutation>;
+export type ReportAddMutationOptions = Apollo.BaseMutationOptions<ReportAddMutation, ReportAddMutationVariables>;
 export const SettingEditDocument = gql`
     mutation settingEdit($data: SettingEditInputType) {
   settingEdit(data: $data) {
@@ -4176,6 +4224,43 @@ export function useProjectTransactionListLazyQuery(baseOptions?: Apollo.LazyQuer
 export type ProjectTransactionListQueryHookResult = ReturnType<typeof useProjectTransactionListQuery>;
 export type ProjectTransactionListLazyQueryHookResult = ReturnType<typeof useProjectTransactionListLazyQuery>;
 export type ProjectTransactionListQueryResult = Apollo.QueryResult<ProjectTransactionListQuery, ProjectTransactionListQueryVariables>;
+export const ReportCategoryListDocument = gql`
+    query ReportCategoryList {
+  reportCategoryList {
+    data {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useReportCategoryListQuery__
+ *
+ * To run a query within a React component, call `useReportCategoryListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReportCategoryListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReportCategoryListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useReportCategoryListQuery(baseOptions?: Apollo.QueryHookOptions<ReportCategoryListQuery, ReportCategoryListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ReportCategoryListQuery, ReportCategoryListQueryVariables>(ReportCategoryListDocument, options);
+      }
+export function useReportCategoryListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ReportCategoryListQuery, ReportCategoryListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ReportCategoryListQuery, ReportCategoryListQueryVariables>(ReportCategoryListDocument, options);
+        }
+export type ReportCategoryListQueryHookResult = ReturnType<typeof useReportCategoryListQuery>;
+export type ReportCategoryListLazyQueryHookResult = ReturnType<typeof useReportCategoryListLazyQuery>;
+export type ReportCategoryListQueryResult = Apollo.QueryResult<ReportCategoryListQuery, ReportCategoryListQueryVariables>;
 export const SettingDetailDocument = gql`
     query settingDetail($userId: ID) {
   settingDetail(userId: $userId) {

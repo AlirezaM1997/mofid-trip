@@ -21,9 +21,13 @@ const HostManagementCard = ({ host }) => {
     <Pressable onPress={() => navigateToTourDetail(host)}>
       <Card key={host.id}>
         <Card.Image
-          source={{
-            uri: host?.accommodation?.avatarS3?.[0]?.medium,
-          }}
+          source={
+            host?.accommodation?.avatarS3.length > 0
+              ? {
+                  uri: host?.accommodation?.avatarS3?.[0]?.medium,
+                }
+              : require("@assets/image/defaultHost.png")
+          }
         />
         <WhiteSpace size={10} />
         <Card.Title heading1 bold caption>
@@ -45,9 +49,7 @@ const HostManagementCard = ({ host }) => {
             />
           ) : (
             <>
-              <Text type={getHostRequestStatusBadgeColor(host)}>
-                  {tr("view and manage host")}
-              </Text>
+              <Text type={getHostRequestStatusBadgeColor(host)}>{tr("view and manage host")}</Text>
               <Feather size={20} name={"chevron-left"} color={theme.colors.primary} />
             </>
           )}

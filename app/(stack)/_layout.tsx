@@ -65,7 +65,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="loginDetails"
+        name="login-details"
         options={{
           title: tr("personal information"),
         }}
@@ -170,6 +170,12 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
+        name="tour/management/[tourId]"
+        options={{
+          title: tr("Loading"),
+        }}
+      />
+      <Stack.Screen
         name="tour/requests/toMyTours"
         options={{
           title: tr("apply to my tours"),
@@ -231,12 +237,6 @@ const HomeLayout = () => {
       />
       <Stack.Screen
         name="tour/management/request/index"
-        options={{
-          title: tr("loading"),
-        }}
-      />
-      <Stack.Screen
-        name="tour/management/[tourId]"
         options={{
           title: tr("loading"),
         }}

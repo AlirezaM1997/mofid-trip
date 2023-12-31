@@ -7,13 +7,23 @@ import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation
 import ButtonRow from "@modules/button-rows";
 import Container from "@atoms/container";
 import { BANKES_DATA } from "@src/constant/banks";
+import * as Clipboard from "expo-clipboard";
+import Toast from "react-native-toast-message";
 
 const WalletCardDetailBottomSheet = ({ card }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [bankDetail, setBankDetail] = useState({ title: card.title, icon: card.icon });
-  const {localizeNumber} = useLocalizedNumberFormat()
+  const { localizeNumber } = useLocalizedNumberFormat();
+
+  const handlePressCopy = async text => {
+    await Clipboard.setStringAsync(text);
+    Toast.show({
+      type: "success",
+      text1: tr("copied"),
+    });
+  };
 
   useEffect(() => {
     const cardDetail = BANKES_DATA.find(item => card.cardPan.includes(item.cardPan));
@@ -55,9 +65,11 @@ const WalletCardDetailBottomSheet = ({ card }) => {
           <WhiteSpace size={24} />
 
           <View style={styles.cardDetail}>
-            <Text body2 type="info">
-              {localizeNumber(card.iban)}
-            </Text>
+            <Pressable onPress={() => handlePressCopy(card.iban)}>
+              <Text body2 type="info">
+                {localizeNumber(card.iban)}
+              </Text>
+            </Pressable>
             <Text body2 type="grey2">
               {tr("iban")}
             </Text>
@@ -68,9 +80,11 @@ const WalletCardDetailBottomSheet = ({ card }) => {
           <WhiteSpace size={12} />
 
           <View style={styles.cardDetail}>
-            <Text body2 type="info">
-              {localizeNumber(card.cardPan)}
-            </Text>
+            <Pressable onPress={() => handlePressCopy(card.cardPan)}>
+              <Text body2 type="info">
+                {localizeNumber(card.cardPan)}
+              </Text>
+            </Pressable>
             <Text body2 type="grey2">
               {tr("cardPan")}
             </Text>

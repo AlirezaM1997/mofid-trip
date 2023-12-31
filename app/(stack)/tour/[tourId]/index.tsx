@@ -22,9 +22,9 @@ import {
 } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
+import ShareReportDropDown from "@modules/share-report-dropdown";
 import { useSelector } from "react-redux";
 import { RootState } from "@src/store";
-import Share from "@modules/share";
 import { useIsAuthenticated } from "@src/hooks/auth";
 
 export default () => {
@@ -78,7 +78,7 @@ export default () => {
   const endTime = moment(tour?.endTime).locale("fa").format("MMMM D");
 
   useEffect(() => {
-    navigation.setOptions({ title: name, headerRight: () => <Share /> });
+    navigation.setOptions({ title: name, headerRight: () => <ShareReportDropDown /> });
   }, [name]);
 
   useEffect(() => {

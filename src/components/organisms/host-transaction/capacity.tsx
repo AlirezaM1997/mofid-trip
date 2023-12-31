@@ -22,7 +22,7 @@ const HostTransactionCapacityTab = () => {
       <Text heading2 bold>
         {tr("capacity and Gender")}
       </Text>
-      <Text type="grey3">{tr("Select the capacity and gender of the tour passengers")}</Text>
+      <Text type="grey3">{tr("select the capacity and gender of passengers")}</Text>
       <WhiteSpace size={20} />
       <Input
         name="guests.guestNumber"
@@ -36,7 +36,7 @@ const HostTransactionCapacityTab = () => {
 
       <CheckBox
         checked={values.guests.childAccept}
-        title={tr("Is open to children under 12 years old")}
+        title={tr("i have a child under 12 years old")}
         onPress={() => setFieldValue("guests.childAccept", !values.guests.childAccept)}
       />
 
