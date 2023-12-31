@@ -93,7 +93,6 @@ const Page: React.FC = ({ ...props }) => {
 
           <ProjectFacilities facilities={facilities} />
 
-          <ContactCard user={creator ?? {}} />
           {/* <ContactCard user={tour.NGO.user} /> */}
 
           <View style={style.infoContainer}>

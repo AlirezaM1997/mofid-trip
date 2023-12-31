@@ -1534,6 +1534,16 @@ export const messages = {
     fa_ir: "مدیریت ها",
     en_us: "Managements",
   },
+  "you can communicate with the host owner by calling and texting.": {
+    ar: "يمكنك إجراء حجز مع المضيف عن طريق الاتصال والرسائل النصية لقد تواصلت.",
+    fa_ir: "شما می‌توانید از طریق تماس و پیامک، با میزبان هاستی که رزرو کرده اید ارتباط برقرار کنید.",
+    en_us: "you can communicate with the host owner by calling and texting.",
+  },
+  "communication with the host": {
+    ar: "التواصل مع المضيف",
+    fa_ir: "ارتباط با میزبان",
+    en_us: "communication with the host",
+  },
   "tour transactions": {
     ar: "طلب جولة",
     fa_ir: "درخواست به تور",
@@ -1544,10 +1554,10 @@ export const messages = {
     fa_ir: "درخواست به هاست",
     en_us: "Host transactions",
   },
-  "manage your requests for hosting and trips": {
+  "manage your requests for host": {
     ar: "إدارة طلباتك للاستضافة والرحلات",
-    fa_ir: "مدیریت درخواست های شما به میزبانی ها و سفرهای انجام شده",
-    en_us: "Manage your requests for hosting and trips",
+    fa_ir: "مدیریت درخواست های شما به میزبانی ها",
+    en_us: "Manage your requests for host",
   },
   "view and manage tour": {
     ar: "المشاهدة والإدارة",

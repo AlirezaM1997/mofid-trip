@@ -41,7 +41,11 @@ const Banner = ({ name }) => {
   return (
     <Pressable style={style.bannerStyle} onPress={() => handlePress(banner.url)}>
       {banner?.avatarS3 ? (
-        <Image source={{ uri: banner?.avatarS3.large }} style={style.bannerSize} />
+        <Image
+          source={{ uri: banner?.avatarS3.large }}
+          resizeMode="stretch"
+          style={style.bannerSize}
+        />
       ) : null}
     </Pressable>
   );

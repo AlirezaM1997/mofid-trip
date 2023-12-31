@@ -27,6 +27,12 @@ query projectTransactionDetail($pk: ID!) {
       name
       tax
       price
+      creator {
+        id
+        firstname
+        fullname
+        phoneNumber
+      }
       description
       categories {
         name

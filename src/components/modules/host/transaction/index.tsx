@@ -48,12 +48,6 @@ const HostTransaction = () => {
         <RefreshControl refreshing={networkStatus !== NetworkStatus.ready} onRefresh={onRefresh} />
       }>
       <Container>
-        {data?.projectTransactionList?.data?.length === 0 && (
-          <View style={{ height: HEIGHT - 150 }}>
-            <NoResult />
-          </View>
-        )}
-
         {data?.projectTransactionList?.data?.map((transaction, index) => (
           <ReservationCard
             transaction={transaction as ProjectTransactionQueryType}
