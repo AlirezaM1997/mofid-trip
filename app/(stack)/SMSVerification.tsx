@@ -69,7 +69,7 @@ const SMSVerificationScreen = () => {
       if (dataChecking.userGetToken.statusCode === 200) {
         dispatch(setLoginData(dataChecking.userGetToken));
 
-        if (!dataChecking.userGetToken.metadata.firstname) return router.push("loginDetails");
+        if (!dataChecking.userGetToken.metadata.firstname) return router.push("login-details");
         router.push(redirectToScreenAfterLogin ? redirectToScreenAfterLogin : "/");
       } else {
         Toast.show({

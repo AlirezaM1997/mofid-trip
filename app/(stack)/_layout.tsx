@@ -65,7 +65,7 @@ const HomeLayout = () => {
         }}
       />
       <Stack.Screen
-        name="loginDetails"
+        name="login-details"
         options={{
           title: tr("personal information"),
         }}
