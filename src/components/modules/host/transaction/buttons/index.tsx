@@ -8,13 +8,15 @@ import RejectedDetails from "./rejectedDetails";
 import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { ProjectTransactionQueryType } from "@src/gql/generated";
+import LoadingIndicator from "@modules/Loading-indicator";
 
 type PropsType = {
   purchaseHandler: () => void;
+  purchaseLoading: boolean;
   transaction: ProjectTransactionQueryType;
 };
 
-const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
+const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: PropsType) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const [isAcceptPaymentVisible, setIsAcceptPaymentVisible] = useState(false);
@@ -22,9 +24,6 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
 
   const pressHandler = (pathname: string) => {
     router.push(pathname);
-  };
-  const handlePressNavigateToHostDetail = (pathname: string, params: object) => {
-    router.push({ pathname: pathname, params: params });
   };
 
   const buttonType = () => {
@@ -37,9 +36,11 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
       },
       ACCEPT: transaction.status.isActive
         ? {
-            title: tr("pay"),
+            title: transaction.project.price ? tr("pay") : tr("reservation"),
             detailsBtn: true,
-            changeHandler: () => setIsAcceptPaymentVisible(true),
+            changeHandler: transaction.project.price
+              ? () => setIsAcceptPaymentVisible(true)
+              : purchaseHandler,
           }
         : {
             title: tr("reason for rejecting the request"),
@@ -52,13 +53,8 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
         ? {
             type: "outline",
             color: "secondary",
-            detailsBtn: false,
-            title: tr("host details"),
-            changeHandler: () =>
-              handlePressNavigateToHostDetail(`/host/${transaction.project.id}`, {
-                id: transaction.project.id,
-                name: transaction.project.name,
-              }),
+            title: tr("request details"),
+            changeHandler: () => pressHandler(`/host/transaction/detail/${transaction.id}`),
           }
         : {
             title: tr("pay"),
@@ -68,9 +64,8 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
       SUCCESSFUL: {
         type: "outline",
         color: "secondary",
-        detailsBtn: false,
-        title: tr("host details"),
-        changeHandler: () => pressHandler(`/host/${transaction.project.id}`),
+        title: tr("request details"),
+        changeHandler: () => pressHandler(`/host/transaction/detail/${transaction.id}`),
       },
     };
 
@@ -95,6 +90,7 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
           size="sm"
           icon={buttonType().icon}
           type={buttonType()?.type}
+          loading={purchaseLoading}
           color={buttonType()?.color}
           title={buttonType()?.title}
           containerStyle={styles.button}
@@ -104,6 +100,7 @@ const TransactionButtons = ({ transaction, purchaseHandler }: PropsType) => {
       </View>
 
       <AcceptPayment
+        purchaseLoading={purchaseLoading}
         purchaseHandler={purchaseHandler}
         isVisible={isAcceptPaymentVisible}
         setIsVisible={setIsAcceptPaymentVisible}

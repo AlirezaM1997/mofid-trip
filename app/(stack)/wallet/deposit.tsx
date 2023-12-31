@@ -15,10 +15,12 @@ import { useDepositWalletMutation, useUserDetailQuery } from "@src/gql/generated
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import Input from "@atoms/input";
 import parseText from "@src/helper/number-input";
+import { useFormatPrice } from "@src/hooks/localization";
 
 const Increase = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
+  const { formatPrice } = useFormatPrice();
   const { localizeNumber } = useLocalizedNumberFormat();
 
   const { data, loading } = useUserDetailQuery();
@@ -79,9 +81,7 @@ const Increase = () => {
 
             <WhiteSpace />
 
-            <Text center>
-              {localizeNumber(data.userDetail.wallet.balance)} {tr("tooman")}
-            </Text>
+            <Text center>{formatPrice(data.userDetail.wallet.balance)}</Text>
 
             <WhiteSpace size={32} />
 

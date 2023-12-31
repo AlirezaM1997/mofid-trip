@@ -4,7 +4,9 @@ import { Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import {
   MyNgoDetailProjectTransactionSetQuery,
+  MyUserDetailProjectTransactionSetQuery,
   useMyNgoDetailProjectTransactionSetQuery,
+  useMyUserDetailProjectTransactionSetQuery,
 } from "@src/gql/generated";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { useNavigation } from "expo-router";
@@ -28,13 +30,13 @@ const RequestScreen = () => {
   const handleOpen = () => setIsVisible(true);
   const handleClose = () => setIsVisible(false);
   const handleRequestPress = (
-    transaction: MyNgoDetailProjectTransactionSetQuery["NGODetail"]["projectTransactionSet"][number]
+    transaction: MyUserDetailProjectTransactionSetQuery["userDetail"]["projectTransactionSet"][number]
   ) => {
     setSelectedTransaction(transaction);
     handleOpen();
   };
 
-  const { loading, data, refetch, networkStatus } = useMyNgoDetailProjectTransactionSetQuery({
+  const { loading, data, refetch, networkStatus } = useMyUserDetailProjectTransactionSetQuery({
     notifyOnNetworkStatusChange: true,
   });
 
@@ -46,7 +48,7 @@ const RequestScreen = () => {
 
   useEffect(() => {
     if (!loading && data) {
-      setTransactionSet(data.NGODetail.projectTransactionSet);
+      setTransactionSet(data.userDetail.projectTransactionSet);
     }
   }, [loading, data]);
 

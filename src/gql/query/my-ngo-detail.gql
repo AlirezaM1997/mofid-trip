@@ -66,6 +66,7 @@ query myNGODetail {
       statusStep
       statusActivation
       createdDate
+      modifiedDate
       origin {
         ... on AccommodationQueryType {
           id

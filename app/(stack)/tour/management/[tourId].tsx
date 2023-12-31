@@ -17,6 +17,9 @@ import useIsRtl from "@src/hooks/localization";
 import { Divider } from "@rneui/themed";
 import ComingSoon from "@modules/coming-soon";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { Linking } from "react-native";
+import moment from "jalali-moment";
+import { passedTime } from "@src/helper/date";
 
 const TourDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -41,8 +44,14 @@ const TourDetailScreen = () => {
   const handleNavigateToRequest = () => {
     router.push("/tour/management/request/" + tour.id);
   };
+
+  const makePhoneCall = () => {
+    const phoneURL = `tel:09102018074`;
+    Linking.openURL(phoneURL);
+  };
+
   useEffect(() => {
-    if (tour) navigation.setOptions({ title: tour?.title  });
+    if (tour) navigation.setOptions({ title: tour?.title });
   }, [tour]);
 
   useEffect(() => {
@@ -64,7 +73,7 @@ const TourDetailScreen = () => {
           {tour?.title}
         </Text>
         <Text caption type="grey3">
-          آخرین به روز رسانی در
+          {tr("Last modification")}: {passedTime(tour.modifiedDate)}
         </Text>
         <WhiteSpace size={20} />
         <Text subtitle1 bold>
@@ -119,7 +128,7 @@ const TourDetailScreen = () => {
 
       <Divider thickness={8} bgColor="grey0" />
 
-      <ListItem onPress={() => setIsVisible(true)}>
+      <ListItem onPress={makePhoneCall}>
         <Feather name="phone" size={24} color={theme.colors.black} />
         <ListItem.Content>
           <ListItem.Title>{tr("Contact Support")}</ListItem.Title>

@@ -37,7 +37,7 @@
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "expo-system-ui": "~2.4.0",
-    "expo-updates": "~0.18.16",
+    "expo-updates": "~0.18.18",
     "formik": "^2.4.5",
     "graphql": "^15.8.0",
     "jalali-moment": "^3.3.11",

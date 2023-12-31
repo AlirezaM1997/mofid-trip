@@ -16,7 +16,7 @@ const TourTransactionDetailScreen = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { transactionId } = useLocalSearchParams();
 
-  const [addPurchase] = useTourPurchaseAddMutation();
+  const [addPurchase, { loading: purchaseLoading }] = useTourPurchaseAddMutation();
 
   const { data, loading } = useTourTransactionDetailQuery({
     variables: { pk: transactionId as string },
@@ -55,7 +55,13 @@ const TourTransactionDetailScreen = () => {
         </Button>
       ),
       SUCCESSFUL: <Button>{tr("rates to the tour")}</Button>,
-      ACCEPT: <Button onPress={() => setIsVisible(true)}>{tr("pay")}</Button>,
+      ACCEPT: tourPackage.price ? (
+        <Button onPress={() => setIsVisible(true)}>{tr("pay")}</Button>
+      ) : (
+        <Button loading={purchaseLoading} onPress={purchaseHandler}>
+          {tr("reservation")}
+        </Button>
+      ),
     };
     return lookup[status.step || null];
   };
@@ -64,9 +70,10 @@ const TourTransactionDetailScreen = () => {
     <BottomButtonLayout buttons={bottomButton() ? [bottomButton()] : []}>
       <TourTransactionDetail transactionDetail={data.tourTransactionDetail} />
       <AcceptPayment
-        purchaseHandler={purchaseHandler}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
+        purchaseLoading={purchaseLoading}
+        purchaseHandler={purchaseHandler}
       />
     </BottomButtonLayout>
   );
