@@ -5,7 +5,7 @@ import { SetStateAction, useState } from "react";
 import Container from "@src/components/atoms/container";
 import Banner from "@src/components/atoms/banner/banner";
 import SearchBar from "@src/components/modules/search-bar";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView } from "react-native";
 import WhiteSpace from "@atoms/white-space";
 
 export default function Index() {
@@ -26,7 +26,7 @@ export default function Index() {
         </Container>
 
         <WhiteSpace size={32} />
-        <TourList />
+        <HostList />
 
         <WhiteSpace size={32} />
 
@@ -36,7 +36,7 @@ export default function Index() {
 
         <WhiteSpace size={32} />
 
-        <HostList />
+        <TourList />
 
         <WhiteSpace size={10} />
       </ScrollView>

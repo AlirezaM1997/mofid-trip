@@ -26,7 +26,7 @@ export default function Index() {
         </Container>
 
         <WhiteSpace size={32} />
-        <TourList />
+        <HostList />
 
         <WhiteSpace size={32} />
 
@@ -34,8 +34,7 @@ export default function Index() {
           <Banner name="home-2" />
         </Container>
         <WhiteSpace size={32} />
-
-        <HostList />
+        <TourList />
 
         <WhiteSpace size={10} />
       </ScrollView>

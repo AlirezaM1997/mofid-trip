@@ -54,12 +54,6 @@ const TourReservation = () => {
         <RefreshControl refreshing={networkStatus !== NetworkStatus.ready} onRefresh={onRefresh} />
       }>
       <Container>
-        {data?.tourTransactionList?.data?.length === 0 && (
-          <View style={{ height: HEIGHT - 150 }}>
-            <NoResult />
-          </View>
-        )}
-
         {data?.tourTransactionList?.data?.map((transaction, index) => (
           <ReservationCard
             transaction={transaction as TourTransactionQueryType}

@@ -36,9 +36,9 @@ const WalletScreen = () => {
         <WhiteSpace size={24} />
 
         <ImageBackground
-          source={require("@assets/image/wallet.png")}
-          resizeMode="cover"
-          style={styles.imageBackground}>
+          resizeMode="stretch"
+          style={styles.imageBackground}
+          source={require("@assets/image/wallet.png")}>
           <Text body2 type="white">
             {tr("wallet balance")}
           </Text>
@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     height: 114,
     padding: 16,
     width: "100%",
+    // maxWidth: 350,
     justifyContent: "flex-end",
   },
   transactionHistory: {
