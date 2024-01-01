@@ -17,10 +17,10 @@ function ImageSlider({ imageList }: ImageSlider) {
         imageStyle={style.sliderImageActiveSlide}
         source={
           imageList?.[activeSlide]?.medium
-          ? {
-            uri: imageList?.[activeSlide]?.medium,
-          }
-          : require("@assets/image/defaultHost.png")
+            ? {
+              uri: imageList?.[activeSlide]?.medium,
+            }
+            : require("@assets/image/defaultHost.svg")
         }
       />
 
@@ -52,7 +52,7 @@ function ImageSlider({ imageList }: ImageSlider) {
 const style = StyleSheet.create({
   sliderActiveSlide: {
     height: 200,
-    width:'100%'
+    width: '100%'
   },
   sliderImageActiveSlide: {
     borderRadius: 10,

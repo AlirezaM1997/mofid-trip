@@ -34,7 +34,7 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
   };
 
   const avatar =
-    avatarS3?.length > 0 ? { uri: avatarS3?.[0].small } : require("@assets/image/defaultHost.png");
+    avatarS3?.length > 0 ? { uri: avatarS3?.[0].small } : require("@assets/image/defaultHost.svg");
 
   return (
     <Pressable style={style.container} onPress={handlePress}>
