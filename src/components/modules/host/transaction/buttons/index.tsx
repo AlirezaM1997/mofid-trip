@@ -54,7 +54,7 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
             type: "outline",
             color: "secondary",
             title: tr("request details"),
-            changeHandler: () => pressHandler(`/host/transaction/detail/${transaction.id}`),
+            changeHandler: () => pressHandler(`/host/transaction/${transaction.id}`),
           }
         : {
             title: tr("pay"),
@@ -65,7 +65,7 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
         type: "outline",
         color: "secondary",
         title: tr("request details"),
-        changeHandler: () => pressHandler(`/host/transaction/detail/${transaction.id}`),
+        changeHandler: () => pressHandler(`/host/transaction/${transaction.id}`),
       },
     };
 

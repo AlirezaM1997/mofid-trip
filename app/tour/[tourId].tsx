@@ -22,8 +22,8 @@ import {
 } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
-import Share from "@modules/share";
 import { useSession } from "@src/context/auth";
+import ShareReportDropDown from "@modules/share-report-dropdown";
 
 export default () => {
   const isRtl = useIsRtl();
@@ -75,7 +75,7 @@ export default () => {
   const endTime = moment(tour?.endTime).locale("fa").format("MMMM D");
 
   useEffect(() => {
-    navigation.setOptions({ title: name, headerRight: () => <Share /> });
+    navigation.setOptions({ title: name, headerRight: () => <ShareReportDropDown /> });
   }, [name]);
 
   useEffect(() => {

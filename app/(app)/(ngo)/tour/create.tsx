@@ -176,7 +176,7 @@ const Screen = () => {
     });
   }, []);
   // ########## END OF BACK BUTTON HANDLING ##########
-  
+
   if (!isNgo) return <AccessDenied />;
 
   return (

@@ -21,7 +21,7 @@ const TransactionDetailsScreen = () => {
   const { transactionId } = useLocalSearchParams();
   const [isVisible, setIsVisible] = useState(false);
 
-  const [addPurchase] = useProjectPurchaseAddMutation();
+  const [addPurchase, { loading: purchaseLoading }] = useProjectPurchaseAddMutation();
 
   const { data, loading } = useProjectTransactionDetailQuery({
     variables: { pk: transactionId as string },
@@ -78,6 +78,7 @@ const TransactionDetailsScreen = () => {
         transactionDetail={data.projectTransactionDetail as ProjectTransactionQueryType}
       />
       <AcceptPayment
+        purchaseLoading={purchaseLoading}
         purchaseHandler={purchaseHandler}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
