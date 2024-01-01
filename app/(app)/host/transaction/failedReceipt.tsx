@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "jalali-moment";
-import { Text } from "@rneui/themed";
+import { Chip, Text } from "@rneui/themed";
 import Container from "@atoms/container";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
@@ -10,7 +10,7 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { useProjectTransactionDetailQuery, useUserDetailQuery } from "@src/gql/generated";
-import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
+import { ImageSourcePropType, Pressable, StyleSheet, View, ViewStyle } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormatPrice } from "@src/hooks/localization";
 import { totalPrice } from "@src/helper/totalPrice";
@@ -108,19 +108,13 @@ const Receipt = () => {
             {localizeNumber(formattedTotalPrice)}
           </Text>
 
-          <Button
+          <Chip
+            buttonStyle={styles.chip}
             color={theme.colors.error}
-            titleStyle={styles.buttonTitle}
-            icon={
-              <AntDesign
-                size={16}
-                color="black"
-                name="closecircle"
-                style={[styles.tickIcon, { color: theme.colors.white }]}
-              />
-            }>
-            {tr("unsuccessful payment")}
-          </Button>
+            titleStyle={styles.chipTitle(theme)}
+            title={tr("unsuccessful payment")}
+            icon={<AntDesign size={16} name="checkcircle" color={theme.colors.white} />}
+          />
         </View>
       </Container>
 
@@ -171,6 +165,9 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     borderStyle: "dashed",
   },
+
+  chip: { padding: 8, gap: 8, margin: "auto" },
+  chipTitle: (theme => ({ color: theme.colors.white })) as ViewStyle,
   buttonTitle: { fontSize: 12 },
   issueTrackingContainer: {
     display: "flex",

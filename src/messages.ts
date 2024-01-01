@@ -2225,6 +2225,11 @@ export const messages = {
     fa_ir: "پرداخت موفق",
     en_us: "Success Receipt",
   },
+  "failed receipt": {
+    ar: "إيصال النجاح",
+    fa_ir: "پرداخت ناموفق",
+    en_us: "Failed Receipt",
+  },
   "passengers who plan to travel with this tour. please check the submitted requests.": {
     ar: "المسافرون الذين يخططون للسفر بهذه الجولة. يرجى التحقق من الطلبات المقدمة.",
     fa_ir: "مسافرانی که قصد دارند با این تور سفر کنند. لطفا درخواست های ارسال شده را بررسی کنید.",

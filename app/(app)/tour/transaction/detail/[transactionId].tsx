@@ -4,7 +4,7 @@ import useTranslation from "@src/hooks/translation";
 import React, { ReactElement, useState } from "react";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import LoadingIndicator from "@modules/Loading-indicator";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import TourTransactionDetail from "@modules/tour/transaction/detail";
 import AcceptPayment from "@modules/tour/transaction/buttons/acceptPayment";
@@ -15,6 +15,7 @@ const TourTransactionDetailScreen = () => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const { transactionId } = useLocalSearchParams();
+  const navigation = useNavigation();
 
   const [addPurchase, { loading: purchaseLoading }] = useTourPurchaseAddMutation();
 
@@ -25,7 +26,7 @@ const TourTransactionDetailScreen = () => {
   if (!data || loading) {
     return <LoadingIndicator />;
   }
-
+navigation.setOptions({title: data.tourTransactionDetail.tourPackage.tour.title})
   const { status, tourPackage, tourGuests } = data.tourTransactionDetail;
 
   const purchaseHandler = async () => {

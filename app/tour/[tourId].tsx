@@ -76,10 +76,6 @@ export default () => {
   const endTime = moment(tour?.endTime).locale("fa").format("D MMMM");
 
   useEffect(() => {
-    navigation.setOptions({ title: name, headerRight: () => <ShareReportDropDown /> });
-  }, [name]);
-
-  useEffect(() => {
     if (!loading && data) {
       setTour(data.tourDetail);
     }
@@ -107,6 +103,7 @@ export default () => {
   };
 
   if (loading || !tour) return <LoadingIndicator />;
+  navigation.setOptions({ title: data?.tourDetail?.title, headerRight: () => <ShareReportDropDown /> });
 
   return (
     <BottomButtonLayout buttons={[<Button onPress={handleBottomSheet}>{tr("Reserve")}</Button>]}>
