@@ -308,7 +308,7 @@ export const messages = {
     ar: "إدارة الطلبات الواردة من المستخدمين الذين يرغبون في تجربة استضافتك.",
     fa_ir:
       "مدیریت درخواست های دریافت شده از سوی کاربرانی که قصد دارند به میزبانی های شما را تجربه کنند.",
-    en_us: "Management of requests received from users who intend to experience your hosting.",
+    en_us: "management of requests received from users who intend to experience your hosting.",
   },
   "requests received": {
     ar: "الطلبات الواردة",
@@ -1348,16 +1348,22 @@ export const messages = {
     fa_ir: "ثبت و ارسال",
     en_us: "confirm and send",
   },
-  "if you see a problem in the tour, you can report this violation to the admin so that it can be addressed.": {
-    ar: "إذا رأيت مشكلة في الجولة، يمكنك الإبلاغ عن هذا الانتهاك إلى المسؤول حتى يتم معالجته.",
-    fa_ir: "در صورت مشاهده مشکل در تور، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
-    en_us: "If you see a problem in the tour, you can report this violation to the admin so that it can be addressed.",
-  },
-  "if you see a problem in the host, you can report this violation to the admin so that it can be addressed.": {
-    ar: "إذا رأيت مشكلة في الاستضافة، يمكنك الإبلاغ عن هذه المخالفة إلى المسؤول حتى يتم التعامل معها.",
-    fa_ir: "در صورت مشاهده مشکل در میزبانی، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
-    en_us: "If you see a problem in the host, you can report this violation to the admin so that it can be addressed.",
-  },
+  "if you see a problem in the tour, you can report this violation to the admin so that it can be addressed.":
+    {
+      ar: "إذا رأيت مشكلة في الجولة، يمكنك الإبلاغ عن هذا الانتهاك إلى المسؤول حتى يتم معالجته.",
+      fa_ir:
+        "در صورت مشاهده مشکل در تور، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
+      en_us:
+        "If you see a problem in the tour, you can report this violation to the admin so that it can be addressed.",
+    },
+  "if you see a problem in the host, you can report this violation to the admin so that it can be addressed.":
+    {
+      ar: "إذا رأيت مشكلة في الاستضافة، يمكنك الإبلاغ عن هذه المخالفة إلى المسؤول حتى يتم التعامل معها.",
+      fa_ir:
+        "در صورت مشاهده مشکل در میزبانی، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
+      en_us:
+        "If you see a problem in the host, you can report this violation to the admin so that it can be addressed.",
+    },
   copied: {
     ar: "نسخ",
     fa_ir: "کپی شد",
@@ -1536,7 +1542,8 @@ export const messages = {
   },
   "you can communicate with the host owner by calling and texting.": {
     ar: "يمكنك إجراء حجز مع المضيف عن طريق الاتصال والرسائل النصية لقد تواصلت.",
-    fa_ir: "شما می‌توانید از طریق تماس و پیامک، با میزبان هاستی که رزرو کرده اید ارتباط برقرار کنید.",
+    fa_ir:
+      "شما می‌توانید از طریق تماس و پیامک، با میزبان هاستی که رزرو کرده اید ارتباط برقرار کنید.",
     en_us: "you can communicate with the host owner by calling and texting.",
   },
   "communication with the host": {
@@ -1558,6 +1565,11 @@ export const messages = {
     ar: "إدارة طلباتك للاستضافة والرحلات",
     fa_ir: "مدیریت درخواست های شما به میزبانی ها",
     en_us: "Manage your requests for host",
+  },
+  "manage your requests for hosting and trips": {
+    ar: "إدارة طلباتك للاستضافة والرحلات",
+    fa_ir: "مدیریت درخواست های شما به میزبانی ها و تورها",
+    en_us: "manage your requests for hosting and trips",
   },
   "view and manage tour": {
     ar: "المشاهدة والإدارة",
@@ -2404,7 +2416,8 @@ export const messages = {
     ar: "أكتب تعليقا*",
     fa_ir: "توضیجی بنویسید*",
     en_us: "Write a comment*",
-  },  "choose or write the cost of your tour, you can give a discount to the original price.": {
+  },
+  "choose or write the cost of your tour, you can give a discount to the original price.": {
     ar: "اختر أو اكتب تكلفة جولتك، يمكنك إعطاء خصم على السعر الأصلي.",
     fa_ir: "هزینه تور خودتان را انتخاب کنید یا بنویسید، شما می‌توانید تخفیف هم به قیمت اصلی بدهید.",
     en_us: "Choose or write the cost of your tour, you can give a discount to the original price.",
@@ -2716,11 +2729,13 @@ export const messages = {
     fa_ir: "دسترسی ندارید!",
     en_us: "Access Denied",
   },
-  "it appears that you do not have permission to access this page. access the system administrator for access.": {
-    ar: "يبدو أنه ليس لديك إذن للوصول إلى هذه الصفحة. الوصول إلى مسؤول النظام للوصول.",
-    fa_ir: "به نظر می رسد که شما اجازه دسترسی به این صفحه را ندارید.",
-    en_us: "It appears that you do not have permission to access this page. Access the system administrator for access.",
-  },
+  "it appears that you do not have permission to access this page. access the system administrator for access.":
+    {
+      ar: "يبدو أنه ليس لديك إذن للوصول إلى هذه الصفحة. الوصول إلى مسؤول النظام للوصول.",
+      fa_ir: "به نظر می رسد که شما اجازه دسترسی به این صفحه را ندارید.",
+      en_us:
+        "It appears that you do not have permission to access this page. Access the system administrator for access.",
+    },
   "user login": {
     ar: "",
     fa_ir: "ورود کاربر",

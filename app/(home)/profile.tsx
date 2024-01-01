@@ -221,29 +221,6 @@ const Profile: React.FC = () => {
           <Text type="grey3">{tr("Requests")}</Text>
         </Container>
 
-        <ListItem bottomDivider onPress={handleNavigateToRequestToMyTours}>
-          <Feather name="aperture" size={24} color="black" />
-          <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("My Tours Requests")}</ListItem.Title>
-          </ListItem.Content>
-          <Feather
-            name={isRtl ? "chevron-left" : "chevron-right"}
-            size={24}
-            color={theme.colors.grey3}
-          />
-        </ListItem>
-
-        <ListItem bottomDivider onPress={handleNavigateToRequestToMyHost}>
-          <Feather name="aperture" size={24} color="black" />
-          <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("apply to my hosts")}</ListItem.Title>
-          </ListItem.Content>
-          <Feather
-            name={isRtl ? "chevron-left" : "chevron-right"}
-            size={24}
-            color={theme.colors.grey3}
-          />
-        </ListItem>
         <ListItem bottomDivider onPress={() => router.push("host/transaction")}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
@@ -256,39 +233,10 @@ const Profile: React.FC = () => {
           />
         </ListItem>
 
-        <ListItem onPress={() => router.push("/reservation")}>
-          <Feather name="aperture" size={24} color="black" />
-          <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("Tours and my travels")}</ListItem.Title>
-          </ListItem.Content>
-          <Feather
-            name={isRtl ? "chevron-left" : "chevron-right"}
-            size={24}
-            color={theme.colors.grey3}
-          />
-        </ListItem>
-
-        <ListItem onPress={() => router.push("/host/management")} bottomDivider>
+        <ListItem onPress={() => router.push("/host/management")}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Hosts")}</ListItem.Title>
-          </ListItem.Content>
-          <Feather
-            name={isRtl ? "chevron-left" : "chevron-right"}
-            size={24}
-            color={theme.colors.grey3}
-          />
-        </ListItem>
-
-        <WhiteSpace size={30} />
-
-        <Container>
-          <Text type="grey3">{tr("Requests")}</Text>
-        </Container>
-        <ListItem bottomDivider onPress={() => router.push("/host/management/request")}>
-          <Feather name="aperture" size={24} color="black" />
-          <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("apply to my hosts")}</ListItem.Title>
           </ListItem.Content>
           <Feather
             name={isRtl ? "chevron-left" : "chevron-right"}
@@ -367,6 +315,7 @@ const Profile: React.FC = () => {
         </Text>
         <WhiteSpace size={10} />
       </ScrollView>
+
       <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
         {Object.values(LanguageChoiceEnum).map((lang, index) => (
           <ListItem key={lang} bottomDivider={index !== 2} onPress={() => handleChangeLang(lang)}>
@@ -382,6 +331,7 @@ const Profile: React.FC = () => {
           </ListItem>
         ))}
       </BottomSheet>
+
       <BottomSheet isVisible={isVisibleLogout} onBackdropPress={() => setIsVisibleLogout(false)}>
         <ListItem>
           <ListItem.Content style={style.logoutContent}>

@@ -24,10 +24,13 @@ const Item = ({ project }: ItemPropsType) => {
       <ImageBackground
         style={style.imageContainerStyle}
         imageStyle={style.imageStyle}
-        source={project?.accommodation?.avatarS3.length > 0 ? {
-          uri: project?.accommodation?.avatarS3[0]?.large,
-        }:
-        require("@assets/image/defaultHost.png")}
+        source={
+          project?.accommodation?.avatarS3.length > 0
+            ? {
+                uri: project?.accommodation?.avatarS3[0]?.large,
+              }
+            : require("@assets/image/defaultHost.png")
+        }
       />
       <View style={style.cardTextContainer}>
         <Text numberOfLines={1} style={style.projectTitle} body1>
@@ -82,7 +85,7 @@ const style = StyleSheet.create({
     backgroundColor: "#fff",
     display: "flex",
     flexDirection: "row",
-    paddingRight: 10,
+    paddingLeft: 10,
     maxWidth: 300,
     ...Platform.select({
       web: { boxShadow: "0 0 3px #12121233" },

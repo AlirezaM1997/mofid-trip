@@ -2,7 +2,7 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import ImageSlider from "@modules/image-slider";
 import Stepper from "@modules/stepper";
-import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
+import { ListItem, Text, useTheme } from "@rneui/themed";
 import {
   MyNgoDetailTourSetQuery,
   TourTourStatusStepChoices,
@@ -15,8 +15,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import { Divider } from "@rneui/themed";
-import ComingSoon from "@modules/coming-soon";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { Linking } from "react-native";
+import { passedTime } from "@src/helper/date";
 
 const TourDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -25,7 +26,6 @@ const TourDetailScreen = () => {
   const navigation = useNavigation();
   const { tourId } = useLocalSearchParams();
   const steps = [tr("pending"), tr("published"), tr("End Tour")];
-  const [isVisible, setIsVisible] = useState(false);
   const [tour, setTour] = useState<MyNgoDetailTourSetQuery["NGODetail"]["tourSet"][0]>();
 
   const { loading, data } = useMyNgoDetailTourSetQuery();
@@ -41,8 +41,13 @@ const TourDetailScreen = () => {
   const handleNavigateToRequest = () => {
     router.push("/tour/management/request/" + tour.id);
   };
+
+  const makePhoneCall = () => {
+    Linking.openURL("tel:09036495273");
+  };
+
   useEffect(() => {
-    if (tour) navigation.setOptions({ title: tour?.title  });
+    if (tour) navigation.setOptions({ title: tour?.title });
   }, [tour]);
 
   useEffect(() => {
@@ -64,7 +69,7 @@ const TourDetailScreen = () => {
           {tour?.title}
         </Text>
         <Text caption type="grey3">
-          آخرین به روز رسانی در
+          {tr("Last modification")}: {passedTime(tour.modifiedDate)}
         </Text>
         <WhiteSpace size={20} />
         <Text subtitle1 bold>
@@ -119,7 +124,7 @@ const TourDetailScreen = () => {
 
       <Divider thickness={8} bgColor="grey0" />
 
-      <ListItem onPress={() => setIsVisible(true)}>
+      <ListItem onPress={makePhoneCall}>
         <Feather name="phone" size={24} color={theme.colors.black} />
         <ListItem.Content>
           <ListItem.Title>{tr("Contact Support")}</ListItem.Title>
@@ -130,18 +135,6 @@ const TourDetailScreen = () => {
           color={theme.colors.grey3}
         />
       </ListItem>
-
-      <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
-        <ListItem>
-          <ListItem.Content>
-            <ComingSoon />
-            <WhiteSpace size={10} />
-            <Button containerStyle={{ width: "100%" }} onPress={() => setIsVisible(false)}>
-              {tr("ok")}
-            </Button>
-          </ListItem.Content>
-        </ListItem>
-      </BottomSheet>
     </ScrollView>
   );
 };

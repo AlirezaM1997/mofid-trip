@@ -5,7 +5,7 @@ import WhiteSpace from "@atoms/white-space";
 import { useEffect, useState } from "react";
 import { getCapacity } from "@src/helper/tour";
 import ImageSlider from "@modules/image-slider";
-import { ImageBackground, StyleSheet, View } from "react-native";
+import { ImageBackground, Linking, Platform, Pressable, StyleSheet, View } from "react-native";
 import ContactCard from "@modules/contact-card";
 import SimilarTours from "@modules/similar-tours";
 import TourFacilities from "@modules/tour/facilities";
@@ -16,6 +16,7 @@ import { BottomSheet, Button, ListItem, Text } from "@rneui/themed";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import {
   AccommodationQueryType,
+  TourCapacityType,
   TourDetailQuery,
   TourPackageType,
   useTourDetailQuery,
@@ -84,6 +85,27 @@ export default () => {
     }
   }, [loading, data]);
 
+  const openMapHandler = () => {
+    const scheme = Platform?.select({ ios: "maps://0,0?q=", android: "geo:0,0?q=" });
+    const latLng = ` ${(tour.destination as AccommodationQueryType)?.lat}, ${
+      (tour.destination as AccommodationQueryType)?.lng
+    }`;
+    const url = Platform?.select({
+      ios: `${scheme}@${latLng}`,
+      android: `${scheme}${latLng}`,
+    });
+
+    if (Platform.OS === "web") {
+      const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${
+        (tour.destination as AccommodationQueryType)?.lat
+      },${(tour.destination as AccommodationQueryType)?.lng}`;
+      window.open(googleMapsUrl, "_blank");
+      return;
+    }
+
+    Linking?.openURL(url);
+  };
+
   if (loading || !tour) return <LoadingIndicator />;
 
   return (
@@ -111,7 +133,7 @@ export default () => {
           </View>
           <View style={styles.grid}>
             <Text type="grey2">{tr("Capacity")}</Text>
-            <Text bold>{localizeNumber(getCapacity(tour.capacity))}</Text>
+            <Text bold>{localizeNumber(getCapacity(tour.capacity as TourCapacityType))}</Text>
           </View>
         </View>
 
@@ -142,10 +164,12 @@ export default () => {
             <Text type="grey4">{(tour?.destination as AccommodationQueryType)?.address}</Text>
 
             <WhiteSpace size={20} />
-            <Map
-              lat={(tour.destination as AccommodationQueryType)?.lat}
-              lng={(tour.destination as AccommodationQueryType)?.lng}
-            />
+            <Pressable onPress={openMapHandler}>
+              <Map
+                lat={(tour.destination as AccommodationQueryType)?.lat}
+                lng={(tour.destination as AccommodationQueryType)?.lng}
+              />
+            </Pressable>
           </>
         )}
       </Container>

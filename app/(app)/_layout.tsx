@@ -51,7 +51,7 @@ export default function AppLayout() {
       <Stack.Screen
         name="host/transaction/index"
         options={{
-          title: tr("Tour Transactions"),
+          title: tr("requests"),
         }}
       />
       <Stack.Screen
