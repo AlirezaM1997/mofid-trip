@@ -37,11 +37,13 @@ const Tag = ({ name }) => {
 
 const ProjectTags = ({ tags }) => {
   return (
-    <View style={style.container}>
-      {tags.map((tag, index) => (
-        <Tag key={index} name={tag.name} />
-      ))}
-    </View>
+    tags.length > 0 && (
+      <View style={style.container}>
+        {tags.map((tag, index) => (
+          <Tag key={index} name={tag.name} />
+        ))}
+      </View>
+    )
   );
 };
 

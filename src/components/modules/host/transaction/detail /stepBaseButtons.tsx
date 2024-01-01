@@ -27,7 +27,8 @@ const StepBaseButtons = ({
     router.push({
       pathname: `/host/transaction/edit`,
       params: {
-        projectId: transaction.id,
+        projectId: transaction.project.id,
+        transactionId: transaction.id,
         name: project.name,
       },
     });

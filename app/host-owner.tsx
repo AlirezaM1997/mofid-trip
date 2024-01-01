@@ -1,17 +1,17 @@
-import Container from "@atoms/container";
-import { Text } from "@rneui/themed";
-import WhiteSpace from "@atoms/white-space";
-import { Avatar, Image, useTheme } from "@rneui/themed";
-import { WIDTH } from "@src/constants";
-import { useNgoDetailQuery } from "@src/gql/generated";
-import useTranslation from "@src/hooks/translation";
-import { useLocalSearchParams, useNavigation } from "expo-router";
-import { View } from "react-native";
-import { ActivityIndicator, StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import HostCard from "@modules/host/card";
 import { useEffect } from "react";
+import { View } from "react-native";
+import { Text } from "@rneui/themed";
+import { WIDTH } from "@src/constants";
+import Container from "@atoms/container";
+import HostCard from "@modules/host/card";
+import { StyleSheet } from "react-native";
+import WhiteSpace from "@atoms/white-space";
+import useTranslation from "@src/hooks/translation";
+import { useNgoDetailQuery } from "@src/gql/generated";
+import { Avatar, Image, useTheme } from "@rneui/themed";
+import { ScrollView } from "react-native-gesture-handler";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 
 const height = 220;
 
@@ -22,7 +22,6 @@ export default () => {
   const navigation = useNavigation();
   const { loading, data } = useNgoDetailQuery({ variables: { pk: ngoId as string } });
 
-  
   useEffect(() => {
     if (!loading && data) {
       navigation.setOptions({
@@ -30,9 +29,9 @@ export default () => {
       });
     }
   }, [loading, data]);
-  
+
   if (loading) return <LoadingIndicator />;
-  
+
   return (
     <ScrollView>
       <Image

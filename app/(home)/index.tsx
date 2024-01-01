@@ -22,7 +22,7 @@ export default function Index() {
       <ScrollView>
         <WhiteSpace size={20} />
         <Container>
-          <Banner name="home-1" />
+          <Banner name="home-2" />
         </Container>
 
         <WhiteSpace size={32} />
@@ -31,7 +31,7 @@ export default function Index() {
         <WhiteSpace size={32} />
 
         <Container>
-          <Banner name="home-2" />
+          <Banner name="home-1" />
         </Container>
 
         <WhiteSpace size={32} />

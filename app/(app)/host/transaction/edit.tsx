@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Button, Text } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import Container from "@atoms/container";
 import { useEffect, useState } from "react";
 import WhiteSpace from "@atoms/white-space";
@@ -19,12 +19,12 @@ import HostTransactionEditSubmitBottomSheet from "@organisms/host-transaction/ed
 const HostTransactionEditScreen = () => {
   const { tr } = useTranslation();
   const navigation = useNavigation();
-  const { projectId, name } = useLocalSearchParams();
+  const { transactionId, name } = useLocalSearchParams();
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [activeStep, setActiveStep] = useState(3);
 
   const { data, loading } = useProjectTransactionDetailQuery({
-    variables: { pk: projectId as string },
+    variables: { pk: transactionId as string },
   });
 
   if (!data || loading) return <LoadingIndicator />;
@@ -62,7 +62,7 @@ const HostTransactionEditScreen = () => {
       headerTitle: name,
     });
   }, []);
-  
+
   return (
     <Formik
       onSubmit={handleSubmit}

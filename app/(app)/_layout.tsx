@@ -20,7 +20,7 @@ export default function AppLayout() {
   if (!session) {
     // On web, static rendering will stop here as the user is not authenticated
     // in the headless Node process that the pages are rendered in.
-    return <Redirect href="/userLogin" />;
+    return <Redirect href="/reservation" />;
   }
 
   // This layout can be deferred because it's not the root layout.
@@ -34,6 +34,24 @@ export default function AppLayout() {
         name="host/create"
         options={{
           title: tr("Create Host"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/transaction/detail/[transactionId]"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/transaction/successReceipt"
+        options={{
+          title: tr("success receipt"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/transaction/failedReceipt"
+        options={{
+          title: tr("failed receipt"),
         }}
       />
       <Stack.Screen
@@ -51,7 +69,7 @@ export default function AppLayout() {
       <Stack.Screen
         name="host/transaction/index"
         options={{
-          title: tr("Tour Transactions"),
+          title: tr("requests"),
         }}
       />
       <Stack.Screen

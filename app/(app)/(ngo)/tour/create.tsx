@@ -11,7 +11,7 @@ import { setTourCreateActiveStep } from "@src/slice/tour-create-slice";
 import { RootState } from "@src/store";
 import { router, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
-import { ImageBackground, Pressable, StyleSheet } from "react-native";
+import { ImageBackground, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import CapacityTab from "@organisms/tour-create/capacity-tab";

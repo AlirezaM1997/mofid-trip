@@ -35,6 +35,7 @@ import { CommonActions } from "@react-navigation/routers";
 import TabFaclities from "@organisms/host-create/facilities";
 import AccessDenied from "@modules/access-denied";
 import { useSession } from "@src/context/auth";
+import Authentication from "@modules/authentication";
 
 const initialValues = {
   name: "",
@@ -192,8 +193,7 @@ const Screen = () => {
   }, []);
   // ########## END OF BACK BUTTON HANDLING ##########
 
-
-  if (!isNgo) return <AccessDenied />;
+  if (!session) <Authentication />;
 
   return (
     <Formik

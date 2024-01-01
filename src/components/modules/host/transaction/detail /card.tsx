@@ -34,7 +34,9 @@ const TransactionDetailCard = ({
         />
 
         <View style={styles.hostDetail}>
-          <Text subtitle1>{transactionDetail.project.name}</Text>
+          <Text numberOfLines={1} subtitle1>
+            {transactionDetail.project.name}
+          </Text>
 
           <Text numberOfLines={1} caption type="grey2">
             {transactionDetail.project.accommodation.address}
@@ -73,6 +75,7 @@ const styles = StyleSheet.create({
   hostDetailContainer: {
     gap: 12,
     flexDirection: "row",
+    alignItems: "center",
   },
   hostDetail: { width: 164, gap: 8, justifyContent: "center" },
   hostAvatar: {

@@ -2,18 +2,18 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import Input from "@atoms/input";
 import { router } from "expo-router";
+import { Image } from "@rneui/themed";
 import React, { useState } from "react";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import { Image } from "@rneui/themed";
 import { Button, Text } from "@rneui/themed";
 import Toast from "react-native-toast-message";
+import parseText from "@src/helper/number-input";
 import { BANKES_DATA } from "@src/constant/banks";
 import { ImageSourcePropType } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import { useBankCardAddMutation } from "@src/gql/generated";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import parseText from "@src/helper/number-input";
 
 const initialValues = { title: "", iban: "", cardPan: "" };
 
@@ -24,10 +24,11 @@ const AddCardScreen = () => {
   const [bankCardAdd, { loading }] = useBankCardAddMutation();
 
   const validationSchema = Yup.object().shape({
-    cardPan: Yup.number()
+    iban: Yup.string().typeError(tr("must be a number")).min(24, tr("iban should be 24 character")),
+    cardPan: Yup.string()
       .typeError(tr("must be a number"))
-      .min(1000000000000000, tr("cardpan should be 16 character"))
       .required(tr("cardPan is required"))
+      .min(16, tr("cardpan should be 16 character"))
       .test("startsWithValidId", tr("this cardpan does not exist"), value => {
         if (value) {
           const stringValue = value.toString();
@@ -38,13 +39,13 @@ const AddCardScreen = () => {
       }),
   });
 
-  const handleSubmit = async value => {
+  const handleSubmit = async (value, resetForm) => {
     const { data } = await bankCardAdd({
       variables: {
         data: {
           title: value.title,
           cardPan: value.cardPan,
-          ...(value.iban ? { iban: value.iban } : {}),
+          ...(value.iban ? { iban: `IR${value.iban}` } : {}),
         },
       },
     });
@@ -57,6 +58,7 @@ const AddCardScreen = () => {
 
       router.push("wallet/cards");
     }
+    resetForm();
   };
 
   const handleIcon = e => {
@@ -69,7 +71,7 @@ const AddCardScreen = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}>
-      {({ values, errors, touched, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
+      {({ values, errors, touched, handleBlur, handleSubmit, setFieldValue }) => (
         <BottomButtonLayout
           buttons={[
             <Button loading={loading} onPress={handleSubmit}>
@@ -104,10 +106,12 @@ const AddCardScreen = () => {
 
             <Input
               name="iban"
+              maxLength={24}
               value={values.iban}
               onBlur={handleBlur("iban")}
               placeholder={`${tr("iban")}`}
-              onChangeText={handleChange("iban")}
+              leftIcon={<Text>IR-</Text>}
+              onChangeText={text => setFieldValue("iban", parseText(text))}
               errorMessage={touched.iban && (errors.iban as string)}
             />
 
@@ -115,8 +119,8 @@ const AddCardScreen = () => {
 
             <Input
               name="cardPan"
-              keyboardType="numeric"
               maxLength={16}
+              keyboardType="numeric"
               value={values.cardPan}
               onBlur={handleBlur("cardPan")}
               placeholder={`${tr("cardPan")}`}

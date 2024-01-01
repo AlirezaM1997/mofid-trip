@@ -77,7 +77,7 @@ const Profile: React.FC = () => {
 
   const handleNavigateToEditProfile = () => router.push("/edit-profile");
 
-  const handleNavigateToComingSoon = () => router.push("/comingSoon");
+  const handleNavigateToComingSoon = () => router.push("/coming-soon");
 
   const openLanguageSetting = () => setIsVisible(true);
 
@@ -272,7 +272,7 @@ const Profile: React.FC = () => {
             color={theme.colors.grey3}
           />
         </ListItem>
-        <ListItem bottomDivider onPress={() => router.push("/termsOfServices")}>
+        <ListItem bottomDivider onPress={() => router.push("/terms-of-services")}>
           <Feather name="shield" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("Terms of services")}</ListItem.Title>

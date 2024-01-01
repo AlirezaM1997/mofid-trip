@@ -2,7 +2,7 @@ import { Text } from "@rneui/themed";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Map from "@src/components/modules/map";
-import { StyleSheet, View } from "react-native";
+import { Linking, Platform, Pressable, StyleSheet, View } from "react-native";
 import ImageSlider from "@modules/image-slider";
 import useTranslation from "@src/hooks/translation";
 import { useIsFocused } from "@react-navigation/native";
@@ -45,6 +45,23 @@ const Page: React.FC = ({ ...props }) => {
     headerRight: () => <ShareReportDropDown />,
   });
 
+  const openMapHandler = () => {
+    const scheme = Platform?.select({ ios: "maps://0,0?q=", android: "geo:0,0?q=" });
+    const latLng = ` ${accommodation?.lat}, ${accommodation?.lng}`;
+    const url = Platform?.select({
+      ios: `${scheme}@${latLng}`,
+      android: `${scheme}${latLng}`,
+    });
+
+    if (Platform.OS === "web") {
+      const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${accommodation?.lat},${accommodation?.lng}`;
+      window.open(googleMapsUrl, "_blank");
+      return;
+    }
+
+    Linking?.openURL(url);
+  };
+
   if (loading) return <LoadingIndicator />;
 
   const {
@@ -57,7 +74,7 @@ const Page: React.FC = ({ ...props }) => {
     facilities,
     description,
     accommodation,
-  } = data.projectDetail;
+  } = data?.projectDetail;
 
   return (
     <BottomButtonLayout
@@ -102,7 +119,11 @@ const Page: React.FC = ({ ...props }) => {
             <Text caption type="grey3">
               {accommodation.address}
             </Text>
-            {isFocused && <Map lat={accommodation?.lat} lng={accommodation?.lng} />}
+            {isFocused && (
+              <Pressable onPress={openMapHandler}>
+                <Map lat={accommodation?.lat} lng={accommodation?.lng} />
+              </Pressable>
+            )}
           </View>
 
           <SimilarProjects
