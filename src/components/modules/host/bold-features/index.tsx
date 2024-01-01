@@ -26,7 +26,7 @@ const ProjectBoldFeatures = ({ capacity, dateStart, dateEnd, category }) => {
   const { tr } = useTranslation();
   const totalCapacity = getCapacity(capacity);
   const { localizeNumber } = useLocalizedNumberFormat();
-  const dateConvertor = date => localizeNumber(moment(date).locale("fa").format("jMMMM jDD"));
+  const dateConvertor = date => localizeNumber(moment(date).locale("fa").format("jDD jMMMM"));
 
   return (
     <View style={style.container}>
