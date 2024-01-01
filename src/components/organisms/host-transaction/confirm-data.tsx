@@ -13,8 +13,8 @@ const HostTransactionConfirmData = ({ setActiveStep }) => {
   const { tr } = useTranslation();
   const { projectId, name } = useLocalSearchParams();
 
-  const handleNavigation = (route: string) => {
-    router.push({ pathname: route, params: { projectId: projectId, name: name } });
+  const handleNavigation = () => {
+    router.push({ pathname: `host/${projectId}`, params: { projectId: projectId, name: name } });
   };
 
   const { values } = useFormikContext<ProjectTransactionAddInputType>();
@@ -43,7 +43,7 @@ const HostTransactionConfirmData = ({ setActiveStep }) => {
           color="secondary"
           iconPosition="right"
           titleStyle={styles.buttonTitle}
-          onPress={() => handleNavigation(`host/${projectId}`)}
+          onPress={handleNavigation}
           icon={<AntDesign name="left" size={16} color="black" />}>
           {tr("view")}
         </Button>

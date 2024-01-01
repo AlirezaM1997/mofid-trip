@@ -47,6 +47,7 @@ const Profile: React.FC = () => {
       networkStatus: networkStatusUserDetail,
     },
   ] = useUserDetailLazyQuery({
+    fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
   });
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
@@ -69,7 +70,7 @@ const Profile: React.FC = () => {
 
   const handleNavigateToEditProfile = () => router.push("/edit-profile");
 
-  const handleNavigateToComingSoon = () => router.push("/comingSoon");
+  const handleNavigateToComingSoon = () => router.push("/coming-soon");
 
   const handleNavigateToRequestToMyTours = () => router.push("/tour/management/request");
 
@@ -290,7 +291,7 @@ const Profile: React.FC = () => {
             color={theme.colors.grey3}
           />
         </ListItem>
-        <ListItem bottomDivider onPress={() => router.push("/termsOfServices")}>
+        <ListItem bottomDivider onPress={() => router.push("/terms-of-services")}>
           <Feather name="shield" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("Terms of services")}</ListItem.Title>

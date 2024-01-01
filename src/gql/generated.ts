@@ -2201,7 +2201,7 @@ export type UserGetTokenMutationVariables = Exact<{
 }>;
 
 
-export type UserGetTokenMutation = { __typename?: 'Mutation', userGetToken?: { __typename: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | { __typename: 'ResponseWithToken', message?: string | null, metadata?: any | null, refreshToken?: string | null, status?: string | null, statusCode?: number | null, token?: string | null } | null };
+export type UserGetTokenMutation = { __typename?: 'Mutation', userGetToken?: { __typename: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | { __typename: 'ResponseWithToken', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null, token?: string | null, refreshToken?: string | null } | null };
 
 export type UserEditMutationVariables = Exact<{
   data?: InputMaybe<UserEditInputType>;
@@ -2885,10 +2885,10 @@ export const UserGetTokenDocument = gql`
     ... on ResponseWithToken {
       message
       metadata
-      refreshToken
       status
       statusCode
       token
+      refreshToken
     }
     ... on ResponseBase {
       message

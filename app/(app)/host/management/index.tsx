@@ -6,8 +6,10 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import { ScrollView } from "react-native-gesture-handler";
 import HostManagementCard from "@organisms/host-management-card";
 import { MyNgoDetailProjectSetQuery, useMyUserDetailProjectSetQuery } from "@src/gql/generated";
+import useTranslation from "@src/hooks/translation";
 
 const HostManagementScreen = () => {
+  const { tr } = useTranslation();
   const [hostSet, setHostSet] = useState<MyNgoDetailProjectSetQuery["NGODetail"]["projectSet"]>([]);
 
   const { loading, data } = useMyUserDetailProjectSetQuery({ fetchPolicy: "network-only" });
@@ -24,7 +26,7 @@ const HostManagementScreen = () => {
     <ScrollView>
       {!hostSet?.length && (
         <View style={{ height: HEIGHT / 2 }}>
-          <NoResult />
+          <NoResult title={tr("no hosting exist")} />
         </View>
       )}
       {hostSet?.map(host => (
