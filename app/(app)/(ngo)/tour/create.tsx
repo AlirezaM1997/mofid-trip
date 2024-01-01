@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import { ImageBackground, Pressable, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import { Feather } from "@expo/vector-icons";
 import CapacityTab from "@organisms/tour-create/capacity-tab";
 import OriginTab from "@organisms/tour-create/origin-tab";
 import DestinationTab from "@organisms/tour-create/destination-tab";
@@ -62,7 +61,6 @@ const Screen = () => {
   const [submit, { loading }] = useTourAddMutation();
   const [isVisibleExit, setIsVisibleExit] = useState(false);
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
-  const [exitElement, setExitElement] = useState<"HardwareBackButton" | "BackButton">();
   const { activeStep } = useSelector((state: RootState) => state.tourCreateSlice);
   const { session } = useSession();
   const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
@@ -107,7 +105,10 @@ const Screen = () => {
   });
 
   const handleOpen = () => setIsVisibleExit(true);
-  const handleClose = () => setIsVisibleExit(false);
+  const handleClose = () => {
+    navigation.addListener("beforeRemove", beforeRemoveHandler);
+    setIsVisibleExit(false);
+  };
 
   const handleNext = () => dispatch(setTourCreateActiveStep(activeStep + 1));
   const handlePrev = () => dispatch(setTourCreateActiveStep(activeStep - 1));
@@ -128,27 +129,13 @@ const Screen = () => {
     }
   };
 
-  // ########## START OF BACK BUTTON HANDLING ##########
   const handleExit = () => {
-    if (exitElement === "BackButton") {
-      router.back();
-      router.back();
-    } else {
-      router.back();
-    }
-  };
-
-  const handleHeaderBackButtonPress = () => {
-    handleOpen();
-    navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    setExitElement("BackButton");
+    router.back();
   };
 
   const beforeRemoveHandler = e => {
     e.preventDefault();
-    window.history.pushState(null, "", "/tour/create");
     navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    setExitElement("HardwareBackButton");
     handleOpen();
   };
 
@@ -160,119 +147,106 @@ const Screen = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (!isVisibleExit) {
-      navigation.addListener("beforeRemove", beforeRemoveHandler);
-    }
-  }, [isVisibleExit]);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <Pressable onPress={handleHeaderBackButtonPress}>
-          <Feather name="arrow-right" size={24} color="black" style={{ marginRight: 12 }} />
-        </Pressable>
-      ),
-    });
-  }, []);
-  // ########## END OF BACK BUTTON HANDLING ##########
-
   if (!isNgo) return <AccessDenied />;
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}>
-      {({ values, errors, handleSubmit }) => (
-        <BottomButtonLayout
-          buttons={[
-            <Button
-              onPress={activeStep === 8 ? handleSubmit : handleNext}
-              disabled={loading}
-              loading={loading}>
-              {activeStep === 8 ? tr("Submit") : tr("Next")}
-            </Button>,
-            <Button
-              type="outline"
-              color="secondary"
-              disabled={activeStep === 1}
-              onPress={handlePrev}>
-              {tr("Previous")}
-            </Button>,
-          ]}>
-          <TourCreateTabs />
-          <WhiteSpace />
+    <>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}>
+        {({ values, errors, handleSubmit }) => (
+          <BottomButtonLayout
+            buttons={[
+              <Button
+                onPress={activeStep === 8 ? handleSubmit : handleNext}
+                disabled={loading}
+                loading={loading}>
+                {activeStep === 8 ? tr("Submit") : tr("Next")}
+              </Button>,
+              <Button
+                type="outline"
+                color="secondary"
+                disabled={activeStep === 1}
+                onPress={handlePrev}>
+                {tr("Previous")}
+              </Button>,
+            ]}>
+            <TourCreateTabs />
+            <WhiteSpace />
 
-          <Container>
-            {activeStep === 1 && <DetailsTab />}
-            {activeStep === 2 && <CapacityTab />}
-            {activeStep === 3 && <OriginTab />}
-            {activeStep === 4 && <DestinationTab />}
-            {activeStep === 5 && <DateTab />}
-            {activeStep === 6 && <PriceTab />}
-            {activeStep === 7 && <ImagesTab />}
-            {activeStep === 8 && <FacilitiesTab />}
-          </Container>
-
-          <BottomSheet isVisible={isVisibleExit} onBackdropPress={handleClose}>
             <Container>
-              <ImageBackground
-                style={styles.rejectIcon}
-                imageStyle={{ resizeMode: "contain" }}
-                source={require("@assets/image/rejectIcon.svg")}
-              />
-              <Text heading1 center>
-                آیا از خروج از این صفحه اطمینان دارید؟
-              </Text>
-              <Text center>در صورت خروج از این صفحه اطلاعات این فرم ها پاک خواهد شد</Text>
-              <WhiteSpace />
-              <ButtonRow>
-                <Button onPress={handleExit}>خارج شدن</Button>
-                <Button onPress={handleClose}>{tr("Stay")}</Button>
-              </ButtonRow>
+              {activeStep === 1 && <DetailsTab />}
+              {activeStep === 2 && <CapacityTab />}
+              {activeStep === 3 && <OriginTab />}
+              {activeStep === 4 && <DestinationTab />}
+              {activeStep === 5 && <DateTab />}
+              {activeStep === 6 && <PriceTab />}
+              {activeStep === 7 && <ImagesTab />}
+              {activeStep === 8 && <FacilitiesTab />}
             </Container>
-          </BottomSheet>
 
-          <BottomSheet isVisible={isVisibleFinish}>
-            <Container>
-              <ImageBackground
-                style={styles.rejectIcon}
-                imageStyle={{ resizeMode: "contain" }}
-                source={require("@assets/image/check.svg")}
-              />
-              <Text center heading2 bold>
-                {tr("Your request to create a tour has been successfully registered")}
-              </Text>
-              <Text center>
-                {tr(
-                  "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers."
-                )}
-              </Text>
-              <WhiteSpace />
-              <ButtonRow>
-                <Button
-                  onPress={() => {
-                    router.push("/tour/management");
-                    setIsVisibleFinish(false);
-                  }}
-                  color="secondary"
-                  type="outline">
-                  {tr("Tour Management")}
-                </Button>
-                <Button
-                  onPress={() => {
-                    router.push("/");
-                    setIsVisibleFinish(false);
-                  }}>
-                  {tr("Return to home")}
-                </Button>
-              </ButtonRow>
-            </Container>
-          </BottomSheet>
-        </BottomButtonLayout>
-      )}
-    </Formik>
+            <BottomSheet isVisible={isVisibleExit} onBackdropPress={handleClose}>
+              <Container>
+                <ImageBackground
+                  style={styles.rejectIcon}
+                  imageStyle={{ resizeMode: "contain" }}
+                  source={require("@assets/image/rejectIcon.svg")}
+                />
+                <Text heading1 center>
+                  آیا از خروج از این صفحه اطمینان دارید؟
+                </Text>
+                <Text center>در صورت خروج از این صفحه اطلاعات این فرم ها پاک خواهد شد</Text>
+                <WhiteSpace />
+                <ButtonRow>
+                  <Button onPress={handleExit}>خارج شدن</Button>
+                  <Button onPress={handleClose}>{tr("Stay")}</Button>
+                </ButtonRow>
+              </Container>
+            </BottomSheet>
+
+            <BottomSheet isVisible={isVisibleFinish}>
+              <Container>
+                <ImageBackground
+                  style={styles.rejectIcon}
+                  imageStyle={{ resizeMode: "contain" }}
+                  source={require("@assets/image/check.svg")}
+                />
+                <Text center heading2 bold>
+                  {tr("Your request to create a tour has been successfully registered")}
+                </Text>
+                <Text center>
+                  {tr(
+                    "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers."
+                  )}
+                </Text>
+                <WhiteSpace />
+                <ButtonRow>
+                  <Button
+                    onPress={() => {
+                      router.replace("/tour/management");
+                      router.replace("/tour/management");
+                      setIsVisibleFinish(false);
+                    }}
+                    color="secondary"
+                    type="outline">
+                    {tr("Tour Management")}
+                  </Button>
+                  <Button
+                    onPress={() => {
+                      router.replace("/");
+                      router.replace("/");
+                      setIsVisibleFinish(false);
+                    }}>
+                    {tr("Return to home")}
+                  </Button>
+                </ButtonRow>
+              </Container>
+            </BottomSheet>
+          </BottomButtonLayout>
+        )}
+      </Formik>
+    </>
   );
 };
 
