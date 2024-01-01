@@ -85,7 +85,7 @@ const Page: React.FC = ({ ...props }) => {
               <Text subtitle1 bold>
                 {tr("about host")}
               </Text>
-              <Text caption type="grey2">
+              <Text caption type="grey3">
                 {description}
               </Text>
             </View>
@@ -99,7 +99,7 @@ const Page: React.FC = ({ ...props }) => {
             <Text subtitle1 bold>
               {tr("host address")}
             </Text>
-            <Text caption type="grey2">
+            <Text caption type="grey3">
               {accommodation.address}
             </Text>
             {isFocused && <Map lat={accommodation?.lat} lng={accommodation?.lng} />}
