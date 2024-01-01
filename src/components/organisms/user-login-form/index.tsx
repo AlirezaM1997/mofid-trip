@@ -38,6 +38,8 @@ const UserLoginForm = () => {
     }
   }, [loading, data]);
 
+  
+
   return (
     <>
       <View style={style.container}>
@@ -58,7 +60,7 @@ const UserLoginForm = () => {
         </Container>
       </View>
       <Container>
-        <Pressable style={style.bottomTextContainer} onPress={() => router.push("/ngoLogin")}>
+        <Pressable style={style.bottomTextContainer} onPress={() => router.replace("/ngo-login")}>
           <Text style={style.registerText}>{tr("sign in as an organization")}</Text>
         </Pressable>
 

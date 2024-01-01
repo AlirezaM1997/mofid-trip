@@ -35,7 +35,6 @@ const LoginDetailScreen = () => {
         },
       },
     });
-    console.log(data);
 
     if (data.userEdit.status === "ACCEPTED") {
       router.push(redirectToScreenAfterLogin ? redirectToScreenAfterLogin : "/");

@@ -2,12 +2,12 @@ import { ApolloClient, InMemoryCache, createHttpLink, from } from "@apollo/clien
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { API_URL } from "@src/settings";
-// import { navigationRef } from "@src/utils/root-navigation"
 import { useSelector } from "react-redux";
 import Toast from "react-native-toast-message";
 import { RootState } from "@src/store";
 import { LanguageChoiceEnum } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
+import { useSession } from "@src/context/auth";
 
 const languageCodes = {
   [LanguageChoiceEnum.FaIr]: "fa",
@@ -16,14 +16,27 @@ const languageCodes = {
 };
 
 const customUseApolloClient = () => {
-  const { token } = useSelector((state: RootState) => state.authSlice?.loginData ?? "");
+  const { session, isLoading } = useSession();
+
   const lang = useSelector(
     (state: RootState) =>
       state.settingDetailSlice?.settingDetail?.language || LanguageChoiceEnum.EnUs
   );
   const { tr } = useTranslation();
 
-  const authLink = setContext((_, { headers }) => {
+  const authLink = setContext(async (_, { headers }) => {
+    // wait until session fully loaded from LocalStorage/secure-store
+    await new Promise(resolve => {
+      if (!isLoading) {
+        resolve(true);
+      }
+    });
+
+    let token = "";
+
+    // Wait for the session to be available before retrieving the token
+    token = (await JSON.parse(session)?.token) || "";
+
     return {
       headers: {
         ...headers,

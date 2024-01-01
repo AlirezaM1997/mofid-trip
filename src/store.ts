@@ -11,7 +11,6 @@ import networkSlice from "@src/slice/network-slice";
 import NavigationSlice from "@src/slice/navigation-slice";
 import settingDetailSlice from "@src/slice/setting-detail-slice";
 import myNGODetailSlice from "@src/slice/my-ngo-slice";
-import authSlice from "@src/slice/auth-slice";
 import tourCreateSlice from "@src/slice/tour-create-slice";
 import hostCreateSlice from "@src/slice/host-create-slice";
 import * as Updates from "expo-updates";
@@ -27,7 +26,6 @@ const persistConfig = {
 
 const appReducer = combineReducers({
   userSlice: userSlice,
-  authSlice: authSlice,
   tourSlice: tourSlice,
   networkSlice: networkSlice,
   projectSlice: projectSlice,

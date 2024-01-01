@@ -57,7 +57,7 @@ const NgoLoginForm = () => {
         </Container>
       </View>
       <Container>
-        <Pressable style={style.bottomTextContainer} onPress={() => router.push("/userLogin")}>
+        <Pressable style={style.bottomTextContainer} onPress={() => router.replace("/user-login")}>
           <Text style={style.registerText}>{tr("log in as an individual")}</Text>
         </Pressable>
 

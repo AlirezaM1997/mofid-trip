@@ -32,7 +32,7 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
         type: "outline",
         color: "secondary",
         title: tr("request details"),
-        changeHandler: () => pressHandler(`/host/transaction/detail/${transaction.id}`),
+        changeHandler: () => pressHandler(`/host/transaction/${transaction.id}`),
       },
       ACCEPT: transaction.status.isActive
         ? {
@@ -54,7 +54,7 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
             type: "outline",
             color: "secondary",
             title: tr("request details"),
-            changeHandler: () => pressHandler(`/host/transaction/detail/${transaction.id}`),
+            changeHandler: () => pressHandler(`/host/transaction/${transaction.id}`),
           }
         : {
             title: tr("pay"),
@@ -65,7 +65,7 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
         type: "outline",
         color: "secondary",
         title: tr("request details"),
-        changeHandler: () => pressHandler(`/host/transaction/detail/${transaction.id}`),
+        changeHandler: () => pressHandler(`/host/transaction/${transaction.id}`),
       },
     };
 
@@ -82,7 +82,7 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
             color="secondary"
             title={tr("request details")}
             containerStyle={styles.button}
-            onPress={() => pressHandler(`/host/transaction/detail/${transaction.id}`)}
+            onPress={() => pressHandler(`/host/transaction/${transaction.id}`)}
           />
         )}
 
