@@ -1,13 +1,14 @@
 import React from "react";
 import { Skeleton } from "@rneui/themed";
 import { Image, StyleSheet, Pressable, Platform } from "react-native";
-import { BannerImageType, useBannerListQuery } from "@src/gql/generated";
+import {  useBannerListQuery } from "@src/gql/generated";
 import * as Linking from "expo-linking";
 import { useRouter } from "expo-router/src/hooks";
+import { WIDTH } from "@src/constants";
 
 const Banner = ({ name }) => {
   const router = useRouter();
-  const { loading, data, error } = useBannerListQuery({
+  const { loading, data } = useBannerListQuery({
     variables: {
       search: name,
       page: {
@@ -46,7 +47,7 @@ const Banner = ({ name }) => {
           resizeMode="stretch"
           style={style.bannerSize}
         />
-      ) : null}
+        ) : null}
     </Pressable>
   );
 };
@@ -56,8 +57,9 @@ const style = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
-    height: 144,
+    // TODO: refactor the size of image
+    width: WIDTH - 48,
+    height: (WIDTH -48)*144/330,
     overflow: "hidden",
   },
   bannerSize: {

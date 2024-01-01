@@ -37,6 +37,24 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
+        name="tour/transaction/detail/[transactionId]"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/transaction/successReceipt"
+        options={{
+          title: tr("success receipt"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/transaction/failedReceipt"
+        options={{
+          title: tr("failed receipt"),
+        }}
+      />
+      <Stack.Screen
         name="host/transaction/add"
         options={{
           title: tr("Host Reservation"),
