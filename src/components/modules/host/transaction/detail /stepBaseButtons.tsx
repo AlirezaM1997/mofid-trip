@@ -28,7 +28,7 @@ const StepBaseButtons = ({
       pathname: `/host/transaction/edit`,
       params: {
         projectId: transaction.id,
-        name: JSON.stringify(project.name),
+        name: project.name,
       },
     });
   };

@@ -4,13 +4,15 @@ import Container from "@atoms/container";
 import { ScrollView, StyleSheet } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import TourReservation from "@organisms/tour-reservation";
-import { ifNotLoggedInRedirectTo } from "@src/hooks/auth";
+import Authentication from "@modules/authentication";
+import { useSession } from "@src/context/auth";
 import HostTransaction from "@modules/host/transaction";
 
 const Page = () => {
+  const { session } = useSession();
   const { tr } = useTranslation();
 
-  ifNotLoggedInRedirectTo("/reservation");
+  if (!session) return <Authentication />;
 
   return (
     <>

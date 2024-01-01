@@ -13,7 +13,7 @@ import { useFormatPrice } from "@src/hooks/localization";
 import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { useIsAuthenticated } from "@src/hooks/auth";
+import { useSession } from "@src/context/auth";
 
 const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { tr } = useTranslation();
@@ -21,11 +21,9 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { projectId, name } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisible, setIsVisible] = useState<boolean>();
-  const isNgo = useSelector(
-    (state: RootState) => state.authSlice?.loginData?.metadata?.is_ngo || false
-  );
+  const { session } = useSession();
+  const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
   const { formatPrice } = useFormatPrice();
-  const isAuthenticated = useIsAuthenticated();
 
   const handlePress = () => {
     // if (!isNgo) {
@@ -33,7 +31,7 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
     //   return;
     // }
 
-    if (!isAuthenticated) return router.push("/authentication");
+    if (!session) return router.push("/authentication");
 
     if (getCapacity(project.capacity) === 0) {
       Toast.show({
@@ -57,7 +55,7 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
           <Text>{tr("Price")}</Text>
           <View style={style.priceContainer}>
             {project.price <= 0 ? (
-              <Text bold >{tr("it is free")}</Text>
+              <Text bold>{tr("it is free")}</Text>
             ) : (
               <>
                 <Text body1 style={style.priceNumber}>
