@@ -31,7 +31,7 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
     //   return;
     // }
 
-    if (!session) return router.push("/authentication");
+    if (!session) return router.push("/user-login");
 
     if (getCapacity(project.capacity) === 0) {
       Toast.show({
