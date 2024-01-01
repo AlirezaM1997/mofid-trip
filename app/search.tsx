@@ -3,7 +3,7 @@ import HostCard from "@modules/host/card";
 import { PAGE_SIZE } from "@src/settings";
 import { NetworkStatus } from "@apollo/client";
 import { Divider, useTheme } from "@rneui/themed";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import { ScrollView } from "react-native-gesture-handler";
@@ -12,58 +12,59 @@ import WhiteSpace from "@src/components/atoms/white-space";
 import NoResult from "@src/components/organisms/no-result";
 import SelectedFilters from "@src/components/modules/selected-filters";
 import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
-import { ProjectListQuery, useProjectListLazyQuery } from "@src/gql/generated";
+import { ProjectListQuery, useProjectListLazyQuery, useProjectListQuery } from "@src/gql/generated";
 
 const SearchScreen: React.FC = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const [searchText, setSearchText] = useState("");
-  const [list, setList] = useState<ProjectListQuery[] | undefined[]>([]);
-  const [_, { networkStatus }] = useProjectListLazyQuery({
-    notifyOnNetworkStatusChange: false,
+  const pageNumber = useRef(1);
+  const { data, error, networkStatus, fetchMore, refetch } = useProjectListQuery({
+    notifyOnNetworkStatusChange: true,
+    variables: {
+      sort: {
+        descending: false,
+      },
+      search: searchText,
+      page: { pageNumber: 1, pageSize: PAGE_SIZE },
+    },
   });
-  const [pageNumber, setPageNumber] = useState(1);
+
+  const handleLoadMore = () => {
+    pageNumber.current = pageNumber.current + 1;
+    fetchMore({
+      variables: {
+        sort: {
+          descending: false,
+        },
+        search: searchText,
+        page: { pageNumber: pageNumber.current, pageSize: PAGE_SIZE },
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return {
+          ...prev,
+          projectList: {
+            ...prev.projectList,
+            data: [...prev.projectList.data, ...fetchMoreResult.projectList.data],
+          },
+        };
+      },
+    });
+  };
 
   useEffect(() => {
-    const getResult = async () => {
-      const { data } = await _({
-        variables: {
-          sort: {
-            descending: false,
-          },
-          search: searchText,
-          page: { pageNumber: 1, pageSize: 10 },
-        },
-      });
-      return data?.projectList?.data;
-    };
-
-    getResult().then(res => {
-      setList(res as []);
-      setPageNumber(1);
+    pageNumber.current = 1;
+    refetch({
+      sort: {
+        descending: false,
+      },
+      search: searchText,
+      page: { pageNumber: pageNumber.current, pageSize: PAGE_SIZE },
     });
   }, [searchText]);
 
-  useEffect(() => {
-    if (pageNumber > 1) {
-      const getResult = async () => {
-        const { data } = await _({
-          variables: {
-            search: searchText,
-            sort: {
-              descending: false,
-            },
-            page: { pageNumber: pageNumber, pageSize: 10 },
-          },
-        });
-        return data?.projectList?.data;
-      };
-      getResult().then(res => {
-        setList(res as []);
-        // setList([...list, ...res]);
-      });
-    }
-  }, [pageNumber]);
+  if (error) return <p>Error: {error?.message}</p>;
 
   return (
     <>
@@ -75,11 +76,11 @@ const SearchScreen: React.FC = () => {
         <SelectedFilters />
         <WhiteSpace size={10} />
 
-        {networkStatus !== NetworkStatus.ready ? (
+        {networkStatus === NetworkStatus.loading || networkStatus === NetworkStatus.refetch ? (
           <ActivityIndicator size="large" color={theme.colors.primary} />
         ) : (
           <Container size={25} style={styles.resultContainer}>
-            {list?.map((project, index) => (
+            {data?.projectList?.data?.map((project, index) => (
               <HostCard
                 key={index}
                 id={project.id}
@@ -89,12 +90,17 @@ const SearchScreen: React.FC = () => {
                 avatarS3={project.accommodation.avatarS3}
               />
             ))}
-            {list?.length && list?.length === pageNumber * PAGE_SIZE ? (
-              <Button type="outline" onPress={() => setPageNumber(pageNumber + 1)}>
+            {data?.projectList?.data?.length &&
+            data?.projectList?.data?.length === pageNumber.current * PAGE_SIZE ? (
+              <Button
+                type="outline"
+                onPress={handleLoadMore}
+                disabled={networkStatus === NetworkStatus.refetch}
+                loading={networkStatus === NetworkStatus.refetch}>
                 {tr("Fetch More")}
               </Button>
             ) : null}
-            {!list?.length ? <NoResult /> : ""}
+            {networkStatus === NetworkStatus.ready && !data?.projectList?.data?.length ? <NoResult /> : ""}
           </Container>
         )}
 

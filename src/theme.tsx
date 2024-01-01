@@ -178,16 +178,16 @@ export const theme = isRtl =>
           }),
         };
 
-        const heading1Style = { fontSize: 18, lineHeight: 26 };
-        const heading2Style = { fontSize: 16 };
-        const subtitle1Style = { fontSize: 14 };
-        const subtitle2Style = { fontSize: 14 };
-        const body1Style = { fontSize: 14 };
-        const body2Style = { fontSize: 12 };
-        const captionStyle = { fontSize: 12 };
-        const cta1Style = { fontSize: 16 };
-        const cta2Style = { fontSize: 14 };
-        const cta3Style = { fontSize: 12 };
+        const heading1Style = { fontSize: 20, lineHeight: 26 };
+        const heading2Style = { fontSize: 18 };
+        const subtitle1Style = { fontSize: 16 };
+        const subtitle2Style = { fontSize: 16 };
+        const body1Style = { fontSize: 16 };
+        const body2Style = { fontSize: 14 };
+        const captionStyle = { fontSize: 14 };
+        const cta1Style = { fontSize: 18 };
+        const cta2Style = { fontSize: 16 };
+        const cta3Style = { fontSize: 14 };
 
         if (props.heading1) {
           style = { ...style, ...heading1Style };

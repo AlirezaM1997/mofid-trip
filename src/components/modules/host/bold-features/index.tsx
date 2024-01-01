@@ -9,7 +9,7 @@ import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation
 const Item = ({ title, subtitle }) => {
   return (
     <View>
-      <Text caption type="grey2" center>
+      <Text caption type="grey3" center>
         {title}
       </Text>
 
