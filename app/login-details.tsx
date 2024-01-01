@@ -2,7 +2,7 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import Input from "@atoms/input";
-import { router } from "expo-router";
+import { Redirect, router } from "expo-router";
 import { RootState } from "@src/store";
 import Container from "@atoms/container";
 import { useSelector } from "react-redux";
@@ -13,8 +13,10 @@ import { ScrollView } from "react-native-gesture-handler";
 import LoadingIndicator from "@modules/Loading-indicator";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { useUserDetailQuery, useUserEditMutation } from "@src/gql/generated";
+import { useSession } from "@src/context/auth";
 
 const LoginDetailScreen = () => {
+  const { session } = useSession();
   const { tr } = useTranslation();
   const { data, loading } = useUserDetailQuery();
   const [edit, { loading: editLoading }] = useUserEditMutation();
@@ -44,6 +46,8 @@ const LoginDetailScreen = () => {
   const validationSchema = Yup.object().shape({
     name: Yup.string().required(tr("display name is required")),
   });
+  
+  if (session) return <Redirect href="/" />;
 
   return (
     <Formik

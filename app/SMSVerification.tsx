@@ -12,13 +12,13 @@ import { useCreateLoginMutation, useUserGetTokenMutation } from "@src/gql/genera
 import { RootState } from "@src/store";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import OtpInput from "@src/components/modules/otp-input";
-import { router, useLocalSearchParams } from "expo-router";
+import { Redirect, router, useLocalSearchParams } from "expo-router";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import Toast from "react-native-toast-message";
 import { useSession } from "@src/context/auth";
 
 const SMSVerificationScreen = () => {
-  const { signIn } = useSession();
+  const { signIn, session } = useSession();
   const { tr } = useTranslation();
   const countDownTimerRef = useRef();
   const { phone, isNgo } = useLocalSearchParams();
@@ -26,6 +26,7 @@ const SMSVerificationScreen = () => {
   const { redirectToScreenAfterLogin } = useSelector((state: RootState) => state.navigationSlice);
   const [login, { loading, data, error }] = useCreateLoginMutation();
   const { localizeNumber } = useLocalizedNumberFormat();
+
   const [
     userCheckSmsVerificationCode,
     { loading: loadingChecking, data: dataChecking, error: errorChecking },
@@ -72,7 +73,7 @@ const SMSVerificationScreen = () => {
           refreshToken: dataChecking.userGetToken.refreshToken,
           metadata: dataChecking.userGetToken.metadata,
         });
-        if (!dataChecking.userGetToken.metadata.firstname) return router.push("loginDetails");
+        if (!dataChecking.userGetToken.metadata.firstname) return router.push("login-details");
         router.push(redirectToScreenAfterLogin ? redirectToScreenAfterLogin : "/");
       } else {
         Toast.show({
@@ -89,6 +90,8 @@ const SMSVerificationScreen = () => {
       setCanRequestCode(false);
     }
   }, [loading, data]);
+
+  if (session) return <Redirect href="/" />;
 
   return (
     <>
