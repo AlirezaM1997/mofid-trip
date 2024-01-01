@@ -20,7 +20,7 @@ export default function AppLayout() {
   if (!session) {
     // On web, static rendering will stop here as the user is not authenticated
     // in the headless Node process that the pages are rendered in.
-    return <Redirect href="/userLogin" />;
+    return <Redirect href="/reservation" />;
   }
 
   const isNgo = JSON.parse(session).metadata.is_ngo;

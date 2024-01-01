@@ -98,12 +98,6 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
-          name="userLogin"
-          options={{
-            title: tr("log in, sign up"),
-          }}
-        />
-        <Stack.Screen
           name="ngoLogin"
           options={{
             title: tr("log in, sign up"),

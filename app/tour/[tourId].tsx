@@ -72,8 +72,8 @@ export default () => {
     }
   };
 
-  const startTime = moment(tour?.startTime).locale("fa").format("MMMM D");
-  const endTime = moment(tour?.endTime).locale("fa").format("MMMM D");
+  const startTime = moment(tour?.startTime).locale("fa").format("D MMMM");
+  const endTime = moment(tour?.endTime).locale("fa").format("D MMMM");
 
   useEffect(() => {
     navigation.setOptions({ title: name, headerRight: () => <ShareReportDropDown /> });
