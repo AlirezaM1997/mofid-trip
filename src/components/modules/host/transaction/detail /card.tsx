@@ -28,9 +28,14 @@ const TransactionDetailCard = ({
       <View style={styles.hostDetailContainer}>
         <Image
           style={styles.hostAvatar}
-          source={{
-            uri: transactionDetail.project.accommodation.avatarS3[0].small,
-          }}
+          source={
+            transactionDetail?.project?.accommodation?.avatarS3.length > 0
+              ? {
+                  uri: transactionDetail?.project?.accommodation?.avatarS3?.[0]?.small,
+                }
+              : require("@assets/image/defaultHost.svg")
+          }
+          resizeMode="cover"
         />
 
         <View style={styles.hostDetail}>

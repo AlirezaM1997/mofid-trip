@@ -88,7 +88,7 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
 
 const style = StyleSheet.create({
   container: {
-    width: WIDTH - 50,
+    width: WIDTH - 65,
     overflow: "hidden",
     backgroundColor: "#fff",
     elevation: 5,
@@ -118,7 +118,7 @@ const style = StyleSheet.create({
     display: "flex",
     justifyContent: "space-between",
     paddingHorizontal: 10,
-    paddingBottom: 15,
+    // paddingBottom: 15,
   },
   bottom: {
     display: "flex",
