@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "build": "expo export -p web",
+    "start": "serve -s dist"
+  },
+  "devDependencies": {
+    "serve": "^12.0.0"
+  },
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/"
+    }
+  ]
+}
