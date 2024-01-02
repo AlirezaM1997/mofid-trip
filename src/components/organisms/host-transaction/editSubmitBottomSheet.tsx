@@ -43,6 +43,7 @@ const HostTransactionEditSubmitBottomSheet = ({
         type: "success",
         text1: tr("Your request has been successfully submitted"),
       });
+      setIsVisible(false)
       router.push("host/transaction");
     }
   };

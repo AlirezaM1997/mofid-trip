@@ -75,7 +75,7 @@ const Profile: React.FC = () => {
 
   const handleNavigateToEditNgoProfile = () => router.push("/edit-ngo-profile");
 
-  const handleNavigateToComingSoon = () => router.push("/comingSoon");
+  const handleNavigateToComingSoon = () => router.push("/coming-soon");
 
   const openLanguageSetting = () => setIsVisible(true);
 
@@ -225,7 +225,7 @@ const Profile: React.FC = () => {
             <Container>
               <Text type="grey3">{tr("Managements")}</Text>
             </Container>
-            <ListItem onPress={() => router.push("/comingSoon")}>
+            <ListItem onPress={() => router.push("/coming-soon")}>
               <Feather name="aperture" size={24} color="black" />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>
@@ -280,7 +280,7 @@ const Profile: React.FC = () => {
           />
         </ListItem>
 
-        <ListItem  onPress={() => router.push("/wallet")}>
+        <ListItem onPress={() => router.push("/wallet")}>
           <Feather name="aperture" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("wallet")}</ListItem.Title>
@@ -337,7 +337,7 @@ const Profile: React.FC = () => {
             color={theme.colors.grey3}
           />
         </ListItem>
-        <ListItem bottomDivider onPress={() => router.push("/termsOfServices")}>
+        <ListItem bottomDivider onPress={() => router.push("/terms-of-services")}>
           <Feather name="shield" size={24} color="black" />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("Terms of services")}</ListItem.Title>
@@ -457,7 +457,7 @@ const style = StyleSheet.create({
     width: 40,
     height: 40,
   },
-  userInf:{flex:1},
+  userInf: { flex: 1 },
   label: isRtl => ({
     fontWeight: "400",
     fontFamily: isRtl

@@ -28,13 +28,20 @@ const TransactionDetailCard = ({
       <View style={styles.hostDetailContainer}>
         <Image
           style={styles.hostAvatar}
-          source={{
-            uri: transactionDetail.project.accommodation.avatarS3[0].small,
-          }}
+          source={
+            transactionDetail?.project?.accommodation?.avatarS3.length > 0
+              ? {
+                  uri: transactionDetail?.project?.accommodation?.avatarS3?.[0]?.small,
+                }
+              : require("@assets/image/defaultHost.svg")
+          }
+          resizeMode="cover"
         />
 
         <View style={styles.hostDetail}>
-          <Text subtitle1>{transactionDetail.project.name}</Text>
+          <Text numberOfLines={1} subtitle1>
+            {transactionDetail.project.name}
+          </Text>
 
           <Text numberOfLines={1} caption type="grey2">
             {transactionDetail.project.accommodation.address}
@@ -73,6 +80,7 @@ const styles = StyleSheet.create({
   hostDetailContainer: {
     gap: 12,
     flexDirection: "row",
+    alignItems: "center",
   },
   hostDetail: { width: 164, gap: 8, justifyContent: "center" },
   hostAvatar: {

@@ -74,6 +74,12 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
+          name="coming-soon"
+          options={{
+            title: tr("coming soon"),
+          }}
+        />
+        <Stack.Screen
           name="tour/[tourId]"
           options={{
             title: tr("loading"),

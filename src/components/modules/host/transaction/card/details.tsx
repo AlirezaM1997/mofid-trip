@@ -25,9 +25,9 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
         source={
           transaction?.project?.accommodation?.avatarS3.length > 0
             ? {
-                uri: transaction?.project?.accommodation?.avatarS3?.[0]?.small,
-              }
-            : require("@assets/image/defaultHost.png")
+              uri: transaction?.project?.accommodation?.avatarS3?.[0]?.small,
+            }
+            : require("@assets/image/defaultHost.svg")
         }
         resizeMode="cover"
       />

@@ -12,8 +12,15 @@ import { ProjectTransactionQueryType, useProjectTransactionListQuery } from "@sr
 
 const HostTransaction = () => {
   const isFocused = useIsFocused();
+  // TODO: make pagination dynamically
   const { data, refetch, networkStatus } = useProjectTransactionListQuery({
     notifyOnNetworkStatusChange: true,
+    variables: {
+      page: {
+        pageNumber: 1,
+        pageSize: 100
+      }
+    }
   });
 
   const onRefresh = useCallback(() => {

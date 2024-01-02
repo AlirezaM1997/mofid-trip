@@ -4,6 +4,7 @@ import { useSession } from "@src/context/auth";
 import { Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import useDefaultScreenOptions from "@src/hooks/use-default-screen-options";
+import AccessDenied from "@modules/access-denied";
 
 export default function AppLayout() {
   const { tr } = useTranslation();
@@ -20,12 +21,12 @@ export default function AppLayout() {
   if (!session) {
     // On web, static rendering will stop here as the user is not authenticated
     // in the headless Node process that the pages are rendered in.
-    return <Redirect href="/reservation" />;
+    return <Redirect href="/user-login" />;
   }
 
   const isNgo = JSON.parse(session).metadata.is_ngo;
 
-  if (!isNgo) return <Text>403 not ngo</Text>;
+  if (!isNgo) return <AccessDenied />;
 
   // This layout can be deferred because it's not the root layout.
   return (

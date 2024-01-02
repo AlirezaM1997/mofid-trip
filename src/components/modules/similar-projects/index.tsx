@@ -27,9 +27,9 @@ const Item = ({ project }: ItemPropsType) => {
         source={
           project?.accommodation?.avatarS3.length > 0
             ? {
-                uri: project?.accommodation?.avatarS3[0]?.large,
-              }
-            : require("@assets/image/defaultHost.png")
+              uri: project?.accommodation?.avatarS3[0]?.large,
+            }
+            : require("@assets/image/defaultHost.svg")
         }
       />
       <View style={style.cardTextContainer}>

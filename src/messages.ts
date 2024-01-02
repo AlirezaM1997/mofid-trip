@@ -1556,6 +1556,11 @@ export const messages = {
     fa_ir: "درخواست به تور",
     en_us: "Tour transactions",
   },
+  "no hosting exist": {
+    ar: "لا يوجد أي شيء",
+    fa_ir: "میزبانی وجود ندارد",
+    en_us: "no hosting exist",
+  },
   "host transactions": {
     ar: "طلب استضافةه",
     fa_ir: "درخواست به هاست",

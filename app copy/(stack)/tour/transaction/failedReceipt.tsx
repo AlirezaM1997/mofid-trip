@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "jalali-moment";
-import { Chip, Text } from "@rneui/themed";
+import { Text } from "@rneui/themed";
 import Container from "@atoms/container";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
@@ -9,27 +9,23 @@ import { Avatar, Button, useTheme } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { ImageSourcePropType, Pressable, StyleSheet, View, ViewStyle } from "react-native";
+import {
+  AccommodationQueryType,
+  useTourTransactionDetailQuery,
+  useUserDetailQuery,
+} from "@src/gql/generated";
+import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { useTourTransactionDetailQuery, useUserDetailQuery } from "@src/gql/generated";
 import { useFormatPrice } from "@src/hooks/localization";
 import ButtonRow from "@modules/button-rows";
 import ShareButton from "@modules/share-button";
-
-const CustomView = ({ children }) => {
-  const { theme } = useTheme();
-
-  return (
-    <View style={[{ borderColor: theme.colors.grey0 }, styles.detailsContainer]}>{children}</View>
-  );
-};
 
 const Receipt = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { id } = useLocalSearchParams();
-  const { localizeNumber } = useLocalizedNumberFormat();
   const { formatPrice } = useFormatPrice();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { data, loading } = useTourTransactionDetailQuery({
     variables: { pk: id as string },
@@ -42,11 +38,19 @@ const Receipt = () => {
       data?.tourTransactionDetail?.tourGuests?.length || 0;
   const formattedTotalPrice = formatPrice(totalPrice);
 
-  if (!data || loading) {
+  if (loading || !data) {
     return <LoadingIndicator />;
   }
 
-  const { invoiceNumber, modifiedDate, tourPackage, purchaseRefId } = data?.tourTransactionDetail;
+  const { invoiceNumber, modifiedDate, tourPackage } = data?.tourTransactionDetail;
+
+  const CustomView = ({ children }) => {
+    const { theme } = useTheme();
+
+    return (
+      <View style={[{ borderColor: theme.colors.grey0 }, styles.detailsContainer]}>{children}</View>
+    );
+  };
 
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(invoiceNumber);
@@ -74,7 +78,7 @@ const Receipt = () => {
                 rounded
                 size={56}
                 containerStyle={{ backgroundColor: "#0003" }}
-                source={tourPackage.tour?.avatarS3?.[0]?.small as ImageSourcePropType}
+                source={tourPackage.tour?.avatarS3[0].small as ImageSourcePropType}
               />
               <View style={styles.swapIconContainer}>
                 <AntDesign name="swap" size={10} color="black" />
@@ -92,7 +96,7 @@ const Receipt = () => {
               <View style={styles.subtitle}>
                 <Feather name="copy" size={12} color="black" />
                 <Text subtitle2 style={{ color: theme.colors.grey2 }}>
-                  {invoiceNumber}
+                  {localizeNumber(invoiceNumber)}
                 </Text>
               </View>
             </Pressable>
@@ -102,13 +106,19 @@ const Receipt = () => {
             {localizeNumber(formattedTotalPrice)}
           </Text>
 
-          <Chip
-            buttonStyle={styles.chip}
-            color={theme.colors.success}
-            titleStyle={styles.chipTitle(theme)}
-            title={tr("successful transfer")}
-            icon={<AntDesign size={16} name="checkcircle" color={theme.colors.white} />}
-          />
+          <Button
+            color={theme.colors.error}
+            titleStyle={styles.buttonTitle}
+            icon={
+              <AntDesign
+                size={16}
+                color="black"
+                name="closecircle"
+                style={[styles.tickIcon, { color: theme.colors.white }]}
+              />
+            }>
+            {tr("unsuccessful payment")}
+          </Button>
         </View>
       </Container>
 
@@ -136,14 +146,9 @@ const Receipt = () => {
           <Text caption>انتقال از کیف پول</Text>
         </CustomView>
 
-        <CustomView>
+        <View style={styles.issueTrackingContainer}>
           <Text caption>{tr("initial deposit")}</Text>
           <Text caption>کیف پول مفید تریپ</Text>
-        </CustomView>
-
-        <View style={styles.issueTrackingContainer}>
-          <Text caption>{tr("issue tracking")}</Text>
-          <Text caption>{localizeNumber(purchaseRefId)}</Text>
         </View>
       </Container>
     </BottomButtonLayout>
@@ -157,13 +162,12 @@ const styles = StyleSheet.create({
   },
   topContent: { gap: 32 },
 
-  chip: { padding: 8, gap: 8, margin: "auto" },
-  chipTitle: (theme => ({ color: theme.colors.white })) as ViewStyle,
   bottomContent: {
     borderTopWidth: 1,
     marginVertical: 16,
     borderStyle: "dashed",
   },
+  buttonTitle: { fontSize: 12 },
   issueTrackingContainer: {
     display: "flex",
     paddingVertical: 12,

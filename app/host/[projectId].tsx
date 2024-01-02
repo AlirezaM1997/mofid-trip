@@ -74,7 +74,7 @@ const Page: React.FC = ({ ...props }) => {
     facilities,
     description,
     accommodation,
-  } = data.projectDetail;
+  } = data?.projectDetail;
 
   return (
     <BottomButtonLayout

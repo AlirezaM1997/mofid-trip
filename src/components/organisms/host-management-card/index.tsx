@@ -24,9 +24,9 @@ const HostManagementCard = ({ host }) => {
           source={
             host?.accommodation?.avatarS3.length > 0
               ? {
-                  uri: host?.accommodation?.avatarS3?.[0]?.medium,
-                }
-              : require("@assets/image/defaultHost.png")
+                uri: host?.accommodation?.avatarS3?.[0]?.medium,
+              }
+              : require("@assets/image/defaultHost.svg")
           }
         />
         <WhiteSpace size={10} />
