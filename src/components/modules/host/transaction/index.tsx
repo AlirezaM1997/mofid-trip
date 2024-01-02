@@ -1,10 +1,8 @@
-import { HEIGHT } from "@src/constants";
 import { NetworkStatus } from "@apollo/client";
+import { ScrollView, StyleSheet } from "react-native";
 import React, { useCallback, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
-import NoResult from "@src/components/organisms/no-result";
-import { ScrollView, StyleSheet, View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
 import ReservationCard from "@src/components/modules/host/transaction/card";
 import ReservationSkeleton from "@src/components/modules/reservation-skeleton";
@@ -18,9 +16,9 @@ const HostTransaction = () => {
     variables: {
       page: {
         pageNumber: 1,
-        pageSize: 100
-      }
-    }
+        pageSize: 100,
+      },
+    },
   });
 
   const onRefresh = useCallback(() => {

@@ -25,6 +25,7 @@ import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation
 import LoadingIndicator from "@modules/Loading-indicator";
 import { useSession } from "@src/context/auth";
 import ShareReportDropDown from "@modules/share-report-dropdown";
+import openMapHandler from "@src/helper/opem-map";
 
 export default () => {
   const isRtl = useIsRtl();
@@ -81,29 +82,11 @@ export default () => {
     }
   }, [loading, data]);
 
-  const openMapHandler = () => {
-    const scheme = Platform?.select({ ios: "maps://0,0?q=", android: "geo:0,0?q=" });
-    const latLng = ` ${(tour.destination as AccommodationQueryType)?.lat}, ${
-      (tour.destination as AccommodationQueryType)?.lng
-    }`;
-    const url = Platform?.select({
-      ios: `${scheme}@${latLng}`,
-      android: `${scheme}${latLng}`,
-    });
-
-    if (Platform.OS === "web") {
-      const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${
-        (tour.destination as AccommodationQueryType)?.lat
-      },${(tour.destination as AccommodationQueryType)?.lng}`;
-      window.open(googleMapsUrl, "_blank");
-      return;
-    }
-
-    Linking?.openURL(url);
-  };
-
   if (loading || !tour) return <LoadingIndicator />;
-  navigation.setOptions({ title: data?.tourDetail?.title, headerRight: () => <ShareReportDropDown /> });
+  navigation.setOptions({
+    title: data?.tourDetail?.title,
+    headerRight: () => <ShareReportDropDown />,
+  });
 
   return (
     <BottomButtonLayout buttons={[<Button onPress={handleBottomSheet}>{tr("Reserve")}</Button>]}>
@@ -161,7 +144,13 @@ export default () => {
             <Text type="grey4">{(tour?.destination as AccommodationQueryType)?.address}</Text>
 
             <WhiteSpace size={20} />
-            <Pressable onPress={openMapHandler}>
+            <Pressable
+              onPress={() =>
+                openMapHandler(
+                  (tour.destination as AccommodationQueryType)?.lat,
+                  (tour.destination as AccommodationQueryType)?.lng
+                )
+              }>
               <Map
                 lat={(tour.destination as AccommodationQueryType)?.lat}
                 lng={(tour.destination as AccommodationQueryType)?.lng}
