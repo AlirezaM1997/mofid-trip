@@ -1591,6 +1591,11 @@ export const messages = {
     fa_ir: "درخواست ها",
     en_us: "Requests",
   },
+  "there is no tour": {
+    ar: "لا يوجد صافي",
+    fa_ir: "توری وجود ندارد",
+    en_us: "There is no tour",
+  },
   "there is no request for this host": {
     ar: "لا يوجد طلب لهؤلاء المضيفين",
     fa_ir: "درخواستی برای این هاست وجود نداره",
@@ -1605,6 +1610,16 @@ export const messages = {
     ar: "يشتري",
     fa_ir: "خرید",
     en_us: "buy",
+  },
+  "add new host": {
+    ar: "إضافة مضيف جديد",
+    fa_ir: "افزودن میزبانی جدید",
+    en_us: "add new host",
+  },
+  "add new tour": {
+    ar: "إضافة جولة جديدة",
+    fa_ir: "افزودن تور جدید",
+    en_us: "Add new tour",
   },
   "there is no card in your wallet": {
     ar: "لا توجد بطاقة في محفظتك",

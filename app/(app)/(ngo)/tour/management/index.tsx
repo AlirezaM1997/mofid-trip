@@ -1,83 +1,53 @@
-import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
-import { Card, Chip, Text, useTheme } from "@rneui/themed";
-import {
-  AccommodationQueryType,
-  TourTourStatusStepChoices,
-  useMyNgoDetailTourSetQuery,
-} from "@src/gql/generated";
-import { Pressable, StyleSheet, View } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { getTourRequestStatusBadgeColor } from "@src/helper/tour";
-import { router } from "expo-router";
+import { useMyNgoDetailTourSetQuery } from "@src/gql/generated";
+import { View } from "react-native";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { ScrollView } from "react-native-gesture-handler";
+import { HEIGHT } from "@src/constants";
+import NoResult from "@organisms/no-result";
+import TourManagementCard from "@organisms/tour-management-card";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import { Button, useTheme } from "@rneui/themed";
+import { AntDesign } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 const TourManagement = () => {
-  const { theme } = useTheme();
   const { tr } = useTranslation();
+  const {theme} = useTheme();
   const { loading, data } = useMyNgoDetailTourSetQuery({
     fetchPolicy: "network-only",
   });
-
-  const navigateToTourDetail = (tourId: string) => {
-    router.push(`/tour/management/${tourId}`);
-  };
-
+const handleNavigateToCreateTour = ()=>{
+  router.push("tour/create")
+}
   if (loading) return <LoadingIndicator />;
 
   return (
-    <View>
-      {data?.NGODetail?.tourSet.map(tour => (
-        <Pressable onPress={() => navigateToTourDetail(tour.id)}>
-          <Card key={tour.id}>
-            <Card.Image
-              source={{
-                uri: tour.avatarS3?.[0]?.medium,
-              }}
-            />
-            <WhiteSpace size={10} />
-            <Card.Title heading1 bold caption>
-              {tour.title}
-            </Card.Title>
-            <Card.FeaturedTitle caption>
-              {(tour.destination as AccommodationQueryType)?.province ?? tr("Province")},{" "}
-              {(tour.destination as AccommodationQueryType)?.city ?? tr("City")}
-            </Card.FeaturedTitle>
-            <Card.FeaturedSubtitle numberOfLines={2} type="grey3">
-              {tour.description}
-            </Card.FeaturedSubtitle>
-            <Container size={10} style={styles.footer}>
-              {tour.statusStep === TourTourStatusStepChoices.Request ? (
-                <Chip
-                  title={tour.statusStep}
-                  color={getTourRequestStatusBadgeColor(tour)}
-                  type="outline"
-                />
-              ) : (
-                <>
-                  <Text type={getTourRequestStatusBadgeColor(tour)}>
-                    {tr("view and manage tour")}
-                  </Text>
-                  <Feather size={20} name={"chevron-left"} color={theme.colors.primary} />
-                </>
-              )}
-            </Container>
-            <WhiteSpace size={10} />
-          </Card>
-        </Pressable>
-      ))}
-    </View>
+    <BottomButtonLayout
+      contentContainerStyle={{ flex: 1 }}
+      buttons={[
+        <Button
+          color={theme.colors.black}
+          loading={loading}
+          icon={<AntDesign name="pluscircleo" size={16} color={theme.colors.white} />}
+          onPress={handleNavigateToCreateTour}>
+          {tr("add new tour")}
+        </Button>,
+      ]}>
+      <ScrollView>
+        {!data?.NGODetail?.tourSet.length && (
+          <View style={{ height: HEIGHT / 2 }}>
+            <NoResult title={tr("there is no tour")} />
+          </View>
+        )}
+        {data?.NGODetail?.tourSet?.map(tour => (
+          <TourManagementCard tour={tour} />
+        ))}
+        <WhiteSpace size={15} />
+      </ScrollView>
+    </BottomButtonLayout>
   );
 };
-
-const styles = StyleSheet.create({
-  footer: { display: "flex", flexDirection: "row", justifyContent: "space-between" },
-  buttonContainer: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 5,
-  },
-});
 
 export default TourManagement;
