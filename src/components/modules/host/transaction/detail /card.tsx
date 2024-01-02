@@ -29,7 +29,7 @@ const TransactionDetailCard = ({
         <Image
           style={styles.hostAvatar}
           source={
-            transactionDetail?.project?.accommodation?.avatarS3.length > 0
+            transactionDetail?.project?.accommodation?.avatarS3?.length > 0
               ? {
                   uri: transactionDetail?.project?.accommodation?.avatarS3?.[0]?.small,
                 }
