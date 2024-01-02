@@ -2,7 +2,6 @@ import React from "react";
 import { Skeleton } from "@rneui/themed";
 import { Image, StyleSheet, Pressable, Platform } from "react-native";
 import { useBannerListQuery } from "@src/gql/generated";
-import * as Linking from "expo-linking";
 import { useRouter } from "expo-router/src/hooks";
 import { WIDTH } from "@src/constants";
 
@@ -21,9 +20,7 @@ const Banner = ({ name }) => {
   const handlePress = url => {
     if (url) {
       if (Platform.OS === "web") {
-        router.push({
-          pathname: url,
-        });
+        router.push(url);
       } else {
         router.push({
           pathname: "/web-view",
