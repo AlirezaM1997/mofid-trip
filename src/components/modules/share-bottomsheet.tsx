@@ -9,7 +9,6 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-import { useURL } from "expo-linking";
 import * as Clipboard from "expo-clipboard";
 import { WIDTH } from "@src/constants";
 import Toast from "react-native-toast-message";
@@ -18,13 +17,13 @@ const ShareBottomsheet = ({ isVisible, handleClose }) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
 
-  const url = useURL();
+  const url = window.location.href;
 
   const tour = url?.split("/")[3] === "tour";
 
   const handlePressTelegram = () => {
     if (Platform.OS === "web") {
-      Linking.openURL(`https://t.me/share/url?url=${url}`);
+      Linking.openURL(`https://t.me/share/url?text=از لینک زیر در مفیدتریپ دیدن کنید &url=${url}`);
     } else {
       Alert.alert("coming soon");
     }
@@ -32,7 +31,9 @@ const ShareBottomsheet = ({ isVisible, handleClose }) => {
 
   const handlePressTwitter = () => {
     if (Platform.OS === "web") {
-      Linking.openURL(`https://www.twitter.com/intent/tweet?url=${url}`);
+      Linking.openURL(
+        `https://www.twitter.com/intent/tweet?url= از لینک زیر در مفیدتریپ دیدن کنید ${url}`
+      );
     } else {
       Alert.alert("coming soon");
     }
@@ -40,7 +41,7 @@ const ShareBottomsheet = ({ isVisible, handleClose }) => {
 
   const handlePressWhatsapp = () => {
     if (Platform.OS === "web") {
-      Linking.openURL(`https://wa.me/?text=${url}`);
+      Linking.openURL(`https://wa.me/?text= از لینک زیر در مفیدتریپ دیدن کنید ${url}`);
     } else {
       Alert.alert("coming soon");
     }
@@ -48,9 +49,7 @@ const ShareBottomsheet = ({ isVisible, handleClose }) => {
 
   const handlePressEmail = () => {
     if (Platform.OS === "web") {
-      Linking.openURL(
-        `mailto:?subject= I want to share this with you &body= Hi there, Check out this site ${url}.`
-      );
+      Linking.openURL(`mailto:?subject= مفیدتریپ &body= از لینک زیر در مفیدتریپ دیدن کنید ${url}.`);
     } else {
       Alert.alert("coming soon");
     }
