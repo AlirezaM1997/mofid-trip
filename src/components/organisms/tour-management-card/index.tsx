@@ -4,49 +4,45 @@ import WhiteSpace from "@atoms/white-space";
 import { Feather } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
 import { Pressable, StyleSheet } from "react-native";
-import { ProjectStatusEnum } from "@src/gql/generated";
+import { AccommodationQueryType, TourTourStatusStepChoices } from "@src/gql/generated";
 import { Card, Chip, Text, useTheme } from "@rneui/themed";
-import { getHostRequestStatusBadgeColor } from "@src/helper/host";
+import { getTourRequestStatusBadgeColor } from "@src/helper/tour";
 
-const HostManagementCard = ({ host }) => {
+const TourManagementCard = ({ tour }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
-  const navigateToHostDetail = () => router.push(`/host/management/${host.id}`);
-
+  const navigateToTourDetail = () => router.push(`/tour/management/${tour.id}`);
+  
   return (
-    <Pressable onPress={navigateToHostDetail}>
-      <Card key={host.id}>
+    <Pressable onPress={navigateToTourDetail}>
+      <Card key={tour.id}>
         <Card.Image
-          source={
-            host?.accommodation?.avatarS3.length > 0
-              ? {
-                  uri: host?.accommodation?.avatarS3?.[0]?.medium,
-                }
-              : require("@assets/image/defaultHost.svg")
-          }
+          source={{
+            uri: tour.avatarS3?.[0]?.medium,
+          }}
         />
         <WhiteSpace size={10} />
         <Card.Title heading1 bold caption>
-          {host?.name}
+          {tour.title}
         </Card.Title>
         <Card.FeaturedTitle caption>
-          {host?.accommodation?.province ?? tr("Province")},{" "}
-          {host?.accommodation?.city ?? tr("City")}
+          {(tour.destination as AccommodationQueryType)?.province ?? tr("Province")},{" "}
+          {(tour.destination as AccommodationQueryType)?.city ?? tr("City")}
         </Card.FeaturedTitle>
         <Card.FeaturedSubtitle numberOfLines={2} type="grey3">
-          {host?.description}
+          {tour.description}
         </Card.FeaturedSubtitle>
         <Container size={10} style={styles.footer}>
-          {host.statusStep === ProjectStatusEnum.Request ? (
+          {tour.statusStep === TourTourStatusStepChoices.Request ? (
             <Chip
-              title={host?.statusStep}
-              color={getHostRequestStatusBadgeColor(host)}
+              title={tour.statusStep}
+              color={getTourRequestStatusBadgeColor(tour)}
               type="outline"
             />
           ) : (
             <>
-              <Text type={getHostRequestStatusBadgeColor(host)}>{tr("view and manage host")}</Text>
+              <Text type={getTourRequestStatusBadgeColor(tour)}>{tr("view and manage tour")}</Text>
               <Feather size={20} name={"chevron-left"} color={theme.colors.primary} />
             </>
           )}
@@ -66,4 +62,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HostManagementCard;
+export default TourManagementCard;
