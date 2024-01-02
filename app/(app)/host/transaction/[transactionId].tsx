@@ -54,7 +54,7 @@ const TransactionDetailsScreen = () => {
       },
     });
 
-    if (data.projectPurchaseAdd.status === "OK") {
+    if (data?.projectPurchaseAdd?.status === "OK") {
       router.push(data.projectPurchaseAdd.metadata?.url);
     }
   };
@@ -69,7 +69,7 @@ const TransactionDetailsScreen = () => {
       SUCCESSFUL: <Button>{tr("rates to the host")}</Button>,
       ACCEPT: <Button onPress={() => setIsVisible(true)}>{tr("pay")}</Button>,
     };
-    return lookup[status.step || null];
+    return lookup[status?.step || null];
   };
 
   return (

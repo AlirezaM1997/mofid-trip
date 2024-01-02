@@ -144,27 +144,14 @@ const Screen = () => {
     }
   };
 
-  // ########## START OF BACK BUTTON HANDLING ##########
   const handleExit = () => {
-    if (exitElement === "BackButton") {
-      router.back();
-      router.back();
-    } else {
-      router.back();
-    }
+    router.back();
   };
 
-  const handleHeaderBackButtonPress = () => {
-    handleOpen();
-    navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    setExitElement("BackButton");
-  };
 
   const beforeRemoveHandler = e => {
     e.preventDefault();
-    window.history.pushState(null, "", "/tour/create");
     navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    setExitElement("HardwareBackButton");
     handleOpen();
   };
 
@@ -176,24 +163,6 @@ const Screen = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (!isVisibleExit) {
-      navigation.addListener("beforeRemove", beforeRemoveHandler);
-    }
-  }, [isVisibleExit]);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <Pressable onPress={handleHeaderBackButtonPress}>
-          <Feather name="arrow-right" size={24} color="black" style={{ marginRight: 12 }} />
-        </Pressable>
-      ),
-    });
-  }, []);
-  // ########## END OF BACK BUTTON HANDLING ##########
-
-  if (!session) <Authentication />;
 
   return (
     <Formik
@@ -269,7 +238,9 @@ const Screen = () => {
                 <Button
                   onPress={() => {
                     setIsVisibleFinish(false);
-                    routeHandler("/host/management");
+                    navigation.removeListener("beforeRemove", beforeRemoveHandler);
+                    router.replace("/host/management");
+                    router.replace("/host/management");
                   }}
                   color="secondary"
                   type="outline">
@@ -277,7 +248,9 @@ const Screen = () => {
                 </Button>
                 <Button
                   onPress={() => {
-                    routeHandler("/");
+                    navigation.removeListener("beforeRemove", beforeRemoveHandler);
+                    router.replace("/");
+                    router.replace("/");
                     setIsVisibleFinish(false);
                   }}>
                   {tr("Return to home")}

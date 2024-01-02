@@ -45,9 +45,10 @@ const TabHostType = () => {
       <Text heading2>{tr("Host Type")}</Text>
       <Text type="grey3">{tr("Determine the type of space and your hosting environment.")}</Text>
 
-      {defaultValues?.map(category => (
+      {defaultValues?.map((category, index) => (
         <>
           <Card
+            key={index}
             containerStyle={
               values.categories?.includes(category.id)
                 ? styles.selectedCard(theme)
