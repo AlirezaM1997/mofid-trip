@@ -37,7 +37,6 @@ const HostManagementScreen = () => {
       buttons={[
         <Button
           color={theme.colors.black}
-          loading={loading}
           icon={<AntDesign name="pluscircleo" size={16} color={theme.colors.white} />}
           onPress={handleNavigateToCreateHost}>
           {tr("add new host")}
