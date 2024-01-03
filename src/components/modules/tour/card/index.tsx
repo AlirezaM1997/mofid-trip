@@ -1,6 +1,6 @@
 import React from "react";
 import { router } from "expo-router";
-import { Divider } from "@rneui/themed";
+import { Divider, useTheme } from "@rneui/themed";
 import { Text } from "@rneui/themed";
 import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
@@ -20,6 +20,7 @@ type PropsType = {
 function TourCard({ price, id, name, avatarS3, address }: PropsType) {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
+  const {theme} = useTheme()
   const { localizeNumber } = useLocalizedNumberFormat();
   const { formatPrice } = useFormatPrice();
 
@@ -38,48 +39,53 @@ function TourCard({ price, id, name, avatarS3, address }: PropsType) {
 
   return (
     <Pressable style={style.container} onPress={handlePress}>
-      <View>
-        <ImageBackground
-          style={style.ImageBackground(isRtl)}
-          imageStyle={style.ImageBackgroundImage}
-          source={avatar}
-        />
-      </View>
+      <ImageBackground
+        style={style.ImageBackground(isRtl)}
+        imageStyle={style.ImageBackgroundImage}
+        source={avatar}
+      />
       <View style={style.top}>
         <View style={style.top2}>
-          <Text heading2 bold numberOfLines={1}>
+          <Text bold numberOfLines={1}>
             {name}
           </Text>
-
           <View style={style.rate}>
-            <FontAwesome name="star" size={20} color="#FEC30D" />
-            <Text style={{ fontSize: 15 }}>{localizeNumber(4.1)}</Text>
+            <FontAwesome name="star" size={20} color={theme.colors.warning} />
+            <Text body2>{localizeNumber(4.9)}</Text>
           </View>
         </View>
         <View style={style.address}>
-          <EvilIcons name="location" size={20} color="black" />
-          <Text numberOfLines={1} type="grey3">
+          <EvilIcons name="location" size={18} color={theme.colors.black} />
+          <Text caption numberOfLines={1} type="grey3">
             {address}
           </Text>
         </View>
       </View>
+
       <Divider />
-      <View>
-        <View style={style.bottom}>
-          {price <= 0 ? (
-            <Text bold>{tr("it is free")}</Text>
-          ) : (
-            <>
-              <View style={style.bottomStyle}>
-                <Text subtitle1 bold>
-                  {localizeNumber(formatPrice(price))}
-                </Text>
-                <Text>/ {tr("night")}</Text>
-              </View>
-            </>
-          )}
-          <Feather name={isRtl ? "arrow-left" : "arrow-right"} size={20} color={"red"} />
-        </View>
+
+      <View style={style.bottom}>
+        {price <= 0 ? (
+          <Text body2 bold>
+            {tr("it is free")}
+          </Text>
+        ) : (
+          <>
+            <View style={style.bottomStyle}>
+              <Text body2 bold>
+                {localizeNumber(formatPrice(price))}
+              </Text>
+              <Text body2 bold>
+                / {tr("night")}
+              </Text>
+            </View>
+          </>
+        )}
+        <Feather
+          name={isRtl ? "chevron-left" : "chevron-right"}
+          size={18}
+          color={theme.colors.primary}
+        />
       </View>
     </Pressable>
   );
@@ -87,11 +93,13 @@ function TourCard({ price, id, name, avatarS3, address }: PropsType) {
 
 const style = StyleSheet.create({
   container: {
+    maxWidth:500,
     width: WIDTH - 50,
     overflow: "hidden",
     backgroundColor: "#fff",
     elevation: 5,
-    borderRadius: 12,
+    borderRadius: 16,
+    marginVertical: 5,
     ...Platform.select({
       web: { boxShadow: "0 0 5px #12121233" },
     }),
@@ -99,7 +107,8 @@ const style = StyleSheet.create({
   ImageBackground: isRtl => ({
     marginRight: isRtl ? 0 : 5,
     width: "100%",
-    height: 200,
+    height: (WIDTH - 50)*0.6116,
+    maxHeight:500*0.6116,
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
@@ -108,42 +117,29 @@ const style = StyleSheet.create({
   }),
   ImageBackgroundImage: {
     width: "100%",
-    height: 200,
+    height: '100%',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
   top: {
-    display: "flex",
-    justifyContent: "space-between",
     paddingHorizontal: 10,
-    paddingBottom: 15,
   },
   bottom: {
-    display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 12,
-    paddingRight: 12,
-    paddingBottom: 12,
-    paddingLeft: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
   },
   rate: {
     gap: 4,
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },
   address: {
-    display: "flex",
     flexDirection: "row",
     gap: 2,
-    marginTop: 10,
-    marginBottom: 10,
+    marginVertical: 12,
     alignItems: "center",
-  },
-  addressText: {
-    fontSize: 14,
-    color: "grey",
   },
   top2: {
     display: "flex",
@@ -152,11 +148,11 @@ const style = StyleSheet.create({
     justifyContent: "space-between",
   },
   bottomStyle: {
-    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
     gap: 2,
-    flexDirection: "row",
   },
 });
+
 
 export default TourCard;

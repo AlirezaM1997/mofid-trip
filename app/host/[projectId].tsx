@@ -22,6 +22,7 @@ import { Feather } from "@expo/vector-icons";
 import { ProjectQueryType, useProjectDetailQuery } from "@src/gql/generated";
 import ShareReportDropDown from "@modules/share-report-dropdown";
 import openMapHandler from "@src/helper/opem-map";
+import WhiteSpace from "@atoms/white-space";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
@@ -110,12 +111,14 @@ const Page: React.FC = ({ ...props }) => {
               </Pressable>
             )}
           </View>
-
+          <Text subtitle1 bold>
+            پیشنهادی برای شما
+          </Text>
+        </Container>
           <SimilarProjects
             currentProjectId={projectId as string}
             projects={creator?.projectSet as ProjectQueryType[]}
           />
-        </Container>
       </ScrollView>
     </BottomButtonLayout>
   );
