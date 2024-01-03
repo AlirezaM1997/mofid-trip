@@ -158,8 +158,12 @@ export default () => {
             </Pressable>
           </>
         )}
+        <WhiteSpace size={15} />
+        <Text subtitle1 bold>
+          پیشنهادی برای شما
+        </Text>
+        <WhiteSpace size={15} />
       </Container>
-      <WhiteSpace size={20} />
       <SimilarTours currentTourId={tour.id} tours={tour.NGO.tourSet} />
       <WhiteSpace size={20} />
       <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>

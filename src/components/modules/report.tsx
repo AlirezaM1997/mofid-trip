@@ -137,11 +137,10 @@ const Report = ({ closeMoreDetails }) => {
             {name}
           </Text>
           <View style={styles.headerBarButton}>
-            <Text caption>{tr("violation report")}</Text>
-            <AntDesign onPress={handleClose} name="close" size={16} />
+            <Text body1>{tr("violation report")}</Text>
+            <AntDesign onPress={handleClose} name="close" size={19} />
           </View>
         </Container>
-        <WhiteSpace size={8} />
         <Divider />
         <Formik
           initialValues={initialValues}
@@ -269,17 +268,19 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     justifyContent: "flex-end",
+    paddingVertical: 0,
   },
   headerBar: {
     flexDirection: "row",
+    height: 64,
     justifyContent: "space-between",
     alignItems: "center",
   },
-  headerBarButton: { flexDirection: "row", gap: 10 },
+  headerBarButton: { flexDirection: "row", gap: 20 },
   formikScrollView: { maxHeight: HEIGHT },
   formikView: { minHeight: HEIGHT, justifyContent: "space-between" },
   textBox: { gap: 16, paddingTop: 8 },
-  submitButton: { gap: 16, paddingBottom: 55 },
+  submitButton: { gap: 16, paddingBottom: 16, marginBottom: 65 },
 });
 
 export default Report;

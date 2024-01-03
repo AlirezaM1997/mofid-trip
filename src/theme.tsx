@@ -156,7 +156,7 @@ export const theme = isRtl =>
       },
       Text: ({ bold, italic, underline, center, color, type, ...props }, theme) => {
         let style = {
-          fontSize: 14,
+          fontSize: 16,
           fontStyle: italic ? "italic" : "normal",
           textDecorationLine: underline ? "underline" : "none",
           textAlign: center ? "center" : isRtl ? "right" : "left",
@@ -263,6 +263,7 @@ export const theme = isRtl =>
 
         if (size === "sm") {
           containerStyle = { ...buttonStyle, height: Platform.OS === "web" ? "auto" : 31.6 };
+          titleStyle = { ...titleStyle, fontSize: 16 };
         }
 
         if (size === "md") {
