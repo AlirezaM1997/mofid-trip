@@ -1,46 +1,30 @@
 import Container from "@atoms/container";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
 import { BottomSheet } from "@rneui/themed";
+import { useEffect, useState } from "react";
 import WhiteSpace from "@atoms/white-space";
-import ButtonRow from "@modules/button-rows";
-import { Feather } from "@expo/vector-icons";
 import { Button, Text } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
+import ButtonRow from "@modules/button-rows";
+import { ImageBackground, StyleSheet } from "react-native";
 import { router, useNavigation } from "expo-router";
-import { ImageBackground, Pressable, StyleSheet } from "react-native";
 import { setTourCreateActiveStep } from "@src/slice/tour-create-slice";
+import useTranslation from "@src/hooks/translation";
 
-const HostTransactionExitBottomSheet = () => {
+const CloseFormBottomSheet = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const navigation = useNavigation();
   const [isVisibleExit, setIsVisibleExit] = useState(false);
-  const [exitElement, setExitElement] = useState<"HardwareBackButton" | "BackButton">();
 
   const handleOpen = () => setIsVisibleExit(true);
-  const handleClose = () => setIsVisibleExit(false);
-
-  const handleExit = () => {
-    if (exitElement === "BackButton") {
-      router.back();
-      router.back();
-    } else {
-      router.back();
-    }
-  };
-
-  const handleHeaderBackButtonPress = () => {
-    handleOpen();
-    navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    setExitElement("BackButton");
+  const handleClose = () => {
+    navigation.addListener("beforeRemove", beforeRemoveHandler);
+    setIsVisibleExit(false);
   };
 
   const beforeRemoveHandler = e => {
     e.preventDefault();
-    window.history.pushState(null, "", "/host/transaction/add");
     navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    setExitElement("HardwareBackButton");
     handleOpen();
   };
 
@@ -50,22 +34,6 @@ const HostTransactionExitBottomSheet = () => {
       dispatch(setTourCreateActiveStep(1));
       navigation.removeListener("beforeRemove", beforeRemoveHandler);
     };
-  }, []);
-
-  useEffect(() => {
-    if (!isVisibleExit) {
-      navigation.addListener("beforeRemove", beforeRemoveHandler);
-    }
-  }, [isVisibleExit]);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <Pressable onPress={handleHeaderBackButtonPress}>
-          <Feather name="arrow-right" size={24} color="black" style={{ marginRight: 12 }} />
-        </Pressable>
-      ),
-    });
   }, []);
 
   return (
@@ -82,7 +50,13 @@ const HostTransactionExitBottomSheet = () => {
         <Text center>در صورت خروج از این صفحه اطلاعات این فرم ها پاک خواهد شد</Text>
         <WhiteSpace />
         <ButtonRow>
-          <Button onPress={handleExit}>خارج شدن</Button>
+          <Button
+            onPress={() => {
+              router.replace("/");
+              router.replace("/");
+            }}>
+            خارج شدن
+          </Button>
           <Button onPress={handleClose}>{tr("Stay")}</Button>
         </ButtonRow>
       </Container>
@@ -98,4 +72,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HostTransactionExitBottomSheet;
+export default CloseFormBottomSheet;

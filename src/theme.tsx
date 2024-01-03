@@ -221,7 +221,6 @@ export const theme = isRtl =>
         let buttonStyle: any = {
           gap: 8,
           borderRadius: 12,
-          gap: 8,
           fontWeight: "400",
           ...Platform.select({
             web: {
@@ -329,6 +328,8 @@ export const theme = isRtl =>
           borderWidth: 1,
           borderRadius: 12,
           padding: 15,
+          paddingLeft: WIDTH >= 285 ? 15 : 0,
+          fontSize: WIDTH > 320 ? 16 : 14,
           ...Platform.select({
             web: {
               fontFamily:
@@ -376,6 +377,7 @@ export const theme = isRtl =>
             },
           }),
           fontWeight: "400",
+          fontSize: WIDTH > 320 ? 14 : 12,
         },
         checkedIcon: <Ionicons name="md-checkbox" size={24} color={theme.colors.primary} />,
         uncheckedIcon: <Ionicons name="square-outline" size={24} color={theme.colors.black} />,

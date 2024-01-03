@@ -136,11 +136,11 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   address: {
-    display: "flex",
-    flexDirection: "row",
     gap: 2,
     marginTop: 10,
+    display: "flex",
     marginBottom: 10,
+    flexDirection: "row",
     alignItems: "center",
   },
   top2: {

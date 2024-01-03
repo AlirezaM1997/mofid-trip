@@ -13,8 +13,8 @@ import HostTransactionDateTab from "@organisms/host-transaction/date";
 import HostTransactionTab from "@modules/virtual-tabs/host-transaction-tabs";
 import HostTransactionCapacityTab from "@organisms/host-transaction/capacity";
 import HostTransactionConfirmData from "@organisms/host-transaction/confirm-data";
-import HostTransactionExitBottomSheet from "@organisms/host-transaction/exitBottomSheet";
 import HostTransactionEditSubmitBottomSheet from "@organisms/host-transaction/editSubmitBottomSheet";
+import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
 
 const HostTransactionEditScreen = () => {
   const { tr } = useTranslation();
@@ -97,7 +97,7 @@ const HostTransactionEditScreen = () => {
             isVisible={isVisibleFinish}
             setIsVisible={setIsVisibleFinish}
           />
-          <HostTransactionExitBottomSheet />
+          <CloseFormBottomSheet />
         </BottomButtonLayout>
       )}
     </Formik>
