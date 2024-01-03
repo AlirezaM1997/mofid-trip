@@ -51,6 +51,7 @@ const CloseFormBottomSheet = () => {
         <WhiteSpace />
         <ButtonRow>
           <Button
+            type="outline"
             onPress={() => {
               router.replace("/");
               router.replace("/");

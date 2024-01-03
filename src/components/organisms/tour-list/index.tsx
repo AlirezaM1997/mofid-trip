@@ -74,7 +74,7 @@ function TourList() {
 
 const style = StyleSheet.create({
   listContainer: {
-    minHeight: 342,
+    maxHeight: 342,
     display: "flex",
     flexDirection: "row",
   },
