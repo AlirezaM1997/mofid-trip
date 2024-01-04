@@ -133,11 +133,9 @@ const Report = ({ closeMoreDetails }) => {
         onBackdropPress={handleClose}
         containerStyle={styles.reportBottomSheet}>
         <Container style={styles.headerBar}>
-          <Text caption type="grey3">
-            {name}
-          </Text>
+          <Text type="grey3">{name}</Text>
           <View style={styles.headerBarButton}>
-            <Text body1>{tr("violation report")}</Text>
+            <Text>{tr("violation report")}</Text>
             <AntDesign onPress={handleClose} name="close" size={19} />
           </View>
         </Container>

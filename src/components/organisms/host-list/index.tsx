@@ -71,7 +71,7 @@ function HostList() {
 
 const style = StyleSheet.create({
   listContainer: {
-    minHeight: 345,
+    maxHeight: 345,
     display: "flex",
     flexDirection: "row",
   },

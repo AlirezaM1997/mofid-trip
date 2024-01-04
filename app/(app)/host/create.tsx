@@ -2,25 +2,16 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import ButtonRow from "@modules/button-rows";
-import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
-import DetailsTab from "@organisms/tour-create/details-tab";
 import { BottomSheet } from "@rneui/themed";
 import { Button, Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { setTourCreateActiveStep } from "@src/slice/tour-create-slice";
 import { RootState } from "@src/store";
 import { router, useNavigation } from "expo-router";
-import { useEffect, useState } from "react";
-import { ImageBackground, Platform, Pressable, StyleSheet } from "react-native";
+import { useState } from "react";
+import { ImageBackground, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import { Feather } from "@expo/vector-icons";
-import {
-  ProjectGenderEnum,
-  TourGenderEnum,
-  useProjectAddMutation,
-  useTourAddMutation,
-} from "@src/gql/generated";
+import { ProjectGenderEnum, useProjectAddMutation } from "@src/gql/generated";
 import { Formik } from "formik";
 import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
 import { setHostCreateActiveStep } from "@src/slice/host-create-slice";
@@ -31,11 +22,9 @@ import TabCapacity from "@organisms/host-create/capacity";
 import TabDate from "@organisms/host-create/date";
 import TabPrice from "@organisms/host-create/price";
 import TabImage from "@organisms/host-create/images";
-import { CommonActions } from "@react-navigation/routers";
 import TabFaclities from "@organisms/host-create/facilities";
-import AccessDenied from "@modules/access-denied";
 import { useSession } from "@src/context/auth";
-import Authentication from "@modules/authentication";
+import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
 
 const initialValues = {
   name: "",
@@ -64,11 +53,10 @@ const initialValues = {
 const Screen = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const [isVisibleExit, setIsVisibleExit] = useState(false);
-  const [isVisibleFinish, setIsVisibleFinish] = useState(false);
-  const [exitElement, setExitElement] = useState<"HardwareBackButton" | "BackButton">();
   const navigation = useNavigation();
+  const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const { activeStep } = useSelector((state: RootState) => state.hostCreateSlice);
+
   const [submit, { loading }] = useProjectAddMutation();
   const { session } = useSession();
   const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
@@ -107,9 +95,6 @@ const Screen = () => {
       .max(100, tr("Discount can not be greater than 100")),
   });
 
-  const handleOpen = () => setIsVisibleExit(true);
-  const handleClose = () => setIsVisibleExit(false);
-
   const handleNext = () => dispatch(setHostCreateActiveStep(activeStep + 1));
   const handlePrev = () => dispatch(setHostCreateActiveStep(activeStep - 1));
 
@@ -129,47 +114,12 @@ const Screen = () => {
     }
   };
 
-  const routeHandler = route => {
-    if (Platform.OS === "web") {
-      let currentUrl = "/";
-      history.replaceState({ url: currentUrl }, document.title, currentUrl);
-      router.push(route);
-    } else {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ key: `${route}/index`, name: `${route}/index` }],
-        })
-      );
-    }
-  };
-
-  const handleExit = () => {
-    router.back();
-  };
-
-
-  const beforeRemoveHandler = e => {
-    e.preventDefault();
-    navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    handleOpen();
-  };
-
-  useEffect(() => {
-    navigation.addListener("beforeRemove", beforeRemoveHandler);
-    return () => {
-      dispatch(setHostCreateActiveStep(1));
-      navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    };
-  }, []);
-
-
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}>
-      {({ values, errors, handleSubmit }) => (
+      {({ handleSubmit }) => (
         <BottomButtonLayout
           buttons={[
             <Button
@@ -200,25 +150,6 @@ const Screen = () => {
             {activeStep === 8 && <TabFaclities />}
           </Container>
 
-          <BottomSheet isVisible={isVisibleExit} onBackdropPress={handleClose}>
-            <Container>
-              <ImageBackground
-                style={styles.rejectIcon}
-                imageStyle={{ resizeMode: "contain" }}
-                source={require("@assets/image/rejectIcon.svg")}
-              />
-              <Text heading1 center>
-                آیا از خروج از این صفحه اطمینان دارید؟
-              </Text>
-              <Text center>در صورت خروج از این صفحه اطلاعات این فرم ها پاک خواهد شد</Text>
-              <WhiteSpace />
-              <ButtonRow>
-                <Button onPress={handleExit}>خارج شدن</Button>
-                <Button onPress={handleClose}>{tr("Stay")}</Button>
-              </ButtonRow>
-            </Container>
-          </BottomSheet>
-
           <BottomSheet isVisible={isVisibleFinish}>
             <Container>
               <ImageBackground
@@ -237,10 +168,9 @@ const Screen = () => {
               <ButtonRow>
                 <Button
                   onPress={() => {
+                    router.replace("/host/management");
+                    router.replace("/host/management");
                     setIsVisibleFinish(false);
-                    navigation.removeListener("beforeRemove", beforeRemoveHandler);
-                    router.replace("/host/management");
-                    router.replace("/host/management");
                   }}
                   color="secondary"
                   type="outline">
@@ -248,7 +178,6 @@ const Screen = () => {
                 </Button>
                 <Button
                   onPress={() => {
-                    navigation.removeListener("beforeRemove", beforeRemoveHandler);
                     router.replace("/");
                     router.replace("/");
                     setIsVisibleFinish(false);
@@ -258,6 +187,8 @@ const Screen = () => {
               </ButtonRow>
             </Container>
           </BottomSheet>
+
+          <CloseFormBottomSheet />
         </BottomButtonLayout>
       )}
     </Formik>

@@ -42,15 +42,18 @@ const FacilitiesTab = () => {
 
       <WhiteSpace />
 
-      <View style={styles.inputContainer}>
-        <Input value={value} onChange={handleChangeInput} placeholder={tr("Add facilities")} />
-        <Button
-          containerStyle={styles.containerStyle}
-          onPress={handleAddPress}
-          color="secondary"
-          icon={<Feather name="plus" size={24} color={theme.colors.white} />}
-        />
-      </View>
+      <Input
+        value={value}
+        onChange={handleChangeInput}
+        placeholder={tr("Add facilities")}
+        leftIcon={
+          <Button
+            onPress={handleAddPress}
+            color="secondary"
+            icon={<Feather name="plus" size={24} color={theme.colors.white} />}
+          />
+        }
+      />
       <View style={styles.chipsContainer}>
         {values.facilities.map(value => (
           <Chip
@@ -71,14 +74,7 @@ const FacilitiesTab = () => {
 
 const styles = StyleSheet.create({
   chipsContainer: { display: "flex", flexDirection: "row", flexWrap: "wrap", gap: 10 },
-  containerStyle: {
-    position: "absolute",
-    left: 8,
-    top: 8,
-  },
-  inputContainer: {
-    position: "relative",
-  },
+
   rejectIcon: {
     margin: "auto",
     width: 56,

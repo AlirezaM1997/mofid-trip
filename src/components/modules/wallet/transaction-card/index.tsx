@@ -8,10 +8,11 @@ import moment from "jalali-moment";
 import { useTheme } from "@rneui/themed";
 import WhiteSpace from "@atoms/white-space";
 import { Avatar, Text } from "@rneui/themed";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View, ViewProps } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import SuccessReceiptBottomSheet from "@modules/receipt-bottom-sheet/success";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { WIDTH } from "@src/constants";
 
 type LookUpType = Record<
   Exclude<WalletWalletTransactionActionChoices, "IN_APP_PURCHASE">,
@@ -76,10 +77,18 @@ const WalletTransactionCard = ({ transaction }: { transaction: WalletTransaction
             )}
             {transactionActionHolder.subTitle}
           </Text>
+          {WIDTH < 320 && (
+            <Text type={transactionActionHolder.color}>
+              {localizeNumber(transactionActionHolder.amount)}
+            </Text>
+          )}
         </View>
-        <Text type={transactionActionHolder.color}>
-          {localizeNumber(transactionActionHolder.amount)}
-        </Text>
+
+        {WIDTH >= 320 && (
+          <Text type={transactionActionHolder.color}>
+            {localizeNumber(transactionActionHolder.amount)}
+          </Text>
+        )}
       </Pressable>
       <WhiteSpace size={8} />
       <SuccessReceiptBottomSheet
@@ -101,7 +110,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: theme.colors.grey0,
   }),
-  avatarContainer: theme => ({ backgroundColor: theme.colors.grey1 }),
+  avatarContainer: (theme => ({ backgroundColor: theme.colors.grey1 })) as ViewProps,
   header: { flex: 1 },
 });
 

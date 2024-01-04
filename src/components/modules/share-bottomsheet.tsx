@@ -12,12 +12,13 @@ import { Feather } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 import { WIDTH } from "@src/constants";
 import Toast from "react-native-toast-message";
+import { useURL } from "expo-linking";
 
 const ShareBottomsheet = ({ isVisible, handleClose }) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
 
-  const url = window.location.href;
+  const url = Platform.OS === "web" ? window.location.href : useURL();
 
   const tour = url?.split("/")[3] === "tour";
 

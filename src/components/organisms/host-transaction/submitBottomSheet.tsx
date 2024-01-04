@@ -33,7 +33,8 @@ const HostTransactionSubmitBottomSheet = ({ isVisible, setIsVisible }) => {
       },
     });
     if (data.projectTransactionAdd.status === "OK") {
-      router.push(`host/transaction/${data.projectTransactionAdd.metadata.project_request_id}`);
+      router.replace(`host/transaction/${data.projectTransactionAdd.metadata.project_request_id}`);
+      router.replace(`host/transaction/${data.projectTransactionAdd.metadata.project_request_id}`);
       setIsVisible(false);
     }
   };
