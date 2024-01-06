@@ -1,10 +1,11 @@
 import React from "react";
-import { Text } from "@rneui/themed";
+import { Text, useTheme } from "@rneui/themed";
 import { ProjectQueryType } from "@src/gql/generated";
 import { useFormatPrice } from "@src/hooks/localization";
 import { router } from "expo-router";
 import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import useTranslation from "@src/hooks/translation";
+import { EvilIcons } from "@expo/vector-icons";
 
 type PropsType = {
   projects: ProjectQueryType[];
@@ -18,6 +19,7 @@ type ItemPropsType = {
 const Item = ({ project }: ItemPropsType) => {
   const { formatPrice } = useFormatPrice();
   const { tr } = useTranslation();
+  const { theme } = useTheme();
 
   return (
     <View style={style.card}>
@@ -27,19 +29,28 @@ const Item = ({ project }: ItemPropsType) => {
         source={
           project?.accommodation?.avatarS3.length > 0
             ? {
-              uri: project?.accommodation?.avatarS3[0]?.large,
-            }
+                uri: project?.accommodation?.avatarS3[0]?.large,
+              }
             : require("@assets/image/defaultHost.svg")
         }
       />
       <View style={style.cardTextContainer}>
-        <Text numberOfLines={1} style={style.projectTitle} body1>
+        <Text numberOfLines={1} body2 bold>
           {project.name}
         </Text>
-        <Text numberOfLines={1} style={style.projectAddress} body2>
-          {project.accommodation.address}
-        </Text>
-        <Text bold>{project.price <= 0 ? tr("it is free") : formatPrice(project.price)}</Text>
+        <View style={style.address}>
+          <EvilIcons name="location" size={16} color={theme.colors.grey3} />
+          <Text numberOfLines={1} type="grey3" caption>
+            {project.accommodation.address}
+          </Text>
+        </View>
+        {project.price <= 0 ? (
+          <Text body2 bold>{tr("it is free")}</Text>
+        ) : (
+          <Text body2 bold>
+            {formatPrice(project.price)} / هر‌شب
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -50,67 +61,66 @@ const SimilarProjects = ({ projects, currentProjectId }: PropsType) => {
     router.push({ pathname: `/host/${project.id}`, params: { name: project.name } });
 
   return (
-    <ScrollView horizontal style={style.container}>
+    <ScrollView horizontal contentContainerStyle={style.contentContainerStyle}>
+      <View style={style.dummyContent} />
       {projects
         ?.filter(p => p.id !== currentProjectId)
         .map((p, index) => (
           <Pressable
             key={index}
-            onPress={() => handlePress(p)}
-            style={{
-              paddingVertical: 5,
-              paddingLeft: index === 0 ? 0 : 10,
-              paddingRight: index === projects.length - 1 ? 0 : 10,
-            }}>
+            onPress={() => handlePress(p)}>
             <Item project={p} />
           </Pressable>
         ))}
+      <View style={style.dummyContent} />
     </ScrollView>
   );
 };
 
 const style = StyleSheet.create({
-  container: {
-    display: "flex",
+  contentContainerStyle: { gap: 15, paddingVertical: 15 },
+  dummyContent: { width: 10 },
+  card: {
+    height: 100,
+    width: 300,
+    borderRadius: 10,
+    elevation: 1,
+    padding: 8,
+    gap:10,
     flexDirection: "row",
-    gap: 10,
+    ...Platform.select({
+      web: { boxShadow: "0 0 3px #12121233" },
+    }),
   },
   cardContainer: {
     paddingHorizontal: 10,
   },
   card: {
+    height: 100,
+    width: 300,
     borderRadius: 10,
-    borderWidth: 0,
     elevation: 1,
-    backgroundColor: "#fff",
-    display: "flex",
+    padding: 8,
+    gap:10,
     flexDirection: "row",
-    paddingLeft: 10,
-    maxWidth: 300,
     ...Platform.select({
       web: { boxShadow: "0 0 3px #12121233" },
     }),
   },
-  imageContainerStyle: { width: 100, height: 100 },
+  imageContainerStyle: { width: 84, height: 84 },
   imageStyle: {
-    width: 100,
-    height: 100,
+    width: 84,
+    height: 84,
     borderRadius: 12,
   },
   cardTextContainer: {
-    padding: 10,
-    display: "flex",
+    paddingVertical:5,
     justifyContent: "space-between",
   },
-  projectTitle: {
-    width: 180,
-    height: "auto",
-    overflow: "hidden",
-  },
-  projectAddress: {
-    width: 180,
-    height: "auto",
-    overflow: "hidden",
+  address: {
+    flexDirection: "row",
+    gap: 2,
+    alignItems: "center",
   },
 });
 

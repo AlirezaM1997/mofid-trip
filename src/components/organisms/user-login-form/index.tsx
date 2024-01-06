@@ -38,8 +38,6 @@ const UserLoginForm = () => {
     }
   }, [loading, data]);
 
-  
-
   return (
     <>
       <View style={style.container}>

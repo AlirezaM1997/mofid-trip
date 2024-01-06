@@ -44,7 +44,7 @@ const HostTransactionConfirmData = ({ setActiveStep }) => {
           iconPosition="right"
           titleStyle={styles.buttonTitle}
           onPress={handleNavigation}
-          icon={<AntDesign name="left" size={16} color="black" />}>
+          icon={<AntDesign name="left" size={14} color="black" />}>
           {tr("view")}
         </Button>
       </View>
@@ -67,7 +67,7 @@ const HostTransactionConfirmData = ({ setActiveStep }) => {
           iconPosition="right"
           titleStyle={styles.buttonTitle}
           onPress={() => setActiveStep(activeStep => activeStep - 1)}
-          icon={<AntDesign name="left" size={16} color="black" />}>
+          icon={<AntDesign name="left" size={14} color="black" />}>
           {tr("edit")}
         </Button>
       </View>
@@ -89,7 +89,7 @@ const HostTransactionConfirmData = ({ setActiveStep }) => {
           iconPosition="right"
           titleStyle={styles.buttonTitle}
           onPress={() => setActiveStep(activeStep => activeStep - 2)}
-          icon={<AntDesign name="left" size={16} color="black" />}>
+          icon={<AntDesign name="left" size={14} color="black" />}>
           {tr("edit")}
         </Button>
       </View>

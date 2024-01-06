@@ -4,29 +4,29 @@ import { Divider, useTheme } from "@rneui/themed";
 import { Text } from "@rneui/themed";
 import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { ProjectQueryType } from "@src/gql/generated";
+import { AccommodationQueryType, TourImageType, TourQueryType } from "@src/gql/generated";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
 import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native";
 import { WIDTH } from "@src/constants";
 
 type PropsType = {
-  avatarS3: ProjectQueryType["accommodation"]["avatarS3"];
-  address: ProjectQueryType["accommodation"]["address"];
-  price: ProjectQueryType["price"];
-  name: ProjectQueryType["name"];
-  id: ProjectQueryType["id"];
+  address: AccommodationQueryType["address"];
+  price: TourPriceType["price"];
+  name: TourQueryType["title"];
+  avatarS3: TourImageType[];
+  id: TourQueryType["id"];
 };
 
-function HostCard({ price, id, name, avatarS3, address }: PropsType) {
+function TourCardForSlider({ price, id, name, avatarS3, address }: PropsType) {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
-  const { theme } = useTheme();
+  const {theme} = useTheme()
   const { localizeNumber } = useLocalizedNumberFormat();
   const { formatPrice } = useFormatPrice();
 
   const handlePress = () => {
     router.push({
-      pathname: `/host/${id}`,
+      pathname: `/tour/${id}`,
       params: {
         id: id,
         name: name,
@@ -92,27 +92,29 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
 }
 
 const style = StyleSheet.create({
-  container: {
-    width: WIDTH - 50,
-    overflow: "hidden",
-    backgroundColor: "#fff",
-    elevation: 5,
-    borderRadius: 16,
-    marginVertical: 5,
-    ...Platform.select({
-      web: { boxShadow: "0 0 5px #12121233" },
+    container: {
+      width: WIDTH - 80,
+      maxWidth:350,
+      overflow: "hidden",
+      backgroundColor: "#fff",
+      elevation: 5,
+      borderRadius: 16,
+      marginVertical: 5,
+      ...Platform.select({
+        web: { boxShadow: "0 0 5px #12121233" },
+      }),
+    },
+    ImageBackground: isRtl => ({
+      marginRight: isRtl ? 0 : 5,
+      width: "100%",
+      height: (WIDTH - 80)*0.6116,
+      maxHeight: 350*0.6116,
+      backgroundPosition: "center",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      borderRadius: 16,
+      marginBottom: 10,
     }),
-  },
-  ImageBackground: isRtl => ({
-    marginRight: isRtl ? 0 : 5,
-    width: "100%",
-    height: (WIDTH - 50)*0.6116,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    borderRadius: 16,
-    marginBottom: 10,
-  }),
   ImageBackgroundImage: {
     width: "100%",
     height: '100%',
@@ -152,4 +154,5 @@ const style = StyleSheet.create({
   },
 });
 
-export default HostCard;
+
+export default TourCardForSlider;

@@ -26,7 +26,7 @@ export const messages = {
   },
   "anywhere you want": {
     ar: "في أي مكان تريده",
-    fa_ir: "جستجوی اقامتگاه ها",
+    fa_ir: "جستجوی میزبانی‌ها",
     en_us: "Anywhere You Want",
   },
   "are you sure to cancel?": {
@@ -687,7 +687,7 @@ export const messages = {
   },
   "available hosts": {
     ar: "الاستضافة المتوفرة",
-    fa_ir: "میزبانی های موجود",
+    fa_ir: "میزبانی‌های موجود",
     en_us: "Available hosts",
   },
   "available tours": {
@@ -1522,7 +1522,7 @@ export const messages = {
   },
   "manage my tours": {
     ar: "إدارة جولاتي",
-    fa_ir: "مدیریت تور های من",
+    fa_ir: "مدیریت تور‌های من",
     en_us: "Manage My Tours",
   },
   "my tours requests": {
@@ -1532,7 +1532,7 @@ export const messages = {
   },
   "my requests": {
     ar: "طلباتي",
-    fa_ir: "درخواست های من",
+    fa_ir: "درخواست‌های من",
     en_us: "My Requests",
   },
   managements: {
@@ -1588,8 +1588,13 @@ export const messages = {
   },
   requests: {
     ar: "طلبات",
-    fa_ir: "درخواست ها",
+    fa_ir: "درخواست‌ها",
     en_us: "Requests",
+  },
+  "there is no tour": {
+    ar: "لا يوجد صافي",
+    fa_ir: "توری وجود ندارد",
+    en_us: "There is no tour",
   },
   "there is no request for this host": {
     ar: "لا يوجد طلب لهؤلاء المضيفين",
@@ -1605,6 +1610,16 @@ export const messages = {
     ar: "يشتري",
     fa_ir: "خرید",
     en_us: "buy",
+  },
+  "add new host": {
+    ar: "إضافة مضيف جديد",
+    fa_ir: "افزودن میزبانی جدید",
+    en_us: "add new host",
+  },
+  "add new tour": {
+    ar: "إضافة جولة جديدة",
+    fa_ir: "افزودن تور جدید",
+    en_us: "Add new tour",
   },
   "there is no card in your wallet": {
     ar: "لا توجد بطاقة في محفظتك",
@@ -2522,7 +2537,7 @@ export const messages = {
   },
   "manage my hosts": {
     ar: "إدارة مضيفي",
-    fa_ir: "مدیریت میزبانی های من",
+    fa_ir: "مدیریت میزبانی‌های من",
     en_us: "Manage My Hosts",
   },
   "host management": {

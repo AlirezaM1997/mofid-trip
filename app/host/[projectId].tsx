@@ -18,8 +18,11 @@ import SimilarProjects from "@src/components/modules/similar-projects";
 import ProjectFacilities from "@src/components/modules/host/facilities";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import ProjectBoldFeatures from "@src/components/modules/host/bold-features";
+import { Feather } from "@expo/vector-icons";
 import { ProjectQueryType, useProjectDetailQuery } from "@src/gql/generated";
 import ShareReportDropDown from "@modules/share-report-dropdown";
+import openMapHandler from "@src/helper/opem-map";
+import WhiteSpace from "@atoms/white-space";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
@@ -44,23 +47,6 @@ const Page: React.FC = ({ ...props }) => {
     title: name,
     headerRight: () => <ShareReportDropDown />,
   });
-
-  const openMapHandler = () => {
-    const scheme = Platform?.select({ ios: "maps://0,0?q=", android: "geo:0,0?q=" });
-    const latLng = ` ${accommodation?.lat}, ${accommodation?.lng}`;
-    const url = Platform?.select({
-      ios: `${scheme}@${latLng}`,
-      android: `${scheme}${latLng}`,
-    });
-
-    if (Platform.OS === "web") {
-      const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${accommodation?.lat},${accommodation?.lng}`;
-      window.open(googleMapsUrl, "_blank");
-      return;
-    }
-
-    Linking?.openURL(url);
-  };
 
   if (loading) return <LoadingIndicator />;
 
@@ -120,17 +106,19 @@ const Page: React.FC = ({ ...props }) => {
               {accommodation.address}
             </Text>
             {isFocused && (
-              <Pressable onPress={openMapHandler}>
+              <Pressable onPress={() => openMapHandler(accommodation?.lat, accommodation?.lng)}>
                 <Map lat={accommodation?.lat} lng={accommodation?.lng} />
               </Pressable>
             )}
           </View>
-
+          <Text subtitle1 bold>
+            پیشنهادی برای شما
+          </Text>
+        </Container>
           <SimilarProjects
             currentProjectId={projectId as string}
             projects={creator?.projectSet as ProjectQueryType[]}
           />
-        </Container>
       </ScrollView>
     </BottomButtonLayout>
   );

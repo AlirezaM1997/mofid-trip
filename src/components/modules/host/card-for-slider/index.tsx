@@ -17,7 +17,7 @@ type PropsType = {
   id: ProjectQueryType["id"];
 };
 
-function HostCard({ price, id, name, avatarS3, address }: PropsType) {
+function HostCardForSlider({ price, id, name, avatarS3, address }: PropsType) {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
   const { theme } = useTheme();
@@ -93,7 +93,8 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
 
 const style = StyleSheet.create({
   container: {
-    width: WIDTH - 50,
+    width: WIDTH - 80,
+    maxWidth:350,
     overflow: "hidden",
     backgroundColor: "#fff",
     elevation: 5,
@@ -106,7 +107,8 @@ const style = StyleSheet.create({
   ImageBackground: isRtl => ({
     marginRight: isRtl ? 0 : 5,
     width: "100%",
-    height: (WIDTH - 50)*0.6116,
+    height: (WIDTH - 80)*0.6116,
+    maxHeight: 350*0.6116,
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
@@ -152,4 +154,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default HostCard;
+export default HostCardForSlider;

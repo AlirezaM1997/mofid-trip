@@ -1,13 +1,13 @@
 import React from "react";
 import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
-import HostCard from "@modules/host/card";
 import Container from "@atoms/container";
 import { router } from "expo-router";
 import { useProjectListQuery } from "@src/gql/generated";
 import { ScrollView, View, StyleSheet } from "react-native";
 import { Skeleton } from "@rneui/themed";
 import WhiteSpace from "@atoms/white-space";
+import HostCardForSlider from "@modules/host/card-for-slider";
 
 function HostList() {
   const { tr } = useTranslation();
@@ -54,7 +54,7 @@ function HostList() {
               ))
             : data.projectList.data?.map((project, index) => (
                 <View key={index}>
-                  <HostCard
+                  <HostCardForSlider
                     id={project.id}
                     name={project.name}
                     price={(project.price * (100 - project.discount)) / 100}
@@ -71,12 +71,12 @@ function HostList() {
 
 const style = StyleSheet.create({
   listContainer: {
-    minHeight: 345,
+    maxHeight: 345,
     display: "flex",
     flexDirection: "row",
   },
-  gap: { gap: 10 },
-  spacer: { width: 15 },
+  gap: { gap: 18 },
+  spacer: { width: 7 },
 });
 
 export default HostList;

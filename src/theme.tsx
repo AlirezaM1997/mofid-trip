@@ -156,7 +156,7 @@ export const theme = isRtl =>
       },
       Text: ({ bold, italic, underline, center, color, type, ...props }, theme) => {
         let style = {
-          fontSize: 14,
+          fontSize: 16,
           fontStyle: italic ? "italic" : "normal",
           textDecorationLine: underline ? "underline" : "none",
           textAlign: center ? "center" : isRtl ? "right" : "left",
@@ -221,7 +221,6 @@ export const theme = isRtl =>
         let buttonStyle: any = {
           gap: 8,
           borderRadius: 12,
-          gap: 8,
           fontWeight: "400",
           ...Platform.select({
             web: {
@@ -264,6 +263,7 @@ export const theme = isRtl =>
 
         if (size === "sm") {
           containerStyle = { ...buttonStyle, height: Platform.OS === "web" ? "auto" : 31.6 };
+          titleStyle = { ...titleStyle, fontSize: 16 };
         }
 
         if (size === "md") {
@@ -329,6 +329,8 @@ export const theme = isRtl =>
           borderWidth: 1,
           borderRadius: 12,
           padding: 15,
+          paddingLeft: WIDTH >= 285 ? 15 : 0,
+          fontSize: WIDTH > 320 ? 16 : 14,
           ...Platform.select({
             web: {
               fontFamily:
@@ -376,6 +378,7 @@ export const theme = isRtl =>
             },
           }),
           fontWeight: "400",
+          fontSize: WIDTH > 320 ? 14 : 12,
         },
         checkedIcon: <Ionicons name="md-checkbox" size={24} color={theme.colors.primary} />,
         uncheckedIcon: <Ionicons name="square-outline" size={24} color={theme.colors.black} />,

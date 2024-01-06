@@ -9,8 +9,8 @@ import { Button, Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { setTourCreateActiveStep } from "@src/slice/tour-create-slice";
 import { RootState } from "@src/store";
-import { router, useNavigation } from "expo-router";
-import { useEffect, useState } from "react";
+import { router } from "expo-router";
+import { useState } from "react";
 import { ImageBackground, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
@@ -25,6 +25,7 @@ import { TourGenderEnum, useTourAddMutation } from "@src/gql/generated";
 import { Formik } from "formik";
 import AccessDenied from "@modules/access-denied";
 import { useSession } from "@src/context/auth";
+import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
 
 const initialValues = {
   title: null,
@@ -57,9 +58,7 @@ const initialValues = {
 const Screen = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const navigation = useNavigation();
   const [submit, { loading }] = useTourAddMutation();
-  const [isVisibleExit, setIsVisibleExit] = useState(false);
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const { activeStep } = useSelector((state: RootState) => state.tourCreateSlice);
   const { session } = useSession();
@@ -104,12 +103,6 @@ const Screen = () => {
       .required(tr("Required")),
   });
 
-  const handleOpen = () => setIsVisibleExit(true);
-  const handleClose = () => {
-    navigation.addListener("beforeRemove", beforeRemoveHandler);
-    setIsVisibleExit(false);
-  };
-
   const handleNext = () => dispatch(setTourCreateActiveStep(activeStep + 1));
   const handlePrev = () => dispatch(setTourCreateActiveStep(activeStep - 1));
 
@@ -129,24 +122,6 @@ const Screen = () => {
     }
   };
 
-  const handleExit = () => {
-    router.back();
-  };
-
-  const beforeRemoveHandler = e => {
-    e.preventDefault();
-    navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    handleOpen();
-  };
-
-  useEffect(() => {
-    navigation.addListener("beforeRemove", beforeRemoveHandler);
-    return () => {
-      dispatch(setTourCreateActiveStep(1));
-      navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    };
-  }, []);
-
   if (!isNgo) return <AccessDenied />;
 
   return (
@@ -155,7 +130,7 @@ const Screen = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}>
-        {({ values, errors, handleSubmit }) => (
+        {({ handleSubmit }) => (
           <BottomButtonLayout
             buttons={[
               <Button
@@ -185,25 +160,6 @@ const Screen = () => {
               {activeStep === 7 && <ImagesTab />}
               {activeStep === 8 && <FacilitiesTab />}
             </Container>
-
-            <BottomSheet isVisible={isVisibleExit} onBackdropPress={handleClose}>
-              <Container>
-                <ImageBackground
-                  style={styles.rejectIcon}
-                  imageStyle={{ resizeMode: "contain" }}
-                  source={require("@assets/image/rejectIcon.svg")}
-                />
-                <Text heading1 center>
-                  آیا از خروج از این صفحه اطمینان دارید؟
-                </Text>
-                <Text center>در صورت خروج از این صفحه اطلاعات این فرم ها پاک خواهد شد</Text>
-                <WhiteSpace />
-                <ButtonRow>
-                  <Button onPress={handleExit}>خارج شدن</Button>
-                  <Button onPress={handleClose}>{tr("Stay")}</Button>
-                </ButtonRow>
-              </Container>
-            </BottomSheet>
 
             <BottomSheet isVisible={isVisibleFinish}>
               <Container>
@@ -243,6 +199,8 @@ const Screen = () => {
                 </ButtonRow>
               </Container>
             </BottomSheet>
+
+            <CloseFormBottomSheet />
           </BottomButtonLayout>
         )}
       </Formik>
