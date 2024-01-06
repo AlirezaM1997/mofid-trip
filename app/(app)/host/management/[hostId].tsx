@@ -5,8 +5,8 @@ import Stepper from "@modules/stepper";
 import { ListItem, Text, useTheme } from "@rneui/themed";
 import {
   ProjectStatusEnum,
-  MyNgoDetailProjectSetQuery,
-  useMyNgoDetailProjectSetQuery,
+  useMyUserDetailProjectSetQuery,
+  MyUserDetailProjectSetQuery,
 } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
@@ -18,6 +18,7 @@ import { Divider } from "@rneui/themed";
 import { Linking } from "react-native";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { passedTime } from "@src/helper/date";
+import HostManagementStepBaseButton from "@modules/host/management/step-base-button";
 
 const HostDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -25,10 +26,10 @@ const HostDetailScreen = () => {
   const { theme } = useTheme();
   const navigation = useNavigation();
   const { hostId } = useLocalSearchParams();
-  const [host, setHost] = useState<MyNgoDetailProjectSetQuery["NGODetail"]["projectSet"][0]>();
+  const [host, setHost] = useState<MyUserDetailProjectSetQuery["userDetail"]["projectSet"][0]>();
   const steps = [tr("pending"), tr("published")];
 
-  const { loading, data } = useMyNgoDetailProjectSetQuery();
+  const { loading, data } = useMyUserDetailProjectSetQuery();
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
@@ -49,13 +50,10 @@ const HostDetailScreen = () => {
         name: host?.name,
       },
     });
-  const handleNavigateToRequest = () => {
-    router.push("/host/management/request/" + host.id);
-  };
 
   useEffect(() => {
     if (!loading && data) {
-      const h = data.NGODetail.projectSet.find(host => host.id === hostId);
+      const h = data.userDetail.projectSet.find(host => host.id === hostId);
       setHost(h);
       navigation.setOptions({ title: h?.name });
     }
@@ -108,19 +106,7 @@ const HostDetailScreen = () => {
           color={theme.colors.grey3}
         />
       </ListItem>
-      {host.statusStep === ProjectStatusEnum.Accept && host.statusActivation && (
-        <ListItem onPress={handleNavigateToRequest}>
-          <Feather name="users" size={24} color={theme.colors.black} />
-          <ListItem.Content>
-            <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>
-          </ListItem.Content>
-          <Feather
-            name={isRtl ? "chevron-left" : "chevron-right"}
-            size={24}
-            color={theme.colors.grey3}
-          />
-        </ListItem>
-      )}
+      <HostManagementStepBaseButton host={host} />
 
       <Divider thickness={8} bgColor="grey0" />
 

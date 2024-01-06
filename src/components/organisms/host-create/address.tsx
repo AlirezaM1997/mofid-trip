@@ -39,7 +39,7 @@ const TabAddress = () => {
         onChangeText={handleChange("accommodation.city")}
         onBlur={handleBlur("accommodation.city")}
         value={values.accommodation.city}
-        errorMessage={touched?.accommodation?.city && (errors?.accommodation.city as string)}
+        errorMessage={touched?.accommodation?.city && (errors?.accommodation?.city as string)}
       />
       <Input
         name="address"
@@ -48,7 +48,7 @@ const TabAddress = () => {
         onChangeText={handleChange("accommodation.address")}
         onBlur={handleBlur("accommodation.address")}
         value={values.accommodation.address}
-        errorMessage={touched?.accommodation?.address && (errors?.accommodation.address as string)}
+        errorMessage={touched?.accommodation?.address && (errors?.accommodation?.address as string)}
       />
       <Field name="lat" component={LocationPickerHost} />
     </>

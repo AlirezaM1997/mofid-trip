@@ -11,6 +11,8 @@ query myUserDetailProjectSet {
         address
         province
         city
+        lat
+        lng
         avatarS3 {
           large
           medium
@@ -31,6 +33,8 @@ query myUserDetailProjectSet {
       statusActivation
       facilities {
         id
+        faName
+        enName
       }
       tags {
         id
@@ -41,6 +45,9 @@ query myUserDetailProjectSet {
       createdDate
       capacity {
         id
+        # gender
+        # childAccept
+        # capacityNumber
       }
       transactionSet {
         id
@@ -55,7 +62,6 @@ query myUserDetailProjectSet {
         female
         allCap
       }
-      __typename
     }
   }
 }

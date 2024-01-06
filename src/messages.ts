@@ -1591,6 +1591,11 @@ export const messages = {
     fa_ir: "درخواست‌ها",
     en_us: "Requests",
   },
+  "edit host": {
+    ar: "تحرير الاستضافة",
+    fa_ir: "ویرایش میزبانی",
+    en_us: "edit host",
+  },
   "there is no tour": {
     ar: "لا يوجد صافي",
     fa_ir: "توری وجود ندارد",

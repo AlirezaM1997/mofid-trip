@@ -8,6 +8,7 @@ query projectDetail($pk: ID!) {
     dateStart
     description
     discount
+  
     tags {
       id
       name

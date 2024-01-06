@@ -2132,6 +2132,13 @@ export type ProjectAddMutationVariables = Exact<{
 
 export type ProjectAddMutation = { __typename?: 'Mutation', projectAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
+export type ProjectEditMutationVariables = Exact<{
+  data: ProjectEditInputType;
+}>;
+
+
+export type ProjectEditMutation = { __typename?: 'Mutation', projectEdit?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
+
 export type ProjectTransactionAddMutationVariables = Exact<{
   data: ProjectTransactionAddInputType;
 }>;
@@ -2254,7 +2261,7 @@ export type MyNgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?
 export type MyUserDetailProjectSetQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyUserDetailProjectSetQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, projectSet?: Array<{ __typename: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusStep?: ProjectStatusEnum | null, statusActivation?: boolean | null, createdDate?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, capacity?: { __typename?: 'CapacityQueryType', id: string } | null, transactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string } | null> | null, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null } | null> | null } | null };
+export type MyUserDetailProjectSetQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusStep?: ProjectStatusEnum | null, statusActivation?: boolean | null, createdDate?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, faName?: string | null, enName?: string | null } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, capacity?: { __typename?: 'CapacityQueryType', id: string } | null, transactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string } | null> | null, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null } | null> | null } | null };
 
 export type MyUserDetailProjectTransactionSetQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2552,6 +2559,42 @@ export function useProjectAddMutation(baseOptions?: Apollo.MutationHookOptions<P
 export type ProjectAddMutationHookResult = ReturnType<typeof useProjectAddMutation>;
 export type ProjectAddMutationResult = Apollo.MutationResult<ProjectAddMutation>;
 export type ProjectAddMutationOptions = Apollo.BaseMutationOptions<ProjectAddMutation, ProjectAddMutationVariables>;
+export const ProjectEditDocument = gql`
+    mutation projectEdit($data: ProjectEditInputType!) {
+  projectEdit(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}
+    `;
+export type ProjectEditMutationFn = Apollo.MutationFunction<ProjectEditMutation, ProjectEditMutationVariables>;
+
+/**
+ * __useProjectEditMutation__
+ *
+ * To run a mutation, you first call `useProjectEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useProjectEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [projectEditMutation, { data, loading, error }] = useProjectEditMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useProjectEditMutation(baseOptions?: Apollo.MutationHookOptions<ProjectEditMutation, ProjectEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ProjectEditMutation, ProjectEditMutationVariables>(ProjectEditDocument, options);
+      }
+export type ProjectEditMutationHookResult = ReturnType<typeof useProjectEditMutation>;
+export type ProjectEditMutationResult = Apollo.MutationResult<ProjectEditMutation>;
+export type ProjectEditMutationOptions = Apollo.BaseMutationOptions<ProjectEditMutation, ProjectEditMutationVariables>;
 export const ProjectTransactionAddDocument = gql`
     mutation projectTransactionAdd($data: ProjectTransactionAddInputType!) {
   projectTransactionAdd(data: $data) {
@@ -3618,6 +3661,8 @@ export const MyUserDetailProjectSetDocument = gql`
         address
         province
         city
+        lat
+        lng
         avatarS3 {
           large
           medium
@@ -3638,6 +3683,8 @@ export const MyUserDetailProjectSetDocument = gql`
       statusActivation
       facilities {
         id
+        faName
+        enName
       }
       tags {
         id
@@ -3662,7 +3709,6 @@ export const MyUserDetailProjectSetDocument = gql`
         female
         allCap
       }
-      __typename
     }
   }
 }
