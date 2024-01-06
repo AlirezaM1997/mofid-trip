@@ -67,7 +67,15 @@ const TransactionDetailsScreen = () => {
         </Button>
       ),
       SUCCESSFUL: <Button>{tr("rates to the host")}</Button>,
-      ACCEPT: <Button onPress={() => setIsVisible(true)}>{tr("pay")}</Button>,
+      ACCEPT: data.projectTransactionDetail.project.price ? (
+        <Button loading={purchaseLoading} onPress={() => setIsVisible(true)}>
+          {tr("pay")}
+        </Button>
+      ) : (
+        <Button loading={purchaseLoading} onPress={purchaseHandler}>
+          {tr("reserve")}
+        </Button>
+      ),
     };
     return lookup[status?.step || null];
   };

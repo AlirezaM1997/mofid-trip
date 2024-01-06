@@ -7,26 +7,10 @@ import { Linking, Platform, Pressable, View } from "react-native";
 import ContactCard from "@modules/contact-card";
 import useTranslation from "@src/hooks/translation";
 import WhiteSpace from "@atoms/white-space";
+import openMapHandler from "@src/helper/opem-map";
 
 const PaymentStep = ({ status, location, creator }) => {
   const { tr } = useTranslation();
-
-  const openMapHandler = () => {
-    const scheme = Platform?.select({ ios: "maps://0,0?q=", android: "geo:0,0?q=" });
-    const latLng = ` ${location.lat}, ${location.lng}`;
-    const url = Platform?.select({
-      ios: `${scheme}@${latLng}`,
-      android: `${scheme}${latLng}`,
-    });
-
-    if (Platform.OS === "web") {
-      const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lng}`;
-      window.open(googleMapsUrl, "_blank");
-      return;
-    }
-
-    Linking?.openURL(url);
-  };
 
   return (
     <>
@@ -48,7 +32,7 @@ const PaymentStep = ({ status, location, creator }) => {
 
           <Divider bgColor="grey0" thickness={6} />
 
-          <Pressable onPress={openMapHandler}>
+          <Pressable onPress={() => openMapHandler(location.lat, location.lng)}>
             <Container>
               <Map lat={location.lat} lng={location.lng} />
             </Container>

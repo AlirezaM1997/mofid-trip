@@ -19,9 +19,10 @@ const ButtonRow = ({ children, ...props }: ButtonRowProps) => {
 
 const styles = StyleSheet.create({
   row: {
-    display: "flex",
-    flexDirection: "row",
     gap: 10,
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "row",
   },
   child: {
     flexGrow: 1,

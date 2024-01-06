@@ -2,12 +2,12 @@ import React from "react";
 import { router } from "expo-router";
 import Container from "@atoms/container";
 import { Skeleton } from "@rneui/themed";
-import TourCard from "@modules/tour/card";
 import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView, View, StyleSheet } from "react-native";
 import { AccommodationQueryType, useTourListQuery } from "@src/gql/generated";
+import TourCardForSlider from "@modules/tour/card-for-slider";
 
 function TourList() {
   const { tr } = useTranslation();
@@ -54,7 +54,7 @@ function TourList() {
               ))
             : data.tourList.data?.map((tour, index) => (
                 <View key={index}>
-                  <TourCard
+                  <TourCardForSlider
                     key={index}
                     id={tour.id}
                     name={tour.title}
@@ -74,12 +74,12 @@ function TourList() {
 
 const style = StyleSheet.create({
   listContainer: {
-    minHeight: 342,
+    maxHeight: 342,
     display: "flex",
     flexDirection: "row",
   },
-  gap: { gap: 10 },
-  spacer: { width: 15 },
+  gap: { gap: 18 },
+  spacer: { width: 7 },
 });
 
 export default TourList;

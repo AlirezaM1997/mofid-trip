@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import Report from "./report";
@@ -45,6 +45,11 @@ const styles = StyleSheet.create({
   dropDown: {
     position: "absolute",
     left: 15,
+    borderBottomRightRadius: 8,
+    borderBottomLeftRadius: 8,
+    ...Platform.select({
+      web: { boxShadow: "0 0 5px #12121227" },
+    }),
   },
 });
 

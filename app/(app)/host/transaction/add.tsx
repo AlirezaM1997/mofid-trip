@@ -12,8 +12,8 @@ import HostTransactionTab from "@modules/virtual-tabs/host-transaction-tabs";
 import HostTransactionDateTab from "@organisms/host-transaction/date";
 import HostTransactionCapacityTab from "@organisms/host-transaction/capacity";
 import HostTransactionConfirmData from "@organisms/host-transaction/confirm-data";
-import HostTransactionExitBottomSheet from "@organisms/host-transaction/exitBottomSheet";
 import HostTransactionSubmitBottomSheet from "@organisms/host-transaction/submitBottomSheet";
+import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
 
 const initialValues = {
   guests: {
@@ -78,7 +78,7 @@ const Screen = () => {
             isVisible={isVisibleFinish}
             setIsVisible={setIsVisibleFinish}
           />
-          <HostTransactionExitBottomSheet />
+          <CloseFormBottomSheet />
         </BottomButtonLayout>
       )}
     </Formik>

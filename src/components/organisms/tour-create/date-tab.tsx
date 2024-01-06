@@ -133,7 +133,7 @@ const DateTab = () => {
             <Text type="error">{touched.startTime && (errors.startTime as string)}</Text>
           )}
         </View>
-        <Divider vertical={true} style={styles.divider} />
+        <Divider orientation="vertical" />
         <View style={styles.timeContainer}>
           <Text body2 type={touched.endTime && errors.endTime ? "error" : "secondary"}>
             {tr("end")}: {getLastDayFormatted()}
@@ -150,7 +150,6 @@ const DateTab = () => {
 const styles = StyleSheet.create({
   header: { gap: 6 },
   container: { gap: 24 },
-  divider: { width: 50 },
   showDateContainer: { flexDirection: "row", justifyContent: "space-evenly", marginTop: 25 },
   startDayButtonStyle: theme => ({
     backgroundColor: theme.colors.black,

@@ -1,8 +1,8 @@
 import React from "react";
 import { router } from "expo-router";
 import { Text } from "@rneui/themed";
+import { ProjectTransactionQueryType } from "@src/gql/generated";
 import { View, Image, StyleSheet, Pressable } from "react-native";
-import { AccommodationQueryType, ProjectTransactionQueryType } from "@src/gql/generated";
 
 type TransactionDetailPropsType = {
   transaction: ProjectTransactionQueryType;
@@ -25,8 +25,8 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
         source={
           transaction?.project?.accommodation?.avatarS3.length > 0
             ? {
-              uri: transaction?.project?.accommodation?.avatarS3?.[0]?.small,
-            }
+                uri: transaction?.project?.accommodation?.avatarS3?.[0]?.small,
+              }
             : require("@assets/image/defaultHost.svg")
         }
         resizeMode="cover"

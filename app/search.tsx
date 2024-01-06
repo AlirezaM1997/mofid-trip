@@ -100,7 +100,11 @@ const SearchScreen: React.FC = () => {
                 {tr("Fetch More")}
               </Button>
             ) : null}
-            {networkStatus === NetworkStatus.ready && !data?.projectList?.data?.length ? <NoResult /> : ""}
+            {networkStatus === NetworkStatus.ready && !data?.projectList?.data?.length ? (
+              <NoResult />
+            ) : (
+              ""
+            )}
           </Container>
         )}
 
