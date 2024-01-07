@@ -148,6 +148,12 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
+        name="wallet/cards/edit/[cardId]"
+        options={{
+          title: tr("edit card"),
+        }}
+      />
+      <Stack.Screen
         name="transactionPaymentStatus"
         options={{
           title: tr("payment status"),

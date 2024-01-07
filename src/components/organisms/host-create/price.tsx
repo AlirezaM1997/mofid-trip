@@ -1,4 +1,3 @@
-import Container from "@atoms/container";
 import Input from "@atoms/input";
 import WhiteSpace from "@atoms/white-space";
 import { Badge, Divider, Text } from "@rneui/themed";
@@ -48,6 +47,7 @@ const TabPrice = () => {
 
       <Input
         value={values.price?.toString()}
+        maxLength={8}
         label={tr("Price") + " (" + tr("Tooman") + ")"}
         onChangeText={text => setFieldValue("price", parseText(text))}
         onBlur={handleBlur("price")}
@@ -61,7 +61,7 @@ const TabPrice = () => {
             type="solid"
             containerStyle={styles.badgeContainerStyle}
             badgeStyle={styles.badgeStyle}
-            onPress={() => setFieldValue("price", parseInt(recom.value))}
+            onPress={() => setFieldValue("price", +recom.value)}
           />
         ))}
       </View>
@@ -72,6 +72,7 @@ const TabPrice = () => {
 
       <Input
         value={values.discount?.toString()}
+        maxLength={3}
         onChangeText={text => setFieldValue("discount", parseText(text))}
         onBlur={handleBlur("discount")}
         errorMessage={touched.discount && (errors.discount as string)}
@@ -85,7 +86,7 @@ const TabPrice = () => {
             type="solid"
             containerStyle={styles.badgeContainerStyle}
             badgeStyle={styles.badgeStyle2}
-            onPress={() => setFieldValue("discount", parseInt(recom.value))}
+            onPress={() => setFieldValue("discount", +recom.value)}
           />
         ))}
       </View>
@@ -94,7 +95,7 @@ const TabPrice = () => {
         <View style={styles.row}>
           <Text>تخفیف {localizeNumber(values.discount)}%</Text>
           <Text>+</Text>
-          <Text>قیمت پایه {(formatPrice(+values.price ?? 0))}</Text>
+          <Text>قیمت پایه {formatPrice(+values.price ?? 0)}</Text>
         </View>
         <Text>=</Text>
         <Text>

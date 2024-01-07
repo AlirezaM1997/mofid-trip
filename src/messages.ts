@@ -556,6 +556,16 @@ export const messages = {
     fa_ir: "ذخیره",
     en_us: "confirm",
   },
+  no: {
+    ar: "لا",
+    fa_ir: "خیر",
+    en_us: "no",
+  },
+  "card deleted successfully": {
+    ar: "تم حذف البطاقة بنجاح",
+    fa_ir: "کارت با موفقیت حذف شد",
+    en_us: "Card deleted successfully",
+  },
   search: {
     ar: "يبحث",
     fa_ir: "جستجو",
@@ -2033,6 +2043,33 @@ export const messages = {
     ar: "مدة",
     fa_ir: "مدت",
     en_us: "Duration",
+  },
+  "if you confirm and click on the yes option, your bank card will be removed from mofidtrip.": {
+    ar: "إذا قمت بالتأكيد والنقر على خيار نعم، فستتم إزالة بطاقتك المصرفية من مفیدتریپ.",
+    fa_ir: "در صورت تایید و زدن روی گزینه بله، کارت بانکی شما از مفیدتریپ حذف خواهد شد.",
+    en_us:
+      "If you confirm and click on the yes option, your bank card will be removed from Mofidtrip.",
+  },
+  "are you sure to delete your bank card?": {
+    ar: "هل أنت متأكد من حذف بطاقتك المصرفية؟",
+    fa_ir: "آیا از حذف کارت بانکی خود مطمئن هستید؟",
+    en_us: "Are you sure to delete your bank card?",
+  },
+  "card edited successfully": {
+    ar: "تم تحرير البطاقة بنجاح",
+    fa_ir: "کارت با موفقیت ویرایش شد",
+    en_us: "Card edited successfully",
+  },
+  "confirmation and registration": {
+    ar: "التأكيد والتسجيل",
+    fa_ir: "تایید و ثبت",
+    en_us: "Confirmation and registration",
+  },
+  "to edit the card, touch the desired section to apply the desired changes": {
+    ar: "لتحرير البطاقة، المس القسم المطلوب لتطبيق التغييرات المطلوبة",
+    fa_ir:
+      "برای ویرایش کارت، روی بخش مورد نظر را لمس کنید تا بتوانید تغییرات مد نظرتان را اعمال کنید",
+    en_us: "To edit the card, touch the desired section to apply the desired changes",
   },
   "tour facilities": {
     ar: "مرافق الجولة",

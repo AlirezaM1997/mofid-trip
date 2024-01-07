@@ -2103,6 +2103,20 @@ export type BankCardAddMutationVariables = Exact<{
 
 export type BankCardAddMutation = { __typename?: 'Mutation', bankCardAdd?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
 
+export type BankCardDeleteMutationVariables = Exact<{
+  pk: Scalars['Int']['input'];
+}>;
+
+
+export type BankCardDeleteMutation = { __typename?: 'Mutation', bankCardDelete?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
+
+export type BankCardEditMutationVariables = Exact<{
+  data: EditCardType;
+}>;
+
+
+export type BankCardEditMutation = { __typename?: 'Mutation', bankCardEdit?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
 export type DepositWalletMutationVariables = Exact<{
   data: DepositWalletInputType;
 }>;
@@ -2405,6 +2419,78 @@ export function useBankCardAddMutation(baseOptions?: Apollo.MutationHookOptions<
 export type BankCardAddMutationHookResult = ReturnType<typeof useBankCardAddMutation>;
 export type BankCardAddMutationResult = Apollo.MutationResult<BankCardAddMutation>;
 export type BankCardAddMutationOptions = Apollo.BaseMutationOptions<BankCardAddMutation, BankCardAddMutationVariables>;
+export const BankCardDeleteDocument = gql`
+    mutation bankCardDelete($pk: Int!) {
+  bankCardDelete(pk: $pk) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}
+    `;
+export type BankCardDeleteMutationFn = Apollo.MutationFunction<BankCardDeleteMutation, BankCardDeleteMutationVariables>;
+
+/**
+ * __useBankCardDeleteMutation__
+ *
+ * To run a mutation, you first call `useBankCardDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBankCardDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [bankCardDeleteMutation, { data, loading, error }] = useBankCardDeleteMutation({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useBankCardDeleteMutation(baseOptions?: Apollo.MutationHookOptions<BankCardDeleteMutation, BankCardDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<BankCardDeleteMutation, BankCardDeleteMutationVariables>(BankCardDeleteDocument, options);
+      }
+export type BankCardDeleteMutationHookResult = ReturnType<typeof useBankCardDeleteMutation>;
+export type BankCardDeleteMutationResult = Apollo.MutationResult<BankCardDeleteMutation>;
+export type BankCardDeleteMutationOptions = Apollo.BaseMutationOptions<BankCardDeleteMutation, BankCardDeleteMutationVariables>;
+export const BankCardEditDocument = gql`
+    mutation bankCardEdit($data: EditCardType!) {
+  bankCardEdit(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}
+    `;
+export type BankCardEditMutationFn = Apollo.MutationFunction<BankCardEditMutation, BankCardEditMutationVariables>;
+
+/**
+ * __useBankCardEditMutation__
+ *
+ * To run a mutation, you first call `useBankCardEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useBankCardEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [bankCardEditMutation, { data, loading, error }] = useBankCardEditMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useBankCardEditMutation(baseOptions?: Apollo.MutationHookOptions<BankCardEditMutation, BankCardEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<BankCardEditMutation, BankCardEditMutationVariables>(BankCardEditDocument, options);
+      }
+export type BankCardEditMutationHookResult = ReturnType<typeof useBankCardEditMutation>;
+export type BankCardEditMutationResult = Apollo.MutationResult<BankCardEditMutation>;
+export type BankCardEditMutationOptions = Apollo.BaseMutationOptions<BankCardEditMutation, BankCardEditMutationVariables>;
 export const DepositWalletDocument = gql`
     mutation depositWallet($data: DepositWalletInputType!) {
   depositWallet(data: $data) {
