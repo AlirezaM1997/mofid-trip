@@ -1014,6 +1014,11 @@ export const messages = {
     fa_ir: "مالیات",
     en_us: "Tax",
   },
+  "withdrawal of total balance": {
+    ar: "سحب الرصيد الإجمالي",
+    fa_ir: "برداشت کل موجودی",
+    en_us: "Withdrawal of total balance",
+  },
   "wallet balance": {
     ar: "رصيد المحفظة",
     fa_ir: "موجودی کیف پول",
@@ -1155,6 +1160,11 @@ export const messages = {
     ar: "كمية",
     fa_ir: "مبلغ",
     en_us: "amount ",
+  },
+  "the desired amount is more than the account balance": {
+    ar: "كمية",
+    fa_ir: "مبلغ موردنظر بیشتر از موجودی حساب است",
+    en_us: "the desired amount is more than the account balance ",
   },
   "select or enter an amount to increase your wallet balance.": {
     ar: "حدد أو أدخل مبلغًا لزيادة رصيد محفظتك.",
@@ -1600,6 +1610,24 @@ export const messages = {
     ar: "طلبات",
     fa_ir: "درخواست‌ها",
     en_us: "Requests",
+  },
+  "withdrawal request": {
+    ar: "طلبات",
+    fa_ir: "درخواست برداشت",
+    en_us: "withdrawal request",
+  },
+  "to request a withdrawal from the wallet, please enter the desired amount and select one of your previously created bank cards or register a new bank card.":
+    {
+      ar: "لطلب السحب من المحفظة، يرجى إدخال المبلغ المطلوب واختيار إحدى بطاقاتك المصرفية التي تم إنشاؤها مسبقًا أو تسجيل بطاقة مصرفية جديدة.",
+      fa_ir:
+        "جهت درخواست برداشت وجه از کیف پول خواهشمند است مبلغ مورد نظرتان را وارد کرده و یکی از کارت های بانکی از قبل ایجاد شده‌تان را انتخاب کنید یا کارت بانکی جدیدی ثبت کنید.",
+      en_us:
+        "To request a withdrawal from the wallet, please enter the desired amount and select one of your previously created bank cards or register a new bank card.",
+    },
+  "withdraw from the wallet": {
+    ar: "السحب من المحفظة",
+    fa_ir: "برداشت از کیف پول",
+    en_us: "Withdraw from the wallet",
   },
   "edit host": {
     ar: "تحرير الاستضافة",

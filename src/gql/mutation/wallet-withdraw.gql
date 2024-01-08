@@ -1,0 +1,8 @@
+mutation walletWithdraw($data: WalletWithdrawInputType!) {
+  walletWithdraw(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}
