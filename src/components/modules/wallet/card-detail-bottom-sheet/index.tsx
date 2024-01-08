@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import WhiteSpace from "@atoms/white-space";
 import { Entypo } from "@expo/vector-icons";
-import { Pressable, StyleSheet, View, Platform } from "react-native";
+import { Pressable, StyleSheet, View, Platform, ViewStyle } from "react-native";
 import { Avatar, BottomSheet, Button, Divider, Text, useTheme } from "@rneui/themed";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import ButtonRow from "@modules/button-rows";
@@ -38,22 +38,21 @@ const WalletCardDetailBottomSheet = ({ card }) => {
     setIsVisibleDelete(true);
   };
 
-  // const handleAcceptDelete = async () => {
-  //   const { data } = await bankCardDelete({
-  //     variables: {
-  //       pk: +card.id,
-  //     },
-  //   });
-  //   if (data.bankCardDelete.status === "OK") {
-  //     Toast.show({
-  //       type: "success",
-  //       text1: tr("card deleted successfully"),
-  //     });
+  const handleAcceptDelete = async () => {
+    const { data } = await bankCardDelete({
+      variables: {
+        pk: +card.id,
+      },
+    });
+    if (data.bankCardDelete.status === "NO_CONTENT") {
+      Toast.show({
+        type: "success",
+        text1: tr("card deleted successfully"),
+      });
 
-  //     setIsVisible(false);
-  //     setIsVisibleDelete(false);
-  //   }
-  // };
+      router.push("/wallet/cards");
+    }
+  };
 
   useEffect(() => {
     const cardDetail = BANKES_DATA.find(item => card.cardPan.includes(item.cardPan));
@@ -144,11 +143,7 @@ const WalletCardDetailBottomSheet = ({ card }) => {
             <Button type="outline" onPress={() => setIsVisibleDelete(false)}>
               {tr("no")}
             </Button>
-            <Button
-            //  onPress={handleAcceptDelete}
-            >
-              {tr("yes")}
-            </Button>
+            <Button onPress={handleAcceptDelete}>{tr("yes")}</Button>
           </ButtonRow>
         </Container>
       </BottomSheet>
