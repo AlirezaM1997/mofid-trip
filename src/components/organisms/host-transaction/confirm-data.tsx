@@ -4,13 +4,14 @@ import { useFormikContext } from "formik";
 import WhiteSpace from "@atoms/white-space";
 import { Button, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { ProjectTransactionAddInputType } from "@src/gql/generated";
 
 const HostTransactionConfirmData = ({ setActiveStep }) => {
   const { tr } = useTranslation();
+  const { localizeNumber } = useLocalizedNumberFormat();
   const { projectId, name } = useLocalSearchParams();
 
   const handleNavigation = () => {
@@ -57,7 +58,7 @@ const HostTransactionConfirmData = ({ setActiveStep }) => {
           </Text>
           <Text body2>
             {values?.dateStart &&
-              moment(values?.dateStart)?.locale("fa")?.format("dddd . jDD jMMMM YYYY")}
+              localizeNumber(moment(values?.dateStart)?.locale("fa")?.format("dddd . jDD jMMMM YYYY"))}
           </Text>
         </View>
         <Button

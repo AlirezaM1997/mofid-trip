@@ -18,7 +18,6 @@ import { HEIGHT } from "@src/constants";
 import useTranslation from "@src/hooks/translation";
 import Toast from "react-native-toast-message";
 import { useSession } from "@src/context/auth";
-import Authentication from "./authentication";
 
 const Report = ({ closeMoreDetails }) => {
   const { name, id } = useLocalSearchParams();
@@ -136,7 +135,7 @@ const Report = ({ closeMoreDetails }) => {
           <Text type="grey3">{name}</Text>
           <View style={styles.headerBarButton}>
             <Text>{tr("violation report")}</Text>
-            <AntDesign onPress={handleClose} name="close" size={19} />
+            <AntDesign onPress={handleClose} name="arrowright" size={19} />
           </View>
         </Container>
         <Divider />
