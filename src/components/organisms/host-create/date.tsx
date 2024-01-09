@@ -1,19 +1,12 @@
-import Container from "@atoms/container";
-import BottomButtonLayout from "@components/layout/bottom-button";
-import JalaliDatePicker from "@modules/jalali-date-picker";
-import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
-import { Button, Divider, Text, useTheme, CheckBox } from "@rneui/themed";
-import { ProjectAddInputType } from "@src/gql/generated";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { setHostCreateData } from "@src/slice/host-create-slice";
-import { RootState } from "@src/store";
-import { router } from "expo-router";
-import { Formik, FormikProps, FormikValues, useFormikContext } from "formik";
 import moment from "jalali-moment";
-import { Ref, useRef, useState } from "react";
+import WhiteSpace from "@atoms/white-space";
+import JalaliDatePicker from "@modules/jalali-date-picker";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { Divider, Text, useTheme, CheckBox } from "@rneui/themed";
+import { ProjectAddInputType } from "@src/gql/generated";
+import { useFormikContext } from "formik";
+import { useEffect, useState } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import * as Yup from "yup";
 
 const getDaysBetween = (startDay, endDay) => {
   // Array to store the days
@@ -41,13 +34,27 @@ const TabDate = () => {
   const [checked, setChecked] = useState<boolean>(false);
   const { localizeNumber } = useLocalizedNumberFormat();
   const [markedDays, setMarkedDays] = useState([]);
-  const { errors, touched, setFieldTouched, setFieldValue, resetForm } =
+  const { errors, touched, setFieldTouched, setFieldValue, resetForm, values } =
     useFormikContext<ProjectAddInputType>();
 
   const handleCheck = () => setChecked(!checked);
 
+  const setStartDate = date => {
+    setFieldTouched("dateStart", true);
+    setFieldValue("dateStart", date);
+    setMarkedDays([
+      {
+        date: date,
+        buttonStyle: styles.startDayButtonStyle(theme),
+        containerStyle: styles.startDayContainerStyle(theme),
+        titleStyle: styles.startDayTitleStyle(theme),
+      },
+    ]);
+  };
+
   const handleDayPress = dayPressed => {
     const date = moment(dayPressed).format("YYYY-MM-DD");
+    const dateStart = moment(values.dateStart);
     if (checked) {
       setFieldTouched("dateStart", true);
       setFieldTouched("dateEnd", true);
@@ -63,17 +70,8 @@ const TabDate = () => {
       ]);
     } else {
       if (markedDays.length === 0) {
-        setFieldTouched("dateStart", true);
-        setFieldValue("dateStart", date);
-        setMarkedDays([
-          {
-            date: date,
-            buttonStyle: styles.startDayButtonStyle(theme),
-            containerStyle: styles.startDayContainerStyle(theme),
-            titleStyle: styles.startDayTitleStyle(theme),
-          },
-        ]);
-      } else if (markedDays.length === 1) {
+        setStartDate(date);
+      } else if (markedDays.length === 1 && moment(dateStart).isBefore(dayPressed)) {
         setFieldTouched("dateEnd", true);
         setFieldValue("dateEnd", date);
         const startDay = markedDays[0].date;
@@ -118,6 +116,16 @@ const TabDate = () => {
     }
   };
 
+  useEffect(() => {
+    if (checked && values.dateStart) {
+      const dateStart = moment(values.dateStart);
+      handleDayPress(dateStart);
+    } else if (!checked && values.dateStart) {
+      const dateStart = moment(values.dateStart);
+      setStartDate(dateStart);
+    }
+  }, [checked]);
+
   return (
     <>
       <CheckBox checked={checked} onPress={handleCheck} title={tr("The host is one day")} />
@@ -143,6 +151,7 @@ const TabDate = () => {
           )}
         </View>
       </View>
+      <WhiteSpace />
     </>
   );
 };
