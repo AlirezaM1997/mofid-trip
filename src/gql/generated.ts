@@ -2350,6 +2350,13 @@ export type UserEditMutationVariables = Exact<{
 
 export type UserEditMutation = { __typename?: 'Mutation', userEdit?: { __typename: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
+export type WalletWithdrawMutationVariables = Exact<{
+  data: WalletWithdrawInputType;
+}>;
+
+
+export type WalletWithdrawMutation = { __typename?: 'Mutation', walletWithdraw?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
+
 export type BannerListQueryVariables = Exact<{
   page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
@@ -3216,6 +3223,42 @@ export function useUserEditMutation(baseOptions?: Apollo.MutationHookOptions<Use
 export type UserEditMutationHookResult = ReturnType<typeof useUserEditMutation>;
 export type UserEditMutationResult = Apollo.MutationResult<UserEditMutation>;
 export type UserEditMutationOptions = Apollo.BaseMutationOptions<UserEditMutation, UserEditMutationVariables>;
+export const WalletWithdrawDocument = gql`
+    mutation walletWithdraw($data: WalletWithdrawInputType!) {
+  walletWithdraw(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}
+    `;
+export type WalletWithdrawMutationFn = Apollo.MutationFunction<WalletWithdrawMutation, WalletWithdrawMutationVariables>;
+
+/**
+ * __useWalletWithdrawMutation__
+ *
+ * To run a mutation, you first call `useWalletWithdrawMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useWalletWithdrawMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [walletWithdrawMutation, { data, loading, error }] = useWalletWithdrawMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useWalletWithdrawMutation(baseOptions?: Apollo.MutationHookOptions<WalletWithdrawMutation, WalletWithdrawMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<WalletWithdrawMutation, WalletWithdrawMutationVariables>(WalletWithdrawDocument, options);
+      }
+export type WalletWithdrawMutationHookResult = ReturnType<typeof useWalletWithdrawMutation>;
+export type WalletWithdrawMutationResult = Apollo.MutationResult<WalletWithdrawMutation>;
+export type WalletWithdrawMutationOptions = Apollo.BaseMutationOptions<WalletWithdrawMutation, WalletWithdrawMutationVariables>;
 export const BannerListDocument = gql`
     query bannerList($page: PageType, $search: String) {
   bannerList(search: $search, page: $page) {

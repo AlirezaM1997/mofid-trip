@@ -105,10 +105,38 @@ export const messages = {
     fa_ir: "تایید شده",
     en_us: "Accepted",
   },
+  "finally, it will be deposited into your selected account within 72 hours. if the deposit is not made, please contact mofidtrip support.":
+    {
+      ar: "وأخيرًا، سيتم إيداعه في حسابك الذي اخترته خلال 72 ساعة. إذا لم يتم الإيداع، يرجى الاتصال بدعم Mofidtrip.",
+      fa_ir:
+        " نهایتا تا ۷۲ ساعت دیگر به حساب انتخاب شده شما واریز می‌شود. در صورت واریز نشدن ، با پشتیبانی مفیدتریپ تماس حاصل بفرمایید.",
+      en_us:
+        "finally, it will be deposited into your selected account within 72 hours. If the deposit is not made, please contact Mofidtrip support.",
+    },
+  "choose a card please": {
+    ar: "اختر بطاقة",
+    fa_ir: "لطفا یک کارت را انتخاب کنید",
+    en_us: "choose a card please",
+  },
   "awaiting review": {
     ar: "في انتظار المراجعة",
     fa_ir: "در انتظار بررسی",
     en_us: "Awaiting review",
+  },
+  "your request has been registered": {
+    ar: "لقد تم تسجيل طلبك",
+    fa_ir: "درخواست شما ثبت شد",
+    en_us: "your request has been registered",
+  },
+  close: {
+    ar: "الخروج",
+    fa_ir: "بستن",
+    en_us: "close",
+  },
+  "successful withdraw": {
+    ar: "الخروج",
+    fa_ir: "برداشت موفق",
+    en_us: "Successful withdraw",
   },
   "check-out": {
     ar: "الخروج",
@@ -1014,6 +1042,11 @@ export const messages = {
     fa_ir: "مالیات",
     en_us: "Tax",
   },
+  "withdrawal of total balance": {
+    ar: "سحب الرصيد الإجمالي",
+    fa_ir: "برداشت کل موجودی",
+    en_us: "Withdrawal of total balance",
+  },
   "wallet balance": {
     ar: "رصيد المحفظة",
     fa_ir: "موجودی کیف پول",
@@ -1155,6 +1188,11 @@ export const messages = {
     ar: "كمية",
     fa_ir: "مبلغ",
     en_us: "amount ",
+  },
+  "the desired amount is more than the account balance": {
+    ar: "كمية",
+    fa_ir: "مبلغ موردنظر بیشتر از موجودی حساب است",
+    en_us: "the desired amount is more than the account balance ",
   },
   "select or enter an amount to increase your wallet balance.": {
     ar: "حدد أو أدخل مبلغًا لزيادة رصيد محفظتك.",
@@ -1600,6 +1638,24 @@ export const messages = {
     ar: "طلبات",
     fa_ir: "درخواست‌ها",
     en_us: "Requests",
+  },
+  "withdrawal request": {
+    ar: "طلبات",
+    fa_ir: "درخواست برداشت",
+    en_us: "withdrawal request",
+  },
+  "to request a withdrawal from the wallet, please enter the desired amount and select one of your previously created bank cards or register a new bank card.":
+    {
+      ar: "لطلب السحب من المحفظة، يرجى إدخال المبلغ المطلوب واختيار إحدى بطاقاتك المصرفية التي تم إنشاؤها مسبقًا أو تسجيل بطاقة مصرفية جديدة.",
+      fa_ir:
+        "جهت درخواست برداشت وجه از کیف پول خواهشمند است مبلغ مورد نظرتان را وارد کرده و یکی از کارت های بانکی از قبل ایجاد شده‌تان را انتخاب کنید یا کارت بانکی جدیدی ثبت کنید.",
+      en_us:
+        "To request a withdrawal from the wallet, please enter the desired amount and select one of your previously created bank cards or register a new bank card.",
+    },
+  "withdraw from the wallet": {
+    ar: "السحب من المحفظة",
+    fa_ir: "برداشت از کیف پول",
+    en_us: "Withdraw from the wallet",
   },
   "edit host": {
     ar: "تحرير الاستضافة",

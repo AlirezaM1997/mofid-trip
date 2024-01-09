@@ -85,6 +85,12 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
+        name="wallet/withdraw"
+        options={{
+          title: tr("withdraw"),
+        }}
+      />
+      <Stack.Screen
         name="host/management/index"
         options={{
           title: tr("Host Management"),

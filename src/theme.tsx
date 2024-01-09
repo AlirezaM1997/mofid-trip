@@ -185,6 +185,7 @@ export const theme = isRtl =>
         const body1Style = { fontSize: 16 };
         const body2Style = { fontSize: 14 };
         const captionStyle = { fontSize: 14 };
+        const errorStyle = { fontSize: 12 };
         const cta1Style = { fontSize: 18 };
         const cta2Style = { fontSize: 16 };
         const cta3Style = { fontSize: 14 };
@@ -203,6 +204,8 @@ export const theme = isRtl =>
           style = { ...style, ...body2Style };
         } else if (props.caption) {
           style = { ...style, ...captionStyle };
+        } else if (props.error) {
+          style = { ...style, ...errorStyle };
         } else if (props.cta1) {
           style = { ...style, ...cta1Style };
         } else if (props.cta2) {
