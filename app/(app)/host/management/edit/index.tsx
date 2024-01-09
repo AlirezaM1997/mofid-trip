@@ -11,12 +11,7 @@ import { useState } from "react";
 import { ImageBackground, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import {
-  ProjectGenderEnum,
-  useMyUserDetailProjectSetQuery,
-  useProjectAddMutation,
-  useProjectEditMutation,
-} from "@src/gql/generated";
+import { useMyUserDetailProjectSetEditQuery, useProjectEditMutation } from "@src/gql/generated";
 import { Formik } from "formik";
 import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
 import { setHostCreateActiveStep } from "@src/slice/host-create-slice";
@@ -32,30 +27,6 @@ import { useSession } from "@src/context/auth";
 import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
 import LoadingIndicator from "@modules/Loading-indicator";
 
-// const initialValues = {
-//   name: "",
-//   description: "",
-//   dateStart: null,
-//   dateEnd: null,
-//   accommodation: {
-//     province: null,
-//     city: null,
-//     address: null,
-//     lat: null,
-//     lng: null,
-//     base64Images: [],
-//   },
-//   capacity: {
-//     capacityNumber: null,
-//     gender: ProjectGenderEnum.Both,
-//     childAccept: false,
-//   },
-//   price: null,
-//   discount: 0,
-//   categories: [],
-//   facilities: [],
-// };
-
 const Screen = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
@@ -64,7 +35,7 @@ const Screen = () => {
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const { activeStep } = useSelector((state: RootState) => state.hostCreateSlice);
 
-  const { loading, data } = useMyUserDetailProjectSetQuery();
+  const { loading, data } = useMyUserDetailProjectSetEditQuery();
 
   const [submit, { loading: submitLoading }] = useProjectEditMutation();
   const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
@@ -127,21 +98,46 @@ const Screen = () => {
 
   const hostDetail = data.userDetail.projectSet.find(item => item.id === hostId);
 
-  const copyOfHostDetail = JSON.parse(
-    JSON.stringify(hostDetail, (key, value) =>
-      ["__typename", "id"].includes(key) ? undefined : value
+  const copyOfHostDetail = {
+    ...hostDetail,
+    categories: hostDetail.categories.map(item => item.id),
+    facilities: hostDetail.facilities.map(item => item.faName),
+    accommodation: {
+      ...hostDetail.accommodation,
+      base64Images: hostDetail.accommodation.avatarS3.map(item => item.small),
+    },
+  };
+
+  // const initialValuesww = {
+  //   name: "",
+  //   description: "",
+  //   dateStart: null,
+  //   dateEnd: null,
+  //   accommodation: {
+  //     province: null,
+  //     city: null,
+  //     address: null,
+  //     lat: null,
+  //     lng: null,
+  //     base64Images: [],
+  //   },
+  //   capacity: {
+  //     capacityNumber: null,
+  //     gender: ProjectGenderEnum.Both,
+  //     childAccept: false,
+  //   },
+  //   price: null,
+  //   discount: 0,
+  //   categories: [],
+  //   facilities: [],
+  // };
+
+  const initialValues = JSON.parse(
+    JSON.stringify(copyOfHostDetail, (key, value) =>
+      ["id", "avatarS3", "__typename"].includes(key) ? undefined : value
     )
   );
 
-  const initialValues = {
-    ...copyOfHostDetail,
-    categories: hostDetail.categories.map(item => item.id),
-    facilities: copyOfHostDetail.facilities.map(item => item.faName),
-    accommodation: {
-      ...copyOfHostDetail.accommodation,
-      base64Images: copyOfHostDetail.accommodation.avatarS3.map(item => item.small),
-    },
-  };
   console.log(initialValues);
 
   return (

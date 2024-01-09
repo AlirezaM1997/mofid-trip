@@ -109,6 +109,7 @@ const AddCardScreen = () => {
               maxLength={24}
               value={values.iban}
               onBlur={handleBlur("iban")}
+              keyboardType="numeric"
               placeholder={`${tr("iban")}`}
               leftIcon={<Text>IR-</Text>}
               onChangeText={text => setFieldValue("iban", parseText(text))}

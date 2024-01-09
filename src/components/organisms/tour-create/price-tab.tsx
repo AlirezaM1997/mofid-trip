@@ -54,6 +54,7 @@ const PriceTab = () => {
         label={tr("Price") + " (" + tr("Tooman") + ")"}
         onChangeText={price => setFieldValue("price", parseText(price))}
         onBlur={handleBlur("price")}
+        keyboardType="numeric"
         errorMessage={touched.price && (errors.price as string)}
       />
       <View style={styles.badgeRow}>

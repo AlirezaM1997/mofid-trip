@@ -51,6 +51,7 @@ const TabPrice = () => {
         label={tr("Price") + " (" + tr("Tooman") + ")"}
         onChangeText={text => setFieldValue("price", parseText(text))}
         onBlur={handleBlur("price")}
+        keyboardType="numeric"
         errorMessage={touched.price && (errors.price as string)}
       />
       <View style={styles.badgeRow}>
@@ -73,6 +74,7 @@ const TabPrice = () => {
       <Input
         value={values.discount?.toString()}
         maxLength={3}
+        keyboardType="numeric"
         onChangeText={text => setFieldValue("discount", parseText(text))}
         onBlur={handleBlur("discount")}
         errorMessage={touched.discount && (errors.discount as string)}

@@ -24,6 +24,7 @@ const CapacityTab = () => {
         name="capacityNumber"
         placeholder={tr("enter the capacity (quantity)")}
         textAlignVertical="top"
+        keyboardType="numeric"
         onChangeText={capacity => {
           try {
             setFieldValue("capacity.capacityNumber", parseText(capacity));
