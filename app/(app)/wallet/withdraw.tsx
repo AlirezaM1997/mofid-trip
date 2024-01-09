@@ -6,27 +6,40 @@ import React, { useState } from "react";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import { AntDesign } from "@expo/vector-icons";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import parseText from "@src/helper/number-input";
 import useTranslation from "@src/hooks/translation";
-import { useUserDetailQuery } from "@src/gql/generated";
 import { useFormatPrice } from "@src/hooks/localization";
 import LoadingIndicator from "@modules/Loading-indicator";
 import WithdrawBankCard from "@modules/wallet/withdraw/bankCard";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { Button, CheckBox, Divider, Text, useTheme } from "@rneui/themed";
+import { useUserDetailQuery, useWalletWithdrawMutation } from "@src/gql/generated";
+import ConfirmWithdrawButtonSheet from "@modules/wallet/withdraw/confirmButtonSheet";
 
 const WithdrawScreen = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { formatPrice } = useFormatPrice();
-  const [selectedCard, setCard] = useState("0");
-
-  const submitHandler = values => {
-    console.log(values);
-  };
+  const [openConfirmMessage, setOpenConfirmMessage] = useState(false);
 
   const { data, loading } = useUserDetailQuery();
+  const [withdraw, { loading: withdrawLoading }] = useWalletWithdrawMutation();
+
+  const submitHandler = async ({ amount, cardId }) => {
+    const { data } = await withdraw({
+      variables: {
+        data: {
+          amount: +amount,
+          bankCardId: cardId,
+        },
+      },
+    });
+
+    if (data.walletWithdraw.status === "OK") {
+      setOpenConfirmMessage(true);
+    }
+  };
 
   if (!data || loading) return <LoadingIndicator />;
 
@@ -36,16 +49,23 @@ const WithdrawScreen = () => {
     amount: Yup.number()
       .required(tr("amount is required"))
       .max(balance, tr("the desired amount is more than the account balance")),
+    cardId: Yup.number().required(tr("choose a card please")),
   });
 
   return (
     <Formik
       onSubmit={submitHandler}
-      initialValues={{ amount: "" }}
+      initialValues={{ amount: "", cardId: "" }}
       validationSchema={validationSchema}>
-      {({ values, setFieldValue, handleSubmit, touched, errors }) => (
+      {({ values, touched, errors, setFieldValue }) => (
         <BottomButtonLayout
-          buttons={[<Button onPress={handleSubmit}>{tr("withdrawal request")}</Button>]}>
+          buttons={[
+            <ConfirmWithdrawButtonSheet
+              withdrawLoading={withdrawLoading}
+              openConfirmMessage={openConfirmMessage}
+              setOpenConfirmMessage={setOpenConfirmMessage}
+            />,
+          ]}>
           <WhiteSpace size={24} />
 
           <Container>
@@ -99,19 +119,25 @@ const WithdrawScreen = () => {
             </View>
 
             {walletCards?.map(card => (
-              <CheckBox
-                key={card.id}
-                iconRight={true}
-                iconType="material-community"
-                checkedIcon="radiobox-marked"
-                uncheckedIcon="radiobox-blank"
-                onPress={() => setCard(card.id)}
-                wrapperStyle={styles.card(theme)}
-                checked={selectedCard === card.id}
-                checkedColor={theme.colors.secondary}
-                title={<WithdrawBankCard card={card} />}
-              />
+              <Pressable
+                style={styles.card(theme)}
+                onPress={() => setFieldValue("cardId", card.id)}>
+                <CheckBox
+                  key={card.id}
+                  iconRight={true}
+                  iconType="material-community"
+                  checkedIcon="radiobox-marked"
+                  uncheckedIcon="radiobox-blank"
+                  checked={values.cardId === card.id}
+                  checkedColor={theme.colors.secondary}
+                  onPress={() => setFieldValue("cardId", card.id)}
+                />
+                <WithdrawBankCard card={card} />
+              </Pressable>
             ))}
+            <Text error type="error">
+              {touched.cardId && (errors.cardId as string)}
+            </Text>
           </Container>
           <WhiteSpace size={24} />
         </BottomButtonLayout>
@@ -135,6 +161,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 8,
     borderRadius: 12,
+    alignItems: "center",
+    flexDirection: "row-reverse",
     justifyContent: "space-between",
     borderColor: theme.colors.grey0,
   }),

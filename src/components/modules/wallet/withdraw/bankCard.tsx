@@ -1,30 +1,19 @@
+import React from "react";
+import { Avatar, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import { BANKES_DATA } from "@src/constant/banks";
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Avatar, Text, useTheme } from "@rneui/themed";
 import { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const WithdrawBankCard = ({ card }) => {
-  const { theme } = useTheme();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const [bankDetail, setBankDetail] = useState({ title: card.title, icon: card.icon });
 
-  useLayoutEffect(() => {
-    const matchedCard = BANKES_DATA.find(item => card?.cardPan?.includes(item?.cardPan));
-
-    matchedCard && setBankDetail({ icon: matchedCard?.icon, title: matchedCard?.faName });
-  }, []);
+  const matchedCard = BANKES_DATA.find(item => card?.cardPan?.includes(item?.cardPan));
 
   return (
     <View style={styles.card}>
-      <Avatar
-        rounded
-        size={40}
-        source={bankDetail?.icon}
-        containerStyle={{ backgroundColor: !bankDetail.icon && theme.colors.grey1 }}
-      />
+      <Avatar rounded size={40} source={matchedCard?.icon} />
       <View style={styles.cardData}>
-        <Text>{card.title || bankDetail.title}</Text>
+        <Text>{card.title || matchedCard?.faName}</Text>
         <Text caption type="grey3">
           {localizeNumber(card.cardPan)}
         </Text>

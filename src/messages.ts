@@ -105,10 +105,38 @@ export const messages = {
     fa_ir: "تایید شده",
     en_us: "Accepted",
   },
+  "finally, it will be deposited into your selected account within 72 hours. if the deposit is not made, please contact mofidtrip support.":
+    {
+      ar: "وأخيرًا، سيتم إيداعه في حسابك الذي اخترته خلال 72 ساعة. إذا لم يتم الإيداع، يرجى الاتصال بدعم Mofidtrip.",
+      fa_ir:
+        " نهایتا تا ۷۲ ساعت دیگر به حساب انتخاب شده شما واریز می‌شود. در صورت واریز نشدن ، با پشتیبانی مفیدتریپ تماس حاصل بفرمایید.",
+      en_us:
+        "finally, it will be deposited into your selected account within 72 hours. If the deposit is not made, please contact Mofidtrip support.",
+    },
+  "choose a card please": {
+    ar: "اختر بطاقة",
+    fa_ir: "لطفا یک کارت را انتخاب کنید",
+    en_us: "choose a card please",
+  },
   "awaiting review": {
     ar: "في انتظار المراجعة",
     fa_ir: "در انتظار بررسی",
     en_us: "Awaiting review",
+  },
+  "your request has been registered": {
+    ar: "لقد تم تسجيل طلبك",
+    fa_ir: "درخواست شما ثبت شد",
+    en_us: "your request has been registered",
+  },
+  close: {
+    ar: "الخروج",
+    fa_ir: "بستن",
+    en_us: "close",
+  },
+  "successful withdraw": {
+    ar: "الخروج",
+    fa_ir: "برداشت موفق",
+    en_us: "Successful withdraw",
   },
   "check-out": {
     ar: "الخروج",
