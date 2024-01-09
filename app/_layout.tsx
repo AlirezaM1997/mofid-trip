@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@rneui/themed";
-import { SessionProvider } from "@src/context/auth";
+import { SessionProvider, useSession } from "@src/context/auth";
 import { StatusBar } from "expo-status-bar";
 import { Provider } from "react-redux";
 import { useFonts } from "expo-font";
@@ -17,7 +17,6 @@ import { LtrSpecificStyles, RtlSpecificStyles } from "@src/global-style";
 import customUseApolloClient from "@src/hooks/apollo/client";
 import { Stack } from "expo-router/stack";
 import useTranslation from "@src/hooks/translation";
-import HeaderBackButton from "@atoms/header-back-button";
 import useDefaultScreenOptions from "@src/hooks/use-default-screen-options";
 
 SplashScreen.preventAutoHideAsync();
@@ -61,6 +60,12 @@ const MainContent = () => {
           headerShown: !["(home)", "(app)"].includes(route.name),
           ...defaultScreenOptions,
         })}>
+          <Stack.Screen
+          name="login-details"
+          options={{
+            title: tr("Basic Info"),
+          }}
+        />
         <Stack.Screen
           name="user-login"
           options={{

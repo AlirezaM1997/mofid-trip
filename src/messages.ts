@@ -2776,4 +2776,9 @@ export const messages = {
     fa_ir: "اعتبارسنجی پیامکی",
     en_us: "SMS Verification",
   },
+  "basic info": {
+    ar: "",
+    fa_ir: "اطلاعات اولیه",
+    en_us: "Basic Info",
+  },
 };

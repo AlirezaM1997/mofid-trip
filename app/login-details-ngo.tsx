@@ -13,48 +13,44 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useSession } from "@src/context/auth";
 import { useSelector } from "react-redux";
 import { Button, Text } from "@rneui/themed";
-import { useUserDetailQuery, useUserEditMutation } from "@src/gql/generated";
+import { useMyNgoDetailQuery, useNgoDetailQuery, useNgoEditMutation } from "@src/gql/generated";
 
 const LoginDetailScreen = () => {
   const { tr } = useTranslation();
   const { session, signIn } = useSession();
-  const { data, loading } = useUserDetailQuery();
-  const [edit, { loading: editLoading }] = useUserEditMutation();
+  const [edit, { loading: editLoading }] = useNgoEditMutation();
+  const { data, loading } = useMyNgoDetailQuery();
   const { redirectToScreenAfterLogin } = useSelector((state: RootState) => state.navigationSlice);
 
   if (loading) return <LoadingIndicator />;
 
   const initialValues = {
-    firstname: data?.userDetail.firstname,
-    lastname: data?.userDetail.lastname,
+    title: data?.NGODetail.title,
   };
 
   const validationSchema = Yup.object().shape({
-    firstname: Yup.string().required(tr("First name is required")),
-    lastname: Yup.string().required(tr("Last name is required")),
+    title: Yup.string().required(tr("Title is required")),
   });
 
-  const submitHandler = async ({ firstname, lastname }) => {
+  const submitHandler = async values => {
     const { data } = await edit({
       variables: {
-        data: {
-          firstname: firstname,
-          lastname: lastname,
-        },
+        data: values,
       },
     });
 
-    if (data.userEdit.status === "ACCEPTED") {
-      const parsedSession = JSON.parse(session);
-      signIn({
-        ...parsedSession,
-        metadata: {
-          ...parsedSession.metadata,
-          firstname: firstname,
-          lastname: lastname,
-        },
-      });
-    }
+    console.log("YY", data.ngoEdit.status);
+    // if (data.ngoEdit.status === "ACCEPTED") {
+    //   const parsedSession = JSON.parse(session);
+    //   // signIn({
+    //   //   ...parsedSession,
+    //   //   metadata: {
+    //   //     ...parsedSession.metadata,
+    //   //     firstname: firstname,
+    //   //     lastname: lastname,
+    //   //   },
+    //   // });
+    // }
   };
 
   if (session) {

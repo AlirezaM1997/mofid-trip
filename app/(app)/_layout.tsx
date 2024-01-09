@@ -1,14 +1,20 @@
-import { Redirect, Stack } from "expo-router";
+import { Redirect, Stack, router, useNavigation, usePathname } from "expo-router";
 
 import { useSession } from "@src/context/auth";
 import { Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import useDefaultScreenOptions from "@src/hooks/use-default-screen-options";
+import { useURL } from "expo-linking";
+import { useDispatch } from "react-redux";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 
 export default function AppLayout() {
   const { tr } = useTranslation();
   const { session, isLoading } = useSession();
   const defaultScreenOptions = useDefaultScreenOptions();
+  const routeName = usePathname();
+  const dispatch = useDispatch();
+  
 
   // You can keep the splash screen open, or render a loading screen like we do here.
   if (isLoading) {
@@ -20,7 +26,17 @@ export default function AppLayout() {
   if (!session) {
     // On web, static rendering will stop here as the user is not authenticated
     // in the headless Node process that the pages are rendered in.
+    dispatch(setRedirectToScreenAfterLogin(routeName));
     return <Redirect href="/user-login" />;
+  } else if (session) {
+    const { firstname, lastname, is_ngo } = JSON.parse(session).metadata;
+    if (is_ngo && ) {
+      dispatch(setRedirectToScreenAfterLogin(routeName));
+      return <Redirect href="/login-details-ngo" />;
+    } else if (!firstname && !lastname) {
+      dispatch(setRedirectToScreenAfterLogin(routeName));
+      return <Redirect href="/login-details" />;
+    }
   }
 
   // This layout can be deferred because it's not the root layout.
