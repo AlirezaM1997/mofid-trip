@@ -33,8 +33,9 @@ const JalaliDatePicker = ({ onDayPress, markedDays, ...props }: JalaliDatePicker
 
   function shouldDisable(date: moment.Moment) {
     return (
-      props.disableDaysAfter?.isBefore(date) || props.disableDaysBefore?.isAfter(date)
-      || props.disableDaysIn?.find(disableDate => moment(disableDate).isSame(date))
+      props.disableDaysAfter?.isBefore(date) ||
+      props.disableDaysBefore?.isAfter(date) ||
+      props.disableDaysIn?.find(disableDate => moment(disableDate).isSame(date))
     );
   }
 
@@ -56,7 +57,7 @@ const JalaliDatePicker = ({ onDayPress, markedDays, ...props }: JalaliDatePicker
           numColumns={7}
           horizontal={false}
           data={daysArray}
-          columnWrapperStyle={styles.calendarColumnWrapperStyle}
+          columnWrapperStyle={{ gap: 2 }}
           renderItem={({ index, item }) => {
             const markedDay = markedDays && markedDays.length && findMarkedDay(item.date);
             return (
