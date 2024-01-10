@@ -2762,18 +2762,38 @@ export const messages = {
         "It appears that you do not have permission to access this page. Access the system administrator for access.",
     },
   "user login": {
-    ar: "",
+    ar: "ندارد",
     fa_ir: "ورود کاربر",
     en_us: "User Login",
   },
   "ngo login": {
-    ar: "",
+    ar: "ندارد",
     fa_ir: "ورود تشکل",
     en_us: "NGO Login",
   },
   "sms verification": {
-    ar: "",
+    ar: "ندارد",
     fa_ir: "اعتبارسنجی پیامکی",
     en_us: "SMS Verification",
+  },
+  "phone number is not valid": {
+    ar: "ندارد",
+    fa_ir: "شماره تلفن نا معتبر است",
+    en_us: "Phone number is not valid",
+  },
+  "phone number is required": {
+    ar: "ندارد",
+    fa_ir: "شماره تلفن لازم است",
+    en_us: "Phone number is required",
+  },
+  "contact number": {
+    ar: "ندارد",
+    fa_ir: "شماره تلفن",
+    en_us: "Contact Number",
+  },
+  "edit ngo": {
+    ar: "ندارد",
+    fa_ir: "ویرایش تشکل",
+    en_us: "Edit NGO",
   },
 };

@@ -61,6 +61,12 @@ export default function AppLayout() {
           title: tr("Loading"),
         }}
       />
+      <Stack.Screen
+        name="edit-ngo"
+        options={{
+          title: tr("Edit NGO"),
+        }}
+      />
     </Stack>
   );
 }
