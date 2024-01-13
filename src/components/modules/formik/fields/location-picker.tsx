@@ -8,6 +8,7 @@ import { FieldProps, useFormikContext } from "formik";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { Pressable, StyleSheet, View, ViewProps } from "react-native";
 import * as Location from "expo-location";
+import Search from "@modules/map/search.web";
 
 export type LocationPickerProps = FieldProps & ViewProps;
 
@@ -41,7 +42,14 @@ const MemoizedMapWithoutDragging = memo(
 );
 
 const MemoizedMap = memo(
-  ({ style, onMoveEnd, bottomRightContent, lat = 35.7429943, lng = 51.3505697 }: MapPropsType) => {
+  ({
+    style,
+    onMoveEnd,
+    bottomRightContent,
+    topCenterContent,
+    lat = 35.7429943,
+    lng = 51.3505697,
+  }: MapPropsType) => {
     const la = lat ?? initLocation?.lat;
     const ln = lng ?? initLocation?.lng;
     return (
@@ -52,6 +60,7 @@ const MemoizedMap = memo(
         onMoveEnd={onMoveEnd}
         mapOptions={{ zoomControl: false }}
         bottomRightContent={bottomRightContent}
+        topCenterContent={topCenterContent}
       />
     );
   }
@@ -139,6 +148,32 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
     []
   );
 
+  const MemoizedTopCenterContent = useMemo(
+    () => (
+      <Container
+        style={{
+          marginTop: 55,
+          backgroundColor: theme.colors.white,
+          width: WIDTH,
+          paddingTop: 10,
+          borderTopWidth: 1,
+          borderTopColor: theme.colors.grey0,
+        }}>
+        <Search
+          onSelect={place =>
+            setLocation({
+              lng: place.location.lat,
+              lat: place.location.lng,
+            })
+          }
+          onChangeText={console.log}
+          placeholder="جستجوی شهر، استان، خیابان، محله"
+        />
+      </Container>
+    ),
+    []
+  );
+
   return (
     <>
       <Pressable style={styles.container(theme)} onPress={handlePress}>
@@ -180,6 +215,7 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
           style={styles.root}
           onMoveEnd={setLocation}
           bottomRightContent={MemoizedCurrentLocation}
+          topCenterContent={MemoizedTopCenterContent}
         />
         <Container style={styles.mapContainer}>
           <Button onPress={handleSubmit}>انتخاب</Button>
