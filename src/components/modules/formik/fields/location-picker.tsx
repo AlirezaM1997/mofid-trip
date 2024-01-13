@@ -1,41 +1,76 @@
-import { BottomSheet, Button, Image, Text, useTheme } from "@rneui/themed";
+import Container from "@atoms/container";
+import { Feather } from "@expo/vector-icons";
+import Map, { MapPropsType } from "@modules/map/index.web";
+import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
+import { HEIGHT, WIDTH } from "@src/constants";
 import useTranslation from "@src/hooks/translation";
 import { FieldProps, useFormikContext } from "formik";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
-import { Pressable, StyleSheet, ViewProps } from "react-native";
-import Map from "@modules/map";
-import { View } from "react-native";
-import { HEIGHT, WIDTH } from "@src/constants";
-import { useIsFocused } from "@react-navigation/native";
-import { Feather } from "@expo/vector-icons";
-import Container from "@atoms/container";
+import { Pressable, StyleSheet, View, ViewProps } from "react-native";
+import * as Location from "expo-location";
 
 export type LocationPickerProps = FieldProps & ViewProps;
 
-const MemoizedMap = memo(({ lat, lng, style, onMoveEnd }) => {
-  return (
-    <Map
-      lat={lat ?? initLocation?.lat}
-      lng={lng ?? initLocation?.lng}
-      style={style}
-      onMoveEnd={onMoveEnd}
-    />
-  );
-});
+const MemoizedMapWithoutDragging = memo(
+  ({ style, onMoveEnd, lat = 35.7429943, lng = 51.3505697 }: MapPropsType) => {
+    const la = lat ?? initLocation?.lat;
+    const ln = lng ?? initLocation?.lng;
+    return (
+      <Map
+        lat={la}
+        lng={ln}
+        style={style}
+        onMoveEnd={onMoveEnd}
+        mapOptions={{ dragging: false, zoomControl: false }}
+        mapMarkers={
+          lat !== 35.7429943 && lng !== 51.3505697
+            ? [
+                {
+                  id: "string",
+                  position: { lat: la, lng: ln },
+                  size: [52, 60],
+                  icon: window.location.origin + "/assets/image/marker.png",
+                  iconAnchor: [-26, 60],
+                },
+              ]
+            : []
+        }
+      />
+    );
+  }
+);
 
-const markerHeight = 52;
-const markerWidth = 60;
+const MemoizedMap = memo(
+  ({ style, onMoveEnd, bottomRightContent, lat = 35.7429943, lng = 51.3505697 }: MapPropsType) => {
+    const la = lat ?? initLocation?.lat;
+    const ln = lng ?? initLocation?.lng;
+    return (
+      <Map
+        lat={la}
+        lng={ln}
+        style={style}
+        onMoveEnd={onMoveEnd}
+        mapOptions={{ zoomControl: false }}
+        bottomRightContent={bottomRightContent}
+      />
+    );
+  }
+);
+
 const mapHeight = 200;
 
-const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
+const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPickerProps) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, touched, errors, getFieldProps } = useFormikContext();
   const isMapOpened = useRef<boolean>();
   const [location, setLocation] = useState();
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
   const [isVisible, setIsVisible] = useState();
-  const [lat, setLat] = useState();
-  const [lng, setLng] = useState();
+
+  const latFieldProps = getFieldProps(latName);
+  const lngFieldProps = getFieldProps(lngName);
 
   const { setFieldTouched } = useFormikContext();
 
@@ -51,78 +86,85 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
   );
 
   const handlePress = () => {
-    setFieldTouched("origin.lat", true);
-    setFieldTouched("origin.lng", true);
+    setFieldTouched(latName, true);
+    setFieldTouched(lngName, true);
     handleOpen();
     isMapOpened.current = true;
   };
 
-  useEffect(() => {
-    if (location?.lat) {
-      setLat(location.lat);
-      setLng(location.lng);
-    }
-  }, [location]);
-
   const handleSubmit = () => {
-    setFieldValue("origin.lat", lat);
-    setFieldValue("origin.lng", lng);
+    setFieldValue(latName, location?.lat);
+    setFieldValue(lngName, location?.lng);
     handleClose();
   };
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setCurrentLocation({
+        lat: location?.coords?.latitude,
+        lng: location?.coords?.latitude,
+      });
+    })();
+  }, []);
+
+  let text = "Waiting...";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
+  const MemoizedCurrentLocation = useMemo(
+    () => (
+      <Button
+        onPress={() => {
+          setLocation({
+            lat: currentLocation?.coords?.latitude,
+            lng: currentLocation?.coords?.longitude,
+          });
+        }}
+        buttonStyle={{
+          backgroundColor: theme.colors.white,
+        }}
+        icon={<Feather name="crosshair" size={24} color={theme.colors.black} />}
+        style={{ marginBottom: 70, padding: 10 }}></Button>
+    ),
+    []
+  );
 
   return (
     <>
       <Pressable style={styles.container(theme)} onPress={handlePress}>
-        {form?.values?.origin?.lat && form?.values?.origin?.lng ? (
-          <>
-            <Image
-              containerStyle={{
-                width: 52,
-                height: 60,
-                position: "absolute",
-                zIndex: 1,
-                top: mapHeight / 2 - markerWidth / 2 - 40,
-                left: WIDTH / 2 - markerHeight / 2 - 26,
-              }}
-              source={require("@assets/image/marker.png")}
-            />
-            <MemoizedMap
-              lat={form.values.origin.lat}
-              lng={form.values.origin.lng}
-              style={styles.map}
-            />
-          </>
+        {latFieldProps.value && lngFieldProps.value ? (
+          <MemoizedMapWithoutDragging
+            lat={latFieldProps.value}
+            lng={lngFieldProps.value}
+            style={styles.map}
+          />
         ) : (
-          <Text>{tr("Select On Map")}</Text>
+          <View style={styles.nullMap}>
+            <Text center style={styles.selectText}>
+              {tr("Select On Map")}
+            </Text>
+            <View style={styles.mapMask(theme)}></View>
+            <MemoizedMapWithoutDragging style={styles.map} />
+          </View>
         )}
       </Pressable>
-      <Text type="error">{form.touched[field.name] && form.errors[field.name]}</Text>
+      <Text type="error">{touched[latName] && errors[latName]}</Text>
 
-      {/* TODO: استایل ها از اینلاین در بیان */}
       <BottomSheet
         isVisible={isVisible}
         onBackdropPress={handleClose}
-        containerStyle={{
-          height: HEIGHT,
-          borderTopLeftRadius: 0,
-          borderTopRightRadius: 0,
-          display: "flex",
-          justifyContent: "center",
-        }}>
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            zIndex: 1,
-            backgroundColor: "#fff",
-            width: "100%",
-            height: 55,
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "space-between",
-            flexDirection: "row",
-            padding: 12,
-          }}>
+        containerStyle={styles.bottomSheetContainerStyle}>
+        <View style={styles.header}>
           <View style={{ opacity: 0 }}>
             <Feather name="x-circle" size={24} color="black" />
           </View>
@@ -133,19 +175,13 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
         </View>
         <View style={styles.mapMarkerCentered} />
         <MemoizedMap
-          lat={initLocation.lat}
-          lng={initLocation.lng}
+          lat={location?.lat ? location.lat : initLocation.lat}
+          lng={location?.lng ? location.lng : initLocation.lng}
           style={styles.root}
           onMoveEnd={setLocation}
+          bottomRightContent={MemoizedCurrentLocation}
         />
-        <Container
-          style={{
-            position: "absolute",
-            bottom: 0,
-            backgroundColor: "#fff",
-            width: "100%",
-            paddingVertical: 12,
-          }}>
+        <Container style={styles.mapContainer}>
           <Button onPress={handleSubmit}>انتخاب</Button>
         </Container>
       </BottomSheet>
@@ -153,6 +189,20 @@ const LocationPicker = ({ field, form, ...props }: LocationPickerProps) => {
   );
 };
 const styles = StyleSheet.create({
+  root: { width: "100%", height: HEIGHT },
+  header: {
+    position: "absolute",
+    top: 0,
+    zIndex: 1,
+    backgroundColor: "#fff",
+    width: "100%",
+    height: 55,
+    display: "flex",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    padding: 12,
+  },
   container: theme => ({
     width: "100%",
     height: mapHeight,
@@ -169,16 +219,45 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  root: { width: "100%", height: HEIGHT },
+  mapMask: theme => ({
+    width: "100%",
+    height: "100%",
+    backgroundColor: theme.colors.white,
+    opacity: 0.5,
+    zIndex: 1,
+    position: "absolute",
+  }),
   mapMarkerCentered: {
-    backgroundImage: `url("https://img.icons8.com/color/48/000000/marker--v1.png")`,
-    width: 50,
-    height: 50,
+    backgroundImage: `url(${window.location.origin + "/assets/image/marker.png"})`,
+    width: 52,
+    height: 60,
     position: "absolute",
     zIndex: 2,
-    left: WIDTH / 2 - 25,
-    top: HEIGHT / 2 - 25,
-    // transition: "all 0.4s ease",
+    left: WIDTH / 2 - 26,
+    top: HEIGHT / 2 - 30,
   },
+  selectText: {
+    opacity: 1,
+    zIndex: 2,
+    position: "absolute",
+    top: "45%",
+    right: WIDTH / 2 - 90,
+  },
+  mapContainer: {
+    position: "absolute",
+    bottom: 0,
+    backgroundColor: "#fff",
+    width: "100%",
+    paddingVertical: 12,
+    zIndex: 3,
+  },
+  bottomSheetContainerStyle: {
+    height: HEIGHT,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    display: "flex",
+    justifyContent: "center",
+  },
+  nullMap: { width: "100%", height: "100%" },
 });
 export default LocationPicker;
