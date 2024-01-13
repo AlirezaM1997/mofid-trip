@@ -67,6 +67,12 @@ export default function AppLayout() {
           title: tr("edit tour"),
         }}
       />
+      <Stack.Screen
+        name="ngo-authentication"
+        options={{
+          title: tr("authentication"),
+        }}
+      />
     </Stack>
   );
 }

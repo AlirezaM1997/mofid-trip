@@ -19,6 +19,7 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import { Linking } from "react-native";
 import { passedTime } from "@src/helper/date";
 import TourManagementStepBaseButton from "@modules/tour/management/step-base-button";
+import NgoAuthentication from "@modules/ngo/ngoAuthentication";
 
 const TourDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -59,11 +60,19 @@ const TourDetailScreen = () => {
   }, [loading, data]);
 
   if (loading || !tour) return <LoadingIndicator />;
+  console.log(tour);
 
   return (
     <ScrollView>
-      <WhiteSpace size={10} />
+      <WhiteSpace size={32} />
       <Container>
+        {!data.NGODetail.isVerify && (
+          <>
+            <NgoAuthentication />
+            <WhiteSpace size={32} />
+          </>
+        )}
+
         <ImageSlider imageList={tour?.avatarS3} />
         <WhiteSpace size={10} />
         <Text subtitle1 bold>

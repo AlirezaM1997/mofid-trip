@@ -1,7 +1,17 @@
 query myNGODetail {
   NGODetail {
     id
+    kind
+    title
+    address
     isVerify
+    description
+    contactNumber
+    user {
+      id
+      email
+      phoneNumber
+    }
     projectSet {
       id
       creator {

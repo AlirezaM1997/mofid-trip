@@ -19,6 +19,7 @@ import { Linking } from "react-native";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { passedTime } from "@src/helper/date";
 import HostManagementStepBaseButton from "@modules/host/management/step-base-button";
+import NgoAuthentication from "@modules/ngo/ngoAuthentication";
 
 const HostDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -63,8 +64,15 @@ const HostDetailScreen = () => {
 
   return (
     <ScrollView>
-      <WhiteSpace size={10} />
+      <WhiteSpace size={32} />
       <Container>
+        {data.userDetail.isNgo && !data.userDetail.ngo.isVerify && (
+          <>
+            <NgoAuthentication />
+            <WhiteSpace size={32} />
+          </>
+        )}
+
         <ImageSlider imageList={host?.accommodation?.avatarS3} />
         <WhiteSpace size={10} />
         <Text subtitle1 bold>
