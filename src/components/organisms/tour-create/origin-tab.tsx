@@ -30,7 +30,7 @@ const OriginTab = () => {
         value={values?.origin?.address}
         errorMessage={touched?.origin?.address && (errors?.origin?.address as string)}
       />
-      <Field name="lat" component={LocationPicker} />
+      <Field latName="origin.lat" lngName="origin.lng" component={LocationPicker} />
     </>
   );
 };

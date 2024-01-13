@@ -6,3 +6,4 @@ export const PAGE_SIZE = 10;
 export const API_URL = BASE_URL + "/graphql/";
 export const RERENDERING_INSPECTOR_IS_ACTIVE = false;
 export const APP_VERSION = "2.0.17";
+export const MAP_TILER_KEY = "Of87hpCmWUtdhJL4OG3k";
