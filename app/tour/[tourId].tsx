@@ -1,11 +1,11 @@
-import Map from "@modules/map";
+import Map from "@modules/map/index.web";
 import moment from "jalali-moment";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import { useEffect, useState } from "react";
 import { getCapacity } from "@src/helper/tour";
 import ImageSlider from "@modules/image-slider";
-import { ImageBackground, Linking, Platform, Pressable, StyleSheet, View } from "react-native";
+import { ImageBackground, Pressable, StyleSheet, View } from "react-native";
 import ContactCard from "@modules/contact-card";
 import SimilarTours from "@modules/similar-tours";
 import TourFacilities from "@modules/tour/facilities";
@@ -154,6 +154,19 @@ export default () => {
               <Map
                 lat={(tour.destination as AccommodationQueryType)?.lat}
                 lng={(tour.destination as AccommodationQueryType)?.lng}
+                mapOptions={{
+                  dragging: false,
+                  zoomControl: false,
+                }}
+                mapMarkers={[
+                  {
+                    id: "string",
+                    position: { lat: tour?.destination?.lat, lng: tour?.destination?.lng },
+                    size: [52, 60],
+                    icon: window.location.origin + "/assets/image/marker.png",
+                    iconAnchor: [-26, 60],
+                  },
+                ]}
               />
             </Pressable>
           </>
