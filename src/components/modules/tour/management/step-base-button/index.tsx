@@ -1,13 +1,13 @@
-import { ListItem, useTheme } from "@rneui/themed";
-import { ProjectQueryType, ProjectStatusEnum } from "@src/gql/generated";
-import useIsRtl from "@src/hooks/localization";
-import useTranslation from "@src/hooks/translation";
-import { router } from "expo-router";
 import React from "react";
+import { router } from "expo-router";
 import { Feather } from "@expo/vector-icons";
+import useIsRtl from "@src/hooks/localization";
+import { ListItem, useTheme } from "@rneui/themed";
+import useTranslation from "@src/hooks/translation";
 import { StyleSheet, ViewProps } from "react-native";
+import { TourTourStatusStepChoices } from "@src/gql/generated";
 
-const HostManagementStepBaseButton = ({ host }) => {
+const TourManagementStepBaseButton = ({ tour }) => {
   const isRtl = useIsRtl();
   const { theme } = useTheme();
   const { tr } = useTranslation();
@@ -17,16 +17,16 @@ const HostManagementStepBaseButton = ({ host }) => {
   };
 
   return (
-    host.statusActivation && (
+    tour.statusActivation && (
       <>
-        {host.statusStep === ProjectStatusEnum.Request && (
+        {tour.statusStep === TourTourStatusStepChoices.Request && (
           <>
             <ListItem
               bottomDivider
-              onPress={() => handleNavigate(`host/management/edit?hostId=${host.id}`)}>
+              onPress={() => handleNavigate(`tour/management/edit/${tour.id}`)}>
               <Feather name="users" size={24} color={theme.colors.black} />
               <ListItem.Content>
-                <ListItem.Title>{tr("edit host")}</ListItem.Title>
+                <ListItem.Title>{tr("edit tour")}</ListItem.Title>
               </ListItem.Content>
               <Feather
                 name={isRtl ? "chevron-left" : "chevron-right"}
@@ -49,8 +49,8 @@ const HostManagementStepBaseButton = ({ host }) => {
           </>
         )}
 
-        {host.statusStep === ProjectStatusEnum.Accept && (
-          <ListItem onPress={() => handleNavigate(`/host/management/request/${host.id}`)}>
+        {tour.statusStep === TourTourStatusStepChoices.Accept && (
+          <ListItem onPress={() => handleNavigate(`/tour/management/request/${tour.id}`)}>
             <Feather name="users" size={24} color={theme.colors.black} />
             <ListItem.Content>
               <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>
@@ -73,4 +73,4 @@ const styles = StyleSheet.create({
   })) as ViewProps,
 });
 
-export default HostManagementStepBaseButton;
+export default TourManagementStepBaseButton;

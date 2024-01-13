@@ -1,28 +1,30 @@
-import Container from "@atoms/container";
-import WhiteSpace from "@atoms/white-space";
-import BottomButtonLayout from "@components/layout/bottom-button";
-import ButtonRow from "@modules/button-rows";
-import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
-import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
-import CapacityTab from "@organisms/tour-create/capacity-tab";
-import DateTab from "@organisms/tour-create/date-tab";
-import DestinationTab from "@organisms/tour-create/destination-tab";
-import DetailsTab from "@organisms/tour-create/details-tab";
-import FacilitiesTab from "@organisms/tour-create/facilities-tab";
-import ImagesTab from "@organisms/tour-create/images-tab";
-import OriginTab from "@organisms/tour-create/origin-tab";
-import PriceTab from "@organisms/tour-create/price-tab";
-import { BottomSheet, Button, Text } from "@rneui/themed";
-import { TourGenderEnum, useTourAddMutation } from "@src/gql/generated";
-import useTranslation from "@src/hooks/translation";
-import { setTourCreateActiveStep } from "@src/slice/tour-create-slice";
-import { RootState } from "@src/store";
-import { router } from "expo-router";
+import * as Yup from "yup";
 import { Formik } from "formik";
 import { useState } from "react";
-import { ImageBackground, StyleSheet } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
+import { RootState } from "@src/store";
+import Container from "@atoms/container";
+import { BottomSheet } from "@rneui/themed";
+import WhiteSpace from "@atoms/white-space";
+import { Button, Text } from "@rneui/themed";
+import ButtonRow from "@modules/button-rows";
+import useTranslation from "@src/hooks/translation";
+import DateTab from "@organisms/tour-create/date-tab";
 import { useDispatch, useSelector } from "react-redux";
-import * as Yup from "yup";
+import PriceTab from "@organisms/tour-create/price-tab";
+import ImagesTab from "@organisms/tour-create/images-tab";
+import OriginTab from "@organisms/tour-create/origin-tab";
+import { ImageBackground, StyleSheet } from "react-native";
+import DetailsTab from "@organisms/tour-create/details-tab";
+import CapacityTab from "@organisms/tour-create/capacity-tab";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import FacilitiesTab from "@organisms/tour-create/facilities-tab";
+import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
+import DestinationTab from "@organisms/tour-create/destination-tab";
+import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
+import { setTourCreateActiveStep } from "@src/slice/tour-create-slice";
+import { TourGenderEnum, useMyNgoDetailTourSetQuery, useTourAddMutation } from "@src/gql/generated";
+import LoadingIndicator from "@modules/Loading-indicator";
 
 const initialValues = {
   title: null,
@@ -52,12 +54,18 @@ const initialValues = {
   facilities: [],
 };
 
-const Screen = () => {
+const EditTourScreen = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const [submit, { loading }] = useTourAddMutation();
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const { activeStep } = useSelector((state: RootState) => state.tourCreateSlice);
+  const { tourId } = useLocalSearchParams();
+
+  const [submit, { loading: submitLoading }] = useTourAddMutation();
+
+  const { loading, data } = useMyNgoDetailTourSetQuery({
+    fetchPolicy: "network-only",
+  });
 
   const validationSchema = Yup.object().shape({
     capacity: Yup.object().shape({
@@ -117,6 +125,32 @@ const Screen = () => {
     }
   };
 
+  if (loading && !data) return <LoadingIndicator />;
+
+  const tourDetail = data.NGODetail.tourSet.find(tour => tour.id === tourId);
+
+  const copyOfHostDetail = {
+    ...tourDetail,
+    facilities: tourDetail.facilities.map(item => item.faName),
+    base64Images: tourDetail.avatarS3.map(item => item.small),
+    price: tourDetail.packages[0].price,
+    discount: tourDetail.packages[0].discount,
+    origin: {
+      address: tourDetail.origin?.address,
+      lat: tourDetail.origin?.lat,
+      lng: tourDetail.origin?.lng,
+    },
+  };
+
+  const initialValues = JSON.parse(
+    JSON.stringify(copyOfHostDetail, (key, value) =>
+      ["id", "avatarS3", "__typename", "packages", "createdDate", "modifiedDate"].includes(key)
+        ? undefined
+        : value
+    )
+  );
+  console.log(initialValues, tourDetail);
+
   return (
     <>
       <Formik
@@ -128,8 +162,8 @@ const Screen = () => {
             buttons={[
               <Button
                 onPress={activeStep === 8 ? handleSubmit : handleNext}
-                disabled={loading}
-                loading={loading}>
+                disabled={submitLoading}
+                loading={submitLoading}>
                 {activeStep === 8 ? tr("Submit") : tr("Next")}
               </Button>,
               <Button
@@ -209,4 +243,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Screen;
+export default EditTourScreen;

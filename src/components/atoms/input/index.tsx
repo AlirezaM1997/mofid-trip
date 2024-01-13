@@ -12,12 +12,12 @@ const Input = forwardRef((props: InputProps, ref: Ref<TextInput>) => {
   return props.type === "date" ? (
     <InputWithDate ref={ref} {...props} />
   ) : (
-    <NativeInput ref={ref} {...props} style={styles.input(language, props.keyboardType)} />
+    <NativeInput ref={ref} {...props} style={styles.input(language)} />
   );
 });
 
 const styles = StyleSheet.create({
-  input: ((lng: LanguageChoiceEnum, type) => ({
+  input: ((lng: LanguageChoiceEnum) => ({
     ...Platform.select({
       web: {
         fontFamily:
@@ -32,9 +32,6 @@ const styles = StyleSheet.create({
         fontFamily: "DanaFaNum",
       },
     }),
-    textAlign: ["phone-pad", "number-pad", "decimal-pad", "numeric"].includes(type)
-      ? "left"
-      : "right",
   })) as ViewStyle,
 });
 

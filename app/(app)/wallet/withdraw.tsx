@@ -96,6 +96,7 @@ const WithdrawScreen = () => {
             <Input
               value={values.amount}
               placeholder={tr("amount")}
+              keyboardType="numeric"
               errorMessage={touched?.amount && (errors?.amount as string)}
               onChangeText={t => setFieldValue("amount", parseText(t))}
             />

@@ -5,7 +5,7 @@ import { Redirect } from "expo-router";
 
 const LoginScreen = () => {
   const { session } = useSession();
-  
+
   if (session) return <Redirect href="/" />;
 
   return <UserLoginForm />;

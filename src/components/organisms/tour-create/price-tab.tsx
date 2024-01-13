@@ -78,6 +78,7 @@ const PriceTab = () => {
         maxLength={3}
         value={values.discount?.toString()}
         onChangeText={handleChange("discount")}
+        keyboardType="numeric"
         onBlur={handleBlur("discount")}
         errorMessage={touched.discount && (errors.discount as string)}
         label={tr("Discount") + " (%)"}

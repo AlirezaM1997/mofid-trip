@@ -2095,6 +2095,11 @@ export const messages = {
     fa_ir: "ویرایش کارت",
     en_us: "edit card",
   },
+  "edit tour": {
+    ar: "نداریم",
+    fa_ir: "ویرایش تور",
+    en_us: "edit tour",
+  },
   "team leader": {
     ar: "رئيس الفريق",
     fa_ir: "سرگروه",
@@ -2166,6 +2171,17 @@ export const messages = {
     ar: "المصادقة",
     fa_ir: "احراز هویت",
     en_us: "Authentication",
+  },
+  "if your collection is not authenticated by the admin, it will not be approved. please authenticate as soon as possible.": {
+    ar: "إذا لم تتم المصادقة على مجموعتك من قبل المسؤول، فلن تتم الموافقة عليها. يرجى المصادقة في أقرب وقت ممكن.",
+    fa_ir:
+      "در صورت احراز نشدن هویت مجموعه شما توسط ادمین ، تایید نخواهد شد. لطفا در سریعترین زمان اقدام به احراز هویت کنید.",
+    en_us: "if your collection is not authenticated by the admin, it will not be approved. please authenticate as soon as possible.",
+  },
+  "verify your ngo!": {
+    ar: "التحقق من مجموعتك!",
+    fa_ir: "مجموعه‌تان را احراز کنید!",
+    en_us: "verify your ngo!",
   },
   chat: {
     ar: "رسالة",

@@ -37,7 +37,6 @@ export default () => {
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
-  const isAuthenticated = false;
   const { session } = useSession();
   const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
   const { loading, data } = useTourDetailQuery({
@@ -57,7 +56,7 @@ export default () => {
   const handleNavigateToReserve = (tourPackage: TourPackageType) => {
     setIsVisible(false);
     router.push({
-      pathname: `/tour/${tour.id}/reservation/step-1`,
+      pathname: `/tour/${tour.id}/reservation/add/step-1`,
       params: {
         tourId: tour.id,
         tourPackage: JSON.stringify(tourPackage),
@@ -66,7 +65,7 @@ export default () => {
   };
 
   const handleBuy = p => {
-    if (isAuthenticated) {
+    if (session) {
       handleNavigateToReserve(p);
     } else {
       setIsVisiblePrevent(true);
@@ -166,6 +165,7 @@ export default () => {
       </Container>
       <SimilarTours currentTourId={tour.id} tours={tour.NGO.tourSet} />
       <WhiteSpace size={20} />
+
       <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
         {tour.packages.map((p, index) => (
           <ListItem
@@ -186,6 +186,7 @@ export default () => {
           </ListItem>
         ))}
       </BottomSheet>
+
       <BottomSheet isVisible={isVisiblePrevent} onBackdropPress={() => setIsVisiblePrevent(false)}>
         <Container>
           <ImageBackground

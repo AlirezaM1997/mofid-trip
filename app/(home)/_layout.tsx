@@ -5,7 +5,7 @@ import useIsRtl from "@src/hooks/localization";
 import useTranslation from "@src/hooks/translation";
 import useProjectTable from "@src/hooks/db/project";
 import { Platform, StyleSheet } from "react-native";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Feather, Entypo } from "@expo/vector-icons";
 import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
 import ButtonRow from "@modules/button-rows";
 import WhiteSpace from "@atoms/white-space";
@@ -84,6 +84,15 @@ export default function AppLayout() {
           options={{
             title: tr("My requests"),
             tabBarIcon: ({ color, size }) => <Feather name="bookmark" size={size} color={color} />,
+          }}
+        />
+        <Tabs.Screen
+          name="search"
+          options={{
+            title: tr("Search"),
+            tabBarIcon: ({ color, size }) => (
+              <Entypo name="location-pin" size={size} color={color} />
+            ),
           }}
         />
         <Tabs.Screen

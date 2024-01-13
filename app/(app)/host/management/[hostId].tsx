@@ -78,7 +78,7 @@ const HostDetailScreen = () => {
         <Text subtitle1 bold>
           {tr("At what stage is your application?")}
         </Text>
-        <Text>
+        <Text caption type="grey3">
           {tr(
             "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list."
           )}

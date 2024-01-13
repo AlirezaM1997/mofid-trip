@@ -1,10 +1,8 @@
-import { createTheme } from "@rneui/themed";
-import { DefaultTheme } from "@react-navigation/native";
-import { LinearGradient } from "expo-linear-gradient";
-import { Platform, Pressable, PressableProps } from "react-native";
-import { WIDTH } from "./constants";
-import { View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { createTheme } from "@rneui/themed";
+import { LinearGradient } from "expo-linear-gradient";
+import { Platform, Pressable, PressableProps, View } from "react-native";
+import { WIDTH } from "./constants";
 
 export const PRIMARY_COLOR = "#FF4332";
 export const SECONDARY_COLOR = "#101010";
@@ -296,7 +294,7 @@ export const theme = isRtl =>
           backgroundColor: "#0003",
         },
       }),
-      Input: {
+      Input: props => ({
         errorStyle: Platform.select({
           web: {
             fontFamily:
@@ -312,6 +310,10 @@ export const theme = isRtl =>
         leftIconContainerStyle: {
           position: "absolute",
           left: 10,
+        },
+        rightIconContainerStyle: {
+          position: "absolute",
+          right: 10,
         },
         labelStyle: {
           marginBottom: 5,
@@ -332,7 +334,7 @@ export const theme = isRtl =>
           borderWidth: 1,
           borderRadius: 12,
           padding: 15,
-          paddingLeft: WIDTH >= 285 ? 15 : 0,
+          paddingLeft: props.leftIcon ? 35 : WIDTH >= 285 ? 15 : 0,
           fontSize: WIDTH > 320 ? 16 : 14,
           ...Platform.select({
             web: {
@@ -347,7 +349,7 @@ export const theme = isRtl =>
             },
           }),
           fontWeight: "400",
-          textAlign: isRtl ? "right" : "left",
+          textAlign: !isRtl || ["numeric"].includes(props.keyboardType) ? "left" : "right",
         },
         inputContainerStyle: {
           borderBottomWidth: 0,
@@ -357,7 +359,7 @@ export const theme = isRtl =>
           paddingHorizontal: 0,
           margin: 0,
         },
-      },
+      }),
       CheckBox: (props, theme) => ({
         Component: ({ children, ...props }: PressableProps) => (
           <View style={{ marginHorizontal: -5 }}>

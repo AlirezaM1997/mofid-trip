@@ -29,7 +29,7 @@ const TabCapacity = () => {
         }}
         onBlur={handleBlur("capacity.capacityNumber")}
         value={values.capacity.capacityNumber?.toString()}
-        keyboardType="numeric"
+        keyboardType="number-pad"
         errorMessage={
           touched?.capacity?.capacityNumber && (errors?.capacity?.capacityNumber as string)
         }

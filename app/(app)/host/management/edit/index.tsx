@@ -108,37 +108,11 @@ const Screen = () => {
     },
   };
 
-  // const initialValuesww = {
-  //   name: "",
-  //   description: "",
-  //   dateStart: null,
-  //   dateEnd: null,
-  //   accommodation: {
-  //     province: null,
-  //     city: null,
-  //     address: null,
-  //     lat: null,
-  //     lng: null,
-  //     base64Images: [],
-  //   },
-  //   capacity: {
-  //     capacityNumber: null,
-  //     gender: ProjectGenderEnum.Both,
-  //     childAccept: false,
-  //   },
-  //   price: null,
-  //   discount: 0,
-  //   categories: [],
-  //   facilities: [],
-  // };
-
   const initialValues = JSON.parse(
     JSON.stringify(copyOfHostDetail, (key, value) =>
       ["id", "avatarS3", "__typename"].includes(key) ? undefined : value
     )
   );
-
-  console.log(initialValues);
 
   return (
     <Formik

@@ -125,7 +125,7 @@ const AddCardScreen = () => {
               value={values.cardPan}
               onBlur={handleBlur("cardPan")}
               placeholder={`${tr("cardPan")}`}
-              leftIcon={
+              rightIcon={
                 <Image source={bankIcon as ImageSourcePropType} style={{ width: 18, height: 18 }} />
               }
               onChange={handleIcon}

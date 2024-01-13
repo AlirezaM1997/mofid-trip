@@ -1,6 +1,9 @@
 query myUserDetailProjectSet {
   userDetail {
     id
+    ngo {
+      isVerify
+    }
     projectSet {
       id
       creator {
