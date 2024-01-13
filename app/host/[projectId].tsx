@@ -21,6 +21,11 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 
+// @@@@@@@@@@@@@ DON'T REMOVE THIS LINE @@@@@@@@@@@@@@@@@@
+// @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
+import markerImage from "@assets/image/marker.png";
+const a = markerImage
+
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
@@ -116,7 +121,7 @@ const Page: React.FC = ({ ...props }) => {
                       id: "string",
                       position: { lat: accommodation?.lat, lng: accommodation?.lng },
                       size: [52, 60],
-                      icon: window.location.origin + "/assets/image/marker.png",
+                      icon: window.location.origin + "/assets/assets/image/marker.png",
                       iconAnchor: [-26, 60],
                     },
                   ]}
