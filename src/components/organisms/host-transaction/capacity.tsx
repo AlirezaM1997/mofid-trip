@@ -25,7 +25,7 @@ const HostTransactionCapacityTab = () => {
       <Text type="grey3">{tr("select the capacity and gender of passengers")}</Text>
       <WhiteSpace size={20} />
       <Input
-        keyboardType="numeric"
+        keyboardType="number-pad"
         name="guests.guestNumber"
         placeholder={tr("enter the capacity (quantity)")}
         textAlignVertical="top"

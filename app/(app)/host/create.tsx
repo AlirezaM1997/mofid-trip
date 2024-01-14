@@ -78,7 +78,9 @@ const Screen = () => {
     }),
 
     capacity: Yup.object().shape({
-      capacityNumber: Yup.number().positive().required(tr("Capacity is required")),
+      capacityNumber: Yup.number()
+        .positive(tr("Capacity is required"))
+        .required(tr("Capacity is required")),
       gender: Yup.string(),
       childAccept: Yup.boolean(),
     }),

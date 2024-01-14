@@ -19,6 +19,7 @@ query userDetail {
     isNgo
     ngo {
       id
+      isVerify
     }
     wallet {
       balance

@@ -1,22 +1,18 @@
-import Container from "@atoms/container";
-import WhiteSpace from "@atoms/white-space";
-import BottomButtonLayout from "@components/layout/bottom-button";
-import { Feather } from "@expo/vector-icons";
-import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
-import { Chip, Input, Text } from "@rneui/themed";
-import { Button, useTheme } from "@rneui/themed";
-import { ProjectAddInputType } from "@src/gql/generated";
-import useTranslation from "@src/hooks/translation";
-import { router } from "expo-router";
-import { Formik, useFormikContext } from "formik";
 import { useState } from "react";
+import { useFormikContext } from "formik";
+import WhiteSpace from "@atoms/white-space";
+import { Feather } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
+import { Button, useTheme } from "@rneui/themed";
+import { Chip, Input, Text } from "@rneui/themed";
+import useTranslation from "@src/hooks/translation";
+import { ProjectAddInputType } from "@src/gql/generated";
 
 const TabFaclities = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const [value, setValue] = useState<string | null>();
-  const { values, setValues, setFieldValue } = useFormikContext<ProjectAddInputType>();
+  const { values, setFieldValue } = useFormikContext<ProjectAddInputType>();
 
   const handleChangeInput = e => {
     setValue(e.target.value);

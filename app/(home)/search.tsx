@@ -1,18 +1,17 @@
-import { Button } from "@rneui/themed";
 import HostCard from "@modules/host/card";
 import { PAGE_SIZE } from "@src/settings";
 import { NetworkStatus } from "@apollo/client";
-import { Divider, useTheme } from "@rneui/themed";
-import React, { useEffect, useRef, useState } from "react";
 import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
+import { useProjectListQuery } from "@src/gql/generated";
+import { Button, Divider, useTheme } from "@rneui/themed";
 import { ScrollView } from "react-native-gesture-handler";
-import SearchBar from "@src/components/modules/search-bar";
-import WhiteSpace from "@src/components/atoms/white-space";
 import NoResult from "@src/components/organisms/no-result";
+import React, { useEffect, useRef, useState } from "react";
+import WhiteSpace from "@src/components/atoms/white-space";
+import SearchBar from "@src/components/modules/search-bar";
 import SelectedFilters from "@src/components/modules/selected-filters";
 import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
-import { ProjectListQuery, useProjectListLazyQuery, useProjectListQuery } from "@src/gql/generated";
 
 const SearchScreen: React.FC = () => {
   const { theme } = useTheme();

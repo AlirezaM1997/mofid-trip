@@ -28,6 +28,7 @@ import { NetworkStatus } from "@apollo/client";
 import { useSession } from "@src/context/auth";
 import UserLoginForm from "@organisms/user-login-form";
 import Authentication from "@modules/authentication";
+import NgoAuthentication from "@modules/ngo/ngoAuthentication";
 
 const Profile: React.FC = () => {
   const { session } = useSession();
@@ -107,7 +108,7 @@ const Profile: React.FC = () => {
 
   if (!dataUserDetail) return <LoadingIndicator />;
 
-  const userDetail = dataUserDetail.userDetail;
+  const userDetail = dataUserDetail.userDetail; 
 
   return (
     <>
@@ -134,6 +135,10 @@ const Profile: React.FC = () => {
         <WhiteSpace size={30} />
 
         <Container>
+          {!userDetail.ngo.isVerify && <NgoAuthentication />}
+
+          <WhiteSpace size={24} />
+
           <Text type="grey3">{tr("Account")}</Text>
         </Container>
         <ListItem onPress={handleNavigateToEditProfile}>

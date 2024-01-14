@@ -1,6 +1,10 @@
 query myUserDetailProjectSet {
   userDetail {
     id
+    isNgo
+    ngo {
+      isVerify
+    }
     projectSet {
       id
       creator {
@@ -11,6 +15,8 @@ query myUserDetailProjectSet {
         address
         province
         city
+        lat
+        lng
         avatarS3 {
           large
           medium
@@ -31,6 +37,8 @@ query myUserDetailProjectSet {
       statusActivation
       facilities {
         id
+        faName
+        enName
       }
       tags {
         id
@@ -39,9 +47,7 @@ query myUserDetailProjectSet {
         id
       }
       createdDate
-      capacity {
-        id
-      }
+
       transactionSet {
         id
       }
@@ -55,7 +61,6 @@ query myUserDetailProjectSet {
         female
         allCap
       }
-      __typename
     }
   }
 }

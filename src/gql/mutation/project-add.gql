@@ -1,4 +1,4 @@
-mutation projectAdd ($data: ProjectAddInputType!) {
+mutation projectAdd($data: ProjectAddInputType!) {
   projectAdd(data: $data) {
     status
     statusCode

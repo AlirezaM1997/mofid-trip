@@ -7,6 +7,7 @@ query tourDetail($pk: ID!) {
     endTime
     NGO {
       id
+      isVerify
       user {
         id
         fullname

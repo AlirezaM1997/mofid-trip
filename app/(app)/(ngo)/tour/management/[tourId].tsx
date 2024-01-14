@@ -18,6 +18,8 @@ import { Divider } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { Linking } from "react-native";
 import { passedTime } from "@src/helper/date";
+import TourManagementStepBaseButton from "@modules/tour/management/step-base-button";
+import NgoAuthentication from "@modules/ngo/ngoAuthentication";
 
 const TourDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -58,11 +60,19 @@ const TourDetailScreen = () => {
   }, [loading, data]);
 
   if (loading || !tour) return <LoadingIndicator />;
+  console.log(tour);
 
   return (
     <ScrollView>
-      <WhiteSpace size={10} />
+      <WhiteSpace size={32} />
       <Container>
+        {!data.NGODetail.isVerify && (
+          <>
+            <NgoAuthentication />
+            <WhiteSpace size={32} />
+          </>
+        )}
+
         <ImageSlider imageList={tour?.avatarS3} />
         <WhiteSpace size={10} />
         <Text subtitle1 bold>
@@ -108,19 +118,8 @@ const TourDetailScreen = () => {
           color={theme.colors.grey3}
         />
       </ListItem>
-      {tour.statusStep === TourTourStatusStepChoices.Accept && tour.statusActivation && (
-        <ListItem onPress={handleNavigateToRequest}>
-          <Feather name="users" size={24} color={theme.colors.black} />
-          <ListItem.Content>
-            <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>
-          </ListItem.Content>
-          <Feather
-            name={isRtl ? "chevron-left" : "chevron-right"}
-            size={24}
-            color={theme.colors.grey3}
-          />
-        </ListItem>
-      )}
+
+      <TourManagementStepBaseButton tour={tour} />
 
       <Divider thickness={8} bgColor="grey0" />
 
