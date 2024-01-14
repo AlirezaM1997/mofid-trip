@@ -18,10 +18,11 @@ const Day = ({ date, ...props }: DayProps) => {
 
   return (
     <Button
-      onPress={(e) => _onPress(date)}
+      onPress={e => _onPress(date)}
       color="secondary"
       buttonStyle={styles.buttonStyle}
       containerStyle={styles.dayBtn}
+      style={{ marginBottom: 2 }}
       type="clear"
       {...props}>
       {localizeNumber(jalaliDate)}
@@ -35,5 +36,6 @@ const styles = StyleSheet.create({
   buttonStyle: { padding: 12 },
   dayBtn: {
     width: 45,
+    height: 45
   },
 });
