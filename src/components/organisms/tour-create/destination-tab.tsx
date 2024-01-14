@@ -1,5 +1,5 @@
 import WhiteSpace from "@atoms/white-space";
-import LocationPickerDestination from "@modules/formik/fields/location-picker-destination";
+import LocationPicker from "@modules/formik/fields/location-picker";
 import { Input, Text } from "@rneui/themed";
 import { TourAddInputType } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
@@ -47,7 +47,7 @@ const DestinationTab = () => {
         value={values?.destination?.address}
         errorMessage={touched?.destination?.address && (errors?.destination?.address as string)}
       />
-      <Field name="lat" component={LocationPickerDestination} />
+      <Field latName="destination.lat" lngName="destination.lng" component={LocationPicker} />
     </>
   );
 };

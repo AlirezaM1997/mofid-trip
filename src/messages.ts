@@ -2796,4 +2796,19 @@ export const messages = {
     fa_ir: "ویرایش تشکل",
     en_us: "Edit NGO",
   },
+  "basic info": {
+    ar: "",
+    fa_ir: "اطلاعات اولیه",
+    en_us: "Basic Info",
+  },
+  "enter the name of your organization": {
+    ar: "أدخل اسم مؤسستك",
+    fa_ir: "لطفا نام تشکل خود را وارد کنید",
+    en_us: "Enter the name of your organization",
+  },
+  title: {
+    ar: "عنوان",
+    fa_ir: "عنوان",
+    en_us: "Title",
+  },
 };

@@ -1,7 +1,7 @@
 import { Button } from "@rneui/themed";
 import CountDownTimer from "@src/components/atoms/count-down-timer";
 import { Text } from "@rneui/themed";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
 import React, { useEffect, useRef, useState } from "react";
@@ -21,16 +21,13 @@ const SMSVerificationScreen = () => {
   const { signIn, session } = useSession();
   const { tr } = useTranslation();
   const countDownTimerRef = useRef();
-  const { phone, isNgo } = useLocalSearchParams();
+  const { phone } = useLocalSearchParams();
   const [canRequestCode, setCanRequestCode] = useState(false);
   const { redirectToScreenAfterLogin } = useSelector((state: RootState) => state.navigationSlice);
-  const [login, { loading, data, error }] = useCreateLoginMutation();
+  const [login, { loading, data }] = useCreateLoginMutation();
   const { localizeNumber } = useLocalizedNumberFormat();
 
-  const [
-    userCheckSmsVerificationCode,
-    { loading: loadingChecking, data: dataChecking, error: errorChecking },
-  ] = useUserGetTokenMutation();
+  const [userCheckSmsVerificationCode, { loading: loadingChecking }] = useUserGetTokenMutation();
 
   const handleCountDownTimerOnEnd = () => {
     setCanRequestCode(true);
@@ -38,21 +35,35 @@ const SMSVerificationScreen = () => {
 
   const handleBack = () => router.back();
 
-  const onComplete = text => {
-    userCheckSmsVerificationCode({
+  const onComplete = async text => {
+    const { data } = await userCheckSmsVerificationCode({
       variables: {
         code: parseInt(text),
         phoneNumber: phone as string,
       },
-    }).then(({ data, errors }) => {
-      if (data.userGetToken.statusCode === 404) {
-        Toast.show({
-          type: "error",
-          text1: tr("Error"),
-          text2: data.userGetToken.message,
-        });
-      }
     });
+
+    // اگه کد وارد شده درست نباشه
+    if (data.userGetToken.statusCode === 404) {
+      Toast.show({
+        type: "error",
+        text1: tr("Error"),
+        text2: data.userGetToken.message,
+      });
+    }
+    if (data.userGetToken.statusCode === 200) {
+      signIn({
+        token: data.userGetToken.token,
+        refreshToken: data.userGetToken.refreshToken,
+        metadata: data.userGetToken.metadata,
+      });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: tr("Error"),
+        text2: data.userGetToken.message,
+      });
+    }
   };
 
   const handleRequestAgain = () => {
@@ -66,32 +77,18 @@ const SMSVerificationScreen = () => {
   };
 
   useEffect(() => {
-    if (!loadingChecking && dataChecking) {
-      if (dataChecking.userGetToken.statusCode === 200) {
-        signIn({
-          token: dataChecking.userGetToken.token,
-          refreshToken: dataChecking.userGetToken.refreshToken,
-          metadata: dataChecking.userGetToken.metadata,
-        });
-        if (!dataChecking.userGetToken.metadata.firstname) return router.push("login-details");
-        router.push(redirectToScreenAfterLogin ? redirectToScreenAfterLogin : "/");
-      } else {
-        Toast.show({
-          type: "error",
-          text1: tr("Error"),
-          text2: dataChecking.userGetToken.message,
-        });
-      }
-    }
-  }, [loadingChecking, dataChecking]);
-
-  useEffect(() => {
     if (!loading && data && data.createLogin.status === "OK") {
       setCanRequestCode(false);
     }
   }, [loading, data]);
 
-  if (session) return <Redirect href="/" />;
+  if (session) {
+    return redirectToScreenAfterLogin ? (
+      <Redirect href={redirectToScreenAfterLogin} />
+    ) : (
+      <Redirect href="/" />
+    );
+  }
 
   return (
     <>
@@ -118,20 +115,6 @@ const SMSVerificationScreen = () => {
         </Container>
         <WhiteSpace size={10} />
         <OtpInput onComplete={onComplete} />
-        {/* <OtpInput
-          numberOfDigits={4}
-          onTextChange={handleChangeOTP}
-          focusColor={PRIMARY_COLOR}
-          theme={{
-            containerStyle: {
-              width: 260,
-            },
-            pinCodeContainerStyle: {
-              width: 60,
-              height: 60,
-            },
-          }}
-        /> */}
         <WhiteSpace size={10} />
         <Pressable style={style.editContainer} onPress={handleBack}>
           <Feather name="edit" size={20} color={PRIMARY_COLOR} />
