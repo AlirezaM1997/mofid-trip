@@ -148,7 +148,7 @@ const Page = () => {
           buttonStyle={style.btnContainerStyle}
           containerStyle={style.btnContainerStyle}
           size="lg"
-          disabled={loading}
+          disabled={loading || !userDetailTemp.firstname || !userDetailTemp.lastname}
           loading={loading}>
           {tr("confirm")}
         </Button>
