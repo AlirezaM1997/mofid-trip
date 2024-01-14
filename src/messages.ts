@@ -2959,4 +2959,9 @@ export const messages = {
     fa_ir: "عنوان",
     en_us: "Title",
   },
+  "add your comment": {
+    ar: "نظر دهید",
+    fa_ir: "نظر دهید",
+    en_us: "Add your comment",
+  },
 };

@@ -8,19 +8,23 @@ import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import TourTransactionDetail from "@modules/tour/transaction/detail";
 import AcceptPayment from "@modules/tour/transaction/buttons/acceptPayment";
-import { useTourPurchaseAddMutation, useTourTransactionDetailQuery } from "@src/gql/generated";
+import { RateObjectTypeEnum, useTourPurchaseAddMutation, useTourTransactionDetailQuery } from "@src/gql/generated";
 import { totalPrice } from "@src/helper/totalPrice";
+import RatingBottomSheet from "@modules/rating-bottom-sheet";
 
 const TourTransactionDetailScreen = () => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
+  const [ratingValue, setRatingValue] = useState(0);
   const { transactionId } = useLocalSearchParams();
+  const [ratingIsVisible, setRatingIsVisible] = useState(false);
 
   const [addPurchase, { loading: purchaseLoading }] = useTourPurchaseAddMutation();
 
   const { data, loading } = useTourTransactionDetailQuery({
     variables: { pk: transactionId as string },
   });
+  console.log('==', data)
 
   if (!data || loading) {
     return <LoadingIndicator />;
@@ -54,7 +58,9 @@ const TourTransactionDetailScreen = () => {
           {tr("view invoice")}
         </Button>
       ),
-      SUCCESSFUL: <Button>{tr("rates to the tour")}</Button>,
+      SUCCESSFUL: (
+        <Button onPress={() => setRatingIsVisible(true)}>{tr("rates to the tour")}</Button>
+      ),
       ACCEPT: <Button onPress={() => setIsVisible(true)}>{tr("pay")}</Button>,
     };
     return lookup[status.step || null];
@@ -68,6 +74,18 @@ const TourTransactionDetailScreen = () => {
         setIsVisible={setIsVisible}
         purchaseHandler={purchaseHandler}
         purchaseLoading={purchaseLoading}
+      />
+      <RatingBottomSheet
+        objectType={RateObjectTypeEnum.Project}
+        // objectId={data.tourTransactionDetail.}
+        isVisible={ratingIsVisible}
+        onBackdropPress={() => setRatingIsVisible(false)}
+        value={ratingValue}
+        onValueChange={setRatingValue}
+        maximumValue={10}
+        minimumValue={0}
+        step={1}
+        allowTouchTrack
       />
     </BottomButtonLayout>
   );

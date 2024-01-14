@@ -311,6 +311,8 @@ export type ChannelListType = {
 /** GraphQL type representing a chat channel. */
 export type ChannelQueryType = {
   __typename?: 'ChannelQueryType';
+  /** Channel avatar image in different sizes. */
+  avatarS3?: Maybe<UserImageType>;
   /** Unique identifier of the chat channel. */
   channelId?: Maybe<Scalars['String']['output']>;
   /** Name of the chat channel. */
@@ -2291,6 +2293,13 @@ export type ProjectPurchaseAddMutationVariables = Exact<{
 
 export type ProjectPurchaseAddMutation = { __typename?: 'Mutation', projectPurchaseAdd?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
 
+export type RateAddMutationVariables = Exact<{
+  data: RateInputType;
+}>;
+
+
+export type RateAddMutation = { __typename?: 'Mutation', rateAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
 export type ReportAddMutationVariables = Exact<{
   data: ReportInputType;
 }>;
@@ -2923,6 +2932,42 @@ export function useProjectPurchaseAddMutation(baseOptions?: Apollo.MutationHookO
 export type ProjectPurchaseAddMutationHookResult = ReturnType<typeof useProjectPurchaseAddMutation>;
 export type ProjectPurchaseAddMutationResult = Apollo.MutationResult<ProjectPurchaseAddMutation>;
 export type ProjectPurchaseAddMutationOptions = Apollo.BaseMutationOptions<ProjectPurchaseAddMutation, ProjectPurchaseAddMutationVariables>;
+export const RateAddDocument = gql`
+    mutation rateAdd($data: RateInputType!) {
+  rateAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}
+    `;
+export type RateAddMutationFn = Apollo.MutationFunction<RateAddMutation, RateAddMutationVariables>;
+
+/**
+ * __useRateAddMutation__
+ *
+ * To run a mutation, you first call `useRateAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRateAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [rateAddMutation, { data, loading, error }] = useRateAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useRateAddMutation(baseOptions?: Apollo.MutationHookOptions<RateAddMutation, RateAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RateAddMutation, RateAddMutationVariables>(RateAddDocument, options);
+      }
+export type RateAddMutationHookResult = ReturnType<typeof useRateAddMutation>;
+export type RateAddMutationResult = Apollo.MutationResult<RateAddMutation>;
+export type RateAddMutationOptions = Apollo.BaseMutationOptions<RateAddMutation, RateAddMutationVariables>;
 export const ReportAddDocument = gql`
     mutation reportAdd($data: ReportInputType!) {
   reportAdd(data: $data) {
