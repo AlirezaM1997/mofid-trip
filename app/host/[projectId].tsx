@@ -1,27 +1,30 @@
-import { Text } from "@rneui/themed";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import Map from "@src/components/modules/map";
-import { Linking, Platform, Pressable, StyleSheet, View } from "react-native";
-import ImageSlider from "@modules/image-slider";
-import useTranslation from "@src/hooks/translation";
-import { useIsFocused } from "@react-navigation/native";
-import Container from "@src/components/atoms/container";
-import { ScrollView } from "react-native-gesture-handler";
-import { setProjectDetail } from "@src/slice/project-slice";
-import ProjectTags from "@src/components/modules/host/tags";
-import ContactCard from "@src/components/modules/contact-card";
-import BookHostBottomSheet from "@modules/host/book/bottomSheet";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { useLocalSearchParams, useNavigation } from "expo-router";
-import SimilarProjects from "@src/components/modules/similar-projects";
-import ProjectFacilities from "@src/components/modules/host/facilities";
+import BookHostBottomSheet from "@modules/host/book/bottomSheet";
+import ImageSlider from "@modules/image-slider";
+import ShareReportDropDown from "@modules/share-report-dropdown";
+import { useIsFocused } from "@react-navigation/native";
+import { Text } from "@rneui/themed";
+import Container from "@src/components/atoms/container";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import ProjectBoldFeatures from "@src/components/modules/host/bold-features";
-import { Feather } from "@expo/vector-icons";
+import ProjectFacilities from "@src/components/modules/host/facilities";
+import ProjectTags from "@src/components/modules/host/tags";
+import Map from "@src/components/modules/map/index.web";
+import SimilarProjects from "@src/components/modules/similar-projects";
 import { ProjectQueryType, useProjectDetailQuery } from "@src/gql/generated";
-import ShareReportDropDown from "@modules/share-report-dropdown";
 import openMapHandler from "@src/helper/opem-map";
+import useTranslation from "@src/hooks/translation";
+import { setProjectDetail } from "@src/slice/project-slice";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import React, { useEffect } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { useDispatch } from "react-redux";
+
+// @@@@@@@@@@@@@ DON'T REMOVE THIS LINE @@@@@@@@@@@@@@@@@@
+// @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
+import markerImage from "@assets/image/marker.png";
+const a = markerImage
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
@@ -107,7 +110,23 @@ const Page: React.FC = ({ ...props }) => {
             </Text>
             {isFocused && (
               <Pressable onPress={() => openMapHandler(accommodation?.lat, accommodation?.lng)}>
-                <Map lat={accommodation?.lat} lng={accommodation?.lng} />
+                <Map
+                  lat={accommodation?.lat}
+                  lng={accommodation?.lng}
+                  mapOptions={{
+                    dragging: false,
+                    zoomControl: false,
+                  }}
+                  mapMarkers={[
+                    {
+                      id: "string",
+                      position: { lat: accommodation?.lat, lng: accommodation?.lng },
+                      size: [52, 60],
+                      icon: window.location.origin + "/assets/assets/image/marker.png",
+                      iconAnchor: [-26, 60],
+                    },
+                  ]}
+                />
               </Pressable>
             )}
           </View>
