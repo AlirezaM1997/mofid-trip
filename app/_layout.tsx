@@ -60,8 +60,14 @@ const MainContent = () => {
           headerShown: !["(home)", "(app)"].includes(route.name),
           ...defaultScreenOptions,
         })}>
-          <Stack.Screen
+        <Stack.Screen
           name="login-details"
+          options={{
+            title: tr("Basic Info"),
+          }}
+        />
+        <Stack.Screen
+          name="login-details-ngo"
           options={{
             title: tr("Basic Info"),
           }}

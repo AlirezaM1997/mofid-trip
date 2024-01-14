@@ -26,14 +26,15 @@ export default function AppLayout() {
   if (!session) {
     // On web, static rendering will stop here as the user is not authenticated
     // in the headless Node process that the pages are rendered in.
+    // TODO: use param solution instead redux to handling redirection route name
     dispatch(setRedirectToScreenAfterLogin(routeName));
     return <Redirect href="/user-login" />;
   } else if (session) {
-    const { firstname, lastname, is_ngo } = JSON.parse(session).metadata;
-    if (is_ngo && ) {
+    const { firstname, lastname, is_ngo, title } = JSON.parse(session).metadata;
+    if (is_ngo && !title) {
       dispatch(setRedirectToScreenAfterLogin(routeName));
       return <Redirect href="/login-details-ngo" />;
-    } else if (!firstname && !lastname) {
+    } else if (!is_ngo && !firstname && !lastname) {
       dispatch(setRedirectToScreenAfterLogin(routeName));
       return <Redirect href="/login-details" />;
     }
