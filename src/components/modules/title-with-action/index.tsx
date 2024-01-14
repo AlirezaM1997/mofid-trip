@@ -21,6 +21,8 @@ const TitleWithAction = ({
       heading2: { heading2: true },
       subtitle1: { subtitle1: true },
       subtitle2: { subtitle2: true },
+      caption: { caption: true },
+      body2: { body2: true },
     };
     if (size in obj) return obj[size];
   };

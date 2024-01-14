@@ -1,120 +1,66 @@
-import HostCard from "@modules/host/card";
-import { PAGE_SIZE } from "@src/settings";
-import { NetworkStatus } from "@apollo/client";
+import React, { useMemo, useState } from "react";
+import { Text } from "@rneui/themed";
+import debounce from "lodash/debounce";
+import { RootState } from "@src/store";
+import { StyleSheet, View } from "react-native";
+import SearchHost from "@organisms/search/host";
+import SearchTour from "@organisms/search/tour";
+import { setSearch } from "@src/slice/filter-slice";
 import useTranslation from "@src/hooks/translation";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "@src/components/atoms/container";
-import { useProjectListQuery } from "@src/gql/generated";
-import { Button, Divider, useTheme } from "@rneui/themed";
-import { ScrollView } from "react-native-gesture-handler";
-import NoResult from "@src/components/organisms/no-result";
-import React, { useEffect, useRef, useState } from "react";
-import WhiteSpace from "@src/components/atoms/white-space";
 import SearchBar from "@src/components/modules/search-bar";
-import SelectedFilters from "@src/components/modules/selected-filters";
-import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
+import TitleWithAction from "@modules/title-with-action";
+import { router } from "expo-router";
+import WhiteSpace from "@atoms/white-space";
 
 const SearchScreen: React.FC = () => {
-  const { theme } = useTheme();
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const [searchText, setSearchText] = useState("");
-  const pageNumber = useRef(1);
-  const { data, error, networkStatus, fetchMore, refetch } = useProjectListQuery({
-    notifyOnNetworkStatusChange: true,
-    variables: {
-      sort: {
-        descending: false,
-      },
-      search: searchText,
-      page: { pageNumber: 1, pageSize: PAGE_SIZE },
-    },
-  });
+  const { search } = useSelector((state: RootState) => state.filterSlice);
+  const [value, setValue] = useState(search);
 
-  const handleLoadMore = () => {
-    pageNumber.current = pageNumber.current + 1;
-    fetchMore({
-      variables: {
-        sort: {
-          descending: false,
-        },
-        search: searchText,
-        page: { pageNumber: pageNumber.current, pageSize: PAGE_SIZE },
-      },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        if (!fetchMoreResult) return prev;
-        return {
-          ...prev,
-          projectList: {
-            ...prev.projectList,
-            data: [...prev.projectList.data, ...fetchMoreResult.projectList.data],
-          },
-        };
-      },
-    });
+  const debouncedOnChange = useMemo(() => debounce(t => dispatch(setSearch(t)), 1000), [search]);
+
+  const handleChange = t => {
+    setValue(t);
+    debouncedOnChange(t);
   };
-
-  useEffect(() => {
-    pageNumber.current = 1;
-    refetch({
-      sort: {
-        descending: false,
-      },
-      search: searchText,
-      page: { pageNumber: pageNumber.current, pageSize: PAGE_SIZE },
-    });
-  }, [searchText]);
-
-  if (error) return <p>Error: {error?.message}</p>;
 
   return (
     <>
-      <SearchBar onChangeText={e => setSearchText(e)} value={searchText} />
-      <Divider />
-      <ScrollView
-        refreshControl={<RefreshControl refreshing={networkStatus === NetworkStatus.refetch} />}>
-        <WhiteSpace size={10} />
-        <SelectedFilters />
-        <WhiteSpace size={10} />
+      <SearchBar onChangeText={handleChange} value={value} />
+      <Container style={styles.container}>
+        <View>
+          <TitleWithAction
+            size="body2"
+            actionTitle={tr("See All")}
+            onActionPress={() => router.push("/tour-list")}
+            title={`${tr("all tours of")} ${search}`}
+          />
 
-        {networkStatus === NetworkStatus.loading || networkStatus === NetworkStatus.refetch ? (
-          <ActivityIndicator size="large" color={theme.colors.primary} />
-        ) : (
-          <Container size={25} style={styles.resultContainer}>
-            {data?.projectList?.data?.map((project, index) => (
-              <HostCard
-                key={index}
-                id={project.id}
-                name={project.name}
-                price={(project.price * (100 - project.discount)) / 100}
-                address={project.accommodation.address}
-                avatarS3={project.accommodation.avatarS3}
-              />
-            ))}
-            {data?.projectList?.data?.length &&
-            data?.projectList?.data?.length === pageNumber.current * PAGE_SIZE ? (
-              <Button
-                type="outline"
-                onPress={handleLoadMore}
-                disabled={networkStatus === NetworkStatus.refetch}
-                loading={networkStatus === NetworkStatus.refetch}>
-                {tr("Fetch More")}
-              </Button>
-            ) : null}
-            {networkStatus === NetworkStatus.ready && !data?.projectList?.data?.length ? (
-              <NoResult />
-            ) : (
-              ""
-            )}
-          </Container>
-        )}
+          <WhiteSpace size={8} />
+          <SearchTour />
+        </View>
 
-        <WhiteSpace size={20} />
-      </ScrollView>
+        <View>
+          <TitleWithAction
+            size="body2"
+            actionTitle={tr("See All")}
+            onActionPress={() => router.push("/host-list")}
+            title={`${tr("all hosts of")} ${search}`}
+          />
+
+          <WhiteSpace size={8} />
+          <SearchHost />
+        </View>
+      </Container>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  resultContainer: { gap: 20 },
+  container: { gap: 24 },
 });
 
 export default SearchScreen;

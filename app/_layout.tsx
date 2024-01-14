@@ -80,6 +80,20 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
+          name="host-list"
+          options={{
+            headerShown: false,
+            title: tr("coming soon"),
+          }}
+        />
+        <Stack.Screen
+          name="tour-list"
+          options={{
+            headerShown: false,
+            title: tr("coming soon"),
+          }}
+        />
+        <Stack.Screen
           name="tour/[tourId]"
           options={{
             title: tr("loading"),

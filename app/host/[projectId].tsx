@@ -22,14 +22,13 @@ import { Feather } from "@expo/vector-icons";
 import { ProjectQueryType, useProjectDetailQuery } from "@src/gql/generated";
 import ShareReportDropDown from "@modules/share-report-dropdown";
 import openMapHandler from "@src/helper/opem-map";
-import WhiteSpace from "@atoms/white-space";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const isFocused = useIsFocused();
   const navigation = useNavigation();
-  const { projectId, name } = useLocalSearchParams();
+  const { projectId } = useLocalSearchParams();
 
   const { loading, data } = useProjectDetailQuery({
     variables: {
@@ -43,14 +42,15 @@ const Page: React.FC = ({ ...props }) => {
     }
   }, [loading, data]);
 
+  if (loading) return <LoadingIndicator />;
+
   navigation.setOptions({
-    title: name,
+    title: data.projectDetail.name,
     headerRight: () => <ShareReportDropDown />,
   });
 
-  if (loading) return <LoadingIndicator />;
-
   const {
+    name,
     tags,
     creator,
     dateEnd,
@@ -115,10 +115,10 @@ const Page: React.FC = ({ ...props }) => {
             پیشنهادی برای شما
           </Text>
         </Container>
-          <SimilarProjects
-            currentProjectId={projectId as string}
-            projects={creator?.projectSet as ProjectQueryType[]}
-          />
+        <SimilarProjects
+          currentProjectId={projectId as string}
+          projects={creator?.projectSet as ProjectQueryType[]}
+        />
       </ScrollView>
     </BottomButtonLayout>
   );

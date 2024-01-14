@@ -311,6 +311,8 @@ export type ChannelListType = {
 /** GraphQL type representing a chat channel. */
 export type ChannelQueryType = {
   __typename?: 'ChannelQueryType';
+  /** Channel avatar image in different sizes. */
+  avatarS3?: Maybe<UserImageType>;
   /** Unique identifier of the chat channel. */
   channelId?: Maybe<Scalars['String']['output']>;
   /** Name of the chat channel. */
@@ -845,6 +847,7 @@ export type NgoQueryType = {
   /** List of tour transactions associated with the NGO. */
   tourTransactionSet?: Maybe<Array<Maybe<TourTransactionQueryType>>>;
   user?: Maybe<UserQueryType>;
+  verifyDescription?: Maybe<Scalars['String']['output']>;
   /** Wallet field related to the NGO */
   wallet?: Maybe<UserWalletType>;
 };
@@ -2072,7 +2075,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
