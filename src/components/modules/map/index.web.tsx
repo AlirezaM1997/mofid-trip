@@ -1,29 +1,55 @@
 import { ExpoLeaflet } from "expo-leaflet";
-import { Alert, StyleSheet, View, ViewProps } from "react-native";
+import { ExpoLeafletProps } from "expo-leaflet/web/src/ExpoLeaflet.types";
+import { ReactNode } from "react";
+import { Alert, StyleSheet, View } from "react-native";
 
-type MapPropsType = ViewProps & {
+export type MapPropsType = ExpoLeafletProps & {
   lat: number;
   lng: number;
-  mapMarkers?: {
-    id: string;
-    size: [number, number];
-    position: { lat: number; lng: number };
-    icon: string;
-  }[];
   onMoveEnd?: () => { lat: number; lng: number };
+  topLeftContent: ReactNode;
+  topCenterContent: ReactNode;
+  topRightContent: ReactNode;
+  bottomLeftContent: ReactNode;
+  bottomCenterContent: ReactNode;
+  bottomRightContent: ReactNode;
 };
 
-const Map = ({ lat, lng, mapMarkers, onMoveEnd, ...props }: MapPropsType) => {
+const Map = ({
+  lat,
+  lng,
+  mapMarkers,
+  onMoveEnd,
+  mapOptions = {},
+  zoom = 5,
+  topLeftContent = <View></View>,
+  topCenterContent = <View></View>,
+  topRightContent = <View></View>,
+  bottomLeftContent = <View></View>,
+  bottomCenterContent = <View></View>,
+  bottomRightContent = <View></View>,
+  ...props
+}: MapPropsType) => {
   if (!lat && !lng) return;
 
   return (
     <>
       <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="StyleSheet" />
+
+      <View style={[style.row, style.topRow]}>
+        <View>{topLeftContent}</View>
+        <View>{topCenterContent}</View>
+        <View>{topRightContent}</View>
+      </View>
+      <View style={[style.row, style.bottomRow]}>
+        <View>{bottomLeftContent}</View>
+        <View>{bottomCenterContent}</View>
+        <View>{bottomRightContent}</View>
+      </View>
+
       <View style={[style.container, props.style]}>
         <ExpoLeaflet
-          zoom={14}
-          maxZoom={14}
-          zoomControl={false}
+          zoom={zoom}
           mapCenterPosition={{
             lat: lat,
             lng: lng,
@@ -35,20 +61,9 @@ const Map = ({ lat, lng, mapMarkers, onMoveEnd, ...props }: MapPropsType) => {
               baseLayerIsChecked: true,
               baseLayerName: "OpenStreetMap",
               url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-              attribution:
-                '&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-            },
-            {
-              baseLayer: true,
-              layerType: "TileLayer",
-              baseLayerName: "Mapbox",
-              baseLayerIsChecked: true,
-              url: `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid2hlcmVzbXl3YXZlcyIsImEiOiJjanJ6cGZtd24xYmU0M3lxcmVhMDR2dWlqIn0.QQSWbd-riqn1U5ppmyQjRw`,
             },
           ]}
-          // mapOptions={{
-          //   dragging: false,
-          // }}
+          mapOptions={mapOptions}
           onMessage={message => {
             switch (message.tag) {
               case "onMapMarkerClicked":
@@ -83,6 +98,21 @@ const style = StyleSheet.create({
     height: 158,
     width: "100%",
     zIndex: 1,
+  },
+  row: {
+    position: "absolute",
+    display: "flex",
+    justifyContent: "space-between",
+    flexDirection: "row",
+    zIndex: 1,
+    left: 0,
+    width: "100%",
+  },
+  topRow: {
+    top: 0,
+  },
+  bottomRow: {
+    bottom: 0,
   },
 });
 
