@@ -62,16 +62,15 @@ const Index = () => {
     base64Image: detail.avatarS3?.medium ? atob(detail.avatarS3.medium) : null,
     contactNumber: detail.contactNumber,
     description: detail.description,
-    phoneNumber: null,
   };
 
   const phoneRegExp = /^\+(?:[0-9] ?){6,14}[0-9]$/;
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required(tr("display name is required")),
-    phoneNumber: Yup.string()
-      .matches(phoneRegExp, tr("Phone number is not valid"))
-      .required(tr("Phone number is required")),
+    // contactNumber: Yup.string()
+    //   .matches(phoneRegExp, tr("Phone number is not valid"))
+    //   .required(tr("Phone number is required")),
   });
 
   return (
@@ -110,12 +109,6 @@ const Index = () => {
                   value={values.title}
                   onChangeText={handleChange("title")}
                   errorMessage={touched.title && (errors.title as string)}
-                />
-                <Input
-                  label={tr("Phone Number")}
-                  value={values.phoneNumber}
-                  onChangeText={handleChange("phoneNumber")}
-                  errorMessage={touched.phoneNumber && (errors.phoneNumber as string)}
                 />
                 <Input
                   label={tr("Address")}
