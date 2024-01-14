@@ -13,53 +13,47 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useSession } from "@src/context/auth";
 import { useSelector } from "react-redux";
 import { Button, Text } from "@rneui/themed";
-import { useUserDetailQuery, useUserEditMutation } from "@src/gql/generated";
+import { useMyNgoDetailQuery, useNgoEditMutation } from "@src/gql/generated";
 
 const LoginDetailScreen = () => {
   const { tr } = useTranslation();
   const { session, signIn } = useSession();
-  const { data, loading } = useUserDetailQuery();
-  const [edit, { loading: editLoading }] = useUserEditMutation();
+  const [edit, { loading: editLoading }] = useNgoEditMutation();
+  const { data, loading } = useMyNgoDetailQuery();
   const { redirectToScreenAfterLogin } = useSelector((state: RootState) => state.navigationSlice);
 
   if (loading) return <LoadingIndicator />;
 
   const initialValues = {
-    firstname: data?.userDetail.firstname,
-    lastname: data?.userDetail.lastname,
+    title: data?.NGODetail.title,
   };
 
   const validationSchema = Yup.object().shape({
-    firstname: Yup.string().required(tr("First name is required")),
-    lastname: Yup.string().required(tr("Last name is required")),
+    title: Yup.string().required(tr("Title is required")),
   });
 
-  const submitHandler = async ({ firstname, lastname }) => {
+  const submitHandler = async values => {
     const { data } = await edit({
       variables: {
-        data: {
-          firstname: firstname,
-          lastname: lastname,
-        },
+        data: values,
       },
     });
 
-    if (data.userEdit.status === "ACCEPTED") {
+    if (data.ngoEdit.status === "OK") {
       const parsedSession = JSON.parse(session);
       signIn({
         ...parsedSession,
         metadata: {
           ...parsedSession.metadata,
-          firstname: firstname,
-          lastname: lastname,
+          title: values.title,
         },
       });
     }
   };
 
   if (session) {
-    const { firstname, lastname } = JSON.parse(session).metadata;
-    if (firstname || lastname) {
+    const { title } = JSON.parse(session).metadata;
+    if (title) {
       return redirectToScreenAfterLogin ? (
         <Redirect href={redirectToScreenAfterLogin} />
       ) : (
@@ -84,25 +78,18 @@ const LoginDetailScreen = () => {
           <ScrollView>
             <Container>
               <WhiteSpace size={32} />
-              <Text heading1>{tr("write a screen name for yourself")}</Text>
+              <Text heading1>{tr("enter the name of your organization")}</Text>
               <WhiteSpace size={4} />
               <Text caption>
                 {tr("choose a display name for yourself to create an account on mofidtrip")}
               </Text>
               <WhiteSpace size={24} />
               <Input
-                name="firstname"
-                value={values.firstname}
-                placeholder={tr("First Name")}
-                onChangeText={handleChange("firstname")}
-                errorMessage={touched?.firstname && (errors?.firstname as string)}
-              />
-              <Input
-                name="lastname"
-                value={values.lastname}
-                placeholder={tr("Last Name")}
-                onChangeText={handleChange("lastname")}
-                errorMessage={touched?.lastname && (errors?.lastname as string)}
+                name="title"
+                value={values.title}
+                placeholder={tr("Title")}
+                onChangeText={handleChange("title")}
+                errorMessage={touched?.title && (errors?.title as string)}
               />
             </Container>
           </ScrollView>

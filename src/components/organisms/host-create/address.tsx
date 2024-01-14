@@ -3,7 +3,7 @@ import useTranslation from "@src/hooks/translation";
 import { Input, Text } from "@rneui/themed";
 import { ProjectAddInputType } from "@src/gql/generated";
 import { Field, useFormikContext } from "formik";
-import LocationPickerHost from "@modules/formik/fields/location-picker-host";
+import LocationPicker from "@modules/formik/fields/location-picker";
 
 const TabAddress = () => {
   const { tr } = useTranslation();
@@ -50,7 +50,7 @@ const TabAddress = () => {
         value={values.accommodation.address}
         errorMessage={touched?.accommodation?.address && (errors?.accommodation?.address as string)}
       />
-      <Field name="lat" component={LocationPickerHost} />
+      <Field latName="accommodation.lat" lngName="accommodation.lng" component={LocationPicker} />
     </>
   );
 };
