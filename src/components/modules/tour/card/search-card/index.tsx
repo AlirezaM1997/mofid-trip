@@ -27,12 +27,14 @@ const TourSearchCard = ({ tour }: { tour: TourQueryType }) => {
         <Text numberOfLines={1} body2 bold>
           {tour.title}
         </Text>
+
         <View style={styles.address}>
           <EvilIcons name="location" size={16} color={theme.colors.grey3} />
           <Text numberOfLines={1} type="grey3" caption>
-            {(tour.destination as AccommodationQueryType).address}
+            {(tour.destination as AccommodationQueryType)?.address}
           </Text>
         </View>
+
         {tour.packages[0].price <= 0 ? (
           <Text body2 bold>
             {tr("it is free")}

@@ -25,21 +25,23 @@ const HostSearchCard = ({ project }: { project: ProjectQueryType }) => {
       />
       <View style={styles.cardTextContainer}>
         <Text numberOfLines={1} body2 bold>
-          {project.name}
+          {project?.name}
         </Text>
+
         <View style={styles.address}>
           <EvilIcons name="location" size={16} color={theme.colors.grey3} />
           <Text numberOfLines={1} type="grey3" caption>
-            {project.accommodation.address}
+            {project.accommodation?.address}
           </Text>
         </View>
+
         {project.price <= 0 ? (
           <Text body2 bold>
             {tr("it is free")}
           </Text>
         ) : (
           <Text body2 bold numberOfLines={1}>
-            {formatPrice(project.price)}
+            {formatPrice(project?.price)}
             <Text body2>/ هر‌شب</Text>
           </Text>
         )}

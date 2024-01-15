@@ -1,34 +1,28 @@
-import HostCard from "@modules/host/card";
+import React, { Fragment, useRef } from "react";
+import { RootState } from "@src/store";
+import { useSelector } from "react-redux";
+import TourCard from "@modules/tour/card";
 import { PAGE_SIZE } from "@src/settings";
 import { NetworkStatus } from "@apollo/client";
 import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
-import {
-  AccommodationAddInputType,
-  useProjectListQuery,
-  useTourListQuery,
-} from "@src/gql/generated";
-import { Button, Divider, useTheme } from "@rneui/themed";
+import TitleWithAction from "@modules/title-with-action";
+import LoadingIndicator from "@modules/Loading-indicator";
+import { Button, Divider, Text, useTheme } from "@rneui/themed";
 import { ScrollView } from "react-native-gesture-handler";
 import NoResult from "@src/components/organisms/no-result";
-import React, { useEffect, useRef, useState } from "react";
 import WhiteSpace from "@src/components/atoms/white-space";
 import SearchBar from "@src/components/modules/search-bar";
-import SelectedFilters from "@src/components/modules/selected-filters";
-import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
-import { RootState } from "@src/store";
-import TourCard from "@modules/tour/card";
+import { RefreshControl, StyleSheet, View } from "react-native";
+import { AccommodationAddInputType, useTourListQuery } from "@src/gql/generated";
 
 const TourListScreen: React.FC = () => {
-  const { theme } = useTheme();
   const pageNumber = useRef(1);
   const { tr } = useTranslation();
-  const [searchText, setSearchText] = useState("");
 
   const { filterSlice } = useSelector((state: RootState) => state);
 
-  const { data, error, networkStatus, fetchMore, refetch } = useTourListQuery({
+  const { data, networkStatus, fetchMore } = useTourListQuery({
     notifyOnNetworkStatusChange: true,
     variables: filterSlice,
   });
@@ -36,7 +30,7 @@ const TourListScreen: React.FC = () => {
   const handleLoadMore = () => {
     pageNumber.current = pageNumber.current + 1;
     fetchMore({
-      variables: filterSlice,
+      variables: { ...filterSlice, page: { ...filterSlice.page, pageNumber: pageNumber.current } },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev;
         return {
@@ -50,37 +44,32 @@ const TourListScreen: React.FC = () => {
     });
   };
 
-  useEffect(() => {
-    pageNumber.current = 1;
-    refetch({
-      sort: {
-        descending: false,
-      },
-      search: searchText,
-      page: { pageNumber: pageNumber.current, pageSize: PAGE_SIZE },
-    });
-  }, [searchText]);
+  if (networkStatus === NetworkStatus.loading || networkStatus === NetworkStatus.refetch)
+    return <LoadingIndicator />;
 
-  if (error) return <p>Error: {error?.message}</p>;
+  if (networkStatus === NetworkStatus.ready && !data?.tourList?.data?.length) return <NoResult />;
 
   return (
     <>
-      <SearchBar onChangeText={e => setSearchText(e)} value={searchText} />
+      <SearchBar />
       <Divider />
+
       <ScrollView
         refreshControl={<RefreshControl refreshing={networkStatus === NetworkStatus.refetch} />}>
-        <WhiteSpace size={10} />
-        <SelectedFilters />
-        <WhiteSpace size={10} />
+        <Container>
+          <WhiteSpace size={24} />
+          <TitleWithAction
+            size="caption"
+            color="grey3"
+            title={`${tr("all tours of")} ${filterSlice.search}`}
+            actionTitle={`${data?.tourList?.count.toString()} ${tr("tour")}`}
+          />
+          <WhiteSpace size={16} />
 
-        {networkStatus === NetworkStatus.loading || networkStatus === NetworkStatus.refetch ? (
-          <ActivityIndicator size="large" color={theme.colors.primary} />
-        ) : (
-          <Container style={styles.resultContainer}>
+          <View style={styles.resultContainer}>
             {data?.tourList?.data?.map((tour, index) => (
-              <>
+              <Fragment key={index}>
                 <TourCard
-                  key={index}
                   id={tour.id}
                   title={tour.title}
                   avatarS3={tour.avatarS3}
@@ -88,7 +77,7 @@ const TourListScreen: React.FC = () => {
                   address={(tour.destination as AccommodationAddInputType).address}
                 />
                 <Divider />
-              </>
+              </Fragment>
             ))}
             {data?.tourList?.data?.length &&
             data?.tourList?.data?.length === pageNumber.current * PAGE_SIZE ? (
@@ -100,15 +89,10 @@ const TourListScreen: React.FC = () => {
                 {tr("Fetch More")}
               </Button>
             ) : null}
-            {networkStatus === NetworkStatus.ready && !data?.tourList?.data?.length ? (
-              <NoResult />
-            ) : (
-              ""
-            )}
-          </Container>
-        )}
+          </View>
 
-        <WhiteSpace size={20} />
+          <WhiteSpace size={20} />
+        </Container>
       </ScrollView>
     </>
   );

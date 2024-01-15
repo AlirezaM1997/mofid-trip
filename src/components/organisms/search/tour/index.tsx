@@ -1,11 +1,11 @@
 import React from "react";
+import { router } from "expo-router";
 import { RootState } from "@src/store";
 import { useSelector } from "react-redux";
 import { useTourListQuery } from "@src/gql/generated";
-import { Pressable, ScrollView, StyleSheet } from "react-native";
 import LoadingIndicator from "@modules/Loading-indicator";
 import TourSearchCard from "@modules/tour/card/search-card";
-import { router } from "expo-router";
+import { Pressable, ScrollView, StyleSheet } from "react-native";
 
 const SearchTour = () => {
   const { filterSlice } = useSelector((state: RootState) => state);

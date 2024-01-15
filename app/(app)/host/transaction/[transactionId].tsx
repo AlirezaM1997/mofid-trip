@@ -10,7 +10,7 @@ import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import React, { ReactElement, useState } from "react";
 import LoadingIndicator from "@modules/Loading-indicator";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import HostTransactionDetail from "@modules/host/transaction/detail ";
+import HostTransactionDetail from "@modules/host/transaction/detail";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import AcceptPayment from "@modules/host/transaction/buttons/acceptPayment";
 import { totalPrice } from "@src/helper/totalPrice";

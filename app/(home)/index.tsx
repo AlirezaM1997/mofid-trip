@@ -17,7 +17,7 @@ export default function Index() {
 
   return (
     <>
-      <SearchBar onChangeText={handleChange} value={searchText} />
+      <SearchBar showSearchText={false} />
       <Divider />
       <ScrollView>
         <WhiteSpace size={20} />

@@ -1,3 +1,6 @@
+import React, { useRef } from "react";
+import { RootState } from "@src/store";
+import { useSelector } from "react-redux";
 import HostCard from "@modules/host/card";
 import { PAGE_SIZE } from "@src/settings";
 import { NetworkStatus } from "@apollo/client";
@@ -7,23 +10,20 @@ import { useProjectListQuery } from "@src/gql/generated";
 import { Button, Divider, useTheme } from "@rneui/themed";
 import { ScrollView } from "react-native-gesture-handler";
 import NoResult from "@src/components/organisms/no-result";
-import React, { useEffect, useRef, useState } from "react";
 import WhiteSpace from "@src/components/atoms/white-space";
 import SearchBar from "@src/components/modules/search-bar";
-import SelectedFilters from "@src/components/modules/selected-filters";
-import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
-import { RootState } from "@src/store";
+import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
+import LoadingIndicator from "@modules/Loading-indicator";
+import TitleWithAction from "@modules/title-with-action";
 
 const HostListScreen: React.FC = () => {
   const { theme } = useTheme();
   const pageNumber = useRef(1);
   const { tr } = useTranslation();
-  const [searchText, setSearchText] = useState("");
 
   const { filterSlice } = useSelector((state: RootState) => state);
 
-  const { data, error, networkStatus, fetchMore, refetch } = useProjectListQuery({
+  const { data, error, networkStatus, fetchMore } = useProjectListQuery({
     notifyOnNetworkStatusChange: true,
     variables: filterSlice,
   });
@@ -31,13 +31,7 @@ const HostListScreen: React.FC = () => {
   const handleLoadMore = () => {
     pageNumber.current = pageNumber.current + 1;
     fetchMore({
-      variables: {
-        sort: {
-          descending: false,
-        },
-        search: searchText,
-        page: { pageNumber: pageNumber.current, pageSize: PAGE_SIZE },
-      },
+      variables: { ...filterSlice, page: { ...filterSlice.page, pageNumber: pageNumber.current } },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev;
         return {
@@ -51,33 +45,30 @@ const HostListScreen: React.FC = () => {
     });
   };
 
-  useEffect(() => {
-    pageNumber.current = 1;
-    refetch({
-      sort: {
-        descending: false,
-      },
-      search: searchText,
-      page: { pageNumber: pageNumber.current, pageSize: PAGE_SIZE },
-    });
-  }, [searchText]);
+  if (networkStatus === NetworkStatus.loading || networkStatus === NetworkStatus.refetch)
+    return <LoadingIndicator />;
 
-  if (error) return <p>Error: {error?.message}</p>;
+  if (networkStatus === NetworkStatus.ready && !data?.projectList?.data?.length)
+    return <NoResult />;
 
   return (
     <>
-      <SearchBar onChangeText={e => setSearchText(e)} value={searchText} />
+      <SearchBar />
       <Divider />
+
       <ScrollView
         refreshControl={<RefreshControl refreshing={networkStatus === NetworkStatus.refetch} />}>
-        <WhiteSpace size={10} />
-        <SelectedFilters />
-        <WhiteSpace size={10} />
+        <Container>
+          <WhiteSpace size={24} />
+          <TitleWithAction
+            size="caption"
+            color="grey3"
+            title={`${tr("all hosts of")} ${filterSlice.search}`}
+            actionTitle={`${data?.projectList?.count.toString()} ${tr("host")}`}
+          />
+          <WhiteSpace size={16} />
 
-        {networkStatus === NetworkStatus.loading || networkStatus === NetworkStatus.refetch ? (
-          <ActivityIndicator size="large" color={theme.colors.primary} />
-        ) : (
-          <Container style={styles.resultContainer}>
+          <View style={styles.resultContainer}>
             {data?.projectList?.data?.map((project, index) => (
               <>
                 <HostCard
@@ -101,13 +92,8 @@ const HostListScreen: React.FC = () => {
                 {tr("Fetch More")}
               </Button>
             ) : null}
-            {networkStatus === NetworkStatus.ready && !data?.projectList?.data?.length ? (
-              <NoResult />
-            ) : (
-              ""
-            )}
-          </Container>
-        )}
+          </View>
+        </Container>
 
         <WhiteSpace size={20} />
       </ScrollView>

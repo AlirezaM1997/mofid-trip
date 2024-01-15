@@ -26,7 +26,7 @@ export const messages = {
   },
   "all hosts of": {
     ar: "نداریم",
-    fa_ir: "همه هاست‌های",
+    fa_ir: "همه میزبانی‌های",
     en_us: "all hosts of",
   },
   "ngo details": {
@@ -81,6 +81,11 @@ export const messages = {
     ar: "السيرة الذاتية (۲۰۰ حرف)",
     fa_ir: "بیوگرافی",
     en_us: "Bio",
+  },
+  host: {
+    ar: "السيرة الذاتية (۲۰۰ حرف)",
+    fa_ir: "میزبانی",
+    en_us: "host",
   },
   "book accommodation": {
     ar: "حجز الإقامة",
@@ -2967,7 +2972,7 @@ export const messages = {
     fa_ir: "لطفا نام تشکل خود را وارد کنید",
     en_us: "Enter the name of your organization",
   },
-  "title": {
+  title: {
     ar: "عنوان",
     fa_ir: "عنوان",
     en_us: "Title",

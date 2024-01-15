@@ -9,7 +9,6 @@ import Container from "@src/components/atoms/container";
 import { ScrollView } from "react-native-gesture-handler";
 import WhiteSpace from "@src/components/atoms/white-space";
 import NoResult from "@src/components/organisms/no-result";
-import SelectedFilters from "@src/components/modules/selected-filters";
 import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
 import { useTourListQuery } from "@src/gql/generated";
 import TourSearchBar from "@modules/search-bar/tour-search-bar";
@@ -44,10 +43,6 @@ const TourSearch: React.FC = () => {
       <Divider />
       <ScrollView
         refreshControl={<RefreshControl refreshing={networkStatus === NetworkStatus.refetch} />}>
-        <WhiteSpace size={10} />
-        <SelectedFilters />
-        <WhiteSpace size={10} />
-
         {networkStatus === NetworkStatus.loading ? (
           <ActivityIndicator size="large" color={theme.colors.primary} />
         ) : (
@@ -58,7 +53,7 @@ const TourSearch: React.FC = () => {
                 <TourCard
                   key={index}
                   id={tour?.id}
-                  name={tour?.title}
+                  title={tour?.title}
                   price={tour?.packages[0]?.price}
                   address={tour?.destination?.address}
                   avatarS3={tour?.avatarS3}
