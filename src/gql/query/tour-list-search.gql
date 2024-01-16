@@ -1,0 +1,26 @@
+query tourListSearch($search: String, $sort: SortType, $filter: TourFilterType, $page: PageType!) {
+  tourList(search: $search, sort: $sort, filter: $filter, page: $page) {
+    count
+    data {
+      id
+      title
+      destination {
+        ... on AccommodationQueryType {
+          id
+          address
+          lat
+          lng
+        }
+      }
+      packages {
+        id
+        price
+      }
+      avatarS3 {
+        medium
+        large
+        small
+      }
+    }
+  }
+}

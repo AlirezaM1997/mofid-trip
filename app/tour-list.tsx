@@ -12,22 +12,16 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import NoResult from "@src/components/organisms/no-result";
 import WhiteSpace from "@src/components/atoms/white-space";
 import SearchBar from "@src/components/modules/search-bar";
-import { AccommodationQueryType, useTourListQuery } from "@src/gql/generated";
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
-import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import { AccommodationQueryType, useTourListSearchQuery } from "@src/gql/generated";
 
 const TourListScreen: React.FC = () => {
   const pageNumber = useRef(1);
   const { tr } = useTranslation();
 
-  if (__DEV__) {  // Adds messages only in a dev environment
-    loadDevMessages();
-    loadErrorMessages();
-  }
-
   const { filterSlice } = useSelector((state: RootState) => state);
 
-  const { data, networkStatus, fetchMore } = useTourListQuery({
+  const { data, networkStatus, fetchMore } = useTourListSearchQuery({
     notifyOnNetworkStatusChange: true,
     variables: filterSlice,
   });
@@ -35,7 +29,6 @@ const TourListScreen: React.FC = () => {
   const handleLoadMore = () => {
     pageNumber.current = pageNumber.current + 1;
     console.log("pageNumber.current", pageNumber.current);
-    
 
     fetchMore({
       variables: { ...filterSlice, page: { ...filterSlice.page, pageNumber: pageNumber.current } },
@@ -80,8 +73,7 @@ const TourListScreen: React.FC = () => {
       <ScrollView
         onScroll={handleScroll}
         scrollEventThrottle={150}
-        refreshControl={<RefreshControl refreshing={networkStatus === NetworkStatus.refetch} />}
-      >
+        refreshControl={<RefreshControl refreshing={networkStatus === NetworkStatus.refetch} />}>
         <Container>
           <WhiteSpace size={24} />
           <TitleWithAction

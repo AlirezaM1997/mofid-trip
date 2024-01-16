@@ -4,8 +4,8 @@ import { RootState } from "@src/store";
 import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import { StyleSheet, View } from "react-native";
-import SearchHost from "@organisms/search/host";
-import SearchTour from "@organisms/search/tour";
+import HostSearch from "@organisms/search/host";
+import TourSearch from "@organisms/search/tour";
 import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import TitleWithAction from "@modules/title-with-action";
@@ -29,7 +29,7 @@ const SearchScreen: React.FC = () => {
             />
 
             <WhiteSpace size={8} />
-            <SearchTour />
+            <TourSearch />
           </View>
 
           <View>
@@ -41,7 +41,7 @@ const SearchScreen: React.FC = () => {
             />
 
             <WhiteSpace size={8} />
-            <SearchHost />
+            <HostSearch />
           </View>
         </Container>
       ) : (
