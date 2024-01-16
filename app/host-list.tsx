@@ -1,35 +1,34 @@
-import React, { useRef } from "react";
+import React, { Fragment, useRef } from "react";
 import { RootState } from "@src/store";
+import { Divider } from "@rneui/themed";
 import { useSelector } from "react-redux";
 import HostCard from "@modules/host/card";
-import { PAGE_SIZE } from "@src/settings";
 import { NetworkStatus } from "@apollo/client";
 import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import { useProjectListQuery } from "@src/gql/generated";
-import { Button, Divider, useTheme } from "@rneui/themed";
+import TitleWithAction from "@modules/title-with-action";
+import LoadingIndicator from "@modules/Loading-indicator";
 import { ScrollView } from "react-native-gesture-handler";
 import NoResult from "@src/components/organisms/no-result";
 import WhiteSpace from "@src/components/atoms/white-space";
 import SearchBar from "@src/components/modules/search-bar";
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
-import LoadingIndicator from "@modules/Loading-indicator";
-import TitleWithAction from "@modules/title-with-action";
 
 const HostListScreen: React.FC = () => {
-  const { theme } = useTheme();
   const pageNumber = useRef(1);
   const { tr } = useTranslation();
 
   const { filterSlice } = useSelector((state: RootState) => state);
 
-  const { data, error, networkStatus, fetchMore } = useProjectListQuery({
+  const { data, networkStatus, fetchMore } = useProjectListQuery({
     notifyOnNetworkStatusChange: true,
     variables: filterSlice,
   });
 
   const handleLoadMore = () => {
     pageNumber.current = pageNumber.current + 1;
+
     fetchMore({
       variables: { ...filterSlice, page: { ...filterSlice.page, pageNumber: pageNumber.current } },
       updateQuery: (prev, { fetchMoreResult }) => {
@@ -45,6 +44,21 @@ const HostListScreen: React.FC = () => {
     });
   };
 
+  const handleScroll = ({ nativeEvent }) => {
+    const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+      const threshold = 50;
+      return layoutMeasurement.height + contentOffset.y >= contentSize.height - threshold;
+    };
+
+    if (
+      isCloseToBottom(nativeEvent) &&
+      data?.projectList?.data?.length < data?.projectList?.count &&
+      networkStatus === NetworkStatus.ready
+    ) {
+      handleLoadMore();
+    }
+  };
+
   if (networkStatus === NetworkStatus.loading || networkStatus === NetworkStatus.refetch)
     return <LoadingIndicator />;
 
@@ -57,6 +71,8 @@ const HostListScreen: React.FC = () => {
       <Divider />
 
       <ScrollView
+        onScroll={handleScroll}
+        scrollEventThrottle={150}
         refreshControl={<RefreshControl refreshing={networkStatus === NetworkStatus.refetch} />}>
         <Container>
           <WhiteSpace size={24} />
@@ -69,10 +85,9 @@ const HostListScreen: React.FC = () => {
           <WhiteSpace size={16} />
 
           <View style={styles.resultContainer}>
-            {data?.projectList?.data?.map((project, index) => (
-              <>
+            {data?.projectList?.data?.map(project => (
+              <Fragment key={project.id}>
                 <HostCard
-                  key={index}
                   id={project.id}
                   name={project.name}
                   address={project.accommodation.address}
@@ -80,22 +95,13 @@ const HostListScreen: React.FC = () => {
                   price={(project.price * (100 - project.discount)) / 100}
                 />
                 <Divider />
-              </>
+              </Fragment>
             ))}
-            {data?.projectList?.data?.length &&
-            data?.projectList?.data?.length === pageNumber.current * PAGE_SIZE ? (
-              <Button
-                type="outline"
-                onPress={handleLoadMore}
-                disabled={networkStatus === NetworkStatus.refetch}
-                loading={networkStatus === NetworkStatus.refetch}>
-                {tr("Fetch More")}
-              </Button>
-            ) : null}
           </View>
         </Container>
 
         <WhiteSpace size={20} />
+        {networkStatus === NetworkStatus.fetchMore && <ActivityIndicator />}
       </ScrollView>
     </>
   );

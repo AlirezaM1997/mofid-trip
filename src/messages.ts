@@ -34,6 +34,11 @@ export const messages = {
     fa_ir: "مشخصات مجری",
     en_us: "ngo details",
   },
+  "nothing found": {
+    ar: "نداریم",
+    fa_ir: "موردی یافت نشد",
+    en_us: "nothing found",
+  },
   "anywhere you want": {
     ar: "في أي مكان تريده",
     fa_ir: "جستجوی میزبانی‌ها",

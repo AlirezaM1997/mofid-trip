@@ -19,10 +19,10 @@ type PropsType = {
 
 function HostCard({ price, id, name, avatarS3, address }: PropsType) {
   const isRtl = useIsRtl();
-  const { tr } = useTranslation();
   const { theme } = useTheme();
-  const { localizeNumber } = useLocalizedNumberFormat();
+  const { tr } = useTranslation();
   const { formatPrice } = useFormatPrice();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const handlePress = () => {
     router.push({

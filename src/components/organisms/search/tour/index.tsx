@@ -1,13 +1,15 @@
 import React from "react";
+import { Text } from "@rneui/themed";
 import { router } from "expo-router";
 import { RootState } from "@src/store";
 import { useSelector } from "react-redux";
+import useTranslation from "@src/hooks/translation";
 import { useTourListQuery } from "@src/gql/generated";
-import LoadingIndicator from "@modules/Loading-indicator";
 import TourSearchCard from "@modules/tour/card/search-card";
-import { Pressable, ScrollView, StyleSheet } from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet } from "react-native";
 
 const SearchTour = () => {
+  const { tr } = useTranslation();
   const { filterSlice } = useSelector((state: RootState) => state);
 
   const { data, loading } = useTourListQuery({
@@ -15,9 +17,9 @@ const SearchTour = () => {
     variables: filterSlice,
   });
 
-  if (!data || loading) <LoadingIndicator />;
+  if (!data || loading) return <ActivityIndicator />;
 
-  if (!data?.tourList) return;
+  if (!data?.tourList.data.length) return <Text center>{tr("nothing found")}</Text>;
 
   return (
     <ScrollView

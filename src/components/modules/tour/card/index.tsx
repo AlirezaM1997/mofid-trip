@@ -10,8 +10,8 @@ import { View, ImageBackground, StyleSheet, Pressable } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 type PropsType = {
-  avatarS3: TourQueryType["avatarS3"];
   address: AccommodationAddInputType["address"];
+  avatarS3: TourQueryType["avatarS3"];
   price: TourPackageType["price"];
   title: TourQueryType["title"];
   id: TourQueryType["id"];
@@ -19,10 +19,10 @@ type PropsType = {
 
 function TourCard({ price, id, title, avatarS3, address }: PropsType) {
   const isRtl = useIsRtl();
-  const { tr } = useTranslation();
   const { theme } = useTheme();
-  const { localizeNumber } = useLocalizedNumberFormat();
+  const { tr } = useTranslation();
   const { formatPrice } = useFormatPrice();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const handlePress = () => {
     router.push(`/tour/${id}`);

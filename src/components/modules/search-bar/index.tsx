@@ -1,19 +1,14 @@
 import { RootState } from "@src/store";
 import debounce from "lodash/debounce";
-import { Feather, AntDesign } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import { router, usePathname } from "expo-router";
 import { setSearch } from "@src/slice/filter-slice";
 import useTranslation from "@src/hooks/translation";
 import { useDispatch, useSelector } from "react-redux";
+import { Feather, AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
-import {
-  SearchBar as ReactNativeElementsSearchBar,
-  SearchBarProps,
-  Text,
-  useTheme,
-} from "@rneui/themed";
+import { SearchBar as ReactNativeElementsSearchBar, SearchBarProps, useTheme } from "@rneui/themed";
 
 const SearchBar = ({ onFocus, showSearchText = true }) => {
   const isRtl = useIsRtl();
@@ -30,7 +25,10 @@ const SearchBar = ({ onFocus, showSearchText = true }) => {
 
   const [value, setValue] = useState(showSearchText ? search : "");
 
-  const debouncedOnChange = useMemo(() => debounce(t => dispatch(setSearch(t)), 1500), [search]);
+  const debouncedOnChange = useMemo(
+    () => debounce(t => dispatch(setSearch(t.trim())), 1500),
+    [search]
+  );
 
   const handleChange = t => {
     setValue(t);
@@ -52,13 +50,15 @@ const SearchBar = ({ onFocus, showSearchText = true }) => {
         ref={searchRef}
         onFocus={onFocus}
         clearIcon={
-          <AntDesign
-            size={18}
-            name="closecircle"
-            onPress={handleClear}
-            style={styles.clearIcon}
-            color={theme.colors.secondary}
-          />
+          value && (
+            <AntDesign
+              size={18}
+              name="closecircle"
+              onPress={handleClear}
+              style={styles.clearIcon}
+              color={theme.colors.secondary}
+            />
+          )
         }
         showCancel={false}
         placeholder={tr("search")}
