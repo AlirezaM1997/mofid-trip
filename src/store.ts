@@ -12,6 +12,7 @@ import NavigationSlice from "@src/slice/navigation-slice";
 import settingDetailSlice from "@src/slice/setting-detail-slice";
 import myNGODetailSlice from "@src/slice/my-ngo-slice";
 import tourCreateSlice from "@src/slice/tour-create-slice";
+import filterSlice from "@src/slice/filter-slice";
 import hostCreateSlice from "@src/slice/host-create-slice";
 import * as Updates from "expo-updates";
 import { I18nManager } from "react-native";
@@ -27,6 +28,7 @@ const persistConfig = {
 const appReducer = combineReducers({
   userSlice: userSlice,
   tourSlice: tourSlice,
+  filterSlice: filterSlice,
   networkSlice: networkSlice,
   projectSlice: projectSlice,
   navigationSlice: NavigationSlice,

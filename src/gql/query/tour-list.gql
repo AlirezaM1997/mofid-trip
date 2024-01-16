@@ -7,8 +7,10 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
       description
       startTime
       endTime
+      statusActivation
       NGO {
         id
+        title
         user {
           id
           fullname

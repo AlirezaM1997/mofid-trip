@@ -9,7 +9,7 @@ import { StyleSheet, View } from "react-native";
 import StepBaseButtons from "./stepBaseButtons";
 import useTranslation from "@src/hooks/translation";
 import { ScrollView } from "react-native-gesture-handler";
-import CancelTransaction from "@modules/host/transaction/cancel ";
+import CancelTransaction from "@modules/host/transaction/cancel";
 import { ProjectTransactionQueryType, TransactionStatusEnum } from "@src/gql/generated";
 
 const HostTransactionDetail = ({
