@@ -2,6 +2,7 @@ query myNGODetailTourSet {
   NGODetail {
     id
     isVerify
+    verifyDescription
     tourSet {
       id
       title

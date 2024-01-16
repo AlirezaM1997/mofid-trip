@@ -10,26 +10,54 @@ import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import TitleWithAction from "@modules/title-with-action";
 import SearchBar from "@src/components/modules/search-bar";
+import Map from "@modules/map";
+import { AccommodationQueryType, useTourListSearchQuery } from "@src/gql/generated";
 
 const SearchScreen: React.FC = () => {
   const { tr } = useTranslation();
-  const { search } = useSelector((state: RootState) => state.filterSlice);
+
+  const { filterSlice } = useSelector((state: RootState) => state);
+
+  const { data: tourData, loading: tourLoading } = useTourListSearchQuery({
+    notifyOnNetworkStatusChange: true,
+    variables: filterSlice,
+  });
 
   return (
     <>
       <SearchBar />
-      {search ? (
+      <Map
+        // lat={accommodation?.lat}
+        // lng={accommodation?.lng}
+        width={222}
+        height={222}
+        mapOptions={{
+          dragging: false,
+          zoomControl: false,
+        }}
+        mapMarkers={tourData?.tourList?.data?.map(tour => ({
+          id: "string",
+          position: {
+            lat: (tour.destination as AccommodationQueryType)?.lat,
+            lng: (tour.destination as AccommodationQueryType)?.lng,
+          },
+          size: [52, 60],
+          icon: window.location.origin + "/assets/assets/image/marker.png",
+          iconAnchor: [-26, 60],
+        }))}
+      />
+      {filterSlice.search ? (
         <Container style={styles.container}>
           <View>
             <TitleWithAction
               size="body2"
               actionTitle={tr("See All")}
               onActionPress={() => router.push("/tour-list")}
-              title={`${tr("all tours of")} ${search}`}
+              title={`${tr("all tours of")} ${filterSlice.search}`}
             />
 
             <WhiteSpace size={8} />
-            <TourSearch />
+            <TourSearch data={tourData} loading={tourLoading} />
           </View>
 
           <View>
@@ -37,7 +65,7 @@ const SearchScreen: React.FC = () => {
               size="body2"
               actionTitle={tr("See All")}
               onActionPress={() => router.push("/host-list")}
-              title={`${tr("all hosts of")} ${search}`}
+              title={`${tr("all hosts of")} ${filterSlice.search}`}
             />
 
             <WhiteSpace size={8} />

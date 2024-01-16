@@ -108,7 +108,7 @@ const Profile: React.FC = () => {
 
   if (!dataUserDetail) return <LoadingIndicator />;
 
-  const userDetail = dataUserDetail.userDetail; 
+  const userDetail = dataUserDetail.userDetail;
 
   return (
     <>
@@ -135,7 +135,12 @@ const Profile: React.FC = () => {
         <WhiteSpace size={30} />
 
         <Container>
-          {!userDetail.ngo.isVerify && <NgoAuthentication />}
+          {!userDetail.ngo.isVerify && (
+            <NgoAuthentication
+              isVerify={userDetail.ngo.isVerify}
+              description={userDetail.ngo.verifyDescription}
+            />
+          )}
 
           <WhiteSpace size={24} />
 

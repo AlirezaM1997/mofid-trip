@@ -5,6 +5,7 @@ query myNGODetail {
     title
     address
     isVerify
+    verifyDescription
     description
     contactNumber
     user {

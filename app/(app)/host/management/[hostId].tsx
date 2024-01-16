@@ -68,7 +68,10 @@ const HostDetailScreen = () => {
       <Container>
         {data.userDetail.isNgo && !data.userDetail.ngo.isVerify && (
           <>
-            <NgoAuthentication />
+            <NgoAuthentication
+              isVerify={data.userDetail.ngo.isVerify}
+              description={data.userDetail.ngo.verifyDescription}
+            />
             <WhiteSpace size={32} />
           </>
         )}

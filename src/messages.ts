@@ -34,6 +34,11 @@ export const messages = {
     fa_ir: "مشخصات مجری",
     en_us: "ngo details",
   },
+  "request again": {
+    ar: "نداریم",
+    fa_ir: "درخواست مجدد",
+    en_us: "request again",
+  },
   "nothing found": {
     ar: "نداریم",
     fa_ir: "موردی یافت نشد",
