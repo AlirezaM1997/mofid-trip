@@ -9,6 +9,8 @@ query projectListSearch($search: String, $sort: SortType, $filter: ProjectFilter
       discount
       accommodation {
         id
+        lat
+        lng
         address
         avatarS3 {
           small

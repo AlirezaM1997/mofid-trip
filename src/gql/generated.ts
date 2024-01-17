@@ -299,28 +299,6 @@ export type CategoryQueryType = {
   projectSet: Array<ProjectQueryType>;
 };
 
-/** GraphQL type representing a paginated list of chat channels. */
-export type ChannelListType = {
-  __typename?: 'ChannelListType';
-  /** List of chat channels. */
-  data?: Maybe<Array<Maybe<ChannelQueryType>>>;
-  /** Indicates if there are more pages available. */
-  hasNext?: Maybe<Scalars['Boolean']['output']>;
-};
-
-/** GraphQL type representing a chat channel. */
-export type ChannelQueryType = {
-  __typename?: 'ChannelQueryType';
-  /** Channel avatar image in different sizes. */
-  avatarS3?: Maybe<UserImageType>;
-  /** Unique identifier of the chat channel. */
-  channelId?: Maybe<Scalars['String']['output']>;
-  /** Name of the chat channel. */
-  channelName?: Maybe<Scalars['String']['output']>;
-  /** The last message sent in the channel. */
-  lastMessage?: Maybe<MessageQueryType>;
-};
-
 /** An InputObjectType for adding a new comment. */
 export type CommentAddInputType = {
   /** The unique identifier of the object the comment is associated with. */
@@ -480,32 +458,6 @@ export type LocationType = {
   province?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** GraphQL type representing a paginated list of messages. */
-export type MessageListType = {
-  __typename?: 'MessageListType';
-  /** List of messages. */
-  data?: Maybe<Array<Maybe<MessageQueryType>>>;
-  /** Indicates if there are more pages available. */
-  hasNext?: Maybe<Scalars['Boolean']['output']>;
-  /** Indicates if there are previous pages available. */
-  hasPrevious?: Maybe<Scalars['Boolean']['output']>;
-};
-
-/** GraphQL type representing a message in a chat system. */
-export type MessageQueryType = {
-  __typename?: 'MessageQueryType';
-  /** Timestamp when the message was created. */
-  createAt?: Maybe<Scalars['String']['output']>;
-  /** Unique identifier of the message. */
-  id?: Maybe<Scalars['String']['output']>;
-  /** Content of the message. */
-  message?: Maybe<Scalars['String']['output']>;
-  /** User who sent the message. */
-  owner?: Maybe<UserQueryType>;
-  /** Type of the message, e.g., 'text', 'image', 'system_join_team'. */
-  type?: Maybe<Scalars['String']['output']>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   /** Mutation for adding a new accommodation. */
@@ -518,11 +470,6 @@ export type Mutation = {
   bankCardDelete?: Maybe<ResponseBase>;
   /** Mutation for editing the bank card to a user's wallet. */
   bankCardEdit?: Maybe<ResponseBase>;
-  /**
-   * Mutation to create a new channel.
-   * This mutation is responsible for creating a new channel in the system and adding specified members to it.
-   */
-  channelCreateJoin?: Maybe<ResponseBase>;
   /** A Graphene mutation for adding comments to different types of objects like Projects, Tours, or other Comments. */
   commentAdd?: Maybe<ResponseBase>;
   /**
@@ -567,11 +514,6 @@ export type Mutation = {
    * This mutation is used to edit user settings, including the selected language.
    */
   settingEdit?: Maybe<ResponseBase>;
-  /**
-   * Mutation to send a text message to a channel.
-   * This mutation handles sending a message to a specified channel and broadcasts it to all channel members.
-   */
-  textMessageSend?: Maybe<ResponseBase>;
   tourAdd?: Maybe<ResponseBase>;
   /** Mutation to edit an existing tour. */
   tourEdit?: Maybe<ResponseBase>;
@@ -630,12 +572,6 @@ export type MutationBankCardDeleteArgs = {
 
 export type MutationBankCardEditArgs = {
   data: EditCardType;
-};
-
-
-export type MutationChannelCreateJoinArgs = {
-  channelName: Scalars['String']['input'];
-  otherMembers: Array<InputMaybe<Scalars['String']['input']>>;
 };
 
 
@@ -715,12 +651,6 @@ export type MutationSettingEditArgs = {
 };
 
 
-export type MutationTextMessageSendArgs = {
-  channelIdentifier: Scalars['String']['input'];
-  textMessage: Scalars['String']['input'];
-};
-
-
 export type MutationTourAddArgs = {
   data: TourAddInputType;
 };
@@ -769,7 +699,7 @@ export type MutationWalletWithdrawArgs = {
 /** Input type for editing an NGO. */
 export type NgoEditInputType = {
   /** Address of the NGO. */
-  address?: InputMaybe<Scalars['String']['input']>;
+  address: Scalars['String']['input'];
   /** Base64-encoded image. */
   base64Image?: InputMaybe<Scalars['String']['input']>;
   /** contact number of the NGO. */
@@ -780,8 +710,10 @@ export type NgoEditInputType = {
   email?: InputMaybe<Scalars['String']['input']>;
   /** Type of the NGO. */
   kind?: InputMaybe<Scalars['String']['input']>;
+  /** Phone number of the NGO. */
+  phoneNumber: Scalars['String']['input'];
   /** Title of the NGO. */
-  title?: InputMaybe<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
 };
 
 /** Type representing an image with different sizes for an NGO. */
@@ -847,19 +779,8 @@ export type NgoQueryType = {
   /** List of tour transactions associated with the NGO. */
   tourTransactionSet?: Maybe<Array<Maybe<TourTransactionQueryType>>>;
   user?: Maybe<UserQueryType>;
-  verifyDescription?: Maybe<Scalars['String']['output']>;
   /** Wallet field related to the NGO */
   wallet?: Maybe<UserWalletType>;
-};
-
-/**
- * GraphQL Subscription for new chat messages.
- * This subscription allows clients to listen for new messages on a specified channel.
- */
-export type OnNewMessage = {
-  __typename?: 'OnNewMessage';
-  channelIdentifier?: Maybe<Scalars['String']['output']>;
-  message?: Maybe<MessageQueryType>;
 };
 
 /**
@@ -1183,12 +1104,6 @@ export type Query = {
   bannerDetail?: Maybe<BannerQueryType>;
   bannerList?: Maybe<BannerListType>;
   categoryList?: Maybe<CategoryListType>;
-  /** Query to retrieve a channel details. */
-  channelDetail?: Maybe<ChannelQueryType>;
-  /** Query to retrieve a paginated list of channels. */
-  channelList?: Maybe<ChannelListType>;
-  /** Query to retrieve a paginated list of messages from a specified channel. */
-  getMessageList?: Maybe<MessageListType>;
   projectDetail?: Maybe<ProjectQueryType>;
   projectFacilityList?: Maybe<ProjectFacilityListType>;
   projectList?: Maybe<ProjectListType>;
@@ -1260,22 +1175,6 @@ export type QueryCategoryListArgs = {
   filter?: InputMaybe<CategoryFilterType>;
   page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryChannelDetailArgs = {
-  channelId?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryChannelListArgs = {
-  page?: InputMaybe<PageType>;
-};
-
-
-export type QueryGetMessageListArgs = {
-  channelIdentifier: Scalars['String']['input'];
-  page?: InputMaybe<PageType>;
 };
 
 
@@ -1563,16 +1462,6 @@ export type StatusQueryType = {
   isActive?: Maybe<Scalars['Boolean']['output']>;
   /** Transaction status step. */
   step?: Maybe<Scalars['String']['output']>;
-};
-
-export type Subscription = {
-  __typename?: 'Subscription';
-  onNewMessage?: Maybe<OnNewMessage>;
-};
-
-
-export type SubscriptionOnNewMessageArgs = {
-  channelIdentifier: Scalars['String']['input'];
 };
 
 export enum TagFilterEnum {
@@ -2082,7 +1971,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
+  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -2448,7 +2337,7 @@ export type ProjectListSearchQueryVariables = Exact<{
 }>;
 
 
-export type ProjectListSearchQuery = { __typename?: 'Query', projectList?: { __typename?: 'ProjectListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, discount?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null> | null } | null };
+export type ProjectListSearchQuery = { __typename?: 'Query', projectList?: { __typename?: 'ProjectListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, discount?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null> | null } | null };
 
 export type ProjectListQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
@@ -4457,6 +4346,8 @@ export const ProjectListSearchDocument = gql`
       discount
       accommodation {
         id
+        lat
+        lng
         address
         avatarS3 {
           small

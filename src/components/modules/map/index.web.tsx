@@ -1,18 +1,20 @@
-import { ExpoLeaflet } from "expo-leaflet";
-import { ExpoLeafletProps } from "expo-leaflet/web/src/ExpoLeaflet.types";
 import { ReactNode } from "react";
+import { ExpoLeaflet } from "expo-leaflet";
 import { Alert, StyleSheet, View } from "react-native";
+import { ExpoLeafletProps } from "expo-leaflet/web/src/ExpoLeaflet.types";
 
 export type MapPropsType = ExpoLeafletProps & {
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
   onMoveEnd?: () => { lat: number; lng: number };
-  topLeftContent: ReactNode;
-  topCenterContent: ReactNode;
-  topRightContent: ReactNode;
-  bottomLeftContent: ReactNode;
-  bottomCenterContent: ReactNode;
-  bottomRightContent: ReactNode;
+  onMarkerClick?: FunctionConstructor;
+  centerContent?: ReactNode;
+  topLeftContent?: ReactNode;
+  topCenterContent?: ReactNode;
+  topRightContent?: ReactNode;
+  bottomLeftContent?: ReactNode;
+  bottomCenterContent?: ReactNode;
+  bottomRightContent?: ReactNode;
 };
 
 const Map = ({
@@ -24,6 +26,7 @@ const Map = ({
   zoom = 5,
   topLeftContent = <View></View>,
   topCenterContent = <View></View>,
+  centerContent = <View></View>,
   topRightContent = <View></View>,
   bottomLeftContent = <View></View>,
   bottomCenterContent = <View></View>,
@@ -41,6 +44,7 @@ const Map = ({
         <View>{topCenterContent}</View>
         <View>{topRightContent}</View>
       </View>
+      <View style={[style.center]}>{centerContent}</View>
       <View style={[style.row, style.bottomRow]}>
         <View>{bottomLeftContent}</View>
         <View>{bottomCenterContent}</View>
@@ -67,13 +71,14 @@ const Map = ({
           onMessage={message => {
             switch (message.tag) {
               case "onMapMarkerClicked":
-                Alert.alert(`Map Marker Touched, ID: ${message.mapMarkerId || "unknown"}`);
+                props.onMarkerClick?.(message.mapMarkerId);
                 break;
               case "onMapClicked":
                 Alert.alert(`Map Touched at:`, `${message.location.lat}, ${message.location.lng}`);
                 break;
               case "onMoveEnd":
                 onMoveEnd?.(message.mapCenter);
+
                 break;
               default:
                 if (["onMove"].includes(message.tag)) {
@@ -95,18 +100,24 @@ const style = StyleSheet.create({
     position: "relative",
   },
   map: {
+    zIndex: 1,
     height: 158,
     width: "100%",
+  },
+  center: {
     zIndex: 1,
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%,-50%)",
   },
   row: {
-    position: "absolute",
-    display: "flex",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    zIndex: 1,
     left: 0,
+    zIndex: 1,
     width: "100%",
+    display: "flex",
+    position: "absolute",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   topRow: {
     top: 0,

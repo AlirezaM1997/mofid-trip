@@ -1,23 +1,15 @@
 import React from "react";
-import { Text } from "@rneui/themed";
 import { router } from "expo-router";
-import { RootState } from "@src/store";
-import { useSelector } from "react-redux";
+import { Text, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { useTourListSearchQuery } from "@src/gql/generated";
 import TourSearchCard from "@modules/tour/card/search-card";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet } from "react-native";
 
-const TourSearch = () => {
+const SearchTour = ({ data, loading }) => {
+  const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { filterSlice } = useSelector((state: RootState) => state);
 
-  const { data, loading } = useTourListSearchQuery({
-    notifyOnNetworkStatusChange: true,
-    variables: filterSlice,
-  });
-
-  if (!data || loading) return <ActivityIndicator />;
+  if (!data || loading) return <ActivityIndicator size="large" color={theme.colors.primary} />;
 
   if (!data?.tourList.data.length) return <Text center>{tr("nothing found")}</Text>;
 
@@ -39,4 +31,4 @@ const styles = StyleSheet.create({
   contentContainerStyle: { gap: 15, padding: 1 },
 });
 
-export default TourSearch;
+export default SearchTour;

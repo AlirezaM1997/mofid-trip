@@ -4,15 +4,15 @@ import useTranslation from "@src/hooks/translation";
 import { Image, Text, useTheme } from "@rneui/themed";
 import { useFormatPrice } from "@src/hooks/localization";
 import { Platform, StyleSheet, View } from "react-native";
-import { AccommodationQueryType, TourQueryType } from "@src/gql/generated";
+import { AccommodationQueryType, TourListSearchQuery } from "@src/gql/generated";
 
-const TourSearchCard = ({ tour }: { tour: TourQueryType }) => {
+const TourSearchCard = ({ tour }: { tour: TourListSearchQuery["tourList"]["data"][number] }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { formatPrice } = useFormatPrice();
 
   return (
-    <View style={styles.card}>
+    <View style={styles.card(theme)}>
       <Image
         style={styles.imageStyle}
         source={
@@ -51,7 +51,7 @@ const TourSearchCard = ({ tour }: { tour: TourQueryType }) => {
 };
 
 const styles = StyleSheet.create({
-  card: {
+  card: theme => ({
     gap: 10,
     width: 226,
     height: 86,
@@ -59,10 +59,11 @@ const styles = StyleSheet.create({
     elevation: 1,
     borderRadius: 10,
     flexDirection: "row",
+    backgroundColor: theme.colors.white,
     ...Platform.select({
       web: { boxShadow: "0 0 3px #12121233" },
     }),
-  },
+  }),
   imageStyle: {
     width: 64,
     height: 64,
