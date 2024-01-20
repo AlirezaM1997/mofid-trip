@@ -2408,7 +2408,7 @@ export type MyNgoDetailVerifyQuery = { __typename?: 'Query', NGODetail?: { __typ
 export type MyNgoDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyNgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, kind?: string | null, title: string, address?: string | null, isVerify?: boolean | null, description?: string | null, contactNumber?: string | null, user?: { __typename?: 'UserQueryType', id: string, email: string, phoneNumber?: string | null } | null, projectSet?: Array<{ __typename: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusStep?: ProjectStatusEnum | null, statusActivation?: boolean | null, createdDate?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, capacity?: { __typename?: 'CapacityQueryType', id: string } | null, transactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string } | null> | null, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null } | null> | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusStep?: TourTourStatusStepChoices | null, statusActivation: boolean, createdDate?: any | null, modifiedDate?: any | null, origin?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: boolean } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null } | null> | null, tourTransactionSet?: Array<{ __typename?: 'TourTransactionQueryType', id: string, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, tourPackage?: { __typename?: 'TourPackageType', tour?: { __typename?: 'TourQueryType', id: string, title: string } | null } | null, tourGuests?: Array<{ __typename?: 'TourGuestQueryType', id: string, firstname?: string | null, lastname?: string | null, phoneNumber?: string | null, avatarS3?: Array<{ __typename?: 'TourGuestImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null> | null } | null> | null, projectTransactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', dateEnd?: any | null, dateStart?: any | null, id: string, owner?: { __typename?: 'UserQueryType', phoneNumber?: string | null, fullname?: string | null, id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, guest?: { __typename?: 'ProjectGuestQueryType', guestNumber?: number | null, gender?: string | null, childAccept?: boolean | null } | null, project?: { __typename?: 'ProjectQueryType', name?: string | null, id: string } | null, status?: { __typename?: 'StatusQueryType', isActive?: boolean | null, step?: string | null } | null } | null> | null } | null };
+export type MyNgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, kind?: string | null, title: string, address?: string | null, isVerify?: boolean | null, description?: string | null, contactNumber?: string | null, lat?: number | null, lng?: number | null, user?: { __typename?: 'UserQueryType', id: string, email: string, phoneNumber?: string | null } | null, projectSet?: Array<{ __typename: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusStep?: ProjectStatusEnum | null, statusActivation?: boolean | null, createdDate?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, capacity?: { __typename?: 'CapacityQueryType', id: string } | null, transactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string } | null> | null, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null } | null> | null, bannerS3?: { __typename?: 'NGOImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null };
 
 export type MyUserDetailProjectSetEditQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3843,138 +3843,17 @@ export const MyNgoDetailDocument = gql`
       }
       __typename
     }
-    tourSet {
-      id
-      title
-      description
-      startTime
-      endTime
-      statusStep
-      statusActivation
-      createdDate
-      modifiedDate
-      origin {
-        ... on AccommodationQueryType {
-          id
-          province
-          city
-          address
-          lat
-          lng
-          avatarS3 {
-            large
-            medium
-            small
-          }
-        }
-        ... on ProjectQueryType {
-          id
-        }
-      }
-      destination {
-        ... on AccommodationQueryType {
-          id
-          province
-          city
-          address
-          lat
-          lng
-          avatarS3 {
-            large
-            medium
-            small
-          }
-        }
-        ... on ProjectQueryType {
-          id
-        }
-        __typename
-      }
-      avatarS3 {
-        large
-        medium
-        small
-      }
-      packages {
-        id
-        title
-        price
-      }
-      capacity {
-        id
-        male
-        female
-        child
-      }
-      facilities {
-        id
-        faName
-        enName
-        arName
-      }
+    bannerS3 {
+      large
+      medium
+      small
     }
-    tourTransactionSet {
-      id
-      status {
-        isActive
-        step
-      }
-      owner {
-        avatarS3 {
-          large
-          medium
-          small
-        }
-        id
-        fullname
-        phoneNumber
-      }
-      tourPackage {
-        tour {
-          id
-          title
-        }
-      }
-      tourGuests {
-        avatarS3 {
-          large
-          medium
-          small
-        }
-        id
-        firstname
-        lastname
-        phoneNumber
-      }
-    }
-    projectTransactionSet {
-      dateEnd
-      dateStart
-      id
-      owner {
-        phoneNumber
-        fullname
-        id
-        avatarS3 {
-          large
-          medium
-          small
-        }
-      }
-      guest {
-        guestNumber
-        gender
-        childAccept
-      }
-      project {
-        name
-        id
-      }
-      status {
-        isActive
-        step
-      }
-    }
+    contactNumber
+    description
+    isVerify
+    kind
+    lat
+    lng
   }
 }
     `;
