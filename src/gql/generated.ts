@@ -2082,7 +2082,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -2546,7 +2546,7 @@ export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionLi
 export type UserDetailProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDetailProfileQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, isNgo?: boolean | null, username: string, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string, verifyDescription?: string | null } | null } | null };
+export type UserDetailProfileQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, isNgo?: boolean | null, username: string, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string, title: string, verifyDescription?: string | null, avatarS3?: { __typename?: 'NGOImageType', small?: string | null } | null } | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5211,7 +5211,11 @@ export const UserDetailProfileDocument = gql`
     }
     ngo {
       id
+      title
       verifyDescription
+      avatarS3 {
+        small
+      }
     }
   }
 }

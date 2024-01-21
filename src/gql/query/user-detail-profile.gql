@@ -8,7 +8,11 @@ query userDetailProfile {
     }
     ngo {
       id
+      title
       verifyDescription
+      avatarS3 {
+        small
+      }
     }
   }
 }

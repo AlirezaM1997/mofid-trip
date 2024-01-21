@@ -67,7 +67,7 @@ const Profile = ({ userDetail }) => {
         <Container size={15}>
           <Pressable style={style.userInfo} onPress={handleNavigateToEditProfile}>
             {userDetail?.avatarS3?.small ? (
-              <Image style={style.userAvatar} source={{ uri: userDetail.avatarS3.small }} />
+              <Image style={style.userAvatar} source={{ uri: userDetail.ngo.avatarS3.small }} />
             ) : (
               <View style={style.userAvatar}>
                 <Feather name="user" size={24} color="black" />
@@ -76,9 +76,9 @@ const Profile = ({ userDetail }) => {
 
             <View style={style.userInf}>
               <Text heading2 numberOfLines={1}>
-                {localizeNumber(getFullName(userDetail)) || tr("No Name")}
+                {localizeNumber(userDetail.ngo.title) || tr("No Name")}
               </Text>
-              <Text>{localizeNumber(userDetail?.username)}</Text>
+              <Text>{localizeNumber(userDetail.username)}</Text>
             </View>
           </Pressable>
         </Container>

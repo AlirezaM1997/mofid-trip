@@ -1,26 +1,16 @@
+import BottomButtonLayout from "@components/layout/bottom-button";
 import { Feather } from "@expo/vector-icons";
-import { Button, Divider, Input, Text } from "@rneui/themed";
+import LoadingIndicator from "@modules/Loading-indicator";
+import { Button, Input } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
-import {
-  useMyNgoDetailQuery,
-  useNgoDetailQuery,
-  useNgoEditMutation,
-  useUserDetailQuery,
-  useUserEditMutation,
-} from "@src/gql/generated";
-import { SECONDARY_COLOR } from "@src/theme";
-import React, { useEffect, useRef, useState } from "react";
-import { Image, ScrollView, StyleSheet } from "react-native";
-import { Pressable, View } from "react-native";
-import Toast from "react-native-toast-message";
-import * as ImagePicker from "expo-image-picker";
-import { isBase64 } from "@src/helper/extra";
+import { useMyNgoDetailQuery, useNgoEditMutation } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
-import LoadingIndicator from "@modules/Loading-indicator";
+import * as ImagePicker from "expo-image-picker";
 import { Formik } from "formik";
+import React, { useRef } from "react";
+import { Image, Pressable, StyleSheet } from "react-native";
 import * as Yup from "yup";
-import BottomButtonLayout from "@components/layout/bottom-button";
 
 const Index = () => {
   const { tr } = useTranslation();
