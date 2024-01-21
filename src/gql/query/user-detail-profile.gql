@@ -6,5 +6,9 @@ query userDetailProfile {
     avatarS3 {
       small
     }
+    ngo {
+      id
+      verifyDescription
+    }
   }
 }

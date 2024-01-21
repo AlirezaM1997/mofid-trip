@@ -10,12 +10,12 @@ import { getFullName } from "@src/helper/extra";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "@src/theme";
+import NgoAuthentication from "@modules/ngo/ngoAuthentication";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
 import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import { LanguageChoiceEnum, useSettingEditMutation } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import NgoAuthentication from "@modules/ngo/ngoAuthentication";
 
 const Profile = ({ userDetail }) => {
   const { signOut } = useSession();
@@ -65,15 +65,6 @@ const Profile = ({ userDetail }) => {
       <ScrollView>
         <WhiteSpace size={30} />
         <Container size={15}>
-          {!userDetail.ngo.isVerify && (
-            <NgoAuthentication
-              isVerify={userDetail.ngo.isVerify}
-              description={userDetail.ngo.verifyDescription}
-            />
-          )}
-
-          <WhiteSpace size={24} />
-
           <Pressable style={style.userInfo} onPress={handleNavigateToEditProfile}>
             {userDetail?.avatarS3?.small ? (
               <Image style={style.userAvatar} source={{ uri: userDetail.avatarS3.small }} />
@@ -91,9 +82,18 @@ const Profile = ({ userDetail }) => {
             </View>
           </Pressable>
         </Container>
-        <WhiteSpace size={30} />
+        <WhiteSpace size={26} />
 
         <Container>
+          {!userDetail.ngo.isVerify && (
+            <NgoAuthentication
+              isVerify={userDetail.ngo.isVerify}
+              description={userDetail.ngo.verifyDescription}
+            />
+          )}
+
+          <WhiteSpace size={24} />
+
           <Text type="grey3">{tr("Account")}</Text>
         </Container>
         <ListItem onPress={handleNavigateToEditProfile}>
@@ -346,13 +346,7 @@ const style = StyleSheet.create({
     width: 174,
     height: 238,
   },
-  buttonContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-    gap: 10,
-  },
+
   buttonItem: {
     flex: 1,
   },
