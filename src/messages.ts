@@ -173,10 +173,10 @@ export const messages = {
     fa_ir: "شماره تماس",
     en_us: "Phone number",
   },
-  "host name": {
+  "ngo name": {
     ar: "اسم المجموعة",
     fa_ir: "نام مجموعه",
-    en_us: "Host name",
+    en_us: "ngo name",
   },
   "must be a number": {
     ar: "يجب أن يكون رقما",
@@ -495,6 +495,11 @@ export const messages = {
     ar: "تقديم الطلب",
     fa_ir: "ارسال درخواست",
     en_us: "submit request",
+  },
+  submit: {
+    ar: "تقديم",
+    fa_ir: "ارسال",
+    en_us: "submit",
   },
   "your initial request will be approved or rejected by the tour after it is submitted": {
     ar: "ستتم الموافقة على طلبك الأولي أو رفضه بواسطة الجولة بعد تقديمه",
@@ -1492,6 +1497,21 @@ export const messages = {
     fa_ir: "شماره تماس",
     en_us: "Call",
   },
+  "ngo type": {
+    ar: "نداریم",
+    fa_ir: "نوع مجموعه",
+    en_us: "ngo type",
+  },
+  "mobile phone number": {
+    ar: "رقم الهاتف الجوال",
+    fa_ir: "شماره تلفن همراه",
+    en_us: "mobile phone number",
+  },
+  "landline number": {
+    ar: "رقم الهاتف الثابت",
+    fa_ir: "شماره تلفن ثابت",
+    en_us: "landline number",
+  },
   contact: {
     ar: "اتصال",
     fa_ir: "تماس",
@@ -2172,16 +2192,23 @@ export const messages = {
     fa_ir: "احراز هویت",
     en_us: "Authentication",
   },
-  "if your collection is not authenticated by the admin, it will not be approved. please authenticate as soon as possible.": {
-    ar: "إذا لم تتم المصادقة على مجموعتك من قبل المسؤول، فلن تتم الموافقة عليها. يرجى المصادقة في أقرب وقت ممكن.",
-    fa_ir:
-      "در صورت احراز نشدن هویت مجموعه شما توسط ادمین ، تایید نخواهد شد. لطفا در سریعترین زمان اقدام به احراز هویت کنید.",
-    en_us: "if your collection is not authenticated by the admin, it will not be approved. please authenticate as soon as possible.",
-  },
+  "if your collection is not authenticated by the admin, it will not be approved. please authenticate as soon as possible.":
+    {
+      ar: "إذا لم تتم المصادقة على مجموعتك من قبل المسؤول، فلن تتم الموافقة عليها. يرجى المصادقة في أقرب وقت ممكن.",
+      fa_ir:
+        "در صورت احراز نشدن هویت مجموعه شما توسط ادمین ، تایید نخواهد شد. لطفا در سریعترین زمان اقدام به احراز هویت کنید.",
+      en_us:
+        "if your collection is not authenticated by the admin, it will not be approved. please authenticate as soon as possible.",
+    },
   "verify your ngo!": {
     ar: "التحقق من مجموعتك!",
     fa_ir: "مجموعه‌تان را احراز کنید!",
     en_us: "verify your ngo!",
+  },
+  "charity group, student ngo, cultural group or...": {
+    ar: "مجموعة مجتهدة، مجموعة من الباحثين المتميزين، مجموعة من الدورات التدريبية أو...",
+    fa_ir: "گروه جهادی، تشکل دانشجویی، مجموعه فرهنگی و یا...!",
+    en_us: "charity group, student ngo, cultural group or...",
   },
   chat: {
     ar: "رسالة",
@@ -2252,6 +2279,21 @@ export const messages = {
     ar: "الإسم الأول مطلوب",
     fa_ir: "لطفا نام را وارد کنید",
     en_us: "First name is required",
+  },
+  "ngo name is required": {
+    ar: "الإسم الأول مطلوب",
+    fa_ir: "نام مجموعه اجباری است",
+    en_us: "ngo name is required",
+  },
+  "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published": {
+    ar: "ندارد",
+    fa_ir: "درخواست شما توسط ادمین در حال بررسی می‌باشد، در صورت تایید هویت، تور شما / هاست شما منتشر خواهد شد",
+    en_us: "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published",
+  },
+  "your ngo authentication request has been successfully submitted": {
+    ar: "الإسم الأول مطلوب",
+    fa_ir: "درخواست احراز هویت مجموعه شما با موفقیت ارسال شد",
+    en_us: "Your ngo authentication request has been successfully submitted",
   },
   "display name is required": {
     ar: "الإسم الأول مطلوب",
@@ -2521,16 +2563,13 @@ export const messages = {
     fa_ir: "آدرس اجباری است",
     en_us: "Address is required",
   },
+
   "select on map": {
     ar: "حدد على الخريطة",
     fa_ir: "انتخاب از روی نقشه",
     en_us: "Select On Map",
   },
-  submit: {
-    ar: "يُقدِّم",
-    fa_ir: "ثبت",
-    en_us: "Submit",
-  },
+
   "the tour is one day": {
     ar: "الجولة يوم واحد",
     fa_ir: "یک روزه است",
@@ -2663,6 +2702,21 @@ export const messages = {
     ar: "يخلق",
     fa_ir: "ایجاد",
     en_us: "Create",
+  },
+  "invalid email address": {
+    ar: "نداریم",
+    fa_ir: "لطفا ایمیل را به درستی وارد کنید",
+    en_us: "invalid email address",
+  },
+  "type of ngo is required": {
+    ar: "اسم النوع مطلوب",
+    fa_ir: "نوع تشکل ضروری است",
+    en_us: "type of ngo is required",
+  },
+  "description ...": {
+    ar: "نداریم",
+    fa_ir: "... توضیحات",
+    en_us: "description ...",
   },
   "host type": {
     ar: "نوع المضيف",
@@ -2876,19 +2930,39 @@ export const messages = {
         "It appears that you do not have permission to access this page. Access the system administrator for access.",
     },
   "user login": {
-    ar: "",
+    ar: "ندارد",
     fa_ir: "ورود کاربر",
     en_us: "User Login",
   },
   "ngo login": {
-    ar: "",
+    ar: "ندارد",
     fa_ir: "ورود تشکل",
     en_us: "NGO Login",
   },
   "sms verification": {
-    ar: "",
+    ar: "ندارد",
     fa_ir: "اعتبارسنجی پیامکی",
     en_us: "SMS Verification",
+  },
+  "phone number is not valid": {
+    ar: "ندارد",
+    fa_ir: "شماره تلفن نا معتبر است",
+    en_us: "Phone number is not valid",
+  },
+  "phone number is required": {
+    ar: "ندارد",
+    fa_ir: "شماره تلفن لازم است",
+    en_us: "Phone number is required",
+  },
+  "contact number": {
+    ar: "ندارد",
+    fa_ir: "شماره تلفن",
+    en_us: "Contact Number",
+  },
+  "edit ngo": {
+    ar: "ندارد",
+    fa_ir: "ویرایش تشکل",
+    en_us: "Edit NGO",
   },
   "basic info": {
     ar: "",
@@ -2900,9 +2974,14 @@ export const messages = {
     fa_ir: "لطفا نام تشکل خود را وارد کنید",
     en_us: "Enter the name of your organization",
   },
-  "title": {
+  title: {
     ar: "عنوان",
     fa_ir: "عنوان",
     en_us: "Title",
+  },
+  "add your comment": {
+    ar: "نظر دهید",
+    fa_ir: "نظر دهید",
+    en_us: "Add your comment",
   },
 };

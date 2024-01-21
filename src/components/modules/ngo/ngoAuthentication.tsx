@@ -1,9 +1,10 @@
+import { Text } from "@rneui/themed";
+import { router } from "expo-router";
 import Container from "@atoms/container";
+import { StyleSheet } from "react-native";
 import WhiteSpace from "@atoms/white-space";
 import { Button, useTheme } from "@rneui/themed";
-import { Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { StyleSheet, View } from "react-native";
 
 const NgoAuthentication = () => {
   const { tr } = useTranslation();
@@ -21,7 +22,7 @@ const NgoAuthentication = () => {
         )}
       </Text>
       <WhiteSpace size={16} />
-      <Button size="sm" color="secondary">
+      <Button size="sm" color="secondary" onPress={() => router.push("ngo-authentication")}>
         {tr("authentication")}
       </Button>
     </Container>

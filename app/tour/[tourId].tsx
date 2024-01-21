@@ -26,6 +26,7 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import { useSession } from "@src/context/auth";
 import ShareReportDropDown from "@modules/share-report-dropdown";
 import openMapHandler from "@src/helper/opem-map";
+import NgoAuthentication from "@modules/ngo/ngoAuthentication";
 
 export default () => {
   const isRtl = useIsRtl();
@@ -39,6 +40,7 @@ export default () => {
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
   const { session } = useSession();
   const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
+
   const { loading, data } = useTourDetailQuery({
     variables: {
       pk: tourId as string,

@@ -1,6 +1,7 @@
 query myUserDetailProjectSet {
   userDetail {
     id
+    isNgo
     ngo {
       isVerify
     }
@@ -46,12 +47,7 @@ query myUserDetailProjectSet {
         id
       }
       createdDate
-      capacity {
-        id
-        # gender
-        # childAccept
-        # capacityNumber
-      }
+
       transactionSet {
         id
       }
