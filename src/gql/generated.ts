@@ -522,12 +522,7 @@ export type Mutation = {
    * Mutation to create a new channel.
    * This mutation is responsible for creating a new channel in the system and adding specified members to it.
    */
-  chatChannelCreateJoin?: Maybe<ResponseBase>;
-  /**
-   * Mutation to send a text message to a channel.
-   * This mutation handles sending a message to a specified channel and broadcasts it to all channel members.
-   */
-  chatTextMessageSend?: Maybe<ResponseBase>;
+  channelCreateJoin?: Maybe<ResponseBase>;
   /** A Graphene mutation for adding comments to different types of objects like Projects, Tours, or other Comments. */
   commentAdd?: Maybe<ResponseBase>;
   /**
@@ -572,6 +567,11 @@ export type Mutation = {
    * This mutation is used to edit user settings, including the selected language.
    */
   settingEdit?: Maybe<ResponseBase>;
+  /**
+   * Mutation to send a text message to a channel.
+   * This mutation handles sending a message to a specified channel and broadcasts it to all channel members.
+   */
+  textMessageSend?: Maybe<ResponseBase>;
   tourAdd?: Maybe<ResponseBase>;
   /** Mutation to edit an existing tour. */
   tourEdit?: Maybe<ResponseBase>;
@@ -633,15 +633,9 @@ export type MutationBankCardEditArgs = {
 };
 
 
-export type MutationChatChannelCreateJoinArgs = {
+export type MutationChannelCreateJoinArgs = {
   channelName: Scalars['String']['input'];
   otherMembers: Array<InputMaybe<Scalars['String']['input']>>;
-};
-
-
-export type MutationChatTextMessageSendArgs = {
-  channelIdentifier: Scalars['String']['input'];
-  textMessage: Scalars['String']['input'];
 };
 
 
@@ -718,6 +712,12 @@ export type MutationReportAddArgs = {
 
 export type MutationSettingEditArgs = {
   data?: InputMaybe<SettingEditInputType>;
+};
+
+
+export type MutationTextMessageSendArgs = {
+  channelIdentifier: Scalars['String']['input'];
+  textMessage: Scalars['String']['input'];
 };
 
 
@@ -847,6 +847,7 @@ export type NgoQueryType = {
   /** List of tour transactions associated with the NGO. */
   tourTransactionSet?: Maybe<Array<Maybe<TourTransactionQueryType>>>;
   user?: Maybe<UserQueryType>;
+  verifyDescription?: Maybe<Scalars['String']['output']>;
   /** Wallet field related to the NGO */
   wallet?: Maybe<UserWalletType>;
 };
@@ -1182,6 +1183,8 @@ export type Query = {
   bannerDetail?: Maybe<BannerQueryType>;
   bannerList?: Maybe<BannerListType>;
   categoryList?: Maybe<CategoryListType>;
+  /** Query to retrieve a channel details. */
+  channelDetail?: Maybe<ChannelQueryType>;
   /** Query to retrieve a paginated list of channels. */
   channelList?: Maybe<ChannelListType>;
   /** Query to retrieve a paginated list of messages from a specified channel. */
@@ -1257,6 +1260,11 @@ export type QueryCategoryListArgs = {
   filter?: InputMaybe<CategoryFilterType>;
   page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryChannelDetailArgs = {
+  channelId?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -1559,11 +1567,11 @@ export type StatusQueryType = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  chatOnNewMessage?: Maybe<OnNewMessage>;
+  onNewMessage?: Maybe<OnNewMessage>;
 };
 
 
-export type SubscriptionChatOnNewMessageArgs = {
+export type SubscriptionOnNewMessageArgs = {
   channelIdentifier: Scalars['String']['input'];
 };
 
@@ -2514,6 +2522,11 @@ export type TourTransactionListQueryVariables = Exact<{
 
 
 export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionList?: { __typename?: 'TourTransactionListType', count?: number | null, data?: Array<{ __typename?: 'TourTransactionQueryType', id: string, description?: string | null, invoiceNumber?: any | null, tourguestSet: Array<{ __typename?: 'TourGuestQueryType', id: string }>, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, tourPackage?: { __typename?: 'TourPackageType', price: number, tour?: { __typename?: 'TourQueryType', id: string, startTime: any, endTime: any, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null> | null } | null };
+
+export type UserDetailProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserDetailProfileQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, isNgo?: boolean | null, username: string, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5048,6 +5061,45 @@ export function useTourTransactionListLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type TourTransactionListQueryHookResult = ReturnType<typeof useTourTransactionListQuery>;
 export type TourTransactionListLazyQueryHookResult = ReturnType<typeof useTourTransactionListLazyQuery>;
 export type TourTransactionListQueryResult = Apollo.QueryResult<TourTransactionListQuery, TourTransactionListQueryVariables>;
+export const UserDetailProfileDocument = gql`
+    query userDetailProfile {
+  userDetail {
+    id
+    isNgo
+    username
+    avatarS3 {
+      small
+    }
+  }
+}
+    `;
+
+/**
+ * __useUserDetailProfileQuery__
+ *
+ * To run a query within a React component, call `useUserDetailProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserDetailProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserDetailProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserDetailProfileQuery(baseOptions?: Apollo.QueryHookOptions<UserDetailProfileQuery, UserDetailProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserDetailProfileQuery, UserDetailProfileQueryVariables>(UserDetailProfileDocument, options);
+      }
+export function useUserDetailProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserDetailProfileQuery, UserDetailProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserDetailProfileQuery, UserDetailProfileQueryVariables>(UserDetailProfileDocument, options);
+        }
+export type UserDetailProfileQueryHookResult = ReturnType<typeof useUserDetailProfileQuery>;
+export type UserDetailProfileLazyQueryHookResult = ReturnType<typeof useUserDetailProfileLazyQuery>;
+export type UserDetailProfileQueryResult = Apollo.QueryResult<UserDetailProfileQuery, UserDetailProfileQueryVariables>;
 export const UserDetailDocument = gql`
     query userDetail {
   userDetail {

@@ -1,0 +1,10 @@
+query userDetailProfile {
+  userDetail {
+    id
+    isNgo
+    username
+    avatarS3 {
+      small
+    }
+  }
+}

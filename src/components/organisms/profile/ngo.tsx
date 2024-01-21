@@ -1,56 +1,37 @@
+import { router } from "expo-router";
+import { RootState } from "@src/store";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { APP_VERSION } from "@src/settings";
 import { Feather } from "@expo/vector-icons";
-import LoadingIndicator from "@modules/Loading-indicator";
-import Authentication from "@modules/authentication";
-import { useIsFocused } from "@react-navigation/native";
-import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
+import { useSession } from "@src/context/auth";
+import useIsRtl from "@src/hooks/localization";
+import { getFullName } from "@src/helper/extra";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
-import { useSession } from "@src/context/auth";
-import {
-  LanguageChoiceEnum,
-  useSettingEditMutation,
-  useUserDetailLazyQuery
-} from "@src/gql/generated";
-import { getFullName } from "@src/helper/extra";
-import useSettingDetailTable from "@src/hooks/db/setting-detail";
-import useIsRtl from "@src/hooks/localization";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { APP_VERSION } from "@src/settings";
-import { RootState } from "@src/store";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "@src/theme";
-import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
+import useSettingDetailTable from "@src/hooks/db/setting-detail";
 import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
+import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
+import { LanguageChoiceEnum, useSettingEditMutation } from "@src/gql/generated";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import NgoAuthentication from "@modules/ngo/ngoAuthentication";
 
-
-const Profile = () => {
-  const { session } = useSession();
+const Profile = ({ userDetail }) => {
   const { signOut } = useSession();
   const isRtl = useIsRtl();
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
-  const [
-    _,
-    {
-      refetch: refetchUserDetail,
-      data: dataUserDetail,
-    },
-  ] = useUserDetailLazyQuery({
-    fetchPolicy: "network-only",
-    notifyOnNetworkStatusChange: true,
-  });
+
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
-  const userId = useSelector((state: RootState) => state.userSlice?.loginData?.metadata?.id);
+  const userId = useSelector((state: RootState) => state.userSlice?.userDetail?.id);
   const [settingEdit] = useSettingEditMutation({
     notifyOnNetworkStatusChange: true,
   });
   const { syncTable } = useSettingDetailTable();
   const [isVisibleLogout, setIsVisibleLogout] = useState(false);
   const { localizeNumber } = useLocalizedNumberFormat();
-
-  const isFocused = useIsFocused();
 
   const handleNavigateToEditProfile = () => router.push("/edit-ngo");
 
@@ -79,21 +60,20 @@ const Profile = () => {
     signOut();
   };
 
-  useEffect(() => {
-    refetchUserDetail();
-  }, [isFocused]);
-
-  if (!session) return <Authentication />;
-
-  if (!dataUserDetail) return <LoadingIndicator />;
-
-  const userDetail = dataUserDetail.userDetail;
-
   return (
     <>
       <ScrollView>
         <WhiteSpace size={30} />
         <Container size={15}>
+          {!userDetail.ngo.isVerify && (
+            <NgoAuthentication
+              isVerify={userDetail.ngo.isVerify}
+              description={userDetail.ngo.verifyDescription}
+            />
+          )}
+
+          <WhiteSpace size={24} />
+
           <Pressable style={style.userInfo} onPress={handleNavigateToEditProfile}>
             {userDetail?.avatarS3?.small ? (
               <Image style={style.userAvatar} source={{ uri: userDetail.avatarS3.small }} />
