@@ -1,65 +1,72 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Button, SearchBar as ReactNativeElementsSearchBar } from "@rneui/themed";
-import { Feather } from "@expo/vector-icons";
-import { Pressable, StyleSheet, View } from "react-native";
-import FilterBottomDrawer from "../filter-bottom-drawer";
-import { useIsFocused } from "@react-navigation/native";
-import useTranslation from "@src/hooks/translation";
+import { RootState } from "@src/store";
+import debounce from "lodash/debounce";
 import useIsRtl from "@src/hooks/localization";
-import { Platform } from "react-native";
 import { router, usePathname } from "expo-router";
+import { setSearch } from "@src/slice/filter-slice";
+import useTranslation from "@src/hooks/translation";
+import { useDispatch, useSelector } from "react-redux";
+import { Feather, AntDesign } from "@expo/vector-icons";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { SearchBar as ReactNativeElementsSearchBar, SearchBarProps, useTheme } from "@rneui/themed";
 
-const SearchBar = ({ onFocus, onChange, onChangeText, value }) => {
-  const pathName = usePathname();
-  const { tr } = useTranslation();
+const SearchBar = ({ onFocus, showSearchText = true }) => {
   const isRtl = useIsRtl();
-  const [isVisible, setIsVisible] = useState(false);
-  const isFocused = useIsFocused();
-  const inputRef = useRef(null);
+  const { theme } = useTheme();
+  const pathName = usePathname();
+  const dispatch = useDispatch();
+  const { tr } = useTranslation();
+  const searchRef = useRef<TextInput & SearchBarProps>();
+  const { search } = useSelector((state: RootState) => state.filterSlice);
 
-  // useEffect(() => {
-  //   // if (pathName === "/search") {
-  //   //   inputRef.current.focus();
-  //   // }
-  // }, [isFocused]);
+  useEffect(() => {
+    if (pathName === "/search") searchRef.current.focus();
+  }, [pathName]);
 
-  const right = { right: 35 };
-  const left = Platform.select({
-    web: {
-      left: 35,
-    },
-    android: {
-      right: 35,
-    },
-    ios: {
-      right: 35,
-    },
-  });
+  const [value, setValue] = useState(showSearchText ? search : "");
+
+  const debouncedOnChange = useMemo(
+    () => debounce(t => dispatch(setSearch(t.trim())), 1500),
+    [search]
+  );
+
+  const handleChange = t => {
+    setValue(t);
+    debouncedOnChange(t);
+  };
+
+  const handleClear = () => {
+    handleChange("");
+    searchRef.current.focus();
+  };
 
   return (
     <View>
-      {pathName !== "/search" && <Pressable onPress={() => router.push("/search")} style={styles.pressHandler}></Pressable>}
-      <Button
-        type="clear"
-        containerStyle={[styles.filterContainerStyle, isRtl ? left : right]}
-        buttonStyle={styles.filterButtonStyle}
-        onPress={() => setIsVisible(true)}>
-        <Feather name="filter" size={19} color="#ADAFAE" />
-      </Button>
+      {pathName !== "/search" && (
+        <Pressable onPress={() => router.push("/search")} style={styles.pressHandler}></Pressable>
+      )}
       <ReactNativeElementsSearchBar
-        ref={inputRef}
-        placeholder={tr("Anywhere You Want")}
-        searchIcon={<Feather name="search" size={24} color="#ADAFAE" />}
-        clearIcon={<></>}
+        value={value}
+        ref={searchRef}
+        onFocus={onFocus}
+        clearIcon={
+          value && (
+            <AntDesign
+              size={18}
+              name="closecircle"
+              onPress={handleClear}
+              style={styles.clearIcon}
+              color={theme.colors.secondary}
+            />
+          )
+        }
         showCancel={false}
+        placeholder={tr("search")}
+        onChangeText={handleChange}
         containerStyle={{ borderTopWidth: 0 }}
         inputStyle={{ direction: isRtl ? "rtl" : "ltr" }}
-        onChange={onChange}
-        onFocus={onFocus}
-        onChangeText={onChangeText}
-        value={value}
+        searchIcon={<Feather name="search" size={22} color={theme.colors.grey2} />}
       />
-      <FilterBottomDrawer isVisible={pathName === "/search" && isVisible} setIsVisible={setIsVisible} />
     </View>
   );
 };
@@ -72,31 +79,17 @@ SearchBar.defaultProps = {
 };
 
 const styles = StyleSheet.create({
+  clearIcon: {
+    marginLeft: 6,
+  },
   pressHandler: {
-    backgroundColor: "transparent",
-    width: "100%",
-    height: "100%",
-    position: "absolute",
     top: 0,
     left: 0,
     zIndex: 2,
-  },
-  filterButtonStyle: {
-    backgroundColor: "transparent",
-    borderWidth: 0,
-    elevation: 0,
-    width: 37,
-    height: 37,
-  },
-  filterContainerStyle: {
+    width: "100%",
+    height: "100%",
     position: "absolute",
-    top: 35,
-    zIndex: 1,
-    width: 37,
-    height: 37,
-    borderWidth: 0,
-    elevation: 0,
-    borderRadius: 50,
+    backgroundColor: "transparent",
   },
 });
 

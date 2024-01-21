@@ -1,9 +1,10 @@
-import { Text } from "@rneui/themed";
+import { Colors, Text } from "@rneui/themed";
 import { Pressable, StyleSheet, View } from "react-native";
 
 type TitleWithActionPropsType = {
   size?: string;
   title: string;
+  color?: keyof Colors;
   actionTitle: string;
   onActionPress?: () => void;
 };
@@ -11,6 +12,7 @@ type TitleWithActionPropsType = {
 const TitleWithAction = ({
   title,
   actionTitle,
+  color = "primary",
   size = "heading2",
   onActionPress,
 }: TitleWithActionPropsType) => {
@@ -21,6 +23,8 @@ const TitleWithAction = ({
       heading2: { heading2: true },
       subtitle1: { subtitle1: true },
       subtitle2: { subtitle2: true },
+      caption: { caption: true },
+      body2: { body2: true },
     };
     if (size in obj) return obj[size];
   };
@@ -32,7 +36,7 @@ const TitleWithAction = ({
       </Text>
 
       <Pressable onPress={onActionPress}>
-        <Text type="primary" caption>
+        <Text type={color} caption>
           {actionTitle}
         </Text>
       </Pressable>

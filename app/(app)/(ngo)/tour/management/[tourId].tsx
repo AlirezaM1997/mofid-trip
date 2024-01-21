@@ -68,7 +68,10 @@ const TourDetailScreen = () => {
       <Container>
         {!data.NGODetail.isVerify && (
           <>
-            <NgoAuthentication />
+            <NgoAuthentication
+              isVerify={data.NGODetail.isVerify}
+              description={data.NGODetail.verifyDescription}
+            />
             <WhiteSpace size={32} />
           </>
         )}

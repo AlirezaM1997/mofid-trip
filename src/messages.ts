@@ -19,10 +19,30 @@ export const messages = {
     fa_ir: "افزودن مهمان",
     en_us: "Add Guest",
   },
+  "all tours of": {
+    ar: "نداریم",
+    fa_ir: "همه تورهای",
+    en_us: "all tours of",
+  },
+  "all hosts of": {
+    ar: "نداریم",
+    fa_ir: "همه میزبانی‌های",
+    en_us: "all hosts of",
+  },
   "ngo details": {
     ar: "الملف الشخصي للمؤدي",
     fa_ir: "مشخصات مجری",
     en_us: "ngo details",
+  },
+  "request again": {
+    ar: "نداریم",
+    fa_ir: "درخواست مجدد",
+    en_us: "request again",
+  },
+  "nothing found": {
+    ar: "نداریم",
+    fa_ir: "موردی یافت نشد",
+    en_us: "nothing found",
   },
   "anywhere you want": {
     ar: "في أي مكان تريده",
@@ -71,6 +91,11 @@ export const messages = {
     ar: "السيرة الذاتية (۲۰۰ حرف)",
     fa_ir: "بیوگرافی",
     en_us: "Bio",
+  },
+  host: {
+    ar: "السيرة الذاتية (۲۰۰ حرف)",
+    fa_ir: "میزبانی",
+    en_us: "host",
   },
   "book accommodation": {
     ar: "حجز الإقامة",
@@ -631,7 +656,7 @@ export const messages = {
   },
   "see all": {
     ar: "اظهار الكل",
-    fa_ir: "بیشتر",
+    fa_ir: "مشاهده همه",
     en_us: "See All",
   },
   "send request": {
@@ -2285,11 +2310,14 @@ export const messages = {
     fa_ir: "نام مجموعه اجباری است",
     en_us: "ngo name is required",
   },
-  "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published": {
-    ar: "ندارد",
-    fa_ir: "درخواست شما توسط ادمین در حال بررسی می‌باشد، در صورت تایید هویت، تور شما / هاست شما منتشر خواهد شد",
-    en_us: "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published",
-  },
+  "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published":
+    {
+      ar: "ندارد",
+      fa_ir:
+        "درخواست شما توسط ادمین در حال بررسی می‌باشد، در صورت تایید هویت، تور شما / هاست شما منتشر خواهد شد",
+      en_us:
+        "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published",
+    },
   "your ngo authentication request has been successfully submitted": {
     ar: "الإسم الأول مطلوب",
     fa_ir: "درخواست احراز هویت مجموعه شما با موفقیت ارسال شد",

@@ -9,7 +9,7 @@ import {
 } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
-import CancelTransaction from "@modules/host/transaction/cancel ";
+import CancelTransaction from "@modules/host/transaction/cancel";
 
 const StepBaseButtons = ({
   status,

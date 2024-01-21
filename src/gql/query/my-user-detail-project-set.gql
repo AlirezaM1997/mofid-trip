@@ -4,6 +4,7 @@ query myUserDetailProjectSet {
     isNgo
     ngo {
       isVerify
+      verifyDescription
     }
     projectSet {
       id

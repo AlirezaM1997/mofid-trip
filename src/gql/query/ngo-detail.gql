@@ -4,6 +4,7 @@ query NGODetail($pk: ID) {
     title
     address
     isVerify
+    verifyDescription
     description
     avatarS3 {
       large

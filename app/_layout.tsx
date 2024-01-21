@@ -1,23 +1,24 @@
+import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 import { ThemeProvider } from "@rneui/themed";
-import { SessionProvider, useSession } from "@src/context/auth";
-import { StatusBar } from "expo-status-bar";
-import { Provider } from "react-redux";
-import { useFonts } from "expo-font";
-import { persistor, store } from "@src/store";
-import { toastConfig } from "@src/toast-config";
-import { theme } from "@src/theme";
-import { View, Platform, StyleSheet, Appearance, I18nManager } from "react-native";
-import Toast from "react-native-toast-message";
-import React, { useCallback, useEffect } from "react";
-import * as SplashScreen from "expo-splash-screen";
-import { PersistGate } from "redux-persist/integration/react";
+import { SessionProvider } from "@src/context/auth";
 import useIsRtl from "@src/hooks/localization";
+import { persistor, store } from "@src/store";
+import { theme } from "@src/theme";
+import { toastConfig } from "@src/toast-config";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import React, { useCallback, useEffect } from "react";
+import { Appearance, I18nManager, Platform, StyleSheet, View } from "react-native";
+import Toast from "react-native-toast-message";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import { ApolloProvider } from "@apollo/client";
 import { LtrSpecificStyles, RtlSpecificStyles } from "@src/global-style";
 import customUseApolloClient from "@src/hooks/apollo/client";
-import { Stack } from "expo-router/stack";
 import useTranslation from "@src/hooks/translation";
 import useDefaultScreenOptions from "@src/hooks/use-default-screen-options";
+import { Stack } from "expo-router/stack";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -53,6 +54,13 @@ const MainContent = () => {
 
   I18nManager.allowRTL(I18nManager.isRTL);
 
+  // *  if you had an error that you don't know where it is coming from you can turn this on to see error in console 
+  // if (__DEV__) {
+  //   // Adds messages only in a dev environment
+  //   loadDevMessages();
+  //   loadErrorMessages();
+  // }
+
   return (
     <>
       <Stack
@@ -87,6 +95,20 @@ const MainContent = () => {
         <Stack.Screen
           name="coming-soon"
           options={{
+            title: tr("coming soon"),
+          }}
+        />
+        <Stack.Screen
+          name="host-list"
+          options={{
+            headerShown: false,
+            title: tr("coming soon"),
+          }}
+        />
+        <Stack.Screen
+          name="tour-list"
+          options={{
+            headerShown: false,
             title: tr("coming soon"),
           }}
         />

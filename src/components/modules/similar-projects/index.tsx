@@ -1,11 +1,11 @@
-import React from "react";
+import { EvilIcons } from "@expo/vector-icons";
 import { Image, Text, useTheme } from "@rneui/themed";
 import { ProjectQueryType } from "@src/gql/generated";
 import { useFormatPrice } from "@src/hooks/localization";
-import { router } from "expo-router";
-import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import useTranslation from "@src/hooks/translation";
-import { EvilIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import React from "react";
+import { Platform, Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 type PropsType = {
   projects: ProjectQueryType[];
