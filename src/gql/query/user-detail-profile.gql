@@ -9,6 +9,7 @@ query userDetailProfile {
     ngo {
       id
       title
+      isVerify
       verifyDescription
       avatarS3 {
         small

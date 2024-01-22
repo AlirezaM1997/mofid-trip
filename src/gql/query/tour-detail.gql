@@ -40,12 +40,12 @@ query tourDetail($pk: ID!) {
         }
       }
     }
-    capacity {
-      id
-      male
-      female
-      child
-    }
+    # capacity {
+    #   id
+    #   # male
+    #   # female
+    #   # child
+    # }
     facilities {
       id
       enName

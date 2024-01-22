@@ -4,13 +4,13 @@ import { RootState } from "@src/store";
 import { HEIGHT } from "@src/constants";
 import { useTheme } from "@rneui/themed";
 import { useSelector } from "react-redux";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { MapPropsType } from "@modules/map/index.web";
 import HostSearchCard from "@modules/host/card/search-card";
-import { ActivityIndicator, Pressable } from "react-native";
 import { useProjectListSearchLazyQuery } from "@src/gql/generated";
+import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
-const SearchHostMap = ({ ...props }: MapPropsType) => {
+const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPropsType }) => {
   const { theme } = useTheme();
   const [selectedItem, setItem] = useState(null);
 
@@ -27,7 +27,7 @@ const SearchHostMap = ({ ...props }: MapPropsType) => {
   const onMarkerClick = id => {
     setItem(
       <Pressable key={id} onPress={() => router.push(`host/${id}`)}>
-        <HostSearchCard project={data.projectList.data[id]} />
+        <HostSearchCard chevron={true} project={data.projectList.data.find(obj => obj.id === id)} />
       </Pressable>
     );
   };
@@ -35,7 +35,7 @@ const SearchHostMap = ({ ...props }: MapPropsType) => {
   const onMoveHandler = bounds => {
     const { latHigh, latLow, lngHigh, lngLow } = bounds;
     console.log(latHigh, latLow, lngHigh, lngLow);
-
+    setItem(null);
     search({
       variables: {
         ...filterSlice,
@@ -50,7 +50,12 @@ const SearchHostMap = ({ ...props }: MapPropsType) => {
       onMarkerClick={onMarkerClick}
       style={{ height: HEIGHT, borderRadius: 0 }}
       centerContent={loading && <ActivityIndicator size="large" color={theme.colors.primary} />}
-      bottomCenterContent={selectedItem}
+      bottomCenterContent={
+        <View style={styles.bottomContainer}>
+          {button}
+          {selectedItem}
+        </View>
+      }
       onMoveEnd={onMoveHandler}
       mapMarkers={
         (!loading &&
@@ -73,5 +78,12 @@ const SearchHostMap = ({ ...props }: MapPropsType) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  bottomContainer: {
+    width: 350,
+    marginBottom: 24,
+  },
+});
 
 export default SearchHostMap;

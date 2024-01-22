@@ -2,7 +2,7 @@ import { RootState } from "@src/store";
 import { useSelector } from "react-redux";
 import HostCard from "@modules/host/card";
 import { NetworkStatus } from "@apollo/client";
-import React, { Fragment, useRef } from "react";
+import React, { Fragment, useRef, useState } from "react";
 import { Divider, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
@@ -14,10 +14,11 @@ import NoResult from "@src/components/organisms/no-result";
 import { useProjectListSearchQuery } from "@src/gql/generated";
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
 
-const SearchHostList = () => {
+const SearchHostList = ({ button }) => {
   const pageNumber = useRef(1);
   const { theme } = useTheme();
   const { tr } = useTranslation();
+  const [scrollReachedEnd, setScrollReachedEnd] = useState(false);
 
   const { filterSlice } = useSelector((state: RootState) => state);
 
@@ -46,17 +47,22 @@ const SearchHostList = () => {
 
   const handleScroll = ({ nativeEvent }) => {
     const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
-      const threshold = 50;
+      const threshold = 150;
       return layoutMeasurement.height + contentOffset.y >= contentSize.height - threshold;
     };
 
-    if (
-      isCloseToBottom(nativeEvent) &&
-      data?.projectList?.data?.length < data?.projectList?.count &&
-      networkStatus === NetworkStatus.ready
-    ) {
-      handleLoadMore();
+    if (isCloseToBottom(nativeEvent)) {
+      if (
+        data?.projectList?.data?.length < data?.projectList?.count &&
+        networkStatus === NetworkStatus.ready
+      ) {
+        handleLoadMore();
+      }
+      setScrollReachedEnd(true);
+    } else {
+      setScrollReachedEnd(false);
     }
+    console.log(scrollReachedEnd);
   };
 
   if (networkStatus === NetworkStatus.loading || networkStatus === NetworkStatus.refetch)
@@ -96,6 +102,8 @@ const SearchHostList = () => {
         </View>
       </Container>
 
+      <Container style={styles.button(scrollReachedEnd)}>{button}</Container>
+
       <WhiteSpace size={20} />
       {networkStatus === NetworkStatus.fetchMore && (
         <ActivityIndicator size="large" color={theme.colors.primary} />
@@ -105,6 +113,14 @@ const SearchHostList = () => {
 };
 
 const styles = StyleSheet.create({
+  button: scrollReachedEnd => ({
+    bottom: 0,
+    left: "50%",
+    position: "sticky",
+    paddingBottom: 24,
+    alignItems: "center",
+    display: scrollReachedEnd ? "none" : "flex",
+  }),
   resultContainer: { gap: 20 },
 });
 

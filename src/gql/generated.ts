@@ -299,6 +299,28 @@ export type CategoryQueryType = {
   projectSet: Array<ProjectQueryType>;
 };
 
+/** GraphQL type representing a paginated list of chat channels. */
+export type ChannelListType = {
+  __typename?: 'ChannelListType';
+  /** List of chat channels. */
+  data?: Maybe<Array<Maybe<ChannelQueryType>>>;
+  /** Indicates if there are more pages available. */
+  hasNext?: Maybe<Scalars['Boolean']['output']>;
+};
+
+/** GraphQL type representing a chat channel. */
+export type ChannelQueryType = {
+  __typename?: 'ChannelQueryType';
+  /** Channel avatar image in different sizes. */
+  avatarS3?: Maybe<UserImageType>;
+  /** Unique identifier of the chat channel. */
+  channelId?: Maybe<Scalars['String']['output']>;
+  /** Name of the chat channel. */
+  channelName?: Maybe<Scalars['String']['output']>;
+  /** The last message sent in the channel. */
+  lastMessage?: Maybe<MessageQueryType>;
+};
+
 /** An InputObjectType for adding a new comment. */
 export type CommentAddInputType = {
   /** The unique identifier of the object the comment is associated with. */
@@ -458,6 +480,32 @@ export type LocationType = {
   province?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** GraphQL type representing a paginated list of messages. */
+export type MessageListType = {
+  __typename?: 'MessageListType';
+  /** List of messages. */
+  data?: Maybe<Array<Maybe<MessageQueryType>>>;
+  /** Indicates if there are more pages available. */
+  hasNext?: Maybe<Scalars['Boolean']['output']>;
+  /** Indicates if there are previous pages available. */
+  hasPrevious?: Maybe<Scalars['Boolean']['output']>;
+};
+
+/** GraphQL type representing a message in a chat system. */
+export type MessageQueryType = {
+  __typename?: 'MessageQueryType';
+  /** Timestamp when the message was created. */
+  createAt?: Maybe<Scalars['String']['output']>;
+  /** Unique identifier of the message. */
+  id?: Maybe<Scalars['String']['output']>;
+  /** Content of the message. */
+  message?: Maybe<Scalars['String']['output']>;
+  /** User who sent the message. */
+  owner?: Maybe<UserQueryType>;
+  /** Type of the message, e.g., 'text', 'image', 'system_join_team'. */
+  type?: Maybe<Scalars['String']['output']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /** Mutation for adding a new accommodation. */
@@ -470,6 +518,11 @@ export type Mutation = {
   bankCardDelete?: Maybe<ResponseBase>;
   /** Mutation for editing the bank card to a user's wallet. */
   bankCardEdit?: Maybe<ResponseBase>;
+  /**
+   * Mutation to create a new channel.
+   * This mutation is responsible for creating a new channel in the system and adding specified members to it.
+   */
+  channelCreateJoin?: Maybe<ResponseBase>;
   /** A Graphene mutation for adding comments to different types of objects like Projects, Tours, or other Comments. */
   commentAdd?: Maybe<ResponseBase>;
   /**
@@ -514,6 +567,11 @@ export type Mutation = {
    * This mutation is used to edit user settings, including the selected language.
    */
   settingEdit?: Maybe<ResponseBase>;
+  /**
+   * Mutation to send a text message to a channel.
+   * This mutation handles sending a message to a specified channel and broadcasts it to all channel members.
+   */
+  textMessageSend?: Maybe<ResponseBase>;
   tourAdd?: Maybe<ResponseBase>;
   /** Mutation to edit an existing tour. */
   tourEdit?: Maybe<ResponseBase>;
@@ -572,6 +630,12 @@ export type MutationBankCardDeleteArgs = {
 
 export type MutationBankCardEditArgs = {
   data: EditCardType;
+};
+
+
+export type MutationChannelCreateJoinArgs = {
+  channelName: Scalars['String']['input'];
+  otherMembers: Array<InputMaybe<Scalars['String']['input']>>;
 };
 
 
@@ -651,6 +715,12 @@ export type MutationSettingEditArgs = {
 };
 
 
+export type MutationTextMessageSendArgs = {
+  channelIdentifier: Scalars['String']['input'];
+  textMessage: Scalars['String']['input'];
+};
+
+
 export type MutationTourAddArgs = {
   data: TourAddInputType;
 };
@@ -699,7 +769,7 @@ export type MutationWalletWithdrawArgs = {
 /** Input type for editing an NGO. */
 export type NgoEditInputType = {
   /** Address of the NGO. */
-  address: Scalars['String']['input'];
+  address?: InputMaybe<Scalars['String']['input']>;
   /** Base64-encoded image. */
   base64Image?: InputMaybe<Scalars['String']['input']>;
   /** contact number of the NGO. */
@@ -710,10 +780,8 @@ export type NgoEditInputType = {
   email?: InputMaybe<Scalars['String']['input']>;
   /** Type of the NGO. */
   kind?: InputMaybe<Scalars['String']['input']>;
-  /** Phone number of the NGO. */
-  phoneNumber: Scalars['String']['input'];
   /** Title of the NGO. */
-  title: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Type representing an image with different sizes for an NGO. */
@@ -779,8 +847,19 @@ export type NgoQueryType = {
   /** List of tour transactions associated with the NGO. */
   tourTransactionSet?: Maybe<Array<Maybe<TourTransactionQueryType>>>;
   user?: Maybe<UserQueryType>;
+  verifyDescription?: Maybe<Scalars['String']['output']>;
   /** Wallet field related to the NGO */
   wallet?: Maybe<UserWalletType>;
+};
+
+/**
+ * GraphQL Subscription for new chat messages.
+ * This subscription allows clients to listen for new messages on a specified channel.
+ */
+export type OnNewMessage = {
+  __typename?: 'OnNewMessage';
+  channelIdentifier?: Maybe<Scalars['String']['output']>;
+  message?: Maybe<MessageQueryType>;
 };
 
 /**
@@ -1104,6 +1183,12 @@ export type Query = {
   bannerDetail?: Maybe<BannerQueryType>;
   bannerList?: Maybe<BannerListType>;
   categoryList?: Maybe<CategoryListType>;
+  /** Query to retrieve a channel details. */
+  channelDetail?: Maybe<ChannelQueryType>;
+  /** Query to retrieve a paginated list of channels. */
+  channelList?: Maybe<ChannelListType>;
+  /** Query to retrieve a paginated list of messages from a specified channel. */
+  getMessageList?: Maybe<MessageListType>;
   projectDetail?: Maybe<ProjectQueryType>;
   projectFacilityList?: Maybe<ProjectFacilityListType>;
   projectList?: Maybe<ProjectListType>;
@@ -1175,6 +1260,22 @@ export type QueryCategoryListArgs = {
   filter?: InputMaybe<CategoryFilterType>;
   page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryChannelDetailArgs = {
+  channelId?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryChannelListArgs = {
+  page?: InputMaybe<PageType>;
+};
+
+
+export type QueryGetMessageListArgs = {
+  channelIdentifier: Scalars['String']['input'];
+  page?: InputMaybe<PageType>;
 };
 
 
@@ -1464,6 +1565,16 @@ export type StatusQueryType = {
   step?: Maybe<Scalars['String']['output']>;
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  onNewMessage?: Maybe<OnNewMessage>;
+};
+
+
+export type SubscriptionOnNewMessageArgs = {
+  channelIdentifier: Scalars['String']['input'];
+};
+
 export enum TagFilterEnum {
   Discount = 'DISCOUNT',
   Economy = 'ECONOMY',
@@ -1540,11 +1651,12 @@ export type TourCapacityAddType = {
 /** Type representing tour capacity with additional fields. */
 export type TourCapacityType = {
   __typename?: 'TourCapacityType';
-  both: Scalars['Int']['output'];
-  child: Scalars['Boolean']['output'];
-  female: Scalars['Int']['output'];
-  id: Scalars['ID']['output'];
-  male: Scalars['Int']['output'];
+  /** Boolean indicating if children are accepted for the tour. */
+  childAccept?: Maybe<Scalars['Boolean']['output']>;
+  /** Gender of the guests. */
+  gender?: Maybe<Scalars['String']['output']>;
+  /** Number of the guests */
+  guestNumber?: Maybe<Scalars['Int']['output']>;
 };
 
 /**
@@ -1702,6 +1814,7 @@ export type TourListType = {
 /** Type representing tour packages with additional fields. */
 export type TourPackageType = {
   __typename?: 'TourPackageType';
+  discount?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   price: Scalars['Float']['output'];
   title?: Maybe<Scalars['String']['output']>;
@@ -2290,7 +2403,7 @@ export type MyNgoDetailProjectTransactionSetQuery = { __typename?: 'Query', NGOD
 export type MyNgoDetailTourSetQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyNgoDetailTourSetQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, isVerify?: boolean | null, verifyDescription?: string | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusStep?: TourTourStatusStepChoices | null, statusActivation: boolean, createdDate?: any | null, modifiedDate?: any | null, origin?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: boolean } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null } | null> | null } | null };
+export type MyNgoDetailTourSetQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, isVerify?: boolean | null, verifyDescription?: string | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusStep?: TourTourStatusStepChoices | null, statusActivation: boolean, createdDate?: any | null, modifiedDate?: any | null, origin?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null } | null> | null } | null };
 
 export type MyNgoDetailTourTransactionSetQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2396,7 +2509,7 @@ export type TourDetailQueryVariables = Exact<{
 }>;
 
 
-export type TourDetailQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, NGO: { __typename?: 'NGOQueryType', id: string, isVerify?: boolean | null, verifyDescription?: string | null, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: boolean } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null };
+export type TourDetailQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, NGO: { __typename?: 'NGOQueryType', id: string, isVerify?: boolean | null, verifyDescription?: string | null, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null };
 
 export type TourListSearchQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
@@ -2416,7 +2529,7 @@ export type TourListQueryVariables = Exact<{
 }>;
 
 
-export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', count?: number | null, data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusActivation: boolean, NGO: { __typename?: 'NGOQueryType', id: string, title: string, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, capacity?: { __typename?: 'TourCapacityType', id: string, male: number, female: number, child: boolean } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
+export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', count?: number | null, data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusActivation: boolean, NGO: { __typename?: 'NGOQueryType', id: string, title: string, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
 
 export type TourTransactionDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
@@ -2435,7 +2548,7 @@ export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionLi
 export type UserDetailProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDetailProfileQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, isNgo?: boolean | null, username: string, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string, title: string, verifyDescription?: string | null, avatarS3?: { __typename?: 'NGOImageType', small?: string | null } | null } | null } | null };
+export type UserDetailProfileQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, isNgo?: boolean | null, username: string, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string, title: string, isVerify?: boolean | null, verifyDescription?: string | null, avatarS3?: { __typename?: 'NGOImageType', small?: string | null } | null } | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3540,12 +3653,6 @@ export const MyNgoDetailTourSetDocument = gql`
         id
         title
         price
-      }
-      capacity {
-        id
-        male
-        female
-        child
       }
       facilities {
         id
@@ -4710,12 +4817,6 @@ export const TourDetailDocument = gql`
         }
       }
     }
-    capacity {
-      id
-      male
-      female
-      child
-    }
     facilities {
       id
       enName
@@ -4871,12 +4972,6 @@ export const TourListDocument = gql`
             }
           }
         }
-      }
-      capacity {
-        id
-        male
-        female
-        child
       }
       facilities {
         id
@@ -5103,6 +5198,7 @@ export const UserDetailProfileDocument = gql`
     ngo {
       id
       title
+      isVerify
       verifyDescription
       avatarS3 {
         small

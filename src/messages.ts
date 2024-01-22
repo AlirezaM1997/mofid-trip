@@ -639,6 +639,16 @@ export const messages = {
     fa_ir: "وارد‌شوید",
     en_us: "enter",
   },
+  "show list": {
+    ar: "show list",
+    fa_ir: "مشاهده لیست",
+    en_us: "show list",
+  },
+  "show map": {
+    ar: "show map",
+    fa_ir: "مشاهده نقشه",
+    en_us: "show map",
+  },
   "and booking them in mofidtrip": {
     ar: "وحجزهم في مفیدتریپ",
     fa_ir: " و رزرو آن ها در مفیدتریپ",

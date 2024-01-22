@@ -1,16 +1,20 @@
 import React from "react";
+import { Feather } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
 import { Image, Text, useTheme } from "@rneui/themed";
-import { useFormatPrice } from "@src/hooks/localization";
 import { Platform, StyleSheet, View } from "react-native";
 import { ProjectListSearchQuery } from "@src/gql/generated";
+import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 
 const HostSearchCard = ({
+  chevron = false,
   project,
 }: {
+  chevron?: boolean;
   project: ProjectListSearchQuery["projectList"]["data"][number];
 }) => {
+  const isRtl = useIsRtl();
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { formatPrice } = useFormatPrice();
@@ -50,6 +54,8 @@ const HostSearchCard = ({
           </Text>
         )}
       </View>
+
+      {chevron ? <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={18} /> : ""}
     </View>
   );
 };
@@ -57,12 +63,13 @@ const HostSearchCard = ({
 const styles = StyleSheet.create({
   card: theme => ({
     gap: 10,
-    width: 226,
     height: 86,
     padding: 8,
     elevation: 1,
     borderRadius: 10,
     flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     backgroundColor: theme.colors.white,
     ...Platform.select({
       web: { boxShadow: "0 0 3px #12121233" },

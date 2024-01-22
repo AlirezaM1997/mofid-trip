@@ -40,12 +40,12 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
           }
         }
       }
-      capacity {
-        id
-        male
-        female
-        child
-      }
+      # capacity {
+      #   id
+      #   # male
+      #   # female
+      #   # child
+      # }
       facilities {
         id
         enName

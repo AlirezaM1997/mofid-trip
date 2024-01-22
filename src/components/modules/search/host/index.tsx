@@ -20,7 +20,10 @@ const SearchHost = ({ data, loading }) => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.contentContainerStyle}>
       {data?.projectList?.data.map(project => (
-        <Pressable key={project.id} onPress={() => router.push(`host/${project.id}`)}>
+        <Pressable
+          style={styles.card}
+          key={project.id}
+          onPress={() => router.push(`host/${project.id}`)}>
           <HostSearchCard project={project} />
         </Pressable>
       ))}
@@ -30,6 +33,7 @@ const SearchHost = ({ data, loading }) => {
 
 const styles = StyleSheet.create({
   contentContainerStyle: { gap: 15, padding: 1 },
+  card: { width: 226 },
 });
 
 export default SearchHost;
