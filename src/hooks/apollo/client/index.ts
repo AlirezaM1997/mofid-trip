@@ -49,12 +49,11 @@ const customUseApolloClient = () => {
   const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
       graphQLErrors.map(error => {
-        if (error.message === "'AnonymousUser' object is not iterable") {
-          window.location.href = "/authentication";
-          // navigationRef.navigate("LoginScreen")
-        } else if (error.message === "You do not have permission to perform this action") {
-          // navigationRef.navigate("LoginScreen")
-        }
+        Toast.show({
+          type: "error",
+          text1: "Error",
+          text2: error.message,
+        });
       });
     }
 
