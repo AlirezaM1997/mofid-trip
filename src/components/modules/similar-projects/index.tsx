@@ -6,6 +6,7 @@ import { router } from "expo-router";
 import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import { EvilIcons } from "@expo/vector-icons";
+import WhiteSpace from "@atoms/white-space";
 
 type PropsType = {
   projects: ProjectQueryType[];
@@ -45,7 +46,9 @@ const Item = ({ project }: ItemPropsType) => {
           </Text>
         </View>
         {project.price <= 0 ? (
-          <Text body2 bold>{tr("it is free")}</Text>
+          <Text body2 bold>
+            {tr("it is free")}
+          </Text>
         ) : (
           <Text body2 bold>
             {formatPrice(project.price)} / هر‌شب
@@ -61,19 +64,20 @@ const SimilarProjects = ({ projects, currentProjectId }: PropsType) => {
     router.push({ pathname: `/host/${project.id}`, params: { name: project.name } });
 
   return (
-    <ScrollView horizontal contentContainerStyle={style.contentContainerStyle}>
-      <View style={style.dummyContent} />
-      {projects
-        ?.filter(p => p.id !== currentProjectId)
-        .map((p, index) => (
-          <Pressable
-            key={index}
-            onPress={() => handlePress(p)}>
-            <Item project={p} />
-          </Pressable>
-        ))}
-      <View style={style.dummyContent} />
-    </ScrollView>
+    <>
+      <ScrollView horizontal contentContainerStyle={style.contentContainerStyle}>
+        <View style={style.dummyContent} />
+        {projects
+          ?.filter(p => p.id !== currentProjectId)
+          .map((p, index) => (
+            <Pressable key={index} onPress={() => handlePress(p)}>
+              <Item project={p} />
+            </Pressable>
+          ))}
+        <View style={style.dummyContent} />
+      </ScrollView>
+      <WhiteSpace size={32} />
+    </>
   );
 };
 
@@ -86,7 +90,7 @@ const style = StyleSheet.create({
     borderRadius: 10,
     elevation: 1,
     padding: 8,
-    gap:10,
+    gap: 10,
     flexDirection: "row",
     ...Platform.select({
       web: { boxShadow: "0 0 3px #12121233" },
@@ -101,7 +105,7 @@ const style = StyleSheet.create({
     borderRadius: 10,
     elevation: 1,
     padding: 8,
-    gap:10,
+    gap: 10,
     flexDirection: "row",
     ...Platform.select({
       web: { boxShadow: "0 0 3px #12121233" },
@@ -114,7 +118,7 @@ const style = StyleSheet.create({
     borderRadius: 12,
   },
   cardTextContainer: {
-    paddingVertical:5,
+    paddingVertical: 5,
     justifyContent: "space-between",
   },
   address: {

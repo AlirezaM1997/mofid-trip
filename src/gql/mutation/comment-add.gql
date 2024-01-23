@@ -1,0 +1,8 @@
+mutation commentAdd($data : CommentAddInputType!) {
+  commentAdd(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}
