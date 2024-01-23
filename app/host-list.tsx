@@ -4,7 +4,7 @@ import SearchHostMap from "@modules/search/host/map";
 import SearchHostList from "@modules/search/host/list";
 import { Button, Divider, useTheme } from "@rneui/themed";
 import SearchBar from "@src/components/modules/search-bar";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 
 const HostListScreen: React.FC = () => {
   const { tr } = useTranslation();
@@ -13,13 +13,15 @@ const HostListScreen: React.FC = () => {
 
   const showMapButton = (
     <Button
+      size="sm"
       color="secondary"
       onPress={() => setShowMap(showMap => !showMap)}
+      containerStyle={{ margin: "auto" }}
       icon={
         showMap ? (
-          <Ionicons name="list-sharp" size={18} color={theme.colors.white} />
+          <Ionicons name="list-sharp" size={15} color={theme.colors.white} />
         ) : (
-          <FontAwesome5 name="map-marked-alt" size={18} color={theme.colors.white} />
+          <FontAwesome name="map" size={15} color={theme.colors.white} />
         )
       }>
       {showMap ? tr("show list") : tr("show map")}

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import HostCard from "@modules/host/card";
 import { NetworkStatus } from "@apollo/client";
 import React, { Fragment, useRef, useState } from "react";
-import { Divider, useTheme } from "@rneui/themed";
+import { BottomSheet, Divider, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import TitleWithAction from "@modules/title-with-action";
@@ -62,7 +62,6 @@ const SearchHostList = ({ button }) => {
     } else {
       setScrollReachedEnd(false);
     }
-    console.log(scrollReachedEnd);
   };
 
   if (networkStatus === NetworkStatus.loading || networkStatus === NetworkStatus.refetch)
@@ -102,25 +101,23 @@ const SearchHostList = ({ button }) => {
         </View>
       </Container>
 
-      <Container style={styles.button(scrollReachedEnd)}>{button}</Container>
-
       <WhiteSpace size={20} />
       {networkStatus === NetworkStatus.fetchMore && (
         <ActivityIndicator size="large" color={theme.colors.primary} />
       )}
+
+      {!scrollReachedEnd && <View style={styles.showMapButton}>{button}</View>}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  button: scrollReachedEnd => ({
-    bottom: 0,
+  showMapButton: {
+    bottom: 24,
     left: "50%",
     position: "sticky",
-    paddingBottom: 24,
     alignItems: "center",
-    display: scrollReachedEnd ? "none" : "flex",
-  }),
+  },
   resultContainer: { gap: 20 },
 });
 

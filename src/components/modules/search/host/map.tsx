@@ -4,15 +4,16 @@ import { RootState } from "@src/store";
 import { HEIGHT } from "@src/constants";
 import { useTheme } from "@rneui/themed";
 import { useSelector } from "react-redux";
-import React, { ReactNode, useEffect, useState } from "react";
 import { MapPropsType } from "@modules/map/index.web";
 import HostSearchCard from "@modules/host/card/search-card";
+import React, { ReactNode, useEffect, useState } from "react";
 import { useProjectListSearchLazyQuery } from "@src/gql/generated";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
 const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPropsType }) => {
   const { theme } = useTheme();
   const [selectedItem, setItem] = useState(null);
+  const [location, setLocation] = useState({ lat: 30, lng: 54 });
 
   const { filterSlice } = useSelector((state: RootState) => state);
 
@@ -32,21 +33,31 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
     );
   };
 
-  const onMoveHandler = bounds => {
+  const onMoveHandler = async bounds => {
     const { latHigh, latLow, lngHigh, lngLow } = bounds;
-    console.log(latHigh, latLow, lngHigh, lngLow);
+
     setItem(null);
-    search({
+
+    const { data } = await search({
       variables: {
         ...filterSlice,
         filter: { ...filterSlice.filter, geoLimit: { latHigh, latLow, lngHigh, lngLow } },
       },
     });
+
+    if (data.projectList.data.length) {
+      setLocation({
+        lat: data?.projectList?.data?.[0]?.accommodation?.lat,
+        lng: data?.projectList?.data?.[data?.projectList?.data?.length - 1]?.accommodation?.lng,
+      });
+    }
   };
 
   return (
     <Map
-      {...props}
+      lat={location.lat}
+      lng={location.lng}
+      onMoveEnd={onMoveHandler}
       onMarkerClick={onMarkerClick}
       style={{ height: HEIGHT, borderRadius: 0 }}
       centerContent={loading && <ActivityIndicator size="large" color={theme.colors.primary} />}
@@ -56,13 +67,12 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
           {selectedItem}
         </View>
       }
-      onMoveEnd={onMoveHandler}
       mapMarkers={
         (!loading &&
           data && [
             ...data.projectList.data.map(project => ({
               id: project.id,
-              size: [80, 80],
+              size: [60, 60],
               iconAnchor: [-26, 60],
               position: {
                 lat: project?.accommodation.lat || 33,
@@ -73,14 +83,14 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
           ]) ||
         []
       }
-      lat={data?.projectList?.data?.[0]?.accommodation?.lat || 30}
-      lng={data?.projectList?.data?.[data?.projectList?.data?.length - 1]?.accommodation?.lng || 54}
+      {...props}
     />
   );
 };
 
 const styles = StyleSheet.create({
   bottomContainer: {
+    gap: 16,
     width: 350,
     marginBottom: 24,
   },

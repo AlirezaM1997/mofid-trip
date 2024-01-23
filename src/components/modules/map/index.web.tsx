@@ -1,7 +1,10 @@
-import { ReactNode } from "react";
+import { Button, useTheme } from "@rneui/themed";
+import * as Location from "expo-location";
 import { ExpoLeaflet } from "expo-leaflet";
+import { ReactNode, useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { ExpoLeafletProps } from "expo-leaflet/web/src/ExpoLeaflet.types";
+import { Feather } from "@expo/vector-icons";
 
 export type MapPropsType = ExpoLeafletProps & {
   lat?: number;
@@ -35,6 +38,31 @@ const Map = ({
 }: MapPropsType) => {
   if (!lat && !lng) return;
 
+  const { theme } = useTheme();
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [location, setLocation] = useState({ lat: 30, lng: 54 });
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setCurrentLocation({
+        lat: location?.coords?.latitude,
+        lng: location?.coords?.latitude,
+      });
+    })();
+  }, []);
+
+  useEffect(() => {
+    setLocation({ lat, lng });
+    console.log("currentLocation", lat, lng);
+  }, [lat, lng]);
+
   return (
     <>
       <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="StyleSheet" />
@@ -46,7 +74,20 @@ const Map = ({
       </View>
       <View style={[style.center]}>{centerContent}</View>
       <View style={[style.row, style.bottomRow]}>
-        <View>{bottomLeftContent}</View>
+        <View>
+          {bottomLeftContent}
+          <Button
+            onPress={() =>
+              setLocation({
+                lat: currentLocation.lat,
+                lng: currentLocation.lng,
+              })
+            }
+            buttonStyle={{
+              backgroundColor: theme.colors.white,
+            }}
+            icon={<Feather name="crosshair" size={18} color={theme.colors.black} />}></Button>
+        </View>
         <View>{bottomCenterContent}</View>
         <View>{bottomRightContent}</View>
       </View>
@@ -55,8 +96,8 @@ const Map = ({
         <ExpoLeaflet
           zoom={zoom}
           mapCenterPosition={{
-            lat: lat,
-            lng: lng,
+            lat: location.lat,
+            lng: location.lng,
           }}
           mapMarkers={mapMarkers || []}
           mapLayers={[
