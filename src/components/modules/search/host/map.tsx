@@ -1,9 +1,11 @@
 import Map from "@modules/map";
 import { router } from "expo-router";
 import { RootState } from "@src/store";
-import { HEIGHT } from "@src/constants";
-import { useTheme } from "@rneui/themed";
+import { HEIGHT, WIDTH } from "@src/constants";
 import { useSelector } from "react-redux";
+import { AntDesign } from "@expo/vector-icons";
+import { Button, useTheme } from "@rneui/themed";
+import useTranslation from "@src/hooks/translation";
 import { MapPropsType } from "@modules/map/index.web";
 import HostSearchCard from "@modules/host/card/search-card";
 import React, { ReactNode, useEffect, useState } from "react";
@@ -12,8 +14,9 @@ import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
 const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPropsType }) => {
   const { theme } = useTheme();
+  const { tr } = useTranslation();
+  const [bounds, setBounds] = useState({});
   const [selectedItem, setItem] = useState(null);
-  const [location, setLocation] = useState({ lat: 30, lng: 54 });
 
   const { filterSlice } = useSelector((state: RootState) => state);
 
@@ -27,40 +30,53 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
 
   const onMarkerClick = id => {
     setItem(
-      <Pressable key={id} onPress={() => router.push(`host/${id}`)}>
+      <Pressable key={id} onPress={() => router.push(`host/${id}`)} style={styles.itemCard}>
         <HostSearchCard chevron={true} project={data.projectList.data.find(obj => obj.id === id)} />
       </Pressable>
     );
   };
 
-  const onMoveHandler = async bounds => {
-    const { latHigh, latLow, lngHigh, lngLow } = bounds;
+  const onMoveHandler = bounds => {
+    const latHigh = bounds[0][0];
+    const latLow = bounds[1][0];
+    const lngHigh = bounds[0][1];
+    const lngLow = bounds[1][1];
 
-    setItem(null);
-
-    const { data } = await search({
-      variables: {
-        ...filterSlice,
-        filter: { ...filterSlice.filter, geoLimit: { latHigh, latLow, lngHigh, lngLow } },
-      },
+    setBounds({
+      latHigh,
+      latLow,
+      lngHigh,
+      lngLow,
     });
 
-    if (data.projectList.data.length) {
-      setLocation({
-        lat: data?.projectList?.data?.[0]?.accommodation?.lat,
-        lng: data?.projectList?.data?.[data?.projectList?.data?.length - 1]?.accommodation?.lng,
-      });
-    }
+    setItem(null);
+  };
+
+  const handleSearchArea = async () => {
+    await search({
+      variables: {
+        ...filterSlice,
+        filter: { ...filterSlice.filter, geoLimit: bounds },
+      },
+    });
   };
 
   return (
     <Map
-      lat={location.lat}
-      lng={location.lng}
       onMoveEnd={onMoveHandler}
       onMarkerClick={onMarkerClick}
-      style={{ height: HEIGHT, borderRadius: 0 }}
+      style={styles.map}
       centerContent={loading && <ActivityIndicator size="large" color={theme.colors.primary} />}
+      topCenterContent={
+        <Button
+          size="sm"
+          color="secondary"
+          onPress={handleSearchArea}
+          containerStyle={{ top: 120 }}
+          icon={<AntDesign name="search1" color={theme.colors.white} />}>
+          {tr("search this area")}
+        </Button>
+      }
       bottomCenterContent={
         <View style={styles.bottomContainer}>
           {button}
@@ -89,10 +105,16 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
 };
 
 const styles = StyleSheet.create({
+  map: { height: HEIGHT, borderRadius: 0 },
   bottomContainer: {
     gap: 16,
-    width: 350,
+    width: WIDTH,
     marginBottom: 24,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  itemCard: {
+    width: 350,
   },
 });
 

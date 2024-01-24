@@ -1,66 +1,65 @@
-import { Button, useTheme } from "@rneui/themed";
 import * as Location from "expo-location";
 import { ExpoLeaflet } from "expo-leaflet";
+import { Feather } from "@expo/vector-icons";
+import { Button, useTheme } from "@rneui/themed";
 import { ReactNode, useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { ExpoLeafletProps } from "expo-leaflet/web/src/ExpoLeaflet.types";
-import { Feather } from "@expo/vector-icons";
 
 export type MapPropsType = ExpoLeafletProps & {
   lat?: number;
   lng?: number;
-  onMoveEnd?: () => { lat: number; lng: number };
-  onMarkerClick?: FunctionConstructor;
   centerContent?: ReactNode;
   topLeftContent?: ReactNode;
-  topCenterContent?: ReactNode;
   topRightContent?: ReactNode;
+  topCenterContent?: ReactNode;
   bottomLeftContent?: ReactNode;
-  bottomCenterContent?: ReactNode;
   bottomRightContent?: ReactNode;
+  bottomCenterContent?: ReactNode;
+  onMarkerClick?: FunctionConstructor;
+  onMoveEnd?: () => { lat: number; lng: number };
 };
 
 const Map = ({
-  lat,
-  lng,
-  mapMarkers,
-  onMoveEnd,
-  mapOptions = {},
+  lat = 30,
+  lng = 54,
   zoom = 5,
-  topLeftContent = <View></View>,
-  topCenterContent = <View></View>,
+  onMoveEnd,
+  mapMarkers,
+  mapOptions = {},
   centerContent = <View></View>,
+  topLeftContent = <View></View>,
   topRightContent = <View></View>,
+  topCenterContent = <View></View>,
   bottomLeftContent = <View></View>,
-  bottomCenterContent = <View></View>,
   bottomRightContent = <View></View>,
+  bottomCenterContent = <View></View>,
   ...props
 }: MapPropsType) => {
   if (!lat && !lng) return;
 
   const { theme } = useTheme();
-  const [currentLocation, setCurrentLocation] = useState(null);
   const [location, setLocation] = useState({ lat: 30, lng: 54 });
 
-  useEffect(() => {
+  const handleCurrentLocation = () => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
+
+      if (status === Location.PermissionStatus.DENIED) {
+        alert("Permission to access location was denied");
         return;
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      setCurrentLocation({
+      setLocation({
         lat: location?.coords?.latitude,
         lng: location?.coords?.latitude,
       });
     })();
-  }, []);
+  };
 
   useEffect(() => {
     setLocation({ lat, lng });
-    console.log("currentLocation", lat, lng);
   }, [lat, lng]);
 
   return (
@@ -72,17 +71,14 @@ const Map = ({
         <View>{topCenterContent}</View>
         <View>{topRightContent}</View>
       </View>
-      <View style={[style.center]}>{centerContent}</View>
+
+      <View style={style.center}>{centerContent}</View>
+
       <View style={[style.row, style.bottomRow]}>
-        <View>
+        <View style={style.bottomLeftContent}>
           {bottomLeftContent}
           <Button
-            onPress={() =>
-              setLocation({
-                lat: currentLocation.lat,
-                lng: currentLocation.lng,
-              })
-            }
+            onPress={handleCurrentLocation}
             buttonStyle={{
               backgroundColor: theme.colors.white,
             }}
@@ -118,7 +114,7 @@ const Map = ({
                 Alert.alert(`Map Touched at:`, `${message.location.lat}, ${message.location.lng}`);
                 break;
               case "onMoveEnd":
-                onMoveEnd?.(message.mapCenter);
+                onMoveEnd?.(message.bounds);
 
                 break;
               default:
@@ -147,8 +143,9 @@ const style = StyleSheet.create({
   },
   center: {
     zIndex: 1,
-    left: "50%",
     top: "50%",
+    left: "50%",
+    position: "absolute",
     transform: "translate(-50%,-50%)",
   },
   row: {
@@ -165,6 +162,11 @@ const style = StyleSheet.create({
   },
   bottomRow: {
     bottom: 0,
+  },
+  bottomLeftContent: {
+    right: 24,
+    zIndex: 1000,
+    position: "absolute",
   },
 });
 

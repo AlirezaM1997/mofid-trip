@@ -644,6 +644,11 @@ export const messages = {
     fa_ir: "مشاهده لیست",
     en_us: "show list",
   },
+  "search this area": {
+    ar: "search this area",
+    fa_ir: "اینجارو بگرد",
+    en_us: "search this area",
+  },
   "show map": {
     ar: "show map",
     fa_ir: "مشاهده نقشه",
