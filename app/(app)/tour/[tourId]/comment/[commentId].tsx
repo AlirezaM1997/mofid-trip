@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { Text, useTheme } from "@rneui/themed";
 import Container from "@atoms/container";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import moment from "jalali-moment";
 import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
 import {
@@ -21,6 +21,8 @@ import CommentCardReplay from "@modules/comment/comment-card-replay";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import Input from "@atoms/input";
 import Toast from "react-native-toast-message";
+import ReportComment from "@modules/report/report-comment";
+import { HEIGHT, WIDTH } from "@src/constants";
 
 const TourCommentReplay = () => {
   const { tr } = useTranslation();
@@ -30,6 +32,10 @@ const TourCommentReplay = () => {
   const navigation = useNavigation();
 
   const [value, setValue] = useState<string>("");
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const handleOpen = () => setIsVisible(!isVisible);
+  const handleClose = () => setIsVisible(false);
 
   const { loading, data, refetch } = useTourCommentQuery({ variables: { pk: tourId as string } });
   const [likeAdd] = useLikeAddMutation();
@@ -91,6 +97,13 @@ const TourCommentReplay = () => {
     }
   };
 
+  const closeDropDown = () => window.addEventListener("click", handleClose);
+
+  useEffect(() => {
+    closeDropDown();
+    return () => window.removeEventListener("click", handleClose);
+  }, []);
+
   return (
     <BottomButtonLayout
       contentContainerStyle={styles.bottomButtonLayout}
@@ -124,7 +137,17 @@ const TourCommentReplay = () => {
                     {comment.text}
                   </Text>
                 </View>
-                <Entypo name="dots-three-vertical" size={14} color={theme.colors.grey2} />
+                <Entypo
+                  name="dots-three-vertical"
+                  size={14}
+                  color={theme.colors.grey2}
+                  onPress={handleOpen}
+                />
+                <View style={styles.backDrop(isVisible)}>
+                  <View style={styles.dropDown}>
+                    <ReportComment closeDropDown={handleClose} id={comment.id} />
+                  </View>
+                </View>
               </View>
               <Text caption type="grey3">
                 {localizeNumber(moment(comment.createdDate).locale("fa").format("jD jMMMM jYYYY"))}{" "}
@@ -214,6 +237,24 @@ const styles = StyleSheet.create({
   likeStyle: { flexDirection: "row", gap: 4, alignItems: "center" },
   nestedCommentInf: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   nestedCommentList: { gap: 40 },
+  backDrop: isVisible => ({
+    display: isVisible ? "flex" : "none",
+    position: "absolute",
+    width: WIDTH,
+    height: HEIGHT,
+    top: 25,
+    left: -10,
+  }),
+  dropDown: {
+    position: "absolute",
+    left: 15,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+    borderBottomLeftRadius: 8,
+    ...Platform.select({
+      web: { boxShadow: "0 0 5px #12121227" },
+    }),
+  },
 });
 
 export default TourCommentReplay;

@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
-import React from "react";
+import { Platform, StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
 import { Button, Divider, Text, useTheme } from "@rneui/themed";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import moment from "jalali-moment";
@@ -12,6 +12,8 @@ import {
   useLikeAddMutation,
 } from "@src/gql/generated";
 import { router } from "expo-router";
+import ReportComment from "@modules/report/report-comment";
+import { HEIGHT, WIDTH } from "@src/constants";
 
 const CommentCard = ({
   comment,
@@ -26,7 +28,12 @@ const CommentCard = ({
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
 
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
   const [likeAdd] = useLikeAddMutation();
+
+  const handleOpen = () => setIsVisible(!isVisible);
+  const handleClose = () => setIsVisible(false);
 
   const handleLike = async () => {
     const { data } = await likeAdd({
@@ -57,6 +64,13 @@ const CommentCard = ({
     }
   };
 
+  const closeDropDown = () => window.addEventListener("click", handleClose);
+
+  useEffect(() => {
+    closeDropDown();
+    return () => window.removeEventListener("click", handleClose);
+  }, []);
+
   return (
     <View style={styles.containerStyle(theme)}>
       <View style={styles.cardInf}>
@@ -66,7 +80,17 @@ const CommentCard = ({
               {comment.text}
             </Text>
           </View>
-          <Entypo name="dots-three-vertical" size={14} color={theme.colors.grey2} />
+          <Entypo
+            name="dots-three-vertical"
+            size={14}
+            color={theme.colors.grey2}
+            onPress={handleOpen}
+          />
+          <View style={styles.backDrop(isVisible)}>
+            <View style={styles.dropDown}>
+              <ReportComment closeDropDown={handleClose} id={comment.id} />
+            </View>
+          </View>
         </View>
         <Text caption type="grey3">
           {localizeNumber(moment(comment.createdDate).locale("fa").format("jD jMMMM jYYYY"))} .{" "}
@@ -125,6 +149,24 @@ const CommentCard = ({
 };
 
 const styles = StyleSheet.create({
+  backDrop: isVisible => ({
+    display: isVisible ? "flex" : "none",
+    position: "absolute",
+    width: WIDTH,
+    height: HEIGHT,
+    top: 25,
+    left: -10,
+  }),
+  dropDown: {
+    position: "absolute",
+    left: 15,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+    borderBottomLeftRadius: 8,
+    ...Platform.select({
+      web: { boxShadow: "0 0 5px #12121227" },
+    }),
+  },
   containerStyle: theme => ({
     paddingHorizontal: 16,
     paddingVertical: 12,

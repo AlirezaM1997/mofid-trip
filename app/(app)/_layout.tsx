@@ -14,7 +14,6 @@ export default function AppLayout() {
   const defaultScreenOptions = useDefaultScreenOptions();
   const routeName = usePathname();
   const dispatch = useDispatch();
-  
 
   // You can keep the splash screen open, or render a loading screen like we do here.
   if (isLoading) {
@@ -55,6 +54,30 @@ export default function AppLayout() {
       />
       <Stack.Screen
         name="tour/transaction/detail/[transactionId]"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="host/[hostId]/comment/[commentId]"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="host/[hostId]/comment"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/[tourId]/comment/[commentId]"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/[tourId]/comment"
         options={{
           title: tr("loading"),
         }}

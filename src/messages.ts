@@ -192,7 +192,8 @@ export const messages = {
   },
   "there are no comments yet. be the first to write your opinion about this host": {
     ar: "لا توجد تعليقات حتى الآن. كن أول من يكتب رأيك حول هذا المضيف",
-    fa_ir: "هنوز دیدگاهی ثبت نشده است. شما اولین نفر باشید که نظرتان را درباره این هاست ثبت می‌کنید",
+    fa_ir:
+      "هنوز دیدگاهی ثبت نشده است. شما اولین نفر باشید که نظرتان را درباره این هاست ثبت می‌کنید",
     en_us: "There are no comments yet. Be the first to write your opinion about this host",
   },
   "your comment has been successfully registered": {
@@ -230,16 +231,22 @@ export const messages = {
     fa_ir: "آیا این دیدگاه مفید بود؟",
     en_us: "Was this review helpful?",
   },
-  "write your comments and questions related to this tour. once approved, your comment will be published.": {
-    ar: "اكتب تعليقاتك وأسئلتك المتعلقة بهذه الجولة. بمجرد الموافقة، سيتم نشر تعليقك.",
-    fa_ir: "دیدگاه و سوالات خودتان را که مربوط به این تور هست را بنویسید. پس از تایید شدن، دیدگاه‌تان منتشر می‌شود.",
-    en_us: "Write your comments and questions related to this tour. Once approved, your comment will be published.",
-  },
-  "write your comments and questions related to this host. once approved, your comment will be published.": {
-    ar: "اكتب تعليقاتك وأسئلتك المتعلقة بهذا المضيف. بمجرد الموافقة، سيتم نشر تعليقك.",
-    fa_ir: "دیدگاه و سوالات خودتان را که مربوط به این هاست هست را بنویسید. پس از تایید شدن، دیدگاه‌تان منتشر می‌شود.",
-    en_us: "Write your comments and questions related to this host. Once approved, your comment will be published.",
-  },
+  "write your comments and questions related to this tour. once approved, your comment will be published.":
+    {
+      ar: "اكتب تعليقاتك وأسئلتك المتعلقة بهذه الجولة. بمجرد الموافقة، سيتم نشر تعليقك.",
+      fa_ir:
+        "دیدگاه و سوالات خودتان را که مربوط به این تور هست را بنویسید. پس از تایید شدن، دیدگاه‌تان منتشر می‌شود.",
+      en_us:
+        "Write your comments and questions related to this tour. Once approved, your comment will be published.",
+    },
+  "write your comments and questions related to this host. once approved, your comment will be published.":
+    {
+      ar: "اكتب تعليقاتك وأسئلتك المتعلقة بهذا المضيف. بمجرد الموافقة، سيتم نشر تعليقك.",
+      fa_ir:
+        "دیدگاه و سوالات خودتان را که مربوط به این هاست هست را بنویسید. پس از تایید شدن، دیدگاه‌تان منتشر می‌شود.",
+      en_us:
+        "Write your comments and questions related to this host. Once approved, your comment will be published.",
+    },
   "write your opinion about this tour": {
     ar: "اكتب رأيك حول هذه الجولة",
     fa_ir: "دیدگاه خود را درباره این تور بنویسید",
@@ -342,6 +349,11 @@ export const messages = {
     ar: "فشل",
     fa_ir: "رد شده",
     en_us: "failed",
+  },
+  "violation report successfully filed.": {
+    ar: "Violation report successfully filed.",
+    fa_ir: "گزارش تخلف با موفقیت ثبت شد.",
+    en_us: "Violation report successfully filed.",
   },
   telegram: {
     ar: "تلگرام",
@@ -1480,6 +1492,14 @@ export const messages = {
         "در صورت مشاهده مشکل در تور، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
       en_us:
         "If you see a problem in the tour, you can report this violation to the admin so that it can be addressed.",
+    },
+  "if you see a problem in the comment, you can report this violation to the admin so that it can be addressed.":
+    {
+      ar: "إذا رأيت مشكلة في النظر، يمكنك الإبلاغ عن هذا الانتهاك إلى المسؤول حتى يتم معالجته.",
+      fa_ir:
+        "در صورت مشاهده مشکل در دیدگاه، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
+      en_us:
+        "If you see a problem in the comment, you can report this violation to the admin so that it can be addressed.",
     },
   "if you see a problem in the host, you can report this violation to the admin so that it can be addressed.":
     {
@@ -2911,7 +2931,7 @@ export const messages = {
     fa_ir: "لطفا نام تشکل خود را وارد کنید",
     en_us: "Enter the name of your organization",
   },
-  "title": {
+  title: {
     ar: "عنوان",
     fa_ir: "عنوان",
     en_us: "Title",
