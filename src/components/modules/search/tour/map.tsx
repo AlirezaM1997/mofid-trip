@@ -7,12 +7,12 @@ import { AntDesign } from "@expo/vector-icons";
 import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { MapPropsType } from "@modules/map/index.web";
-import HostSearchCard from "@modules/host/card/search-card";
+import TourSearchCard from "@modules/tour/card/search-card";
 import React, { ReactNode, useEffect, useState } from "react";
-import { useProjectListSearchLazyQuery } from "@src/gql/generated";
+import { AccommodationQueryType, useTourListSearchLazyQuery } from "@src/gql/generated";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
-const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPropsType }) => {
+const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPropsType }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const [bounds, setBounds] = useState({});
@@ -20,7 +20,7 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
 
   const { filterSlice } = useSelector((state: RootState) => state);
 
-  const [search, { data, loading }] = useProjectListSearchLazyQuery();
+  const [search, { data, loading }] = useTourListSearchLazyQuery();
 
   useEffect(() => {
     search({
@@ -30,8 +30,8 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
 
   const onMarkerClick = id => {
     setItem(
-      <Pressable key={id} onPress={() => router.push(`host/${id}`)} style={styles.itemCard}>
-        <HostSearchCard chevron={true} project={data.projectList.data.find(obj => obj.id === id)} />
+      <Pressable key={id} onPress={() => router.push(`tour/${id}`)} style={styles.itemCard}>
+        <TourSearchCard chevron={true} tour={data.tourList.data.find(obj => obj.id === id)} />
       </Pressable>
     );
   };
@@ -56,16 +56,16 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
     await search({
       variables: {
         ...filterSlice,
-        filter: { ...filterSlice.filter, geoLimit: bounds },
+        filter: { ...filterSlice.filter, destinationGeoLimit: bounds },
       },
     });
   };
 
   return (
     <Map
-      style={styles.map}
       onMoveEnd={onMoveHandler}
       onMarkerClick={onMarkerClick}
+      style={styles.map}
       centerContent={loading && <ActivityIndicator size="large" color={theme.colors.primary} />}
       topCenterContent={
         <Button
@@ -86,13 +86,13 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
       mapMarkers={
         (!loading &&
           data && [
-            ...data.projectList.data.map(project => ({
-              id: project.id,
+            ...data.tourList.data.map(tour => ({
+              id: tour.id,
               size: [60, 60],
               iconAnchor: [-26, 60],
               position: {
-                lat: project?.accommodation.lat || 33,
-                lng: project?.accommodation.lng || 33,
+                lat: (tour?.destination as AccommodationQueryType)?.lat || 33,
+                lng: (tour?.destination as AccommodationQueryType)?.lng || 33,
               },
               icon: window.location.origin + "/assets/assets/image/location-marker.png",
             })),
@@ -118,4 +118,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchHostMap;
+export default SearchTourMap;

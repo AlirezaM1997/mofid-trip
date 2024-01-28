@@ -5,6 +5,7 @@ import SearchHostList from "@modules/search/host/list";
 import { Button, Divider, useTheme } from "@rneui/themed";
 import SearchBar from "@src/components/modules/search-bar";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import Filter from "@organisms/filter";
 
 const HostListScreen: React.FC = () => {
   const { tr } = useTranslation();
@@ -31,6 +32,7 @@ const HostListScreen: React.FC = () => {
   return (
     <>
       <SearchBar />
+      {/* <Filter /> */}
       <Divider />
       {showMap ? (
         <SearchHostMap button={showMapButton} />

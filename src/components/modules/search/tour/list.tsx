@@ -2,22 +2,23 @@ import { RootState } from "@src/store";
 import { useSelector } from "react-redux";
 import TourCard from "@modules/tour/card";
 import { NetworkStatus } from "@apollo/client";
-import React, { Fragment, useRef } from "react";
 import { Divider, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView } from "react-native-gesture-handler";
+import React, { Fragment, useRef, useState } from "react";
 import LoadingIndicator from "@modules/Loading-indicator";
 import NoResult from "@src/components/organisms/no-result";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
 import { AccommodationQueryType, useTourListSearchQuery } from "@src/gql/generated";
 
-const SearchTourList: React.FC = () => {
+const SearchTourList = ({ button }) => {
   const pageNumber = useRef(1);
   const { theme } = useTheme();
   const { tr } = useTranslation();
+  const [scrollReachedEnd, setScrollReachedEnd] = useState(false);
 
   const { filterSlice } = useSelector((state: RootState) => state);
 
@@ -28,7 +29,6 @@ const SearchTourList: React.FC = () => {
 
   const handleLoadMore = () => {
     pageNumber.current = pageNumber.current + 1;
-    console.log("pageNumber.current", pageNumber.current);
 
     fetchMore({
       variables: { ...filterSlice, page: { ...filterSlice.page, pageNumber: pageNumber.current } },
@@ -51,12 +51,16 @@ const SearchTourList: React.FC = () => {
       return layoutMeasurement.height + contentOffset.y >= contentSize.height - threshold;
     };
 
-    if (
-      isCloseToBottom(nativeEvent) &&
-      data?.tourList?.data?.length < data?.tourList?.count &&
-      networkStatus === NetworkStatus.ready
-    ) {
-      handleLoadMore();
+    if (isCloseToBottom(nativeEvent)) {
+      if (
+        data?.tourList?.data?.length < data?.tourList?.count &&
+        networkStatus === NetworkStatus.ready
+      ) {
+        handleLoadMore();
+      }
+      setScrollReachedEnd(true);
+    } else {
+      setScrollReachedEnd(false);
     }
   };
 
@@ -87,7 +91,7 @@ const SearchTourList: React.FC = () => {
                 id={tour.id}
                 title={tour.title}
                 avatarS3={tour?.avatarS3}
-                price={tour.packages[0].price}
+                price={tour?.packages?.[0]?.price}
                 address={(tour.destination as AccommodationQueryType)?.address}
               />
               <Divider />
@@ -100,11 +104,19 @@ const SearchTourList: React.FC = () => {
           <ActivityIndicator size="large" color={theme.colors.primary} />
         )}
       </Container>
+
+      {!scrollReachedEnd && <View style={styles.showMapButton}>{button}</View>}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  showMapButton: {
+    bottom: 24,
+    left: "50%",
+    position: "sticky",
+    alignItems: "center",
+  },
   resultContainer: { gap: 20 },
 });
 

@@ -67,6 +67,7 @@ const SearchBar = ({ onFocus, showSearchText = true }) => {
         inputStyle={{ direction: isRtl ? "rtl" : "ltr" }}
         searchIcon={<Feather name="search" size={22} color={theme.colors.grey2} />}
       />
+      
     </View>
   );
 };

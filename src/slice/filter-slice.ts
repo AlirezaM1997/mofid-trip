@@ -38,9 +38,7 @@ export const filterSlice = createSlice({
     setSort: (state, action: PayloadAction<PropsTypes["sort"]>) => {
       state.sort = action.payload;
     },
-    clearFilter: state => {
-      state = initialState;
-    },
+    clearFilter: () => initialState,
   },
 });
 

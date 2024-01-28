@@ -390,8 +390,18 @@ export const messages = {
   },
   filter: {
     ar: "منقي",
-    fa_ir: "فیلتر کنید",
+    fa_ir: "فیلتر",
     en_us: "Filter",
+  },
+  filters: {
+    ar: "منقي",
+    fa_ir: "فیلترها",
+    en_us: "Filters",
+  },
+  "clear filters": {
+    ar: "منقي",
+    fa_ir: "حذف فیلترها",
+    en_us: "clear filters",
   },
   "first name": {
     ar: "اسم",

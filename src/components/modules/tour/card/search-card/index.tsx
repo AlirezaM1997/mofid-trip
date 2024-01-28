@@ -1,12 +1,20 @@
 import React from "react";
+import { Feather } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
 import { Image, Text, useTheme } from "@rneui/themed";
-import { useFormatPrice } from "@src/hooks/localization";
+import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import { Platform, StyleSheet, View } from "react-native";
 import { AccommodationQueryType, TourListSearchQuery } from "@src/gql/generated";
 
-const TourSearchCard = ({ tour }: { tour: TourListSearchQuery["tourList"]["data"][number] }) => {
+const TourSearchCard = ({
+  tour,
+  chevron = false,
+}: {
+  chevron?: boolean;
+  tour: TourListSearchQuery["tourList"]["data"][number];
+}) => {
+  const isRtl = useIsRtl();
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { formatPrice } = useFormatPrice();
@@ -35,17 +43,18 @@ const TourSearchCard = ({ tour }: { tour: TourListSearchQuery["tourList"]["data"
           </Text>
         </View>
 
-        {tour.packages[0].price <= 0 ? (
+        {tour?.packages?.[0]?.price <= 0 ? (
           <Text body2 bold>
             {tr("it is free")}
           </Text>
         ) : (
           <Text body2 bold numberOfLines={1}>
-            {formatPrice(tour.packages[0].price)}
+            {formatPrice(tour?.packages?.[0]?.price)}
             <Text body2>/ هر‌شب</Text>
           </Text>
         )}
       </View>
+      {chevron ? <Feather name={isRtl ? "chevron-left" : "chevron-right"} size={18} /> : ""}
     </View>
   );
 };
@@ -53,7 +62,6 @@ const TourSearchCard = ({ tour }: { tour: TourListSearchQuery["tourList"]["data"
 const styles = StyleSheet.create({
   card: theme => ({
     gap: 10,
-    width: 226,
     height: 86,
     padding: 8,
     elevation: 1,

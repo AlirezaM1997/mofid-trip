@@ -1,7 +1,7 @@
 import * as Location from "expo-location";
 import { ExpoLeaflet } from "expo-leaflet";
-import { Feather } from "@expo/vector-icons";
 import { Button, useTheme } from "@rneui/themed";
+import { MaterialIcons } from "@expo/vector-icons";
 import { ReactNode, useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { ExpoLeafletProps } from "expo-leaflet/web/src/ExpoLeaflet.types";
@@ -39,23 +39,25 @@ const Map = ({
   if (!lat && !lng) return;
 
   const { theme } = useTheme();
-  const [location, setLocation] = useState({ lat: 30, lng: 54 });
+  const [location, setLocation] = useState<{ lat: number; lng: number }>({ lat, lng });
 
-  const handleCurrentLocation = () => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+  const handleCurrentLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
 
-      if (status === Location.PermissionStatus.DENIED) {
-        alert("Permission to access location was denied");
-        return;
-      }
+    if (status === Location.PermissionStatus.DENIED) {
+      alert("Permission to access location was denied");
+      return;
+    }
 
-      let location = await Location.getCurrentPositionAsync({});
+    try {
+      let loc = await Location.getCurrentPositionAsync({});
       setLocation({
-        lat: location?.coords?.latitude,
-        lng: location?.coords?.latitude,
+        lat: loc?.coords?.latitude,
+        lng: loc?.coords?.longitude,
       });
-    })();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -82,7 +84,9 @@ const Map = ({
             buttonStyle={{
               backgroundColor: theme.colors.white,
             }}
-            icon={<Feather name="crosshair" size={18} color={theme.colors.black} />}></Button>
+            icon={
+              <MaterialIcons name="my-location" size={18} color={theme.colors.black} />
+            }></Button>
         </View>
         <View>{bottomCenterContent}</View>
         <View>{bottomRightContent}</View>
@@ -92,8 +96,8 @@ const Map = ({
         <ExpoLeaflet
           zoom={zoom}
           mapCenterPosition={{
-            lat: location.lat,
-            lng: location.lng,
+            lat: location?.lat,
+            lng: location?.lng,
           }}
           mapMarkers={mapMarkers || []}
           mapLayers={[
@@ -115,7 +119,7 @@ const Map = ({
                 break;
               case "onMoveEnd":
                 onMoveEnd?.(message.bounds);
-
+                setLocation(message.mapCenter);
                 break;
               default:
                 if (["onMove"].includes(message.tag)) {

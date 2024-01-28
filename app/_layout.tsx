@@ -1,24 +1,24 @@
-import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
-import { ThemeProvider } from "@rneui/themed";
-import { SessionProvider } from "@src/context/auth";
-import useIsRtl from "@src/hooks/localization";
-import { persistor, store } from "@src/store";
+// import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 import { theme } from "@src/theme";
-import { toastConfig } from "@src/toast-config";
 import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { StatusBar } from "expo-status-bar";
-import React, { useCallback, useEffect } from "react";
-import { Appearance, I18nManager, Platform, StyleSheet, View } from "react-native";
-import Toast from "react-native-toast-message";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { ApolloProvider } from "@apollo/client";
-import { LtrSpecificStyles, RtlSpecificStyles } from "@src/global-style";
-import customUseApolloClient from "@src/hooks/apollo/client";
-import useTranslation from "@src/hooks/translation";
-import useDefaultScreenOptions from "@src/hooks/use-default-screen-options";
 import { Stack } from "expo-router/stack";
+import { StatusBar } from "expo-status-bar";
+import { ThemeProvider } from "@rneui/themed";
+import { persistor, store } from "@src/store";
+import useIsRtl from "@src/hooks/localization";
+import Toast from "react-native-toast-message";
+import { toastConfig } from "@src/toast-config";
+import { ApolloProvider } from "@apollo/client";
+import * as SplashScreen from "expo-splash-screen";
+import { SessionProvider } from "@src/context/auth";
+import useTranslation from "@src/hooks/translation";
+import React, { useCallback, useEffect } from "react";
+import customUseApolloClient from "@src/hooks/apollo/client";
+import { PersistGate } from "redux-persist/integration/react";
+import { LtrSpecificStyles, RtlSpecificStyles } from "@src/global-style";
+import useDefaultScreenOptions from "@src/hooks/use-default-screen-options";
+import { Appearance, I18nManager, Platform, StyleSheet, View } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -54,7 +54,7 @@ const MainContent = () => {
 
   I18nManager.allowRTL(I18nManager.isRTL);
 
-  // *  if you had an error that you don't know where it is coming from you can turn this on to see error in console 
+  // *  if you had an error that you don't know where it is coming from you can turn this on to see error in console
   // if (__DEV__) {
   //   // Adds messages only in a dev environment
   //   loadDevMessages();

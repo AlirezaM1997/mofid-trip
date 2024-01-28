@@ -19,7 +19,7 @@ const SearchTour = ({ data, loading }) => {
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.contentContainerStyle}>
       {data?.tourList?.data.map(tour => (
-        <Pressable key={tour.id} onPress={() => router.push(`tour/${tour.id}`)}>
+        <Pressable key={tour.id} style={styles.card} onPress={() => router.push(`tour/${tour.id}`)}>
           <TourSearchCard tour={tour} />
         </Pressable>
       ))}
@@ -28,6 +28,7 @@ const SearchTour = ({ data, loading }) => {
 };
 
 const styles = StyleSheet.create({
+  card: { width: 226 },
   contentContainerStyle: { gap: 15, padding: 1 },
 });
 
