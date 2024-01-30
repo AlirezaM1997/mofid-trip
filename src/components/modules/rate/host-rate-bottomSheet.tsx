@@ -28,6 +28,7 @@ const HostRateBottomSheet = ({
   const { localizeNumber } = useLocalizedNumberFormat();
 
   const [value, setValue] = useState<number>(0);
+  const [text, setText] = useState<string>("");
 
   const [rateAdd] = useRateAddMutation();
 
@@ -38,6 +39,7 @@ const HostRateBottomSheet = ({
           objectType: RateObjectTypeEnum.Project,
           objectId: +transaction.project.id,
           value: value,
+          description: text,
         },
       },
     });
@@ -49,6 +51,7 @@ const HostRateBottomSheet = ({
       });
       handleClose();
       setValue(0);
+      setText("");
     }
   };
 
@@ -96,7 +99,13 @@ const HostRateBottomSheet = ({
           {value !== 0 && (
             <Container style={styles.description}>
               <Text caption>{tr("share your opinion about the host with us.")}</Text>
-              <Input multiline numberOfLines={4} placeholder={tr("description")} />
+              <Input
+                multiline
+                numberOfLines={4}
+                placeholder={tr("description")}
+                onChangeText={text => setText(text)}
+                value={text}
+              />
             </Container>
           )}
           <Divider />

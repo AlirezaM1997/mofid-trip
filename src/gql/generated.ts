@@ -1391,6 +1391,7 @@ export type QueryWalletTransactionListArgs = {
  * along with the rating value.
  */
 export type RateInputType = {
+  description?: InputMaybe<Scalars['String']['input']>;
   objectId: Scalars['Int']['input'];
   objectType: RateObjectTypeEnum;
   value: Scalars['Int']['input'];
