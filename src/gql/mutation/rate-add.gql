@@ -1,8 +1,8 @@
 mutation rateAdd($data: RateInputType!) {
   rateAdd(data: $data) {
-    status
     message
     metadata
+    status
     statusCode
   }
 }

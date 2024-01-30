@@ -1893,11 +1893,11 @@ export type TourStatusQueryType = {
 
 /** An enumeration. */
 export enum TourTourGuestGenderChoices {
-  /** CHILD */
+  /** کودک */
   Child = 'CHILD',
-  /** FEMALE */
+  /** زن */
   Female = 'FEMALE',
-  /** MALE */
+  /** مرد */
   Male = 'MALE'
 }
 
@@ -2085,7 +2085,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -2323,7 +2323,7 @@ export type RateAddMutationVariables = Exact<{
 }>;
 
 
-export type RateAddMutation = { __typename?: 'Mutation', rateAdd?: { __typename?: 'ResponseBase', status?: string | null, message?: string | null, metadata?: any | null, statusCode?: number | null } | null };
+export type RateAddMutation = { __typename?: 'Mutation', rateAdd?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
 
 export type ReportAddMutationVariables = Exact<{
   data: ReportInputType;
@@ -3071,9 +3071,9 @@ export type ProjectPurchaseAddMutationOptions = Apollo.BaseMutationOptions<Proje
 export const RateAddDocument = gql`
     mutation rateAdd($data: RateInputType!) {
   rateAdd(data: $data) {
-    status
     message
     metadata
+    status
     statusCode
   }
 }
