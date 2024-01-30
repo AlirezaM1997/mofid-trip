@@ -44,7 +44,7 @@ const BottomButtonLayout = ({
 
 const styles = {
   contentContainer: {
-    height: HEIGHT - 85,
+    // height: HEIGHT - 195,
   },
   buttonContainer: theme => ({
     gap: 10,

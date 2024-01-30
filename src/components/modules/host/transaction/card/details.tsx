@@ -13,7 +13,7 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
     router.push({
       pathname: `/host/transaction/${transaction.id}`,
       params: {
-        name: transaction?.project.name,
+        name: transaction?.project?.name,
       },
     });
   };
@@ -23,7 +23,7 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
       <Image
         style={styles.image}
         source={
-          transaction?.project?.accommodation?.avatarS3.length > 0
+          transaction?.project?.accommodation?.avatarS3?.length > 0
             ? {
                 uri: transaction?.project?.accommodation?.avatarS3?.[0]?.small,
               }
@@ -33,10 +33,10 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
       />
 
       <View style={styles.infoContainer}>
-        <Text>{transaction?.project.name}</Text>
+        <Text>{transaction?.project?.name}</Text>
 
         <Text caption type="grey2">
-          {transaction?.project.accommodation?.address}
+          {transaction?.project?.accommodation?.address}
         </Text>
       </View>
     </Pressable>

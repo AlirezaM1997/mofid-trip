@@ -1391,6 +1391,7 @@ export type QueryWalletTransactionListArgs = {
  * along with the rating value.
  */
 export type RateInputType = {
+  description?: InputMaybe<Scalars['String']['input']>;
   objectId: Scalars['Int']['input'];
   objectType: RateObjectTypeEnum;
   value: Scalars['Int']['input'];
@@ -1892,11 +1893,11 @@ export type TourStatusQueryType = {
 
 /** An enumeration. */
 export enum TourTourGuestGenderChoices {
-  /** CHILD */
+  /** کودک */
   Child = 'CHILD',
-  /** FEMALE */
+  /** زن */
   Female = 'FEMALE',
-  /** MALE */
+  /** مرد */
   Male = 'MALE'
 }
 
@@ -2084,7 +2085,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
