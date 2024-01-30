@@ -1,14 +1,13 @@
-import { View } from "react-native";
+import { View , StyleSheet} from "react-native";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
 import AcceptPayment from "./acceptPayment";
 import { Feather } from "@expo/vector-icons";
 import RejectedDetails from "./rejectedDetails";
 import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { ProjectTransactionQueryType } from "@src/gql/generated";
-import LoadingIndicator from "@modules/Loading-indicator";
+import HostRateBottomSheet from "@modules/rate/host-rate-bottomSheet";
 
 type PropsType = {
   purchaseHandler: () => void;
@@ -19,13 +18,14 @@ type PropsType = {
 const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: PropsType) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
-  const [isAcceptPaymentVisible, setIsAcceptPaymentVisible] = useState(false);
-  const [isRejectedVisible, setIsRejectedVisible] = useState(false);
+  const [isAcceptPaymentVisible, setIsAcceptPaymentVisible] = useState<boolean>(false);
+  const [isRejectedVisible, setIsRejectedVisible] = useState<boolean>(false);
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState<boolean>(false);
 
   const pressHandler = (pathname: string) => {
     router.push(pathname);
   };
-
+  const handleClose = () => setIsBottomSheetVisible(false);
   const buttonType = () => {
     const lookup = {
       REQUEST: {
@@ -62,10 +62,9 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
             changeHandler: () => setIsAcceptPaymentVisible(true),
           },
       SUCCESSFUL: {
-        type: "outline",
-        color: "secondary",
-        title: tr("request details"),
-        changeHandler: () => pressHandler(`/host/transaction/${transaction.id}`),
+        title: tr("rates to the host"),
+        detailsBtn: true,
+        changeHandler: () => setIsBottomSheetVisible(true),
       },
     };
 
@@ -109,6 +108,11 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
         transaction={transaction}
         isVisible={isRejectedVisible}
         setIsVisible={setIsRejectedVisible}
+      />
+      <HostRateBottomSheet
+        transaction={transaction}
+        isVisible={isBottomSheetVisible}
+        handleClose={handleClose}
       />
     </>
   );

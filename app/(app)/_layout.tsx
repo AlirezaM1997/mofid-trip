@@ -53,6 +53,12 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
+        name="host/[projectId]/rate"
+        options={{
+          title: tr("rates to the host"),
+        }}
+      />
+      <Stack.Screen
         name="tour/transaction/detail/[transactionId]"
         options={{
           title: tr("loading"),
