@@ -198,6 +198,138 @@ export const messages = {
     fa_ir: "حذف",
     en_us: "Delete",
   },
+  replay: {
+    ar: "replay",
+    fa_ir: "پاسخ",
+    en_us: "Replay",
+  },
+  "your comment ...": {
+    ar: "Your comment ...",
+    fa_ir: "...پاسخ شما",
+    en_us: "Your comment ...",
+  },
+  "the answers": {
+    ar: "the answers",
+    fa_ir: "پاسخ ها",
+    en_us: "the answers",
+  },
+  "comment registered": {
+    ar: "comment registered",
+    fa_ir: "دیدگاه ثبت شده",
+    en_us: "Comment registered",
+  },
+  about: {
+    ar: "عن",
+    fa_ir: "درباره",
+    en_us: "about",
+  },
+  "add comment": {
+    ar: "أضف تعليق",
+    fa_ir: "افزودن دیدگاه",
+    en_us: "Add comment",
+  },
+  "record the answer": {
+    ar: "سجل الجواب",
+    fa_ir: "ثبت پاسخ",
+    en_us: "Record the answer",
+  },
+  comments: {
+    ar: "تعليقات",
+    fa_ir: "دیدگاه ها",
+    en_us: "Comments",
+  },
+  "comments of": {
+    ar: "تعليقات",
+    fa_ir: "دیدگاه های",
+    en_us: "Comments of",
+  },
+  "there are no comments yet. be the first to write your opinion about this tour": {
+    ar: "لا توجد تعليقات حتى الآن. كن أول من يكتب رأيك حول هذه الجولة",
+    fa_ir: "هنوز دیدگاهی ثبت نشده است. شما اولین نفر باشید که نظرتان را درباره این تور ثبت می‌کنید",
+    en_us: "There are no comments yet. Be the first to write your opinion about this tour",
+  },
+  "there are no comments yet. be the first to write your opinion about this host": {
+    ar: "لا توجد تعليقات حتى الآن. كن أول من يكتب رأيك حول هذا المضيف",
+    fa_ir:
+      "هنوز دیدگاهی ثبت نشده است. شما اولین نفر باشید که نظرتان را درباره این هاست ثبت می‌کنید",
+    en_us: "There are no comments yet. Be the first to write your opinion about this host",
+  },
+  "your comment has been successfully registered": {
+    ar: "لقد تم تسجيل تعليقك بنجاح",
+    fa_ir: "دیدگاه شما با موفقیت ثبت شد",
+    en_us: "Your comment has been successfully registered",
+  },
+  "register a comment": {
+    ar: "تسجيل تعليق",
+    fa_ir: "ثبت دیدگاه",
+    en_us: "Register a comment",
+  },
+  "comment text...": {
+    ar: "نص التعليق...",
+    fa_ir: "...متن نظر",
+    en_us: "Comment text...",
+  },
+  "describe your point of view": {
+    ar: "صف وجهة نظرك",
+    fa_ir: "دیدگاه خود را شرح دهید",
+    en_us: "Describe your point of view",
+  },
+  "your point of view": {
+    ar: "وجهة نظرك",
+    fa_ir: "دیدگاه شما",
+    en_us: "your point of view",
+  },
+  "view more": {
+    ar: "عرض المزيد",
+    fa_ir: "مشاهده بیشتر",
+    en_us: "View more",
+  },
+  "was this review helpful?": {
+    ar: "هل كانت هذه المراجعة مفيدة؟",
+    fa_ir: "آیا این دیدگاه مفید بود؟",
+    en_us: "Was this review helpful?",
+  },
+  "write your comments and questions related to this tour. once approved, your comment will be published.":
+    {
+      ar: "اكتب تعليقاتك وأسئلتك المتعلقة بهذه الجولة. بمجرد الموافقة، سيتم نشر تعليقك.",
+      fa_ir:
+        "دیدگاه و سوالات خودتان را که مربوط به این تور هست را بنویسید. پس از تایید شدن، دیدگاه‌تان منتشر می‌شود.",
+      en_us:
+        "Write your comments and questions related to this tour. Once approved, your comment will be published.",
+    },
+  "write your comments and questions related to this host. once approved, your comment will be published.":
+    {
+      ar: "اكتب تعليقاتك وأسئلتك المتعلقة بهذا المضيف. بمجرد الموافقة، سيتم نشر تعليقك.",
+      fa_ir:
+        "دیدگاه و سوالات خودتان را که مربوط به این هاست هست را بنویسید. پس از تایید شدن، دیدگاه‌تان منتشر می‌شود.",
+      en_us:
+        "Write your comments and questions related to this host. Once approved, your comment will be published.",
+    },
+  "write your opinion about this tour": {
+    ar: "اكتب رأيك حول هذه الجولة",
+    fa_ir: "دیدگاه خود را درباره این تور بنویسید",
+    en_us: "Write your opinion about this tour",
+  },
+  "write your opinion about this host": {
+    ar: "اكتب رأيك حول هذا المضيف",
+    fa_ir: "دیدگاه خود را درباره این هاست بنویسید",
+    en_us: "Write your opinion about this host",
+  },
+  comment: {
+    ar: "تعليق",
+    fa_ir: "دیدگاه",
+    en_us: "Comment",
+  },
+  "opinions about the tour": {
+    ar: "آراء حول الجولة",
+    fa_ir: "دیدگاه‌ها درباره تور",
+    en_us: "Opinions about the tour",
+  },
+  "opinions about the host": {
+    ar: "آراء حول المضيف",
+    fa_ir: "دیدگاه‌ها درباره هاست",
+    en_us: "Opinions about the host",
+  },
   "phone number": {
     ar: "رقم التليفون",
     fa_ir: "شماره تماس",
@@ -275,6 +407,11 @@ export const messages = {
     ar: "فشل",
     fa_ir: "رد شده",
     en_us: "failed",
+  },
+  "violation report successfully filed.": {
+    ar: "Violation report successfully filed.",
+    fa_ir: "گزارش تخلف با موفقیت ثبت شد.",
+    en_us: "Violation report successfully filed.",
   },
   telegram: {
     ar: "تلگرام",
@@ -1368,7 +1505,7 @@ export const messages = {
   },
   "rates to the host": {
     ar: "أسعار الجولة",
-    fa_ir: "امتیاز به میزبان",
+    fa_ir: "امتیاز به هاست",
     en_us: "Rates to the host",
   },
   paypal: {
@@ -1416,10 +1553,50 @@ export const messages = {
     fa_ir: "بیشتر",
     en_us: "Profile Saved Successfully",
   },
+  "your feedback has been recorded.": {
+    ar: "Your feedback has been recorded.",
+    fa_ir: "بازخورد شما ثبت شد.",
+    en_us: "Your feedback has been recorded.",
+  },
   error: {
     ar: "الارور",
     fa_ir: "خطا",
     en_us: "Error",
+  },
+  "register points": {
+    ar: "Register points",
+    fa_ir: "ثبت امتیاز",
+    en_us: "Register points",
+  },
+  "share your opinion about the host with us.": {
+    ar: "Share your opinion about the host with us.",
+    fa_ir: "نقطه نظراتتان را درباره هاست، با ما در میان بگذارید.",
+    en_us: "Share your opinion about the host with us.",
+  },
+  "share your opinion about the tour with us.": {
+    ar: "Share your opinion about the tour with us.",
+    fa_ir: "نقطه نظراتتان را درباره تور با ما در میان بگذارید.",
+    en_us: "Share your opinion about the tour with us.",
+  },
+  "how satisfied were you with the experience of traveling to these hosts?": {
+    ar: "How satisfied were you with the experience of traveling to these hosts?",
+    fa_ir: "چقدر از تجربه سفر به این هاست رضایت داشتید؟",
+    en_us: "How satisfied were you with the experience of traveling to these hosts?",
+  },
+  "how satisfied were you with the experience of traveling to these tours?": {
+    ar: "How satisfied were you with the experience of traveling to these tours?",
+    fa_ir: "چقدر از تجربه سفر به این تور رضایت داشتید؟",
+    en_us: "How satisfied were you with the experience of traveling to these tours?",
+  },
+  "rate the host": {
+    ar: "Rate the host",
+    fa_ir: "به هاست امتیاز دهید",
+    en_us: "Rate the host",
+  },
+  "rate the tour": {
+    ar: "Rate the tour",
+    fa_ir: "به تور امتیاز دهید",
+    en_us: "Rate the tour",
   },
   "more options": {
     ar: "المزيد من الخيارات",
@@ -1463,6 +1640,14 @@ export const messages = {
         "در صورت مشاهده مشکل در تور، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
       en_us:
         "If you see a problem in the tour, you can report this violation to the admin so that it can be addressed.",
+    },
+  "if you see a problem in the comment, you can report this violation to the admin so that it can be addressed.":
+    {
+      ar: "إذا رأيت مشكلة في النظر، يمكنك الإبلاغ عن هذا الانتهاك إلى المسؤول حتى يتم معالجته.",
+      fa_ir:
+        "در صورت مشاهده مشکل در دیدگاه، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
+      en_us:
+        "If you see a problem in the comment, you can report this violation to the admin so that it can be addressed.",
     },
   "if you see a problem in the host, you can report this violation to the admin so that it can be addressed.":
     {

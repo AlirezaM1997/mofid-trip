@@ -30,6 +30,9 @@ query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterT
         tax
         price
         description
+        categories {
+          name
+        }
         facilities {
           id
           enName

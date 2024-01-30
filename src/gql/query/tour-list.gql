@@ -42,9 +42,9 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
       }
       # capacity {
       #   id
-      #   # male
-      #   # female
-      #   # child
+      #   male
+      #   female
+      #   child
       # }
       facilities {
         id
