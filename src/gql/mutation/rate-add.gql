@@ -1,0 +1,8 @@
+mutation rateAdd($data: RateInputType!) {
+  rateAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}

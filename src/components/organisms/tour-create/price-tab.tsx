@@ -50,9 +50,11 @@ const PriceTab = () => {
 
       <Input
         value={values.price?.toString()}
+        maxLength={8}
         label={tr("Price") + " (" + tr("Tooman") + ")"}
         onChangeText={price => setFieldValue("price", parseText(price))}
         onBlur={handleBlur("price")}
+        keyboardType="numeric"
         errorMessage={touched.price && (errors.price as string)}
       />
       <View style={styles.badgeRow}>
@@ -73,8 +75,10 @@ const PriceTab = () => {
       <WhiteSpace />
 
       <Input
+        maxLength={3}
         value={values.discount?.toString()}
         onChangeText={handleChange("discount")}
+        keyboardType="numeric"
         onBlur={handleBlur("discount")}
         errorMessage={touched.discount && (errors.discount as string)}
         label={tr("Discount") + " (%)"}
@@ -96,7 +100,7 @@ const PriceTab = () => {
         <View style={styles.row}>
           <Text>تخفیف {localizeNumber(values.discount)}%</Text>
           <Text>+</Text>
-          <Text>قیمت پایه {(formatPrice(+values.price ?? 0))}</Text>
+          <Text>قیمت پایه {formatPrice(+values.price ?? 0)}</Text>
         </View>
         <Text>=</Text>
         <Text>

@@ -1,6 +1,8 @@
 query myNGODetailProjectSet {
   NGODetail {
     id
+    isVerify
+    verifyDescription
     projectSet {
       id
       creator {

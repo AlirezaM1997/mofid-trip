@@ -7,7 +7,7 @@ import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView, View, StyleSheet } from "react-native";
 import { AccommodationQueryType, useTourListQuery } from "@src/gql/generated";
-import TourCardForSlider from "@modules/tour/card-for-slider";
+import TourSliderCard from "@modules/tour/card/slider-card";
 
 function TourList() {
   const { tr } = useTranslation();
@@ -54,7 +54,7 @@ function TourList() {
               ))
             : data.tourList.data?.map((tour, index) => (
                 <View key={index}>
-                  <TourCardForSlider
+                  <TourSliderCard
                     key={index}
                     id={tour.id}
                     name={tour.title}

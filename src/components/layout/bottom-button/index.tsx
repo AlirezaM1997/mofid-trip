@@ -4,8 +4,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Dimensions } from "react-native";
 import { useTheme } from "@rneui/themed";
 import { Divider } from "@rneui/base";
-
-const { height } = Dimensions.get("screen");
+import { HEIGHT } from "@src/constants";
 
 type BottomButtonLayoutProps = {
   children: ReactNode;
@@ -22,7 +21,9 @@ const BottomButtonLayout = ({
 
   return (
     <>
-      <ScrollView contentContainerStyle={contentContainerStyle} style={styles.contentContainer}>
+      <ScrollView
+        contentContainerStyle={[contentContainerStyle, styles.contentContainer]}
+        style={styles.contentContainer}>
         {children}
       </ScrollView>
       <Divider />
@@ -43,8 +44,7 @@ const BottomButtonLayout = ({
 
 const styles = {
   contentContainer: {
-    flex: 1,
-    height: height - 195,
+    height: HEIGHT - 85,
   },
   buttonContainer: theme => ({
     gap: 10,
@@ -52,6 +52,7 @@ const styles = {
     width: "100%",
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
     backgroundColor: theme.colors.white,
   }),
   button: {

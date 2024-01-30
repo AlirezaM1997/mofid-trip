@@ -1,0 +1,15 @@
+query myNGODetailVerify {
+  NGODetail {
+    id
+    title
+    kind
+    address
+    description
+    contactNumber
+    user {
+      id
+      email
+      phoneNumber
+    }
+  }
+}

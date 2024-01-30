@@ -5,7 +5,7 @@ import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
 import { HEIGHT, WIDTH } from "@src/constants";
 import useTranslation from "@src/hooks/translation";
 import { FieldProps, useFormikContext } from "formik";
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Pressable, StyleSheet, View, ViewProps } from "react-native";
 import * as Location from "expo-location";
 import Search from "@modules/map/search.web";
@@ -71,12 +71,11 @@ const mapHeight = 200;
 const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPickerProps) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
-  const { setFieldValue, touched, errors, getFieldProps } = useFormikContext();
   const isMapOpened = useRef<boolean>();
   const [location, setLocation] = useState();
-  const [currentLocation, setCurrentLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [isVisible, setIsVisible] = useState();
+  const { setFieldValue, touched, errors, getFieldProps } = useFormikContext();
 
   const latFieldProps = getFieldProps(latName);
   const lngFieldProps = getFieldProps(lngName);
@@ -107,46 +106,12 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
     handleClose();
   };
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setCurrentLocation({
-        lat: location?.coords?.latitude,
-        lng: location?.coords?.latitude,
-      });
-    })();
-  }, []);
-
   let text = "Waiting...";
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
     text = JSON.stringify(location);
   }
-
-  const MemoizedCurrentLocation = useMemo(
-    () => (
-      <Button
-        onPress={() => {
-          setLocation({
-            lat: currentLocation?.coords?.latitude,
-            lng: currentLocation?.coords?.longitude,
-          });
-        }}
-        buttonStyle={{
-          backgroundColor: theme.colors.white,
-        }}
-        icon={<Feather name="crosshair" size={24} color={theme.colors.black} />}
-        style={{ marginBottom: 70, padding: 10 }}></Button>
-    ),
-    []
-  );
 
   const MemoizedTopCenterContent = useMemo(
     () => (
@@ -173,6 +138,9 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
     ),
     []
   );
+  console.log(location);
+
+  const moveEndHandler = useCallback((_, mapCenter) => setLocation(mapCenter), []);
 
   return (
     <>
@@ -210,11 +178,10 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
         </View>
         <View style={styles.mapMarkerCentered} />
         <MemoizedMap
+          style={styles.root}
+          onMoveEnd={moveEndHandler}
           lat={location?.lat ? location.lat : initLocation.lat}
           lng={location?.lng ? location.lng : initLocation.lng}
-          style={styles.root}
-          onMoveEnd={setLocation}
-          bottomRightContent={MemoizedCurrentLocation}
           topCenterContent={MemoizedTopCenterContent}
         />
         <Container style={styles.mapContainer}>

@@ -1,19 +1,18 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Button } from "@rneui/themed";
 import { useState } from "react";
-import { useNavigation } from "expo-router";
-import { TourGenderEnum } from "@src/gql/generated";
+import { Button } from "@rneui/themed";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
+import { TourGenderEnum } from "@src/gql/generated";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import HostTransactionTab from "@modules/virtual-tabs/host-transaction-tabs";
+import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
 import HostTransactionDateTab from "@organisms/host-transaction/date";
+import HostTransactionTab from "@modules/virtual-tabs/host-transaction-tabs";
 import HostTransactionCapacityTab from "@organisms/host-transaction/capacity";
 import HostTransactionConfirmData from "@organisms/host-transaction/confirm-data";
 import HostTransactionSubmitBottomSheet from "@organisms/host-transaction/submitBottomSheet";
-import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
 
 const initialValues = {
   guests: {

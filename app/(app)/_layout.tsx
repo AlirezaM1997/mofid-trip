@@ -96,6 +96,18 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
+        name="host/management/edit/index"
+        options={{
+          title: tr("edit host"),
+        }}
+      />
+      <Stack.Screen
+        name="wallet/withdraw"
+        options={{
+          title: tr("withdraw"),
+        }}
+      />
+      <Stack.Screen
         name="host/management/index"
         options={{
           title: tr("Host Management"),
@@ -162,6 +174,12 @@ export default function AppLayout() {
         options={{
           title: tr("add card"),
           headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/cards/edit/[cardId]"
+        options={{
+          title: tr("edit card"),
         }}
       />
       <Stack.Screen
