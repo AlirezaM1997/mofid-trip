@@ -15,7 +15,7 @@ const SearchList = () => {
   return (
     <>
       <SearchBar />
-      {/* <Filter /> */}
+      <Filter />
       <Divider />
       {category === CategoryEnum.HOST ? <SearchHost /> : <SearchTour />}
     </>

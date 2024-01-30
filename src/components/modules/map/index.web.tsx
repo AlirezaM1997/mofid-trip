@@ -22,9 +22,9 @@ export type MapPropsType = ExpoLeafletProps & {
 };
 
 const Map = ({
+  zoom,
   lat = 30,
   lng = 54,
-  zoom = 5,
   onMoveEnd,
   mapMarkers,
   mapOptions = {},

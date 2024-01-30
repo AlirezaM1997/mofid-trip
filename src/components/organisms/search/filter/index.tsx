@@ -46,7 +46,9 @@ const Filter = () => {
       </Pressable>
 
       <BottomSheet isVisible={isVisible} containerStyle={styles.bottomSheet(isRtl)}>
-        <BottomButtonLayout buttons={bottomLayoutButton}>
+        <BottomButtonLayout
+          buttons={bottomLayoutButton}
+          contentContainerStyle={styles.bottomLayoutContainer}>
           <FilterHeader index={index} setIndex={setIndex} setIsVisible={setIsVisible} />
 
           <Divider />
@@ -78,6 +80,7 @@ const styles = StyleSheet.create({
     direction: isRtl ? "rtl" : "ltr",
   }),
   filterIcon: { transform: "rotate(90deg)" },
+  bottomLayoutContainer: { height: HEIGHT - 85 },
 });
 
 export default Filter;

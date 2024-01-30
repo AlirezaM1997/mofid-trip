@@ -910,6 +910,11 @@ export const messages = {
     fa_ir: "رسید",
     en_us: "Receipt",
   },
+  from: {
+    ar: "from",
+    fa_ir: "از",
+    en_us: "from",
+  },
   "view receipt": {
     ar: "المتن",
     fa_ir: "مشاهده رسید",
