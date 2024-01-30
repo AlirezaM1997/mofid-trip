@@ -42,9 +42,9 @@ query tourDetail($pk: ID!) {
     }
     # capacity {
     #   id
-    #   # male
-    #   # female
-    #   # child
+    #   male
+    #   female
+    #   child
     # }
     facilities {
       id

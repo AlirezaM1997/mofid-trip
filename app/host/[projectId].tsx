@@ -24,6 +24,7 @@ import { useDispatch } from "react-redux";
 // @@@@@@@@@@@@@ DON'T REMOVE THIS LINE @@@@@@@@@@@@@@@@@@
 // @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
 import markerImage from "@assets/image/marker.png";
+import HostComment from "@modules/host/comment";
 const a = markerImage;
 
 const Page: React.FC = ({ ...props }) => {
@@ -138,12 +139,14 @@ const Page: React.FC = ({ ...props }) => {
           currentProjectId={projectId as string}
           projects={creator?.projectSet as ProjectQueryType[]}
         />
+        <HostComment />
       </ScrollView>
     </BottomButtonLayout>
   );
 };
 const style = StyleSheet.create({
   scrollView: {
+    paddingBottom:16,
     flex: 1,
   },
   container: { gap: 32, marginVertical: 10 },

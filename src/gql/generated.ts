@@ -1893,11 +1893,11 @@ export type TourStatusQueryType = {
 
 /** An enumeration. */
 export enum TourTourGuestGenderChoices {
-  /** کودک */
+  /** CHILD */
   Child = 'CHILD',
-  /** زن */
+  /** FEMALE */
   Female = 'FEMALE',
-  /** مرد */
+  /** MALE */
   Male = 'MALE'
 }
 
@@ -2085,7 +2085,7 @@ export type UserQueryType = {
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
+  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -2247,12 +2247,26 @@ export type BankCardEditMutationVariables = Exact<{
 
 export type BankCardEditMutation = { __typename?: 'Mutation', bankCardEdit?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
+export type CommentAddMutationVariables = Exact<{
+  data: CommentAddInputType;
+}>;
+
+
+export type CommentAddMutation = { __typename?: 'Mutation', commentAdd?: { __typename?: 'ResponseBase', message?: string | null, metadata?: any | null, status?: string | null, statusCode?: number | null } | null };
+
 export type DepositWalletMutationVariables = Exact<{
   data: DepositWalletInputType;
 }>;
 
 
 export type DepositWalletMutation = { __typename?: 'Mutation', depositWallet?: { __typename?: 'ResponseBase', message?: string | null, status?: string | null, statusCode?: number | null, metadata?: any | null } | null };
+
+export type LikeAddMutationVariables = Exact<{
+  data: LikeInputType;
+}>;
+
+
+export type LikeAddMutation = { __typename?: 'Mutation', likeAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
 export type CreateLoginMutationVariables = Exact<{
   dataUser?: InputMaybe<UserInputType>;
@@ -2391,6 +2405,13 @@ export type CategoryListQueryVariables = Exact<{
 
 export type CategoryListQuery = { __typename?: 'Query', categoryList?: { __typename?: 'CategoryListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null } | null };
 
+export type HostCommentQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+}>;
+
+
+export type HostCommentQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', name?: string | null, commentSet?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null, nestedComment?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null } | null> | null } | null> | null } | null };
+
 export type MyNgoDetailProjectSetQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2504,6 +2525,13 @@ export type TagListQueryVariables = Exact<{
 
 
 export type TagListQuery = { __typename?: 'Query', tagList?: { __typename?: 'TagListType', count?: number | null, pageCount?: number | null, data?: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null, displayName?: string | null } | null> | null } | null };
+
+export type TourCommentQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+}>;
+
+
+export type TourCommentQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'TourQueryType', title: string, commentSet?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null, nestedComment?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null } | null> | null } | null> | null } | null };
 
 export type TourDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
@@ -2677,6 +2705,42 @@ export function useBankCardEditMutation(baseOptions?: Apollo.MutationHookOptions
 export type BankCardEditMutationHookResult = ReturnType<typeof useBankCardEditMutation>;
 export type BankCardEditMutationResult = Apollo.MutationResult<BankCardEditMutation>;
 export type BankCardEditMutationOptions = Apollo.BaseMutationOptions<BankCardEditMutation, BankCardEditMutationVariables>;
+export const CommentAddDocument = gql`
+    mutation commentAdd($data: CommentAddInputType!) {
+  commentAdd(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}
+    `;
+export type CommentAddMutationFn = Apollo.MutationFunction<CommentAddMutation, CommentAddMutationVariables>;
+
+/**
+ * __useCommentAddMutation__
+ *
+ * To run a mutation, you first call `useCommentAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCommentAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [commentAddMutation, { data, loading, error }] = useCommentAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCommentAddMutation(baseOptions?: Apollo.MutationHookOptions<CommentAddMutation, CommentAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CommentAddMutation, CommentAddMutationVariables>(CommentAddDocument, options);
+      }
+export type CommentAddMutationHookResult = ReturnType<typeof useCommentAddMutation>;
+export type CommentAddMutationResult = Apollo.MutationResult<CommentAddMutation>;
+export type CommentAddMutationOptions = Apollo.BaseMutationOptions<CommentAddMutation, CommentAddMutationVariables>;
 export const DepositWalletDocument = gql`
     mutation depositWallet($data: DepositWalletInputType!) {
   depositWallet(data: $data) {
@@ -2713,6 +2777,42 @@ export function useDepositWalletMutation(baseOptions?: Apollo.MutationHookOption
 export type DepositWalletMutationHookResult = ReturnType<typeof useDepositWalletMutation>;
 export type DepositWalletMutationResult = Apollo.MutationResult<DepositWalletMutation>;
 export type DepositWalletMutationOptions = Apollo.BaseMutationOptions<DepositWalletMutation, DepositWalletMutationVariables>;
+export const LikeAddDocument = gql`
+    mutation likeAdd($data: LikeInputType!) {
+  likeAdd(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}
+    `;
+export type LikeAddMutationFn = Apollo.MutationFunction<LikeAddMutation, LikeAddMutationVariables>;
+
+/**
+ * __useLikeAddMutation__
+ *
+ * To run a mutation, you first call `useLikeAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLikeAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [likeAddMutation, { data, loading, error }] = useLikeAddMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useLikeAddMutation(baseOptions?: Apollo.MutationHookOptions<LikeAddMutation, LikeAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LikeAddMutation, LikeAddMutationVariables>(LikeAddDocument, options);
+      }
+export type LikeAddMutationHookResult = ReturnType<typeof useLikeAddMutation>;
+export type LikeAddMutationResult = Apollo.MutationResult<LikeAddMutation>;
+export type LikeAddMutationOptions = Apollo.BaseMutationOptions<LikeAddMutation, LikeAddMutationVariables>;
 export const CreateLoginDocument = gql`
     mutation createLogin($dataUser: UserInputType, $dataNgo: NGOInputType) {
   createLogin(dataUser: $dataUser, dataNgo: $dataNgo) {
@@ -3438,6 +3538,61 @@ export function useCategoryListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type CategoryListQueryHookResult = ReturnType<typeof useCategoryListQuery>;
 export type CategoryListLazyQueryHookResult = ReturnType<typeof useCategoryListLazyQuery>;
 export type CategoryListQueryResult = Apollo.QueryResult<CategoryListQuery, CategoryListQueryVariables>;
+export const HostCommentDocument = gql`
+    query hostComment($pk: ID!) {
+  projectDetail(pk: $pk) {
+    name
+    commentSet {
+      text
+      createdDate
+      dislikeCount
+      likeCount
+      id
+      user {
+        fullname
+      }
+      nestedComment {
+        text
+        createdDate
+        dislikeCount
+        likeCount
+        id
+        user {
+          fullname
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useHostCommentQuery__
+ *
+ * To run a query within a React component, call `useHostCommentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHostCommentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHostCommentQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useHostCommentQuery(baseOptions: Apollo.QueryHookOptions<HostCommentQuery, HostCommentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<HostCommentQuery, HostCommentQueryVariables>(HostCommentDocument, options);
+      }
+export function useHostCommentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HostCommentQuery, HostCommentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<HostCommentQuery, HostCommentQueryVariables>(HostCommentDocument, options);
+        }
+export type HostCommentQueryHookResult = ReturnType<typeof useHostCommentQuery>;
+export type HostCommentLazyQueryHookResult = ReturnType<typeof useHostCommentLazyQuery>;
+export type HostCommentQueryResult = Apollo.QueryResult<HostCommentQuery, HostCommentQueryVariables>;
 export const MyNgoDetailProjectSetDocument = gql`
     query myNGODetailProjectSet {
   NGODetail {
@@ -4775,6 +4930,61 @@ export function useTagListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ta
 export type TagListQueryHookResult = ReturnType<typeof useTagListQuery>;
 export type TagListLazyQueryHookResult = ReturnType<typeof useTagListLazyQuery>;
 export type TagListQueryResult = Apollo.QueryResult<TagListQuery, TagListQueryVariables>;
+export const TourCommentDocument = gql`
+    query tourComment($pk: ID!) {
+  tourDetail(pk: $pk) {
+    title
+    commentSet {
+      text
+      createdDate
+      dislikeCount
+      likeCount
+      id
+      user {
+        fullname
+      }
+      nestedComment {
+        text
+        createdDate
+        dislikeCount
+        likeCount
+        id
+        user {
+          fullname
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useTourCommentQuery__
+ *
+ * To run a query within a React component, call `useTourCommentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTourCommentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTourCommentQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *   },
+ * });
+ */
+export function useTourCommentQuery(baseOptions: Apollo.QueryHookOptions<TourCommentQuery, TourCommentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<TourCommentQuery, TourCommentQueryVariables>(TourCommentDocument, options);
+      }
+export function useTourCommentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TourCommentQuery, TourCommentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<TourCommentQuery, TourCommentQueryVariables>(TourCommentDocument, options);
+        }
+export type TourCommentQueryHookResult = ReturnType<typeof useTourCommentQuery>;
+export type TourCommentLazyQueryHookResult = ReturnType<typeof useTourCommentLazyQuery>;
+export type TourCommentQueryResult = Apollo.QueryResult<TourCommentQuery, TourCommentQueryVariables>;
 export const TourDetailDocument = gql`
     query tourDetail($pk: ID!) {
   tourDetail(pk: $pk) {

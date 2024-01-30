@@ -1,11 +1,11 @@
+import { router } from "expo-router";
+import WhiteSpace from "@atoms/white-space";
 import { EvilIcons } from "@expo/vector-icons";
+import useTranslation from "@src/hooks/translation";
 import { Image, Text, useTheme } from "@rneui/themed";
 import { ProjectQueryType } from "@src/gql/generated";
 import { useFormatPrice } from "@src/hooks/localization";
-import useTranslation from "@src/hooks/translation";
-import { router } from "expo-router";
-import React from "react";
-import { Platform, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View, Platform } from "react-native";
 
 type PropsType = {
   projects: ProjectQueryType[];
@@ -62,17 +62,20 @@ const SimilarProjects = ({ projects, currentProjectId }: PropsType) => {
     router.push({ pathname: `/host/${project.id}`, params: { name: project.name } });
 
   return (
-    <ScrollView horizontal contentContainerStyle={style.contentContainerStyle}>
-      <View style={style.dummyContent} />
-      {projects
-        ?.filter(p => p.id !== currentProjectId)
-        .map((p, index) => (
-          <Pressable key={index} onPress={() => handlePress(p)}>
-            <Item project={p} />
-          </Pressable>
-        ))}
-      <View style={style.dummyContent} />
-    </ScrollView>
+    <>
+      <ScrollView horizontal contentContainerStyle={style.contentContainerStyle}>
+        <View style={style.dummyContent} />
+        {projects
+          ?.filter(p => p.id !== currentProjectId)
+          .map((p, index) => (
+            <Pressable key={index} onPress={() => handlePress(p)}>
+              <Item project={p} />
+            </Pressable>
+          ))}
+        <View style={style.dummyContent} />
+      </ScrollView>
+      <WhiteSpace size={32} />
+    </>
   );
 };
 
@@ -100,7 +103,6 @@ const style = StyleSheet.create({
     borderRadius: 12,
   },
   cardTextContainer: {
-    width: "65%",
     paddingVertical: 5,
     justifyContent: "space-between",
   },

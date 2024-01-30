@@ -26,7 +26,7 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import { useSession } from "@src/context/auth";
 import ShareReportDropDown from "@modules/share-report-dropdown";
 import openMapHandler from "@src/helper/opem-map";
-import NgoAuthentication from "@modules/ngo/ngoAuthentication";
+import TourComment from "@modules/tour/comment";
 
 export default () => {
   const isRtl = useIsRtl();
@@ -179,6 +179,7 @@ export default () => {
         <WhiteSpace size={15} />
       </Container>
       <SimilarTours currentTourId={tour.id} tours={tour.NGO.tourSet} />
+      <TourComment />
       <WhiteSpace size={20} />
 
       <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
