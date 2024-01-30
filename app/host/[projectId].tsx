@@ -146,7 +146,7 @@ const Page: React.FC = ({ ...props }) => {
 };
 const style = StyleSheet.create({
   scrollView: {
-    paddingBottom:16,
+    paddingBottom: 16,
     flex: 1,
   },
   container: { gap: 32, marginVertical: 10 },

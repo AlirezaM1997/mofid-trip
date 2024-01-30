@@ -1505,7 +1505,7 @@ export const messages = {
   },
   "rates to the host": {
     ar: "أسعار الجولة",
-    fa_ir: "امتیاز به میزبان",
+    fa_ir: "امتیاز به هاست",
     en_us: "Rates to the host",
   },
   paypal: {
@@ -1553,10 +1553,50 @@ export const messages = {
     fa_ir: "بیشتر",
     en_us: "Profile Saved Successfully",
   },
+  "your feedback has been recorded.": {
+    ar: "Your feedback has been recorded.",
+    fa_ir: "بازخورد شما ثبت شد.",
+    en_us: "Your feedback has been recorded.",
+  },
   error: {
     ar: "الارور",
     fa_ir: "خطا",
     en_us: "Error",
+  },
+  "register points": {
+    ar: "Register points",
+    fa_ir: "ثبت امتیاز",
+    en_us: "Register points",
+  },
+  "share your opinion about the host with us.": {
+    ar: "Share your opinion about the host with us.",
+    fa_ir: "نقطه نظراتتان را درباره هاست، با ما در میان بگذارید.",
+    en_us: "Share your opinion about the host with us.",
+  },
+  "share your opinion about the tour with us.": {
+    ar: "Share your opinion about the tour with us.",
+    fa_ir: "نقطه نظراتتان را درباره تور با ما در میان بگذارید.",
+    en_us: "Share your opinion about the tour with us.",
+  },
+  "how satisfied were you with the experience of traveling to these hosts?": {
+    ar: "How satisfied were you with the experience of traveling to these hosts?",
+    fa_ir: "چقدر از تجربه سفر به این هاست رضایت داشتید؟",
+    en_us: "How satisfied were you with the experience of traveling to these hosts?",
+  },
+  "how satisfied were you with the experience of traveling to these tours?": {
+    ar: "How satisfied were you with the experience of traveling to these tours?",
+    fa_ir: "چقدر از تجربه سفر به این تور رضایت داشتید؟",
+    en_us: "How satisfied were you with the experience of traveling to these tours?",
+  },
+  "rate the host": {
+    ar: "Rate the host",
+    fa_ir: "به هاست امتیاز دهید",
+    en_us: "Rate the host",
+  },
+  "rate the tour": {
+    ar: "Rate the tour",
+    fa_ir: "به تور امتیاز دهید",
+    en_us: "Rate the tour",
   },
   "more options": {
     ar: "المزيد من الخيارات",

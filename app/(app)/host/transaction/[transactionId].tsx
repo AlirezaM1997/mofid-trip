@@ -14,12 +14,16 @@ import HostTransactionDetail from "@modules/host/transaction/detail";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import AcceptPayment from "@modules/host/transaction/buttons/acceptPayment";
 import { totalPrice } from "@src/helper/totalPrice";
+import HostRateBottomSheet from "@modules/rate/host-rate-bottomSheet";
 
 const TransactionDetailsScreen = () => {
   const { tr } = useTranslation();
   const navigation = useNavigation();
   const { transactionId } = useLocalSearchParams();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState<boolean>(false);
+
+  const handleClose = () => setIsBottomSheetVisible(false);
 
   const [addPurchase, { loading: purchaseLoading }] = useProjectPurchaseAddMutation();
 
@@ -66,7 +70,9 @@ const TransactionDetailsScreen = () => {
           {tr("view invoice")}
         </Button>
       ),
-      SUCCESSFUL: <Button>{tr("rates to the host")}</Button>,
+      SUCCESSFUL: (
+        <Button onPress={() => setIsBottomSheetVisible(true)}>{tr("rates to the host")}</Button>
+      ),
       ACCEPT: data.projectTransactionDetail.project.price ? (
         <Button loading={purchaseLoading} onPress={() => setIsVisible(true)}>
           {tr("pay")}
@@ -90,6 +96,11 @@ const TransactionDetailsScreen = () => {
         purchaseHandler={purchaseHandler}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
+      />
+      <HostRateBottomSheet
+        transaction={data?.projectTransactionDetail as ProjectTransactionQueryType}
+        isVisible={isBottomSheetVisible}
+        handleClose={handleClose}
       />
     </BottomButtonLayout>
   );
