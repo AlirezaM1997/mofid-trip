@@ -66,6 +66,7 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
       style={styles.map}
       onMoveEnd={onMoveHandler}
       onMarkerClick={onMarkerClick}
+      currentLocationVisible={true}
       centerContent={loading && <ActivityIndicator size="large" color={theme.colors.primary} />}
       topCenterContent={
         <Button

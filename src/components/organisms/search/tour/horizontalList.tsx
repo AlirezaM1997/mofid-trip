@@ -5,7 +5,7 @@ import useTranslation from "@src/hooks/translation";
 import TourSearchCard from "@modules/tour/card/search-card";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet } from "react-native";
 
-const SearchTour = ({ data, loading }) => {
+const SearchTourHorizontalList = ({ data, loading }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
   contentContainerStyle: { gap: 15, padding: 1 },
 });
 
-export default SearchTour;
+export default SearchTourHorizontalList;

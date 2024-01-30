@@ -44,25 +44,25 @@ function HostList() {
           <View style={style.spacer}></View>
           {loading
             ? [1, 2, 3, 4, 5, 6, 7, 8].map(i => (
-              <Skeleton
-                key={i}
-                animation="pulse"
-                width={328}
-                height={300}
-                style={{ borderRadius: 10 }}
-              />
-            ))
-            : data.projectList.data?.map((project, index) => (
-              <View key={index}>
-                <HostSliderCard
-                  id={project.id}
-                  name={project.name}
-                  price={(project.price * (100 - project.discount)) / 100}
-                  address={project.accommodation.address}
-                  avatarS3={project.accommodation.avatarS3}
+                <Skeleton
+                  key={i}
+                  animation="pulse"
+                  width={328}
+                  height={300}
+                  style={{ borderRadius: 10 }}
                 />
-              </View>
-            ))}
+              ))
+            : data.projectList.data?.map((project, index) => (
+                <View key={index}>
+                  <HostSliderCard
+                    id={project.id}
+                    name={project.name}
+                    price={(project.price * (100 - project.discount)) / 100}
+                    address={project.accommodation.address}
+                    avatarS3={project.accommodation.avatarS3}
+                  />
+                </View>
+              ))}
           <View style={style.spacer}></View>
         </ScrollView>
       </>

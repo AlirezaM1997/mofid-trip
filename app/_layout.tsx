@@ -137,9 +137,9 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
-          name="tour-search"
+          name="search-list"
           options={{
-            title: tr("search for tours"),
+            title: tr("loading"),
           }}
         />
         <Stack.Screen

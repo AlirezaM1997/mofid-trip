@@ -24,7 +24,7 @@ import { useDispatch } from "react-redux";
 // @@@@@@@@@@@@@ DON'T REMOVE THIS LINE @@@@@@@@@@@@@@@@@@
 // @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
 import markerImage from "@assets/image/marker.png";
-const a = markerImage
+const a = markerImage;
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();

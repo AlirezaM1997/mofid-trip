@@ -63,9 +63,10 @@ const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
 
   return (
     <Map
+      style={styles.map}
       onMoveEnd={onMoveHandler}
       onMarkerClick={onMarkerClick}
-      style={styles.map}
+      currentLocationVisible={true}
       centerContent={loading && <ActivityIndicator size="large" color={theme.colors.primary} />}
       topCenterContent={
         <Button

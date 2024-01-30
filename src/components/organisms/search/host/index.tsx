@@ -1,16 +1,20 @@
 import React, { useState } from "react";
+import { useNavigation } from "expo-router";
+import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import SearchHostMap from "@modules/search/host/map";
-import SearchHostList from "@modules/search/host/list";
-import { Button, Divider, useTheme } from "@rneui/themed";
-import SearchBar from "@src/components/modules/search-bar";
+import SearchHostMap from "@organisms/search/host/map";
+import SearchHostList from "@organisms/search/host/list";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import Filter from "@organisms/filter";
 
-const HostListScreen: React.FC = () => {
-  const { tr } = useTranslation();
+const SearchHost: React.FC = () => {
   const { theme } = useTheme();
+  const { tr } = useTranslation();
+  const navigation = useNavigation();
   const [showMap, setShowMap] = useState(false);
+
+  navigation.setOptions({
+    title: tr("search for hosts"),
+  });
 
   const showMapButton = (
     <Button
@@ -29,18 +33,11 @@ const HostListScreen: React.FC = () => {
     </Button>
   );
 
-  return (
-    <>
-      <SearchBar />
-      {/* <Filter /> */}
-      <Divider />
-      {showMap ? (
-        <SearchHostMap button={showMapButton} />
-      ) : (
-        <SearchHostList button={showMapButton} />
-      )}
-    </>
+  return showMap ? (
+    <SearchHostMap button={showMapButton} />
+  ) : (
+    <SearchHostList button={showMapButton} />
   );
 };
 
-export default HostListScreen;
+export default SearchHost;

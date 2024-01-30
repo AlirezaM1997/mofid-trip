@@ -125,6 +125,11 @@ export const messages = {
     fa_ir: "جستجوی تورها",
     en_us: "Search for tours",
   },
+  "search for hosts": {
+    ar: "البحث عن الجولات",
+    fa_ir: "جستجوی میزبانی‌ها",
+    en_us: "Search for hosts",
+  },
   accepted: {
     ar: "قبلت",
     fa_ir: "تایید شده",
@@ -556,10 +561,10 @@ export const messages = {
     fa_ir: "درخواست اولیه شما پس از ارسال ، توسط میزبان تایید یا رد خواهد شد",
     en_us: "your initial request will be approved or rejected by the host after submission",
   },
-  "place category": {
+  category: {
     ar: "فئة المكان",
     fa_ir: "دسته بندی",
-    en_us: "Place Category",
+    en_us: "Category",
   },
   "place requested": {
     ar: "المكان المطلوب",
@@ -568,7 +573,7 @@ export const messages = {
   },
   price: {
     ar: "سعر",
-    fa_ir: "هزینه",
+    fa_ir: "قیمت",
     en_us: "Price",
   },
   "my cards": {
@@ -2392,6 +2397,16 @@ export const messages = {
     ar: "مدينة",
     fa_ir: "شهر",
     en_us: "City",
+  },
+  "from city": {
+    ar: "مدينة",
+    fa_ir: "شهر مبداء",
+    en_us: "from City",
+  },
+  "destination city": {
+    ar: "مدينة",
+    fa_ir: "شهر مقصد",
+    en_us: "Destination city",
   },
   ok: {
     ar: "نعم",

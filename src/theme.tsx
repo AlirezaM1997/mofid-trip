@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { createTheme } from "@rneui/themed";
+import { createTheme, lightColors } from "@rneui/themed";
 import { LinearGradient } from "expo-linear-gradient";
 import { Platform, Pressable, PressableProps, View } from "react-native";
 import { WIDTH } from "./constants";
@@ -105,7 +105,7 @@ export const theme = isRtl =>
           fontWeight: "400",
         },
       },
-      ListItemSubtitle: {
+      ListItemSubtitle: (_, theme) => ({
         style: {
           ...Platform.select({
             web: {
@@ -119,9 +119,10 @@ export const theme = isRtl =>
               fontFamily: "DanaNoEn",
             },
           }),
+          color: theme.colors.grey3,
           fontWeight: "400",
         },
-      },
+      }),
       ListItemCheckBox: (props, theme) => ({
         checkedIcon: <Ionicons name="md-checkbox" size={24} color={theme.colors.primary} />,
         uncheckedIcon: <Ionicons name="square-outline" size={24} color={theme.colors.black} />,
@@ -152,6 +153,7 @@ export const theme = isRtl =>
           },
         };
       },
+
       Text: ({ bold, italic, underline, center, color, type, ...props }, theme) => {
         let style = {
           fontSize: 16,

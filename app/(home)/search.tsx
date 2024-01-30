@@ -2,17 +2,19 @@ import React from "react";
 import { router } from "expo-router";
 import { RootState } from "@src/store";
 import Container from "@atoms/container";
-import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
-import SearchHost from "@modules/search/host";
-import SearchTour from "@modules/search/tour";
 import { StyleSheet, View } from "react-native";
 import useTranslation from "@src/hooks/translation";
+import { setCategory } from "@src/slice/filter-slice";
+import { useDispatch, useSelector } from "react-redux";
 import TitleWithAction from "@modules/title-with-action";
 import SearchBar from "@src/components/modules/search-bar";
+import SearchTourHorizontalList from "@organisms/search/tour/horizontalList";
+import SearchHostHorizontalList from "@organisms/search/host/horizontalList";
 import { useProjectListSearchQuery, useTourListSearchQuery } from "@src/gql/generated";
 
 const SearchScreen: React.FC = () => {
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
   const { filterSlice } = useSelector((state: RootState) => state);
 
@@ -24,6 +26,11 @@ const SearchScreen: React.FC = () => {
     variables: filterSlice,
   });
 
+  const routerHandler = category => {
+    router.push("/search-list");
+    dispatch(setCategory(category));
+  };
+
   return (
     <>
       <SearchBar />
@@ -33,24 +40,24 @@ const SearchScreen: React.FC = () => {
             <TitleWithAction
               size="body2"
               actionTitle={tr("See All")}
-              onActionPress={() => router.push("/tour-list")}
+              onActionPress={() => routerHandler("tour")}
               title={`${tr("all tours of")} ${filterSlice.search}`}
             />
 
             <WhiteSpace size={8} />
-            <SearchTour data={tourData} loading={tourLoading} />
+            <SearchTourHorizontalList data={tourData} loading={tourLoading} />
           </View>
 
           <View>
             <TitleWithAction
               size="body2"
               actionTitle={tr("See All")}
-              onActionPress={() => router.push("/host-list")}
+              onActionPress={() => routerHandler("host")}
               title={`${tr("all hosts of")} ${filterSlice.search}`}
             />
 
             <WhiteSpace size={8} />
-            <SearchHost data={hostData} loading={hostLoading} />
+            <SearchHostHorizontalList data={hostData} loading={hostLoading} />
           </View>
         </Container>
       ) : (

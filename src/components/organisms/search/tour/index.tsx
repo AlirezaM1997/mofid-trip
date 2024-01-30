@@ -1,15 +1,20 @@
 import React, { useState } from "react";
+import { useNavigation } from "expo-router";
+import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import SearchTourMap from "@modules/search/tour/map";
-import SearchTourList from "@modules/search/tour/list";
-import { Button, Divider, useTheme } from "@rneui/themed";
-import SearchBar from "@src/components/modules/search-bar";
+import SearchTourMap from "@organisms/search/tour/map";
+import SearchTourList from "@organisms/search/tour/list";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 
-const TourListScreen: React.FC = () => {
-  const { tr } = useTranslation();
+const SearchTour: React.FC = () => {
   const { theme } = useTheme();
+  const { tr } = useTranslation();
+  const navigation = useNavigation();
   const [showMap, setShowMap] = useState(false);
+
+  navigation.setOptions({
+    title: tr("search for tours"),
+  });
 
   const showMapButton = (
     <Button
@@ -28,18 +33,11 @@ const TourListScreen: React.FC = () => {
     </Button>
   );
 
-  return (
-    <>
-      <SearchBar />
-      <Divider />
-
-      {showMap ? (
-        <SearchTourMap button={showMapButton} />
-      ) : (
-        <SearchTourList button={showMapButton} />
-      )}
-    </>
+  return showMap ? (
+    <SearchTourMap button={showMapButton} />
+  ) : (
+    <SearchTourList button={showMapButton} />
   );
 };
 
-export default TourListScreen;
+export default SearchTour;

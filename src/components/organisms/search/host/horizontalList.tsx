@@ -6,7 +6,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import HostSearchCard from "@modules/host/card/search-card";
 import { ActivityIndicator, Pressable, StyleSheet } from "react-native";
 
-const SearchHost = ({ data, loading }) => {
+const SearchHostHorizontalList = ({ data, loading }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   card: { width: 226 },
 });
 
-export default SearchHost;
+export default SearchHostHorizontalList;

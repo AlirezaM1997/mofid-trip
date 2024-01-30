@@ -4,7 +4,7 @@ import { StyleSheet, View, ViewStyle } from "react-native";
 type PropsType = {
   children?: ReactElement | ReactNode;
   size?: number;
-  style?: ViewStyle;
+  style?: ViewStyle | ViewStyle[];
 };
 
 const Container = ({ children, size, style, ...props }: PropsType) => {

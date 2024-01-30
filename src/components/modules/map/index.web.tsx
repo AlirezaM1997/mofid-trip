@@ -16,6 +16,7 @@ export type MapPropsType = ExpoLeafletProps & {
   bottomLeftContent?: ReactNode;
   bottomRightContent?: ReactNode;
   bottomCenterContent?: ReactNode;
+  currentLocationVisible?: boolean;
   onMarkerClick?: FunctionConstructor;
   onMoveEnd?: () => { lat: number; lng: number };
 };
@@ -28,6 +29,7 @@ const Map = ({
   mapMarkers,
   mapOptions = {},
   centerContent = <View></View>,
+  currentLocationVisible = false,
   topLeftContent = <View></View>,
   topRightContent = <View></View>,
   topCenterContent = <View></View>,
@@ -79,14 +81,16 @@ const Map = ({
       <View style={[style.row, style.bottomRow]}>
         <View style={style.bottomLeftContent}>
           {bottomLeftContent}
-          <Button
-            onPress={handleCurrentLocation}
-            buttonStyle={{
-              backgroundColor: theme.colors.white,
-            }}
-            icon={
-              <MaterialIcons name="my-location" size={18} color={theme.colors.black} />
-            }></Button>
+          {currentLocationVisible && (
+            <Button
+              onPress={handleCurrentLocation}
+              buttonStyle={{
+                backgroundColor: theme.colors.white,
+              }}
+              icon={
+                <MaterialIcons name="my-location" size={18} color={theme.colors.black} />
+              }></Button>
+          )}
         </View>
         <View>{bottomCenterContent}</View>
         <View>{bottomRightContent}</View>
@@ -118,7 +122,7 @@ const Map = ({
                 Alert.alert(`Map Touched at:`, `${message.location.lat}, ${message.location.lng}`);
                 break;
               case "onMoveEnd":
-                onMoveEnd?.(message.bounds);
+                onMoveEnd?.(message.bounds, message.mapCenter);
                 setLocation(message.mapCenter);
                 break;
               default:
