@@ -4,7 +4,6 @@ import { BottomSheet } from "@rneui/themed";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
 import { Button, Text } from "@rneui/themed";
-import Toast from "react-native-toast-message";
 import {
   ProjectTransactionAddInputType,
   useProjectTransactionAddMutation,
@@ -33,9 +32,9 @@ const HostTransactionSubmitBottomSheet = ({ isVisible, setIsVisible }) => {
       },
     });
     if (data.projectTransactionAdd.status === "OK") {
-      router.replace(`host/transaction/${data.projectTransactionAdd.metadata.project_request_id}`);
-      router.replace(`host/transaction/${data.projectTransactionAdd.metadata.project_request_id}`);
       setIsVisible(false);
+      router.replace(`host/transaction/${data.projectTransactionAdd.metadata.object_id}`);
+      router.replace(`host/transaction/${data.projectTransactionAdd.metadata.object_id}`);
     }
   };
 
