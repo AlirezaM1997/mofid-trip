@@ -39,7 +39,7 @@ const FilterPlaceCategory = () => {
     <ListItem.Accordion
       content={
         <ListItem.Content>
-          <ListItem.Title style={styles.label(isRtl)}>{tr("Place Category")}</ListItem.Title>
+          <ListItem.Title style={styles.label(isRtl)}>{tr("Category")}</ListItem.Title>
         </ListItem.Content>
       }
       icon={<Feather name="chevron-down" size={24} color="black" />}

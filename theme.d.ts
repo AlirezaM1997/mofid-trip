@@ -29,6 +29,7 @@ declare module "@rneui/themed" {
     body2?: boolean;
     body2Style?: TextStyle;
     caption?: boolean;
+    error?: boolean;
     captionStyle?: TextStyle;
     cta1?: boolean;
     cta1Style?: TextStyle;

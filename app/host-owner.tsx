@@ -12,6 +12,7 @@ import { Avatar, Image, useTheme } from "@rneui/themed";
 import { ScrollView } from "react-native-gesture-handler";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { useLocalSearchParams, useNavigation } from "expo-router";
+import HostSliderCard from "@modules/host/card/slider-card";
 
 const height = 220;
 
@@ -77,9 +78,12 @@ export default () => {
       <Container>
         <Text heading2>{tr("Other Hosts")}</Text>
         <WhiteSpace size={10} />
-        <View style={styles.row}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.row}>
           {data?.NGODetail?.projectSet?.map(p => (
-            <HostCard
+            <HostSliderCard
               key={p.id}
               id={p.id}
               name={p.name}
@@ -88,7 +92,7 @@ export default () => {
               address={p.accommodation[0]?.address}
             />
           ))}
-        </View>
+        </ScrollView>
         {!data?.NGODetail?.projectSet?.length && <Text>No project</Text>}
       </Container>
       <WhiteSpace size={40} />
@@ -106,8 +110,6 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.white,
   }),
   row: {
-    display: "flex",
-    flexDirection: "row",
     gap: 20,
   },
 });

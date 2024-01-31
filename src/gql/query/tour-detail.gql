@@ -7,6 +7,8 @@ query tourDetail($pk: ID!) {
     endTime
     NGO {
       id
+      isVerify
+      verifyDescription
       user {
         id
         fullname
@@ -38,12 +40,12 @@ query tourDetail($pk: ID!) {
         }
       }
     }
-    capacity {
-      id
-      male
-      female
-      child
-    }
+    # capacity {
+    #   id
+    #   male
+    #   female
+    #   child
+    # }
     facilities {
       id
       enName

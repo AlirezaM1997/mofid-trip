@@ -24,14 +24,15 @@ import { useDispatch } from "react-redux";
 // @@@@@@@@@@@@@ DON'T REMOVE THIS LINE @@@@@@@@@@@@@@@@@@
 // @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
 import markerImage from "@assets/image/marker.png";
-const a = markerImage
+import HostComment from "@modules/host/comment";
+const a = markerImage;
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const isFocused = useIsFocused();
   const navigation = useNavigation();
-  const { projectId, name } = useLocalSearchParams();
+  const { projectId } = useLocalSearchParams();
 
   const { loading, data } = useProjectDetailQuery({
     variables: {
@@ -45,14 +46,15 @@ const Page: React.FC = ({ ...props }) => {
     }
   }, [loading, data]);
 
+  if (loading) return <LoadingIndicator />;
+
   navigation.setOptions({
-    title: name,
+    title: data.projectDetail.name,
     headerRight: () => <ShareReportDropDown />,
   });
 
-  if (loading) return <LoadingIndicator />;
-
   const {
+    name,
     tags,
     creator,
     dateEnd,
@@ -137,12 +139,14 @@ const Page: React.FC = ({ ...props }) => {
           currentProjectId={projectId as string}
           projects={creator?.projectSet as ProjectQueryType[]}
         />
+        <HostComment />
       </ScrollView>
     </BottomButtonLayout>
   );
 };
 const style = StyleSheet.create({
   scrollView: {
+    paddingBottom: 16,
     flex: 1,
   },
   container: { gap: 32, marginVertical: 10 },

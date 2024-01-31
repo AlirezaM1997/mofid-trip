@@ -133,6 +133,7 @@ const EditCardScreen = () => {
               onBlur={handleBlur("iban")}
               placeholder={`${tr("iban")}`}
               leftIcon={<Text>IR-</Text>}
+              keyboardType="numeric"
               onChangeText={text => setFieldValue("iban", parseText(text))}
               errorMessage={touched.iban && (errors.iban as string)}
             />

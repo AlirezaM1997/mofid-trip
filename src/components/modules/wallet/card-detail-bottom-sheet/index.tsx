@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#f3f3f3",
+    borderColor: theme.colors.grey0,
   }),
   cardData: {
     flex: 1,

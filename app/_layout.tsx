@@ -1,23 +1,24 @@
-import { ThemeProvider } from "@rneui/themed";
-import { SessionProvider, useSession } from "@src/context/auth";
-import { StatusBar } from "expo-status-bar";
-import { Provider } from "react-redux";
-import { useFonts } from "expo-font";
-import { persistor, store } from "@src/store";
-import { toastConfig } from "@src/toast-config";
+// import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 import { theme } from "@src/theme";
-import { View, Platform, StyleSheet, Appearance, I18nManager } from "react-native";
-import Toast from "react-native-toast-message";
-import React, { useCallback, useEffect } from "react";
-import * as SplashScreen from "expo-splash-screen";
-import { PersistGate } from "redux-persist/integration/react";
-import useIsRtl from "@src/hooks/localization";
-import { ApolloProvider } from "@apollo/client";
-import { LtrSpecificStyles, RtlSpecificStyles } from "@src/global-style";
-import customUseApolloClient from "@src/hooks/apollo/client";
+import { useFonts } from "expo-font";
+import { Provider } from "react-redux";
 import { Stack } from "expo-router/stack";
+import { StatusBar } from "expo-status-bar";
+import { ThemeProvider } from "@rneui/themed";
+import { persistor, store } from "@src/store";
+import useIsRtl from "@src/hooks/localization";
+import Toast from "react-native-toast-message";
+import { toastConfig } from "@src/toast-config";
+import { ApolloProvider } from "@apollo/client";
+import * as SplashScreen from "expo-splash-screen";
+import { SessionProvider } from "@src/context/auth";
 import useTranslation from "@src/hooks/translation";
+import React, { useCallback, useEffect } from "react";
+import customUseApolloClient from "@src/hooks/apollo/client";
+import { PersistGate } from "redux-persist/integration/react";
+import { LtrSpecificStyles, RtlSpecificStyles } from "@src/global-style";
 import useDefaultScreenOptions from "@src/hooks/use-default-screen-options";
+import { Appearance, I18nManager, Platform, StyleSheet, View } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -52,6 +53,13 @@ const MainContent = () => {
   const defaultScreenOptions = useDefaultScreenOptions();
 
   I18nManager.allowRTL(I18nManager.isRTL);
+
+  // *  if you had an error that you don't know where it is coming from you can turn this on to see error in console
+  // if (__DEV__) {
+  //   // Adds messages only in a dev environment
+  //   loadDevMessages();
+  //   loadErrorMessages();
+  // }
 
   return (
     <>
@@ -91,6 +99,20 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
+          name="host-list"
+          options={{
+            headerShown: false,
+            title: tr("coming soon"),
+          }}
+        />
+        <Stack.Screen
+          name="tour-list"
+          options={{
+            headerShown: false,
+            title: tr("coming soon"),
+          }}
+        />
+        <Stack.Screen
           name="tour/[tourId]"
           options={{
             title: tr("loading"),
@@ -115,9 +137,9 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
-          name="tour-search"
+          name="search-list"
           options={{
-            title: tr("search for tours"),
+            title: tr("loading"),
           }}
         />
         <Stack.Screen

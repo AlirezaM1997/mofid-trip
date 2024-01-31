@@ -26,6 +26,7 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import { useSession } from "@src/context/auth";
 import ShareReportDropDown from "@modules/share-report-dropdown";
 import openMapHandler from "@src/helper/opem-map";
+import TourComment from "@modules/tour/comment";
 
 export default () => {
   const isRtl = useIsRtl();
@@ -37,9 +38,9 @@ export default () => {
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
-  const isAuthenticated = false;
   const { session } = useSession();
   const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
+
   const { loading, data } = useTourDetailQuery({
     variables: {
       pk: tourId as string,
@@ -57,7 +58,7 @@ export default () => {
   const handleNavigateToReserve = (tourPackage: TourPackageType) => {
     setIsVisible(false);
     router.push({
-      pathname: `/tour/${tour.id}/reservation/step-1`,
+      pathname: `/tour/${tour.id}/reservation/add/step-1`,
       params: {
         tourId: tour.id,
         tourPackage: JSON.stringify(tourPackage),
@@ -66,7 +67,7 @@ export default () => {
   };
 
   const handleBuy = p => {
-    if (isAuthenticated) {
+    if (session) {
       handleNavigateToReserve(p);
     } else {
       setIsVisiblePrevent(true);
@@ -178,7 +179,9 @@ export default () => {
         <WhiteSpace size={15} />
       </Container>
       <SimilarTours currentTourId={tour.id} tours={tour.NGO.tourSet} />
+      <TourComment />
       <WhiteSpace size={20} />
+
       <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
         {tour.packages.map((p, index) => (
           <ListItem
@@ -199,6 +202,7 @@ export default () => {
           </ListItem>
         ))}
       </BottomSheet>
+
       <BottomSheet isVisible={isVisiblePrevent} onBackdropPress={() => setIsVisiblePrevent(false)}>
         <Container>
           <ImageBackground

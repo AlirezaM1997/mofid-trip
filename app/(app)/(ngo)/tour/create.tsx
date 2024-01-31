@@ -2,30 +2,27 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import ButtonRow from "@modules/button-rows";
+import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
 import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
+import CapacityTab from "@organisms/tour-create/capacity-tab";
+import DateTab from "@organisms/tour-create/date-tab";
+import DestinationTab from "@organisms/tour-create/destination-tab";
 import DetailsTab from "@organisms/tour-create/details-tab";
-import { BottomSheet } from "@rneui/themed";
-import { Button, Text } from "@rneui/themed";
+import FacilitiesTab from "@organisms/tour-create/facilities-tab";
+import ImagesTab from "@organisms/tour-create/images-tab";
+import OriginTab from "@organisms/tour-create/origin-tab";
+import PriceTab from "@organisms/tour-create/price-tab";
+import { BottomSheet, Button, Text } from "@rneui/themed";
+import { TourGenderEnum, useTourAddMutation } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { setTourCreateActiveStep } from "@src/slice/tour-create-slice";
 import { RootState } from "@src/store";
 import { router } from "expo-router";
+import { Formik } from "formik";
 import { useState } from "react";
 import { ImageBackground, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import CapacityTab from "@organisms/tour-create/capacity-tab";
-import OriginTab from "@organisms/tour-create/origin-tab";
-import DestinationTab from "@organisms/tour-create/destination-tab";
-import DateTab from "@organisms/tour-create/date-tab";
-import PriceTab from "@organisms/tour-create/price-tab";
-import ImagesTab from "@organisms/tour-create/images-tab";
-import FacilitiesTab from "@organisms/tour-create/facilities-tab";
-import { TourGenderEnum, useTourAddMutation } from "@src/gql/generated";
-import { Formik } from "formik";
-import AccessDenied from "@modules/access-denied";
-import { useSession } from "@src/context/auth";
-import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
 
 const initialValues = {
   title: null,
@@ -61,8 +58,6 @@ const Screen = () => {
   const [submit, { loading }] = useTourAddMutation();
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const { activeStep } = useSelector((state: RootState) => state.tourCreateSlice);
-  const { session } = useSession();
-  const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
 
   const validationSchema = Yup.object().shape({
     capacity: Yup.object().shape({
@@ -121,8 +116,6 @@ const Screen = () => {
       setIsVisibleFinish(true);
     }
   };
-
-  if (!isNgo) return <AccessDenied />;
 
   return (
     <>

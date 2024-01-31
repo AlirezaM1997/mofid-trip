@@ -1,0 +1,258 @@
+import React, { useEffect, useState } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { BottomSheet, Button, CheckBox, Divider, Input, ListItem, Text } from "@rneui/themed";
+import { FieldArray, Formik } from "formik";
+import * as Yup from "yup";
+import {
+  ReportTypeEnum,
+  useReportAddMutation,
+  useReportCategoryListQuery,
+} from "@src/gql/generated";
+import { Redirect } from "expo-router";
+import Container from "@atoms/container";
+import WhiteSpace from "@atoms/white-space";
+import { HEIGHT } from "@src/constants";
+import useTranslation from "@src/hooks/translation";
+import Toast from "react-native-toast-message";
+import { useSession } from "@src/context/auth";
+import LoadingIndicator from "@modules/Loading-indicator";
+
+const ReportComment = ({ closeDropDown, id }) => {
+  const { tr } = useTranslation();
+  const { session } = useSession();
+  const [isVisible, setIsVisible] = useState(false);
+  const [categoryList, setCategoryList] = useState([]);
+  const catList = [
+    "هرزنامه",
+    "حساب جعلی",
+    "محتوای خشونت آمیز",
+    "محتوای غیر اخلاقی",
+    "سرقت اطلاعات خصوصی اشخاص",
+    "سایر",
+  ];
+
+  const [reportAdd, { loading: loadingReportAdd, error: errorReportAdd }] = useReportAddMutation();
+
+  const { loading, data } = useReportCategoryListQuery();
+
+  const handleOpen = () => {
+    setIsVisible(true);
+    closeDropDown();
+  };
+
+  const handleClose = () => setIsVisible(false);
+
+  const handleReport = async variables => {
+    const { data } = await reportAdd({
+      variables: {
+        data: {
+          objectId: +id,
+          objectType: ReportTypeEnum.Comment,
+          types: variables.checkBoxList.filter(item => item.checked === true).map(item => item.id),
+          description: variables.checkBoxList[variables.checkBoxList.length - 1]
+            ? variables.textBox
+            : "",
+        },
+      },
+    });
+
+    if (data?.reportAdd?.status === "OK") {
+      Toast.show({
+        type: "success",
+        text1: tr("Successful"),
+        text2: tr("violation report successfully filed."),
+      });
+      handleClose();
+    }
+  };
+
+  const initialValues = {
+    checkBoxList: categoryList.map(item => ({ id: item.id, checked: false })),
+    textBox: "",
+  };
+
+  const validationSchema = Yup.object().shape({
+    checkBoxList: Yup.array()
+      .of(
+        Yup.object({
+          id: Yup.string(),
+          checked: Yup.boolean(),
+        })
+      )
+      .test("at-least-one-true", tr("choose one of the options above*"), function (value) {
+        return value.some(obj => obj.checked === true);
+      }),
+    textBox: Yup.string().when("checkBoxList", {
+      is: checkBoxList => checkBoxList[checkBoxList.length - 1].checked === true,
+      then: () => Yup.string().required(tr("write a comment*")),
+      otherwise: () => Yup.string(),
+    }),
+  });
+
+  useEffect(() => {
+    if (!loading && data) {
+      setCategoryList(data.reportCategoryList.data);
+    }
+  }, [loading, data]);
+
+  if (loading) return <LoadingIndicator />;
+
+  if (isVisible && !session) return <Redirect href="/user-login" />;
+
+  return (
+    <>
+      <ListItem onPress={handleOpen} containerStyle={styles.reportButton}>
+        <AntDesign name="warning" size={16} />
+        <Text numberOfLines={1} body2>
+          {tr("violation report")}
+        </Text>
+      </ListItem>
+
+      <BottomSheet
+        isVisible={isVisible}
+        onBackdropPress={handleClose}
+        containerStyle={styles.reportBottomSheet}>
+        <Container style={styles.headerBar}>
+          <Text type="grey3">{tr("comment")}</Text>
+          <View style={styles.headerBarButton}>
+            <Text>{tr("violation report")}</Text>
+            <AntDesign onPress={handleClose} name="close" size={19} />
+          </View>
+        </Container>
+        <Divider />
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleReport}>
+          {({
+            handleSubmit,
+            handleChange,
+            handleBlur,
+            setFieldTouched,
+            setFieldValue,
+            touched,
+            values,
+            errors,
+          }) => (
+            <>
+              <ScrollView style={styles.formikScrollView}>
+                <View style={styles.formikView}>
+                  <Container>
+                    <WhiteSpace size={24} />
+                    <Text heading2>{tr("violation report")}</Text>
+                    <WhiteSpace />
+                    <Text caption type="grey2">
+                      {tr(
+                        "if you see a problem in the comment, you can report this violation to the admin so that it can be addressed."
+                      )}
+                    </Text>
+                    <FieldArray name="checkBoxList">
+                      {({ form, replace }) => {
+                        const { values } = form;
+                        const { checkBoxList } = values;
+                        return checkBoxList?.map((obj, index) => (
+                          <ListItem
+                            bottomDivider
+                            containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}
+                            key={index}>
+                            <CheckBox
+                              checked={obj.checked}
+                              title={catList[index]}
+                              onPress={() => {
+                                replace(index, {
+                                  id: categoryList[index].id,
+                                  checked: !obj.checked,
+                                });
+                                if (index === categoryList.length - 1) setFieldValue("textBox", "");
+                              }}
+                            />
+                          </ListItem>
+                        ));
+                      }}
+                    </FieldArray>
+                    {touched.checkBoxList && errors.checkBoxList && (
+                      <>
+                        <WhiteSpace />
+                        <Text caption type="error">
+                          {errors.checkBoxList.toString()}
+                        </Text>
+                      </>
+                    )}
+
+                    {values.checkBoxList[5].checked && (
+                      <>
+                        <View style={styles.textBox}>
+                          <Text caption>
+                            {tr("if you chose other, please also write a note and explanation")}
+                          </Text>
+                          <Input
+                            name="textBox"
+                            value={values.textBox}
+                            onBlur={handleBlur("textBox")}
+                            onChangeText={handleChange("textBox")}
+                            placeholder={tr("description")}
+                            multiline={true}
+                            numberOfLines={4}
+                            errorMessage={
+                              touched.textBox && errors.textBox && errors.textBox.toString()
+                            }
+                          />
+                        </View>
+                        {touched.textBox && errors.textBox && <WhiteSpace />}
+                      </>
+                    )}
+                  </Container>
+                  <View style={styles.submitButton}>
+                    <Divider />
+                    <Container>
+                      <Button
+                        loading={loadingReportAdd}
+                        onPress={() => {
+                          handleSubmit();
+                          setFieldTouched("checkBoxList");
+                          setFieldTouched("textBox");
+                        }}>
+                        {tr("confirm and send")}
+                      </Button>
+                    </Container>
+                  </View>
+                </View>
+              </ScrollView>
+            </>
+          )}
+        </Formik>
+      </BottomSheet>
+    </>
+  );
+};
+
+const styles = StyleSheet.create({
+  reportButton: {
+    direction: "rtl",
+    paddingVertical: 10,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+    borderBottomLeftRadius: 8,
+  },
+  reportBottomSheet: {
+    height: HEIGHT,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    justifyContent: "flex-end",
+    paddingVertical: 0,
+  },
+  headerBar: {
+    flexDirection: "row",
+    height: 64,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  headerBarButton: { flexDirection: "row", gap: 20 },
+  formikScrollView: { maxHeight: HEIGHT },
+  formikView: { minHeight: HEIGHT, justifyContent: "space-between" },
+  textBox: { gap: 16, paddingTop: 8 },
+  submitButton: { gap: 16, paddingBottom: 16, marginBottom: 65 },
+});
+
+export default ReportComment;
