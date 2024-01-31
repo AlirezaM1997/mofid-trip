@@ -2588,10 +2588,10 @@ export const messages = {
     fa_ir: "شهر",
     en_us: "City",
   },
-  "from city": {
+  "origin city": {
     ar: "مدينة",
     fa_ir: "شهر مبداء",
-    en_us: "from City",
+    en_us: "origin City",
   },
   "destination city": {
     ar: "مدينة",
@@ -2843,6 +2843,16 @@ export const messages = {
     fa_ir: "شروع",
     en_us: "Start",
   },
+  men: {
+    ar: "men",
+    fa_ir: "آقایان",
+    en_us: "men",
+  },
+  women: {
+    ar: "women",
+    fa_ir: "خانم‌ها",
+    en_us: "women",
+  },
   "choose one of the options above*": {
     ar: "اختر أحد الخيارات أعلاه*",
     fa_ir: "یکی از گزینه های بالا را انتخاب کنید*",
@@ -3076,6 +3086,11 @@ export const messages = {
     ar: "المضيف هو يوم واحد",
     fa_ir: "میزبانی یک روز است",
     en_us: "The host is one day",
+  },
+  "one day": {
+    ar: "المضيف هو يوم واحد",
+    fa_ir: "یک روزه",
+    en_us: "one day",
   },
   "select the capacity and gender of the host passengers": {
     ar: "حدد سعة وجنس الركاب المضيفين",

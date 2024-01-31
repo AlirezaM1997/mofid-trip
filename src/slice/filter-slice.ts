@@ -1,7 +1,7 @@
 import { PAGE_SIZE } from "@src/settings";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { PageType, ProjectFilterType, SortType } from "@src/gql/generated";
+import { PageType, ProjectFilterType, SortType, TourFilterType } from "@src/gql/generated";
 
 export enum CategoryEnum {
   TOUR = "tour",
@@ -13,7 +13,7 @@ type PropsTypes = {
   search?: string;
   sort?: SortType;
   category?: CategoryEnum;
-  filter?: ProjectFilterType;
+  filter?: ProjectFilterType | TourFilterType;
 };
 
 const initialState: PropsTypes = {
@@ -48,7 +48,9 @@ export const filterSlice = createSlice({
     setSort: (state, action: PayloadAction<PropsTypes["sort"]>) => {
       state.sort = action.payload;
     },
-    clearFilter: () => initialState,
+    clearFilter: state => {
+      state.filter = {};
+    },
   },
 });
 

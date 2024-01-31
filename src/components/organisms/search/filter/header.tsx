@@ -16,11 +16,10 @@ const FilterHeader = ({ index, setIndex, setIsVisible }) => {
       0: tr("filters"),
       1: tr("category"),
       2: tr("price"),
-      3: tr("price"),
-      4: tr("from city"),
-      5: tr("destination city"),
-      6: tr("capacity"),
-      7: tr("date"),
+      3: tr("origin city"),
+      4: tr("destination city"),
+      5: `${tr("capacity")}, ${tr("gender")}`,
+      6: tr("date"),
     };
 
     if (index in obj) return obj[index];

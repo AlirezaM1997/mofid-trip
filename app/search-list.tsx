@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import { RootState } from "@src/store";
 import { Divider } from "@rneui/themed";
 import { useSelector } from "react-redux";
