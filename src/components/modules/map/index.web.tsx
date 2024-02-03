@@ -21,10 +21,17 @@ export type MapPropsType = ExpoLeafletProps & {
   onMoveEnd?: () => { lat: number; lng: number };
 };
 
+// @@@@@@@@@@@@@ DON'T REMOVE THIS LINE @@@@@@@@@@@@@@@@@@
+// @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
+import markerImage from "@assets/image/marker.png";
+import locationMarkerImage from "@assets/image/location-marker.png";
+const a = markerImage;
+const b = locationMarkerImage;
+
 const Map = ({
+  zoom,
   lat = 30,
   lng = 54,
-  zoom = 5,
   onMoveEnd,
   mapMarkers,
   mapOptions = {},

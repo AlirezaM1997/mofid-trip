@@ -73,7 +73,7 @@ const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
           size="sm"
           color="secondary"
           onPress={handleSearchArea}
-          containerStyle={{ top: 120 }}
+          containerStyle={{ top: 150 }}
           icon={<AntDesign name="search1" color={theme.colors.white} />}>
           {tr("search this area")}
         </Button>
