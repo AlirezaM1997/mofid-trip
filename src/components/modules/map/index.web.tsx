@@ -30,7 +30,7 @@ const b = locationMarkerImage;
 
 const Map = ({
   zoom,
-  lat = 30,
+  lat = 28,
   lng = 54,
   onMoveEnd,
   mapMarkers,
@@ -105,7 +105,7 @@ const Map = ({
 
       <View style={[style.container, props.style]}>
         <ExpoLeaflet
-          zoom={zoom}
+          zoom={zoom || 5}
           mapCenterPosition={{
             lat: location?.lat,
             lng: location?.lng,
@@ -130,7 +130,6 @@ const Map = ({
                 break;
               case "onMoveEnd":
                 onMoveEnd?.(message.bounds, message.mapCenter);
-                setLocation(message.mapCenter);
                 break;
               default:
                 if (["onMove"].includes(message.tag)) {
