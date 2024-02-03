@@ -20,12 +20,7 @@ import React, { useEffect } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
-
-// @@@@@@@@@@@@@ DON'T REMOVE THIS LINE @@@@@@@@@@@@@@@@@@
-// @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
-import markerImage from "@assets/image/marker.png";
 import HostComment from "@modules/host/comment";
-const a = markerImage;
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();

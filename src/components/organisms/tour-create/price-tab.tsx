@@ -77,7 +77,7 @@ const PriceTab = () => {
       <Input
         maxLength={3}
         value={values.discount?.toString()}
-        onChangeText={handleChange("discount")}
+        onChangeText={text => setFieldValue("discount", parseText(text))}
         keyboardType="numeric"
         onBlur={handleBlur("discount")}
         errorMessage={touched.discount && (errors.discount as string)}

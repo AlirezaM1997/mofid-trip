@@ -1,7 +1,7 @@
 import { Button } from "@rneui/themed";
 import CountDownTimer from "@src/components/atoms/count-down-timer";
 import { Text } from "@rneui/themed";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
 import React, { useEffect, useRef, useState } from "react";
@@ -16,6 +16,7 @@ import { Redirect, router, useLocalSearchParams } from "expo-router";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import Toast from "react-native-toast-message";
 import { useSession } from "@src/context/auth";
+import { HEIGHT } from "@src/constants";
 
 const SMSVerificationScreen = () => {
   const { signIn, session } = useSession();
@@ -49,6 +50,7 @@ const SMSVerificationScreen = () => {
         type: "error",
         text1: tr("Error"),
         text2: data.userGetToken.message,
+        topOffset: HEIGHT / 4,
       });
     }
     if (data.userGetToken.statusCode === 200) {
@@ -62,6 +64,7 @@ const SMSVerificationScreen = () => {
         type: "error",
         text1: tr("Error"),
         text2: data.userGetToken.message,
+        topOffset: HEIGHT / 4,
       });
     }
   };
