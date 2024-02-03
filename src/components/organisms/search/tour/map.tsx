@@ -8,8 +8,8 @@ import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { MapPropsType } from "@modules/map/index.web";
 import TourSearchCard from "@modules/tour/card/search-card";
-import React, { ReactNode, useEffect, useState } from "react";
-import { AccommodationQueryType, useTourListSearchLazyQuery } from "@src/gql/generated";
+import { useTourListSearchLazyQuery } from "@src/gql/generated";
+import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
 const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPropsType }) => {
@@ -61,45 +61,49 @@ const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
     });
   };
 
+  const markers = useMemo(() => {
+    return !loading && data
+      ? data.tourList.data.map(tour => ({
+          id: tour.id,
+          size: [60, 60],
+          iconAnchor: [-26, 60],
+          position: {
+            lat: tour?.destination?.lat || 33,
+            lng: tour?.destination?.lng || 33,
+          },
+          icon: window.location.origin + "/assets/assets/image/location-marker.png",
+        }))
+      : [];
+  }, [data, loading]);
+
+  const topCenterContent = (
+    <Button
+      size="sm"
+      color="secondary"
+      onPress={handleSearchArea}
+      containerStyle={{ top: 150 }}
+      icon={<AntDesign name="search1" color={theme.colors.white} />}>
+      {tr("search this area")}
+    </Button>
+  );
+
+  const bottomCenterContent = (
+    <View style={styles.bottomContainer}>
+      {button}
+      {selectedItem}
+    </View>
+  );
+
   return (
     <Map
       style={styles.map}
+      mapMarkers={markers}
       onMoveEnd={onMoveHandler}
       onMarkerClick={onMarkerClick}
       currentLocationVisible={true}
+      topCenterContent={topCenterContent}
+      bottomCenterContent={bottomCenterContent}
       centerContent={loading && <ActivityIndicator size="large" color={theme.colors.primary} />}
-      topCenterContent={
-        <Button
-          size="sm"
-          color="secondary"
-          onPress={handleSearchArea}
-          containerStyle={{ top: 120 }}
-          icon={<AntDesign name="search1" color={theme.colors.white} />}>
-          {tr("search this area")}
-        </Button>
-      }
-      bottomCenterContent={
-        <View style={styles.bottomContainer}>
-          {button}
-          {selectedItem}
-        </View>
-      }
-      mapMarkers={
-        (!loading &&
-          data && [
-            ...data.tourList.data.map(tour => ({
-              id: tour.id,
-              size: [60, 60],
-              iconAnchor: [-26, 60],
-              position: {
-                lat: (tour?.destination as AccommodationQueryType)?.lat || 33,
-                lng: (tour?.destination as AccommodationQueryType)?.lng || 33,
-              },
-              icon: window.location.origin + "/assets/assets/image/location-marker.png",
-            })),
-          ]) ||
-        []
-      }
       {...props}
     />
   );

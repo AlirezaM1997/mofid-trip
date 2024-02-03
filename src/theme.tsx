@@ -337,6 +337,7 @@ export const theme = isRtl =>
           borderRadius: 12,
           padding: 15,
           paddingLeft: props.leftIcon ? 35 : WIDTH >= 285 ? 15 : 0,
+          paddingRight: props.rightIcon ? 35 : WIDTH >= 285 ? 15 : 0,
           fontSize: WIDTH > 320 ? 16 : 14,
           ...Platform.select({
             web: {
