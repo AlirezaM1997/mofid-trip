@@ -142,6 +142,7 @@ const Map = ({
     </>
   );
 };
+
 const style = StyleSheet.create({
   container: {
     height: 158,
