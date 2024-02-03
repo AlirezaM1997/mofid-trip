@@ -19,10 +19,30 @@ export const messages = {
     fa_ir: "افزودن مهمان",
     en_us: "Add Guest",
   },
+  "all tours of": {
+    ar: "نداریم",
+    fa_ir: "همه تورهای",
+    en_us: "all tours of",
+  },
+  "all hosts of": {
+    ar: "نداریم",
+    fa_ir: "همه میزبانی‌های",
+    en_us: "all hosts of",
+  },
   "ngo details": {
     ar: "الملف الشخصي للمؤدي",
     fa_ir: "مشخصات مجری",
     en_us: "ngo details",
+  },
+  "request again": {
+    ar: "نداریم",
+    fa_ir: "درخواست مجدد",
+    en_us: "request again",
+  },
+  "nothing found": {
+    ar: "نداریم",
+    fa_ir: "موردی یافت نشد",
+    en_us: "nothing found",
   },
   "anywhere you want": {
     ar: "في أي مكان تريده",
@@ -72,6 +92,11 @@ export const messages = {
     fa_ir: "بیوگرافی",
     en_us: "Bio",
   },
+  host: {
+    ar: "السيرة الذاتية (۲۰۰ حرف)",
+    fa_ir: "میزبانی",
+    en_us: "host",
+  },
   "book accommodation": {
     ar: "حجز الإقامة",
     fa_ir: " رزرو اقامتگاه ",
@@ -100,15 +125,48 @@ export const messages = {
     fa_ir: "جستجوی تورها",
     en_us: "Search for tours",
   },
+  "search for hosts": {
+    ar: "البحث عن الجولات",
+    fa_ir: "جستجوی میزبانی‌ها",
+    en_us: "Search for hosts",
+  },
   accepted: {
     ar: "قبلت",
     fa_ir: "تایید شده",
     en_us: "Accepted",
   },
+  "finally, it will be deposited into your selected account within 72 hours. if the deposit is not made, please contact mofidtrip support.":
+    {
+      ar: "وأخيرًا، سيتم إيداعه في حسابك الذي اخترته خلال 72 ساعة. إذا لم يتم الإيداع، يرجى الاتصال بدعم Mofidtrip.",
+      fa_ir:
+        " نهایتا تا ۷۲ ساعت دیگر به حساب انتخاب شده شما واریز می‌شود. در صورت واریز نشدن ، با پشتیبانی مفیدتریپ تماس حاصل بفرمایید.",
+      en_us:
+        "finally, it will be deposited into your selected account within 72 hours. If the deposit is not made, please contact Mofidtrip support.",
+    },
+  "choose a card please": {
+    ar: "اختر بطاقة",
+    fa_ir: "لطفا یک کارت را انتخاب کنید",
+    en_us: "choose a card please",
+  },
   "awaiting review": {
     ar: "في انتظار المراجعة",
     fa_ir: "در انتظار بررسی",
     en_us: "Awaiting review",
+  },
+  "your request has been registered": {
+    ar: "لقد تم تسجيل طلبك",
+    fa_ir: "درخواست شما ثبت شد",
+    en_us: "your request has been registered",
+  },
+  close: {
+    ar: "الخروج",
+    fa_ir: "بستن",
+    en_us: "close",
+  },
+  "successful withdraw": {
+    ar: "الخروج",
+    fa_ir: "برداشت موفق",
+    en_us: "Successful withdraw",
   },
   "check-out": {
     ar: "الخروج",
@@ -140,15 +198,147 @@ export const messages = {
     fa_ir: "حذف",
     en_us: "Delete",
   },
+  replay: {
+    ar: "replay",
+    fa_ir: "پاسخ",
+    en_us: "Replay",
+  },
+  "your comment ...": {
+    ar: "Your comment ...",
+    fa_ir: "...پاسخ شما",
+    en_us: "Your comment ...",
+  },
+  "the answers": {
+    ar: "the answers",
+    fa_ir: "پاسخ ها",
+    en_us: "the answers",
+  },
+  "comment registered": {
+    ar: "comment registered",
+    fa_ir: "دیدگاه ثبت شده",
+    en_us: "Comment registered",
+  },
+  about: {
+    ar: "عن",
+    fa_ir: "درباره",
+    en_us: "about",
+  },
+  "add comment": {
+    ar: "أضف تعليق",
+    fa_ir: "افزودن دیدگاه",
+    en_us: "Add comment",
+  },
+  "record the answer": {
+    ar: "سجل الجواب",
+    fa_ir: "ثبت پاسخ",
+    en_us: "Record the answer",
+  },
+  comments: {
+    ar: "تعليقات",
+    fa_ir: "دیدگاه ها",
+    en_us: "Comments",
+  },
+  "comments of": {
+    ar: "تعليقات",
+    fa_ir: "دیدگاه های",
+    en_us: "Comments of",
+  },
+  "there are no comments yet. be the first to write your opinion about this tour": {
+    ar: "لا توجد تعليقات حتى الآن. كن أول من يكتب رأيك حول هذه الجولة",
+    fa_ir: "هنوز دیدگاهی ثبت نشده است. شما اولین نفر باشید که نظرتان را درباره این تور ثبت می‌کنید",
+    en_us: "There are no comments yet. Be the first to write your opinion about this tour",
+  },
+  "there are no comments yet. be the first to write your opinion about this host": {
+    ar: "لا توجد تعليقات حتى الآن. كن أول من يكتب رأيك حول هذا المضيف",
+    fa_ir:
+      "هنوز دیدگاهی ثبت نشده است. شما اولین نفر باشید که نظرتان را درباره این هاست ثبت می‌کنید",
+    en_us: "There are no comments yet. Be the first to write your opinion about this host",
+  },
+  "your comment has been successfully registered": {
+    ar: "لقد تم تسجيل تعليقك بنجاح",
+    fa_ir: "دیدگاه شما با موفقیت ثبت شد",
+    en_us: "Your comment has been successfully registered",
+  },
+  "register a comment": {
+    ar: "تسجيل تعليق",
+    fa_ir: "ثبت دیدگاه",
+    en_us: "Register a comment",
+  },
+  "comment text...": {
+    ar: "نص التعليق...",
+    fa_ir: "...متن نظر",
+    en_us: "Comment text...",
+  },
+  "describe your point of view": {
+    ar: "صف وجهة نظرك",
+    fa_ir: "دیدگاه خود را شرح دهید",
+    en_us: "Describe your point of view",
+  },
+  "your point of view": {
+    ar: "وجهة نظرك",
+    fa_ir: "دیدگاه شما",
+    en_us: "your point of view",
+  },
+  "view more": {
+    ar: "عرض المزيد",
+    fa_ir: "مشاهده بیشتر",
+    en_us: "View more",
+  },
+  "was this review helpful?": {
+    ar: "هل كانت هذه المراجعة مفيدة؟",
+    fa_ir: "آیا این دیدگاه مفید بود؟",
+    en_us: "Was this review helpful?",
+  },
+  "write your comments and questions related to this tour. once approved, your comment will be published.":
+    {
+      ar: "اكتب تعليقاتك وأسئلتك المتعلقة بهذه الجولة. بمجرد الموافقة، سيتم نشر تعليقك.",
+      fa_ir:
+        "دیدگاه و سوالات خودتان را که مربوط به این تور هست را بنویسید. پس از تایید شدن، دیدگاه‌تان منتشر می‌شود.",
+      en_us:
+        "Write your comments and questions related to this tour. Once approved, your comment will be published.",
+    },
+  "write your comments and questions related to this host. once approved, your comment will be published.":
+    {
+      ar: "اكتب تعليقاتك وأسئلتك المتعلقة بهذا المضيف. بمجرد الموافقة، سيتم نشر تعليقك.",
+      fa_ir:
+        "دیدگاه و سوالات خودتان را که مربوط به این هاست هست را بنویسید. پس از تایید شدن، دیدگاه‌تان منتشر می‌شود.",
+      en_us:
+        "Write your comments and questions related to this host. Once approved, your comment will be published.",
+    },
+  "write your opinion about this tour": {
+    ar: "اكتب رأيك حول هذه الجولة",
+    fa_ir: "دیدگاه خود را درباره این تور بنویسید",
+    en_us: "Write your opinion about this tour",
+  },
+  "write your opinion about this host": {
+    ar: "اكتب رأيك حول هذا المضيف",
+    fa_ir: "دیدگاه خود را درباره این هاست بنویسید",
+    en_us: "Write your opinion about this host",
+  },
+  comment: {
+    ar: "تعليق",
+    fa_ir: "دیدگاه",
+    en_us: "Comment",
+  },
+  "opinions about the tour": {
+    ar: "آراء حول الجولة",
+    fa_ir: "دیدگاه‌ها درباره تور",
+    en_us: "Opinions about the tour",
+  },
+  "opinions about the host": {
+    ar: "آراء حول المضيف",
+    fa_ir: "دیدگاه‌ها درباره هاست",
+    en_us: "Opinions about the host",
+  },
   "phone number": {
     ar: "رقم التليفون",
     fa_ir: "شماره تماس",
     en_us: "Phone number",
   },
-  "host name": {
+  "ngo name": {
     ar: "اسم المجموعة",
     fa_ir: "نام مجموعه",
-    en_us: "Host name",
+    en_us: "ngo name",
   },
   "must be a number": {
     ar: "يجب أن يكون رقما",
@@ -217,6 +407,11 @@ export const messages = {
     ar: "فشل",
     fa_ir: "رد شده",
     en_us: "failed",
+  },
+  "violation report successfully filed.": {
+    ar: "Violation report successfully filed.",
+    fa_ir: "گزارش تخلف با موفقیت ثبت شد.",
+    en_us: "Violation report successfully filed.",
   },
   telegram: {
     ar: "تلگرام",
@@ -337,8 +532,18 @@ export const messages = {
   },
   filter: {
     ar: "منقي",
-    fa_ir: "فیلتر کنید",
+    fa_ir: "فیلتر",
     en_us: "Filter",
+  },
+  filters: {
+    ar: "منقي",
+    fa_ir: "فیلترها",
+    en_us: "Filters",
+  },
+  "clear filters": {
+    ar: "منقي",
+    fa_ir: "حذف فیلترها",
+    en_us: "clear filters",
   },
   "first name": {
     ar: "اسم",
@@ -468,6 +673,11 @@ export const messages = {
     fa_ir: "ارسال درخواست",
     en_us: "submit request",
   },
+  submit: {
+    ar: "تقديم",
+    fa_ir: "ارسال",
+    en_us: "submit",
+  },
   "your initial request will be approved or rejected by the tour after it is submitted": {
     ar: "ستتم الموافقة على طلبك الأولي أو رفضه بواسطة الجولة بعد تقديمه",
     fa_ir: "درخواست اولیه شما پس از ارسال، توسط تور تایید یا رد خواهد شد",
@@ -488,10 +698,10 @@ export const messages = {
     fa_ir: "درخواست اولیه شما پس از ارسال ، توسط میزبان تایید یا رد خواهد شد",
     en_us: "your initial request will be approved or rejected by the host after submission",
   },
-  "place category": {
+  category: {
     ar: "فئة المكان",
     fa_ir: "دسته بندی",
-    en_us: "Place Category",
+    en_us: "Category",
   },
   "place requested": {
     ar: "المكان المطلوب",
@@ -500,7 +710,7 @@ export const messages = {
   },
   price: {
     ar: "سعر",
-    fa_ir: "هزینه",
+    fa_ir: "قیمت",
     en_us: "Price",
   },
   "my cards": {
@@ -556,6 +766,16 @@ export const messages = {
     fa_ir: "ذخیره",
     en_us: "confirm",
   },
+  no: {
+    ar: "لا",
+    fa_ir: "خیر",
+    en_us: "no",
+  },
+  "card deleted successfully": {
+    ar: "تم حذف البطاقة بنجاح",
+    fa_ir: "کارت با موفقیت حذف شد",
+    en_us: "Card deleted successfully",
+  },
   search: {
     ar: "يبحث",
     fa_ir: "جستجو",
@@ -570,6 +790,21 @@ export const messages = {
     ar: "يدخل",
     fa_ir: "وارد‌شوید",
     en_us: "enter",
+  },
+  "show list": {
+    ar: "show list",
+    fa_ir: "مشاهده لیست",
+    en_us: "show list",
+  },
+  "search this area": {
+    ar: "search this area",
+    fa_ir: "اینجارو بگرد",
+    en_us: "search this area",
+  },
+  "show map": {
+    ar: "show map",
+    fa_ir: "مشاهده نقشه",
+    en_us: "show map",
   },
   "and booking them in mofidtrip": {
     ar: "وحجزهم في مفیدتریپ",
@@ -588,7 +823,7 @@ export const messages = {
   },
   "see all": {
     ar: "اظهار الكل",
-    fa_ir: "بیشتر",
+    fa_ir: "مشاهده همه",
     en_us: "See All",
   },
   "send request": {
@@ -1004,6 +1239,11 @@ export const messages = {
     fa_ir: "مالیات",
     en_us: "Tax",
   },
+  "withdrawal of total balance": {
+    ar: "سحب الرصيد الإجمالي",
+    fa_ir: "برداشت کل موجودی",
+    en_us: "Withdrawal of total balance",
+  },
   "wallet balance": {
     ar: "رصيد المحفظة",
     fa_ir: "موجودی کیف پول",
@@ -1146,6 +1386,11 @@ export const messages = {
     fa_ir: "مبلغ",
     en_us: "amount ",
   },
+  "the desired amount is more than the account balance": {
+    ar: "كمية",
+    fa_ir: "مبلغ موردنظر بیشتر از موجودی حساب است",
+    en_us: "the desired amount is more than the account balance ",
+  },
   "select or enter an amount to increase your wallet balance.": {
     ar: "حدد أو أدخل مبلغًا لزيادة رصيد محفظتك.",
     fa_ir: "برای افزایش موجودی کیف پول، مبلغ را انتخاب یا وارد کنید.",
@@ -1260,7 +1505,7 @@ export const messages = {
   },
   "rates to the host": {
     ar: "أسعار الجولة",
-    fa_ir: "امتیاز به میزبان",
+    fa_ir: "امتیاز به هاست",
     en_us: "Rates to the host",
   },
   paypal: {
@@ -1308,10 +1553,50 @@ export const messages = {
     fa_ir: "بیشتر",
     en_us: "Profile Saved Successfully",
   },
+  "your feedback has been recorded.": {
+    ar: "Your feedback has been recorded.",
+    fa_ir: "بازخورد شما ثبت شد.",
+    en_us: "Your feedback has been recorded.",
+  },
   error: {
     ar: "الارور",
     fa_ir: "خطا",
     en_us: "Error",
+  },
+  "register points": {
+    ar: "Register points",
+    fa_ir: "ثبت امتیاز",
+    en_us: "Register points",
+  },
+  "share your opinion about the host with us.": {
+    ar: "Share your opinion about the host with us.",
+    fa_ir: "نقطه نظراتتان را درباره هاست، با ما در میان بگذارید.",
+    en_us: "Share your opinion about the host with us.",
+  },
+  "share your opinion about the tour with us.": {
+    ar: "Share your opinion about the tour with us.",
+    fa_ir: "نقطه نظراتتان را درباره تور با ما در میان بگذارید.",
+    en_us: "Share your opinion about the tour with us.",
+  },
+  "how satisfied were you with the experience of traveling to these hosts?": {
+    ar: "How satisfied were you with the experience of traveling to these hosts?",
+    fa_ir: "چقدر از تجربه سفر به این هاست رضایت داشتید؟",
+    en_us: "How satisfied were you with the experience of traveling to these hosts?",
+  },
+  "how satisfied were you with the experience of traveling to these tours?": {
+    ar: "How satisfied were you with the experience of traveling to these tours?",
+    fa_ir: "چقدر از تجربه سفر به این تور رضایت داشتید؟",
+    en_us: "How satisfied were you with the experience of traveling to these tours?",
+  },
+  "rate the host": {
+    ar: "Rate the host",
+    fa_ir: "به هاست امتیاز دهید",
+    en_us: "Rate the host",
+  },
+  "rate the tour": {
+    ar: "Rate the tour",
+    fa_ir: "به تور امتیاز دهید",
+    en_us: "Rate the tour",
   },
   "more options": {
     ar: "المزيد من الخيارات",
@@ -1355,6 +1640,14 @@ export const messages = {
         "در صورت مشاهده مشکل در تور، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
       en_us:
         "If you see a problem in the tour, you can report this violation to the admin so that it can be addressed.",
+    },
+  "if you see a problem in the comment, you can report this violation to the admin so that it can be addressed.":
+    {
+      ar: "إذا رأيت مشكلة في النظر، يمكنك الإبلاغ عن هذا الانتهاك إلى المسؤول حتى يتم معالجته.",
+      fa_ir:
+        "در صورت مشاهده مشکل در دیدگاه، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
+      en_us:
+        "If you see a problem in the comment, you can report this violation to the admin so that it can be addressed.",
     },
   "if you see a problem in the host, you can report this violation to the admin so that it can be addressed.":
     {
@@ -1443,6 +1736,21 @@ export const messages = {
     ar: "يتصل",
     fa_ir: "شماره تماس",
     en_us: "Call",
+  },
+  "ngo type": {
+    ar: "نداریم",
+    fa_ir: "نوع مجموعه",
+    en_us: "ngo type",
+  },
+  "mobile phone number": {
+    ar: "رقم الهاتف الجوال",
+    fa_ir: "شماره تلفن همراه",
+    en_us: "mobile phone number",
+  },
+  "landline number": {
+    ar: "رقم الهاتف الثابت",
+    fa_ir: "شماره تلفن ثابت",
+    en_us: "landline number",
   },
   contact: {
     ar: "اتصال",
@@ -1590,6 +1898,29 @@ export const messages = {
     ar: "طلبات",
     fa_ir: "درخواست‌ها",
     en_us: "Requests",
+  },
+  "withdrawal request": {
+    ar: "طلبات",
+    fa_ir: "درخواست برداشت",
+    en_us: "withdrawal request",
+  },
+  "to request a withdrawal from the wallet, please enter the desired amount and select one of your previously created bank cards or register a new bank card.":
+    {
+      ar: "لطلب السحب من المحفظة، يرجى إدخال المبلغ المطلوب واختيار إحدى بطاقاتك المصرفية التي تم إنشاؤها مسبقًا أو تسجيل بطاقة مصرفية جديدة.",
+      fa_ir:
+        "جهت درخواست برداشت وجه از کیف پول خواهشمند است مبلغ مورد نظرتان را وارد کرده و یکی از کارت های بانکی از قبل ایجاد شده‌تان را انتخاب کنید یا کارت بانکی جدیدی ثبت کنید.",
+      en_us:
+        "To request a withdrawal from the wallet, please enter the desired amount and select one of your previously created bank cards or register a new bank card.",
+    },
+  "withdraw from the wallet": {
+    ar: "السحب من المحفظة",
+    fa_ir: "برداشت از کیف پول",
+    en_us: "Withdraw from the wallet",
+  },
+  "edit host": {
+    ar: "تحرير الاستضافة",
+    fa_ir: "ویرایش میزبانی",
+    en_us: "edit host",
   },
   "there is no tour": {
     ar: "لا يوجد صافي",
@@ -2024,6 +2355,11 @@ export const messages = {
     fa_ir: "ویرایش کارت",
     en_us: "edit card",
   },
+  "edit tour": {
+    ar: "نداریم",
+    fa_ir: "ویرایش تور",
+    en_us: "edit tour",
+  },
   "team leader": {
     ar: "رئيس الفريق",
     fa_ir: "سرگروه",
@@ -2033,6 +2369,33 @@ export const messages = {
     ar: "مدة",
     fa_ir: "مدت",
     en_us: "Duration",
+  },
+  "if you confirm and click on the yes option, your bank card will be removed from mofidtrip.": {
+    ar: "إذا قمت بالتأكيد والنقر على خيار نعم، فستتم إزالة بطاقتك المصرفية من مفیدتریپ.",
+    fa_ir: "در صورت تایید و زدن روی گزینه بله، کارت بانکی شما از مفیدتریپ حذف خواهد شد.",
+    en_us:
+      "If you confirm and click on the yes option, your bank card will be removed from Mofidtrip.",
+  },
+  "are you sure to delete your bank card?": {
+    ar: "هل أنت متأكد من حذف بطاقتك المصرفية؟",
+    fa_ir: "آیا از حذف کارت بانکی خود مطمئن هستید؟",
+    en_us: "Are you sure to delete your bank card?",
+  },
+  "card edited successfully": {
+    ar: "تم تحرير البطاقة بنجاح",
+    fa_ir: "کارت با موفقیت ویرایش شد",
+    en_us: "Card edited successfully",
+  },
+  "confirmation and registration": {
+    ar: "التأكيد والتسجيل",
+    fa_ir: "تایید و ثبت",
+    en_us: "Confirmation and registration",
+  },
+  "to edit the card, touch the desired section to apply the desired changes": {
+    ar: "لتحرير البطاقة، المس القسم المطلوب لتطبيق التغييرات المطلوبة",
+    fa_ir:
+      "برای ویرایش کارت، روی بخش مورد نظر را لمس کنید تا بتوانید تغییرات مد نظرتان را اعمال کنید",
+    en_us: "To edit the card, touch the desired section to apply the desired changes",
   },
   "tour facilities": {
     ar: "مرافق الجولة",
@@ -2068,6 +2431,24 @@ export const messages = {
     ar: "المصادقة",
     fa_ir: "احراز هویت",
     en_us: "Authentication",
+  },
+  "if your collection is not authenticated by the admin, it will not be approved. please authenticate as soon as possible.":
+    {
+      ar: "إذا لم تتم المصادقة على مجموعتك من قبل المسؤول، فلن تتم الموافقة عليها. يرجى المصادقة في أقرب وقت ممكن.",
+      fa_ir:
+        "در صورت احراز نشدن هویت مجموعه شما توسط ادمین ، تایید نخواهد شد. لطفا در سریعترین زمان اقدام به احراز هویت کنید.",
+      en_us:
+        "if your collection is not authenticated by the admin, it will not be approved. please authenticate as soon as possible.",
+    },
+  "verify your ngo!": {
+    ar: "التحقق من مجموعتك!",
+    fa_ir: "مجموعه‌تان را احراز کنید!",
+    en_us: "verify your ngo!",
+  },
+  "charity group, student ngo, cultural group or...": {
+    ar: "مجموعة مجتهدة، مجموعة من الباحثين المتميزين، مجموعة من الدورات التدريبية أو...",
+    fa_ir: "گروه جهادی، تشکل دانشجویی، مجموعه فرهنگی و یا...!",
+    en_us: "charity group, student ngo, cultural group or...",
   },
   chat: {
     ar: "رسالة",
@@ -2139,6 +2520,24 @@ export const messages = {
     fa_ir: "لطفا نام را وارد کنید",
     en_us: "First name is required",
   },
+  "ngo name is required": {
+    ar: "الإسم الأول مطلوب",
+    fa_ir: "نام مجموعه اجباری است",
+    en_us: "ngo name is required",
+  },
+  "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published":
+    {
+      ar: "ندارد",
+      fa_ir:
+        "درخواست شما توسط ادمین در حال بررسی می‌باشد، در صورت تایید هویت، تور شما / هاست شما منتشر خواهد شد",
+      en_us:
+        "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published",
+    },
+  "your ngo authentication request has been successfully submitted": {
+    ar: "الإسم الأول مطلوب",
+    fa_ir: "درخواست احراز هویت مجموعه شما با موفقیت ارسال شد",
+    en_us: "Your ngo authentication request has been successfully submitted",
+  },
   "display name is required": {
     ar: "الإسم الأول مطلوب",
     fa_ir: "لطفا نام نمایشی را وارد کنید",
@@ -2183,6 +2582,16 @@ export const messages = {
     ar: "مدينة",
     fa_ir: "شهر",
     en_us: "City",
+  },
+  "from city": {
+    ar: "مدينة",
+    fa_ir: "شهر مبداء",
+    en_us: "from City",
+  },
+  "destination city": {
+    ar: "مدينة",
+    fa_ir: "شهر مقصد",
+    en_us: "Destination city",
   },
   ok: {
     ar: "نعم",
@@ -2407,16 +2816,13 @@ export const messages = {
     fa_ir: "آدرس اجباری است",
     en_us: "Address is required",
   },
+
   "select on map": {
     ar: "حدد على الخريطة",
     fa_ir: "انتخاب از روی نقشه",
     en_us: "Select On Map",
   },
-  submit: {
-    ar: "يُقدِّم",
-    fa_ir: "ثبت",
-    en_us: "Submit",
-  },
+
   "the tour is one day": {
     ar: "الجولة يوم واحد",
     fa_ir: "یک روزه است",
@@ -2549,6 +2955,21 @@ export const messages = {
     ar: "يخلق",
     fa_ir: "ایجاد",
     en_us: "Create",
+  },
+  "invalid email address": {
+    ar: "نداریم",
+    fa_ir: "لطفا ایمیل را به درستی وارد کنید",
+    en_us: "invalid email address",
+  },
+  "type of ngo is required": {
+    ar: "اسم النوع مطلوب",
+    fa_ir: "نوع تشکل ضروری است",
+    en_us: "type of ngo is required",
+  },
+  "description ...": {
+    ar: "نداریم",
+    fa_ir: "... توضیحات",
+    en_us: "description ...",
   },
   "host type": {
     ar: "نوع المضيف",
@@ -2762,19 +3183,39 @@ export const messages = {
         "It appears that you do not have permission to access this page. Access the system administrator for access.",
     },
   "user login": {
-    ar: "",
+    ar: "ندارد",
     fa_ir: "ورود کاربر",
     en_us: "User Login",
   },
   "ngo login": {
-    ar: "",
+    ar: "ندارد",
     fa_ir: "ورود تشکل",
     en_us: "NGO Login",
   },
   "sms verification": {
-    ar: "",
+    ar: "ندارد",
     fa_ir: "اعتبارسنجی پیامکی",
     en_us: "SMS Verification",
+  },
+  "phone number is not valid": {
+    ar: "ندارد",
+    fa_ir: "شماره تلفن نا معتبر است",
+    en_us: "Phone number is not valid",
+  },
+  "phone number is required": {
+    ar: "ندارد",
+    fa_ir: "شماره تلفن لازم است",
+    en_us: "Phone number is required",
+  },
+  "contact number": {
+    ar: "ندارد",
+    fa_ir: "شماره تلفن",
+    en_us: "Contact Number",
+  },
+  "edit ngo": {
+    ar: "ندارد",
+    fa_ir: "ویرایش تشکل",
+    en_us: "Edit NGO",
   },
   "basic info": {
     ar: "",
@@ -2786,9 +3227,14 @@ export const messages = {
     fa_ir: "لطفا نام تشکل خود را وارد کنید",
     en_us: "Enter the name of your organization",
   },
-  "title": {
+  title: {
     ar: "عنوان",
     fa_ir: "عنوان",
     en_us: "Title",
+  },
+  "add your comment": {
+    ar: "نظر دهید",
+    fa_ir: "نظر دهید",
+    en_us: "Add your comment",
   },
 };

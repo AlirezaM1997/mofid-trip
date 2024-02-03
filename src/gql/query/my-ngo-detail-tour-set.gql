@@ -1,6 +1,8 @@
 query myNGODetailTourSet {
   NGODetail {
     id
+    isVerify
+    verifyDescription
     tourSet {
       id
       title
@@ -58,12 +60,12 @@ query myNGODetailTourSet {
         title
         price
       }
-      capacity {
-        id
-        male
-        female
-        child
-      }
+      # capacity {
+      #   id
+      #   male
+      #   female
+      #   child
+      # }
       facilities {
         id
         faName

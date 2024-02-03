@@ -14,7 +14,6 @@ export default function AppLayout() {
   const defaultScreenOptions = useDefaultScreenOptions();
   const routeName = usePathname();
   const dispatch = useDispatch();
-  
 
   // You can keep the splash screen open, or render a loading screen like we do here.
   if (isLoading) {
@@ -54,7 +53,37 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
+        name="host/[projectId]/rate"
+        options={{
+          title: tr("rates to the host"),
+        }}
+      />
+      <Stack.Screen
         name="tour/transaction/detail/[transactionId]"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="host/[hostId]/comment/[commentId]"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="host/[hostId]/comment"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/[tourId]/comment/[commentId]"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="tour/[tourId]/comment"
         options={{
           title: tr("loading"),
         }}
@@ -93,6 +122,18 @@ export default function AppLayout() {
         name="host/transaction/[transactionId]"
         options={{
           title: tr("Loading"),
+        }}
+      />
+      <Stack.Screen
+        name="host/management/edit/index"
+        options={{
+          title: tr("edit host"),
+        }}
+      />
+      <Stack.Screen
+        name="wallet/withdraw"
+        options={{
+          title: tr("withdraw"),
         }}
       />
       <Stack.Screen
@@ -162,6 +203,12 @@ export default function AppLayout() {
         options={{
           title: tr("add card"),
           headerBackButtonMenuEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet/cards/edit/[cardId]"
+        options={{
+          title: tr("edit card"),
         }}
       />
       <Stack.Screen

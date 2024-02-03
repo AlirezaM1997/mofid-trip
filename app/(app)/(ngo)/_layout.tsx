@@ -61,6 +61,24 @@ export default function AppLayout() {
           title: tr("Loading"),
         }}
       />
+      <Stack.Screen
+        name="tour/management/edit/[tourId]"
+        options={{
+          title: tr("edit tour"),
+        }}
+      />
+      <Stack.Screen
+        name="ngo-authentication"
+        options={{
+          title: tr("authentication"),
+        }}
+      />
+      <Stack.Screen
+        name="edit-ngo"
+        options={{
+          title: tr("Edit NGO"),
+        }}
+      />
     </Stack>
   );
 }

@@ -1,0 +1,8 @@
+mutation bankCardDelete($pk: Int!) {
+  bankCardDelete(pk: $pk) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}

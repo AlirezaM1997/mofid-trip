@@ -109,6 +109,7 @@ const AddCardScreen = () => {
               maxLength={24}
               value={values.iban}
               onBlur={handleBlur("iban")}
+              keyboardType="numeric"
               placeholder={`${tr("iban")}`}
               leftIcon={<Text>IR-</Text>}
               onChangeText={text => setFieldValue("iban", parseText(text))}
@@ -124,7 +125,7 @@ const AddCardScreen = () => {
               value={values.cardPan}
               onBlur={handleBlur("cardPan")}
               placeholder={`${tr("cardPan")}`}
-              leftIcon={
+              rightIcon={
                 <Image source={bankIcon as ImageSourcePropType} style={{ width: 18, height: 18 }} />
               }
               onChange={handleIcon}
