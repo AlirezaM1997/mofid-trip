@@ -1,12 +1,12 @@
 import Map from "@modules/map";
 import { router } from "expo-router";
 import { RootState } from "@src/store";
-import { useSelector } from "react-redux";
+import debounce from "lodash/debounce";
+import { useTheme } from "@rneui/themed";
 import { HEIGHT, WIDTH } from "@src/constants";
-import { AntDesign } from "@expo/vector-icons";
-import { Button, useTheme } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
+import { setFilter } from "@src/slice/filter-slice";
 import { MapPropsType } from "@modules/map/index.web";
+import { useDispatch, useSelector } from "react-redux";
 import TourSearchCard from "@modules/tour/card/search-card";
 import { useTourListSearchLazyQuery } from "@src/gql/generated";
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
@@ -14,8 +14,7 @@ import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
 const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPropsType }) => {
   const { theme } = useTheme();
-  const { tr } = useTranslation();
-  const [bounds, setBounds] = useState({});
+  const dispatch = useDispatch();
   const [selectedItem, setItem] = useState(null);
 
   const { filterSlice } = useSelector((state: RootState) => state);
@@ -26,7 +25,7 @@ const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
     search({
       variables: filterSlice,
     });
-  }, []);
+  }, [filterSlice]);
 
   const onMarkerClick = id => {
     setItem(
@@ -36,30 +35,28 @@ const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
     );
   };
 
-  const onMoveHandler = bounds => {
+  const onMoveHandler = debounce(bounds => {
     const latHigh = bounds[0][0];
     const latLow = bounds[1][0];
     const lngHigh = bounds[0][1];
     const lngLow = bounds[1][1];
 
-    setBounds({
+    const mapBounds = {
       latHigh,
       latLow,
       lngHigh,
       lngLow,
-    });
+    };
+
+    dispatch(
+      setFilter({
+        ...filterSlice.filter,
+        destinationGeoLimit: mapBounds,
+      })
+    );
 
     setItem(null);
-  };
-
-  const handleSearchArea = async () => {
-    await search({
-      variables: {
-        ...filterSlice,
-        filter: { ...filterSlice.filter, destinationGeoLimit: bounds },
-      },
-    });
-  };
+  }, 800);
 
   const markers = useMemo(() => {
     return !loading && data
@@ -76,17 +73,6 @@ const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
       : [];
   }, [data, loading]);
 
-  const topCenterContent = (
-    <Button
-      size="sm"
-      color="secondary"
-      onPress={handleSearchArea}
-      containerStyle={{ top: 150 }}
-      icon={<AntDesign name="search1" color={theme.colors.white} />}>
-      {tr("search this area")}
-    </Button>
-  );
-
   const bottomCenterContent = (
     <View style={styles.bottomContainer}>
       {button}
@@ -101,7 +87,6 @@ const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
       onMoveEnd={onMoveHandler}
       onMarkerClick={onMarkerClick}
       currentLocationVisible={true}
-      topCenterContent={topCenterContent}
       bottomCenterContent={bottomCenterContent}
       centerContent={loading && <ActivityIndicator size="large" color={theme.colors.primary} />}
       {...props}
