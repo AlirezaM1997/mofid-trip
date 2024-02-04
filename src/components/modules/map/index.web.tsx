@@ -21,10 +21,17 @@ export type MapPropsType = ExpoLeafletProps & {
   onMoveEnd?: () => { lat: number; lng: number };
 };
 
+// @@@@@@@@@@@@@ DON'T REMOVE THIS LINE @@@@@@@@@@@@@@@@@@
+// @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
+import markerImage from "@assets/image/marker.png";
+import locationMarkerImage from "@assets/image/location-marker.png";
+const a = markerImage;
+const b = locationMarkerImage;
+
 const Map = ({
-  lat = 30,
+  zoom,
+  lat = 28,
   lng = 54,
-  zoom = 5,
   onMoveEnd,
   mapMarkers,
   mapOptions = {},
@@ -98,7 +105,7 @@ const Map = ({
 
       <View style={[style.container, props.style]}>
         <ExpoLeaflet
-          zoom={zoom}
+          zoom={zoom || 5}
           mapCenterPosition={{
             lat: location?.lat,
             lng: location?.lng,
@@ -123,7 +130,6 @@ const Map = ({
                 break;
               case "onMoveEnd":
                 onMoveEnd?.(message.bounds, message.mapCenter);
-                setLocation(message.mapCenter);
                 break;
               default:
                 if (["onMove"].includes(message.tag)) {
@@ -136,6 +142,7 @@ const Map = ({
     </>
   );
 };
+
 const style = StyleSheet.create({
   container: {
     height: 158,

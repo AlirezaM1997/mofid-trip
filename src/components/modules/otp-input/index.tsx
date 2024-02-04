@@ -40,7 +40,7 @@ const OtpInput = ({ onComplete }: OtpInputPropsType) => {
         <Input
           key={i}
           value={parseText(value?.[i])}
-          keyboardType="number-pad"
+          keyboardType="nume"
           ref={inputs[i] as Ref<TextInput>}
           onChangeText={t => setValue(parseText(value + t))}
           containerStyle={styles.inputContainerStyle}
