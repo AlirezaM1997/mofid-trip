@@ -120,9 +120,32 @@ const TabDate = () => {
     if (checked && values.dateStart) {
       const dateStart = moment(values.dateStart);
       handleDayPress(dateStart);
-    } else if (!checked && values.dateStart) {
+    } else if (!checked && values.dateStart && !values.dateEnd) {
       const dateStart = moment(values.dateStart);
       setStartDate(dateStart);
+    }
+    else if (!checked && values.dateStart && values.dateEnd) {
+      const dateStart = moment(values.dateStart);
+      const dateEnd = moment(values.dateEnd);
+      const middleDays = getDaysBetween(moment(dateStart), moment(dateEnd));
+      setMarkedDays([{
+        date: dateStart,
+        buttonStyle: styles.startDayButtonStyle(theme),
+        containerStyle: styles.startDayContainerStyle(theme),
+        titleStyle: styles.startDayTitleStyle(theme),
+      },
+      ...middleDays.map(day => ({
+        date: moment(day).format("YYYY-MM-DD"),
+        buttonStyle: styles.middleDayButtonStyle(theme),
+        containerStyle: styles.middleDayContainerStyle(theme),
+        titleStyle: styles.middleDayTitleStyle(theme),
+      })),
+      {
+        date: dateEnd,
+        buttonStyle: styles.endDayButtonStyle(theme),
+        containerStyle: styles.endDayContainerStyle(theme),
+        titleStyle: styles.endDayTitleStyle(theme),
+      },])
     }
   }, [checked]);
 

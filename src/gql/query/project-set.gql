@@ -11,8 +11,8 @@ query projectList($search: String, $sort: SortType, $filter: ProjectFilterType, 
       discount
       capacity {
         childAccept
-        capacityNumber
         gender
+        guestNumber
       }
       tags {
         id

@@ -25,10 +25,10 @@ const TourCommentScreen = () => {
   if (loading && !data) return <LoadingIndicator />;
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const comment = data?.tourDetail?.commentSet;
+  const comment = (data?.tourDetail as TourQueryType)?.commentSet;
   const handleOpen = () => setIsVisible(true);
 
-  navigation.setOptions({ title: `${tr("comments of")} ${data?.tourDetail?.title}` });
+  navigation.setOptions({ title: `${tr("comments of")} ${(data?.tourDetail as TourQueryType)?.title}` });
 
   return (
     <BottomButtonLayout
@@ -73,7 +73,7 @@ const TourCommentScreen = () => {
         setIsVisible={setIsVisible}
         refetch={refetch}
         id={tourId.toString()}
-        name={data?.tourDetail?.title}
+        name={(data?.tourDetail as TourQueryType)?.title}
       />
     </BottomButtonLayout>
   );

@@ -8,6 +8,7 @@ import WhiteSpace from "@src/components/atoms/white-space";
 import {
   TourDetailQuery,
   TourPackageType,
+  TourQueryType,
   useTourDetailQuery,
   useTourTransactionAddMutation,
 } from "@src/gql/generated";
@@ -28,7 +29,7 @@ export default () => {
   const { tourId, guests, tourPackage } = useLocalSearchParams();
   const guestsObj = JSON.parse(guests as string);
   const tourPackageObj: TourPackageType = JSON.parse(tourPackage as string);
-  const [tour, setTour] = useState<TourDetailQuery["tourDetail"]>();
+  const [tour, setTour] = useState<TourQueryType>();
 
   const [tourTransactionAdd, {}] = useTourTransactionAddMutation();
 
@@ -53,7 +54,7 @@ export default () => {
 
   useEffect(() => {
     if (!loading && data) {
-      setTour(data.tourDetail);
+      setTour(data.tourDetail as TourQueryType);
     }
   }, [loading, data]);
 

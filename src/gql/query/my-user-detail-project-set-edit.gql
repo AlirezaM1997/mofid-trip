@@ -27,9 +27,9 @@ query myUserDetailProjectSetEdit {
         }
       }
       capacity {
+        guestNumber
         gender
         childAccept
-        capacityNumber
       }
     }
   }

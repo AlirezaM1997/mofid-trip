@@ -12,6 +12,5 @@ query categoryList($page: PageType, $search: String) {
         small
       }
     }
-    pageCount
   }
 }

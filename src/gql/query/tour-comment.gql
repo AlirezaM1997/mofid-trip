@@ -1,16 +1,8 @@
 query tourComment($pk: ID!) {
   tourDetail(pk: $pk) {
-    title
-    commentSet {
-      text
-      createdDate
-      dislikeCount
-      likeCount
-      id
-      user {
-        fullname
-      }
-      nestedComment {
+    ... on TourQueryType {
+      title
+      commentSet {
         text
         createdDate
         dislikeCount
@@ -18,6 +10,16 @@ query tourComment($pk: ID!) {
         id
         user {
           fullname
+        }
+        nestedComment {
+        text
+        createdDate
+        dislikeCount
+        likeCount
+        id
+        user {
+          fullname
+        }
         }
       }
     }
