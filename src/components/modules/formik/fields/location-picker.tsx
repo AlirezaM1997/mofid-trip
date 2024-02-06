@@ -1,14 +1,13 @@
 import Container from "@atoms/container";
 import { Feather } from "@expo/vector-icons";
-import Map, { MapPropsType } from "@modules/map/index.web";
-import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
+import Search from "@modules/map/search.web";
 import { HEIGHT, WIDTH } from "@src/constants";
 import useTranslation from "@src/hooks/translation";
 import { FieldProps, useFormikContext } from "formik";
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Map, { MapPropsType } from "@modules/map/index.web";
+import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
+import { memo, useCallback, useMemo, useRef, useState } from "react";
 import { Pressable, StyleSheet, View, ViewProps } from "react-native";
-import * as Location from "expo-location";
-import Search from "@modules/map/search.web";
 
 export type LocationPickerProps = FieldProps & ViewProps;
 
@@ -46,6 +45,7 @@ const MemoizedMap = memo(
     style,
     onMoveEnd,
     bottomRightContent,
+    bottomCenterContent,
     topCenterContent,
     lat = 35.7429943,
     lng = 51.3505697,
@@ -58,9 +58,11 @@ const MemoizedMap = memo(
         lng={ln}
         style={style}
         onMoveEnd={onMoveEnd}
+        currentLocationVisible={true}
         mapOptions={{ zoomControl: false }}
-        bottomRightContent={bottomRightContent}
         topCenterContent={topCenterContent}
+        bottomCenterContent={bottomCenterContent}
+        bottomRightContent={bottomRightContent}
       />
     );
   }
@@ -139,6 +141,15 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
     []
   );
 
+  const MemoizedBottomCenterContent = useMemo(
+    () => (
+      <Container style={styles.mapContainer}>
+        <Button onPress={handleSubmit}>انتخاب</Button>
+      </Container>
+    ),
+    []
+  );
+
   const moveEndHandler = useCallback((_, mapCenter) => setLocation(mapCenter), []);
 
   return (
@@ -181,12 +192,10 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
           onMoveEnd={moveEndHandler}
           currentLocationVisible={true}
           topCenterContent={MemoizedTopCenterContent}
+          bottomCenterContent={MemoizedBottomCenterContent}
           lat={location?.lat ? location.lat : initLocation.lat}
           lng={location?.lng ? location.lng : initLocation.lng}
         />
-        <Container style={styles.mapContainer}>
-          <Button onPress={handleSubmit}>انتخاب</Button>
-        </Container>
       </BottomSheet>
     </>
   );
@@ -247,12 +256,11 @@ const styles = StyleSheet.create({
     right: WIDTH / 2 - 90,
   },
   mapContainer: {
-    position: "absolute",
-    bottom: 0,
-    backgroundColor: "#fff",
-    width: "100%",
-    paddingVertical: 12,
     zIndex: 3,
+    width: WIDTH,
+    marginTop: 42,
+    paddingVertical: 12,
+    backgroundColor: "#fff",
   },
   bottomSheetContainerStyle: {
     height: HEIGHT,

@@ -87,7 +87,6 @@ const Map = ({
 
       <View style={[style.row, style.bottomRow]}>
         <View style={style.bottomLeftContent}>
-          {bottomLeftContent}
           {currentLocationVisible && (
             <Button
               onPress={handleCurrentLocation}
@@ -98,6 +97,7 @@ const Map = ({
                 <MaterialIcons name="my-location" size={18} color={theme.colors.black} />
               }></Button>
           )}
+          {bottomLeftContent}
         </View>
         <View>{bottomCenterContent}</View>
         <View>{bottomRightContent}</View>
@@ -105,7 +105,7 @@ const Map = ({
 
       <View style={[style.container, props.style]}>
         <ExpoLeaflet
-          zoom={zoom || 5}
+          zoom={zoom}
           mapCenterPosition={{
             lat: location?.lat,
             lng: location?.lng,
