@@ -10,10 +10,9 @@ query projectList($search: String, $sort: SortType, $filter: ProjectFilterType, 
       dateEnd
       discount
       capacity {
-        id
-        male
-        female
-        child
+        childAccept
+        gender
+        guestNumber
       }
       tags {
         id

@@ -25,7 +25,7 @@ const HostCommentScreen = () => {
   if (loading && !data) return <LoadingIndicator />;
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const comment = data?.projectDetail?.commentSet;
+  const comment = (data?.projectDetail as ProjectQueryType)?.commentSet;
   const handleOpen = () => setIsVisible(true);
 
   navigation.setOptions({ title: `${tr("comments of")} ${data?.projectDetail?.name}` });

@@ -43,9 +43,9 @@ const TourCommentReplay = () => {
 
   if (loading && !data) return <LoadingIndicator />;
 
-  navigation.setOptions({ title: `${tr("comments of")} ${data?.tourDetail?.title}` });
+  navigation.setOptions({ title: `${tr("comments of")} ${(data?.tourDetail as TourQueryType)?.title}` });
 
-  const comment = data?.tourDetail?.commentSet.find(comment => comment.id === commentId);
+  const comment = (data?.tourDetail as TourQueryType)?.commentSet.find(comment => comment.id === commentId);
 
   const handleLike = async () => {
     const { data } = await likeAdd({
