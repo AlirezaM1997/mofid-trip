@@ -1,16 +1,8 @@
-import * as Yup from "yup";
-import { useEffect, useRef, useState } from "react";
-import { RootState } from "@src/store";
-import { Field, Formik, useFormikContext } from "formik";
-import Container from "@atoms/container";
-import { Button, CheckBox, Divider, Input, Text, useTheme } from "@rneui/themed";
-import { StyleSheet, View } from "react-native";
-import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
+import { useEffect, useState } from "react";
+import { useFormikContext } from "formik";
+import { Divider, Text, useTheme } from "@rneui/themed";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { useDispatch, useSelector } from "react-redux";
-import { setTourCreateData } from "@src/slice/tour-create-slice";
-import BottomButtonLayout from "@components/layout/bottom-button";
-import { router } from "expo-router";
 import JalaliDatePicker from "@modules/jalali-date-picker";
 import moment from "jalali-moment";
 import { TourAddInputType } from "@src/gql/generated";
@@ -18,19 +10,15 @@ import { TourAddInputType } from "@src/gql/generated";
 const getDaysBetween = (startDay, endDay) => {
   // Array to store the days
   var betweenDays = [];
-
   // Clone the start date to avoid modifying the original
   var currentDate = startDay.clone().add(1, "day"); // Start from the day after the start date
-
   // Loop through the dates until the day before the end date
   while (currentDate.isBefore(endDay, "day")) {
     // Add the current date to the array
     betweenDays.push(currentDate.format("YYYY-MM-DD"));
-
     // Move to the next day
     currentDate.add(1, "day");
   }
-
   // Display the array of days between the start and end dates
   return betweenDays;
 };
@@ -38,67 +26,61 @@ const getDaysBetween = (startDay, endDay) => {
 const DateTab = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const [checked, setChecked] = useState<boolean>(false);
   const { localizeNumber } = useLocalizedNumberFormat();
   const [markedDays, setMarkedDays] = useState([]);
-  const { errors, touched, setFieldTouched, setFieldValue, resetForm } =
+  const { values, errors, touched, setFieldTouched, setFieldValue, resetForm } =
     useFormikContext<TourAddInputType>();
 
-  const handleCheck = () => setChecked(!checked);
+  const setStartDate = date => {
+    setFieldTouched("startTime", true);
+    setFieldTouched("endTime", true);
+    setFieldValue("startTime", date);
+    setFieldValue("endTime", date);
+    setMarkedDays([
+      {
+        date: date,
+        buttonStyle: styles.startAndEndDayButtonStyle(theme),
+        containerStyle: styles.startAndEndDayContainerStyle,
+        titleStyle: styles.startAndEndDayTitleStyle(theme),
+      },
+    ]);
+  };
 
   const handleDayPress = dayPressed => {
     const date = moment(dayPressed).format("YYYY-MM-DD");
-    if (checked) {
-      setFieldTouched("startTime", true);
-      setFieldTouched("endTime", true);
-      setFieldValue("startTime", date);
+    const dateStart = moment(values.startTime);
+    if (markedDays.length === 0) {
+      setStartDate(date);
+      console.log(1)
+    } else if (markedDays.length === 1 && moment(dateStart).isBefore(dayPressed)) {
+      console.log(2)
       setFieldValue("endTime", date);
+      const middleDays = getDaysBetween(moment(dateStart), moment(dayPressed));
       setMarkedDays([
         {
+          date: dateStart,
+          buttonStyle: styles.startDayButtonStyle(theme),
+          containerStyle: styles.startDayContainerStyle,
+          titleStyle: styles.startDayTitleStyle(theme),
+        },
+        ...middleDays.map(day => ({
+          date: moment(day).format("YYYY-MM-DD"),
+          buttonStyle: styles.middleDayButtonStyle(theme),
+          containerStyle: styles.middleDayContainerStyle,
+          titleStyle: styles.middleDayTitleStyle(theme),
+        })),
+        {
           date: date,
-          buttonStyle: styles.startAndEndDayButtonStyle(theme),
-          containerStyle: styles.startAndEndDayContainerStyle(theme),
-          titleStyle: styles.startAndEndDayTitleStyle(theme),
+          buttonStyle: styles.endDayButtonStyle(theme),
+          containerStyle: styles.endDayContainerStyle,
+          titleStyle: styles.endDayTitleStyle(theme),
         },
       ]);
     } else {
-      if (markedDays.length === 0) {
-        setFieldTouched("startTime", true);
-        setFieldValue("startTime", date);
-        setMarkedDays([
-          {
-            date: date,
-            buttonStyle: styles.startDayButtonStyle(theme),
-            containerStyle: styles.startDayContainerStyle(theme),
-            titleStyle: styles.startDayTitleStyle(theme),
-          },
-        ]);
-      } else if (markedDays.length === 1) {
-        setFieldTouched("endTime", true);
-        setFieldValue("endTime", date);
-        const startDay = markedDays[0].date;
-        const middleDays = getDaysBetween(moment(startDay), moment(dayPressed));
-        setMarkedDays([
-          ...markedDays,
-          ...middleDays.map(day => ({
-            date: moment(day).format("YYYY-MM-DD"),
-            buttonStyle: styles.middleDayButtonStyle(theme),
-            containerStyle: styles.middleDayContainerStyle(theme),
-            titleStyle: styles.middleDayTitleStyle(theme),
-          })),
-          {
-            date: date,
-            buttonStyle: styles.endDayButtonStyle(theme),
-            containerStyle: styles.endDayContainerStyle(theme),
-            titleStyle: styles.endDayTitleStyle(theme),
-          },
-        ]);
-      } else {
-        resetForm();
-        setMarkedDays([]);
-      }
+      resetForm();
+      setMarkedDays([]);
     }
-  };
+  }
 
   const getFirstDayFormatted = () => {
     return markedDays.length
@@ -107,39 +89,64 @@ const DateTab = () => {
   };
 
   const getLastDayFormatted = () => {
-    if (checked) {
-      return markedDays.length
-        ? localizeNumber(moment(markedDays[0].date).format("jYYYY/jMM/jDD"))
-        : "";
-    } else {
-      return markedDays.length > 1
-        ? localizeNumber(moment(markedDays.slice(-1)[0].date).format("jYYYY/jMM/jDD"))
-        : "";
+    if (markedDays.length) {
+      return markedDays.length === 1 ?
+        localizeNumber(moment(markedDays[0].date).format("jYYYY/jMM/jDD"))
+        :
+        localizeNumber(moment(markedDays.slice(-1)[0].date).format("jYYYY/jMM/jDD"))
     }
   };
 
+  useEffect(() => {
+    if (values.startTime && !values.endTime) {
+      const dateStart = moment(values.startTime);
+      setStartDate(dateStart);
+    }
+    else if (values.startTime && values.endTime) {
+      const dateStart = moment(values.startTime);
+      const dateEnd = moment(values.endTime);
+      const middleDays = getDaysBetween(moment(dateStart), moment(dateEnd));
+      setMarkedDays([{
+        date: dateStart,
+        buttonStyle: styles.startDayButtonStyle(theme),
+        containerStyle: styles.startDayContainerStyle,
+        titleStyle: styles.startDayTitleStyle(theme),
+      },
+      ...middleDays.map(day => ({
+        date: moment(day).format("YYYY-MM-DD"),
+        buttonStyle: styles.middleDayButtonStyle(theme),
+        containerStyle: styles.middleDayContainerStyle,
+        titleStyle: styles.middleDayTitleStyle(theme),
+      })),
+      {
+        date: dateEnd,
+        buttonStyle: styles.endDayButtonStyle(theme),
+        containerStyle: styles.endDayContainerStyle,
+        titleStyle: styles.endDayTitleStyle(theme),
+      },])
+    }
+  }, []);
+
   return (
     <>
-      <CheckBox checked={checked} onPress={handleCheck} title={tr("The tour is one day")} />
-
       <JalaliDatePicker onDayPress={handleDayPress} markedDays={markedDays} />
 
       <View style={styles.showDateContainer}>
         <View style={styles.timeContainer}>
-          <Text body2 type={touched.startTime && errors.startTime ? "error" : "secondary"}>
+          <Text body2 type="secondary">
             {tr("beginning")}: {getFirstDayFormatted()}
           </Text>
           {touched.startTime && errors.startTime && (
-            <Text type="error">{touched.startTime && (errors.startTime as string)}</Text>
+            <Text type="error">{errors.startTime as string}</Text>
           )}
         </View>
         <Divider orientation="vertical" />
         <View style={styles.timeContainer}>
-          <Text body2 type={touched.endTime && errors.endTime ? "error" : "secondary"}>
+          <Text body2 type="secondary">
             {tr("end")}: {getLastDayFormatted()}
           </Text>
           {touched.endTime && errors.endTime && (
-            <Text type="error">{touched.endTime && (errors.endTime as string)}</Text>
+            <Text type="error">{errors.endTime as string}</Text>
           )}
         </View>
       </View>
@@ -151,51 +158,50 @@ const styles = StyleSheet.create({
   header: { gap: 6 },
   container: { gap: 24 },
   showDateContainer: { flexDirection: "row", justifyContent: "space-evenly", marginTop: 25 },
-  startDayButtonStyle: theme => ({
+  startDayButtonStyle: (theme => ({
     backgroundColor: theme.colors.black,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
-  }),
-  startDayContainerStyle: theme => ({
+  })) as ViewStyle,
+  startDayContainerStyle: {
     width: 45,
-    borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 0,
-  }),
-  startDayTitleStyle: theme => ({
+    borderRadius: 0,
+  },
+  startDayTitleStyle: (theme => ({
     color: theme.colors.white,
-  }),
-  middleDayButtonStyle: theme => ({
+  })) as ViewStyle,
+  middleDayButtonStyle: (theme => ({
     backgroundColor: theme.colors.grey1,
     borderRadius: 0,
-  }),
-  middleDayContainerStyle: theme => ({
+  })) as ViewStyle,
+  middleDayContainerStyle: {
     width: 45,
     borderRadius: 0,
-  }),
-  middleDayTitleStyle: theme => ({
+  },
+  middleDayTitleStyle: (theme => ({
     color: theme.colors.grey5,
-  }),
-  endDayButtonStyle: theme => ({
+  })) as ViewStyle,
+  endDayButtonStyle: (theme => ({
     backgroundColor: theme.colors.black,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
-  }),
-  endDayContainerStyle: theme => ({
+  })) as ViewStyle,
+  endDayContainerStyle: {
     width: 45,
     borderRadius: 0,
-  }),
-  endDayTitleStyle: theme => ({
+  },
+  endDayTitleStyle: (theme => ({
     color: theme.colors.white,
-  }),
-  startAndEndDayButtonStyle: theme => ({
+  })) as ViewStyle,
+  startAndEndDayButtonStyle: (theme => ({
     backgroundColor: theme.colors.black,
-  }),
-  startAndEndDayContainerStyle: theme => ({
+  })) as ViewStyle,
+  startAndEndDayContainerStyle: {
     width: 45,
-  }),
-  startAndEndDayTitleStyle: theme => ({
+  },
+  startAndEndDayTitleStyle: (theme => ({
     color: theme.colors.white,
-  }),
+  })) as ViewStyle,
   row: {
     display: "flex",
     flexDirection: "row",
