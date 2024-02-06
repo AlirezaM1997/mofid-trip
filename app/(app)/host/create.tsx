@@ -1,48 +1,29 @@
-import Container from "@atoms/container";
-import WhiteSpace from "@atoms/white-space";
-import BottomButtonLayout from "@components/layout/bottom-button";
-import ButtonRow from "@modules/button-rows";
-import { BottomSheet } from "@rneui/themed";
-import { Button, Text } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
-import { RootState } from "@src/store";
-import { router, useNavigation } from "expo-router";
-import { useState } from "react";
-import { ImageBackground, StyleSheet } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import { ProjectGenderEnum, useProjectAddMutation } from "@src/gql/generated";
 import { Formik } from "formik";
-import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
-import { setHostCreateActiveStep } from "@src/slice/host-create-slice";
-import TabDetails from "@organisms/host-create/details-tab";
-import TabHostType from "@organisms/host-create/host-type";
-import TabAddress from "@organisms/host-create/address";
-import TabCapacity from "@organisms/host-create/capacity";
-import TabDate from "@organisms/host-create/date";
-import TabPrice from "@organisms/host-create/price";
-import TabImage from "@organisms/host-create/images";
-import TabFaclities from "@organisms/host-create/facilities";
-import { useSession } from "@src/context/auth";
-import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
+import { useState } from "react";
+import { Button } from "@rneui/themed";
+import HostCreateForm from "@organisms/host-create";
+import useTranslation from "@src/hooks/translation";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import { ProjectGenderEnum, useProjectAddMutation } from "@src/gql/generated";
 
 const initialValues = {
   name: "",
+  dateEnd: null,
   description: "",
   dateStart: null,
-  dateEnd: null,
   accommodation: {
-    province: null,
-    city: null,
-    address: null,
     lat: null,
     lng: null,
+    city: null,
+    address: null,
+    province: null,
     base64Images: [],
   },
   capacity: {
+    childAccept: false,
     capacityNumber: null,
     gender: ProjectGenderEnum.Both,
-    childAccept: false,
   },
   price: null,
   discount: 0,
@@ -51,54 +32,51 @@ const initialValues = {
 };
 
 const Screen = () => {
-  const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const navigation = useNavigation();
+  const [activeStep, setActiveStep] = useState(1);
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
-  const { activeStep } = useSelector((state: RootState) => state.hostCreateSlice);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const [submit, { loading }] = useProjectAddMutation();
-  const { session } = useSession();
-  const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required(tr("Title is required")),
     description: Yup.string().nullable(),
+    dateEnd: Yup.date().required(tr("Required")),
+    dateStart: Yup.date().required(tr("Required")),
+    name: Yup.string().required(tr("Title is required")),
+
+    discount: Yup.number()
+      .required(tr("Required"))
+      .max(100, tr("Discount can not be greater than 100")),
 
     categories: Yup.array()
       .required("This field is required")
       .min(1, "At least one item is required"),
 
+    price: Yup.number()
+      .required(tr("Required"))
+      .typeError(tr("Only number acceptable"))
+      .min(0, tr("Only positive numbers acceptable")),
+
     accommodation: Yup.object().shape({
-      province: Yup.string().required(tr("Province is required")),
       city: Yup.string().required(tr("City is required")),
       address: Yup.string().required(tr("Address is required")),
+      province: Yup.string().required(tr("Province is required")),
       lat: Yup.string().required(tr("Select location on the map")),
       lng: Yup.string().required(tr("Select location on the map")),
     }),
 
     capacity: Yup.object().shape({
+      gender: Yup.string(),
+      childAccept: Yup.boolean(),
       capacityNumber: Yup.number()
         .positive(tr("Capacity is required"))
         .required(tr("Capacity is required")),
-      gender: Yup.string(),
-      childAccept: Yup.boolean(),
     }),
-
-    dateStart: Yup.date().required(tr("Required")),
-    dateEnd: Yup.date().required(tr("Required")),
-
-    price: Yup.number()
-      .min(0, tr("Only positive numbers acceptable"))
-      .typeError(tr("Only number acceptable"))
-      .required(tr("Required")),
-    discount: Yup.number()
-      .required(tr("Required"))
-      .max(100, tr("Discount can not be greater than 100")),
   });
 
-  const handleNext = () => dispatch(setHostCreateActiveStep(activeStep + 1));
-  const handlePrev = () => dispatch(setHostCreateActiveStep(activeStep - 1));
+  const handleNext = () => setActiveStep(activeStep + 1);
+  const handlePrev = () => setActiveStep(activeStep - 1);
 
   const handleSubmit = async values => {
     const { data } = await submit({
@@ -125,9 +103,9 @@ const Screen = () => {
         <BottomButtonLayout
           buttons={[
             <Button
-              onPress={activeStep === 8 ? handleSubmit : handleNext}
-              disabled={loading}
-              loading={loading}>
+              loading={loading}
+              disabled={loading || isButtonDisabled}
+              onPress={activeStep === 8 ? handleSubmit : handleNext}>
               {activeStep === 8 ? tr("Submit") : tr("Next")}
             </Button>,
             <Button
@@ -138,71 +116,17 @@ const Screen = () => {
               {tr("Previous")}
             </Button>,
           ]}>
-          <HostCreateTabs />
-          <WhiteSpace />
-
-          <Container>
-            {activeStep === 1 && <TabDetails />}
-            {activeStep === 2 && <TabHostType />}
-            {activeStep === 3 && <TabAddress />}
-            {activeStep === 4 && <TabCapacity />}
-            {activeStep === 5 && <TabDate />}
-            {activeStep === 6 && <TabPrice />}
-            {activeStep === 7 && <TabImage />}
-            {activeStep === 8 && <TabFaclities />}
-          </Container>
-
-          <BottomSheet isVisible={isVisibleFinish}>
-            <Container>
-              <ImageBackground
-                style={styles.rejectIcon}
-                imageStyle={{ resizeMode: "contain" }}
-                source={require("@assets/image/check.svg")}
-              />
-              <Text center heading2 bold>
-                {tr("Your hosting creation request has been successfully registered")}
-              </Text>
-              <Text center>
-                کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به
-                مسافران نمایش داده شود.
-              </Text>
-              <WhiteSpace />
-              <ButtonRow>
-                <Button
-                  onPress={() => {
-                    router.replace("/host/management");
-                    router.replace("/host/management");
-                    setIsVisibleFinish(false);
-                  }}
-                  color="secondary"
-                  type="outline">
-                  {tr("Host Management")}
-                </Button>
-                <Button
-                  onPress={() => {
-                    router.replace("/");
-                    router.replace("/");
-                    setIsVisibleFinish(false);
-                  }}>
-                  {tr("Return to home")}
-                </Button>
-              </ButtonRow>
-            </Container>
-          </BottomSheet>
-
-          <CloseFormBottomSheet />
+          <HostCreateForm
+            activeStep={activeStep}
+            isVisibleFinish={isVisibleFinish}
+            isButtonDisabled={isButtonDisabled}
+            setIsVisibleFinish={setIsVisibleFinish}
+            setIsButtonDisabled={setIsButtonDisabled}
+          />
         </BottomButtonLayout>
       )}
     </Formik>
   );
 };
-
-const styles = StyleSheet.create({
-  rejectIcon: {
-    margin: "auto",
-    width: 56,
-    height: 56,
-  },
-});
 
 export default Screen;

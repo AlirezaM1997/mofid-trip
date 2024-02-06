@@ -119,6 +119,12 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
+          name="host/[projectId]"
+          options={{
+            title: tr("loading"),
+          }}
+        />
+        <Stack.Screen
           name="SMSVerification"
           options={{
             title: tr("SMS Verification"),
