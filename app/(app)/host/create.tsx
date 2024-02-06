@@ -40,7 +40,7 @@ const Screen = () => {
   const [submit, { loading }] = useProjectAddMutation();
 
   const validationSchema = Yup.object().shape({
-    description: Yup.string().nullable(),
+    description: Yup.string().nullable().required(tr("Required")),
     dateEnd: Yup.date().required(tr("Required")),
     dateStart: Yup.date().required(tr("Required")),
     name: Yup.string().required(tr("Title is required")),
@@ -119,7 +119,6 @@ const Screen = () => {
           <HostCreateForm
             activeStep={activeStep}
             isVisibleFinish={isVisibleFinish}
-            isButtonDisabled={isButtonDisabled}
             setIsVisibleFinish={setIsVisibleFinish}
             setIsButtonDisabled={setIsButtonDisabled}
           />

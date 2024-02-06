@@ -26,6 +26,7 @@ import TabFaclities from "@organisms/host-create/facilities";
 import { useSession } from "@src/context/auth";
 import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
 import LoadingIndicator from "@modules/Loading-indicator";
+import HostCreateForm from "@organisms/host-create";
 
 const Screen = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Screen = () => {
   const { session } = useSession();
   const { hostId } = useLocalSearchParams();
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const { activeStep } = useSelector((state: RootState) => state.hostCreateSlice);
 
   const { loading, data } = useMyUserDetailProjectSetEditQuery();
@@ -124,7 +126,7 @@ const Screen = () => {
           buttons={[
             <Button
               onPress={activeStep === 8 ? handleSubmit : handleNext}
-              disabled={submitLoading}
+              disabled={submitLoading || isButtonDisabled}
               loading={submitLoading}>
               {activeStep === 8 ? tr("Submit") : tr("Next")}
             </Button>,
@@ -136,59 +138,12 @@ const Screen = () => {
               {tr("Previous")}
             </Button>,
           ]}>
-          <HostCreateTabs />
-          <WhiteSpace />
-
-          <Container>
-            {activeStep === 1 && <TabDetails />}
-            {activeStep === 2 && <TabHostType />}
-            {activeStep === 3 && <TabAddress />}
-            {activeStep === 4 && <TabCapacity />}
-            {activeStep === 5 && <TabDate />}
-            {activeStep === 6 && <TabPrice />}
-            {activeStep === 7 && <TabImage />}
-            {activeStep === 8 && <TabFaclities />}
-          </Container>
-
-          <BottomSheet isVisible={isVisibleFinish}>
-            <Container>
-              <ImageBackground
-                style={styles.rejectIcon}
-                imageStyle={{ resizeMode: "contain" }}
-                source={require("@assets/image/check.svg")}
-              />
-              <Text center heading2 bold>
-                {tr("Your hosting creation request has been successfully registered")}
-              </Text>
-              <Text center>
-                کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به
-                مسافران نمایش داده شود.
-              </Text>
-              <WhiteSpace />
-              <ButtonRow>
-                <Button
-                  onPress={() => {
-                    router.replace("/host/management");
-                    router.replace("/host/management");
-                    setIsVisibleFinish(false);
-                  }}
-                  color="secondary"
-                  type="outline">
-                  {tr("Host Management")}
-                </Button>
-                <Button
-                  onPress={() => {
-                    router.replace("/");
-                    router.replace("/");
-                    setIsVisibleFinish(false);
-                  }}>
-                  {tr("Return to home")}
-                </Button>
-              </ButtonRow>
-            </Container>
-          </BottomSheet>
-
-          <CloseFormBottomSheet />
+          <HostCreateForm
+            activeStep={activeStep}
+            isVisibleFinish={isVisibleFinish}
+            setIsVisibleFinish={setIsVisibleFinish}
+            setIsButtonDisabled={setIsButtonDisabled}
+          />
         </BottomButtonLayout>
       )}
     </Formik>

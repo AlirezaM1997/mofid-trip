@@ -31,16 +31,22 @@ const TourCreateForm = ({
   const { values } = useFormikContext<TourAddInputType>();
 
   const { title, description, capacity, startTime, endTime, price } = values;
-  const { address, city, lat, lng } = values.destination;
+  const { address, city, province, lat, lng } = values.destination;
+  const { address: originAddress, lat: originLat, lng: originLng } = values.origin;
+  console.log(price);
 
-  // useEffect(() => {
-  //   if (activeStep === 1 && (!title || !description)) return setIsButtonDisabled(true);
-  //   if (activeStep === 6 && price.toString() === "") return setIsButtonDisabled(true);
-  //   if (activeStep === 4 && !capacity.capacityNumber) return setIsButtonDisabled(true);
-  //   if (activeStep === 5 && (!startTime || !endTime)) return setIsButtonDisabled(true);
-  //   if (activeStep === 3 && (!address || !city || !lat || !lng)) return setIsButtonDisabled(true);
-  //   return setIsButtonDisabled(false);
-  // }, [values, activeStep]);
+  useEffect(() => {
+    if (activeStep === 1 && (!title || !description)) return setIsButtonDisabled(true);
+    if (activeStep === 2 && !capacity.capacityNumber) return setIsButtonDisabled(true);
+    if (activeStep === 3 && (!originAddress || !originLat || !originLng))
+      return setIsButtonDisabled(true);
+    if (activeStep === 4 && (!address || !province || !city || !lat || !lng))
+      return setIsButtonDisabled(true);
+    if (activeStep === 5 && (!startTime || !endTime)) return setIsButtonDisabled(true);
+    if (activeStep === 6 && ["", null, undefined].includes(price?.toString()))
+      return setIsButtonDisabled(true);
+    return setIsButtonDisabled(false);
+  }, [values, activeStep]);
 
   return (
     <>

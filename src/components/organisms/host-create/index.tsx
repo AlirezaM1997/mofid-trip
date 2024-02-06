@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { router } from "expo-router";
 import Container from "@atoms/container";
 import { useFormikContext } from "formik";
@@ -17,16 +18,30 @@ import TabDetails from "@organisms/host-create/details-tab";
 import TabFaclities from "@organisms/host-create/facilities";
 import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
 import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
-import { useEffect } from "react";
 
 const HostCreateForm = ({
   activeStep,
   isVisibleFinish,
-  isButtonDisabled,
   setIsVisibleFinish,
   setIsButtonDisabled,
 }) => {
   const { tr } = useTranslation();
+
+  const { values } = useFormikContext<ProjectAddInputType>();
+
+  const { name, description, categories, capacity, dateStart, dateEnd, price } = values;
+  const { address, city, lat, lng } = values.accommodation;
+
+  useEffect(() => {
+    if (activeStep === 1 && (!name || !description)) return setIsButtonDisabled(true);
+    if (activeStep === 2 && !categories.length) return setIsButtonDisabled(true);
+    if (activeStep === 3 && (!address || !city || !lat || !lng)) return setIsButtonDisabled(true);
+    if (activeStep === 4 && !capacity.capacityNumber) return setIsButtonDisabled(true);
+    if (activeStep === 5 && (!dateStart || !dateEnd)) return setIsButtonDisabled(true);
+    if (activeStep === 6 && ["", null, undefined].includes(price?.toString()))
+      return setIsButtonDisabled(true);
+    return setIsButtonDisabled(false);
+  }, [values, activeStep]);
 
   return (
     <>

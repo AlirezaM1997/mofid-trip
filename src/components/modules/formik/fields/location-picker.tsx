@@ -138,7 +138,6 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
     ),
     []
   );
-  console.log(location);
 
   const moveEndHandler = useCallback((_, mapCenter) => setLocation(mapCenter), []);
 
@@ -180,9 +179,10 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
         <MemoizedMap
           style={styles.root}
           onMoveEnd={moveEndHandler}
+          currentLocationVisible={true}
+          topCenterContent={MemoizedTopCenterContent}
           lat={location?.lat ? location.lat : initLocation.lat}
           lng={location?.lng ? location.lng : initLocation.lng}
-          topCenterContent={MemoizedTopCenterContent}
         />
         <Container style={styles.mapContainer}>
           <Button onPress={handleSubmit}>انتخاب</Button>

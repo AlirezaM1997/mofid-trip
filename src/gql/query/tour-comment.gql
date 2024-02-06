@@ -11,14 +11,14 @@ query tourComment($pk: ID!) {
         fullname
       }
       nestedComment {
-      text
-      createdDate
-      dislikeCount
-      likeCount
-      id
-      user {
-        fullname
-      }
+        text
+        createdDate
+        dislikeCount
+        likeCount
+        id
+        user {
+          fullname
+        }
       }
     }
   }
