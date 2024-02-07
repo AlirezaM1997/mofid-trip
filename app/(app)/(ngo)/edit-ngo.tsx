@@ -1,12 +1,14 @@
+import Input from "@atoms/input";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { Feather } from "@expo/vector-icons";
 import LoadingIndicator from "@modules/Loading-indicator";
-import { Button, Input } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { useMyNgoDetailQuery, useNgoEditMutation } from "@src/gql/generated";
+import handleUploadImage from "@src/helper/image-picker";
 import useTranslation from "@src/hooks/translation";
-import * as ImagePicker from "expo-image-picker";
+
 import { Formik } from "formik";
 import React, { useRef } from "react";
 import { Image, Pressable, StyleSheet } from "react-native";
@@ -16,24 +18,7 @@ const Index = () => {
   const { tr } = useTranslation();
   const [editProfile, { loading }] = useNgoEditMutation();
   const { loading: loadingNGODetail, data: dataNGODetail } = useMyNgoDetailQuery();
-  const innerRef = useRef();
-
-  const handleUploadImage = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 0.5,
-      base64: true,
-    });
-
-    if (!result.canceled) {
-      innerRef.current.setFieldValue(
-        "base64Image",
-        `data:image/jpg;base64,${result.assets[0].base64}`
-      );
-    }
-  };
+  const innerRef = useRef(null);
 
   const onSubmit = async values => {
     const { data, errors } = await editProfile({ variables: { data: values } });
@@ -63,6 +48,11 @@ const Index = () => {
     //   .required(tr("Phone number is required")),
   });
 
+  const handleImagePicker = async () => {
+    const imageBase64 = await handleUploadImage();
+    innerRef.current && innerRef.current.setFieldValue("base64Image", `${imageBase64}`);
+  };
+
   return (
     <>
       <Formik
@@ -86,7 +76,7 @@ const Index = () => {
                 </Button>,
               ]}>
               <WhiteSpace />
-              <Pressable style={style.imagePicker} onPress={handleUploadImage}>
+              <Pressable style={style.imagePicker} onPress={handleImagePicker}>
                 {values?.base64Image ? (
                   <Image style={style.imageStyle} source={{ uri: values?.base64Image }} />
                 ) : (

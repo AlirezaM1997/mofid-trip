@@ -44,7 +44,6 @@ const MemoizedMap = memo(
   ({
     style,
     onMoveEnd,
-    bottomRightContent,
     bottomCenterContent,
     topCenterContent,
     lat = 35.7429943,
@@ -62,7 +61,6 @@ const MemoizedMap = memo(
         mapOptions={{ zoomControl: false }}
         topCenterContent={topCenterContent}
         bottomCenterContent={bottomCenterContent}
-        bottomRightContent={bottomRightContent}
       />
     );
   }
@@ -133,7 +131,6 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
               lat: place.location.lng,
             })
           }
-          onChangeText={console.log}
           placeholder="جستجوی شهر، استان، خیابان، محله"
         />
       </Container>
