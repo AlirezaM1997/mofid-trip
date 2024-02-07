@@ -12,26 +12,18 @@ import * as ImagePicker from "expo-image-picker";
 import { isBase64 } from "@src/helper/extra";
 import useTranslation from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { router } from "expo-router";
 
 const Page = () => {
   const { tr } = useTranslation();
-  const [editProfile, { loading, data, error }] = useUserEditMutation();
-  const { loading: loadingUserDetail, data: dataUserDetail } = useUserDetailQuery();
+  const [editProfile] = useUserEditMutation();
+  const { loading, data } = useUserDetailQuery();
   const [userDetailTemp, setUserDetailTemp] = useState({
     firstname: "",
     lastname: "",
     bio: "",
     base64Image: "",
   });
-
-  useEffect(() => {
-    setUserDetailTemp({
-      firstname: userDetail?.firstname ?? "",
-      lastname: userDetail?.lastname ?? "",
-      bio: userDetail?.bio ?? "",
-      base64Image: userDetail?.avatarS3?.small ?? "",
-    });
-  }, [userDetail]);
 
   const handleUploadImage = async () => {
     let result = await ImagePicker.launchCameraAsync({
@@ -50,7 +42,7 @@ const Page = () => {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     let tempData = {
       firstname: userDetailTemp?.firstname ?? "",
       lastname: userDetailTemp?.lastname ?? "",
@@ -62,34 +54,29 @@ const Page = () => {
         base64Image: userDetailTemp.base64Image ?? "",
       };
     }
-    editProfile({
-      variables: {
-        data: tempData,
-      },
-    });
-  };
-
-  useEffect(() => {
-    if (!loading && data) {
-      // syncTable();
+    const { data } = await editProfile({ variables: { data: tempData } });
+    if (data.userEdit.status === "ACCEPTED") {
       Toast.show({
         type: "success",
         text1: tr("Successful"),
         text2: tr("Profile saved successfully"),
       });
+      router.push("/profile");
     }
-    if (error) {
-      Toast.show({
-        type: "error",
-        text1: tr("Error"),
-        text2: JSON.stringify(error.message),
-      });
-    }
-  }, [loading, data, error]);
+  };
 
-  if (loadingUserDetail) return <LoadingIndicator />;
+  useEffect(() =>
+    setUserDetailTemp({
+      firstname: data?.userDetail?.firstname ?? "",
+      lastname: data?.userDetail?.lastname ?? "",
+      bio: data?.userDetail?.bio ?? "",
+      base64Image: data?.userDetail?.avatarS3?.small ?? "",
+    })
+    , [data])
 
-  const userDetail = dataUserDetail.userDetail;
+  if (loading && !data) return <LoadingIndicator />;
+
+
 
   return (
     <>
