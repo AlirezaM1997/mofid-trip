@@ -52,7 +52,7 @@ const TabPrice = () => {
         onChangeText={text => setFieldValue("price", parseText(text))}
         onBlur={handleBlur("price")}
         keyboardType="numeric"
-        errorMessage={touched.price && (errors.price as string)}
+        errorMessage={(touched.price && errors.price) as string}
       />
       <View style={styles.badgeRow}>
         {recommendedPrices.map(recom => (
@@ -61,7 +61,7 @@ const TabPrice = () => {
             color="grey2"
             type="solid"
             containerStyle={styles.badgeContainerStyle}
-            badgeStyle={styles.badgeStyle}
+            badgeStyle={[styles.badgeStyle, values.price === recom.value && styles.selectedBadge]}
             onPress={() => setFieldValue("price", +recom.value)}
           />
         ))}
@@ -77,7 +77,7 @@ const TabPrice = () => {
         keyboardType="numeric"
         onChangeText={text => setFieldValue("discount", parseText(text))}
         onBlur={handleBlur("discount")}
-        errorMessage={touched.discount && (errors.discount as string)}
+        errorMessage={(touched.discount && errors.discount) as string}
         label={tr("Discount") + " (%)"}
       />
       <View style={styles.badgeRow}>
@@ -87,7 +87,10 @@ const TabPrice = () => {
             color="grey2"
             type="solid"
             containerStyle={styles.badgeContainerStyle}
-            badgeStyle={styles.badgeStyle2}
+            badgeStyle={[
+              styles.badgeStyle2,
+              values.discount === recom.value && styles.selectedBadge,
+            ]}
             onPress={() => setFieldValue("discount", +recom.value)}
           />
         ))}
@@ -124,6 +127,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 0,
     flexGrow: 1,
+  },
+  selectedBadge: {
+    border: "1px solid #000",
   },
   badgeStyle: {
     minWidth: WIDTH / 2 - 85,

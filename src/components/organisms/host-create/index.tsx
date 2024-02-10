@@ -9,7 +9,6 @@ import useTranslation from "@src/hooks/translation";
 import TabPrice from "@organisms/host-create/price";
 import TabImage from "@organisms/host-create/images";
 import TabAddress from "@organisms/host-create/address";
-import { ProjectAddInputType } from "@src/gql/generated";
 import TabCapacity from "@organisms/host-create/capacity";
 import { BottomSheet, Button, Text } from "@rneui/themed";
 import TabHostType from "@organisms/host-create/host-type";
@@ -18,25 +17,35 @@ import TabDetails from "@organisms/host-create/details-tab";
 import TabFaclities from "@organisms/host-create/facilities";
 import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
 import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
+import { AccommodationAddInputType, ProjectAddInputType } from "@src/gql/generated";
+
+type PropsType = {
+  activeStep: number;
+  isVisibleFinish: boolean;
+  setIsVisibleFinish: (t: boolean) => void;
+  setIsButtonDisabled: (t: boolean) => void;
+};
 
 const HostCreateForm = ({
   activeStep,
   isVisibleFinish,
   setIsVisibleFinish,
   setIsButtonDisabled,
-}) => {
+}: PropsType) => {
   const { tr } = useTranslation();
 
   const { values } = useFormikContext<ProjectAddInputType>();
+  console.log("values", values);
 
   const { name, description, categories, capacity, dateStart, dateEnd, price } = values;
-  const { address, city, lat, lng } = values.accommodation;
+  const { address, city, lat, lng, province } = values.accommodation as AccommodationAddInputType;
 
   useEffect(() => {
     if (activeStep === 1 && (!name || !description)) return setIsButtonDisabled(true);
-    if (activeStep === 2 && !categories.length) return setIsButtonDisabled(true);
-    if (activeStep === 3 && (!address || !city || !lat || !lng)) return setIsButtonDisabled(true);
-    if (activeStep === 4 && !capacity.capacityNumber) return setIsButtonDisabled(true);
+    if (activeStep === 2 && !categories?.length) return setIsButtonDisabled(true);
+    if (activeStep === 3 && (!address || !city || !province || !lat || !lng))
+      return setIsButtonDisabled(true);
+    if (activeStep === 4 && !capacity?.capacityNumber) return setIsButtonDisabled(true);
     if (activeStep === 5 && (!dateStart || !dateEnd)) return setIsButtonDisabled(true);
     if (activeStep === 6 && ["", null, undefined].includes(price?.toString()))
       return setIsButtonDisabled(true);

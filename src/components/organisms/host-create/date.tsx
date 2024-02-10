@@ -1,12 +1,12 @@
 import moment from "jalali-moment";
+import { useFormikContext } from "formik";
 import WhiteSpace from "@atoms/white-space";
+import { useEffect, useState } from "react";
+import { Divider, Text } from "@rneui/themed";
+import { StyleSheet, View } from "react-native";
+import { ProjectAddInputType } from "@src/gql/generated";
 import JalaliDatePicker from "@modules/jalali-date-picker";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { Divider, Text } from "@rneui/themed";
-import { ProjectAddInputType } from "@src/gql/generated";
-import { useFormikContext } from "formik";
-import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
 import useHandleDayPress from "@src/hooks/jalali-date-picker/formik/handle-day-press";
 import useHandleSaveChanges from "@src/hooks/jalali-date-picker/formik/handle-save-changes";
 
@@ -14,8 +14,7 @@ const TabDate = () => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [markedDays, setMarkedDays] = useState([]);
-  const { values, errors, touched } =
-    useFormikContext<ProjectAddInputType>();
+  const { values, errors, touched } = useFormikContext<ProjectAddInputType>();
 
   const { handleDayPress } = useHandleDayPress();
   const { handleSaveChanges } = useHandleSaveChanges();
@@ -28,14 +27,14 @@ const TabDate = () => {
 
   const getLastDayFormatted = () => {
     if (markedDays.length) {
-      return markedDays.length === 1 ?
-        localizeNumber(moment(markedDays[0].date).format("jYYYY/jMM/jDD"))
-        :
-        localizeNumber(moment(markedDays.slice(-1)[0].date).format("jYYYY/jMM/jDD"))
+      return markedDays.length === 1
+        ? localizeNumber(moment(markedDays[0].date).format("jYYYY/jMM/jDD"))
+        : localizeNumber(moment(markedDays.slice(-1)[0].date).format("jYYYY/jMM/jDD"));
     }
   };
 
-  const handleDayPressed = dayPressed => handleDayPress(dayPressed, markedDays, setMarkedDays, "dateStart", "dateEnd")
+  const handleDayPressed = dayPressed =>
+    handleDayPress(dayPressed, markedDays, setMarkedDays, "dateStart", "dateEnd");
 
   useEffect(() => handleSaveChanges("dateStart", "dateEnd", setMarkedDays), []);
 
@@ -69,7 +68,7 @@ const TabDate = () => {
 
 const styles = StyleSheet.create({
   showDateContainer: { flexDirection: "row", justifyContent: "space-evenly", marginTop: 25 },
-  timeContainer: { display: "flex", },
+  timeContainer: { display: "flex" },
 });
 
 export default TabDate;
