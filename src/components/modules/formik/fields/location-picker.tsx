@@ -41,14 +41,7 @@ const MemoizedMapWithoutDragging = memo(
 );
 
 const MemoizedMap = memo(
-  ({
-    style,
-    onMoveEnd,
-    bottomCenterContent,
-    topCenterContent,
-    lat = 35.7429943,
-    lng = 51.3505697,
-  }: MapPropsType) => {
+  ({ style, onMoveEnd, topCenterContent, lat = 35.7429943, lng = 51.3505697 }: MapPropsType) => {
     const la = lat ?? initLocation?.lat;
     const ln = lng ?? initLocation?.lng;
     return (
@@ -60,8 +53,7 @@ const MemoizedMap = memo(
         currentLocationVisible={true}
         mapOptions={{ zoomControl: false }}
         topCenterContent={topCenterContent}
-        bottomCenterContent={bottomCenterContent}
-        bottomLeftContentStyle={bottomLeftContentStyle}
+        bottomLeftContentStyle={styles.bottomLeftContentStyle}
       />
     );
   }

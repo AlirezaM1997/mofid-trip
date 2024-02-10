@@ -119,6 +119,14 @@ export type AccommodationQueryType = {
 };
 
 /** An enumeration. */
+export enum AccommodationTagTypeChoices {
+  /** CAMPAIGN */
+  Campaign = 'CAMPAIGN',
+  /** GENERAL */
+  General = 'GENERAL'
+}
+
+/** An enumeration. */
 export enum AccountSettingLanguageChoices {
   /** AR */
   Ar = 'AR',
@@ -991,8 +999,10 @@ export type ProjectFilterType = {
   price?: InputMaybe<IntRangeType>;
   /** Filter by project status. */
   status?: InputMaybe<Array<InputMaybe<ProjectStatusEnum>>>;
-  /** Filter by project tags. */
-  tags?: InputMaybe<Array<InputMaybe<ProjectTagEnum>>>;
+  /** Filter by project tag ids. */
+  tags?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** filter by visibility of projects. */
+  visibility?: InputMaybe<ProjectVisibilityEnum>;
 };
 
 export enum ProjectGenderEnum {
@@ -1071,6 +1081,7 @@ export type ProjectQueryType = {
   freeCapacity?: Maybe<CapacityReserveType>;
   gender?: Maybe<AccommodationProjectGenderChoices>;
   id: Scalars['ID']['output'];
+  isPublic: Scalars['Boolean']['output'];
   modifiedDate?: Maybe<Scalars['DateTime']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   price?: Maybe<Scalars['Int']['output']>;
@@ -1091,15 +1102,6 @@ export enum ProjectStatusEnum {
   Accept = 'ACCEPT',
   End = 'END',
   Request = 'REQUEST'
-}
-
-export enum ProjectTagEnum {
-  Discount = 'DISCOUNT',
-  Economy = 'ECONOMY',
-  Free = 'FREE',
-  Luxe = 'LUXE',
-  New = 'NEW',
-  Trend = 'TREND'
 }
 
 /** Input type for adding a new project transaction. */
@@ -1138,8 +1140,12 @@ export type ProjectTransactionEditInputType = {
 export type ProjectTransactionFilterType = {
   /** Date range. */
   dateRange?: InputMaybe<DateRangeType>;
+  /** Filter by project owner. */
+  projectOwner?: InputMaybe<Array<InputMaybe<ProjectOwnerEnum>>>;
   /** Filter by transaction status step. */
   statusStep?: InputMaybe<TransactionStatusEnum>;
+  /** Filter by transaction owner. */
+  transactionOwner?: InputMaybe<Array<InputMaybe<TransactionOwnerEnum>>>;
 };
 
 export type ProjectTransactionGuestInputType = {
@@ -1180,6 +1186,12 @@ export type ProjectTransactionQueryType = {
   /** Transaction status information. */
   status?: Maybe<StatusQueryType>;
 };
+
+export enum ProjectVisibilityEnum {
+  Both = 'BOTH',
+  Private = 'PRIVATE',
+  Public = 'PUBLIC'
+}
 
 export type Query = {
   __typename?: 'Query';
@@ -1632,19 +1644,10 @@ export type SubscriptionOnNewMessageArgs = {
   channelIdentifier: Scalars['String']['input'];
 };
 
-export enum TagFilterEnum {
-  Discount = 'DISCOUNT',
-  Economy = 'ECONOMY',
-  Free = 'FREE',
-  Luxe = 'LUXE',
-  New = 'NEW',
-  Trend = 'TREND'
-}
-
 /** Input type for filtering project tags. */
 export type TagFilterType = {
-  /** Filter project tag by name. */
-  tagsName?: InputMaybe<Array<InputMaybe<TagFilterEnum>>>;
+  /** Filter tags by type. */
+  type?: InputMaybe<Array<InputMaybe<TagTypeEnum>>>;
 };
 
 /** Type representing a page of TagQueryType objects. */
@@ -1666,8 +1669,16 @@ export type TagQueryType = {
   id: Scalars['ID']['output'];
   /** Name of the tag. */
   name?: Maybe<Scalars['String']['output']>;
+  owner?: Maybe<UserQueryType>;
   projectSet: Array<ProjectQueryType>;
+  tourSet: Array<TourQueryType>;
+  type: AccommodationTagTypeChoices;
 };
+
+export enum TagTypeEnum {
+  Campaign = 'CAMPAIGN',
+  General = 'GENERAL'
+}
 
 /** Input type for adding a new tour. */
 export type TourAddInputType = {
@@ -1796,6 +1807,10 @@ export type TourFilterType = {
   owner?: InputMaybe<Array<InputMaybe<TourOwnerEnum>>>;
   /** Filter by price range. */
   price?: InputMaybe<IntRangeType>;
+  /** Filter Tours by tag ids. */
+  tags?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** filter by visibility of tours. */
+  visibility?: InputMaybe<TourVisibilityEnum>;
 };
 
 export enum TourGenderEnum {
@@ -1922,6 +1937,7 @@ export type TourQueryType = {
   /** List of tour facilities. */
   facilities?: Maybe<Array<Maybe<TourFacilityQueryType>>>;
   id: Scalars['ID']['output'];
+  isPublic: Scalars['Boolean']['output'];
   modifiedDate?: Maybe<Scalars['DateTime']['output']>;
   /** Tour origin information. */
   origin?: Maybe<TourDestOrigUnion>;
@@ -1931,6 +1947,7 @@ export type TourQueryType = {
   startTime: Scalars['DateTime']['output'];
   statusActivation: Scalars['Boolean']['output'];
   statusStep?: Maybe<TourTourStatusStepChoices>;
+  tags: Array<TagQueryType>;
   title: Scalars['String']['output'];
 };
 
@@ -2005,6 +2022,10 @@ export type TourTransactionEditInputType = {
 export type TourTransactionFilterType = {
   /** Filter by status step. */
   statusStep?: InputMaybe<TransactionStatusEnum>;
+  /** Filter by tour owner. */
+  tourOwner?: InputMaybe<Array<InputMaybe<TourOwnerEnum>>>;
+  /** Filter by transaction owner. */
+  transactionOwner?: InputMaybe<Array<InputMaybe<TransactionOwnerEnum>>>;
 };
 
 /** Type representing a page of TourTransactionQueryType objects. */
@@ -2045,11 +2066,23 @@ export type TourTransactionStatusInputType = {
   step?: InputMaybe<TransactionStatusEnum>;
 };
 
+export enum TourVisibilityEnum {
+  Both = 'BOTH',
+  Private = 'PRIVATE',
+  Public = 'PUBLIC'
+}
+
 export enum TransactionGuestGenderEnum {
   Both = 'BOTH',
   Child = 'CHILD',
   Female = 'FEMALE',
   Male = 'MALE'
+}
+
+export enum TransactionOwnerEnum {
+  Me = 'ME',
+  Others = 'OTHERS',
+  Setad = 'SETAD'
 }
 
 /**
@@ -2150,6 +2183,7 @@ export type UserQueryType = {
   setad?: Maybe<SetadQueryType>;
   setting?: Maybe<SettingDetailType>;
   smsActivationCode?: Maybe<Scalars['Int']['output']>;
+  tag?: Maybe<TagQueryType>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
   /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
@@ -2644,7 +2678,7 @@ export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionLi
 export type UserDetailProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDetailProfileQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, isNgo?: boolean | null, username: string, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string, title: string, isVerify?: boolean | null, verifyDescription?: string | null, avatarS3?: { __typename?: 'NGOImageType', small?: string | null } | null } | null } | null };
+export type UserDetailProfileQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, isNgo?: boolean | null, username: string, fullname?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string, title: string, isVerify?: boolean | null, verifyDescription?: string | null, avatarS3?: { __typename?: 'NGOImageType', small?: string | null } | null } | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5472,6 +5506,7 @@ export const UserDetailProfileDocument = gql`
     id
     isNgo
     username
+    fullname
     avatarS3 {
       small
     }

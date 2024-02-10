@@ -12,11 +12,12 @@ import { isBase64 } from "@src/helper/extra";
 import useTranslation from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
 import handleUploadImage from "@src/helper/image-picker";
+import { router } from "expo-router";
 
 const Page = () => {
   const { tr } = useTranslation();
-  const [editProfile, { loading, data, error }] = useUserEditMutation();
-  const { loading: loadingUserDetail, data: dataUserDetail } = useUserDetailQuery();
+  const [editProfile] = useUserEditMutation();
+  const { loading, data } = useUserDetailQuery();
   const [userDetailTemp, setUserDetailTemp] = useState({
     firstname: "",
     lastname: "",
@@ -24,24 +25,15 @@ const Page = () => {
     base64Image: "",
   });
 
-  useEffect(() => {
-    setUserDetailTemp({
-      firstname: userDetail?.firstname ?? "",
-      lastname: userDetail?.lastname ?? "",
-      bio: userDetail?.bio ?? "",
-      base64Image: userDetail?.avatarS3?.small ?? "",
-    });
-  }, []);
-
   const handleImagePicker = async () => {
     const imageBase64 = await handleUploadImage();
     setUserDetailTemp({
       ...userDetailTemp,
-      base64Image: `data:image/jpg;base64,${imageBase64}`,
+      base64Image: imageBase64 as string,
     });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     let tempData = {
       firstname: userDetailTemp?.firstname ?? "",
       lastname: userDetailTemp?.lastname ?? "",
@@ -53,34 +45,29 @@ const Page = () => {
         base64Image: userDetailTemp.base64Image ?? "",
       };
     }
-    editProfile({
-      variables: {
-        data: tempData,
-      },
-    });
-  };
-
-  useEffect(() => {
-    if (!loading && data) {
-      // syncTable();
+    const { data } = await editProfile({ variables: { data: tempData } });
+    if (data.userEdit.status === "ACCEPTED") {
       Toast.show({
         type: "success",
         text1: tr("Successful"),
         text2: tr("Profile saved successfully"),
       });
+      router.push("/profile");
     }
-    if (error) {
-      Toast.show({
-        type: "error",
-        text1: tr("Error"),
-        text2: JSON.stringify(error.message),
-      });
-    }
-  }, [loading, data, error]);
+  };
 
-  if (loadingUserDetail) return <LoadingIndicator />;
+  useEffect(
+    () =>
+      setUserDetailTemp({
+        firstname: data?.userDetail?.firstname ?? "",
+        lastname: data?.userDetail?.lastname ?? "",
+        bio: data?.userDetail?.bio ?? "",
+        base64Image: data?.userDetail?.avatarS3?.small ?? "",
+      }),
+    [data]
+  );
 
-  const userDetail = dataUserDetail.userDetail;
+  if (loading && !data) return <LoadingIndicator />;
 
   return (
     <>

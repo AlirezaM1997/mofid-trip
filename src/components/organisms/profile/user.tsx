@@ -74,7 +74,7 @@ const Profile = ({ userDetail }) => {
 
             <View style={style.userInf}>
               <Text heading2 numberOfLines={1}>
-                {localizeNumber(getFullName(userDetail)) || tr("No Name")}
+                {localizeNumber(userDetail?.fullname) || tr("No Name")}
               </Text>
               <Text>{localizeNumber(userDetail?.username)}</Text>
             </View>

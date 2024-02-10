@@ -66,7 +66,7 @@ const Profile = ({ userDetail }) => {
         <WhiteSpace size={30} />
         <Container size={15}>
           <Pressable style={style.userInfo} onPress={handleNavigateToEditProfile}>
-            {userDetail?.avatarS3?.small ? (
+            {userDetail?.ngo?.avatarS3?.small ? (
               <Image style={style.userAvatar} source={{ uri: userDetail.ngo.avatarS3.small }} />
             ) : (
               <View style={style.userAvatar}>

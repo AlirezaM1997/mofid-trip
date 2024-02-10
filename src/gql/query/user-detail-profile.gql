@@ -3,6 +3,7 @@ query userDetailProfile {
     id
     isNgo
     username
+    fullname
     avatarS3 {
       small
     }
