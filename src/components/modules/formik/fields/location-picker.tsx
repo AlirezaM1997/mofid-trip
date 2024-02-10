@@ -61,6 +61,7 @@ const MemoizedMap = memo(
         mapOptions={{ zoomControl: false }}
         topCenterContent={topCenterContent}
         bottomCenterContent={bottomCenterContent}
+        bottomLeftContentStyle={bottomLeftContentStyle}
       />
     );
   }
@@ -138,15 +139,6 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
     []
   );
 
-  const MemoizedBottomCenterContent = useMemo(
-    () => (
-      <Container style={styles.mapContainer}>
-        <Button onPress={handleSubmit}>انتخاب</Button>
-      </Container>
-    ),
-    []
-  );
-
   const moveEndHandler = useCallback((_, mapCenter) => setLocation(mapCenter), []);
 
   return (
@@ -189,10 +181,12 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
           onMoveEnd={moveEndHandler}
           currentLocationVisible={true}
           topCenterContent={MemoizedTopCenterContent}
-          bottomCenterContent={MemoizedBottomCenterContent}
           lat={location?.lat ? location.lat : initLocation.lat}
           lng={location?.lng ? location.lng : initLocation.lng}
         />
+        <Container style={styles.mapContainer}>
+          <Button onPress={handleSubmit}>انتخاب</Button>
+        </Container>
       </BottomSheet>
     </>
   );
@@ -253,10 +247,10 @@ const styles = StyleSheet.create({
     right: WIDTH / 2 - 90,
   },
   mapContainer: {
-    zIndex: 3,
+    bottom: 0,
     width: WIDTH,
-    marginTop: 42,
     paddingVertical: 12,
+    position: "absolute",
     backgroundColor: "#fff",
   },
   bottomSheetContainerStyle: {
@@ -266,6 +260,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
   },
+  bottomLeftContentStyle: { bottom: 74 },
   nullMap: { width: "100%", height: "100%" },
 });
 export default LocationPicker;
