@@ -1,31 +1,37 @@
+import { router } from "expo-router";
 import React, { useEffect } from "react";
-
 import Container from "@atoms/container";
+import { useFormikContext } from "formik";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
-import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
-import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
-import CapacityTab from "@organisms/tour-create/capacity-tab";
+import useTranslation from "@src/hooks/translation";
 import DateTab from "@organisms/tour-create/date-tab";
-import DestinationTab from "@organisms/tour-create/destination-tab";
-import DetailsTab from "@organisms/tour-create/details-tab";
-import FacilitiesTab from "@organisms/tour-create/facilities-tab";
+import { TourAddInputType } from "@src/gql/generated";
+import PriceTab from "@organisms/tour-create/price-tab";
 import ImagesTab from "@organisms/tour-create/images-tab";
 import OriginTab from "@organisms/tour-create/origin-tab";
-import PriceTab from "@organisms/tour-create/price-tab";
 import { BottomSheet, Button, Text } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
-import { router } from "expo-router";
 import { ImageBackground, StyleSheet } from "react-native";
-import { useFormikContext } from "formik";
-import { TourAddInputType } from "@src/gql/generated";
+import DetailsTab from "@organisms/tour-create/details-tab";
+import CapacityTab from "@organisms/tour-create/capacity-tab";
+import FacilitiesTab from "@organisms/tour-create/facilities-tab";
+import DestinationTab from "@organisms/tour-create/destination-tab";
+import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
+import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
+
+type PropsType = {
+  activeStep: number;
+  isVisibleFinish: boolean;
+  setIsVisibleFinish: (t: boolean) => void;
+  setIsButtonDisabled: (t: boolean) => void;
+};
 
 const TourCreateForm = ({
   activeStep,
   isVisibleFinish,
   setIsVisibleFinish,
   setIsButtonDisabled,
-}) => {
+}: PropsType) => {
   const { tr } = useTranslation();
 
   const { values } = useFormikContext<TourAddInputType>();
@@ -33,7 +39,6 @@ const TourCreateForm = ({
   const { title, description, capacity, startTime, endTime, price } = values;
   const { address, city, province, lat, lng } = values.destination;
   const { address: originAddress, lat: originLat, lng: originLng } = values.origin;
-  console.log(price);
 
   useEffect(() => {
     if (activeStep === 1 && (!title || !description)) return setIsButtonDisabled(true);

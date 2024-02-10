@@ -1,18 +1,12 @@
-query myNGODetailTourSet {
+query myNGODetailTourSetEdit {
   NGODetail {
     id
-    isVerify
-    verifyDescription
     tourSet {
       id
       title
       description
       startTime
       endTime
-      statusStep
-      statusActivation
-      createdDate
-      modifiedDate
       origin {
         ... on AccommodationQueryType {
           id
@@ -48,7 +42,6 @@ query myNGODetailTourSet {
         ... on ProjectQueryType {
           id
         }
-        __typename
       }
       avatarS3 {
         large
@@ -69,8 +62,6 @@ query myNGODetailTourSet {
       facilities {
         id
         faName
-        enName
-        arName
       }
     }
   }

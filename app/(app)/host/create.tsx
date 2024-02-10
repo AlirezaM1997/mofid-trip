@@ -78,7 +78,7 @@ const Screen = () => {
   const handleNext = () => setActiveStep(activeStep + 1);
   const handlePrev = () => setActiveStep(activeStep - 1);
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values: any) => {
     const { data } = await submit({
       variables: {
         data: {
@@ -89,7 +89,7 @@ const Screen = () => {
         },
       },
     });
-    if (data.projectAdd.status === "OK") {
+    if (data?.projectAdd?.status === "OK") {
       setIsVisibleFinish(true);
     }
   };
