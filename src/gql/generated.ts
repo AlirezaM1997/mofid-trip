@@ -120,9 +120,9 @@ export type AccommodationQueryType = {
 
 /** An enumeration. */
 export enum AccommodationTagTypeChoices {
-  /** CAMPAIGN */
+  /** کمپین */
   Campaign = 'CAMPAIGN',
-  /** GENERAL */
+  /** عمومی */
   General = 'GENERAL'
 }
 
@@ -920,6 +920,25 @@ export type ProjectCapacityAddType = {
   gender: ProjectGenderEnum;
 };
 
+/** Defines input fields for filtering daily project capacity by date range and optionally by transaction status. */
+export type ProjectCapacityListFilterType = {
+  /** Date range. */
+  dateRange: DateRangeType;
+  /** Filter by transaction status. */
+  status?: InputMaybe<TransactionStatusInputType>;
+};
+
+/** Represents capacity details, including date, male, female, and total guest counts. */
+export type ProjectCapacityQueryType = {
+  __typename?: 'ProjectCapacityQueryType';
+  /** The specific date. */
+  date?: Maybe<Scalars['String']['output']>;
+  /** Total number of free capacity. */
+  freeCapacity?: Maybe<Scalars['Int']['output']>;
+  /** Total number of requested guests. */
+  requestedCapacity?: Maybe<Scalars['Int']['output']>;
+};
+
 export enum ProjectCategoryEnum {
   Apartment = 'Apartment',
   Beachfront = 'Beachfront',
@@ -931,29 +950,29 @@ export enum ProjectCategoryEnum {
 /** Input type for editing an existing project. */
 export type ProjectEditInputType = {
   /** New Address of the Project. */
-  accommodation: AccommodationAddInputType;
+  accommodation?: InputMaybe<AccommodationAddInputType>;
   /** New Details regarding the project capacity. */
-  capacity: ProjectCapacityAddType;
+  capacity?: InputMaybe<ProjectCapacityAddType>;
   /** New List of project categories id. */
   categories?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** New End date of the project. */
-  dateEnd: Scalars['String']['input'];
+  dateEnd?: InputMaybe<Scalars['String']['input']>;
   /** NewStart date of the project. */
-  dateStart: Scalars['String']['input'];
+  dateStart?: InputMaybe<Scalars['String']['input']>;
   /** NewDescription of the project. */
   description?: InputMaybe<Scalars['String']['input']>;
   /** New Discount applied to the project. */
   discount?: InputMaybe<Scalars['Int']['input']>;
   /** New List of associated facility names for the project. */
-  facilities: Array<InputMaybe<Scalars['String']['input']>>;
+  facilities?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** New Name of the project. */
-  name: Scalars['String']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
   /** ID of the project to edit. */
   pk: Scalars['ID']['input'];
   /** New Price of the project. */
-  price: Scalars['Int']['input'];
+  price?: InputMaybe<Scalars['Int']['input']>;
   /** New status of the project. */
-  status?: InputMaybe<ProjectStatusEnum>;
+  status?: InputMaybe<ProjectStatusInputType>;
 };
 
 /** Type representing a page of ProjectFacilityQueryType objects. */
@@ -1034,8 +1053,6 @@ export type ProjectListType = {
   pageCount?: Maybe<Scalars['Int']['output']>;
 };
 
-export type ProjectOrError = ProjectQueryType | ResponseBase;
-
 export enum ProjectOwnerEnum {
   Me = 'ME',
   Others = 'OTHERS',
@@ -1101,8 +1118,17 @@ export type ProjectQueryType = {
 export enum ProjectStatusEnum {
   Accept = 'ACCEPT',
   End = 'END',
-  Request = 'REQUEST'
+  Request = 'REQUEST',
+  Suspension = 'SUSPENSION'
 }
+
+/** Input type for updating the status of a tour. */
+export type ProjectStatusInputType = {
+  /** New active status for the project. */
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  /** New step/status for the project. */
+  step?: InputMaybe<ProjectStatusEnum>;
+};
 
 /** Input type for adding a new project transaction. */
 export type ProjectTransactionAddInputType = {
@@ -1210,7 +1236,8 @@ export type Query = {
   channelList?: Maybe<ChannelListType>;
   /** Query to retrieve a paginated list of messages from a specified channel. */
   getMessageList?: Maybe<MessageListType>;
-  projectDetail?: Maybe<ProjectOrError>;
+  projectCapacityList?: Maybe<Array<Maybe<ProjectCapacityQueryType>>>;
+  projectDetail?: Maybe<ProjectQueryType>;
   projectFacilityList?: Maybe<ProjectFacilityListType>;
   projectList?: Maybe<ProjectListType>;
   projectTransactionDetail?: Maybe<ProjectTransactionQueryType>;
@@ -1220,7 +1247,8 @@ export type Query = {
   setadList?: Maybe<SetadListType>;
   settingDetail?: Maybe<SettingDetailType>;
   tagList?: Maybe<TagListType>;
-  tourDetail?: Maybe<TourOrError>;
+  tourCapacityList?: Maybe<TourCapacityQueryType>;
+  tourDetail?: Maybe<TourQueryType>;
   tourFacilityList?: Maybe<TourFacilityListType>;
   tourList?: Maybe<TourListType>;
   tourTransactionDetail?: Maybe<TourTransactionQueryType>;
@@ -1302,6 +1330,12 @@ export type QueryGetMessageListArgs = {
 };
 
 
+export type QueryProjectCapacityListArgs = {
+  filter: ProjectCapacityListFilterType;
+  pk: Scalars['ID']['input'];
+};
+
+
 export type QueryProjectDetailArgs = {
   pk: Scalars['ID']['input'];
 };
@@ -1360,6 +1394,12 @@ export type QueryTagListArgs = {
   filter?: InputMaybe<TagFilterType>;
   page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryTourCapacityListArgs = {
+  filter?: InputMaybe<TourCapacityFilterType>;
+  pk: Scalars['ID']['input'];
 };
 
 
@@ -1716,6 +1756,26 @@ export type TourCapacityAddType = {
   gender: TourGenderEnum;
 };
 
+/**
+ * An input type used for filtering tour capacity reservations based on specific criteria such as date range and transaction status steps.
+ * This allows clients to request tour capacity data that matches certain conditions, making it easier to analyze or display relevant information.
+ */
+export type TourCapacityFilterType = {
+  /** Date range. */
+  dateRange?: InputMaybe<DateRangeType>;
+  /** Filter by transaction status step. */
+  status?: InputMaybe<TourTransactionStatusInputType>;
+};
+
+/** Holds the capacity reservations for a specific tour, encompassing various tour packages and their respective capacities. */
+export type TourCapacityQueryType = {
+  __typename?: 'TourCapacityQueryType';
+  /** A list of capacities for different packages within the tour, detailing male, female, and total guests. */
+  capacities?: Maybe<Array<Maybe<TourPackageCapacityQueryType>>>;
+  /** The unique identifier for the tour. */
+  tourId?: Maybe<Scalars['ID']['output']>;
+};
+
 /** Type representing tour capacity with additional fields. */
 export type TourCapacityType = {
   __typename?: 'TourCapacityType';
@@ -1758,7 +1818,7 @@ export type TourEditInputType = {
   /** New Details of the origin for the tour. */
   origin?: InputMaybe<AccommodationAddInputType>;
   /** ID of the tour to edit. */
-  pk?: InputMaybe<Scalars['ID']['input']>;
+  pk: Scalars['ID']['input'];
   /** New Price of the tour. */
   price?: InputMaybe<Scalars['Int']['input']>;
   /** New Start date and time of the tour. */
@@ -1885,13 +1945,22 @@ export type TourListType = {
   pageCount?: Maybe<Scalars['Int']['output']>;
 };
 
-export type TourOrError = ResponseBase | TourQueryType;
-
 export enum TourOwnerEnum {
   Me = 'ME',
   Others = 'OTHERS',
   Setad = 'SETAD'
 }
+
+/** Represents the capacity details of a specific tour package, including the number of male and female guests, as well as the total capacity. */
+export type TourPackageCapacityQueryType = {
+  __typename?: 'TourPackageCapacityQueryType';
+  /** Total number of free capacity. */
+  freeCapacity?: Maybe<Scalars['Int']['output']>;
+  /** The unique identifier for the tour package. */
+  packageId?: Maybe<Scalars['ID']['output']>;
+  /** Total number of requested guests. */
+  requestedCapacity?: Maybe<Scalars['Int']['output']>;
+};
 
 /** Type representing tour packages with additional fields. */
 export type TourPackageType = {
@@ -1954,7 +2023,8 @@ export type TourQueryType = {
 export enum TourStatusEnum {
   Accept = 'ACCEPT',
   End = 'END',
-  Request = 'REQUEST'
+  Request = 'REQUEST',
+  Suspension = 'SUSPENSION'
 }
 
 /** Input type for updating the status of a tour. */
@@ -1991,7 +2061,9 @@ export enum TourTourStatusStepChoices {
   /** END */
   End = 'END',
   /** REQUEST */
-  Request = 'REQUEST'
+  Request = 'REQUEST',
+  /** تعلیق */
+  Suspension = 'SUSPENSION'
 }
 
 /** Input type for adding a new tour transaction. */
@@ -2058,12 +2130,12 @@ export type TourTransactionQueryType = {
   tourguestSet: Array<TourGuestQueryType>;
 };
 
-/** Input type for updating the status of a tour transaction. */
+/** Input type for specifying status information. */
 export type TourTransactionStatusInputType = {
-  /** New active status for the transaction. */
+  /** Whether the status is active. */
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
-  /** New step/status for the transaction. */
-  step?: InputMaybe<TransactionStatusEnum>;
+  /** Transaction status step. */
+  step?: InputMaybe<Array<InputMaybe<TransactionStatusEnum>>>;
 };
 
 export enum TourVisibilityEnum {
@@ -2103,6 +2175,14 @@ export enum TransactionStatusEnum {
   Request = 'REQUEST',
   Successful = 'SUCCESSFUL'
 }
+
+/** Input type for specifying status information. */
+export type TransactionStatusInputType = {
+  /** Whether the status is active. */
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Transaction status step. */
+  step?: InputMaybe<Array<InputMaybe<TransactionStatusEnum>>>;
+};
 
 export enum TripleChoiceEnum {
   False = 'FALSE',
@@ -2511,7 +2591,7 @@ export type HostCommentQueryVariables = Exact<{
 }>;
 
 
-export type HostCommentQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', name?: string | null, commentSet?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null, nestedComment?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null } | null> | null } | null> | null } | { __typename?: 'ResponseBase' } | null };
+export type HostCommentQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', name?: string | null, commentSet?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null, nestedComment?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null } | null> | null } | null> | null } | null };
 
 export type MyNgoDetailProjectSetQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2570,7 +2650,7 @@ export type ProjectDetailQueryVariables = Exact<{
 }>;
 
 
-export type ProjectDetailQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, gender?: AccommodationProjectGenderChoices | null, dateEnd?: any | null, dateStart?: any | null, description?: string | null, discount?: number | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null }>, capacity?: { __typename?: 'CapacityQueryType', childAccept?: boolean | null, gender?: string | null, guestNumber?: number | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, categories?: Array<{ __typename?: 'CategoryQueryType', name?: string | null, id: string } | null> | null, creator?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, firstname?: string | null, phoneNumber?: string | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null, medium?: string | null, large?: string | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | { __typename?: 'ResponseBase' } | null };
+export type ProjectDetailQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, gender?: AccommodationProjectGenderChoices | null, dateEnd?: any | null, dateStart?: any | null, description?: string | null, discount?: number | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null }>, capacity?: { __typename?: 'CapacityQueryType', childAccept?: boolean | null, gender?: string | null, guestNumber?: number | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, categories?: Array<{ __typename?: 'CategoryQueryType', name?: string | null, id: string } | null> | null, creator?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, firstname?: string | null, phoneNumber?: string | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null, medium?: string | null, large?: string | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null };
 
 export type ProjectListSearchQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
@@ -2632,14 +2712,14 @@ export type TourCommentQueryVariables = Exact<{
 }>;
 
 
-export type TourCommentQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'ResponseBase' } | { __typename?: 'TourQueryType', title: string, commentSet?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null, nestedComment?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null } | null> | null } | null> | null } | null };
+export type TourCommentQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'TourQueryType', title: string, commentSet?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null, nestedComment?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null } | null> | null } | null> | null } | null };
 
 export type TourDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
 }>;
 
 
-export type TourDetailQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'ResponseBase' } | { __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, NGO: { __typename?: 'NGOQueryType', id: string, isVerify?: boolean | null, verifyDescription?: string | null, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null };
+export type TourDetailQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, NGO: { __typename?: 'NGOQueryType', id: string, isVerify?: boolean | null, verifyDescription?: string | null, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null };
 
 export type TourListSearchQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
