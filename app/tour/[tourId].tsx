@@ -19,6 +19,7 @@ import {
   TourCapacityType,
   TourDetailQuery,
   TourPackageType,
+  TourQueryType,
   useTourDetailQuery,
 } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
@@ -34,7 +35,7 @@ export default () => {
   const navigation = useNavigation();
   const { formatPrice } = useFormatPrice();
   const { tourId, name } = useLocalSearchParams();
-  const [tour, setTour] = useState<TourDetailQuery["tourDetail"]>();
+  const [tour, setTour] = useState<TourQueryType>();
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
@@ -79,13 +80,13 @@ export default () => {
 
   useEffect(() => {
     if (!loading && data) {
-      setTour(data.tourDetail);
+      setTour(data.tourDetail as TourQueryType);
     }
   }, [loading, data]);
 
   if (loading || !tour) return <LoadingIndicator />;
   navigation.setOptions({
-    title: data?.tourDetail?.title,
+    title: (data?.tourDetail as TourQueryType)?.title,
     headerRight: () => <ShareReportDropDown />,
   });
 

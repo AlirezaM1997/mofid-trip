@@ -34,10 +34,9 @@ query NGODetail($pk: ID) {
       statusStep
       createdDate
       capacity {
-        id
-        male
-        female
-        child
+        childAccept
+        gender
+        guestNumber
       }
       categories {
         id

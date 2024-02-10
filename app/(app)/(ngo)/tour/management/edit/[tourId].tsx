@@ -25,6 +25,7 @@ import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
 import { setTourCreateActiveStep } from "@src/slice/tour-create-slice";
 import { TourGenderEnum, useMyNgoDetailTourSetQuery, useTourAddMutation } from "@src/gql/generated";
 import LoadingIndicator from "@modules/Loading-indicator";
+import TourCreateForm from "@organisms/tour-create";
 
 const initialValues = {
   title: null,
@@ -55,11 +56,11 @@ const initialValues = {
 };
 
 const EditTourScreen = () => {
-  const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const [isVisibleFinish, setIsVisibleFinish] = useState(false);
-  const { activeStep } = useSelector((state: RootState) => state.tourCreateSlice);
   const { tourId } = useLocalSearchParams();
+  const [activeStep, setActiveStep] = useState(1);
+  const [isVisibleFinish, setIsVisibleFinish] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const [submit, { loading: submitLoading }] = useTourAddMutation();
 
@@ -106,8 +107,8 @@ const EditTourScreen = () => {
       .required(tr("Required")),
   });
 
-  const handleNext = () => dispatch(setTourCreateActiveStep(activeStep + 1));
-  const handlePrev = () => dispatch(setTourCreateActiveStep(activeStep - 1));
+  const handleNext = () => setActiveStep(activeStep + 1);
+  const handlePrev = () => setActiveStep(activeStep - 1);
 
   const handleSubmit = async values => {
     const { data } = await submit({
@@ -162,7 +163,7 @@ const EditTourScreen = () => {
             buttons={[
               <Button
                 onPress={activeStep === 8 ? handleSubmit : handleNext}
-                disabled={submitLoading}
+                disabled={submitLoading || isButtonDisabled}
                 loading={submitLoading}>
                 {activeStep === 8 ? tr("Submit") : tr("Next")}
               </Button>,
@@ -174,60 +175,12 @@ const EditTourScreen = () => {
                 {tr("Previous")}
               </Button>,
             ]}>
-            <TourCreateTabs />
-            <WhiteSpace />
-
-            <Container>
-              {activeStep === 1 && <DetailsTab />}
-              {activeStep === 2 && <CapacityTab />}
-              {activeStep === 3 && <OriginTab />}
-              {activeStep === 4 && <DestinationTab />}
-              {activeStep === 5 && <DateTab />}
-              {activeStep === 6 && <PriceTab />}
-              {activeStep === 7 && <ImagesTab />}
-              {activeStep === 8 && <FacilitiesTab />}
-            </Container>
-
-            <BottomSheet isVisible={isVisibleFinish}>
-              <Container>
-                <ImageBackground
-                  style={styles.rejectIcon}
-                  imageStyle={{ resizeMode: "contain" }}
-                  source={require("@assets/image/check.svg")}
-                />
-                <Text center heading2 bold>
-                  {tr("Your request to create a tour has been successfully registered")}
-                </Text>
-                <Text center>
-                  {tr(
-                    "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers."
-                  )}
-                </Text>
-                <WhiteSpace />
-                <ButtonRow>
-                  <Button
-                    onPress={() => {
-                      router.replace("/tour/management");
-                      router.replace("/tour/management");
-                      setIsVisibleFinish(false);
-                    }}
-                    color="secondary"
-                    type="outline">
-                    {tr("Tour Management")}
-                  </Button>
-                  <Button
-                    onPress={() => {
-                      router.replace("/");
-                      router.replace("/");
-                      setIsVisibleFinish(false);
-                    }}>
-                    {tr("Return to home")}
-                  </Button>
-                </ButtonRow>
-              </Container>
-            </BottomSheet>
-
-            <CloseFormBottomSheet />
+            <TourCreateForm
+              activeStep={activeStep}
+              isVisibleFinish={isVisibleFinish}
+              setIsVisibleFinish={setIsVisibleFinish}
+              setIsButtonDisabled={setIsButtonDisabled}
+            />
           </BottomButtonLayout>
         )}
       </Formik>

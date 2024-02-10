@@ -8,10 +8,10 @@ import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet } from "react-native";
 import { Pressable, View } from "react-native";
 import Toast from "react-native-toast-message";
-import * as ImagePicker from "expo-image-picker";
 import { isBase64 } from "@src/helper/extra";
 import useTranslation from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
+import handleUploadImage from "@src/helper/image-picker";
 
 const Page = () => {
   const { tr } = useTranslation();
@@ -31,23 +31,14 @@ const Page = () => {
       bio: userDetail?.bio ?? "",
       base64Image: userDetail?.avatarS3?.small ?? "",
     });
-  }, [userDetail]);
+  }, []);
 
-  const handleUploadImage = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 0.5,
-      base64: true,
+  const handleImagePicker = async () => {
+    const imageBase64 = await handleUploadImage();
+    setUserDetailTemp({
+      ...userDetailTemp,
+      base64Image: `data:image/jpg;base64,${imageBase64}`,
     });
-
-    if (!result.canceled) {
-      setUserDetailTemp({
-        ...userDetailTemp,
-        base64Image: `data:image/jpg;base64,${result.assets[0].base64}`,
-      });
-    }
   };
 
   const handleSave = () => {
@@ -95,7 +86,7 @@ const Page = () => {
     <>
       <WhiteSpace size={20} />
       <ScrollView contentContainerStyle={style.container}>
-        <Pressable style={style.imagePicker} onPress={handleUploadImage}>
+        <Pressable style={style.imagePicker} onPress={handleImagePicker}>
           {userDetailTemp?.base64Image ? (
             <Image style={style.imageStyle} source={{ uri: userDetailTemp?.base64Image }} />
           ) : (

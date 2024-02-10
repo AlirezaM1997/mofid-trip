@@ -5,7 +5,7 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import { StyleSheet, View } from "react-native";
 import useTranslation from "@src/hooks/translation";
-import { setCategory } from "@src/slice/filter-slice";
+import { CategoryEnum, setCategory } from "@src/slice/filter-slice";
 import { useDispatch, useSelector } from "react-redux";
 import TitleWithAction from "@modules/title-with-action";
 import SearchBar from "@src/components/modules/search-bar";
@@ -16,17 +16,25 @@ import { useProjectListSearchQuery, useTourListSearchQuery } from "@src/gql/gene
 const SearchScreen: React.FC = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const { filterSlice } = useSelector((state: RootState) => state);
+  const { search, page, sort } = useSelector((state: RootState) => state.filterSlice);
 
   const { data: hostData, loading: hostLoading } = useProjectListSearchQuery({
-    variables: filterSlice,
+    variables: {
+      search,
+      page,
+      sort,
+    },
   });
 
   const { data: tourData, loading: tourLoading } = useTourListSearchQuery({
-    variables: filterSlice,
+    variables: {
+      search,
+      page,
+      sort,
+    },
   });
 
-  const routerHandler = category => {
+  const routerHandler = (category: CategoryEnum) => {
     router.push("/search-list");
     dispatch(setCategory(category));
   };
@@ -34,14 +42,14 @@ const SearchScreen: React.FC = () => {
   return (
     <>
       <SearchBar />
-      {filterSlice.search ? (
+      {search ? (
         <Container style={styles.container}>
           <View>
             <TitleWithAction
               size="body2"
               actionTitle={tr("See All")}
-              onActionPress={() => routerHandler("tour")}
-              title={`${tr("all tours of")} ${filterSlice.search}`}
+              onActionPress={() => routerHandler(CategoryEnum.TOUR)}
+              title={`${tr("all tours of")} ${search}`}
             />
 
             <WhiteSpace size={8} />
@@ -52,8 +60,8 @@ const SearchScreen: React.FC = () => {
             <TitleWithAction
               size="body2"
               actionTitle={tr("See All")}
-              onActionPress={() => routerHandler("host")}
-              title={`${tr("all hosts of")} ${filterSlice.search}`}
+              onActionPress={() => routerHandler(CategoryEnum.HOST)}
+              title={`${tr("all hosts of")} ${search}`}
             />
 
             <WhiteSpace size={8} />

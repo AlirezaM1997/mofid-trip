@@ -3,7 +3,7 @@ import { ExpoLeaflet } from "expo-leaflet";
 import { Button, useTheme } from "@rneui/themed";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ReactNode, useEffect, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View, ViewStyle } from "react-native";
 import { ExpoLeafletProps } from "expo-leaflet/web/src/ExpoLeaflet.types";
 
 export type MapPropsType = ExpoLeafletProps & {
@@ -17,6 +17,7 @@ export type MapPropsType = ExpoLeafletProps & {
   bottomRightContent?: ReactNode;
   bottomCenterContent?: ReactNode;
   currentLocationVisible?: boolean;
+  bottomLeftContentStyle?: ViewStyle;
   onMarkerClick?: FunctionConstructor;
   onMoveEnd?: () => { lat: number; lng: number };
 };
@@ -25,6 +26,7 @@ export type MapPropsType = ExpoLeafletProps & {
 // @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
 import markerImage from "@assets/image/marker.png";
 import locationMarkerImage from "@assets/image/location-marker.png";
+import { ViewProps } from "react-native";
 const a = markerImage;
 const b = locationMarkerImage;
 
@@ -35,6 +37,7 @@ const Map = ({
   onMoveEnd,
   mapMarkers,
   mapOptions = {},
+  bottomLeftContentStyle,
   centerContent = <View></View>,
   currentLocationVisible = false,
   topLeftContent = <View></View>,
@@ -86,8 +89,7 @@ const Map = ({
       <View style={style.center}>{centerContent}</View>
 
       <View style={[style.row, style.bottomRow]}>
-        <View style={style.bottomLeftContent}>
-          {bottomLeftContent}
+        <View style={[style.bottomLeftContent, bottomLeftContentStyle]}>
           {currentLocationVisible && (
             <Button
               onPress={handleCurrentLocation}
@@ -98,6 +100,7 @@ const Map = ({
                 <MaterialIcons name="my-location" size={18} color={theme.colors.black} />
               }></Button>
           )}
+          {bottomLeftContent}
         </View>
         <View>{bottomCenterContent}</View>
         <View>{bottomRightContent}</View>
@@ -105,7 +108,7 @@ const Map = ({
 
       <View style={[style.container, props.style]}>
         <ExpoLeaflet
-          zoom={zoom || 5}
+          zoom={zoom}
           mapCenterPosition={{
             lat: location?.lat,
             lng: location?.lng,
@@ -180,6 +183,7 @@ const style = StyleSheet.create({
   },
   bottomLeftContent: {
     right: 24,
+    bottom: 24,
     zIndex: 1000,
     position: "absolute",
   },
