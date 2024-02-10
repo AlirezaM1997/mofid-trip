@@ -8,10 +8,10 @@ import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet } from "react-native";
 import { Pressable, View } from "react-native";
 import Toast from "react-native-toast-message";
-import * as ImagePicker from "expo-image-picker";
 import { isBase64 } from "@src/helper/extra";
 import useTranslation from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
+import handleUploadImage from "@src/helper/image-picker";
 import { router } from "expo-router";
 
 const Page = () => {
@@ -25,21 +25,12 @@ const Page = () => {
     base64Image: "",
   });
 
-  const handleUploadImage = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 0.5,
-      base64: true,
+  const handleImagePicker = async () => {
+    const imageBase64 = await handleUploadImage();
+    setUserDetailTemp({
+      ...userDetailTemp,
+      base64Image: imageBase64 as string,
     });
-
-    if (!result.canceled) {
-      setUserDetailTemp({
-        ...userDetailTemp,
-        base64Image: `data:image/jpg;base64,${result.assets[0].base64}`,
-      });
-    }
   };
 
   const handleSave = async () => {
@@ -65,24 +56,24 @@ const Page = () => {
     }
   };
 
-  useEffect(() =>
-    setUserDetailTemp({
-      firstname: data?.userDetail?.firstname ?? "",
-      lastname: data?.userDetail?.lastname ?? "",
-      bio: data?.userDetail?.bio ?? "",
-      base64Image: data?.userDetail?.avatarS3?.small ?? "",
-    })
-    , [data])
+  useEffect(
+    () =>
+      setUserDetailTemp({
+        firstname: data?.userDetail?.firstname ?? "",
+        lastname: data?.userDetail?.lastname ?? "",
+        bio: data?.userDetail?.bio ?? "",
+        base64Image: data?.userDetail?.avatarS3?.small ?? "",
+      }),
+    [data]
+  );
 
   if (loading && !data) return <LoadingIndicator />;
-
-
 
   return (
     <>
       <WhiteSpace size={20} />
       <ScrollView contentContainerStyle={style.container}>
-        <Pressable style={style.imagePicker} onPress={handleUploadImage}>
+        <Pressable style={style.imagePicker} onPress={handleImagePicker}>
           {userDetailTemp?.base64Image ? (
             <Image style={style.imageStyle} source={{ uri: userDetailTemp?.base64Image }} />
           ) : (

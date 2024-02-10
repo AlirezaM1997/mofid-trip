@@ -1,7 +1,6 @@
 import React from "react";
 import { FieldArray, useFormikContext } from "formik";
 import { Ionicons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
 import useTranslation from "@src/hooks/translation";
 import { Image, Text, useTheme } from "@rneui/themed";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -14,32 +13,22 @@ const CustomImagePicker = () => {
   const { tr } = useTranslation();
   const { values, setFieldValue } = useFormikContext<TourAddInputType>();
 
-  const pickImage = async (item: string) => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      quality: 1,
-      base64: true,
-      aspect: [4, 4],
-      allowsEditing: true,
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-    });
-
-    if (result.canceled) {
-      return;
-    }
-
-    if ("uri" in result) {
-      setFieldValue("base64Images", [...values.base64Images, result.uri]);
-    }
+  const handleImagePicker = async () => {
+    const imageBase64 = await handleUploadImage();
+    setFieldValue("base64Images", [...values.base64Images, imageBase64]);
   };
 
   const removeHandler = (targetIndex: string) => {
-    setFieldValue("base64Images", values.base64Images.filter((i, index) => index.toString() !== targetIndex));
+    setFieldValue(
+      "base64Images",
+      values.base64Images.filter((i, index) => index.toString() !== targetIndex)
+    );
   };
 
   return (
     <>
       <Pressable
-        onPress={() => pickImage("main")}
+        onPress={handleImagePicker}
         style={[styles.imageContainer(values.base64Images?.[0]), styles.mainImageSize]}>
         {values.base64Images?.[0] ? (
           <>
@@ -53,7 +42,7 @@ const CustomImagePicker = () => {
               color={theme.colors.primary}
               style={[styles.deleteIcon(theme), styles.mainDeleteIconPosition]}
               name="trash-outline"
-              onPress={() => removeHandler('0')}
+              onPress={() => removeHandler("0")}
             />
           </>
         ) : (
@@ -70,7 +59,7 @@ const CustomImagePicker = () => {
         {Object.keys([0, 1, 2, 3, 4, 5]).map(item => (
           <Pressable
             key={item}
-            onPress={() => pickImage(item)}
+            onPress={handleImagePicker}
             style={[styles.imageContainer(true), styles.subImageSize]}>
             {values.base64Images?.[item] ? (
               <>

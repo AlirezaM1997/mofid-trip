@@ -21,22 +21,24 @@ import { HEIGHT } from "@src/constants";
 const SMSVerificationScreen = () => {
   const { signIn, session } = useSession();
   const { tr } = useTranslation();
-  const countDownTimerRef = useRef();
   const { phone } = useLocalSearchParams();
-  const [canRequestCode, setCanRequestCode] = useState(false);
-  const { redirectToScreenAfterLogin } = useSelector((state: RootState) => state.navigationSlice);
-  const [login, { loading, data }] = useCreateLoginMutation();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const [resetTimer, setResetTimer] = useState(false);
+  const [canRequestCode, setCanRequestCode] = useState(false);
 
+  const { redirectToScreenAfterLogin } = useSelector((state: RootState) => state.navigationSlice);
+
+  const [login, { loading, data }] = useCreateLoginMutation();
   const [userCheckSmsVerificationCode, { loading: loadingChecking }] = useUserGetTokenMutation();
 
   const handleCountDownTimerOnEnd = () => {
+    setResetTimer(false);
     setCanRequestCode(true);
   };
 
   const handleBack = () => router.back();
 
-  const onComplete = async text => {
+  const onComplete = async (text: string) => {
     const { data } = await userCheckSmsVerificationCode({
       variables: {
         code: parseInt(text),
@@ -45,42 +47,46 @@ const SMSVerificationScreen = () => {
     });
 
     // اگه کد وارد شده درست نباشه
-    if (data.userGetToken.statusCode === 404) {
+    if (data?.userGetToken?.statusCode === 404) {
       Toast.show({
         type: "error",
         text1: tr("Error"),
-        text2: data.userGetToken.message,
+        text2: data.userGetToken.message as string,
         topOffset: HEIGHT / 4,
       });
     }
-    if (data.userGetToken.statusCode === 200) {
+    if (data?.userGetToken?.statusCode === 200) {
       signIn({
-        token: data.userGetToken.token,
-        refreshToken: data.userGetToken.refreshToken,
-        metadata: data.userGetToken.metadata,
+        token: data?.userGetToken?.token,
+        refreshToken: data?.userGetToken?.refreshToken,
+        metadata: data?.userGetToken?.metadata,
       });
     } else {
       Toast.show({
         type: "error",
         text1: tr("Error"),
-        text2: data.userGetToken.message,
+        text2: data?.userGetToken?.message as string,
         topOffset: HEIGHT / 4,
       });
     }
   };
 
-  const handleRequestAgain = () => {
-    login({
+  const handleRequestAgain = async () => {
+    const { data } = await login({
       variables: {
         dataUser: {
           phoneNumber: phone as string,
         },
       },
     });
+    if (data?.createLogin?.status === "OK") {
+      setCanRequestCode(false);
+      setResetTimer(true);
+    }
   };
 
   useEffect(() => {
-    if (!loading && data && data.createLogin.status === "OK") {
+    if (!loading && data && data?.createLogin?.status === "OK") {
       setCanRequestCode(false);
     }
   }, [loading, data]);
@@ -98,10 +104,9 @@ const SMSVerificationScreen = () => {
       {loadingChecking && <LoadingIndicator />}
       <View style={style.container}>
         <CountDownTimer
-          onEnd={handleCountDownTimerOnEnd}
-          ref={countDownTimerRef}
           initialValue={120}
-          style={style.timerText}
+          resetTimer={resetTimer}
+          onEnd={handleCountDownTimerOnEnd}
         />
         <WhiteSpace size={20} />
         <Container size={10}>
@@ -111,7 +116,11 @@ const SMSVerificationScreen = () => {
             )}
           </Text>
           <WhiteSpace size={10} />
-          <Button type="clear" disabled={!canRequestCode} onPress={handleRequestAgain}>
+          <Button
+            type="clear"
+            loading={loading}
+            disabled={!canRequestCode}
+            onPress={handleRequestAgain}>
             {tr("Resend the code")}
           </Button>
           <WhiteSpace size={10} />
@@ -121,7 +130,7 @@ const SMSVerificationScreen = () => {
         <WhiteSpace size={10} />
         <Pressable style={style.editContainer} onPress={handleBack}>
           <Feather name="edit" size={20} color={PRIMARY_COLOR} />
-          <Text style={style.phone} body1>
+          <Text bold style={style.phone}>
             {localizeNumber(phone as string)}
           </Text>
         </Pressable>
@@ -132,9 +141,6 @@ const SMSVerificationScreen = () => {
 
 const style = StyleSheet.create({
   container: { flex: 1, alignItems: "center", justifyContent: "center" },
-  timerText: {
-    fontSize: 40,
-  },
   editContainer: {
     display: "flex",
     flexDirection: "row",
@@ -142,7 +148,7 @@ const style = StyleSheet.create({
     gap: 5,
   },
   phone: {
-    fontWeight: "bold",
+    writingDirection: "ltr",
   },
   text: {
     color: "#ADAFAE",

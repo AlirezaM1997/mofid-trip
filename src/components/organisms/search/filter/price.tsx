@@ -25,7 +25,7 @@ const FilterPrice = () => {
     () =>
       debounce(
         range => dispatch(setFilter({ ...filter, price: { low: +range.low, high: +range.high } })),
-        1500
+        800
       ),
     [filter.price]
   );

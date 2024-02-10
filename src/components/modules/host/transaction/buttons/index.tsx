@@ -36,9 +36,9 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
       },
       ACCEPT: transaction.status.isActive
         ? {
-            title: transaction.project.price ? tr("pay") : tr("reservation"),
+            title: transaction?.project?.price ? tr("pay") : tr("reservation"),
             detailsBtn: true,
-            changeHandler: transaction.project.price
+            changeHandler: transaction?.project?.price
               ? () => setIsAcceptPaymentVisible(true)
               : purchaseHandler,
           }

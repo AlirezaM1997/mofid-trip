@@ -1,14 +1,13 @@
 import Container from "@atoms/container";
 import { Feather } from "@expo/vector-icons";
-import Map, { MapPropsType } from "@modules/map/index.web";
-import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
+import Search from "@modules/map/search.web";
 import { HEIGHT, WIDTH } from "@src/constants";
 import useTranslation from "@src/hooks/translation";
 import { FieldProps, useFormikContext } from "formik";
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Map, { MapPropsType } from "@modules/map/index.web";
+import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
+import { memo, useCallback, useMemo, useRef, useState } from "react";
 import { Pressable, StyleSheet, View, ViewProps } from "react-native";
-import * as Location from "expo-location";
-import Search from "@modules/map/search.web";
 
 export type LocationPickerProps = FieldProps & ViewProps;
 
@@ -42,14 +41,7 @@ const MemoizedMapWithoutDragging = memo(
 );
 
 const MemoizedMap = memo(
-  ({
-    style,
-    onMoveEnd,
-    bottomRightContent,
-    topCenterContent,
-    lat = 35.7429943,
-    lng = 51.3505697,
-  }: MapPropsType) => {
+  ({ style, onMoveEnd, topCenterContent, lat = 35.7429943, lng = 51.3505697 }: MapPropsType) => {
     const la = lat ?? initLocation?.lat;
     const ln = lng ?? initLocation?.lng;
     return (
@@ -58,9 +50,10 @@ const MemoizedMap = memo(
         lng={ln}
         style={style}
         onMoveEnd={onMoveEnd}
+        currentLocationVisible={true}
         mapOptions={{ zoomControl: false }}
-        bottomRightContent={bottomRightContent}
         topCenterContent={topCenterContent}
+        bottomLeftContentStyle={styles.bottomLeftContentStyle}
       />
     );
   }
@@ -131,14 +124,12 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
               lat: place.location.lng,
             })
           }
-          onChangeText={console.log}
           placeholder="جستجوی شهر، استان، خیابان، محله"
         />
       </Container>
     ),
     []
   );
-  console.log(location);
 
   const moveEndHandler = useCallback((_, mapCenter) => setLocation(mapCenter), []);
 
@@ -180,9 +171,10 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
         <MemoizedMap
           style={styles.root}
           onMoveEnd={moveEndHandler}
+          currentLocationVisible={true}
+          topCenterContent={MemoizedTopCenterContent}
           lat={location?.lat ? location.lat : initLocation.lat}
           lng={location?.lng ? location.lng : initLocation.lng}
-          topCenterContent={MemoizedTopCenterContent}
         />
         <Container style={styles.mapContainer}>
           <Button onPress={handleSubmit}>انتخاب</Button>
@@ -247,12 +239,11 @@ const styles = StyleSheet.create({
     right: WIDTH / 2 - 90,
   },
   mapContainer: {
-    position: "absolute",
     bottom: 0,
-    backgroundColor: "#fff",
-    width: "100%",
+    width: WIDTH,
     paddingVertical: 12,
-    zIndex: 3,
+    position: "absolute",
+    backgroundColor: "#fff",
   },
   bottomSheetContainerStyle: {
     height: HEIGHT,
@@ -261,6 +252,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
   },
+  bottomLeftContentStyle: { bottom: 74 },
   nullMap: { width: "100%", height: "100%" },
 });
 export default LocationPicker;

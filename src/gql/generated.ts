@@ -2527,6 +2527,13 @@ export type TourAddMutationVariables = Exact<{
 
 export type TourAddMutation = { __typename?: 'Mutation', tourAdd?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
 
+export type TourEditMutationVariables = Exact<{
+  data: TourEditInputType;
+}>;
+
+
+export type TourEditMutation = { __typename?: 'Mutation', tourEdit?: { __typename?: 'ResponseBase', status?: string | null, statusCode?: number | null, message?: string | null, metadata?: any | null } | null };
+
 export type TourTransactionAddMutationVariables = Exact<{
   data: TourTransactionAddInputType;
 }>;
@@ -2603,10 +2610,15 @@ export type MyNgoDetailProjectTransactionSetQueryVariables = Exact<{ [key: strin
 
 export type MyNgoDetailProjectTransactionSetQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, projectTransactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', dateEnd?: any | null, dateStart?: any | null, id: string, owner?: { __typename?: 'UserQueryType', phoneNumber?: string | null, fullname?: string | null, id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, guest?: { __typename?: 'ProjectGuestQueryType', guestNumber?: number | null, gender?: string | null, childAccept?: boolean | null } | null, project?: { __typename?: 'ProjectQueryType', name?: string | null, id: string } | null, status?: { __typename?: 'StatusQueryType', isActive?: boolean | null, step?: string | null } | null } | null> | null } | null };
 
+export type MyNgoDetailTourSetEditQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyNgoDetailTourSetEditQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, origin?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number, discount?: number | null }>, capacity?: { __typename?: 'TourCapacityType', gender?: string | null, childAccept?: boolean | null, guestNumber?: number | null } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null } | null> | null } | null> | null } | null };
+
 export type MyNgoDetailTourSetQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyNgoDetailTourSetQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, isVerify?: boolean | null, verifyDescription?: string | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusStep?: TourTourStatusStepChoices | null, statusActivation: boolean, createdDate?: any | null, modifiedDate?: any | null, origin?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null } | null> | null } | null };
+export type MyNgoDetailTourSetQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, isVerify?: boolean | null, verifyDescription?: string | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusStep?: TourTourStatusStepChoices | null, statusActivation: boolean, createdDate?: any | null, modifiedDate?: any | null, origin?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number, discount?: number | null }>, capacity?: { __typename?: 'TourCapacityType', gender?: string | null, childAccept?: boolean | null, guestNumber?: number | null } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null } | null> | null } | null };
 
 export type MyNgoDetailTourTransactionSetQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2626,7 +2638,7 @@ export type MyNgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?
 export type MyUserDetailProjectSetEditQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyUserDetailProjectSetEditQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, dateStart?: any | null, dateEnd?: any | null, price?: number | null, discount?: number | null, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', faName?: string | null, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', lat?: number | null, lng?: number | null, city?: string | null, address?: string | null, province?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null, capacity?: { __typename?: 'CapacityQueryType', guestNumber?: number | null, gender?: string | null, childAccept?: boolean | null } | null } | null> | null } | null };
+export type MyUserDetailProjectSetEditQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, dateStart?: any | null, dateEnd?: any | null, price?: number | null, discount?: number | null, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', faName?: string | null, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', lat?: number | null, lng?: number | null, city?: string | null, address?: string | null, province?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null, capacity?: { __typename?: 'CapacityQueryType', gender?: string | null, guestNumber?: number | null, childAccept?: boolean | null } | null } | null> | null } | null };
 
 export type MyUserDetailProjectSetQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3394,6 +3406,42 @@ export function useTourAddMutation(baseOptions?: Apollo.MutationHookOptions<Tour
 export type TourAddMutationHookResult = ReturnType<typeof useTourAddMutation>;
 export type TourAddMutationResult = Apollo.MutationResult<TourAddMutation>;
 export type TourAddMutationOptions = Apollo.BaseMutationOptions<TourAddMutation, TourAddMutationVariables>;
+export const TourEditDocument = gql`
+    mutation tourEdit($data: TourEditInputType!) {
+  tourEdit(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}
+    `;
+export type TourEditMutationFn = Apollo.MutationFunction<TourEditMutation, TourEditMutationVariables>;
+
+/**
+ * __useTourEditMutation__
+ *
+ * To run a mutation, you first call `useTourEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useTourEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [tourEditMutation, { data, loading, error }] = useTourEditMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useTourEditMutation(baseOptions?: Apollo.MutationHookOptions<TourEditMutation, TourEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<TourEditMutation, TourEditMutationVariables>(TourEditDocument, options);
+      }
+export type TourEditMutationHookResult = ReturnType<typeof useTourEditMutation>;
+export type TourEditMutationResult = Apollo.MutationResult<TourEditMutation>;
+export type TourEditMutationOptions = Apollo.BaseMutationOptions<TourEditMutation, TourEditMutationVariables>;
 export const TourTransactionAddDocument = gql`
     mutation tourTransactionAdd($data: TourTransactionAddInputType!) {
   tourTransactionAdd(data: $data) {
@@ -3926,6 +3974,103 @@ export function useMyNgoDetailProjectTransactionSetLazyQuery(baseOptions?: Apoll
 export type MyNgoDetailProjectTransactionSetQueryHookResult = ReturnType<typeof useMyNgoDetailProjectTransactionSetQuery>;
 export type MyNgoDetailProjectTransactionSetLazyQueryHookResult = ReturnType<typeof useMyNgoDetailProjectTransactionSetLazyQuery>;
 export type MyNgoDetailProjectTransactionSetQueryResult = Apollo.QueryResult<MyNgoDetailProjectTransactionSetQuery, MyNgoDetailProjectTransactionSetQueryVariables>;
+export const MyNgoDetailTourSetEditDocument = gql`
+    query myNGODetailTourSetEdit {
+  NGODetail {
+    id
+    tourSet {
+      id
+      title
+      description
+      startTime
+      endTime
+      origin {
+        ... on AccommodationQueryType {
+          id
+          province
+          city
+          address
+          lat
+          lng
+          avatarS3 {
+            large
+            medium
+            small
+          }
+        }
+        ... on ProjectQueryType {
+          id
+        }
+      }
+      destination {
+        ... on AccommodationQueryType {
+          id
+          province
+          city
+          address
+          lat
+          lng
+          avatarS3 {
+            large
+            medium
+            small
+          }
+        }
+        ... on ProjectQueryType {
+          id
+        }
+      }
+      avatarS3 {
+        large
+        medium
+        small
+      }
+      packages {
+        id
+        title
+        price
+        discount
+      }
+      capacity {
+        gender
+        childAccept
+        guestNumber
+      }
+      facilities {
+        id
+        faName
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useMyNgoDetailTourSetEditQuery__
+ *
+ * To run a query within a React component, call `useMyNgoDetailTourSetEditQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyNgoDetailTourSetEditQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyNgoDetailTourSetEditQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyNgoDetailTourSetEditQuery(baseOptions?: Apollo.QueryHookOptions<MyNgoDetailTourSetEditQuery, MyNgoDetailTourSetEditQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyNgoDetailTourSetEditQuery, MyNgoDetailTourSetEditQueryVariables>(MyNgoDetailTourSetEditDocument, options);
+      }
+export function useMyNgoDetailTourSetEditLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyNgoDetailTourSetEditQuery, MyNgoDetailTourSetEditQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyNgoDetailTourSetEditQuery, MyNgoDetailTourSetEditQueryVariables>(MyNgoDetailTourSetEditDocument, options);
+        }
+export type MyNgoDetailTourSetEditQueryHookResult = ReturnType<typeof useMyNgoDetailTourSetEditQuery>;
+export type MyNgoDetailTourSetEditLazyQueryHookResult = ReturnType<typeof useMyNgoDetailTourSetEditLazyQuery>;
+export type MyNgoDetailTourSetEditQueryResult = Apollo.QueryResult<MyNgoDetailTourSetEditQuery, MyNgoDetailTourSetEditQueryVariables>;
 export const MyNgoDetailTourSetDocument = gql`
     query myNGODetailTourSet {
   NGODetail {
@@ -3988,6 +4133,12 @@ export const MyNgoDetailTourSetDocument = gql`
         id
         title
         price
+        discount
+      }
+      capacity {
+        gender
+        childAccept
+        guestNumber
       }
       facilities {
         id
@@ -4278,8 +4429,8 @@ export const MyUserDetailProjectSetEditDocument = gql`
         }
       }
       capacity {
-        guestNumber
         gender
+        guestNumber
         childAccept
       }
     }

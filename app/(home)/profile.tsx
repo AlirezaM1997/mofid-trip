@@ -13,12 +13,14 @@ const Profile: React.FC = () => {
   const { session } = useSession();
   const isFocused = useIsFocused();
   const rootNavigationState = useRootNavigationState();
-  const [_, { refetch, data, loading }] = useUserDetailProfileLazyQuery({
+  const [_, { refetch, data }] = useUserDetailProfileLazyQuery({
     fetchPolicy: "network-only",
     notifyOnNetworkStatusChange: true,
   });
 
   I18nManager.allowRTL(true);
+
+  if (!session) return <Authentication />;
 
   useEffect(() => {
     refetch();
@@ -28,8 +30,6 @@ const Profile: React.FC = () => {
   // https://stackoverflow.com/questions/76828511/expo-router-error-attempted-to-navigate-before-mounting-the-root-layout-compone
   // we should use this line of code to render page if navigation was ready
   if (!rootNavigationState?.key) return null;
-
-  if (!loading && !session) return <Authentication />;
 
   if (!data) return <LoadingIndicator />;
 

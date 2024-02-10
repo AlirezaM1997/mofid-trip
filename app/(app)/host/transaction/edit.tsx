@@ -1,27 +1,23 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Button } from "@rneui/themed";
-import Container from "@atoms/container";
 import { useEffect, useState } from "react";
-import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
+import HostTransactionForm from "@organisms/host-transaction";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { useProjectTransactionDetailQuery } from "@src/gql/generated";
-import HostTransactionDateTab from "@organisms/host-transaction/date";
-import HostTransactionTab from "@modules/virtual-tabs/host-transaction-tabs";
-import HostTransactionCapacityTab from "@organisms/host-transaction/capacity";
-import HostTransactionConfirmData from "@organisms/host-transaction/confirm-data";
-import HostTransactionEditSubmitBottomSheet from "@organisms/host-transaction/editSubmitBottomSheet";
 import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
+import { useProjectTransactionDetailQuery } from "@src/gql/generated";
+import HostTransactionEditSubmitBottomSheet from "@organisms/host-transaction/editSubmitBottomSheet";
 
 const HostTransactionEditScreen = () => {
   const { tr } = useTranslation();
   const navigation = useNavigation();
+  const [activeStep, setActiveStep] = useState(3);
   const { transactionId, name } = useLocalSearchParams();
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
-  const [activeStep, setActiveStep] = useState(3);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const { data, loading } = useProjectTransactionDetailQuery({
     variables: { pk: transactionId as string },
@@ -71,7 +67,9 @@ const HostTransactionEditScreen = () => {
       {({ handleSubmit }) => (
         <BottomButtonLayout
           buttons={[
-            <Button onPress={activeStep === 3 ? handleSubmit : handleNext}>
+            <Button
+              disabled={isButtonDisabled}
+              onPress={activeStep === 3 ? handleSubmit : handleNext}>
               {activeStep === 3 ? tr("Submit") : tr("Next")}
             </Button>,
             <Button
@@ -82,15 +80,11 @@ const HostTransactionEditScreen = () => {
               {tr("Previous")}
             </Button>,
           ]}>
-          <HostTransactionTab activeStep={activeStep} />
-          <WhiteSpace />
-
-          <Container>
-            {activeStep === 1 && <HostTransactionCapacityTab />}
-            {activeStep === 2 && <HostTransactionDateTab />}
-            {activeStep === 3 && <HostTransactionConfirmData setActiveStep={setActiveStep} />}
-          </Container>
-
+          <HostTransactionForm
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            setIsButtonDisabled={setIsButtonDisabled}
+          />
           <HostTransactionEditSubmitBottomSheet
             status={status}
             transactionId={id}
