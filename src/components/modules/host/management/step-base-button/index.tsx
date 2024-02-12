@@ -7,12 +7,12 @@ import React from "react";
 import { Feather } from "@expo/vector-icons";
 import { StyleSheet, ViewProps } from "react-native";
 
-const HostManagementStepBaseButton = ({ host }) => {
+const HostManagementStepBaseButton = ({ host }: { host: ProjectQueryType }) => {
   const isRtl = useIsRtl();
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
-  const handleNavigate = route => {
+  const handleNavigate = (route: string) => {
     router.push(route);
   };
 
@@ -23,7 +23,7 @@ const HostManagementStepBaseButton = ({ host }) => {
           <>
             <ListItem
               bottomDivider
-              onPress={() => handleNavigate(`host/management/edit?hostId=${host.id}`)}>
+              onPress={() => handleNavigate(`host/management/${host.id}/edit`)}>
               <Feather name="users" size={24} color={theme.colors.black} />
               <ListItem.Content>
                 <ListItem.Title>{tr("edit host")}</ListItem.Title>

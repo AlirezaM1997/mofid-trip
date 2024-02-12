@@ -27,14 +27,14 @@ const TabDate = () => {
 
   const getLastDayFormatted = () => {
     if (markedDays.length) {
-      return markedDays.length === 1 ?
-        localizeNumber(moment(markedDays[0].date).format("jYYYY/jMM/jDD"))
-        :
-        localizeNumber(moment(markedDays.slice(-1)[0].date).format("jYYYY/jMM/jDD"))
+      return markedDays.length === 1
+        ? localizeNumber(moment(markedDays[0].date).format("jYYYY/jMM/jDD"))
+        : localizeNumber(moment(markedDays.slice(-1)[0].date).format("jYYYY/jMM/jDD"));
     }
   };
 
-  const handleDayPressed = dayPressed => handleDayPress(dayPressed, markedDays, setMarkedDays, "dateStart", "dateEnd")
+  const handleDayPressed = dayPressed =>
+    handleDayPress(dayPressed, markedDays, setMarkedDays, "dateStart", "dateEnd");
 
   useEffect(() => handleSaveChanges("dateStart", "dateEnd", setMarkedDays), []);
 
@@ -68,7 +68,7 @@ const TabDate = () => {
 
 const styles = StyleSheet.create({
   showDateContainer: { flexDirection: "row", justifyContent: "space-evenly", marginTop: 25 },
-  timeContainer: { display: "flex", },
+  timeContainer: { display: "flex" },
 });
 
 export default TabDate;
