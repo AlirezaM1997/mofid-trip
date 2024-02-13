@@ -125,7 +125,7 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
-        name="host/management/edit/index"
+        name="host/management/[hostId]/edit"
         options={{
           title: tr("edit host"),
         }}
@@ -143,7 +143,13 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
-        name="host/management/[hostId]"
+        name="host/management/[hostId]/index"
+        options={{
+          title: tr("Loading"),
+        }}
+      />
+      <Stack.Screen
+        name="host/management/[hostId]/calendar-management"
         options={{
           title: tr("Loading"),
         }}

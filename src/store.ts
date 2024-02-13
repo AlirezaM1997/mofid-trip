@@ -22,7 +22,7 @@ export type AppDispatch = typeof store.dispatch;
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  blacklist: ["tourCreateSlice", "hostCreateSlice", "hostTransactionSlice"],
+  blacklist: ["tourCreateSlice", "hostCreateSlice", "hostTransactionSlice", "filterSlice"],
 };
 
 const appReducer = combineReducers({

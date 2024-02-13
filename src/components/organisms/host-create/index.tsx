@@ -35,7 +35,6 @@ const HostCreateForm = ({
   const { tr } = useTranslation();
 
   const { values } = useFormikContext<ProjectAddInputType>();
-  console.log("values", values);
 
   const { name, description, categories, capacity, dateStart, dateEnd, price } = values;
   const { address, city, lat, lng, province } = values.accommodation as AccommodationAddInputType;

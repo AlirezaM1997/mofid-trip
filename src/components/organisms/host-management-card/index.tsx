@@ -4,11 +4,11 @@ import WhiteSpace from "@atoms/white-space";
 import { Feather } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
 import { Pressable, StyleSheet } from "react-native";
-import { ProjectStatusEnum } from "@src/gql/generated";
 import { Card, Chip, Text, useTheme } from "@rneui/themed";
 import { getHostRequestStatusBadgeColor } from "@src/helper/host";
+import { ProjectQueryType, ProjectStatusEnum } from "@src/gql/generated";
 
-const HostManagementCard = ({ host }) => {
+const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
@@ -19,7 +19,7 @@ const HostManagementCard = ({ host }) => {
       <Card key={host.id}>
         <Card.Image
           source={
-            host?.accommodation?.avatarS3.length > 0
+            (host?.accommodation?.avatarS3?.length as number) > 0
               ? {
                   uri: host?.accommodation?.avatarS3?.[0]?.medium,
                 }

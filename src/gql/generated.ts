@@ -2657,6 +2657,14 @@ export type NgoDetailQueryVariables = Exact<{
 
 export type NgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, title: string, address?: string | null, isVerify?: boolean | null, verifyDescription?: string | null, description?: string | null, avatarS3?: { __typename?: 'NGOImageType', large?: string | null, medium?: string | null, small?: string | null } | null, user?: { __typename?: 'UserQueryType', id: string, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, projectSet?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, tax?: number | null, description?: string | null, statusStep?: ProjectStatusEnum | null, createdDate?: any | null, capacity?: { __typename?: 'CapacityQueryType', childAccept?: boolean | null, gender?: string | null, guestNumber?: number | null } | null, categories?: Array<{ __typename?: 'CategoryQueryType', id: string, name?: string | null, displayName?: string | null, avatarS3?: { __typename?: 'CategoryImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string, name?: string | null, displayName?: string | null }>, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, faName?: string | null, enName?: string | null, arName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null } | null> | null, tourTransactionSet?: Array<{ __typename?: 'TourTransactionQueryType', id: string, status?: { __typename?: 'TourStatusQueryType', isActive?: boolean | null, step?: string | null } | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, tourPackage?: { __typename?: 'TourPackageType', tour?: { __typename?: 'TourQueryType', title: string } | null } | null, tourGuests?: Array<{ __typename?: 'TourGuestQueryType', id: string, firstname?: string | null, lastname?: string | null, phoneNumber?: string | null, avatarS3?: Array<{ __typename?: 'TourGuestImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null> | null } | null> | null } | null };
 
+export type ProjectCapacityListQueryVariables = Exact<{
+  pk: Scalars['ID']['input'];
+  filter: ProjectCapacityListFilterType;
+}>;
+
+
+export type ProjectCapacityListQuery = { __typename?: 'Query', projectCapacityList?: Array<{ __typename?: 'ProjectCapacityQueryType', date?: string | null, freeCapacity?: number | null, requestedCapacity?: number | null } | null> | null };
+
 export type ProjectDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
 }>;
@@ -4755,6 +4763,44 @@ export function useNgoDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type NgoDetailQueryHookResult = ReturnType<typeof useNgoDetailQuery>;
 export type NgoDetailLazyQueryHookResult = ReturnType<typeof useNgoDetailLazyQuery>;
 export type NgoDetailQueryResult = Apollo.QueryResult<NgoDetailQuery, NgoDetailQueryVariables>;
+export const ProjectCapacityListDocument = gql`
+    query projectCapacityList($pk: ID!, $filter: ProjectCapacityListFilterType!) {
+  projectCapacityList(filter: $filter, pk: $pk) {
+    date
+    freeCapacity
+    requestedCapacity
+  }
+}
+    `;
+
+/**
+ * __useProjectCapacityListQuery__
+ *
+ * To run a query within a React component, call `useProjectCapacityListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProjectCapacityListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProjectCapacityListQuery({
+ *   variables: {
+ *      pk: // value for 'pk'
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useProjectCapacityListQuery(baseOptions: Apollo.QueryHookOptions<ProjectCapacityListQuery, ProjectCapacityListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProjectCapacityListQuery, ProjectCapacityListQueryVariables>(ProjectCapacityListDocument, options);
+      }
+export function useProjectCapacityListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProjectCapacityListQuery, ProjectCapacityListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProjectCapacityListQuery, ProjectCapacityListQueryVariables>(ProjectCapacityListDocument, options);
+        }
+export type ProjectCapacityListQueryHookResult = ReturnType<typeof useProjectCapacityListQuery>;
+export type ProjectCapacityListLazyQueryHookResult = ReturnType<typeof useProjectCapacityListLazyQuery>;
+export type ProjectCapacityListQueryResult = Apollo.QueryResult<ProjectCapacityListQuery, ProjectCapacityListQueryVariables>;
 export const ProjectDetailDocument = gql`
     query projectDetail($pk: ID!) {
   projectDetail(pk: $pk) {

@@ -1,5 +1,5 @@
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
-import { ProjectStatusEnum, useProjectEditMutation } from "@src/gql/generated";
+import { ProjectQueryType, ProjectStatusEnum, useProjectEditMutation } from "@src/gql/generated";
 import useIsRtl from "@src/hooks/localization";
 import useTranslation from "@src/hooks/translation";
 import Toast from "react-native-toast-message";
@@ -11,7 +11,7 @@ import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
 
-const HostManagementStepBaseButton = ({ host , refetch }) => {
+const HostManagementStepBaseButton = ({ host, refetch }: { host: ProjectQueryType }) => {
   const isRtl = useIsRtl();
   const { theme } = useTheme();
   const { tr } = useTranslation();
@@ -62,7 +62,7 @@ const HostManagementStepBaseButton = ({ host , refetch }) => {
           <>
             <ListItem
               bottomDivider
-              onPress={() => handleNavigate(`host/management/edit?hostId=${host.id}`)}>
+              onPress={() => handleNavigate(`host/management/${host.id}/edit`)}>
               <Feather name="users" size={24} color={theme.colors.black} />
               <ListItem.Content>
                 <ListItem.Title>{tr("edit host")}</ListItem.Title>

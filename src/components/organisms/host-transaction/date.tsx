@@ -13,8 +13,7 @@ const HostTransactionDateTab = () => {
   const { tr } = useTranslation();
   const [markedDays, setMarkedDays] = useState([]);
   const { localizeNumber } = useLocalizedNumberFormat();
-  const { values, errors, touched } =
-    useFormikContext<ProjectTransactionAddInputType>();
+  const { values, errors, touched } = useFormikContext<ProjectTransactionAddInputType>();
 
   const { handleDayPress } = useHandleDayPress();
   const { handleSaveChanges } = useHandleSaveChanges();
@@ -27,14 +26,14 @@ const HostTransactionDateTab = () => {
 
   const getLastDayFormatted = () => {
     if (markedDays.length) {
-      return markedDays.length === 1 ?
-        localizeNumber(moment(markedDays[0].date).format("jYYYY/jMM/jDD"))
-        :
-        localizeNumber(moment(markedDays.slice(-1)[0].date).format("jYYYY/jMM/jDD"))
+      return markedDays.length === 1
+        ? localizeNumber(moment(markedDays[0].date).format("jYYYY/jMM/jDD"))
+        : localizeNumber(moment(markedDays.slice(-1)[0].date).format("jYYYY/jMM/jDD"));
     }
   };
 
-  const handleDayPressed = dayPressed => handleDayPress(dayPressed, markedDays, setMarkedDays, "dateStart", "dateEnd")
+  const handleDayPressed = dayPressed =>
+    handleDayPress(dayPressed, markedDays, setMarkedDays, "dateStart", "dateEnd");
 
   useEffect(() => handleSaveChanges("dateStart", "dateEnd", setMarkedDays), []);
 
