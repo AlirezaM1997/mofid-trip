@@ -9,6 +9,7 @@ import {
   CommentObjectEnum,
   LikeObjectEnum,
   LikeStatusEnum,
+  ProjectQueryType,
   TourQueryType,
   useCommentAddMutation,
   useHostCommentQuery,
@@ -47,7 +48,7 @@ const TourCommentReplay = () => {
 
   navigation.setOptions({ title: `${tr("comments of")} ${data?.projectDetail?.name}` });
 
-  const comment = data?.projectDetail?.commentSet.find(comment => comment.id === commentId);
+  const comment = (data?.projectDetail as ProjectQueryType)?.commentSet.find(comment => comment.id === commentId);
 
   const handleLike = async () => {
     const { data } = await likeAdd({

@@ -51,9 +51,6 @@ query myNGODetail {
         id
       }
       createdDate
-      capacity {
-        id
-      }
       transactionSet {
         id
       }

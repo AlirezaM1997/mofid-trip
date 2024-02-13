@@ -26,7 +26,7 @@ const HostComment = () => {
 
   if (loading && !data) return null;
 
-  const comment = data?.projectDetail?.commentSet;
+  const comment = (data?.projectDetail as ProjectQueryType)?.commentSet;
 
   return (
     <>

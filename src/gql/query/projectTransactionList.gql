@@ -29,6 +29,7 @@ query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterT
         name
         tax
         price
+        discount
         description
         categories {
           name

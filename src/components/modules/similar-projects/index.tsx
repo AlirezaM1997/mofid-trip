@@ -26,9 +26,9 @@ const Item = ({ project }: ItemPropsType) => {
       <Image
         style={style.imageStyle}
         source={
-          project?.accommodation?.avatarS3.length > 0
+          (project?.accommodation?.avatarS3?.length as number) > 0
             ? {
-                uri: project?.accommodation?.avatarS3[0]?.large,
+                uri: project?.accommodation?.avatarS3?.[0]?.large,
               }
             : require("@assets/image/defaultHost.svg")
         }
@@ -40,16 +40,16 @@ const Item = ({ project }: ItemPropsType) => {
         <View style={style.address}>
           <EvilIcons name="location" size={16} color={theme.colors.grey3} />
           <Text numberOfLines={1} type="grey3" caption>
-            {project.accommodation.address}
+            {project?.accommodation?.address}
           </Text>
         </View>
-        {project.price <= 0 ? (
+        {(project?.price as number) <= 0 ? (
           <Text body2 bold>
             {tr("it is free")}
           </Text>
         ) : (
           <Text body2 bold>
-            {formatPrice(project.price)} / هر‌شب
+            {formatPrice(project?.price as number)} / هر‌شب
           </Text>
         )}
       </View>
@@ -103,6 +103,7 @@ const style = StyleSheet.create({
     borderRadius: 12,
   },
   cardTextContainer: {
+    width: 185,
     paddingVertical: 5,
     justifyContent: "space-between",
   },

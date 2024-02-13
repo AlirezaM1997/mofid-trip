@@ -1,0 +1,8 @@
+mutation tourEdit ($data: TourEditInputType!) {
+  tourEdit(data: $data) {
+    status
+    statusCode
+    message
+    metadata
+  }
+}

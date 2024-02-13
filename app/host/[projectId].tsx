@@ -44,7 +44,7 @@ const Page: React.FC = ({ ...props }) => {
   if (loading) return <LoadingIndicator />;
 
   navigation.setOptions({
-    title: data.projectDetail.name,
+    title: (data?.projectDetail as ProjectQueryType)?.name,
     headerRight: () => <ShareReportDropDown />,
   });
 
@@ -59,14 +59,14 @@ const Page: React.FC = ({ ...props }) => {
     facilities,
     description,
     accommodation,
-  } = data?.projectDetail;
+  } = data?.projectDetail as ProjectQueryType;
 
   return (
     <BottomButtonLayout
-      buttons={[<BookHostBottomSheet project={data.projectDetail as ProjectQueryType} />]}>
+      buttons={[<BookHostBottomSheet project={data?.projectDetail as ProjectQueryType} />]}>
       <ScrollView style={style.scrollView}>
         <Container style={style.container}>
-          <ImageSlider imageList={accommodation.avatarS3} />
+          <ImageSlider imageList={accommodation?.avatarS3} />
 
           <ProjectTags tags={tags ?? []} />
 
@@ -78,7 +78,7 @@ const Page: React.FC = ({ ...props }) => {
           <ProjectBoldFeatures
             dateEnd={dateEnd}
             dateStart={dateStart}
-            capacity={capacity ?? 0}
+            capacity={capacity?.guestNumber ?? 0}
             category={categories?.[0]?.name}
           />
 

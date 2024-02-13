@@ -163,6 +163,46 @@ export const messages = {
     fa_ir: "بستن",
     en_us: "close",
   },
+  "registration stop": {
+    ar: "Registration stop",
+    fa_ir: "توقف ثبت نام",
+    en_us: "Registration stop",
+  },
+  "continue registration": {
+    ar: "Continue registration",
+    fa_ir: "ادامه ثبت نام",
+    en_us: "Continue registration",
+  },
+  "are you sure to stop registering?": {
+    ar: "Are you sure to stop registering?",
+    fa_ir: "آیا مطمئن به توقف در ثبت نام هستید؟",
+    en_us: "Are you sure to stop registering?",
+  },
+  "by stopping the registration, other users will not be able to register a request for you.": {
+    ar: "By stopping the registration, other users will not be able to register a request for you.",
+    fa_ir: "با توقف در ثبت نام، دیگر کاربران نمی‌توانند درخواستی را برای شما ثبت کنند.",
+    en_us: "By stopping the registration, other users will not be able to register a request for you.",
+  },
+  "are you sure to continue registration?": {
+    ar: "Are you sure to continue registration?",
+    fa_ir: "آیا مطمئن به ادامه ثبت نام هستید؟",
+    en_us: "Are you sure to continue registration?",
+  },
+  "by continuing to register, users can register their request to use your hosting as before.": {
+    ar: "By continuing to register, users can register their request to use your hosting as before.",
+    fa_ir: "با ادامه ثبت نام، کاربران مانند گذشته می‌توانند درخواستشان را برای استفاده ار هاست شما ثبت کنند.",
+    en_us: "By continuing to register, users can register their request to use your hosting as before.",
+  },
+  "unregister successfully": {
+    ar: "Unregister successfully",
+    fa_ir: "متوقف کردن ثبت نام با موفقیت انجام شد",
+    en_us: "Unregister successfully",
+  },
+  "continue registration successfully": {
+    ar: "Continue registration successfully",
+    fa_ir: "ادامه دادن ثبت نام با موفقیت انجام شد",
+    en_us: "Continue registration successfully",
+  },
   "successful withdraw": {
     ar: "الخروج",
     fa_ir: "برداشت موفق",
@@ -1783,6 +1823,11 @@ export const messages = {
     fa_ir: "فاکتور نهایی",
     en_us: "Final invoice",
   },
+  man: {
+    ar: "man",
+    fa_ir: "نفر",
+    en_us: "man",
+  },
   "upload image": {
     ar: "تحميل الصورة ",
     fa_ir: "بارگذاری تصویر ",
@@ -3091,6 +3136,11 @@ export const messages = {
     ar: "المضيف هو يوم واحد",
     fa_ir: "یک روزه",
     en_us: "one day",
+  },
+  "calendar management": {
+    ar: "Calendar management",
+    fa_ir: "مدیریت تقویم",
+    en_us: "calendar management",
   },
   "select the capacity and gender of the host passengers": {
     ar: "حدد سعة وجنس الركاب المضيفين",

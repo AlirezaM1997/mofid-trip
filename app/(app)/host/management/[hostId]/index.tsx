@@ -1,43 +1,45 @@
+import {
+  ProjectQueryType,
+  ProjectStatusEnum,
+  AccommodationImageType,
+  useMyUserDetailProjectSetQuery,
+} from "@src/gql/generated";
+import Stepper from "@modules/stepper";
+import { Linking } from "react-native";
+import { Divider } from "@rneui/themed";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import ImageSlider from "@modules/image-slider";
-import Stepper from "@modules/stepper";
-import { ListItem, Text, useTheme } from "@rneui/themed";
-import {
-  ProjectStatusEnum,
-  useMyUserDetailProjectSetQuery,
-  MyUserDetailProjectSetQuery,
-} from "@src/gql/generated";
-import useTranslation from "@src/hooks/translation";
-import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
-import { ScrollView } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
-import useIsRtl from "@src/hooks/localization";
-import { Divider } from "@rneui/themed";
-import { Linking } from "react-native";
-import LoadingIndicator from "@modules/Loading-indicator";
 import { passedTime } from "@src/helper/date";
-import HostManagementStepBaseButton from "@modules/host/management/step-base-button";
+import useIsRtl from "@src/hooks/localization";
+import ImageSlider from "@modules/image-slider";
+import useTranslation from "@src/hooks/translation";
+import { ListItem, Text, useTheme } from "@rneui/themed";
+import { ScrollView } from "react-native-gesture-handler";
+import LoadingIndicator from "@modules/Loading-indicator";
 import NgoAuthentication from "@modules/ngo/ngoAuthentication";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
+import HostManagementStepBaseButton from "@modules/host/management/step-base-button";
 
 const HostDetailScreen = () => {
   const isRtl = useIsRtl();
-  const { tr } = useTranslation();
   const { theme } = useTheme();
+  const { tr } = useTranslation();
   const navigation = useNavigation();
   const { hostId } = useLocalSearchParams();
-  const [host, setHost] = useState<MyUserDetailProjectSetQuery["userDetail"]["projectSet"][0]>();
+  const [host, setHost] = useState<ProjectQueryType>();
   const steps = [tr("pending"), tr("published")];
 
-  const { loading, data } = useMyUserDetailProjectSetQuery();
+  const { loading, data, refetch } = useMyUserDetailProjectSetQuery();
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
       [ProjectStatusEnum.Request]: 1,
       [ProjectStatusEnum.Accept]: 2,
+      [ProjectStatusEnum.Suspension]: 3,
     };
-    return lookup[host.statusStep];
+    return lookup[host?.statusStep as string];
   };
 
   const makePhoneCall = () => {
@@ -46,16 +48,26 @@ const HostDetailScreen = () => {
 
   const handleGoToHost = () =>
     router.push({
-      pathname: "/host/" + host.id,
+      pathname: "/host/" + host?.id,
       params: {
         name: host?.name,
       },
     });
 
+  const handleGoToCalendarManagement = () =>
+    router.push({
+      pathname: `/host/management/${host?.id}/calendar-management`,
+      params: {
+        name: host?.name,
+        dateEnd: host?.dateEnd,
+        dateStart: host?.dateStart,
+      },
+    });
+
   useEffect(() => {
     if (!loading && data) {
-      const h = data.userDetail.projectSet.find(host => host.id === hostId);
-      setHost(h);
+      const h = data?.userDetail?.projectSet?.find(host => host?.id === hostId);
+      setHost(h as ProjectQueryType);
       navigation.setOptions({ title: h?.name });
     }
   }, [loading, data]);
@@ -66,17 +78,17 @@ const HostDetailScreen = () => {
     <ScrollView>
       <WhiteSpace size={32} />
       <Container>
-        {data.userDetail.isNgo && !data.userDetail.ngo.isVerify && (
+        {data?.userDetail?.isNgo && !data?.userDetail?.ngo?.isVerify && (
           <>
             <NgoAuthentication
-              isVerify={data.userDetail.ngo.isVerify}
-              description={data.userDetail.ngo.verifyDescription}
+              isVerify={data?.userDetail?.ngo?.isVerify}
+              description={data?.userDetail?.ngo?.verifyDescription as string}
             />
             <WhiteSpace size={32} />
           </>
         )}
 
-        <ImageSlider imageList={host?.accommodation?.avatarS3} />
+        <ImageSlider imageList={host?.accommodation?.avatarS3 as AccommodationImageType[]} />
         <WhiteSpace size={10} />
         <Text subtitle1 bold>
           {host?.name}
@@ -117,7 +129,20 @@ const HostDetailScreen = () => {
           color={theme.colors.grey3}
         />
       </ListItem>
-      <HostManagementStepBaseButton host={host} />
+
+      <ListItem bottomDivider onPress={handleGoToCalendarManagement}>
+        <Feather name="eye" size={24} color={theme.colors.black} />
+        <ListItem.Content>
+          <ListItem.Title>{tr("Calendar management")}</ListItem.Title>
+        </ListItem.Content>
+        <Feather
+          name={isRtl ? "chevron-left" : "chevron-right"}
+          size={24}
+          color={theme.colors.grey3}
+        />
+      </ListItem>
+
+      <HostManagementStepBaseButton host={host} refetch={refetch} />
 
       <Divider thickness={8} bgColor="grey0" />
 

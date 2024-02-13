@@ -59,13 +59,13 @@ query myNGODetailTourSet {
         id
         title
         price
+        discount
       }
-      # capacity {
-      #   id
-      #   male
-      #   female
-      #   child
-      # }
+      capacity {
+        gender
+        childAccept
+        guestNumber
+      }
       facilities {
         id
         faName

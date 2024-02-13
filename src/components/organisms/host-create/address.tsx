@@ -1,9 +1,9 @@
-import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
 import { Input, Text } from "@rneui/themed";
 import { ProjectAddInputType } from "@src/gql/generated";
 import { Field, useFormikContext } from "formik";
 import LocationPicker from "@modules/formik/fields/location-picker";
+import { StyleSheet, View } from "react-native";
 
 const TabAddress = () => {
   const { tr } = useTranslation();
@@ -12,15 +12,16 @@ const TabAddress = () => {
 
   return (
     <>
-      <Text heading2 bold>
-        {tr("Place of movement")}
-      </Text>
-      <Text type="grey3">
-        {tr(
-          "To easily find the origin and start the host, set the address and the map of the place of departure."
-        )}
-      </Text>
-      <WhiteSpace size={20} />
+      <View style={styles.headerTitle}>
+        <Text heading2 bold>
+          {tr("Place of movement")}
+        </Text>
+        <Text type="grey3">
+          {tr(
+            "To easily find the origin and start the host, set the address and the map of the place of departure."
+          )}
+        </Text>
+      </View>
       <Input
         name="province"
         placeholder={tr("Province")}
@@ -54,5 +55,8 @@ const TabAddress = () => {
     </>
   );
 };
+const styles = StyleSheet.create({
+  headerTitle: { gap: 5, marginBottom: 20 },
+});
 
 export default TabAddress;

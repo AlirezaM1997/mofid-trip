@@ -27,7 +27,7 @@ const TourComment = () => {
 
   if (loading && !data) return null;
 
-  const comment = data?.tourDetail?.commentSet;
+  const comment = (data?.tourDetail as TourQueryType)?.commentSet;
 
   return (
     <>

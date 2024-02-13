@@ -3,7 +3,6 @@ import moment from "jalali-moment";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import { useEffect, useState } from "react";
-import { getCapacity } from "@src/helper/tour";
 import ImageSlider from "@modules/image-slider";
 import { ImageBackground, Pressable, StyleSheet, View } from "react-native";
 import ContactCard from "@modules/contact-card";
@@ -16,9 +15,8 @@ import { BottomSheet, Button, ListItem, Text } from "@rneui/themed";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import {
   AccommodationQueryType,
-  TourCapacityType,
-  TourDetailQuery,
   TourPackageType,
+  TourQueryType,
   useTourDetailQuery,
 } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
@@ -34,7 +32,7 @@ export default () => {
   const navigation = useNavigation();
   const { formatPrice } = useFormatPrice();
   const { tourId, name } = useLocalSearchParams();
-  const [tour, setTour] = useState<TourDetailQuery["tourDetail"]>();
+  const [tour, setTour] = useState<TourQueryType>();
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
@@ -79,18 +77,18 @@ export default () => {
 
   useEffect(() => {
     if (!loading && data) {
-      setTour(data.tourDetail);
+      setTour(data.tourDetail as TourQueryType);
     }
   }, [loading, data]);
 
   if (loading || !tour) return <LoadingIndicator />;
   navigation.setOptions({
-    title: data?.tourDetail?.title,
+    title: (data?.tourDetail as TourQueryType)?.title,
     headerRight: () => <ShareReportDropDown />,
   });
 
   return (
-    <BottomButtonLayout buttons={[<Button onPress={handleBottomSheet}>{tr("Reserve")}</Button>]}>
+    <BottomButtonLayout buttons={[<Button disabled={tour.statusStep === "SUSPENSION" ? true : false} onPress={handleBottomSheet}>{tr("Reserve")}</Button>]}>
       <Container>
         <WhiteSpace size={10} />
         <ImageSlider imageList={tour?.avatarS3} />
@@ -114,7 +112,7 @@ export default () => {
           </View>
           <View style={styles.grid}>
             <Text type="grey2">{tr("Capacity")}</Text>
-            <Text bold>{localizeNumber(getCapacity(tour.capacity as TourCapacityType))}</Text>
+            <Text bold>{localizeNumber(tour.capacity?.guestNumber)}</Text>
           </View>
         </View>
 

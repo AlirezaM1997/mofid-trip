@@ -36,8 +36,18 @@ const FilterDestination = () => {
   );
 
   const changeHandler = t => {
+    const { destinationLocation, ...restTourFilter } = tourFilter;
+
     setValue(t);
-    debouncedOnChange(t);
+    if (!t) {
+      dispatch(
+        setFilter({
+          ...restTourFilter,
+        })
+      );
+    } else {
+      debouncedOnChange(t);
+    }
   };
 
   return (

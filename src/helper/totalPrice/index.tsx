@@ -1,5 +1,6 @@
 const date = (startDate: Date, endDate: Date) => {
   if (!endDate || !startDate) return 1;
+  if (endDate === startDate) return 1;
 
   return (+new Date(endDate) - +new Date(startDate)) / 86400000;
 };
@@ -14,4 +15,4 @@ export const totalPrice = ({
   endDate?: Date;
   startDate?: Date;
   capacity: number;
-}) => (price * (capacity * date(startDate, endDate))).toString();
+}) => (price * (capacity * date(startDate as Date, endDate as Date))).toString();

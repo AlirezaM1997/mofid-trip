@@ -7,7 +7,7 @@ import { Text } from "@rneui/themed";
 import { ProjectAddInputType, useCategoryListQuery } from "@src/gql/generated";
 import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 
 const TabHostType = () => {
   const { tr } = useTranslation();
@@ -42,8 +42,10 @@ const TabHostType = () => {
 
   return (
     <>
-      <Text heading2>{tr("Host Type")}</Text>
+    <View style={styles.headerTitle}>
+      <Text heading2 bold>{tr("Host Type")}</Text>
       <Text type="grey3">{tr("Determine the type of space and your hosting environment.")}</Text>
+    </View>
 
       {defaultValues?.map((category, index) => (
         <>
@@ -55,8 +57,7 @@ const TabHostType = () => {
                 : styles.nonSelectedCard
             }>
             <Pressable onPress={() => handlePress(category.id)}>
-              <Container>
-                <WhiteSpace />
+              <Container style={styles.CheckBox}>
                 <CheckBox
                   checked={values.categories?.includes(category.id)}
                   disabled
@@ -64,9 +65,8 @@ const TabHostType = () => {
                   checkedIcon="dot-circle-o"
                   uncheckedIcon="circle-o"
                   checkedColor={theme.colors.black}
+                  disabledTitleStyle={{color:theme.colors.black}}
                 />
-                <Text color={theme.colors.grey3}>لورم ایپسوم متن ساختگی با تولید و سادگی</Text>
-                <WhiteSpace />
               </Container>
             </Pressable>
           </Card>
@@ -86,5 +86,7 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
     borderWidth: 1,
   },
+  headerTitle:{gap:5},
+  CheckBox:{paddingVertical:10}
 });
 export default TabHostType;

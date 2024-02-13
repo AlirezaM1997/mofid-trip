@@ -36,8 +36,18 @@ const FilterOriginCity = () => {
   );
 
   const changeHandler = t => {
+    const { originLocation, ...restTourFilter } = tourFilter;
+    
     setValue(t);
-    debouncedOnChange(t);
+    if (!t) {
+      dispatch(
+        setFilter({
+          ...restTourFilter,
+        })
+      );
+    } else {
+      debouncedOnChange(t);
+    }
   };
 
   return (

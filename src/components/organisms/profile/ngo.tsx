@@ -66,11 +66,11 @@ const Profile = ({ userDetail }) => {
         <WhiteSpace size={30} />
         <Container size={15}>
           <Pressable style={style.userInfo} onPress={handleNavigateToEditProfile}>
-            {userDetail?.avatarS3?.small ? (
+            {userDetail?.ngo?.avatarS3?.small ? (
               <Image style={style.userAvatar} source={{ uri: userDetail.ngo.avatarS3.small }} />
             ) : (
               <View style={style.userAvatar}>
-                <Feather name="user" size={24} color="black" />
+                <Feather name="user" size={24} />
               </View>
             )}
 
@@ -97,10 +97,22 @@ const Profile = ({ userDetail }) => {
 
           <Text type="grey3">{tr("Account")}</Text>
         </Container>
-        <ListItem onPress={handleNavigateToEditProfile}>
-          <Feather name="user" size={24} color="black" />
+        <ListItem onPress={handleNavigateToEditProfile} bottomDivider>
+          <Feather name="user" size={24} />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("Account Detail")}</ListItem.Title>
+          </ListItem.Content>
+          <Feather
+            name={isRtl ? "chevron-left" : "chevron-right"}
+            size={24}
+            color={theme.colors.grey3}
+          />
+        </ListItem>
+
+        <ListItem onPress={() => router.push("/wallet")}>
+          <Feather name="aperture" size={24} />
+          <ListItem.Content>
+            <ListItem.Title style={style.label(isRtl)}>{tr("wallet")}</ListItem.Title>
           </ListItem.Content>
           <Feather
             name={isRtl ? "chevron-left" : "chevron-right"}
@@ -115,7 +127,7 @@ const Profile = ({ userDetail }) => {
               <Text type="grey3">{tr("Flows")}</Text>
             </Container>
             <ListItem bottomDivider onPress={() => router.push("/tour/create")}>
-              <Feather name="aperture" size={24} color="black" />
+              <Feather name="aperture" size={24} />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Create Tour")}</ListItem.Title>
               </ListItem.Content>
@@ -126,7 +138,7 @@ const Profile = ({ userDetail }) => {
               />
             </ListItem>
             <ListItem onPress={() => router.push("/host/create")}>
-              <Feather name="aperture" size={24} color="black" />
+              <Feather name="aperture" size={24} />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Create Host")}</ListItem.Title>
               </ListItem.Content>
@@ -142,7 +154,7 @@ const Profile = ({ userDetail }) => {
               <Text type="grey3">{tr("Managements")}</Text>
             </Container>
             <ListItem onPress={() => router.push("/tour/management")} bottomDivider>
-              <Feather name="aperture" size={24} color="black" />
+              <Feather name="aperture" size={24} />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Tours")}</ListItem.Title>
               </ListItem.Content>
@@ -153,7 +165,7 @@ const Profile = ({ userDetail }) => {
               />
             </ListItem>
             <ListItem bottomDivider onPress={() => router.push("/host/management")}>
-              <Feather name="aperture" size={24} color="black" />
+              <Feather name="aperture" size={24} />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Hosts")}</ListItem.Title>
               </ListItem.Content>
@@ -166,39 +178,15 @@ const Profile = ({ userDetail }) => {
           </>
         )}
 
-        <ListItem onPress={() => router.push("/wallet")}>
-          <Feather name="aperture" size={24} color="black" />
-          <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("wallet")}</ListItem.Title>
-          </ListItem.Content>
-          <Feather
-            name={isRtl ? "chevron-left" : "chevron-right"}
-            size={24}
-            color={theme.colors.grey3}
-          />
-        </ListItem>
-
         <WhiteSpace size={30} />
         <Container>
           <Text type="grey3">{tr("Requests")}</Text>
         </Container>
 
-        <ListItem bottomDivider onPress={() => router.push("host/transaction")}>
-          <Feather name="aperture" size={24} color="black" />
+        <ListItem onPress={() => router.push("host/transaction")}>
+          <Feather name="aperture" size={24} />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("My Requests")}</ListItem.Title>
-          </ListItem.Content>
-          <Feather
-            name={isRtl ? "chevron-left" : "chevron-right"}
-            size={24}
-            color={theme.colors.grey3}
-          />
-        </ListItem>
-
-        <ListItem onPress={() => router.push("/host/management")}>
-          <Feather name="aperture" size={24} color="black" />
-          <ListItem.Content>
-            <ListItem.Title style={style.label(isRtl)}>{tr("Manage My Hosts")}</ListItem.Title>
           </ListItem.Content>
           <Feather
             name={isRtl ? "chevron-left" : "chevron-right"}
@@ -213,14 +201,14 @@ const Profile = ({ userDetail }) => {
           <Text type="grey3">{tr("Other Settings")}</Text>
         </Container>
         <ListItem bottomDivider onPress={openLanguageSetting}>
-          <Feather name="aperture" size={24} color="black" />
+          <Feather name="aperture" size={24} />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("Language Settings")}</ListItem.Title>
           </ListItem.Content>
           <Text type="primary">{tr(language)}</Text>
         </ListItem>
         <ListItem bottomDivider onPress={handleNavigateToComingSoon}>
-          <Feather name="user-plus" size={24} color="black" />
+          <Feather name="user-plus" size={24} />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("Invite Friends")}</ListItem.Title>
           </ListItem.Content>
@@ -231,7 +219,7 @@ const Profile = ({ userDetail }) => {
           />
         </ListItem>
         <ListItem bottomDivider onPress={handleNavigateToComingSoon}>
-          <Feather name="headphones" size={24} color="black" />
+          <Feather name="headphones" size={24} />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("Support")}</ListItem.Title>
           </ListItem.Content>
@@ -242,7 +230,7 @@ const Profile = ({ userDetail }) => {
           />
         </ListItem>
         <ListItem bottomDivider onPress={handleNavigateToComingSoon}>
-          <Feather name="info" size={24} color="black" />
+          <Feather name="info" size={24} />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("About MofidTrip")}</ListItem.Title>
           </ListItem.Content>
@@ -253,7 +241,7 @@ const Profile = ({ userDetail }) => {
           />
         </ListItem>
         <ListItem bottomDivider onPress={() => router.push("/terms-of-services")}>
-          <Feather name="shield" size={24} color="black" />
+          <Feather name="shield" size={24} />
           <ListItem.Content>
             <ListItem.Title style={style.label(isRtl)}>{tr("Terms of services")}</ListItem.Title>
           </ListItem.Content>

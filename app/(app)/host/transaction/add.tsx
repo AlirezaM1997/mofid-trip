@@ -2,16 +2,10 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { useState } from "react";
 import { Button } from "@rneui/themed";
-import Container from "@atoms/container";
-import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
 import { TourGenderEnum } from "@src/gql/generated";
+import HostTransactionForm from "@organisms/host-transaction";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
-import HostTransactionDateTab from "@organisms/host-transaction/date";
-import HostTransactionTab from "@modules/virtual-tabs/host-transaction-tabs";
-import HostTransactionCapacityTab from "@organisms/host-transaction/capacity";
-import HostTransactionConfirmData from "@organisms/host-transaction/confirm-data";
 import HostTransactionSubmitBottomSheet from "@organisms/host-transaction/submitBottomSheet";
 
 const initialValues = {
@@ -26,8 +20,9 @@ const initialValues = {
 
 const Screen = () => {
   const { tr } = useTranslation();
-  const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [activeStep, setActiveStep] = useState(1);
+  const [isVisibleFinish, setIsVisibleFinish] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const validationSchema = Yup.object().shape({
     dateStart: Yup.date().required(tr("Required")),
@@ -53,31 +48,28 @@ const Screen = () => {
       {({ handleSubmit }) => (
         <BottomButtonLayout
           buttons={[
-            <Button onPress={activeStep === 3 ? handleSubmit : handleNext}>
+            <Button
+              disabled={isButtonDisabled}
+              onPress={activeStep === 3 ? handleSubmit : handleNext}>
               {activeStep === 3 ? tr("Submit") : tr("Next")}
             </Button>,
             <Button
               type="outline"
               color="secondary"
-              disabled={activeStep === 1}
-              onPress={handlePrev}>
+              onPress={handlePrev}
+              disabled={activeStep === 1}>
               {tr("Previous")}
             </Button>,
           ]}>
-          <HostTransactionTab activeStep={activeStep} />
-          <WhiteSpace />
-
-          <Container>
-            {activeStep === 1 && <HostTransactionCapacityTab />}
-            {activeStep === 2 && <HostTransactionDateTab />}
-            {activeStep === 3 && <HostTransactionConfirmData setActiveStep={setActiveStep} />}
-          </Container>
-
+          <HostTransactionForm
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            setIsButtonDisabled={setIsButtonDisabled}
+          />
           <HostTransactionSubmitBottomSheet
             isVisible={isVisibleFinish}
             setIsVisible={setIsVisibleFinish}
           />
-          <CloseFormBottomSheet />
         </BottomButtonLayout>
       )}
     </Formik>

@@ -1,74 +1,76 @@
 query tourDetail($pk: ID!) {
   tourDetail(pk: $pk) {
-    id
-    title
-    description
-    startTime
-    endTime
-    NGO {
+    ... on TourQueryType {
       id
-      isVerify
-      verifyDescription
-      user {
-        id
-        fullname
-        phoneNumber
-        avatarS3 {
-          small
-        }
-        ngo {
-          id
-        }
+      title
+      endTime
+      startTime
+      statusStep
+      description
+      capacity{
+        guestNumber
+        childAccept
+        gender
       }
-      tourSet {
+      NGO {
         id
-        title
-        packages {
+        isVerify
+        verifyDescription
+        user {
+          id
+          fullname
+          phoneNumber
+          avatarS3 {
+            small
+          }
+          ngo {
+            id
+          }
+        }
+        tourSet {
           id
           title
-          price
-        }
-        destination {
-          ... on AccommodationQueryType {
-            address
-            avatarS3 {
-              large
-              medium
-              small
+          packages {
+            id
+            title
+            price
+          }
+          destination {
+            ... on AccommodationQueryType {
+              address
+              avatarS3 {
+                large
+                medium
+                small
+              }
             }
           }
         }
       }
-    }
-    # capacity {
-    #   id
-    #   male
-    #   female
-    #   child
-    # }
-    facilities {
-      id
-      enName
-      faName
-      arName
-    }
-    destination {
-      ... on AccommodationQueryType {
+      facilities {
         id
-        address
-        lat
-        lng
+        enName
+        faName
+        arName
       }
-    }
-    packages {
-      id
-      title
-      price
-    }
-    avatarS3 {
-      medium
-      large
-      small
+      destination {
+        ... on AccommodationQueryType {
+          id
+          address
+          lat
+          lng
+        }
+      }
+      packages {
+        id
+        title
+        price
+      }
+      avatarS3 {
+        medium
+        large
+        small
+      }
     }
   }
 }

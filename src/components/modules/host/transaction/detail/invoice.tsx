@@ -37,12 +37,12 @@ const Invoice = ({ transactionDetail }: { transactionDetail: ProjectTransactionQ
           {localizeNumber(
             formatPrice(
               +totalPrice({
-                price: +transactionDetail.project.price,
-                capacity: +transactionDetail.guest.guestNumber,
-                startDate: transactionDetail.dateStart,
-                endDate: transactionDetail.dateEnd,
-              })
-            )
+                price: +transactionDetail?.project?.price,
+                capacity: +transactionDetail?.guest?.guestNumber,
+                startDate: transactionDetail?.dateStart,
+                endDate: transactionDetail?.dateEnd,
+              }) as number
+            ) as string
           )}
         </Text>
       </View>

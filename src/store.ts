@@ -1,43 +1,31 @@
-import walletTransactionIdSlice from "@src/slice/wallet-transaction-slice";
-import transactionListSlice from "./slice/transaction-list-slice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { persistStore, persistReducer } from "redux-persist";
 import { combineReducers, createStore } from "@reduxjs/toolkit";
-import tourTransactionSlice from "@src/slice/tour-success-transaction";
-import projectSlice from "@src/slice/project-slice";
-import tourSlice from "@src/slice/tour-slice";
-import userSlice from "@src/slice/user-slice";
-import networkSlice from "@src/slice/network-slice";
-import NavigationSlice from "@src/slice/navigation-slice";
-import settingDetailSlice from "@src/slice/setting-detail-slice";
-import myNGODetailSlice from "@src/slice/my-ngo-slice";
-import tourCreateSlice from "@src/slice/tour-create-slice";
 import filterSlice from "@src/slice/filter-slice";
-import hostCreateSlice from "@src/slice/host-create-slice";
+import NavigationSlice from "@src/slice/navigation-slice";
+import networkSlice from "@src/slice/network-slice";
+import projectSlice from "@src/slice/project-slice";
+import settingDetailSlice from "@src/slice/setting-detail-slice";
+import userSlice from "@src/slice/user-slice";
+import walletTransactionIdSlice from "@src/slice/wallet-transaction-slice";
 import * as Updates from "expo-updates";
 import { I18nManager } from "react-native";
+import { persistReducer, persistStore } from "redux-persist";
 
 export type AppDispatch = typeof store.dispatch;
 
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  blacklist: ["tourCreateSlice", "hostCreateSlice", "hostTransactionSlice"],
+  blacklist: ["tourCreateSlice", "hostCreateSlice", "hostTransactionSlice", "filterSlice"],
 };
 
 const appReducer = combineReducers({
   userSlice: userSlice,
-  tourSlice: tourSlice,
   filterSlice: filterSlice,
   networkSlice: networkSlice,
   projectSlice: projectSlice,
   navigationSlice: NavigationSlice,
-  tourCreateSlice: tourCreateSlice,
-  myNGODetailSlice: myNGODetailSlice,
-  hostCreateSlice: hostCreateSlice,
   settingDetailSlice: settingDetailSlice,
-  tourTransactionSlice: tourTransactionSlice,
-  transactionListSlice: transactionListSlice,
   walletTransactionIdSlice: walletTransactionIdSlice,
 });
 
