@@ -1,23 +1,22 @@
 import { Feather } from "@expo/vector-icons";
+import LoadingIndicator from "@modules/Loading-indicator";
 import { Button, Divider, Input } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
-import { useUserDetailQuery, useUserEditMutation } from "@src/gql/generated";
-import { SECONDARY_COLOR } from "@src/theme";
-import React, { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet } from "react-native";
-import { Pressable, View } from "react-native";
-import Toast from "react-native-toast-message";
+import { useUserDetailProfileQuery, useUserEditMutation } from "@src/gql/generated";
 import { isBase64 } from "@src/helper/extra";
-import useTranslation from "@src/hooks/translation";
-import LoadingIndicator from "@modules/Loading-indicator";
 import handleUploadImage from "@src/helper/image-picker";
+import useTranslation from "@src/hooks/translation";
+import { SECONDARY_COLOR } from "@src/theme";
 import { router } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 const Page = () => {
   const { tr } = useTranslation();
   const [editProfile] = useUserEditMutation();
-  const { loading, data } = useUserDetailQuery();
+  const { loading, data } = useUserDetailProfileQuery();
   const [userDetailTemp, setUserDetailTemp] = useState({
     firstname: "",
     lastname: "",
@@ -46,7 +45,7 @@ const Page = () => {
       };
     }
     const { data } = await editProfile({ variables: { data: tempData } });
-    if (data.userEdit.status === "ACCEPTED") {
+    if (data?.userEdit?.status === "ACCEPTED") {
       Toast.show({
         type: "success",
         text1: tr("Successful"),

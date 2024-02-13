@@ -12,6 +12,7 @@ import useTranslation from "@src/hooks/translation";
 import { Formik } from "formik";
 import React, { useRef } from "react";
 import { Image, Pressable, StyleSheet } from "react-native";
+import Toast from "react-native-toast-message";
 import * as Yup from "yup";
 
 const Index = () => {
@@ -23,7 +24,10 @@ const Index = () => {
   const onSubmit = async values => {
     const { data, errors } = await editProfile({ variables: { data: values } });
     if (data) {
-      console.log("DATA", data, errors);
+      Toast.show({
+        type: "success",
+        text1: tr("Successful"),
+      });
     }
   };
 
@@ -97,11 +101,12 @@ const Index = () => {
                   errorMessage={touched.address && (errors.address as string)}
                 />
                 <Input
+                  disabled={true}
+                  keyboardType="phone-pad"
                   label={tr("Contact Number")}
                   value={values.contactNumber}
                   onChangeText={handleChange("contactNumber")}
                   errorMessage={touched.contactNumber && (errors.contactNumber as string)}
-                  keyboardType="phone-pad"
                 />
                 <Input
                   label={tr("Description")}

@@ -2778,7 +2778,7 @@ export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionLi
 export type UserDetailProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserDetailProfileQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, isNgo?: boolean | null, username: string, fullname?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string, title: string, isVerify?: boolean | null, verifyDescription?: string | null, avatarS3?: { __typename?: 'NGOImageType', small?: string | null } | null } | null } | null };
+export type UserDetailProfileQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, bio?: string | null, isNgo?: boolean | null, username: string, firstname?: string | null, lastname?: string | null, fullname?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string, title: string, isVerify?: boolean | null, verifyDescription?: string | null, avatarS3?: { __typename?: 'NGOImageType', small?: string | null } | null } | null } | null };
 
 export type UserDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5789,8 +5789,11 @@ export const UserDetailProfileDocument = gql`
     query userDetailProfile {
   userDetail {
     id
+    bio
     isNgo
     username
+    firstname
+    lastname
     fullname
     avatarS3 {
       small
