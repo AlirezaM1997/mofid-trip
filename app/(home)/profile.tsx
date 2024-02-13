@@ -18,11 +18,11 @@ const Profile: React.FC = () => {
     fetchPolicy: "network-only",
   });
 
-  if (!loading && !session) return <Authentication />;
-
   useEffect(() => {
     refetch();
   }, [isFocused]);
+
+  if (!loading && !session) return <Authentication />;
 
   if (!data) return <LoadingIndicator />;
 
