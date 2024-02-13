@@ -8,7 +8,7 @@ import { StyleSheet, ViewStyle } from "react-native";
 const useHandleDayPress = () => {
   const { theme } = useTheme();
 
-  const { values, setFieldValue, resetForm } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext();
 
   const { setStartDate } = uesSetStartDate();
   const { getDaysBetween } = useGetDaysBetween();
@@ -42,7 +42,8 @@ const useHandleDayPress = () => {
         },
       ]);
     } else {
-      resetForm();
+      setFieldValue(dateStart, null);
+      setFieldValue(dateEnd, null);
       setMarkedDays([]);
     }
   };

@@ -1,10 +1,8 @@
 import moment from "jalali-moment";
-import { useFormikContext } from "formik";
 import WhiteSpace from "@atoms/white-space";
 import { useEffect, useState } from "react";
 import { Divider, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
-import { ProjectAddInputType } from "@src/gql/generated";
 import JalaliDatePicker from "@modules/jalali-date-picker";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import useHandleDayPress from "@src/hooks/jalali-date-picker/formik/handle-day-press";
@@ -14,7 +12,6 @@ const TabDate = () => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [markedDays, setMarkedDays] = useState([]);
-  const { values, errors, touched } = useFormikContext<ProjectAddInputType>();
 
   const { handleDayPress } = useHandleDayPress();
   const { handleSaveChanges } = useHandleSaveChanges();
@@ -47,18 +44,12 @@ const TabDate = () => {
           <Text body2 type="secondary">
             {tr("beginning")}: {getFirstDayFormatted()}
           </Text>
-          {touched.dateStart && !values.dateStart && (
-            <Text type="error">{errors.dateStart as string}</Text>
-          )}
         </View>
         <Divider orientation="vertical" />
         <View style={styles.timeContainer}>
-          <Text body2 type={touched.dateEnd && errors.dateEnd ? "error" : "secondary"}>
+          <Text body2 type="secondary">
             {tr("end")}: {getLastDayFormatted()}
           </Text>
-          {touched.dateEnd && errors.dateEnd && (
-            <Text type="error">{errors.dateEnd as string}</Text>
-          )}
         </View>
       </View>
       <WhiteSpace />

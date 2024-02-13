@@ -15,11 +15,12 @@ const TabCapacity = () => {
 
   return (
     <>
-      <Text heading2 bold>
-        {tr("Capacity and Gender")}
-      </Text>
-      <Text type="grey3">{tr("Select the capacity and gender of the host passengers")}</Text>
-      <WhiteSpace size={20} />
+      <View style={styles.headerTitle}>
+        <Text heading2 bold>
+          {tr("Capacity and Gender")}
+        </Text>
+        <Text type="grey3">{tr("Select the capacity and gender of the host passengers")}</Text>
+      </View>
       <Input
         name="capacityNumber"
         placeholder={tr("enter the capacity (quantity)")}
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
   checkbox: {
     backgroundColor: "transparent",
   },
+  headerTitle: { gap: 5, marginBottom: 20 },
 });
 
 export default TabCapacity;

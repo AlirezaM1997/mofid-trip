@@ -32,14 +32,14 @@ const TabFaclities = () => {
 
   return (
     <>
-      <Text heading2 bold>
-        {tr("Host Facilities")}
-      </Text>
-      <Text>
-        {tr("You can write and add your own host features. Note that this section is optional.")}
-      </Text>
-
-      <WhiteSpace size={20} />
+      <View style={styles.headerTitle}>
+        <Text heading2 bold>
+          {tr("Host Facilities")}
+        </Text>
+        <Text>
+          {tr("You can write and add your own host features. Note that this section is optional.")}
+        </Text>
+      </View>
 
       <View style={styles.inputContainer}>
         <Input value={value} onChange={handleChangeInput} placeholder={tr("Add facilities")} />
@@ -82,6 +82,9 @@ const styles = StyleSheet.create({
     margin: "auto",
     width: 56,
     height: 56,
+  },
+  headerTitle: {
+    gap: 5, marginBottom: 20
   },
 });
 

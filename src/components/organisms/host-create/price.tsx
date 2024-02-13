@@ -34,16 +34,16 @@ const TabPrice = () => {
 
   return (
     <>
-      <Text heading2 bold>
-        {tr("Host Price")}
-      </Text>
-      <Text>
-        {tr(
-          "Choose or write the cost of your host, you can give a discount to the original price."
-        )}
-      </Text>
-
-      <WhiteSpace />
+      <View style={styles.headerTitle}>
+        <Text heading2 bold>
+          {tr("Host Price")}
+        </Text>
+        <Text>
+          {tr(
+            "Choose or write the cost of your host, you can give a discount to the original price."
+          )}
+        </Text>
+      </View>
 
       <Input
         value={values.price?.toString()}
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 3,
   },
+  headerTitle: { gap: 5, marginBottom: 20 },
 });
 
 export default TabPrice;
