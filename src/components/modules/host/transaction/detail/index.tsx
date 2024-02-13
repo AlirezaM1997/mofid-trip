@@ -1,3 +1,8 @@
+import {
+  ProjectTransactionQueryType,
+  StatusQueryType,
+  TransactionStatusEnum,
+} from "@src/gql/generated";
 import React from "react";
 import Invoice from "./invoice";
 import Stepper from "@modules/stepper";
@@ -10,7 +15,6 @@ import StepBaseButtons from "./stepBaseButtons";
 import useTranslation from "@src/hooks/translation";
 import { ScrollView } from "react-native-gesture-handler";
 import CancelTransaction from "@modules/host/transaction/cancel";
-import { ProjectTransactionQueryType, TransactionStatusEnum } from "@src/gql/generated";
 
 const HostTransactionDetail = ({
   transactionDetail,
@@ -24,12 +28,12 @@ const HostTransactionDetail = ({
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      REQUEST: 1,
-      ACCEPT: 2,
-      PAYMENT: 3,
-      SUCCESSFUL: 4,
+      [TransactionStatusEnum.Request]: 1,
+      [TransactionStatusEnum.Accept]: 2,
+      [TransactionStatusEnum.Payment]: 3,
+      [TransactionStatusEnum.Successful]: 4,
     };
-    return lookup[status.step || 0];
+    return lookup[status?.step || 0];
   };
 
   return (
@@ -40,7 +44,7 @@ const HostTransactionDetail = ({
 
           <CancelTransaction
             button={
-              status.step === TransactionStatusEnum.Request &&
+              status?.step === TransactionStatusEnum.Request &&
               status.isActive && (
                 <Text subtitle2 type="error" style={styles.headerButton}>
                   {tr("cancel request")}
@@ -50,7 +54,7 @@ const HostTransactionDetail = ({
           />
         </View>
 
-        <Stepper activeStep={activeStep()} isActive={status.isActive as boolean} steps={steps} />
+        <Stepper activeStep={activeStep()} isActive={status?.isActive as boolean} steps={steps} />
 
         <TransactionDetailCard transactionDetail={transactionDetail} />
       </Container>
@@ -58,7 +62,7 @@ const HostTransactionDetail = ({
       <PaymentStep
         status={status}
         creator={project?.creator}
-        location={{ lat: project.accommodation.lat, lng: project.accommodation.lng }}
+        location={{ lat: project?.accommodation?.lat, lng: project?.accommodation?.lng }}
       />
 
       <Divider bgColor="grey0" thickness={6} />
@@ -66,7 +70,7 @@ const HostTransactionDetail = ({
       <Container style={styles.container}>
         <Invoice transactionDetail={transactionDetail} />
 
-        <StepBaseButtons status={status} transaction={transactionDetail} />
+        <StepBaseButtons status={status as StatusQueryType} transaction={transactionDetail} />
       </Container>
     </ScrollView>
   );

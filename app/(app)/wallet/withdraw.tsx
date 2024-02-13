@@ -6,15 +6,15 @@ import React, { useState } from "react";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import { AntDesign } from "@expo/vector-icons";
-import { Pressable, StyleSheet, View } from "react-native";
 import parseText from "@src/helper/number-input";
 import useTranslation from "@src/hooks/translation";
 import { useFormatPrice } from "@src/hooks/localization";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { Pressable, StyleSheet, View } from "react-native";
 import WithdrawBankCard from "@modules/wallet/withdraw/bankCard";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { Button, CheckBox, Divider, Text, useTheme } from "@rneui/themed";
-import { useUserDetailQuery, useWalletWithdrawMutation } from "@src/gql/generated";
+import { UserWalletType, useUserDetailQuery, useWalletWithdrawMutation } from "@src/gql/generated";
 import ConfirmWithdrawButtonSheet from "@modules/wallet/withdraw/confirmButtonSheet";
 
 const WithdrawScreen = () => {
@@ -36,17 +36,18 @@ const WithdrawScreen = () => {
       },
     });
 
-    if (data.walletWithdraw.status === "OK") {
+    if (data?.walletWithdraw?.status === "OK") {
       setOpenConfirmMessage(true);
     }
   };
 
   if (!data || loading) return <LoadingIndicator />;
 
-  const { walletCards, balance } = data.userDetail.wallet;
+  const { walletCards, balance } = data?.userDetail?.wallet as UserWalletType;
 
   const validationSchema = Yup.object().shape({
     amount: Yup.number()
+      .min(1, tr("amount is required"))
       .required(tr("amount is required"))
       .max(balance, tr("the desired amount is more than the account balance")),
     cardId: Yup.number().required(tr("choose a card please")),
