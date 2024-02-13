@@ -30,13 +30,14 @@ const TourDetailScreen = () => {
   const steps = [tr("pending"), tr("published"), tr("End Tour")];
   const [tour, setTour] = useState<MyNgoDetailTourSetQuery["NGODetail"]["tourSet"][0]>();
 
-  const { loading, data } = useMyNgoDetailTourSetQuery();
+  const { loading, data , refetch } = useMyNgoDetailTourSetQuery();
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
       [TourTourStatusStepChoices.Request]: 1,
       [TourTourStatusStepChoices.Accept]: 2,
       [TourTourStatusStepChoices.End]: 3,
+      [TourTourStatusStepChoices.Suspension]: 4,
     };
     return lookup[tour.statusStep];
   };
@@ -122,7 +123,7 @@ const TourDetailScreen = () => {
         />
       </ListItem>
 
-      <TourManagementStepBaseButton tour={tour} />
+      <TourManagementStepBaseButton tour={tour} refetch={refetch} />
 
       <Divider thickness={8} bgColor="grey0" />
 

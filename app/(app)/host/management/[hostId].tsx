@@ -30,12 +30,13 @@ const HostDetailScreen = () => {
   const [host, setHost] = useState<MyUserDetailProjectSetQuery["userDetail"]["projectSet"][0]>();
   const steps = [tr("pending"), tr("published")];
 
-  const { loading, data } = useMyUserDetailProjectSetQuery();
+  const { loading, data, refetch } = useMyUserDetailProjectSetQuery();
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
       [ProjectStatusEnum.Request]: 1,
       [ProjectStatusEnum.Accept]: 2,
+      [ProjectStatusEnum.Suspension]: 3,
     };
     return lookup[host.statusStep];
   };
@@ -117,7 +118,7 @@ const HostDetailScreen = () => {
           color={theme.colors.grey3}
         />
       </ListItem>
-      <HostManagementStepBaseButton host={host} />
+      <HostManagementStepBaseButton host={host} refetch={refetch} />
 
       <Divider thickness={8} bgColor="grey0" />
 

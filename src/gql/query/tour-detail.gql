@@ -3,9 +3,10 @@ query tourDetail($pk: ID!) {
     ... on TourQueryType {
       id
       title
-      description
-      startTime
       endTime
+      startTime
+      statusStep
+      description
       NGO {
         id
         isVerify
