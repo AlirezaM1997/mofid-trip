@@ -21,15 +21,18 @@ const TransactionDetailCard = ({
       style={styles.routeToHostPageContainer}
       onPress={() =>
         router.push({
-          pathname: `host/${transactionDetail.project.id}`,
-          params: { projectId: transactionDetail.project.id, name: transactionDetail.project.name },
+          pathname: `host/${transactionDetail?.project?.id}`,
+          params: {
+            projectId: transactionDetail?.project?.id,
+            name: transactionDetail?.project?.name,
+          },
         })
       }>
       <View style={styles.hostDetailContainer}>
         <Image
           style={styles.hostAvatar}
           source={
-            transactionDetail?.project?.accommodation?.avatarS3.length > 0
+            (transactionDetail?.project?.accommodation?.avatarS3?.length as number) > 0
               ? {
                   uri: transactionDetail?.project?.accommodation?.avatarS3?.[0]?.small,
                 }
@@ -40,25 +43,25 @@ const TransactionDetailCard = ({
 
         <View style={styles.hostDetail}>
           <Text numberOfLines={1} subtitle1>
-            {transactionDetail.project.name}
+            {transactionDetail?.project?.name}
           </Text>
 
           <Text numberOfLines={1} caption type="grey2">
-            {transactionDetail.project.accommodation.address}
+            {transactionDetail?.project?.accommodation?.address}
           </Text>
 
           <View style={styles.date}>
             <Text caption type="grey2">
               {tr("hosting type")} .
             </Text>
-            <Text caption>{transactionDetail.project.categories[0].name}</Text>
+            <Text caption>{transactionDetail?.project?.categories?.[0]?.name}</Text>
           </View>
 
           <View style={styles.date}>
             <Text caption type="grey2">
               {tr("date")} .
             </Text>
-            <Text caption>{localizeNumber(formattedDate(transactionDetail.dateStart))}</Text>
+            <Text caption>{localizeNumber(formattedDate(transactionDetail?.dateStart))}</Text>
           </View>
         </View>
       </View>
