@@ -7,7 +7,6 @@ import { Button, Text } from "@rneui/themed";
 import ButtonRow from "@modules/button-rows";
 import { ImageBackground, StyleSheet } from "react-native";
 import { router, useNavigation } from "expo-router";
-import { setTourCreateActiveStep } from "@src/slice/tour-create-slice";
 import useTranslation from "@src/hooks/translation";
 
 const CloseFormBottomSheet = () => {
@@ -30,10 +29,6 @@ const CloseFormBottomSheet = () => {
 
   useEffect(() => {
     navigation.addListener("beforeRemove", beforeRemoveHandler);
-    return () => {
-      dispatch(setTourCreateActiveStep(1));
-      navigation.removeListener("beforeRemove", beforeRemoveHandler);
-    };
   }, []);
 
   return (
