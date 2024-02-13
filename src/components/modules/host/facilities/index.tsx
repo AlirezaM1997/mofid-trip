@@ -2,7 +2,6 @@ import React from "react";
 import { Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import useTranslation from "@src/hooks/translation";
-import TitleWithAction from "@modules/title-with-action";
 import { ProjectFacilityQueryType } from "@src/gql/generated";
 
 type PropsType = {
@@ -24,11 +23,7 @@ const ProjectFacilities = ({ facilities }) => {
 
   return (
     <View style={style.container}>
-      <TitleWithAction
-        size="subtitle1"
-        actionTitle={tr("See All")}
-        title={tr("hosting facilities")}
-      />
+      <Text subtitle1>{tr("hosting facilities")}</Text>
       {facilities?.map((facility, index) => (
         <Item key={index} facility={facility} />
       ))}
