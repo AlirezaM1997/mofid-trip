@@ -80,7 +80,7 @@ const HostTransactionConfirmData = ({ setActiveStep }) => {
             {tr("passengers count")}
           </Text>
           <Text body2>
-            {values.guests.guestNumber}&nbsp;{tr("person")}
+            {localizeNumber(values.guests.guestNumber)}&nbsp;{tr("person")}
           </Text>
         </View>
         <Button

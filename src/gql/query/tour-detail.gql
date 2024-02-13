@@ -7,6 +7,11 @@ query tourDetail($pk: ID!) {
       startTime
       statusStep
       description
+      capacity{
+        guestNumber
+        childAccept
+        gender
+      }
       NGO {
         id
         isVerify

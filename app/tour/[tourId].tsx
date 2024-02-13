@@ -3,7 +3,6 @@ import moment from "jalali-moment";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import { useEffect, useState } from "react";
-import { getCapacity } from "@src/helper/tour";
 import ImageSlider from "@modules/image-slider";
 import { ImageBackground, Pressable, StyleSheet, View } from "react-native";
 import ContactCard from "@modules/contact-card";
@@ -16,8 +15,6 @@ import { BottomSheet, Button, ListItem, Text } from "@rneui/themed";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import {
   AccommodationQueryType,
-  TourCapacityType,
-  TourDetailQuery,
   TourPackageType,
   TourQueryType,
   useTourDetailQuery,
@@ -115,7 +112,7 @@ export default () => {
           </View>
           <View style={styles.grid}>
             <Text type="grey2">{tr("Capacity")}</Text>
-            <Text bold>{localizeNumber(getCapacity(tour.capacity as TourCapacityType))}</Text>
+            <Text bold>{localizeNumber(tour.capacity?.guestNumber)}</Text>
           </View>
         </View>
 
