@@ -1823,6 +1823,11 @@ export const messages = {
     fa_ir: "فاکتور نهایی",
     en_us: "Final invoice",
   },
+  man: {
+    ar: "man",
+    fa_ir: "نفر",
+    en_us: "man",
+  },
   "upload image": {
     ar: "تحميل الصورة ",
     fa_ir: "بارگذاری تصویر ",
@@ -3131,6 +3136,11 @@ export const messages = {
     ar: "المضيف هو يوم واحد",
     fa_ir: "یک روزه",
     en_us: "one day",
+  },
+  "calendar management": {
+    ar: "Calendar management",
+    fa_ir: "مدیریت تقویم",
+    en_us: "calendar management",
   },
   "select the capacity and gender of the host passengers": {
     ar: "حدد سعة وجنس الركاب المضيفين",
