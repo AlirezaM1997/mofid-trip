@@ -7,6 +7,7 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import WhiteSpace from "@atoms/white-space";
 import { TourAddInputType } from "@src/gql/generated";
+import handleUploadImage from "@src/helper/image-picker";
 
 const CustomImagePicker = () => {
   const { theme } = useTheme();
