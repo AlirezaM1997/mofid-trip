@@ -6,6 +6,7 @@ import HostCreateForm from "@organisms/host-create";
 import useTranslation from "@src/hooks/translation";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { ProjectGenderEnum, useProjectAddMutation } from "@src/gql/generated";
+import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
 
 const initialValues = {
   name: "",
@@ -116,6 +117,7 @@ const Screen = () => {
               {tr("Previous")}
             </Button>,
           ]}>
+          <HostCreateTabs activeStep={activeStep} />
           <HostCreateForm
             activeStep={activeStep}
             isVisibleFinish={isVisibleFinish}

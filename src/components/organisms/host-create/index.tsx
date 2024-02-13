@@ -53,7 +53,6 @@ const HostCreateForm = ({
 
   return (
     <>
-      <HostCreateTabs />
       <WhiteSpace />
 
       <Container>

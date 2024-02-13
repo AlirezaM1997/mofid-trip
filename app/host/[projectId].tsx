@@ -11,7 +11,11 @@ import ProjectFacilities from "@src/components/modules/host/facilities";
 import ProjectTags from "@src/components/modules/host/tags";
 import Map from "@src/components/modules/map/index.web";
 import SimilarProjects from "@src/components/modules/similar-projects";
-import { ProjectQueryType, useProjectDetailQuery } from "@src/gql/generated";
+import {
+  AccommodationImageType,
+  ProjectQueryType,
+  useProjectDetailQuery,
+} from "@src/gql/generated";
 import openMapHandler from "@src/helper/opem-map";
 import useTranslation from "@src/hooks/translation";
 import { setProjectDetail } from "@src/slice/project-slice";
@@ -66,7 +70,7 @@ const Page: React.FC = ({ ...props }) => {
       buttons={[<BookHostBottomSheet project={data?.projectDetail as ProjectQueryType} />]}>
       <ScrollView style={style.scrollView}>
         <Container style={style.container}>
-          <ImageSlider imageList={accommodation?.avatarS3} />
+          <ImageSlider imageList={accommodation?.avatarS3 as AccommodationImageType[]} />
 
           <ProjectTags tags={tags ?? []} />
 
@@ -102,13 +106,13 @@ const Page: React.FC = ({ ...props }) => {
               {tr("host address")}
             </Text>
             <Text caption type="grey3">
-              {accommodation.address}
+              {accommodation?.address}
             </Text>
             {isFocused && (
               <Pressable onPress={() => openMapHandler(accommodation?.lat, accommodation?.lng)}>
                 <Map
-                  lat={accommodation?.lat}
-                  lng={accommodation?.lng}
+                  lat={accommodation?.lat as number}
+                  lng={accommodation?.lng as number}
                   mapOptions={{
                     dragging: false,
                     zoomControl: false,
