@@ -14,6 +14,6 @@ export const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     textAlign: "center",
-    paddingVertical: 8,
+    padding: 5,
   },
 });

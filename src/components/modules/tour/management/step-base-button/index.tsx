@@ -165,7 +165,7 @@ const TourManagementStepBaseButton = ({ tour, refetch }) => {
           </Container>
         </BottomSheet>
         <BottomSheet isVisible={isVisibleContinueReserve} onBackdropPress={handleCloseContinueReserve}>
-          <Container>
+          <Container style={{ gap: 16 }}>
             <Text heading2 bold center>
               {tr("are you sure to continue registration?")}
             </Text>

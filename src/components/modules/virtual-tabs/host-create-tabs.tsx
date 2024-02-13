@@ -6,13 +6,11 @@ import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 
-const HostCreateTabs = () => {
+const HostCreateTabs = ({ activeStep }: { activeStep: number }) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const scrollRef = useRef(null);
   const x = useRef(0);
-
-  const { activeStep } = useSelector((state: RootState) => state.hostCreateSlice);
 
   useEffect(() => {
     if (activeStep) {

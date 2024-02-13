@@ -55,7 +55,7 @@ const TourCreateForm = ({
 
   return (
     <>
-      <TourCreateTabs />
+      <TourCreateTabs activeStep={activeStep} />
       <WhiteSpace />
 
       <Container>
