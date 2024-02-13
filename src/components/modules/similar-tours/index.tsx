@@ -104,6 +104,7 @@ const style = StyleSheet.create({
   cardTextContainer: {
     paddingVertical: 5,
     justifyContent: "space-between",
+    width:180
   },
   price: {
     fontWeight: "bold",
