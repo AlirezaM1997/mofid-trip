@@ -85,7 +85,7 @@ const Profile = ({ userDetail }) => {
         <WhiteSpace size={26} />
 
         <Container>
-          {userDetail.isNgo && !userDetail.ngo.isVerify && (
+          {/* {userDetail.isNgo && !userDetail.ngo.isVerify && (
             <>
               <NgoAuthentication
                 isVerify={userDetail.ngo.isVerify}
@@ -93,7 +93,7 @@ const Profile = ({ userDetail }) => {
               />
               <WhiteSpace size={24} />
             </>
-          )}
+          )} */}
 
           <Text type="grey3">{tr("Account")}</Text>
         </Container>

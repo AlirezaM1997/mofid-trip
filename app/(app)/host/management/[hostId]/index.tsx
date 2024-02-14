@@ -77,7 +77,7 @@ const HostDetailScreen = () => {
     <ScrollView>
       <WhiteSpace size={32} />
       <Container>
-        {data?.userDetail?.isNgo && !data?.userDetail?.ngo?.isVerify && (
+        {/* {data?.userDetail?.isNgo && !data?.userDetail?.ngo?.isVerify && (
           <>
             <NgoAuthentication
               isVerify={data?.userDetail?.ngo?.isVerify}
@@ -85,7 +85,7 @@ const HostDetailScreen = () => {
             />
             <WhiteSpace size={32} />
           </>
-        )}
+        )} */}
 
         <ImageSlider imageList={host?.accommodation?.avatarS3 as AccommodationImageType[]} />
         <WhiteSpace size={10} />
