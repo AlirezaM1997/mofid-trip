@@ -26,7 +26,6 @@ export type MapPropsType = ExpoLeafletProps & {
 // @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
 import markerImage from "@assets/image/marker.png";
 import locationMarkerImage from "@assets/image/location-marker.png";
-import { ViewProps } from "react-native";
 const a = markerImage;
 const b = locationMarkerImage;
 
@@ -76,6 +75,14 @@ const Map = ({
     setLocation({ lat, lng });
   }, [lat, lng]);
 
+  const currentLocationIcon = {
+    id: "my-location",
+    size: [60, 60],
+    iconAnchor: [-26, 60],
+    position: location,
+    icon: window.location.origin + markerImage,
+  };
+
   return (
     <>
       <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="StyleSheet" />
@@ -113,7 +120,7 @@ const Map = ({
             lat: location?.lat,
             lng: location?.lng,
           }}
-          mapMarkers={mapMarkers || []}
+          mapMarkers={[currentLocationIcon, ...mapMarkers] || []}
           mapLayers={[
             {
               layerType: "TileLayer",
