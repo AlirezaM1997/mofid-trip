@@ -9,7 +9,10 @@ query myNGODetailTourSet {
       description
       startTime
       endTime
-      statusStep
+      statusStep{
+        displayName
+        name
+      }
       statusActivation
       createdDate
       modifiedDate

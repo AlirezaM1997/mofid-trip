@@ -8,7 +8,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import TourTransactionDetail from "@modules/tour/transaction/detail";
 import AcceptPayment from "@modules/tour/transaction/buttons/acceptPayment";
-import { RateObjectTypeEnum, useTourPurchaseAddMutation, useTourTransactionDetailQuery } from "@src/gql/generated";
+import { RateObjectTypeEnum, TourTransactionQueryType, useTourPurchaseAddMutation, useTourTransactionDetailQuery } from "@src/gql/generated";
 import { totalPrice } from "@src/helper/totalPrice";
 import RatingBottomSheet from "@modules/rating-bottom-sheet";
 
@@ -30,7 +30,7 @@ const TourTransactionDetailScreen = () => {
     return <LoadingIndicator />;
   }
 
-  const { status, tourPackage, tourGuests } = data.tourTransactionDetail;
+  const { status, tourPackage, tourGuests } = data.tourTransactionDetail as TourTransactionQueryType;
 
   const purchaseHandler = async () => {
     const ip = await Network.getIpAddressAsync();
@@ -53,17 +53,17 @@ const TourTransactionDetailScreen = () => {
 
   const bottomButton = () => {
     const lookup: Record<string, ReactElement> = {
-      PAYMENT: (
+      "PAYMENT": (
         <Button onPress={() => router.push(`tour/transaction/successReceipt?id=${transactionId}`)}>
           {tr("view invoice")}
         </Button>
       ),
-      SUCCESSFUL: (
+      "SUCCESSFUL": (
         <Button onPress={() => setRatingIsVisible(true)}>{tr("rates to the tour")}</Button>
       ),
-      ACCEPT: <Button onPress={() => setIsVisible(true)}>{tr("pay")}</Button>,
+      "ACCEPT": <Button onPress={() => setIsVisible(true)}>{tr("pay")}</Button>,
     };
-    return lookup[status.step || null];
+    return lookup[status.step?.name || null];
   };
 
   return (

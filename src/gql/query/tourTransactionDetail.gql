@@ -21,7 +21,10 @@ query tourTransactionDetail($pk: ID!) {
     }
     status {
       isActive
-      step
+      step{
+        displayName
+        name
+      }
     }
     tourPackage {
       title

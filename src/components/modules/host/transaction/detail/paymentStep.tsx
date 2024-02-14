@@ -1,9 +1,8 @@
 import React from "react";
 import Map from "@modules/map";
-import { TransactionStatusEnum } from "@src/gql/generated";
 import { Divider, Text } from "@rneui/themed";
 import Container from "@atoms/container";
-import { Linking, Platform, Pressable, View } from "react-native";
+import { Pressable, View } from "react-native";
 import ContactCard from "@modules/contact-card";
 import useTranslation from "@src/hooks/translation";
 import WhiteSpace from "@atoms/white-space";
@@ -14,7 +13,7 @@ const PaymentStep = ({ status, location, creator }) => {
 
   return (
     <>
-      {[TransactionStatusEnum.Payment, TransactionStatusEnum.Successful].includes(status.step) && (
+      {["PAYMENT", "SUCCESSFUL"].includes(status.step.name) && (
         <>
           <Divider bgColor="grey0" thickness={6} />
 

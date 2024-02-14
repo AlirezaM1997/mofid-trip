@@ -1,6 +1,5 @@
 import {
   ProjectQueryType,
-  ProjectStatusEnum,
   AccommodationImageType,
   useMyUserDetailProjectSetQuery,
 } from "@src/gql/generated";
@@ -35,11 +34,11 @@ const HostDetailScreen = () => {
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      [ProjectStatusEnum.Request]: 1,
-      [ProjectStatusEnum.Accept]: 2,
-      [ProjectStatusEnum.Suspension]: 3,
+      ["REQUEST"]: 1,
+      ["ACCEPT"]: 2,
+      ["SUSPENSION"]: 3,
     };
-    return lookup[host?.statusStep as string];
+    return lookup[host?.statusStep?.name as string];
   };
 
   const makePhoneCall = () => {

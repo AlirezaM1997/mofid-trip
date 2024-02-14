@@ -14,7 +14,10 @@ query projectTransactionDetail($pk: ID!) {
       firstname
     }
     status {
-      step
+      step{
+        displayName
+        name
+      }
       isActive
     }
     guest {
