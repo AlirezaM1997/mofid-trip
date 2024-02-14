@@ -65,15 +65,15 @@ const TransactionDetailsScreen = () => {
 
   const bottomButton = () => {
     const lookup: Record<string, ReactElement> = {
-      ["PAYMENT"]: (
+      PAYMENT: (
         <Button onPress={() => router.push(`host/transaction/successReceipt?id=${transactionId}`)}>
           {tr("view invoice")}
         </Button>
       ),
-      ["SUCCESSFUL"]: (
+      SUCCESSFUL: (
         <Button onPress={() => setIsBottomSheetVisible(true)}>{tr("rates to the host")}</Button>
       ),
-      ["ACCEPT"]: data?.projectTransactionDetail?.project?.price ? (
+      ACCEPT: data?.projectTransactionDetail?.project?.price ? (
         <Button loading={purchaseLoading} onPress={() => setIsVisible(true)}>
           {tr("pay")}
         </Button>

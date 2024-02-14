@@ -1,5 +1,5 @@
 import { Chip } from "@rneui/themed";
-import { AccountSettingLanguageChoices, TourFacilityQueryType } from "@src/gql/generated";
+import { SettingDetailType, TourFacilityQueryType } from "@src/gql/generated";
 import { RootState } from "@src/store";
 import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
@@ -9,7 +9,16 @@ type TourFacilitiesProps = {
 };
 
 const TourFacilities = ({ facilities, ...props }: TourFacilitiesProps) => {
-  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
+  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType);
+
+  const facilitiesLanguage = () => {
+    const lookup: Record<string, string> = {
+      "EN_US": "enName",
+      "FA_IR": "faName",
+      "AR": "arName",
+    };
+    return lookup[language];
+  };
 
   return (
     <View style={style.container}>
@@ -17,13 +26,7 @@ const TourFacilities = ({ facilities, ...props }: TourFacilitiesProps) => {
         return (
           <Chip
             key={index}
-            title={
-              language === AccountSettingLanguageChoices.EnUs
-                ? facility.enName
-                : language === AccountSettingLanguageChoices.FaIr
-                ? facility.faName
-                : facility.arName
-            }
+            title={facility[facilitiesLanguage()]}
             type="outline"
             buttonStyle={style.buttonStyle}
             titleStyle={style.titleStyle}

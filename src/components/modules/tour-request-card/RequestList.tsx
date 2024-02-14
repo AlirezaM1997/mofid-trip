@@ -16,11 +16,11 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
 
   const getCurrentStep = () => {
     const lookup: LookupType = {
-      ["REQUEST"]: {
+      REQUEST: {
         title: tr("awaiting review"),
         color: "grey3",
       },
-      ["ACCEPT"]: transaction.status.isActive
+      ACCEPT: transaction.status.isActive
         ? {
             title: tr("accepted"),
             color: "success",
@@ -29,7 +29,7 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
             title: tr("failed"),
             color: "error",
           },
-      ["PAYMENT"]: {
+      PAYMENT: {
         title: tr("success receipt"),
         color: "info",
       },
