@@ -87,7 +87,7 @@ const RequestListBottomSheet = ({
 
   const getCurrentStep = () => {
     const lookup: LookupType = {
-      [TransactionStatusEnum.Request]: {
+      ["REQUEST"]: {
         color: "grey3",
         bottomSheetTitle: tr("the request is pending review"),
         buttonBox: (
@@ -101,7 +101,7 @@ const RequestListBottomSheet = ({
           </ButtonRow>
         ),
       },
-      [TransactionStatusEnum.Accept]: transaction?.status?.isActive
+      ["ACCEPT"]: transaction?.status?.isActive
         ? {
             color: "success",
             bottomSheetTitle: tr("the request has been approved by you"),
@@ -120,7 +120,7 @@ const RequestListBottomSheet = ({
               </Button>
             ),
           },
-      [TransactionStatusEnum.Payment]: {
+      ["PAYMENT"]: {
         color: "info",
         bottomSheetTitle: tr("the passenger paid and the reservation was finalized"),
         buttonBox: (
@@ -130,7 +130,7 @@ const RequestListBottomSheet = ({
         ),
       },
     };
-    return lookup[transaction?.status.step];
+    return lookup[transaction?.status.step.name];
   };
   const step = getCurrentStep();
 

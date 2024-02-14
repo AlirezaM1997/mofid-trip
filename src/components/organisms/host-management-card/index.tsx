@@ -6,7 +6,7 @@ import useTranslation from "@src/hooks/translation";
 import { Pressable, StyleSheet } from "react-native";
 import { Card, Chip, Text, useTheme } from "@rneui/themed";
 import { getHostRequestStatusBadgeColor } from "@src/helper/host";
-import { ProjectQueryType, ProjectStatusEnum } from "@src/gql/generated";
+import { ProjectQueryType } from "@src/gql/generated";
 
 const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
   const { theme } = useTheme();
@@ -38,9 +38,9 @@ const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
           {host?.description}
         </Card.FeaturedSubtitle>
         <Container size={10} style={styles.footer}>
-          {host.statusStep === ProjectStatusEnum.Request ? (
+          {host.statusStep?.name === "REQUEST" ? (
             <Chip
-              title={host?.statusStep}
+              title={host?.statusStep.displayName}
               color={getHostRequestStatusBadgeColor(host)}
               type="outline"
             />

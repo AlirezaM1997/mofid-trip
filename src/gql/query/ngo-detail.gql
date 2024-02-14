@@ -31,7 +31,10 @@ query NGODetail($pk: ID) {
       requestFrom
       tax
       description
-      statusStep
+      statusStep{
+        displayName
+        name
+      }
       createdDate
       capacity {
         childAccept
@@ -72,7 +75,10 @@ query NGODetail($pk: ID) {
       id
       status {
         isActive
-        step
+        step{
+        displayName
+        name
+      }
       }
       owner {
         avatarS3 {

@@ -67,7 +67,7 @@ const TourDetailScreen = () => {
     <ScrollView>
       <WhiteSpace size={32} />
       <Container>
-        {!data.NGODetail.isVerify && (
+        {/* {!data.NGODetail.isVerify && (
           <>
             <NgoAuthentication
               isVerify={data.NGODetail.isVerify}
@@ -75,7 +75,7 @@ const TourDetailScreen = () => {
             />
             <WhiteSpace size={32} />
           </>
-        )}
+        )} */}
 
         <ImageSlider imageList={tour?.avatarS3} />
         <WhiteSpace size={10} />

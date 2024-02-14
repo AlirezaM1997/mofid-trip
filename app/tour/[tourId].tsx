@@ -82,7 +82,7 @@ export default () => {
   });
 
   return (
-    <BottomButtonLayout buttons={[<Button disabled={tour.statusStep === "SUSPENSION" ? true : false} onPress={handleBottomSheet}>{tr("Reserve")}</Button>]}>
+    <BottomButtonLayout buttons={[<Button disabled={tour.statusStep?.name === "SUSPENSION" ? true : false} onPress={handleBottomSheet}>{tr("Reserve")}</Button>]}>
       <Container>
         <WhiteSpace size={10} />
         <ImageSlider imageList={tour?.avatarS3} />

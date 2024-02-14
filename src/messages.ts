@@ -2054,11 +2054,11 @@ export const messages = {
     fa_ir: "ثبت و ورود",
     en_us: "submit and enter",
   },
-  "by clicking the registration and login button, you agree to mofidtrip rules and regulations.": {
-    ar: "بالنقر فوق زر التسجيل وتسجيل الدخول، فإنك توافق على قواعد ولوائح مفید تریپ.",
-    fa_ir: "شما با زدن دکمه ثبت و ورود ، موافقت خود را با قوانین و مقررات  مفیدتریپ اعلام می کنید.",
+  "by clicking the registration button, you agree to Mofidtrip rules and regulations.": {
+    ar: "By clicking the registration button, you agree to Mofidtrip rules and regulations.",
+    fa_ir: "شما با زدن دکمه ثبت ، موافقت خود را با قوانین و مقررات  مفیدتریپ اعلام می کنید.",
     en_us:
-      "by clicking the registration and login button, you agree to Mofidtrip rules and regulations.",
+      "By clicking the registration button, you agree to Mofidtrip rules and regulations.",
   },
   "identify number": {
     ar: "تحديد الرقم",
@@ -2540,10 +2540,10 @@ export const messages = {
     fa_ir: "مشخصات فردی",
     en_us: "personal information",
   },
-  "choose a display name for yourself to create an account on mofidtrip": {
-    ar: "اختر اسم العرض لنفسك لإنشاء حساب على مفید تریپ",
+  "Please choose a screen name for yourself.": {
+    ar: "Please choose a screen name for yourself.",
     fa_ir: "برای ایجاد حساب در مفیدتریپ ، نام نمایشی برای خودتان انتخاب کنید",
-    en_us: "choose a display name for yourself to create an account on mofidtrip",
+    en_us: "Please choose a screen name for yourself.",
   },
   "tour details": {
     ar: "تفاصيل الجولة",

@@ -1,14 +1,12 @@
 import { NetworkStatus } from "@apollo/client";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import React, { useCallback, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
-import NoResult from "@src/components/organisms/no-result";
 import { RefreshControl } from "react-native-gesture-handler";
 import ReservationCard from "@src/components/modules/tour/transaction/card";
 import ReservationSkeleton from "@src/components/modules/reservation-skeleton";
 import { TourTransactionQueryType, useTourTransactionListQuery } from "@src/gql/generated";
-import { HEIGHT } from "@src/constants";
 
 const TourReservation = () => {
   const isFocused = useIsFocused();
