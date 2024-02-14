@@ -34,9 +34,9 @@ const HostDetailScreen = () => {
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      ["REQUEST"]: 1,
-      ["ACCEPT"]: 2,
-      ["SUSPENSION"]: 3,
+      REQUEST: 1,
+      ACCEPT: 2,
+      SUSPENSION: 3,
     };
     return lookup[host?.statusStep?.name as string];
   };

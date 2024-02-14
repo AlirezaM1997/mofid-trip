@@ -5,7 +5,6 @@ import Stepper from "@modules/stepper";
 import { ListItem, Text, useTheme } from "@rneui/themed";
 import {
   MyNgoDetailTourSetQuery,
-  TourTourStatusStepChoices,
   useMyNgoDetailTourSetQuery,
 } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
@@ -19,7 +18,6 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import { Linking } from "react-native";
 import { passedTime } from "@src/helper/date";
 import TourManagementStepBaseButton from "@modules/tour/management/step-base-button";
-import NgoAuthentication from "@modules/ngo/ngoAuthentication";
 
 const TourDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -34,12 +32,12 @@ const TourDetailScreen = () => {
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      [TourTourStatusStepChoices.Request]: 1,
-      [TourTourStatusStepChoices.Accept]: 2,
-      [TourTourStatusStepChoices.End]: 3,
-      [TourTourStatusStepChoices.Suspension]: 4,
+      REQUEST: 1,
+      ACCEPT: 2,
+      END: 3,
+      SUSPENSION: 4,
     };
-    return lookup[tour.statusStep];
+    return lookup[tour.statusStep.name];
   };
   const handleNavigateToRequest = () => {
     router.push("/tour/management/request/" + tour.id);

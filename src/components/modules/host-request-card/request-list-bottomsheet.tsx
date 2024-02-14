@@ -76,7 +76,7 @@ const RequestListBottomSheet = ({
 
   const getCurrentStep = () => {
     const lookup: LookupType = {
-      ["REQUEST"]: {
+      REQUEST: {
         color: "grey3",
         bottomSheetTitle: tr("the request is pending review"),
         buttonBox: (
@@ -90,7 +90,7 @@ const RequestListBottomSheet = ({
           </ButtonRow>
         ),
       },
-      ["ACCEPT"]: transaction?.status?.isActive
+      ACCEPT: transaction?.status?.isActive
         ? {
             color: "success",
             bottomSheetTitle: tr("the request has been approved by you"),
@@ -109,7 +109,7 @@ const RequestListBottomSheet = ({
               </Button>
             ),
           },
-      ["PAYMENT"]: {
+      PAYMENT: {
         color: "info",
         bottomSheetTitle: tr("the ngo is paid and the reservation is finalized"),
         buttonBox: (
