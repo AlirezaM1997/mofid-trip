@@ -78,7 +78,7 @@ const LoginDetailScreen = () => {
           contentContainerStyle={{ flex: 1 }}
           buttons={[
             <Button loading={editLoading} onPress={handleSubmit}>
-              {tr("submit and enter")}
+              {tr("confirm")}
             </Button>,
           ]}>
           <ScrollView>
@@ -87,7 +87,7 @@ const LoginDetailScreen = () => {
               <Text heading1>{tr("write a screen name for yourself")}</Text>
               <WhiteSpace size={4} />
               <Text caption>
-                {tr("choose a display name for yourself to create an account on mofidtrip")}
+                {tr("Please choose a screen name for yourself.")}
               </Text>
               <WhiteSpace size={24} />
               <Input
@@ -108,7 +108,7 @@ const LoginDetailScreen = () => {
           </ScrollView>
           <Text center type="grey2">
             {tr(
-              "by clicking the registration and login button, you agree to mofidtrip rules and regulations."
+              "by clicking the registration button, you agree to Mofidtrip rules and regulations."
             )}
           </Text>
           <WhiteSpace />

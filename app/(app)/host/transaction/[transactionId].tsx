@@ -2,7 +2,6 @@ import {
   ProjectTransactionQueryType,
   useProjectPurchaseAddMutation,
   useProjectTransactionDetailQuery,
-  TransactionStatusEnum,
 } from "@src/gql/generated";
 import { Button } from "@rneui/themed";
 import * as Network from "expo-network";
@@ -66,15 +65,15 @@ const TransactionDetailsScreen = () => {
 
   const bottomButton = () => {
     const lookup: Record<string, ReactElement> = {
-      [TransactionStatusEnum.Payment]: (
+      ["PAYMENT"]: (
         <Button onPress={() => router.push(`host/transaction/successReceipt?id=${transactionId}`)}>
           {tr("view invoice")}
         </Button>
       ),
-      [TransactionStatusEnum.Successful]: (
+      ["SUCCESSFUL"]: (
         <Button onPress={() => setIsBottomSheetVisible(true)}>{tr("rates to the host")}</Button>
       ),
-      [TransactionStatusEnum.Accept]: data?.projectTransactionDetail?.project?.price ? (
+      ["ACCEPT"]: data?.projectTransactionDetail?.project?.price ? (
         <Button loading={purchaseLoading} onPress={() => setIsVisible(true)}>
           {tr("pay")}
         </Button>

@@ -8,7 +8,7 @@ import StepBaseButtons from "./stepBaseButtons";
 import { useLocalSearchParams } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import { ScrollView } from "react-native-gesture-handler";
-import { TransactionStatusEnum } from "@src/gql/generated";
+import { TourTransactionQueryType } from "@src/gql/generated";
 import Invoice from "@modules/tour/transaction/detail/invoice";
 import CancelTransaction from "@modules/tour/transaction/cancle";
 import TransactionDetailCard from "@modules/tour/transaction/detail/card";
@@ -18,16 +18,16 @@ const TourTransactionDetail = ({ transactionDetail }) => {
   const { transactionId } = useLocalSearchParams();
   const steps = [tr("pending"), tr("accepting"), tr("payment"), tr("finish the trip")];
 
-  const { status, tourPackage } = transactionDetail;
+  const { status, tourPackage } = transactionDetail as TourTransactionQueryType;
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      REQUEST: 1,
-      ACCEPT: 2,
-      PAYMENT: 3,
-      SUCCESSFUL: 4,
+      "REQUEST": 1,
+      "ACCEPT": 2,
+      "PAYMENT": 3,
+      "SUCCESSFUL": 4,
     };
-    return lookup[status.step || 0];
+    return lookup[status.step?.name || 0];
   };
 
   return (
@@ -38,7 +38,7 @@ const TourTransactionDetail = ({ transactionDetail }) => {
 
           <CancelTransaction
             button={
-              status.step === TransactionStatusEnum.Request &&
+              status.step?.name === "REQUEST" &&
               status.isActive && (
                 <Text subtitle2 type="error" style={styles.headerButton}>
                   {tr("cancel request")}

@@ -4,7 +4,6 @@ import useTranslation from "@src/hooks/translation";
 import { Divider, Text, useTheme } from "@rneui/themed";
 import {
   StatusQueryType,
-  TransactionStatusEnum,
   ProjectTransactionQueryType,
 } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -36,7 +35,7 @@ const StepBaseButtons = ({
 
   return (
     <>
-      {status.step === TransactionStatusEnum.Request && status.isActive && (
+      {status.step?.name === "REQUEST" && status.isActive && (
         <>
           <Divider />
           <Pressable style={styles.buttonContainer} onPress={editReservationHandler}>
@@ -63,7 +62,7 @@ const StepBaseButtons = ({
         </>
       )}
 
-      {status.step === TransactionStatusEnum.Successful && (
+      {status.step?.name === "SUCCESSFUL" && (
         <>
           <Divider />
           <Pressable
