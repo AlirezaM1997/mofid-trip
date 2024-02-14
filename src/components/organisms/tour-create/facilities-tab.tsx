@@ -5,13 +5,28 @@ import { Feather } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import { useFormikContext } from "formik";
-import { TourAddInputType, useTourAddMutation } from "@src/gql/generated";
+import { SettingDetailType, TourAddInputType } from "@src/gql/generated";
+import { RootState } from "@src/store";
+import { useSelector } from "react-redux";
 
 const FacilitiesTab = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const [value, setValue] = useState<string | null>();
   const { values, setFieldValue } = useFormikContext<TourAddInputType>();
+  const { language } = useSelector(
+    (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
+  );
+
+  const facilitiesLng: () => string = () => {
+    const obj: Record<string, string> = {
+      AR: "arName",
+      FA_IR: "faName",
+      EN_US: "enName",
+    };
+    if (language in obj) return obj[language];
+    return obj["FA_IR"];
+  };
 
   const handleChangeInput = e => {
     setValue(e.target.value);
@@ -19,7 +34,7 @@ const FacilitiesTab = () => {
 
   const handleAddPress = () => {
     if (value) {
-      setFieldValue("facilities", [...values.facilities, value]);
+      setFieldValue("facilities", [...values.facilities, { [facilitiesLng()]: value }]);
       setValue("");
     }
   };
@@ -57,7 +72,7 @@ const FacilitiesTab = () => {
       <View style={styles.chipsContainer}>
         {values.facilities.map(value => (
           <Chip
-            title={value}
+            title={value[facilitiesLng()]}
             type="outline"
             color="secondary"
             icon={
