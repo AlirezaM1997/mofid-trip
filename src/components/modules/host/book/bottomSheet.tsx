@@ -64,7 +64,7 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
           </View>
         </View>
         <Button
-          disabled={project.statusStep === "SUSPENSION" ? true : false}
+          disabled={project.statusStep?.name === "SUSPENSION" ? true : false}
           size="lg"
           onPress={handlePress}>
           {tr("Book Now")}

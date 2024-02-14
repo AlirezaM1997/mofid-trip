@@ -10,7 +10,6 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import {
-  AccommodationQueryType,
   useTourTransactionDetailQuery,
   useUserDetailQuery,
 } from "@src/gql/generated";

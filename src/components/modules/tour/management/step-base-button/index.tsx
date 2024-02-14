@@ -6,7 +6,7 @@ import useIsRtl from "@src/hooks/localization";
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { StyleSheet, ViewProps } from "react-native";
-import { TourStatusEnum, TourTourStatusStepChoices, useTourEditMutation } from "@src/gql/generated";
+import { TourStatusEnum, useTourEditMutation } from "@src/gql/generated";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
@@ -57,7 +57,7 @@ const TourManagementStepBaseButton = ({ tour, refetch }) => {
   return (
     tour.statusActivation && (
       <>
-        {tour.statusStep === TourTourStatusStepChoices.Request && (
+        {tour.statusStep.name === "REQUEST" && (
           <>
             <ListItem
               bottomDivider
@@ -87,7 +87,7 @@ const TourManagementStepBaseButton = ({ tour, refetch }) => {
           </>
         )}
 
-        {tour.statusStep === TourTourStatusStepChoices.Accept && (
+        {tour.statusStep.name === "ACCEPT" && (
           <>
             <ListItem bottomDivider onPress={() => handleNavigate(`/tour/management/request/${tour.id}`)}>
               <Feather name="users" size={24} color={theme.colors.black} />
@@ -114,7 +114,7 @@ const TourManagementStepBaseButton = ({ tour, refetch }) => {
             </ListItem></>
         )}
 
-        {tour.statusStep === TourStatusEnum.Suspension && (
+        {tour.statusStep.name === "SUSPENSION" && (
           <>
             <ListItem bottomDivider onPress={() => handleNavigate(`/tour/management/request/${tour.id}`)}>
               <Feather name="users" size={24} color={theme.colors.black} />

@@ -34,7 +34,10 @@ query myUserDetailProjectSet {
       price
       discount
       tax
-      statusStep
+      statusStep{
+        displayName
+        name
+      }
       statusActivation
       facilities {
         id

@@ -58,7 +58,7 @@ const HostManagementStepBaseButton = ({ host, refetch }: { host: ProjectQueryTyp
   return (
     host.statusActivation && (
       <>
-        {host.statusStep === ProjectStatusEnum.Request && (
+        {host.statusStep?.name === "REQUEST" && (
           <>
             <ListItem
               bottomDivider
@@ -88,7 +88,7 @@ const HostManagementStepBaseButton = ({ host, refetch }: { host: ProjectQueryTyp
           </>
         )}
 
-        {host.statusStep === ProjectStatusEnum.Accept && (
+        {host.statusStep?.name === "ACCEPT" && (
           <>
             <ListItem bottomDivider onPress={() => handleNavigate(`/host/management/request/${host.id}`)}>
               <Feather name="users" size={24} color={theme.colors.black} />
@@ -116,7 +116,7 @@ const HostManagementStepBaseButton = ({ host, refetch }: { host: ProjectQueryTyp
           </>
         )}
 
-        {host.statusStep === ProjectStatusEnum.Suspension && (
+        {host.statusStep?.name === "SUSPENSION" && (
           <>
             <ListItem bottomDivider onPress={() => handleNavigate(`/host/management/request/${host.id}`)}>
               <Feather name="users" size={24} color={theme.colors.black} />

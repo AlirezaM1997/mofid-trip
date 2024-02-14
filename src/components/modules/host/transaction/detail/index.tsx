@@ -1,7 +1,6 @@
 import {
   ProjectTransactionQueryType,
   StatusQueryType,
-  TransactionStatusEnum,
 } from "@src/gql/generated";
 import React from "react";
 import Invoice from "./invoice";
@@ -28,12 +27,12 @@ const HostTransactionDetail = ({
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      [TransactionStatusEnum.Request]: 1,
-      [TransactionStatusEnum.Accept]: 2,
-      [TransactionStatusEnum.Payment]: 3,
-      [TransactionStatusEnum.Successful]: 4,
+      ["REQUEST"]: 1,
+      ["ACCEPT"]: 2,
+      ["PAYMENT"]: 3,
+      ["SUCCESSFUL"]: 4,
     };
-    return lookup[status?.step || 0];
+    return lookup[status?.step?.name || 0];
   };
 
   return (
@@ -44,7 +43,7 @@ const HostTransactionDetail = ({
 
           <CancelTransaction
             button={
-              status?.step === TransactionStatusEnum.Request &&
+              status?.step?.name === "REQUEST" &&
               status.isActive && (
                 <Text subtitle2 type="error" style={styles.headerButton}>
                   {tr("cancel request")}

@@ -8,7 +8,10 @@ query projectDetail($pk: ID!) {
       dateEnd
       discount
       dateStart
-      statusStep
+      statusStep{
+        displayName
+        name
+      }
       description
       tags {
         id

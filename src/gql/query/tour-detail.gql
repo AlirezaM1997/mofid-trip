@@ -5,7 +5,10 @@ query tourDetail($pk: ID!) {
       title
       endTime
       startTime
-      statusStep
+      statusStep{
+        displayName
+        name
+      }
       description
       capacity{
         guestNumber
