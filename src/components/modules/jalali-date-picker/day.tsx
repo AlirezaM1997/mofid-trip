@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   buttonStyle: { padding: 12 },
   dayBtn: {
     width: 45,
-    height: 50,
+    // height: 50,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

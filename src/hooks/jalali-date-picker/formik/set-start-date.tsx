@@ -3,11 +3,9 @@ import { useFormikContext } from "formik";
 import { StyleSheet, ViewStyle } from "react-native";
 
 const uesSetStartDate = () => {
-
     const { theme } = useTheme();
 
-    const { setFieldTouched, setFieldValue } =
-        useFormikContext();
+    const { setFieldTouched, setFieldValue } = useFormikContext();
 
     const setStartDate = (date, setMarkedDays, dateStart, dateEnd) => {
         setFieldTouched(dateStart, true);
@@ -29,11 +27,12 @@ const uesSetStartDate = () => {
         })) as ViewStyle,
         startAndEndDayContainerStyle: {
             width: 45,
+            height: 35,
         },
         startAndEndDayTitleStyle: (theme => ({
             color: theme.colors.white,
         })) as ViewStyle,
-    })
-    return { setStartDate }
+    });
+    return { setStartDate };
 };
 export default uesSetStartDate;
