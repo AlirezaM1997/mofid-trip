@@ -88,7 +88,7 @@ const JalaliDatePicker = ({
             const dayData = validMarkedDay?.dayData || validMatchDays?.data;
 
             return (
-              <View>
+              <View style={styles.container}>
                 <Day
                   key={index}
                   date={item.date}
@@ -106,7 +106,7 @@ const JalaliDatePicker = ({
                           {localizeNumber(moment(item.date).locale("fa").format("D"))}
                         </Text>
                         {dayData && (
-                          <Text style={[validMarkedDay?.titleStyle, { paddingTop: 2 }]} error>
+                          <Text style={[validMarkedDay?.titleStyle]} error>
                             {`${localizeNumber(dayData.toString() as string)} ${tr("man")}`}
                           </Text>
                         )}
