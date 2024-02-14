@@ -53,8 +53,8 @@ const FilterHeader = ({ index, setIndex, setIsVisible }) => {
 
 const styles = StyleSheet.create({
   filterHeader: {
-    marginTop: 32,
-    marginBottom: 8,
+    marginTop: 8,
+    marginBottom: 16,
     flexDirection: "row",
     justifyContent: "space-between",
   },
