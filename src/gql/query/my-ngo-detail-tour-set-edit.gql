@@ -10,8 +10,6 @@ query myNGODetailTourSetEdit {
       origin {
         ... on AccommodationQueryType {
           id
-          province
-          city
           address
           lat
           lng

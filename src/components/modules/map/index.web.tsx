@@ -75,13 +75,13 @@ const Map = ({
     setLocation({ lat, lng });
   }, [lat, lng]);
 
-  const currentLocationIcon = {
-    id: "my-location",
-    size: [60, 60],
-    iconAnchor: [-26, 60],
-    position: location,
-    icon: window.location.origin + markerImage,
-  };
+  // const currentLocationIcon = {
+  //   id: "my-location",
+  //   size: [60, 60],
+  //   iconAnchor: [-26, 60],
+  //   position: location,
+  //   icon: window.location.origin + markerImage,
+  // };
 
   return (
     <>
@@ -120,7 +120,8 @@ const Map = ({
             lat: location?.lat,
             lng: location?.lng,
           }}
-          mapMarkers={[currentLocationIcon, ...mapMarkers] || []}
+          // mapMarkers={[currentLocationIcon, ...mapMarkers] || []}
+          mapMarkers={mapMarkers || []}
           mapLayers={[
             {
               layerType: "TileLayer",
