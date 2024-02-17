@@ -85,21 +85,21 @@ export type AccommodationListType = {
 
 /** An enumeration. */
 export enum AccommodationProjectGenderChoices {
-  /** هر دو */
+  /** BOTH */
   Both = 'BOTH',
-  /** زن */
+  /** FEMALE */
   Female = 'FEMALE',
-  /** مرد */
+  /** MALE */
   Male = 'MALE'
 }
 
 /** An enumeration. */
 export enum AccommodationProjectRequestFromChoices {
-  /** هر دو */
+  /** BOTH */
   Both = 'BOTH',
-  /** تشکل */
+  /** NGO */
   Ngo = 'NGO',
-  /** کاربر */
+  /** USER */
   User = 'USER'
 }
 
@@ -120,9 +120,9 @@ export type AccommodationQueryType = {
 
 /** An enumeration. */
 export enum AccommodationTagTypeChoices {
-  /** کمپین */
+  /** CAMPAIGN */
   Campaign = 'CAMPAIGN',
-  /** عمومی */
+  /** GENERAL */
   General = 'GENERAL'
 }
 
@@ -2085,11 +2085,11 @@ export type TourStatusStepQueryType = {
 
 /** An enumeration. */
 export enum TourTourGuestGenderChoices {
-  /** کودک */
+  /** CHILD */
   Child = 'CHILD',
-  /** زن */
+  /** FEMALE */
   Female = 'FEMALE',
-  /** مرد */
+  /** MALE */
   Male = 'MALE'
 }
 
@@ -2311,7 +2311,7 @@ export type UserQueryType = {
   tag?: Maybe<TagQueryType>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
+  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;

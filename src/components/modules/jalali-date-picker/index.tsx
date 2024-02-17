@@ -1,5 +1,5 @@
 import Header from "./header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styles } from "./styles";
 import WeekDays from "./week-days";
 import Day, { DayProps } from "./day";
@@ -62,6 +62,14 @@ const JalaliDatePicker = ({
   const _onDayPress = (date: any) => {
     onDayPress?.(date);
   };
+
+  useEffect(() => {
+    if (markedDays?.length !== 0 && cursor === 0) {
+      let a = ((+moment(markedDays[0]?.date).locale("fa").format("YYYY") - +moment(new Date()).locale("fa").format("YYYY")) * 12) +
+        (+moment(markedDays[0]?.date).locale("fa").format("M") - +moment(new Date()).locale("fa").format("M"));
+      setCursor(a);
+    }
+  }, [markedDays?.[0]?.date])
 
   return (
     <CalendarContext.Provider value={{ cursor: cursor, setCursor: setCursor }}>
