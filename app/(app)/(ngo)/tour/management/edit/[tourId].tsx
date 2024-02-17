@@ -55,10 +55,7 @@ const EditTourScreen = () => {
       .required(tr("Required"))
       .typeError(tr("Only number acceptable"))
       .min(0, tr("Only positive numbers acceptable")),
-    discount: Yup.number()
-      .required(tr("Required"))
-      .min(0, tr("Only positive numbers acceptable"))
-      .max(100, tr("Discount can not be greater than 100")),
+    discount: Yup.number().max(100, tr("Discount can not be greater than 100")),
   });
 
   const handleNext = () => setActiveStep(activeStep + 1);
@@ -87,7 +84,6 @@ const EditTourScreen = () => {
 
   const copyOfHostDetail = {
     ...tourDetail,
-    facilities: tourDetail?.facilities?.map(item => item?.faName),
     base64Images: tourDetail?.avatarS3?.map(item => item?.small),
     price: tourDetail?.packages[0].price,
     discount: tourDetail?.packages[0].discount,

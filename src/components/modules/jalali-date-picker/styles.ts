@@ -11,9 +11,15 @@ export const styles = StyleSheet.create({
   divider: theme => ({ borderBottomWidth: 1, borderColor: theme.colors.grey0, width: "100%" }),
   dayText: { textAlign: "center" },
   viewComponent: {
+    padding: 6,
     display: "flex",
     alignItems: "center",
     textAlign: "center",
-    paddingVertical: 8,
+  },
+  container: {
+    display: "flex",
+    marginBottom: 2,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

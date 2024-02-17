@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { Avatar, Colors, ListItem, ListItemProps, Text, useTheme } from "@rneui/themed";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { TourTransactionQueryType, TransactionStatusEnum } from "@src/gql/generated";
+import { TourTransactionQueryType } from "@src/gql/generated";
 
 type PropsType = ListItemProps & {
   transaction: TourTransactionQueryType;
@@ -16,11 +16,11 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
 
   const getCurrentStep = () => {
     const lookup: LookupType = {
-      [TransactionStatusEnum.Request]: {
+      REQUEST: {
         title: tr("awaiting review"),
         color: "grey3",
       },
-      [TransactionStatusEnum.Accept]: transaction.status.isActive
+      ACCEPT: transaction.status.isActive
         ? {
             title: tr("accepted"),
             color: "success",
@@ -29,12 +29,12 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
             title: tr("failed"),
             color: "error",
           },
-      [TransactionStatusEnum.Payment]: {
+      PAYMENT: {
         title: tr("success receipt"),
         color: "info",
       },
     };
-    return lookup[transaction.status.step];
+    return lookup[transaction.status.step?.name];
   };
 
   const step = getCurrentStep();

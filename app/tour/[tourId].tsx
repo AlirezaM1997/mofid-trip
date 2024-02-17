@@ -1,38 +1,36 @@
-import Map from "@modules/map/index.web";
-import moment from "jalali-moment";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import { useEffect, useState } from "react";
-import ImageSlider from "@modules/image-slider";
-import { ImageBackground, Pressable, StyleSheet, View } from "react-native";
-import ContactCard from "@modules/contact-card";
-import SimilarTours from "@modules/similar-tours";
-import TourFacilities from "@modules/tour/facilities";
-import TitleWithAction from "@modules/title-with-action";
-import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import BottomButtonLayout from "@components/layout/bottom-button";
+import LoadingIndicator from "@modules/Loading-indicator";
+import ContactCard from "@modules/contact-card";
+import ImageSlider from "@modules/image-slider";
+import Map from "@modules/map/index.web";
+import ShareReportDropDown from "@modules/share-report-dropdown";
+import SimilarTours from "@modules/similar-tours";
+import TourComment from "@modules/tour/comment";
+import TourFacilities from "@modules/tour/facilities";
 import { BottomSheet, Button, ListItem, Text } from "@rneui/themed";
-import { router, useLocalSearchParams, useNavigation } from "expo-router";
+import { useSession } from "@src/context/auth";
 import {
   AccommodationQueryType,
   TourPackageType,
   TourQueryType,
   useTourDetailQuery,
 } from "@src/gql/generated";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import LoadingIndicator from "@modules/Loading-indicator";
-import { useSession } from "@src/context/auth";
-import ShareReportDropDown from "@modules/share-report-dropdown";
 import openMapHandler from "@src/helper/opem-map";
-import TourComment from "@modules/tour/comment";
+import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
+import moment from "jalali-moment";
+import { useState } from "react";
+import { ImageBackground, Pressable, StyleSheet, View } from "react-native";
 
 export default () => {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
   const navigation = useNavigation();
   const { formatPrice } = useFormatPrice();
-  const { tourId, name } = useLocalSearchParams();
-  const [tour, setTour] = useState<TourQueryType>();
+  const { tourId } = useLocalSearchParams();
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
@@ -56,39 +54,35 @@ export default () => {
   const handleNavigateToReserve = (tourPackage: TourPackageType) => {
     setIsVisible(false);
     router.push({
-      pathname: `/tour/${tour.id}/reservation/add/step-1`,
+      pathname: `/tour/${tourId}/reservation/add/step-1`,
       params: {
-        tourId: tour.id,
+        tourId: tourId,
         tourPackage: JSON.stringify(tourPackage),
       },
     });
   };
 
-  const handleBuy = p => {
+  const handleBuy = (p:TourPackageType) => {
     if (session) {
       handleNavigateToReserve(p);
     } else {
       setIsVisiblePrevent(true);
     }
   };
+  const tour = data?.tourDetail;
 
   const startTime = moment(tour?.startTime).locale("fa").format("D MMMM");
   const endTime = moment(tour?.endTime).locale("fa").format("D MMMM");
 
-  useEffect(() => {
-    if (!loading && data) {
-      setTour(data.tourDetail as TourQueryType);
-    }
-  }, [loading, data]);
 
-  if (loading || !tour) return <LoadingIndicator />;
+  if (loading && !tour) return <LoadingIndicator />;
   navigation.setOptions({
     title: (data?.tourDetail as TourQueryType)?.title,
     headerRight: () => <ShareReportDropDown />,
   });
 
   return (
-    <BottomButtonLayout buttons={[<Button disabled={tour.statusStep === "SUSPENSION" ? true : false} onPress={handleBottomSheet}>{tr("Reserve")}</Button>]}>
+    <BottomButtonLayout buttons={[<Button disabled={tour.statusStep?.name === "SUSPENSION" ? true : false} onPress={handleBottomSheet}>{tr("Reserve")}</Button>]}>
       <Container>
         <WhiteSpace size={10} />
         <ImageSlider imageList={tour?.avatarS3} />
@@ -123,12 +117,8 @@ export default () => {
 
         <WhiteSpace size={20} />
 
-        <TitleWithAction
-          size="subtitle1"
-          title={tr("Tour Facilities")}
-          actionTitle={tr("See All")}
-          onActionPress={() => router.push("/search")}
-        />
+        <Text subtitle1>{tr("Tour Facilities")}</Text>
+
         <TourFacilities facilities={tour.facilities} />
 
         <WhiteSpace size={20} />

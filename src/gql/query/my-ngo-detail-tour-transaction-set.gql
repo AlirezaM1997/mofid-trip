@@ -5,7 +5,10 @@ query myNGODetailTourTransactionSet {
       id
       status {
         isActive
-        step
+        step{
+        displayName
+        name
+      }
       }
       owner {
         avatarS3 {

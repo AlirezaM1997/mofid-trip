@@ -23,7 +23,6 @@ const Day = ({ date, ...props }: DayProps) => {
       color="secondary"
       buttonStyle={styles.buttonStyle}
       containerStyle={styles.dayBtn}
-      style={{ marginBottom: 2 }}
       type="clear"
       {...props}>
       {localizeNumber(jalaliDate)}
@@ -37,6 +36,8 @@ const styles = StyleSheet.create({
   buttonStyle: { padding: 12 },
   dayBtn: {
     width: 45,
-    height: 45,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

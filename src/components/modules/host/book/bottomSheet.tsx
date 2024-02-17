@@ -23,7 +23,6 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { formatPrice } = useFormatPrice();
 
   const handlePress = () => {
-
     if (!session) return router.push("/user-login");
 
     if (project?.capacity?.guestNumber === 0) {
@@ -37,7 +36,12 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
 
     router.push({
       pathname: "host/transaction/add",
-      params: { projectId: projectId, name: name },
+      params: {
+        name: name,
+        projectId: projectId,
+        dateEnd: project.dateEnd,
+        dateStart: project.dateStart,
+      },
     });
   };
 
@@ -59,7 +63,10 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
             )}
           </View>
         </View>
-        <Button disabled={project.statusStep === "SUSPENSION" ? true : false} size="lg" onPress={handlePress}>
+        <Button
+          disabled={project.statusStep?.name === "SUSPENSION" ? true : false}
+          size="lg"
+          onPress={handlePress}>
           {tr("Book Now")}
         </Button>
       </ButtonRow>

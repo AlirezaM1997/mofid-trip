@@ -50,8 +50,8 @@ const useHandleDayPress = () => {
   const styles = StyleSheet.create({
     startDayButtonStyle: (theme => ({
       backgroundColor: theme.colors.black,
-      borderTopLeftRadius: 0,
-      borderBottomLeftRadius: 0,
+      borderTopRightRadius: 10,
+      borderBottomRightRadius: 10,
     })) as ViewStyle,
     startDayContainerStyle: {
       width: 45,
@@ -72,9 +72,9 @@ const useHandleDayPress = () => {
       color: theme.colors.grey5,
     })) as ViewStyle,
     endDayButtonStyle: (theme => ({
+      borderTopLeftRadius: 10,
+      borderBottomLeftRadius: 10,
       backgroundColor: theme.colors.black,
-      borderTopRightRadius: 0,
-      borderBottomRightRadius: 0,
     })) as ViewStyle,
     endDayContainerStyle: {
       width: 45,

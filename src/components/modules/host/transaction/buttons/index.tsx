@@ -28,13 +28,13 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
   const handleClose = () => setIsBottomSheetVisible(false);
   const buttonType = () => {
     const lookup = {
-      REQUEST: {
+      "REQUEST": {
         type: "outline",
         color: "secondary",
         title: tr("request details"),
         changeHandler: () => pressHandler(`/host/transaction/${transaction.id}`),
       },
-      ACCEPT: transaction.status.isActive
+      "ACCEPT": transaction.status?.isActive
         ? {
             title: transaction?.project?.price ? tr("pay") : tr("reservation"),
             detailsBtn: true,
@@ -49,7 +49,7 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
               <Feather name="info" size={16} style={{ marginLeft: 8 }} color={theme.colors.white} />
             ),
           },
-      PAYMENT: transaction.status.isActive
+      "PAYMENT": transaction.status?.isActive
         ? {
             type: "outline",
             color: "secondary",
@@ -61,14 +61,14 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
             detailsBtn: true,
             changeHandler: () => setIsAcceptPaymentVisible(true),
           },
-      SUCCESSFUL: {
+      "SUCCESSFUL": {
         title: tr("rates to the host"),
         detailsBtn: true,
         changeHandler: () => setIsBottomSheetVisible(true),
       },
     };
 
-    if (transaction.status.step in lookup) return lookup[transaction.status.step];
+    if (transaction.status.step?.name in lookup) return lookup[transaction.status.step?.name];
   };
 
   return (

@@ -7,23 +7,22 @@ import { useRootNavigationState } from "expo-router";
 import Authentication from "@modules/authentication";
 import { useIsFocused } from "@react-navigation/core";
 import LoadingIndicator from "@modules/Loading-indicator";
-import { useUserDetailProfileQuery } from "@src/gql/generated";
+import { useUserDetailProfileLazyQuery, useUserDetailProfileQuery } from "@src/gql/generated";
 
 const Profile: React.FC = () => {
   I18nManager.allowRTL(true);
   const { session } = useSession();
   const isFocused = useIsFocused();
   const rootNavigationState = useRootNavigationState();
-  const { refetch, data, loading } = useUserDetailProfileQuery({
+  const [_, { refetch, data }] = useUserDetailProfileLazyQuery({
     fetchPolicy: "network-only",
   });
 
-  if (!loading && !session) return <Authentication />;
-
   useEffect(() => {
-    refetch();
-  }, [isFocused]);
+    session && refetch();
+  }, [isFocused, session]);
 
+  if (!session) return <Authentication />;
   if (!data) return <LoadingIndicator />;
 
   // if you open new tab and enter page url in addressbar and try to open, you see an error. the error described in

@@ -1,6 +1,5 @@
 import {
   ProjectQueryType,
-  ProjectStatusEnum,
   AccommodationImageType,
   useMyUserDetailProjectSetQuery,
 } from "@src/gql/generated";
@@ -35,11 +34,11 @@ const HostDetailScreen = () => {
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      [ProjectStatusEnum.Request]: 1,
-      [ProjectStatusEnum.Accept]: 2,
-      [ProjectStatusEnum.Suspension]: 3,
+      REQUEST: 1,
+      ACCEPT: 2,
+      SUSPENSION: 3,
     };
-    return lookup[host?.statusStep as string];
+    return lookup[host?.statusStep?.name as string];
   };
 
   const makePhoneCall = () => {
@@ -78,7 +77,7 @@ const HostDetailScreen = () => {
     <ScrollView>
       <WhiteSpace size={32} />
       <Container>
-        {data?.userDetail?.isNgo && !data?.userDetail?.ngo?.isVerify && (
+        {/* {data?.userDetail?.isNgo && !data?.userDetail?.ngo?.isVerify && (
           <>
             <NgoAuthentication
               isVerify={data?.userDetail?.ngo?.isVerify}
@@ -86,7 +85,7 @@ const HostDetailScreen = () => {
             />
             <WhiteSpace size={32} />
           </>
-        )}
+        )} */}
 
         <ImageSlider imageList={host?.accommodation?.avatarS3 as AccommodationImageType[]} />
         <WhiteSpace size={10} />

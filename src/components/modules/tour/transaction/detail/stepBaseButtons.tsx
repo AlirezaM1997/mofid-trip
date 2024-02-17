@@ -1,7 +1,6 @@
 import React from "react";
 import useTranslation from "@src/hooks/translation";
 import { Divider, Text, useTheme } from "@rneui/themed";
-import { TransactionStatusEnum } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import CancelTransaction from "@modules/tour/transaction/cancle";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
@@ -23,7 +22,7 @@ const StepBaseButtons = ({ status, transactionId, tourPackage }) => {
 
   return (
     <>
-      {status.step === TransactionStatusEnum.Request && status.isActive && (
+      {status.step === "REQUEST" && status.isActive && (
         <>
           <Divider />
           <Pressable style={styles.buttonContainer} onPress={editReservationHandler}>
@@ -50,7 +49,7 @@ const StepBaseButtons = ({ status, transactionId, tourPackage }) => {
         </>
       )}
 
-      {status.step === TransactionStatusEnum.Successful && (
+      {status.step === "SUCCESSFUL" && (
         <>
           <Divider />
           <Pressable

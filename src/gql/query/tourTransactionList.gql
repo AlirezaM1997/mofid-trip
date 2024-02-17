@@ -10,7 +10,10 @@ query tourTransactionList ($page: PageType) {
       }
       status {
         isActive
-        step
+        step{
+        displayName
+        name
+      }
       }
       tourPackage {
         price
