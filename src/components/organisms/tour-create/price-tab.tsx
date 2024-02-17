@@ -79,7 +79,7 @@ const PriceTab = () => {
         keyboardType="numeric"
         onBlur={handleBlur("discount")}
         label={tr("Discount") + " (%)"}
-        value={values.discount?.toString()}
+        value={parseText(values.discount?.toString())}
         errorMessage={(touched.discount && errors.discount) as string}
         onChangeText={text => setFieldValue("discount", parseText(text))}
       />
@@ -101,7 +101,7 @@ const PriceTab = () => {
       <WhiteSpace />
       <View style={styles.row}>
         <View style={styles.row}>
-          <Text>تخفیف {localizeNumber(values.discount)}%</Text>
+          <Text>تخفیف {localizeNumber(values.discount as number)}%</Text>
           <Text>+</Text>
           <Text>قیمت پایه {formatPrice(+values.price ?? 0)}</Text>
         </View>

@@ -85,21 +85,21 @@ export type AccommodationListType = {
 
 /** An enumeration. */
 export enum AccommodationProjectGenderChoices {
-  /** هر دو */
+  /** BOTH */
   Both = 'BOTH',
-  /** زن */
+  /** FEMALE */
   Female = 'FEMALE',
-  /** مرد */
+  /** MALE */
   Male = 'MALE'
 }
 
 /** An enumeration. */
 export enum AccommodationProjectRequestFromChoices {
-  /** هر دو */
+  /** BOTH */
   Both = 'BOTH',
-  /** تشکل */
+  /** NGO */
   Ngo = 'NGO',
-  /** کاربر */
+  /** USER */
   User = 'USER'
 }
 
@@ -120,9 +120,9 @@ export type AccommodationQueryType = {
 
 /** An enumeration. */
 export enum AccommodationTagTypeChoices {
-  /** کمپین */
+  /** CAMPAIGN */
   Campaign = 'CAMPAIGN',
-  /** عمومی */
+  /** GENERAL */
   General = 'GENERAL'
 }
 
@@ -2085,11 +2085,11 @@ export type TourStatusStepQueryType = {
 
 /** An enumeration. */
 export enum TourTourGuestGenderChoices {
-  /** کودک */
+  /** CHILD */
   Child = 'CHILD',
-  /** زن */
+  /** FEMALE */
   Female = 'FEMALE',
-  /** مرد */
+  /** MALE */
   Male = 'MALE'
 }
 
@@ -2311,7 +2311,7 @@ export type UserQueryType = {
   tag?: Maybe<TagQueryType>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
+  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -2658,7 +2658,7 @@ export type MyNgoDetailProjectTransactionSetQuery = { __typename?: 'Query', NGOD
 export type MyNgoDetailTourSetEditQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyNgoDetailTourSetEditQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, origin?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number, discount?: number | null }>, capacity?: { __typename?: 'TourCapacityType', gender?: string | null, childAccept?: boolean | null, guestNumber?: number | null } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null } | null> | null } | null> | null } | null };
+export type MyNgoDetailTourSetEditQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, origin?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, destination?: { __typename?: 'AccommodationQueryType', id: string, province?: string | null, city?: string | null, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType', id: string } | null, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number, discount?: number | null }>, capacity?: { __typename?: 'TourCapacityType', gender?: string | null, childAccept?: boolean | null, guestNumber?: number | null } | null, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, faName?: string | null } | null> | null } | null> | null } | null };
 
 export type MyNgoDetailTourSetQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -4046,8 +4046,6 @@ export const MyNgoDetailTourSetEditDocument = gql`
       origin {
         ... on AccommodationQueryType {
           id
-          province
-          city
           address
           lat
           lng
