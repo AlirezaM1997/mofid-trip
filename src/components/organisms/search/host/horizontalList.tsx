@@ -5,14 +5,15 @@ import useTranslation from "@src/hooks/translation";
 import { ScrollView } from "react-native-gesture-handler";
 import HostSearchCard from "@modules/host/card/search-card";
 import { ActivityIndicator, Pressable, StyleSheet } from "react-native";
+import { ProjectListSearchQuery } from "@src/gql/generated";
 
-const SearchHostHorizontalList = ({ data, loading }) => {
+const SearchHostHorizontalList = ({ data, loading }: { data: ProjectListSearchQuery | undefined, loading: boolean }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
   if (!data || loading) return <ActivityIndicator size="large" color={theme.colors.primary} />;
 
-  if (!data?.projectList.data.length) return <Text center>{tr("nothing found")}</Text>;
+  if (!data?.projectList?.data?.length) return <Text center>{tr("nothing found")}</Text>;
 
   return (
     <ScrollView
@@ -22,8 +23,8 @@ const SearchHostHorizontalList = ({ data, loading }) => {
       {data?.projectList?.data.map(project => (
         <Pressable
           style={styles.card}
-          key={project.id}
-          onPress={() => router.push(`host/${project.id}`)}>
+          key={project?.id}
+          onPress={() => router.push(`host/${project?.id}`)}>
           <HostSearchCard project={project} />
         </Pressable>
       ))}
@@ -32,7 +33,7 @@ const SearchHostHorizontalList = ({ data, loading }) => {
 };
 
 const styles = StyleSheet.create({
-  contentContainerStyle: { gap: 15, padding: 1 },
+  contentContainerStyle: { gap: 15, padding: 1, paddingHorizontal: 24 },
   card: { width: 226 },
 });
 

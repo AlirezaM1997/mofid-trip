@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { RootState } from "@src/store";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import { CategoryEnum, setCategory } from "@src/slice/filter-slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,40 +43,34 @@ const SearchScreen: React.FC = () => {
     <>
       <SearchBar />
       {search ? (
-        <Container style={styles.container}>
-          <View>
+        <View>
+          <Container>
             <TitleWithAction
               size="body2"
               actionTitle={tr("See All")}
               onActionPress={() => routerHandler(CategoryEnum.TOUR)}
               title={`${tr("all tours of")} ${search}`}
             />
-
-            <WhiteSpace size={8} />
-            <SearchTourHorizontalList data={tourData} loading={tourLoading} />
-          </View>
-
-          <View>
+          </Container>
+          <WhiteSpace size={8} />
+          <SearchTourHorizontalList data={tourData} loading={tourLoading} />
+          <WhiteSpace size={24} />
+          <Container>
             <TitleWithAction
               size="body2"
               actionTitle={tr("See All")}
               onActionPress={() => routerHandler(CategoryEnum.HOST)}
               title={`${tr("all hosts of")} ${search}`}
             />
-
-            <WhiteSpace size={8} />
-            <SearchHostHorizontalList data={hostData} loading={hostLoading} />
-          </View>
-        </Container>
+          </Container>
+          <WhiteSpace size={8} />
+          <SearchHostHorizontalList data={hostData} loading={hostLoading} />
+        </View>
       ) : (
         <></>
       )}
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { gap: 24 },
-});
 
 export default SearchScreen;
