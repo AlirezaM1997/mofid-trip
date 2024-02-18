@@ -87,7 +87,7 @@ const LoginDetailScreen = () => {
               <Text heading1>{tr("write a screen name for yourself")}</Text>
               <WhiteSpace size={4} />
               <Text caption>
-                {tr("Please choose a screen name for yourself.")}
+                {tr("please choose a screen name for yourself.")}
               </Text>
               <WhiteSpace size={24} />
               <Input
@@ -108,7 +108,7 @@ const LoginDetailScreen = () => {
           </ScrollView>
           <Text center type="grey2">
             {tr(
-              "by clicking the registration button, you agree to Mofidtrip rules and regulations."
+              "by clicking the registration button, you agree to mofidtrip rules and regulations."
             )}
           </Text>
           <WhiteSpace />
