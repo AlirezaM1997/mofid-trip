@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "@rneui/themed";
+import { Button, Text } from "@rneui/themed";
 import { Divider } from "@rneui/base";
 import Stepper from "@modules/stepper";
 import TransactionDetail from "./details";
@@ -19,10 +19,10 @@ const ReservationCard = ({ transaction, index }: PropsType) => {
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      "REQUEST": 1,
-      "ACCEPT": 2,
-      "PAYMENT": 3,
-      "SUCCESSFUL": 4,
+      REQUEST: 1,
+      ACCEPT: 2,
+      PAYMENT: 3,
+      SUCCESSFUL: 4,
     };
     return lookup[transaction?.status?.step?.name || 0];
   };
@@ -37,7 +37,7 @@ const ReservationCard = ({ transaction, index }: PropsType) => {
           <Stepper
             steps={steps}
             activeStep={activeStep()}
-            isActive={transaction.status.isActive as boolean}
+            isActive={transaction?.status?.isActive as boolean}
           />
         </View>
         <ConfirmButton transaction={transaction} />

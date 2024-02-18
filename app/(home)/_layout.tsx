@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Redirect, router } from "expo-router";
+import { router } from "expo-router";
 import { Tabs } from "expo-router/tabs";
 import useIsRtl from "@src/hooks/localization";
 import useTranslation from "@src/hooks/translation";
 import useProjectTable from "@src/hooks/db/project";
 import { Platform, StyleSheet } from "react-native";
-import { Feather, Entypo } from "@expo/vector-icons";
+import { Feather, FontAwesome } from "@expo/vector-icons";
 import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
 import ButtonRow from "@modules/button-rows";
 import WhiteSpace from "@atoms/white-space";
@@ -87,11 +87,11 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
-          name="search"
+          name="search-list"
           options={{
-            title: tr("Search"),
+            title: tr("map"),
             tabBarIcon: ({ color, size }) => (
-              <Entypo name="location-pin" size={size} color={color} />
+              <FontAwesome name="map" size={size} color={color} />
             ),
           }}
         />
@@ -99,7 +99,8 @@ export default function AppLayout() {
           name="profile"
           options={{
             title: tr("Profile"),
-            tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
+            tabBarIcon: ({ color, size }) =>
+              <Feather name="user" size={size} color={color} />,
           }}
         />
       </Tabs>

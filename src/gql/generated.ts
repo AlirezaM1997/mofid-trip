@@ -320,14 +320,14 @@ export type ChannelListType = {
 /** GraphQL type representing a chat channel. */
 export type ChannelQueryType = {
   __typename?: 'ChannelQueryType';
-  /** Channel avatar image in different sizes. */
-  avatarS3?: Maybe<UserImageType>;
   /** Unique identifier of the chat channel. */
   channelId?: Maybe<Scalars['String']['output']>;
   /** Name of the chat channel. */
   channelName?: Maybe<Scalars['String']['output']>;
   /** The last message sent in the channel. */
   lastMessage?: Maybe<MessageQueryType>;
+  /** Members in current channel */
+  members?: Maybe<Array<Maybe<UserQueryType>>>;
 };
 
 /** An InputObjectType for adding a new comment. */
@@ -2290,6 +2290,7 @@ export type UserQueryType = {
   /** User avatar image in different sizes. */
   avatarS3?: Maybe<UserImageType>;
   bio?: Maybe<Scalars['String']['output']>;
+  chatId?: Maybe<Scalars['String']['output']>;
   commentSet: Array<CommentType>;
   displayName?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];

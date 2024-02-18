@@ -11,9 +11,12 @@ import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useSession } from "@src/context/auth";
+import { useDispatch } from "react-redux";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 
 const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { tr } = useTranslation();
+  const dispatch = useDispatch();
   const handleClose = () => setIsVisible(false);
   const { projectId, name } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
@@ -23,8 +26,20 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { formatPrice } = useFormatPrice();
 
   const handlePress = () => {
-    if (!session) return router.push("/user-login");
-
+    if (!session) {
+      dispatch(
+        setRedirectToScreenAfterLogin({
+          pathname: "host/transaction/add",
+          params: {
+            name: name,
+            projectId: projectId,
+            dateEnd: project.dateEnd,
+            dateStart: project.dateStart,
+          },
+        })
+      );
+      return router.push("/user-login");
+    }
     if (project?.capacity?.guestNumber === 0) {
       Toast.show({
         type: "error",
