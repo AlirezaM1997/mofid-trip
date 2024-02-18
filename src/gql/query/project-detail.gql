@@ -1,72 +1,76 @@
 query projectDetail($pk: ID!) {
   projectDetail(pk: $pk) {
-    id
-    name
-    price
-    gender
-    dateEnd
-    dateStart
-    description
-    discount
-    tags {
+    ... on ProjectQueryType {
       id
       name
-    }
-    capacity {
-      id
-      male
-      child
-      both
-      female
-    }
-    facilities {
-      id
-      enName
-      faName
-      arName
-    }
-    categories {
-      name
-      id
-    }
-    creator {
-      id
-      fullname
-      firstname
-      phoneNumber
-      ngo {
-        id
+      price
+      gender
+      dateEnd
+      discount
+      dateStart
+      statusStep{
+        displayName
+        name
       }
-
-      avatarS3 {
-        small
-        medium
-        large
-      }
-      projectSet {
+      description
+      tags {
         id
         name
-        price
-        accommodation {
+      }
+      capacity {
+        childAccept
+        gender
+        guestNumber
+      }
+      facilities {
+        id
+        enName
+        faName
+        arName
+      }
+      categories {
+        name
+        id
+      }
+      creator {
+        id
+        fullname
+        firstname
+        phoneNumber
+        ngo {
           id
-          address
-          avatarS3 {
-            large
-            medium
-            small
+        }
+
+        avatarS3 {
+          small
+          medium
+          large
+        }
+        projectSet {
+          id
+          name
+          price
+          accommodation {
+            id
+            address
+            avatarS3 {
+              large
+              medium
+              small
+            }
           }
         }
       }
-    }
-    accommodation {
-      id
-      lat
-      lng
-      address
-      avatarS3 {
-        large
-        medium
-        small
+      accommodation {
+        id
+        lat
+        lng
+        address
+        avatarS3 {
+          large
+          medium
+          small
+        }
       }
     }
   }

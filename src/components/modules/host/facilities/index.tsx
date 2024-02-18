@@ -2,33 +2,38 @@ import React from "react";
 import { Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import useTranslation from "@src/hooks/translation";
-import TitleWithAction from "@modules/title-with-action";
-import { ProjectFacilityQueryType } from "@src/gql/generated";
+import { ProjectFacilityQueryType, SettingDetailType } from "@src/gql/generated";
+import { useSelector } from "react-redux";
+import { RootState } from "@src/store";
 
-type PropsType = {
-  facility: ProjectFacilityQueryType;
-};
+const Item = ({ facility }: {facility: ProjectFacilityQueryType}) => {
 
-const Item = ({ facility }: PropsType) => {
+  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType);
+
+  const facilitiesLanguage = () => {
+    const lookup: Record<string, string> = {
+      "EN_US": "enName",
+      "FA_IR": "faName",
+      "AR": "arName",
+    };
+    return lookup[language];
+  };
+
   return (
     <View style={style.itemContainer}>
-      <Text style={style.itemText}>{facility.enName}</Text>
+      <Text style={style.itemText}>{facility[facilitiesLanguage()] }</Text>
     </View>
   );
 };
 
-const ProjectFacilities = ({ facilities }) => {
+const ProjectFacilities = ({ facilities }: {facilities: ProjectFacilityQueryType[]}) => {
   const { tr } = useTranslation();
 
   if (!facilities || !facilities.length) return;
 
   return (
     <View style={style.container}>
-      <TitleWithAction
-        size="subtitle1"
-        actionTitle={tr("See All")}
-        title={tr("hosting facilities")}
-      />
+      <Text subtitle1>{tr("hosting facilities")}</Text>
       {facilities?.map((facility, index) => (
         <Item key={index} facility={facility} />
       ))}

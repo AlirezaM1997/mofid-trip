@@ -1,13 +1,18 @@
 query myNGODetailTourSet {
   NGODetail {
     id
+    isVerify
+    verifyDescription
     tourSet {
       id
       title
       description
       startTime
       endTime
-      statusStep
+      statusStep{
+        displayName
+        name
+      }
       statusActivation
       createdDate
       modifiedDate
@@ -57,12 +62,12 @@ query myNGODetailTourSet {
         id
         title
         price
+        discount
       }
       capacity {
-        id
-        male
-        female
-        child
+        gender
+        childAccept
+        guestNumber
       }
       facilities {
         id

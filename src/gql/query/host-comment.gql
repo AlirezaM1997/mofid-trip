@@ -1,0 +1,27 @@
+query hostComment($pk: ID!) {
+  projectDetail(pk: $pk) {
+    ... on ProjectQueryType {
+      name
+      commentSet {
+        text
+        createdDate
+        dislikeCount
+        likeCount
+        id
+        user {
+          fullname
+        }
+        nestedComment {
+        text
+        createdDate
+        dislikeCount
+        likeCount
+        id
+        user {
+          fullname
+        }
+        }
+      }
+    }
+  }
+}

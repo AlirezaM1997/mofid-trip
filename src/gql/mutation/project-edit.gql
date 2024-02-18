@@ -1,0 +1,8 @@
+mutation projectEdit($data: ProjectEditInputType!) {
+  projectEdit(data: $data) {
+    message
+    metadata
+    status
+    statusCode
+  }
+}

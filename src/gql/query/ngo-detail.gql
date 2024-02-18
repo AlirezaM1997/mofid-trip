@@ -3,6 +3,8 @@ query NGODetail($pk: ID) {
     id
     title
     address
+    isVerify
+    verifyDescription
     description
     avatarS3 {
       large
@@ -29,13 +31,15 @@ query NGODetail($pk: ID) {
       requestFrom
       tax
       description
-      statusStep
+      statusStep{
+        displayName
+        name
+      }
       createdDate
       capacity {
-        id
-        male
-        female
-        child
+        childAccept
+        gender
+        guestNumber
       }
       categories {
         id
@@ -71,7 +75,10 @@ query NGODetail($pk: ID) {
       id
       status {
         isActive
-        step
+        step{
+        displayName
+        name
+      }
       }
       owner {
         avatarS3 {

@@ -1,6 +1,18 @@
 query myNGODetail {
   NGODetail {
     id
+    kind
+    title
+    address
+    isVerify
+    verifyDescription
+    description
+    contactNumber
+    user {
+      id
+      email
+      phoneNumber
+    }
     projectSet {
       id
       creator {
@@ -27,7 +39,10 @@ query myNGODetail {
       price
       discount
       tax
-      statusStep
+      statusStep{
+        displayName
+        name
+      }
       statusActivation
       facilities {
         id
@@ -39,9 +54,6 @@ query myNGODetail {
         id
       }
       createdDate
-      capacity {
-        id
-      }
       transactionSet {
         id
       }
@@ -57,137 +69,16 @@ query myNGODetail {
       }
       __typename
     }
-    tourSet {
-      id
-      title
-      description
-      startTime
-      endTime
-      statusStep
-      statusActivation
-      createdDate
-      modifiedDate
-      origin {
-        ... on AccommodationQueryType {
-          id
-          province
-          city
-          address
-          lat
-          lng
-          avatarS3 {
-            large
-            medium
-            small
-          }
-        }
-        ... on ProjectQueryType {
-          id
-        }
-      }
-      destination {
-        ... on AccommodationQueryType {
-          id
-          province
-          city
-          address
-          lat
-          lng
-          avatarS3 {
-            large
-            medium
-            small
-          }
-        }
-        ... on ProjectQueryType {
-          id
-        }
-        __typename
-      }
-      avatarS3 {
-        large
-        medium
-        small
-      }
-      packages {
-        id
-        title
-        price
-      }
-      capacity {
-        id
-        male
-        female
-        child
-      }
-      facilities {
-        id
-        faName
-        enName
-        arName
-      }
+    bannerS3 {
+      large
+      medium
+      small
     }
-    tourTransactionSet {
-      id
-      status {
-        isActive
-        step
-      }
-      owner {
-        avatarS3 {
-          large
-          medium
-          small
-        }
-        id
-        fullname
-        phoneNumber
-      }
-      tourPackage {
-        tour {
-          id
-          title
-        }
-      }
-      tourGuests {
-        avatarS3 {
-          large
-          medium
-          small
-        }
-        id
-        firstname
-        lastname
-        phoneNumber
-      }
-    }
-    projectTransactionSet {
-      dateEnd
-      dateStart
-      id
-      owner {
-        phoneNumber
-        fullname
-        id
-        avatarS3 {
-          large
-          medium
-          small
-        }
-      }
-      guest {
-        guestNumber
-        gender
-        childAccept
-      }
-      project {
-        name
-        id
-      }
-      status {
-        isActive
-        step
-      }
-    }
+    contactNumber
+    description
+    isVerify
+    kind
+    lat
+    lng
   }
 }

@@ -5,7 +5,6 @@ import Stepper from "@modules/stepper";
 import { ListItem, Text, useTheme } from "@rneui/themed";
 import {
   MyNgoDetailTourSetQuery,
-  TourTourStatusStepChoices,
   useMyNgoDetailTourSetQuery,
 } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
@@ -18,6 +17,7 @@ import { Divider } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { Linking } from "react-native";
 import { passedTime } from "@src/helper/date";
+import TourManagementStepBaseButton from "@modules/tour/management/step-base-button";
 
 const TourDetailScreen = () => {
   const isRtl = useIsRtl();
@@ -28,15 +28,16 @@ const TourDetailScreen = () => {
   const steps = [tr("pending"), tr("published"), tr("End Tour")];
   const [tour, setTour] = useState<MyNgoDetailTourSetQuery["NGODetail"]["tourSet"][0]>();
 
-  const { loading, data } = useMyNgoDetailTourSetQuery();
+  const { loading, data , refetch } = useMyNgoDetailTourSetQuery();
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      [TourTourStatusStepChoices.Request]: 1,
-      [TourTourStatusStepChoices.Accept]: 2,
-      [TourTourStatusStepChoices.End]: 3,
+      REQUEST: 1,
+      ACCEPT: 2,
+      END: 3,
+      SUSPENSION: 4,
     };
-    return lookup[tour.statusStep];
+    return lookup[tour.statusStep.name];
   };
   const handleNavigateToRequest = () => {
     router.push("/tour/management/request/" + tour.id);
@@ -58,11 +59,22 @@ const TourDetailScreen = () => {
   }, [loading, data]);
 
   if (loading || !tour) return <LoadingIndicator />;
+  console.log(tour);
 
   return (
     <ScrollView>
-      <WhiteSpace size={10} />
+      <WhiteSpace size={32} />
       <Container>
+        {/* {!data.NGODetail.isVerify && (
+          <>
+            <NgoAuthentication
+              isVerify={data.NGODetail.isVerify}
+              description={data.NGODetail.verifyDescription}
+            />
+            <WhiteSpace size={32} />
+          </>
+        )} */}
+
         <ImageSlider imageList={tour?.avatarS3} />
         <WhiteSpace size={10} />
         <Text subtitle1 bold>
@@ -108,19 +120,8 @@ const TourDetailScreen = () => {
           color={theme.colors.grey3}
         />
       </ListItem>
-      {tour.statusStep === TourTourStatusStepChoices.Accept && tour.statusActivation && (
-        <ListItem onPress={handleNavigateToRequest}>
-          <Feather name="users" size={24} color={theme.colors.black} />
-          <ListItem.Content>
-            <ListItem.Title>{tr("Requests And Passengers")}</ListItem.Title>
-          </ListItem.Content>
-          <Feather
-            name={isRtl ? "chevron-left" : "chevron-right"}
-            size={24}
-            color={theme.colors.grey3}
-          />
-        </ListItem>
-      )}
+
+      <TourManagementStepBaseButton tour={tour} refetch={refetch} />
 
       <Divider thickness={8} bgColor="grey0" />
 

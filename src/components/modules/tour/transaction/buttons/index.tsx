@@ -8,6 +8,7 @@ import RejectedDetails from "./rejectedDetails";
 import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { TourTransactionQueryType } from "@src/gql/generated";
+import TourRateBottomSheet from "@modules/rate/tour-rate-bottomSheet";
 
 type PropsType = {
   purchaseLoading: boolean;
@@ -18,22 +19,24 @@ type PropsType = {
 const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: PropsType) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
-  const [isAcceptPaymentVisible, setIsAcceptPaymentVisible] = useState(false);
-  const [isRejectedVisible, setIsRejectedVisible] = useState(false);
+  const [isAcceptPaymentVisible, setIsAcceptPaymentVisible] = useState<boolean>(false);
+  const [isRejectedVisible, setIsRejectedVisible] = useState<boolean>(false);
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState<boolean>(false);
 
+  const handleClose = () => setIsBottomSheetVisible(false);
   const pressHandler = (pathname: string) => {
     router.push(pathname);
   };
 
   const buttonType = () => {
     const lookup = {
-      REQUEST: {
+      "REQUEST": {
         type: "outline",
         color: "secondary",
         title: tr("request details"),
         changeHandler: () => pressHandler(`/tour/transaction/detail/${transaction.id}`),
       },
-      ACCEPT: transaction.status.isActive
+      "ACCEPT": transaction.status.isActive
         ? {
             title: transaction.tourPackage.price ? tr("pay") : tr("reservation"),
             detailsBtn: true,
@@ -48,7 +51,7 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
               <Feather name="info" size={16} style={{ marginLeft: 8 }} color={theme.colors.white} />
             ),
           },
-      PAYMENT: transaction.status.isActive
+      "PAYMENT": transaction.status.isActive
         ? {
             type: "outline",
             color: "secondary",
@@ -61,16 +64,14 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
             detailsBtn: true,
             changeHandler: () => setIsAcceptPaymentVisible(true),
           },
-      SUCCESSFUL: {
-        type: "outline",
-        color: "secondary",
-        detailsBtn: false,
-        title: tr("request details"),
-        changeHandler: () => pressHandler(`/tour/transaction/detail/${transaction.id}`),
-      },
+          SUCCESSFUL: {
+            title: tr("rates to the tour"),
+            detailsBtn: true,
+            changeHandler: () => setIsBottomSheetVisible(true),
+          },
     };
 
-    if (transaction.status.step in lookup) return lookup[transaction.status.step];
+    if (transaction.status.step?.name in lookup) return lookup[transaction.status.step?.name];
   };
 
   return (
@@ -110,6 +111,11 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
         transaction={transaction}
         isVisible={isRejectedVisible}
         setIsVisible={setIsRejectedVisible}
+      />
+      <TourRateBottomSheet
+        transaction={transaction}
+        isVisible={isBottomSheetVisible}
+        handleClose={handleClose}
       />
     </>
   );

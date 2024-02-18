@@ -14,7 +14,7 @@ const PriceTab = () => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
   const { formatPrice } = useFormatPrice();
-  const { values, errors, touched, handleChange, handleBlur, setFieldValue } =
+  const { values, errors, touched, handleBlur, setFieldValue } =
     useFormikContext<TourAddInputType>();
 
   const recommendedPrices = [
@@ -50,10 +50,12 @@ const PriceTab = () => {
 
       <Input
         value={values.price?.toString()}
+        maxLength={8}
         label={tr("Price") + " (" + tr("Tooman") + ")"}
         onChangeText={price => setFieldValue("price", parseText(price))}
         onBlur={handleBlur("price")}
-        errorMessage={touched.price && (errors.price as string)}
+        keyboardType="numeric"
+        errorMessage={(touched.price && errors.price) as string}
       />
       <View style={styles.badgeRow}>
         {recommendedPrices.map(recom => (
@@ -62,8 +64,8 @@ const PriceTab = () => {
             color="grey2"
             type="solid"
             containerStyle={styles.badgeContainerStyle}
-            badgeStyle={styles.badgeStyle}
             onPress={() => setFieldValue("price", recom.value)}
+            badgeStyle={[styles.badgeStyle, values.price === recom.value && styles.selectedBadge]}
           />
         ))}
       </View>
@@ -73,11 +75,13 @@ const PriceTab = () => {
       <WhiteSpace />
 
       <Input
-        value={values.discount?.toString()}
-        onChangeText={handleChange("discount")}
+        maxLength={3}
+        keyboardType="numeric"
         onBlur={handleBlur("discount")}
-        errorMessage={touched.discount && (errors.discount as string)}
         label={tr("Discount") + " (%)"}
+        value={parseText(values.discount?.toString())}
+        errorMessage={(touched.discount && errors.discount) as string}
+        onChangeText={text => setFieldValue("discount", parseText(text))}
       />
       <View style={styles.badgeRow}>
         {recommendedDiscounts.map(recom => (
@@ -86,7 +90,10 @@ const PriceTab = () => {
             color="grey2"
             type="solid"
             containerStyle={styles.badgeContainerStyle}
-            badgeStyle={styles.badgeStyle2}
+            badgeStyle={[
+              styles.badgeStyle2,
+              values.discount === recom.value && styles.selectedBadge,
+            ]}
             onPress={() => setFieldValue("discount", recom.value)}
           />
         ))}
@@ -94,9 +101,9 @@ const PriceTab = () => {
       <WhiteSpace />
       <View style={styles.row}>
         <View style={styles.row}>
-          <Text>تخفیف {localizeNumber(values.discount)}%</Text>
+          <Text>تخفیف {localizeNumber(values.discount as number)}%</Text>
           <Text>+</Text>
-          <Text>قیمت پایه {(formatPrice(+values.price ?? 0))}</Text>
+          <Text>قیمت پایه {formatPrice(+values.price ?? 0)}</Text>
         </View>
         <Text>=</Text>
         <Text>
@@ -130,6 +137,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     flexGrow: 1,
     width: "100%",
+  },
+  selectedBadge: {
+    border: "1px solid #000",
   },
   badgeStyle2: {
     minWidth: WIDTH / 4 - 100,

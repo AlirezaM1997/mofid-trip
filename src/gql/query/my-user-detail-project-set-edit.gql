@@ -1,0 +1,36 @@
+query myUserDetailProjectSetEdit {
+  userDetail {
+    id
+    projectSet {
+      id
+      name
+      description
+      dateStart
+      dateEnd
+      price
+      discount
+      categories {
+        id
+      }
+      facilities {
+        faName
+        enName
+      }
+      accommodation {
+        lat
+        lng
+        city
+        address
+        province
+        avatarS3 {
+          small
+        }
+      }
+      capacity {
+        gender
+        guestNumber
+        childAccept
+      }
+    }
+  }
+}

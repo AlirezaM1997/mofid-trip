@@ -1,0 +1,21 @@
+query projectListSearch($search: String, $sort: SortType, $filter: ProjectFilterType, $page: PageType!) {
+  projectList(search: $search, sort: $sort, filter: $filter, page: $page) {
+    pageCount
+    count
+    data {
+      id
+      name
+      price
+      discount
+      accommodation {
+        id
+        lat
+        lng
+        address
+        avatarS3 {
+          small
+        }
+      }
+    }
+  }
+}

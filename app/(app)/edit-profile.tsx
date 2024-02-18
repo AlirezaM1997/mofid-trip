@@ -1,22 +1,22 @@
 import { Feather } from "@expo/vector-icons";
+import LoadingIndicator from "@modules/Loading-indicator";
 import { Button, Divider, Input } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
-import { useUserDetailQuery, useUserEditMutation } from "@src/gql/generated";
-import { SECONDARY_COLOR } from "@src/theme";
-import React, { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet } from "react-native";
-import { Pressable, View } from "react-native";
-import Toast from "react-native-toast-message";
-import * as ImagePicker from "expo-image-picker";
+import { useUserDetailProfileQuery, useUserEditMutation } from "@src/gql/generated";
 import { isBase64 } from "@src/helper/extra";
+import handleUploadImage from "@src/helper/image-picker";
 import useTranslation from "@src/hooks/translation";
-import LoadingIndicator from "@modules/Loading-indicator";
+import { SECONDARY_COLOR } from "@src/theme";
+import { router } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 const Page = () => {
   const { tr } = useTranslation();
-  const [editProfile, { loading, data, error }] = useUserEditMutation();
-  const { loading: loadingUserDetail, data: dataUserDetail } = useUserDetailQuery();
+  const [editProfile] = useUserEditMutation();
+  const { loading, data } = useUserDetailProfileQuery();
   const [userDetailTemp, setUserDetailTemp] = useState({
     firstname: "",
     lastname: "",
@@ -24,33 +24,15 @@ const Page = () => {
     base64Image: "",
   });
 
-  useEffect(() => {
+  const handleImagePicker = async () => {
+    const imageBase64 = await handleUploadImage();
     setUserDetailTemp({
-      firstname: userDetail?.firstname ?? "",
-      lastname: userDetail?.lastname ?? "",
-      bio: userDetail?.bio ?? "",
-      base64Image: userDetail?.avatarS3?.small ?? "",
+      ...userDetailTemp,
+      base64Image: imageBase64 as string,
     });
-  }, [userDetail]);
-
-  const handleUploadImage = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 0.5,
-      base64: true,
-    });
-
-    if (!result.canceled) {
-      setUserDetailTemp({
-        ...userDetailTemp,
-        base64Image: `data:image/jpg;base64,${result.assets[0].base64}`,
-      });
-    }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     let tempData = {
       firstname: userDetailTemp?.firstname ?? "",
       lastname: userDetailTemp?.lastname ?? "",
@@ -62,40 +44,35 @@ const Page = () => {
         base64Image: userDetailTemp.base64Image ?? "",
       };
     }
-    editProfile({
-      variables: {
-        data: tempData,
-      },
-    });
-  };
-
-  useEffect(() => {
-    if (!loading && data) {
-      // syncTable();
+    const { data } = await editProfile({ variables: { data: tempData } });
+    if (data?.userEdit?.status === "ACCEPTED") {
       Toast.show({
         type: "success",
         text1: tr("Successful"),
         text2: tr("Profile saved successfully"),
       });
+      router.push("/profile");
     }
-    if (error) {
-      Toast.show({
-        type: "error",
-        text1: tr("Error"),
-        text2: JSON.stringify(error.message),
-      });
-    }
-  }, [loading, data, error]);
+  };
 
-  if (loadingUserDetail) return <LoadingIndicator />;
+  useEffect(
+    () =>
+      setUserDetailTemp({
+        firstname: data?.userDetail?.firstname ?? "",
+        lastname: data?.userDetail?.lastname ?? "",
+        bio: data?.userDetail?.bio ?? "",
+        base64Image: data?.userDetail?.avatarS3?.small ?? "",
+      }),
+    [data]
+  );
 
-  const userDetail = dataUserDetail.userDetail;
+  if (loading && !data) return <LoadingIndicator />;
 
   return (
     <>
       <WhiteSpace size={20} />
       <ScrollView contentContainerStyle={style.container}>
-        <Pressable style={style.imagePicker} onPress={handleUploadImage}>
+        <Pressable style={style.imagePicker} onPress={handleImagePicker}>
           {userDetailTemp?.base64Image ? (
             <Image style={style.imageStyle} source={{ uri: userDetailTemp?.base64Image }} />
           ) : (
@@ -148,7 +125,7 @@ const Page = () => {
           buttonStyle={style.btnContainerStyle}
           containerStyle={style.btnContainerStyle}
           size="lg"
-          disabled={loading}
+          disabled={loading || !userDetailTemp.firstname || !userDetailTemp.lastname}
           loading={loading}>
           {tr("confirm")}
         </Button>

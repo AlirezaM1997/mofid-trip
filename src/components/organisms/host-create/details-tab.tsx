@@ -1,8 +1,8 @@
-import WhiteSpace from "@atoms/white-space";
 import { Input, Text } from "@rneui/themed";
 import { ProjectAddInputType } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { useFormikContext } from "formik";
+import { StyleSheet, View } from "react-native";
 
 const TabDetails = () => {
   const { tr } = useTranslation();
@@ -11,13 +11,14 @@ const TabDetails = () => {
 
   return (
     <>
-      <Text heading2 bold>
-        {tr("Host title and details")}
-      </Text>
-      <Text type="grey3">
-        {tr("To find a host, address and information about a host for travelers in Nuwayside.")}
-      </Text>
-      <WhiteSpace size={20} />
+      <View style={styles.headerTitle}>
+        <Text heading2 bold>
+          {tr("Host title and details")}
+        </Text>
+        <Text type="grey3">
+          {tr("To find a host, address and information about a host for travelers in Nuwayside.")}
+        </Text>
+      </View>
 
       <Input
         name="name"
@@ -42,5 +43,8 @@ const TabDetails = () => {
     </>
   );
 };
+const styles = StyleSheet.create({
+  headerTitle: { gap: 5, marginBottom: 20 },
+});
 
 export default TabDetails;

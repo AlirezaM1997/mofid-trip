@@ -1,38 +1,25 @@
 import React from "react";
 import { FieldArray, useFormikContext } from "formik";
 import { Ionicons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
 import useTranslation from "@src/hooks/translation";
 import { Image, Text, useTheme } from "@rneui/themed";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import WhiteSpace from "@atoms/white-space";
 import { ProjectAddInputType, TourAddInputType } from "@src/gql/generated";
+import handleUploadImage from "@src/helper/image-picker";
 
 const HostImagePicker = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { values, setFieldValue } = useFormikContext<ProjectAddInputType>();
 
-  const pickImage = async (item: string) => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      quality: 1,
-      base64: true,
-      aspect: [4, 4],
-      allowsEditing: true,
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-    });
-
-    if (result.canceled) {
-      return;
-    }
-
-    if ("uri" in result) {
-      setFieldValue("accommodation.base64Images", [
-        ...values.accommodation.base64Images,
-        result.uri,
-      ]);
-    }
+  const handleImagePicker = async () => {
+    const imageBase64 = await handleUploadImage();
+    setFieldValue("accommodation.base64Images", [
+      ...values.accommodation.base64Images,
+      imageBase64,
+    ]);
   };
 
   const removeHandler = (targetIndex: string) => {
@@ -45,7 +32,7 @@ const HostImagePicker = () => {
   return (
     <>
       <Pressable
-        onPress={() => pickImage("main")}
+        onPress={handleImagePicker}
         style={[
           styles.imageContainer(values.accommodation.base64Images?.[0]),
           styles.mainImageSize,
@@ -79,7 +66,7 @@ const HostImagePicker = () => {
         {Object.keys([0, 1, 2, 3, 4, 5]).map(item => (
           <Pressable
             key={item}
-            onPress={() => pickImage(item)}
+            onPress={handleImagePicker}
             style={[styles.imageContainer(true), styles.subImageSize]}>
             {values.accommodation.base64Images?.[item] ? (
               <>

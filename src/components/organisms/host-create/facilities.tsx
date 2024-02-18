@@ -1,22 +1,33 @@
-import Container from "@atoms/container";
-import WhiteSpace from "@atoms/white-space";
-import BottomButtonLayout from "@components/layout/bottom-button";
-import { Feather } from "@expo/vector-icons";
-import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
-import { Chip, Input, Text } from "@rneui/themed";
-import { Button, useTheme } from "@rneui/themed";
-import { ProjectAddInputType } from "@src/gql/generated";
-import useTranslation from "@src/hooks/translation";
-import { router } from "expo-router";
-import { Formik, useFormikContext } from "formik";
 import { useState } from "react";
+import { useFormikContext } from "formik";
+import WhiteSpace from "@atoms/white-space";
+import { Feather } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
+import { Button, useTheme } from "@rneui/themed";
+import { Chip, Input, Text } from "@rneui/themed";
+import useTranslation from "@src/hooks/translation";
+import { ProjectAddInputType, SettingDetailType } from "@src/gql/generated";
+import { RootState } from "@src/store";
+import { useSelector } from "react-redux";
 
 const TabFaclities = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const [value, setValue] = useState<string | null>();
-  const { values, setValues, setFieldValue } = useFormikContext<ProjectAddInputType>();
+  const { values, setFieldValue } = useFormikContext<ProjectAddInputType>();
+  const { language } = useSelector(
+    (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
+  );
+
+  const facilitiesLng: () => string = () => {
+    const obj: Record<string, string> = {
+      AR: "arName",
+      FA_IR: "faName",
+      EN_US: "enName",
+    };
+    if (language in obj) return obj[language];
+    return obj["FA_IR"];
+  };
 
   const handleChangeInput = e => {
     setValue(e.target.value);
@@ -24,26 +35,27 @@ const TabFaclities = () => {
 
   const handleAddPress = () => {
     if (value) {
-      setFieldValue("facilities", [...values.facilities, value]);
+      setFieldValue("facilities", [...values?.facilities, { [facilitiesLng()]: value }]);
       setValue("");
     }
   };
 
   const handleRemove = title => {
-    const newValues = values.facilities.filter(value => value !== title);
+    const newValues = values?.facilities?.filter(value => value !== title);
     setFieldValue("facilities", newValues);
   };
+  console.log(values?.facilities);
 
   return (
     <>
-      <Text heading2 bold>
-        {tr("Host Facilities")}
-      </Text>
-      <Text>
-        {tr("You can write and add your own host features. Note that this section is optional.")}
-      </Text>
-
-      <WhiteSpace size={20} />
+      <View style={styles.headerTitle}>
+        <Text heading2 bold>
+          {tr("Host Facilities")}
+        </Text>
+        <Text>
+          {tr("You can write and add your own host features. Note that this section is optional.")}
+        </Text>
+      </View>
 
       <View style={styles.inputContainer}>
         <Input value={value} onChange={handleChangeInput} placeholder={tr("Add facilities")} />
@@ -55,9 +67,9 @@ const TabFaclities = () => {
         />
       </View>
       <View style={styles.chipsContainer}>
-        {values.facilities.map(value => (
+        {values?.facilities?.map(value => (
           <Chip
-            title={value}
+            title={value[facilitiesLng()]}
             type="outline"
             color="secondary"
             icon={
@@ -86,6 +98,10 @@ const styles = StyleSheet.create({
     margin: "auto",
     width: 56,
     height: 56,
+  },
+  headerTitle: {
+    gap: 5,
+    marginBottom: 20,
   },
 });
 

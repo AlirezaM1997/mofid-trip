@@ -1,6 +1,5 @@
 import React from "react";
 import Map from "@modules/map";
-import { TransactionStatusEnum } from "@src/gql/generated";
 import { Divider } from "@rneui/themed";
 import Container from "@atoms/container";
 import { StyleSheet } from "react-native";
@@ -8,7 +7,7 @@ import { StyleSheet } from "react-native";
 const PaymentStep = ({ status, destination }) => {
   return (
     <>
-      {[TransactionStatusEnum.Payment, TransactionStatusEnum.Successful].includes(status.step) && (
+      {["PAYMENT", "SUCCESSFUL"].includes(status.step.name) && (
         <>
           <Divider bgColor="grey0" thickness={6} />
 

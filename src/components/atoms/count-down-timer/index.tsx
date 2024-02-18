@@ -3,7 +3,13 @@ import { useLocalizedNumberFormat } from "@src/hooks/translation";
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
-export default function CountDownTimer({ onEnd, initialValue, ...props }) {
+type PropsType = {
+  onEnd: () => void;
+  resetTimer: boolean;
+  initialValue: number;
+};
+
+export default function CountDownTimer({ onEnd, initialValue, resetTimer, ...props }: PropsType) {
   // TODO: refactore the component to use useRef instead of useState
   const [seconds, setSeconds] = useState(initialValue);
   const { localizeNumber } = useLocalizedNumberFormat();
@@ -12,8 +18,6 @@ export default function CountDownTimer({ onEnd, initialValue, ...props }) {
     const interval = setInterval(() => {
       if (seconds > 0) {
         setSeconds(seconds - 1);
-      } else {
-        onEnd();
       }
     }, 1000);
 
@@ -21,10 +25,15 @@ export default function CountDownTimer({ onEnd, initialValue, ...props }) {
     return () => clearInterval(interval);
   }, [seconds]);
 
-  const formatTime = time => {
+  if (seconds === 0) onEnd();
+  if (resetTimer && seconds === 0) setSeconds(initialValue);
+
+  const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const remainingSeconds = time % 60;
-    return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+    return `${minutes < 10 ? "0" : ""}${minutes}:${
+      remainingSeconds < 10 ? "0" : ""
+    }${remainingSeconds}`;
   };
 
   return <Text style={styles.text}>{localizeNumber(formatTime(seconds))}</Text>;

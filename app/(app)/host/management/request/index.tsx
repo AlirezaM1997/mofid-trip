@@ -35,7 +35,7 @@ const RequestScreen = () => {
     handleOpen();
   };
 
-  const { loading, data, refetch, networkStatus } = useMyUserDetailProjectTransactionSetQuery({
+  const { loading, data, refetch } = useMyUserDetailProjectTransactionSetQuery({
     notifyOnNetworkStatusChange: true,
   });
 

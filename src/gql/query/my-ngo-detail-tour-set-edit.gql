@@ -1,0 +1,66 @@
+query myNGODetailTourSetEdit {
+  NGODetail {
+    id
+    tourSet {
+      id
+      title
+      description
+      startTime
+      endTime
+      origin {
+        ... on AccommodationQueryType {
+          id
+          address
+          lat
+          lng
+          avatarS3 {
+            large
+            medium
+            small
+          }
+        }
+        ... on ProjectQueryType {
+          id
+        }
+      }
+      destination {
+        ... on AccommodationQueryType {
+          id
+          province
+          city
+          address
+          lat
+          lng
+          avatarS3 {
+            large
+            medium
+            small
+          }
+        }
+        ... on ProjectQueryType {
+          id
+        }
+      }
+      avatarS3 {
+        large
+        medium
+        small
+      }
+      packages {
+        id
+        title
+        price
+        discount
+      }
+      capacity {
+        gender
+        childAccept
+        guestNumber
+      }
+      facilities {
+        id
+        faName
+      }
+    }
+  }
+}

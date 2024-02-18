@@ -70,6 +70,7 @@ const WalletScreen = () => {
             size="sm"
             type="outline"
             color="secondary"
+            onPress={() => router.push("wallet/withdraw")}
             icon={<AntDesign name="arrowdown" size={16} color="black" />}>
             {tr("withdraw")}
           </Button>

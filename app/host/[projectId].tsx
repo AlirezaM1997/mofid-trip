@@ -11,7 +11,11 @@ import ProjectFacilities from "@src/components/modules/host/facilities";
 import ProjectTags from "@src/components/modules/host/tags";
 import Map from "@src/components/modules/map/index.web";
 import SimilarProjects from "@src/components/modules/similar-projects";
-import { ProjectQueryType, useProjectDetailQuery } from "@src/gql/generated";
+import {
+  AccommodationImageType,
+  ProjectQueryType,
+  useProjectDetailQuery,
+} from "@src/gql/generated";
 import openMapHandler from "@src/helper/opem-map";
 import useTranslation from "@src/hooks/translation";
 import { setProjectDetail } from "@src/slice/project-slice";
@@ -20,18 +24,14 @@ import React, { useEffect } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
-
-// @@@@@@@@@@@@@ DON'T REMOVE THIS LINE @@@@@@@@@@@@@@@@@@
-// @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
-import markerImage from "@assets/image/marker.png";
-const a = markerImage
+import HostComment from "@modules/host/comment";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const isFocused = useIsFocused();
   const navigation = useNavigation();
-  const { projectId, name } = useLocalSearchParams();
+  const { projectId } = useLocalSearchParams();
 
   const { loading, data } = useProjectDetailQuery({
     variables: {
@@ -45,14 +45,15 @@ const Page: React.FC = ({ ...props }) => {
     }
   }, [loading, data]);
 
+  if (loading) return <LoadingIndicator />;
+
   navigation.setOptions({
-    title: name,
+    title: (data?.projectDetail as ProjectQueryType)?.name,
     headerRight: () => <ShareReportDropDown />,
   });
 
-  if (loading) return <LoadingIndicator />;
-
   const {
+    name,
     tags,
     creator,
     dateEnd,
@@ -62,14 +63,18 @@ const Page: React.FC = ({ ...props }) => {
     facilities,
     description,
     accommodation,
-  } = data?.projectDetail;
+  } = data?.projectDetail as ProjectQueryType;
+
+console.log('====================================');
+console.log(facilities);
+console.log('======================sadfasdfasfasd==============');
 
   return (
     <BottomButtonLayout
-      buttons={[<BookHostBottomSheet project={data.projectDetail as ProjectQueryType} />]}>
+      buttons={[<BookHostBottomSheet project={data?.projectDetail as ProjectQueryType} />]}>
       <ScrollView style={style.scrollView}>
         <Container style={style.container}>
-          <ImageSlider imageList={accommodation.avatarS3} />
+          <ImageSlider imageList={accommodation?.avatarS3 as AccommodationImageType[]} />
 
           <ProjectTags tags={tags ?? []} />
 
@@ -81,7 +86,7 @@ const Page: React.FC = ({ ...props }) => {
           <ProjectBoldFeatures
             dateEnd={dateEnd}
             dateStart={dateStart}
-            capacity={capacity ?? 0}
+            capacity={capacity?.guestNumber ?? 0}
             category={categories?.[0]?.name}
           />
 
@@ -105,13 +110,13 @@ const Page: React.FC = ({ ...props }) => {
               {tr("host address")}
             </Text>
             <Text caption type="grey3">
-              {accommodation.address}
+              {accommodation?.address}
             </Text>
             {isFocused && (
               <Pressable onPress={() => openMapHandler(accommodation?.lat, accommodation?.lng)}>
                 <Map
-                  lat={accommodation?.lat}
-                  lng={accommodation?.lng}
+                  lat={accommodation?.lat as number}
+                  lng={accommodation?.lng as number}
                   mapOptions={{
                     dragging: false,
                     zoomControl: false,
@@ -137,12 +142,14 @@ const Page: React.FC = ({ ...props }) => {
           currentProjectId={projectId as string}
           projects={creator?.projectSet as ProjectQueryType[]}
         />
+        <HostComment />
       </ScrollView>
     </BottomButtonLayout>
   );
 };
 const style = StyleSheet.create({
   scrollView: {
+    paddingBottom: 16,
     flex: 1,
   },
   container: { gap: 32, marginVertical: 10 },

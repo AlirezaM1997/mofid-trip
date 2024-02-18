@@ -1,11 +1,8 @@
 import { Text } from "@rneui/themed";
-import { RootState } from "@src/store";
 import React, { useState } from "react";
 import Container from "@atoms/container";
-import { useSelector } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
-import { getCapacity } from "@src/helper/tour";
 import Toast from "react-native-toast-message";
 import { BottomSheet, Button } from "@rneui/themed";
 import { ProjectQueryType } from "@src/gql/generated";
@@ -26,14 +23,9 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { formatPrice } = useFormatPrice();
 
   const handlePress = () => {
-    // if (!isNgo) {
-    //   setIsVisible(true);
-    //   return;
-    // }
-
     if (!session) return router.push("/user-login");
 
-    if (getCapacity(project.capacity) === 0) {
+    if (project?.capacity?.guestNumber === 0) {
       Toast.show({
         type: "error",
         text1: "Warning",
@@ -44,7 +36,12 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
 
     router.push({
       pathname: "host/transaction/add",
-      params: { projectId: projectId, name: name },
+      params: {
+        name: name,
+        projectId: projectId,
+        dateEnd: project.dateEnd,
+        dateStart: project.dateStart,
+      },
     });
   };
 
@@ -66,7 +63,10 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
             )}
           </View>
         </View>
-        <Button size="lg" onPress={handlePress}>
+        <Button
+          disabled={project.statusStep?.name === "SUSPENSION" ? true : false}
+          size="lg"
+          onPress={handlePress}>
           {tr("Book Now")}
         </Button>
       </ButtonRow>

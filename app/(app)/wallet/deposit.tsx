@@ -88,6 +88,7 @@ const Increase = () => {
             <Input
               name="amount"
               value={values.amount}
+              keyboardType="numeric"
               onBlur={handleBlur("amount")}
               onChangeText={text => setFieldValue("amount", parseText(text))}
               placeholder={`${tr("amount")} (${tr("tooman")})`}

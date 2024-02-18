@@ -1,6 +1,8 @@
 query myNGODetailProjectSet {
   NGODetail {
     id
+    isVerify
+    verifyDescription
     projectSet {
       id
       creator {
@@ -27,7 +29,10 @@ query myNGODetailProjectSet {
       price
       discount
       tax
-      statusStep
+      statusStep{
+        displayName
+        name
+      }
       statusActivation
       facilities {
         id
@@ -39,9 +44,6 @@ query myNGODetailProjectSet {
         id
       }
       createdDate
-      capacity {
-        id
-      }
       transactionSet {
         id
       }

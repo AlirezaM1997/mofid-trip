@@ -1,4 +1,3 @@
-import Container from "@atoms/container";
 import Input from "@atoms/input";
 import WhiteSpace from "@atoms/white-space";
 import { Badge, Divider, Text } from "@rneui/themed";
@@ -35,23 +34,25 @@ const TabPrice = () => {
 
   return (
     <>
-      <Text heading2 bold>
-        {tr("Host Price")}
-      </Text>
-      <Text>
-        {tr(
-          "Choose or write the cost of your host, you can give a discount to the original price."
-        )}
-      </Text>
-
-      <WhiteSpace />
+      <View style={styles.headerTitle}>
+        <Text heading2 bold>
+          {tr("Host Price")}
+        </Text>
+        <Text>
+          {tr(
+            "Choose or write the cost of your host, you can give a discount to the original price."
+          )}
+        </Text>
+      </View>
 
       <Input
         value={values.price?.toString()}
+        maxLength={8}
         label={tr("Price") + " (" + tr("Tooman") + ")"}
         onChangeText={text => setFieldValue("price", parseText(text))}
         onBlur={handleBlur("price")}
-        errorMessage={touched.price && (errors.price as string)}
+        keyboardType="numeric"
+        errorMessage={(touched.price && errors.price) as string}
       />
       <View style={styles.badgeRow}>
         {recommendedPrices.map(recom => (
@@ -60,8 +61,8 @@ const TabPrice = () => {
             color="grey2"
             type="solid"
             containerStyle={styles.badgeContainerStyle}
-            badgeStyle={styles.badgeStyle}
-            onPress={() => setFieldValue("price", parseInt(recom.value))}
+            badgeStyle={[styles.badgeStyle, values.price === recom.value && styles.selectedBadge]}
+            onPress={() => setFieldValue("price", +recom.value)}
           />
         ))}
       </View>
@@ -72,9 +73,11 @@ const TabPrice = () => {
 
       <Input
         value={values.discount?.toString()}
+        maxLength={3}
+        keyboardType="numeric"
         onChangeText={text => setFieldValue("discount", parseText(text))}
         onBlur={handleBlur("discount")}
-        errorMessage={touched.discount && (errors.discount as string)}
+        errorMessage={(touched.discount && errors.discount) as string}
         label={tr("Discount") + " (%)"}
       />
       <View style={styles.badgeRow}>
@@ -84,8 +87,11 @@ const TabPrice = () => {
             color="grey2"
             type="solid"
             containerStyle={styles.badgeContainerStyle}
-            badgeStyle={styles.badgeStyle2}
-            onPress={() => setFieldValue("discount", parseInt(recom.value))}
+            badgeStyle={[
+              styles.badgeStyle2,
+              values.discount === recom.value && styles.selectedBadge,
+            ]}
+            onPress={() => setFieldValue("discount", +recom.value)}
           />
         ))}
       </View>
@@ -94,7 +100,7 @@ const TabPrice = () => {
         <View style={styles.row}>
           <Text>تخفیف {localizeNumber(values.discount)}%</Text>
           <Text>+</Text>
-          <Text>قیمت پایه {(formatPrice(+values.price ?? 0))}</Text>
+          <Text>قیمت پایه {formatPrice(+values.price ?? 0)}</Text>
         </View>
         <Text>=</Text>
         <Text>
@@ -122,6 +128,9 @@ const styles = StyleSheet.create({
     padding: 0,
     flexGrow: 1,
   },
+  selectedBadge: {
+    border: "1px solid #000",
+  },
   badgeStyle: {
     minWidth: WIDTH / 2 - 85,
     paddingHorizontal: 0,
@@ -142,6 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 3,
   },
+  headerTitle: { gap: 5, marginBottom: 20 },
 });
 
 export default TabPrice;

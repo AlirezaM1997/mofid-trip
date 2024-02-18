@@ -1,22 +1,22 @@
+import { router } from "expo-router";
 import { View } from "react-native";
 import { HEIGHT } from "@src/constants";
-import NoResult from "@organisms/no-result";
 import { useEffect, useState } from "react";
+import NoResult from "@organisms/no-result";
+import WhiteSpace from "@atoms/white-space";
+import { AntDesign } from "@expo/vector-icons";
+import { Button, useTheme } from "@rneui/themed";
+import useTranslation from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { ScrollView } from "react-native-gesture-handler";
 import HostManagementCard from "@organisms/host-management-card";
-import { MyNgoDetailProjectSetQuery, useMyUserDetailProjectSetQuery } from "@src/gql/generated";
-import useTranslation from "@src/hooks/translation";
-import WhiteSpace from "@atoms/white-space";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { Button, useTheme } from "@rneui/themed";
-import { AntDesign } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { ProjectQueryType, useMyUserDetailProjectSetQuery } from "@src/gql/generated";
 
 const HostManagementScreen = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
-  const [hostSet, setHostSet] = useState<MyNgoDetailProjectSetQuery["NGODetail"]["projectSet"]>([]);
+  const [hostSet, setHostSet] = useState<ProjectQueryType[]>([]);
 
   const { loading, data } = useMyUserDetailProjectSetQuery({ fetchPolicy: "network-only" });
 
@@ -25,7 +25,7 @@ const HostManagementScreen = () => {
   };
   useEffect(() => {
     if (!loading && data) {
-      setHostSet(data.userDetail.projectSet);
+      setHostSet(data?.userDetail?.projectSet as ProjectQueryType[]);
     }
   }, [loading, data]);
 

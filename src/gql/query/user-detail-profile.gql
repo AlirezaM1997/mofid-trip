@@ -1,0 +1,23 @@
+query userDetailProfile {
+  userDetail {
+    id
+    bio
+    isNgo
+    username
+    firstname
+    lastname
+    fullname
+    avatarS3 {
+      small
+    }
+    ngo {
+      id
+      title
+      isVerify
+      verifyDescription
+      avatarS3 {
+        small
+      }
+    }
+  }
+}

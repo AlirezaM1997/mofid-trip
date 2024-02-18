@@ -16,7 +16,10 @@ query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterT
         firstname
       }
       status {
-        step
+        step{
+        displayName
+        name
+      }
         isActive
       }
       guest {
@@ -29,7 +32,11 @@ query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterT
         name
         tax
         price
+        discount
         description
+        categories {
+          name
+        }
         facilities {
           id
           enName

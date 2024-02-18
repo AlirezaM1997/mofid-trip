@@ -1,0 +1,7 @@
+query projectCapacityList($pk: ID!, $filter: ProjectCapacityListFilterType!) {
+  projectCapacityList(filter: $filter, pk: $pk) {
+    date
+    freeCapacity
+    requestedCapacity
+  }
+}

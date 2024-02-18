@@ -5,21 +5,25 @@ import {
 } from "@src/gql/generated";
 import { Button } from "@rneui/themed";
 import * as Network from "expo-network";
+import { totalPrice } from "@src/helper/totalPrice";
 import useTranslation from "@src/hooks/translation";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import React, { ReactElement, useState } from "react";
 import LoadingIndicator from "@modules/Loading-indicator";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import HostTransactionDetail from "@modules/host/transaction/detail ";
+import HostTransactionDetail from "@modules/host/transaction/detail";
+import HostRateBottomSheet from "@modules/rate/host-rate-bottomSheet";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import AcceptPayment from "@modules/host/transaction/buttons/acceptPayment";
-import { totalPrice } from "@src/helper/totalPrice";
 
 const TransactionDetailsScreen = () => {
   const { tr } = useTranslation();
   const navigation = useNavigation();
   const { transactionId } = useLocalSearchParams();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState<boolean>(false);
+
+  const handleClose = () => setIsBottomSheetVisible(false);
 
   const [addPurchase, { loading: purchaseLoading }] = useProjectPurchaseAddMutation();
 
@@ -66,8 +70,10 @@ const TransactionDetailsScreen = () => {
           {tr("view invoice")}
         </Button>
       ),
-      SUCCESSFUL: <Button>{tr("rates to the host")}</Button>,
-      ACCEPT: data.projectTransactionDetail.project.price ? (
+      SUCCESSFUL: (
+        <Button onPress={() => setIsBottomSheetVisible(true)}>{tr("rates to the host")}</Button>
+      ),
+      ACCEPT: data?.projectTransactionDetail?.project?.price ? (
         <Button loading={purchaseLoading} onPress={() => setIsVisible(true)}>
           {tr("pay")}
         </Button>
@@ -86,10 +92,15 @@ const TransactionDetailsScreen = () => {
         transactionDetail={data.projectTransactionDetail as ProjectTransactionQueryType}
       />
       <AcceptPayment
-        purchaseLoading={purchaseLoading}
-        purchaseHandler={purchaseHandler}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
+        purchaseLoading={purchaseLoading}
+        purchaseHandler={purchaseHandler}
+      />
+      <HostRateBottomSheet
+        handleClose={handleClose}
+        isVisible={isBottomSheetVisible}
+        transaction={data?.projectTransactionDetail as ProjectTransactionQueryType}
       />
     </BottomButtonLayout>
   );

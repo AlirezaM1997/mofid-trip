@@ -91,11 +91,13 @@ const WalletTransactionCard = ({ transaction }: { transaction: WalletTransaction
         )}
       </Pressable>
       <WhiteSpace size={8} />
-      <SuccessReceiptBottomSheet
-        isVisible={isVisible}
-        transaction={transaction}
-        setIsVisible={setIsVisible}
-      />
+      {transaction.statusStep !== WalletWalletTransactionStatusStepChoices.Request && (
+        <SuccessReceiptBottomSheet
+          isVisible={isVisible}
+          transaction={transaction}
+          setIsVisible={setIsVisible}
+        />
+      )}
     </>
   );
 };

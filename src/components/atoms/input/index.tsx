@@ -9,18 +9,6 @@ import { Platform, StyleSheet, TextInput, ViewStyle } from "react-native";
 const Input = forwardRef((props: InputProps, ref: Ref<TextInput>) => {
   const { language } = useSelector((state: RootState) => state.settingDetailSlice?.settingDetail);
 
-  // const handleValue = v => {
-  //   switch (props.keyboardType) {
-  //     case "phone-pad":
-  //     case "number-pad":
-  //     case "decimal-pad":
-  //     case "numeric":
-  //       return handleNumber(v);
-  //     default:
-  //       return v;
-  //   }
-  // };
-
   return props.type === "date" ? (
     <InputWithDate ref={ref} {...props} />
   ) : (

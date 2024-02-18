@@ -6,6 +6,7 @@ import React from "react";
 import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
+import WhiteSpace from "@atoms/white-space";
 
 type PropsType = {
   tours: TourQueryType[];
@@ -18,8 +19,8 @@ type ItemPropsType = {
 
 const Item = ({ tour }: ItemPropsType) => {
   const { formatPrice } = useFormatPrice();
-  const {theme} = useTheme();
-  const {tr} = useTranslation();
+  const { theme } = useTheme();
+  const { tr } = useTranslation();
 
   return (
     <View style={style.card}>
@@ -45,7 +46,9 @@ const Item = ({ tour }: ItemPropsType) => {
           </Text>
         </View>
         {tour.packages[0].price <= 0 ? (
-          <Text body2 bold>{tr("it is free")}</Text>
+          <Text body2 bold>
+            {tr("it is free")}
+          </Text>
         ) : (
           <Text body2 bold>
             {formatPrice(tour.packages[0].price)} / هر‌شب
@@ -60,17 +63,20 @@ const SimilarTours = ({ tours, currentTourId }: PropsType) => {
   const handlePress = (tourId: ProjectQueryType["id"]) => router.push(`/tour/${tourId}`);
 
   return (
-    <ScrollView horizontal contentContainerStyle={style.contentContainerStyle}>
-      <View style={style.dummyContent} />
-      {tours
-        ?.filter(p => p.id !== currentTourId)
-        .map((tour, index) => (
-          <Pressable key={index} onPress={() => handlePress(tour.id)}>
-            <Item tour={tour} />
-          </Pressable>
-        ))}
-      <View style={style.dummyContent} />
-    </ScrollView>
+    <>
+      <ScrollView horizontal contentContainerStyle={style.contentContainerStyle}>
+        <View style={style.dummyContent} />
+        {tours
+          ?.filter(p => p.id !== currentTourId)
+          .map((tour, index) => (
+            <Pressable key={index} onPress={() => handlePress(tour.id)}>
+              <Item tour={tour} />
+            </Pressable>
+          ))}
+        <View style={style.dummyContent} />
+      </ScrollView>
+      <WhiteSpace size={16} />
+    </>
   );
 };
 
@@ -83,7 +89,7 @@ const style = StyleSheet.create({
     borderRadius: 10,
     elevation: 1,
     padding: 8,
-    gap:10,
+    gap: 10,
     flexDirection: "row",
     ...Platform.select({
       web: { boxShadow: "0 0 3px #12121233" },
@@ -96,8 +102,9 @@ const style = StyleSheet.create({
     borderRadius: 12,
   },
   cardTextContainer: {
-    paddingVertical:5,
+    paddingVertical: 5,
     justifyContent: "space-between",
+    width:180
   },
   price: {
     fontWeight: "bold",

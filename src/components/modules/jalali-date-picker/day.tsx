@@ -6,23 +6,23 @@ import moment from "jalali-moment";
 
 export type DayProps = ButtonProps & {
   date?: string;
+  dayData?: string | number;
 };
 
 const Day = ({ date, ...props }: DayProps) => {
   const { localizeNumber } = useLocalizedNumberFormat();
   const jalaliDate = date ? moment(date, "YYYY-M-D").locale("fa").format("jD") : "";
 
-  const _onPress = date => {
+  const _onPress = (date: string) => {
     props?.onPress?.(date);
   };
 
   return (
     <Button
-      onPress={e => _onPress(date)}
+      onPress={e => _onPress(date as string)}
       color="secondary"
       buttonStyle={styles.buttonStyle}
       containerStyle={styles.dayBtn}
-      style={{ marginBottom: 2 }}
       type="clear"
       {...props}>
       {localizeNumber(jalaliDate)}
@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
   buttonStyle: { padding: 12 },
   dayBtn: {
     width: 45,
-    height: 45
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

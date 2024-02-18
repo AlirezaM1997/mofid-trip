@@ -1,31 +1,51 @@
-import { FlatList, View } from "react-native";
+import Header from "./header";
 import { useState } from "react";
-import { useTheme } from "@rneui/themed";
-import getAllDaysInMonth from "./helper";
 import { styles } from "./styles";
 import WeekDays from "./week-days";
 import Day, { DayProps } from "./day";
-import Header from "./header";
+import getAllDaysInMonth from "./helper";
 import { CalendarContext } from "./context";
-import moment from "jalali-moment";
+import { FlatList, View } from "react-native";
+import { Text, useTheme } from "@rneui/themed";
+import moment, { Moment } from "jalali-moment";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+
+type DaysDataType = { date: string; data: number | string }[];
 
 type JalaliDatePickerProps = {
-  onDayPress?: ({ dayPressed }) => void;
   markedDays?: DayProps[];
+  daysData?: DaysDataType;
   disableDaysAfter?: moment.Moment; // gregorian based
   disableDaysBefore?: moment.Moment; // gregorian based
   disableDaysIn?: moment.Moment[]; // gregorian based
+  onDayPress?: ({ dayPressed }) => void;
 };
 
-const JalaliDatePicker = ({ onDayPress, markedDays, ...props }: JalaliDatePickerProps) => {
+const JalaliDatePicker = ({
+  daysData,
+  onDayPress,
+  markedDays,
+  ...props
+}: JalaliDatePickerProps) => {
+  const { tr } = useTranslation();
   const { theme } = useTheme();
   const [cursor, setCursor] = useState(0);
   const { daysArray } = getAllDaysInMonth(cursor);
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   function findMarkedDay(date: moment.Moment) {
-    for (let i = 0; i < markedDays.length; i++) {
-      if (moment(markedDays[i].date, "YYYY-MM-DD").isSame(date)) {
-        return markedDays[i]; // Return the object if found
+    for (let i = 0; i < (markedDays as [])?.length; i++) {
+      if (moment(markedDays?.[i].date, "YYYY-MM-DD").isSame(date)) {
+        return markedDays?.[i]; // Return the object if found
+      }
+    }
+    return null; // Return null if the object is not found
+  }
+
+  function findDayData(date: moment.Moment) {
+    for (let i = 0; i < (daysData as [])?.length; i++) {
+      if (moment(daysData?.[i]?.date, "jYYYY-jMM-jDD").locale("en").isSame(date)) {
+        return daysData?.[i]; // Return the object if found
       }
     }
     return null; // Return null if the object is not found
@@ -39,7 +59,7 @@ const JalaliDatePicker = ({ onDayPress, markedDays, ...props }: JalaliDatePicker
     );
   }
 
-  const _onDayPress = date => {
+  const _onDayPress = (date: any) => {
     onDayPress?.(date);
   };
 
@@ -59,15 +79,43 @@ const JalaliDatePicker = ({ onDayPress, markedDays, ...props }: JalaliDatePicker
           data={daysArray}
           columnWrapperStyle={{ gap: 2 }}
           renderItem={({ index, item }) => {
-            const markedDay = markedDays && markedDays.length && findMarkedDay(item.date);
+            const markedDay = markedDays && markedDays.length && findMarkedDay(item.date as Moment);
+            const matchedDays = daysData && daysData.length && findDayData(item.date as Moment);
+
+            const validMarkedDay = markedDay as DayProps;
+            const validMatchDays = matchedDays as DaysDataType[number];
+
+            const dayData = validMarkedDay?.dayData || validMatchDays?.data;
+
             return (
-              <Day
-                key={index}
-                date={item.date}
-                onPress={e => _onDayPress(item.date)}
-                disabled={shouldDisable(item.date)}
-                {...markedDay}
-              />
+              <View style={styles.container}>
+                <Day
+                  key={index}
+                  date={item.date}
+                  onPress={e => _onDayPress(item.date)}
+                  disabled={
+                    (shouldDisable(item.date as Moment) as boolean) || (daysData && !dayData)
+                  }
+                  ViewComponent={() =>
+                    item.date && (
+                      <View style={[validMarkedDay?.buttonStyle, styles.viewComponent]}>
+                        <Text
+                          disabled={!validMarkedDay?.dayData}
+                          style={[validMarkedDay?.titleStyle]}
+                          heading2={validMarkedDay?.dayData ? false : true}>
+                          {localizeNumber(moment(item.date).locale("fa").format("D"))}
+                        </Text>
+                        {dayData && (
+                          <Text style={[validMarkedDay?.titleStyle]} error>
+                            {`${localizeNumber(dayData.toString() as string)} ${tr("man")}`}
+                          </Text>
+                        )}
+                      </View>
+                    )
+                  }
+                  {...markedDay}
+                />
+              </View>
             );
           }}
           keyExtractor={i => i.dayOfMonth ?? Math.random()}

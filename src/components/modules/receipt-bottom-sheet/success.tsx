@@ -17,6 +17,7 @@ type LookUpType = Record<
   Exclude<WalletActionTransactionEnum, "IN_APP_PURCHASE">,
   {
     icon: {};
+    chip: string;
     card: string;
     title: string;
     subTitle: string;
@@ -47,12 +48,14 @@ const SuccessReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => 
       [WalletActionTransactionEnum.Deposit]: {
         title: tr("increase balance"),
         subTitle: tr("payment by card"),
+        chip: tr("successful transfer"),
         card: (source as BackCardQueryType)?.cardPan,
         icon: { name: "arrowup", type: "ant-design", color: theme.colors.black, size: 24 },
       },
       [WalletActionTransactionEnum.Withdraw]: {
-        title: tr("withdrawal from the wallet"),
+        chip: tr("successful withdraw"),
         subTitle: tr("deposit to the account"),
+        title: tr("withdrawal from the wallet"),
         card: (reference as BackCardQueryType)?.cardPan,
         icon: { name: "arrowdown", type: "ant-design", color: theme.colors.black, size: 24 },
       },
@@ -103,7 +106,7 @@ const SuccessReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => 
         <Chip
           buttonStyle={styles.chip}
           color={theme.colors.success}
-          title={tr("successful transfer")}
+          title={transactionActionHolder.chip}
           titleStyle={styles.chipTitle(theme)}
           icon={<AntDesign size={16} name="checkcircle" color={theme.colors.white} />}
         />

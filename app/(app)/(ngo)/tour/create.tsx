@@ -1,31 +1,15 @@
-import Container from "@atoms/container";
-import WhiteSpace from "@atoms/white-space";
-import BottomButtonLayout from "@components/layout/bottom-button";
-import ButtonRow from "@modules/button-rows";
-import TourCreateTabs from "@modules/virtual-tabs/tour-create-tabs";
-import DetailsTab from "@organisms/tour-create/details-tab";
-import { BottomSheet } from "@rneui/themed";
-import { Button, Text } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
-import { setTourCreateActiveStep } from "@src/slice/tour-create-slice";
-import { RootState } from "@src/store";
-import { router } from "expo-router";
-import { useState } from "react";
-import { ImageBackground, StyleSheet } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import CapacityTab from "@organisms/tour-create/capacity-tab";
-import OriginTab from "@organisms/tour-create/origin-tab";
-import DestinationTab from "@organisms/tour-create/destination-tab";
-import DateTab from "@organisms/tour-create/date-tab";
-import PriceTab from "@organisms/tour-create/price-tab";
-import ImagesTab from "@organisms/tour-create/images-tab";
-import FacilitiesTab from "@organisms/tour-create/facilities-tab";
-import { TourGenderEnum, useTourAddMutation } from "@src/gql/generated";
 import { Formik } from "formik";
-import AccessDenied from "@modules/access-denied";
-import { useSession } from "@src/context/auth";
-import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
+import { useState } from "react";
+import { Button } from "@rneui/themed";
+import { RootState } from "@src/store";
+import { StyleSheet } from "react-native";
+import TourCreateForm from "@organisms/tour-create";
+import useTranslation from "@src/hooks/translation";
+import { useDispatch, useSelector } from "react-redux";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import { setTourCreateActiveStep } from "@src/slice/tour-create-slice";
+import { TourGenderEnum, useTourAddMutation } from "@src/gql/generated";
 
 const initialValues = {
   title: null,
@@ -56,13 +40,12 @@ const initialValues = {
 };
 
 const Screen = () => {
-  const dispatch = useDispatch();
   const { tr } = useTranslation();
-  const [submit, { loading }] = useTourAddMutation();
+  const [activeStep, setActiveStep] = useState(1);
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
-  const { activeStep } = useSelector((state: RootState) => state.tourCreateSlice);
-  const { session } = useSession();
-  const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const [submit, { loading }] = useTourAddMutation();
 
   const validationSchema = Yup.object().shape({
     capacity: Yup.object().shape({
@@ -103,8 +86,8 @@ const Screen = () => {
       .required(tr("Required")),
   });
 
-  const handleNext = () => dispatch(setTourCreateActiveStep(activeStep + 1));
-  const handlePrev = () => dispatch(setTourCreateActiveStep(activeStep - 1));
+  const handleNext = () => setActiveStep(activeStep + 1);
+  const handlePrev = () => setActiveStep(activeStep - 1);
 
   const handleSubmit = async values => {
     const { data } = await submit({
@@ -122,8 +105,6 @@ const Screen = () => {
     }
   };
 
-  if (!isNgo) return <AccessDenied />;
-
   return (
     <>
       <Formik
@@ -135,7 +116,7 @@ const Screen = () => {
             buttons={[
               <Button
                 onPress={activeStep === 8 ? handleSubmit : handleNext}
-                disabled={loading}
+                disabled={loading || isButtonDisabled}
                 loading={loading}>
                 {activeStep === 8 ? tr("Submit") : tr("Next")}
               </Button>,
@@ -147,73 +128,17 @@ const Screen = () => {
                 {tr("Previous")}
               </Button>,
             ]}>
-            <TourCreateTabs />
-            <WhiteSpace />
-
-            <Container>
-              {activeStep === 1 && <DetailsTab />}
-              {activeStep === 2 && <CapacityTab />}
-              {activeStep === 3 && <OriginTab />}
-              {activeStep === 4 && <DestinationTab />}
-              {activeStep === 5 && <DateTab />}
-              {activeStep === 6 && <PriceTab />}
-              {activeStep === 7 && <ImagesTab />}
-              {activeStep === 8 && <FacilitiesTab />}
-            </Container>
-
-            <BottomSheet isVisible={isVisibleFinish}>
-              <Container>
-                <ImageBackground
-                  style={styles.rejectIcon}
-                  imageStyle={{ resizeMode: "contain" }}
-                  source={require("@assets/image/check.svg")}
-                />
-                <Text center heading2 bold>
-                  {tr("Your request to create a tour has been successfully registered")}
-                </Text>
-                <Text center>
-                  {tr(
-                    "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers."
-                  )}
-                </Text>
-                <WhiteSpace />
-                <ButtonRow>
-                  <Button
-                    onPress={() => {
-                      router.replace("/tour/management");
-                      router.replace("/tour/management");
-                      setIsVisibleFinish(false);
-                    }}
-                    color="secondary"
-                    type="outline">
-                    {tr("Tour Management")}
-                  </Button>
-                  <Button
-                    onPress={() => {
-                      router.replace("/");
-                      router.replace("/");
-                      setIsVisibleFinish(false);
-                    }}>
-                    {tr("Return to home")}
-                  </Button>
-                </ButtonRow>
-              </Container>
-            </BottomSheet>
-
-            <CloseFormBottomSheet />
+            <TourCreateForm
+              activeStep={activeStep}
+              isVisibleFinish={isVisibleFinish}
+              setIsVisibleFinish={setIsVisibleFinish}
+              setIsButtonDisabled={setIsButtonDisabled}
+            />
           </BottomButtonLayout>
         )}
       </Formik>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  rejectIcon: {
-    margin: "auto",
-    width: 56,
-    height: 56,
-  },
-});
 
 export default Screen;
