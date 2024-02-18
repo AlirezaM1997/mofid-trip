@@ -55,6 +55,8 @@ const Map = ({
   const handleCurrentLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
 
+    // setTimeout(() => setLocation({ lat, lng }), 0);
+
     if (status === Location.PermissionStatus.DENIED) {
       alert("Permission to access location was denied");
       return;
@@ -80,7 +82,7 @@ const Map = ({
   //   size: [60, 60],
   //   iconAnchor: [-26, 60],
   //   position: location,
-  //   icon: window.location.origin + markerImage,
+  //   icon: window.location.origin + a,
   // };
 
   return (

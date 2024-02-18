@@ -13,6 +13,7 @@ import Map from "@src/components/modules/map/index.web";
 import SimilarProjects from "@src/components/modules/similar-projects";
 import {
   AccommodationImageType,
+  ProjectFacilityQueryType,
   ProjectQueryType,
   useProjectDetailQuery,
 } from "@src/gql/generated";
@@ -41,7 +42,7 @@ const Page: React.FC = ({ ...props }) => {
 
   useEffect(() => {
     if (!loading && data) {
-      dispatch(setProjectDetail(data.projectDetail));
+      dispatch(setProjectDetail(data?.projectDetail as ProjectQueryType));
     }
   }, [loading, data]);
 
@@ -101,7 +102,7 @@ console.log('======================sadfasdfasfasd==============');
             </View>
           )}
 
-          <ProjectFacilities facilities={facilities} />
+          <ProjectFacilities facilities={facilities as ProjectFacilityQueryType[]} />
 
           {/* <ContactCard user={tour.NGO.user} /> */}
 

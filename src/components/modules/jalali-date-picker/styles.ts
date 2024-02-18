@@ -11,10 +11,10 @@ export const styles = StyleSheet.create({
   divider: theme => ({ borderBottomWidth: 1, borderColor: theme.colors.grey0, width: "100%" }),
   dayText: { textAlign: "center" },
   viewComponent: {
-    padding: 6,
     display: "flex",
-    alignItems: "center",
+    paddingVertical: 6,
     textAlign: "center",
+    alignItems: "center",
   },
   container: {
     display: "flex",
