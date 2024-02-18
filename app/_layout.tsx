@@ -148,12 +148,6 @@ const MainContent = () => {
             title: tr("loading"),
           }}
         />
-        <Stack.Screen
-          name="ngoLogin"
-          options={{
-            title: tr("log in, sign up"),
-          }}
-        />
       </Stack>
       <Toast config={toastConfig} />
     </>

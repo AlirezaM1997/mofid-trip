@@ -20,7 +20,7 @@ const SearchBar = ({ onFocus, showSearchText = true }) => {
   const { search } = useSelector((state: RootState) => state.filterSlice);
 
   useEffect(() => {
-    if (pathName === "/search") searchRef.current.focus();
+    if (pathName === "/search") searchRef?.current?.focus();
   }, [pathName]);
 
   const [value, setValue] = useState(showSearchText ? search : "");
@@ -37,7 +37,7 @@ const SearchBar = ({ onFocus, showSearchText = true }) => {
 
   const handleClear = () => {
     handleChange("");
-    searchRef.current.focus();
+    searchRef?.current?.focus();
   };
 
   return (

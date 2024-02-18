@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigation } from "expo-router";
 import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import SearchTourMap from "@organisms/search/tour/map";
@@ -9,12 +8,7 @@ import { FontAwesome, Ionicons } from "@expo/vector-icons";
 const SearchTour: React.FC = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const navigation = useNavigation();
-  const [showMap, setShowMap] = useState(false);
-
-  navigation.setOptions({
-    title: tr("search for tours"),
-  });
+  const [showMap, setShowMap] = useState<boolean>(true);
 
   const showMapButton = (
     <Button
