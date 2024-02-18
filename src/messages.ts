@@ -2540,6 +2540,16 @@ export const messages = {
     fa_ir: "تومان",
     en_us: "Tooman",
   },
+  "search country": {
+    ar: "بحث عن البلد",
+    fa_ir: "جستجوی کشور",
+    en_us: "Search Country",
+  },
+  "select country": {
+    ar: "حدد الدولة",
+    fa_ir: "کشور را انتخاب کنید",
+    en_us: "Select Country",
+  },
   "personal information": {
     ar: "الملف الشخصي الفردي",
     fa_ir: "مشخصات فردی",

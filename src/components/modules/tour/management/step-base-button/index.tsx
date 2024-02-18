@@ -50,7 +50,7 @@ const TourManagementStepBaseButton = ({ tour, refetch }) => {
     }
   }
 
-  const handleNavigate = route => {
+  const handleNavigate = route  => {
     router.push(route);
   };
 
@@ -73,7 +73,7 @@ const TourManagementStepBaseButton = ({ tour, refetch }) => {
               />
             </ListItem>
 
-            <ListItem onPress={() => {}}>
+            <ListItem onPress={() => router.push("/coming-soon")}>
               <Feather name="users" size={24} color={theme.colors.error} />
               <ListItem.Content>
                 <ListItem.Title style={styles.textError(theme)}>{tr("cancel request")}</ListItem.Title>
