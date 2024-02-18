@@ -8,29 +8,32 @@ import { setFilter } from "@src/slice/filter-slice";
 import { MapPropsType } from "@modules/map/index.web";
 import { useDispatch, useSelector } from "react-redux";
 import HostSearchCard from "@modules/host/card/search-card";
-import React, { ReactNode, useEffect, useState } from "react";
 import { useProjectListSearchLazyQuery } from "@src/gql/generated";
+import React, { ReactElement, ReactNode, useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
 const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPropsType }) => {
   const { theme } = useTheme();
   const dispatch = useDispatch();
-  const [selectedItem, setItem] = useState(null);
+  const [selectedItem, setItem] = useState<ReactElement | null>(null);
 
   const { filterSlice } = useSelector((state: RootState) => state);
 
   const [search, { data, loading }] = useProjectListSearchLazyQuery();
-
+  const { category, ...searchVariables } = filterSlice;
   useEffect(() => {
     search({
-      variables: filterSlice,
+      variables: searchVariables,
     });
   }, [filterSlice]);
 
-  const onMarkerClick = id => {
+  const onMarkerClick = (id: number) => {
     setItem(
       <Pressable key={id} onPress={() => router.push(`host/${id}`)} style={styles.itemCard}>
-        <HostSearchCard chevron={true} project={data.projectList.data.find(obj => obj.id === id)} />
+        <HostSearchCard
+          chevron={true}
+          project={data?.projectList?.data?.find(obj => obj?.id === id)}
+        />
       </Pressable>
     );
   };
@@ -75,12 +78,12 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
         (!loading &&
           data && [
             ...data.projectList.data.map(project => ({
-              id: project.id,
+              id: project?.id,
               size: [60, 60],
               iconAnchor: [-26, 60],
               position: {
-                lat: project?.accommodation.lat || 33,
-                lng: project?.accommodation.lng || 33,
+                lat: project?.accommodation?.lat || 33,
+                lng: project?.accommodation?.lng || 33,
               },
               icon: window.location.origin + "/assets/assets/image/location-marker.png",
             })),

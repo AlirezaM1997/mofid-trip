@@ -29,7 +29,7 @@ const MemoizedMapWithoutDragging = memo(
                   id: "string",
                   position: { lat: la, lng: ln },
                   size: [52, 60],
-                  icon: window.location.origin + "/assets/image/marker.png",
+                  icon: window.location.origin + "/assets/assets/image/marker.png",
                   iconAnchor: [-26, 60],
                 },
               ]
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   }),
   mapMarkerCentered: {
-    backgroundImage: `url(${window.location.origin + "/assets/image/marker.png"})`,
+    backgroundImage: `url(${window.location.origin + "/assets/assets/image/marker.png"})`,
     width: 52,
     height: 60,
     position: "absolute",

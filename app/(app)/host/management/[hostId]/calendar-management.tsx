@@ -16,8 +16,8 @@ const calendarManagementScreen = () => {
 
   navigation.setOptions({ title: name });
 
-  const start = moment(dateStart).locale("fa").format("YYYY-MM-DD");
-  const end = moment(dateEnd).locale("fa").format("YYYY-MM-DD");
+  const start = moment(dateStart).format("YYYY-MM-DD");
+  const end = moment(dateEnd).format("YYYY-MM-DD");
 
   const { data, loading } = useProjectCapacityListQuery({
     variables: {
