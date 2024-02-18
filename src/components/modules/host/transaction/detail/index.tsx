@@ -27,10 +27,10 @@ const HostTransactionDetail = ({
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      ["REQUEST"]: 1,
-      ["ACCEPT"]: 2,
-      ["PAYMENT"]: 3,
-      ["SUCCESSFUL"]: 4,
+      REQUEST: 1,
+      ACCEPT: 2,
+      PAYMENT: 3,
+      SUCCESSFUL: 4,
     };
     return lookup[status?.step?.name || 0];
   };

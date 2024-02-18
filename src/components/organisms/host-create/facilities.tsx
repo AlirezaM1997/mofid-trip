@@ -6,13 +6,28 @@ import { StyleSheet, View } from "react-native";
 import { Button, useTheme } from "@rneui/themed";
 import { Chip, Input, Text } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { ProjectAddInputType } from "@src/gql/generated";
+import { ProjectAddInputType, SettingDetailType } from "@src/gql/generated";
+import { RootState } from "@src/store";
+import { useSelector } from "react-redux";
 
 const TabFaclities = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const [value, setValue] = useState<string | null>();
   const { values, setFieldValue } = useFormikContext<ProjectAddInputType>();
+  const { language } = useSelector(
+    (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
+  );
+
+  const facilitiesLng: () => string = () => {
+    const obj: Record<string, string> = {
+      AR: "arName",
+      FA_IR: "faName",
+      EN_US: "enName",
+    };
+    if (language in obj) return obj[language];
+    return obj["FA_IR"];
+  };
 
   const handleChangeInput = e => {
     setValue(e.target.value);
@@ -20,15 +35,16 @@ const TabFaclities = () => {
 
   const handleAddPress = () => {
     if (value) {
-      setFieldValue("facilities", [...values.facilities, value]);
+      setFieldValue("facilities", [...values?.facilities, { [facilitiesLng()]: value }]);
       setValue("");
     }
   };
 
   const handleRemove = title => {
-    const newValues = values.facilities.filter(value => value !== title);
+    const newValues = values?.facilities?.filter(value => value !== title);
     setFieldValue("facilities", newValues);
   };
+  console.log(values?.facilities);
 
   return (
     <>
@@ -51,9 +67,9 @@ const TabFaclities = () => {
         />
       </View>
       <View style={styles.chipsContainer}>
-        {values.facilities.map(value => (
+        {values?.facilities?.map(value => (
           <Chip
-            title={value}
+            title={value[facilitiesLng()]}
             type="outline"
             color="secondary"
             icon={
@@ -84,7 +100,8 @@ const styles = StyleSheet.create({
     height: 56,
   },
   headerTitle: {
-    gap: 5, marginBottom: 20
+    gap: 5,
+    marginBottom: 20,
   },
 });
 

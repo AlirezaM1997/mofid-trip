@@ -4,16 +4,15 @@ import WhiteSpace from "@atoms/white-space";
 import { Feather } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
 import { Pressable, StyleSheet } from "react-native";
-import { AccommodationQueryType, TourTourStatusStepChoices } from "@src/gql/generated";
+import { AccommodationQueryType } from "@src/gql/generated";
 import { Card, Chip, Text, useTheme } from "@rneui/themed";
-import { getTourRequestStatusBadgeColor } from "@src/helper/tour";
 
 const TourManagementCard = ({ tour }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
   const navigateToTourDetail = () => router.push(`/tour/management/${tour.id}`);
-  
+
   return (
     <Pressable onPress={navigateToTourDetail}>
       <Card key={tour.id}>
@@ -34,15 +33,11 @@ const TourManagementCard = ({ tour }) => {
           {tour.description}
         </Card.FeaturedSubtitle>
         <Container size={10} style={styles.footer}>
-          {tour.statusStep === TourTourStatusStepChoices.Request ? (
-            <Chip
-              title={tour.statusStep}
-              color={getTourRequestStatusBadgeColor(tour)}
-              type="outline"
-            />
+          {tour.statusStep.name === "REQUEST" ? (
+            <Chip title={tour.statusStep.displayName} color="warning" type="outline" />
           ) : (
             <>
-              <Text type={getTourRequestStatusBadgeColor(tour)}>{tr("view and manage tour")}</Text>
+              <Text type="primary">{tr("view and manage tour")}</Text>
               <Feather size={20} name={"chevron-left"} color={theme.colors.primary} />
             </>
           )}

@@ -35,9 +35,10 @@ const TransactionDetailsScreen = () => {
     return <LoadingIndicator />;
   }
 
-  const { status, project, dateEnd, dateStart, guest } = data.projectTransactionDetail;
+  const { status, project, dateEnd, dateStart, guest } =
+    data.projectTransactionDetail as ProjectTransactionQueryType;
 
-  navigation.setOptions({ title: project.name });
+  navigation.setOptions({ title: project?.name });
 
   const purchaseHandler = async () => {
     const ip = await Network.getIpAddressAsync();
@@ -48,8 +49,8 @@ const TransactionDetailsScreen = () => {
           price: totalPrice({
             endDate: dateEnd,
             startDate: dateStart,
-            price: project.price,
-            capacity: guest.guestNumber,
+            price: project?.price as number,
+            capacity: guest?.guestNumber as number,
           }),
           description: `${tr("buy")} ${project?.name}`,
           projectTransactionId: transactionId as string,
@@ -65,15 +66,15 @@ const TransactionDetailsScreen = () => {
 
   const bottomButton = () => {
     const lookup: Record<string, ReactElement> = {
-      ["PAYMENT"]: (
+      PAYMENT: (
         <Button onPress={() => router.push(`host/transaction/successReceipt?id=${transactionId}`)}>
           {tr("view invoice")}
         </Button>
       ),
-      ["SUCCESSFUL"]: (
+      SUCCESSFUL: (
         <Button onPress={() => setIsBottomSheetVisible(true)}>{tr("rates to the host")}</Button>
       ),
-      ["ACCEPT"]: data?.projectTransactionDetail?.project?.price ? (
+      ACCEPT: data?.projectTransactionDetail?.project?.price ? (
         <Button loading={purchaseLoading} onPress={() => setIsVisible(true)}>
           {tr("pay")}
         </Button>
@@ -83,7 +84,7 @@ const TransactionDetailsScreen = () => {
         </Button>
       ),
     };
-    return lookup[status?.step || null];
+    return lookup[status?.step?.name as string];
   };
 
   return (

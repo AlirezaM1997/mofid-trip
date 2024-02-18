@@ -109,7 +109,7 @@ const JalaliDatePicker = ({
                           {localizeNumber(moment(item.date).locale("fa").format("D"))}
                         </Text>
                         {dayData && (
-                          <Text style={[validMarkedDay?.titleStyle]} error>
+                          <Text style={[validMarkedDay?.titleStyle, styles.dayText]} error>
                             {`${localizeNumber(dayData.toString() as string)} ${tr("man")}`}
                           </Text>
                         )}
