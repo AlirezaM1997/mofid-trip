@@ -29,7 +29,6 @@ const calendarManagementScreen = () => {
   if (!data && loading) return <LoadingIndicator />;
 
   const markedDays = data?.projectCapacityList?.map(item => ({
-    dayData: item?.freeCapacity,
     titleStyle: { color: "#333" },
     containerStyle: { width: 45, borderRadius: 0 },
     buttonStyle: { backgroundColor: "#DADADA", borderRadius: 0 },
@@ -37,6 +36,13 @@ const calendarManagementScreen = () => {
       .locale("en")
       .format("YYYY-MM-DD"),
   }));
+
+  const daysData = data?.projectCapacityList?.map(item => {
+    return {
+      date: item?.date,
+      data: item?.freeCapacity,
+    };
+  });
 
   return (
     <Container>
@@ -46,7 +52,7 @@ const calendarManagementScreen = () => {
         {tr("calendar management")}
       </Text>
       <WhiteSpace size={24} />
-      <JalaliDatePicker markedDays={markedDays} />
+      <JalaliDatePicker markedDays={markedDays} daysData={daysData} />
     </Container>
   );
 };
