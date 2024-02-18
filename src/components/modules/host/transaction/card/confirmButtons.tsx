@@ -1,12 +1,12 @@
 import React from "react";
 import { router } from "expo-router";
 import * as Network from "expo-network";
+import Toast from "react-native-toast-message";
+import { totalPrice } from "@src/helper/totalPrice";
 import useTranslation from "@src/hooks/translation";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import TransactionButtons from "@modules/host/transaction/buttons";
 import { ProjectTransactionQueryType, useProjectPurchaseAddMutation } from "@src/gql/generated";
-import { totalPrice } from "@src/helper/totalPrice";
-import Toast from "react-native-toast-message";
 
 type PropsType = {
   transaction: ProjectTransactionQueryType;
@@ -26,16 +26,18 @@ const ConfirmButton = ({ transaction }: PropsType) => {
           price: totalPrice({
             endDate: transaction.dateEnd,
             startDate: transaction.dateStart,
-            price: transaction?.project?.price * (1-(transaction.project?.discount/100)) ,
-            capacity: transaction.guest?.guestNumber,
+            price:
+              (transaction?.project?.price as number) *
+              ((1 - (transaction?.project?.discount as number)) / 100),
+            capacity: transaction.guest?.guestNumber as number,
           }),
-          description: `${tr("buy")} ${transaction?.project.name}`,
+          description: `${tr("buy")} ${transaction?.project?.name}`,
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transaction.id}&type=host`,
         },
       },
     });
 
-    const error = data.projectPurchaseAdd.metadata?.service_error;
+    const error = data?.projectPurchaseAdd?.metadata?.service_error;
     if (error) {
       Toast.show({
         type: "error",
@@ -43,7 +45,7 @@ const ConfirmButton = ({ transaction }: PropsType) => {
         text2: error,
       });
     } else {
-      router.push(data.projectPurchaseAdd.metadata?.url);
+      router.push(data?.projectPurchaseAdd?.metadata?.url);
     }
   };
 

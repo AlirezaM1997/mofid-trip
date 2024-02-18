@@ -1,5 +1,5 @@
 import Header from "./header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styles } from "./styles";
 import WeekDays from "./week-days";
 import Day, { DayProps } from "./day";
@@ -63,6 +63,14 @@ const JalaliDatePicker = ({
     onDayPress?.(date);
   };
 
+  useEffect(() => {
+    if (markedDays?.length !== 0 && cursor === 0) {
+      let a = ((+moment(markedDays[0]?.date).locale("fa").format("YYYY") - +moment(new Date()).locale("fa").format("YYYY")) * 12) +
+        (+moment(markedDays[0]?.date).locale("fa").format("M") - +moment(new Date()).locale("fa").format("M"));
+      setCursor(a);
+    }
+  }, [markedDays?.[0]?.date])
+
   return (
     <CalendarContext.Provider value={{ cursor: cursor, setCursor: setCursor }}>
       <View style={styles.root}>
@@ -85,7 +93,8 @@ const JalaliDatePicker = ({
             const validMarkedDay = markedDay as DayProps;
             const validMatchDays = matchedDays as DaysDataType[number];
 
-            const dayData = validMarkedDay?.dayData || validMatchDays?.data;
+            const dayData = validMatchDays?.data;
+            console.log(dayData);
 
             return (
               <View style={styles.container}>
@@ -100,13 +109,15 @@ const JalaliDatePicker = ({
                     item.date && (
                       <View style={[validMarkedDay?.buttonStyle, styles.viewComponent]}>
                         <Text
-                          disabled={!validMarkedDay?.dayData}
-                          style={[validMarkedDay?.titleStyle]}
-                          heading2={validMarkedDay?.dayData ? false : true}>
+                          style={[
+                            styles.dayText,
+                            validMarkedDay?.titleStyle,
+                            daysData && !dayData ? styles.disabledDay : {},
+                          ]}>
                           {localizeNumber(moment(item.date).locale("fa").format("D"))}
                         </Text>
                         {dayData && (
-                          <Text style={[validMarkedDay?.titleStyle]} error>
+                          <Text style={[validMarkedDay?.titleStyle, styles.dayText]} error>
                             {`${localizeNumber(dayData.toString() as string)} ${tr("man")}`}
                           </Text>
                         )}
