@@ -26,7 +26,6 @@ export type MapPropsType = ExpoLeafletProps & {
 // @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
 import markerImage from "@assets/image/marker.png";
 import locationMarkerImage from "@assets/image/location-marker.png";
-import { ViewProps } from "react-native";
 const a = markerImage;
 const b = locationMarkerImage;
 
@@ -56,6 +55,8 @@ const Map = ({
   const handleCurrentLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
 
+    // setTimeout(() => setLocation({ lat, lng }), 0);
+
     if (status === Location.PermissionStatus.DENIED) {
       alert("Permission to access location was denied");
       return;
@@ -75,6 +76,14 @@ const Map = ({
   useEffect(() => {
     setLocation({ lat, lng });
   }, [lat, lng]);
+
+  // const currentLocationIcon = {
+  //   id: "my-location",
+  //   size: [60, 60],
+  //   iconAnchor: [-26, 60],
+  //   position: location,
+  //   icon: window.location.origin + a,
+  // };
 
   return (
     <>
@@ -113,6 +122,7 @@ const Map = ({
             lat: location?.lat,
             lng: location?.lng,
           }}
+          // mapMarkers={[currentLocationIcon, ...mapMarkers] || []}
           mapMarkers={mapMarkers || []}
           mapLayers={[
             {

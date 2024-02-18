@@ -80,7 +80,6 @@ const Screen = () => {
   const copyOfHostDetail = {
     ...hostDetail,
     categories: hostDetail?.categories?.map(item => item?.id),
-    facilities: hostDetail?.facilities?.map(item => item?.faName),
     capacity: {
       ...hostDetail?.capacity,
       capacityNumber: hostDetail?.capacity?.guestNumber,

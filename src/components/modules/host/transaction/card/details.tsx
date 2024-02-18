@@ -23,7 +23,7 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
       <Image
         style={styles.image}
         source={
-          transaction?.project?.accommodation?.avatarS3?.length > 0
+          (transaction?.project?.accommodation?.avatarS3?.length as number) > 0
             ? {
                 uri: transaction?.project?.accommodation?.avatarS3?.[0]?.small,
               }

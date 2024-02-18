@@ -35,9 +35,10 @@ const TransactionDetailsScreen = () => {
     return <LoadingIndicator />;
   }
 
-  const { status, project, dateEnd, dateStart, guest } = data.projectTransactionDetail;
+  const { status, project, dateEnd, dateStart, guest } =
+    data.projectTransactionDetail as ProjectTransactionQueryType;
 
-  navigation.setOptions({ title: project.name });
+  navigation.setOptions({ title: project?.name });
 
   const purchaseHandler = async () => {
     const ip = await Network.getIpAddressAsync();
@@ -48,8 +49,8 @@ const TransactionDetailsScreen = () => {
           price: totalPrice({
             endDate: dateEnd,
             startDate: dateStart,
-            price: project.price,
-            capacity: guest.guestNumber,
+            price: project?.price as number,
+            capacity: guest?.guestNumber as number,
           }),
           description: `${tr("buy")} ${project?.name}`,
           projectTransactionId: transactionId as string,
@@ -83,7 +84,7 @@ const TransactionDetailsScreen = () => {
         </Button>
       ),
     };
-    return lookup[status?.step || null];
+    return lookup[status?.step?.name as string];
   };
 
   return (

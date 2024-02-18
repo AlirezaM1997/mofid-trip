@@ -109,12 +109,12 @@ const JalaliDatePicker = ({
                       <View style={[validMarkedDay?.buttonStyle, styles.viewComponent]}>
                         <Text
                           disabled={!validMarkedDay?.dayData}
-                          style={[validMarkedDay?.titleStyle]}
+                          style={[validMarkedDay?.titleStyle, styles.dayText]}
                           heading2={validMarkedDay?.dayData ? false : true}>
                           {localizeNumber(moment(item.date).locale("fa").format("D"))}
                         </Text>
                         {dayData && (
-                          <Text style={[validMarkedDay?.titleStyle]} error>
+                          <Text style={[validMarkedDay?.titleStyle, styles.dayText]} error>
                             {`${localizeNumber(dayData.toString() as string)} ${tr("man")}`}
                           </Text>
                         )}
