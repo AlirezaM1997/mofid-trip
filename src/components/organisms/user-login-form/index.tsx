@@ -1,20 +1,20 @@
-import { Text, useTheme } from "@rneui/themed";
+import { router } from "expo-router";
 import { Button } from "@rneui/themed";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
+import { Text, useTheme } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
-import { useCreateLoginMutation } from "@src/gql/generated";
-import { Pressable, StyleSheet, View } from "react-native";
-import CountryPicker from "@src/components/modules/country-picker";
 import useTranslation from "@src/hooks/translation";
-import { router } from "expo-router";
+import { Pressable, StyleSheet, View } from "react-native";
+import { useCreateLoginMutation } from "@src/gql/generated";
+import CountryPicker from "@src/components/modules/country-picker";
 
 const UserLoginForm = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const [phone, setPhone] = useState("");
   const [callingCode, setCallingCode] = useState("+98");
-  const [login, { loading, data, error }] = useCreateLoginMutation();
+  const [login, { loading, data }] = useCreateLoginMutation();
   const sendToApiPhone = phone[0] === "0" ? phone.substring(1) : phone;
 
   const handlePress = () => {
@@ -28,7 +28,7 @@ const UserLoginForm = () => {
   };
 
   useEffect(() => {
-    if (!loading && data && data.createLogin.statusCode === 200) {
+    if (!loading && data && data?.createLogin?.statusCode === 200) {
       router.push({
         pathname: "/SMSVerification",
         params: {

@@ -73,7 +73,7 @@ const RequestScreen = () => {
           ))}
         </ScrollView>
       </Container>
-      <RequestListBottomSheet
+      <RequestListas voidBottomSheet
         isVisible={isVisible}
         onBackdropPress={handleClose}
         handleClose={handleClose}
