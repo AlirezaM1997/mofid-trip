@@ -1,40 +1,40 @@
-import { View , StyleSheet} from "react-native";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import AcceptPayment from "./acceptPayment";
 import { Feather } from "@expo/vector-icons";
 import RejectedDetails from "./rejectedDetails";
+import { View, StyleSheet } from "react-native";
 import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { ProjectTransactionQueryType } from "@src/gql/generated";
 import HostRateBottomSheet from "@modules/rate/host-rate-bottomSheet";
 
 type PropsType = {
-  purchaseHandler: () => void;
   purchaseLoading: boolean;
+  purchaseHandler: () => void;
   transaction: ProjectTransactionQueryType;
 };
 
 const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: PropsType) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
-  const [isAcceptPaymentVisible, setIsAcceptPaymentVisible] = useState<boolean>(false);
   const [isRejectedVisible, setIsRejectedVisible] = useState<boolean>(false);
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState<boolean>(false);
+  const [isAcceptPaymentVisible, setIsAcceptPaymentVisible] = useState<boolean>(false);
 
   const pressHandler = (pathname: string) => {
     router.push(pathname);
   };
   const handleClose = () => setIsBottomSheetVisible(false);
   const buttonType = () => {
-    const lookup = {
-      "REQUEST": {
+    const lookup: Record<string, any> = {
+      REQUEST: {
         type: "outline",
         color: "secondary",
         title: tr("request details"),
         changeHandler: () => pressHandler(`/host/transaction/${transaction.id}`),
       },
-      "ACCEPT": transaction.status?.isActive
+      ACCEPT: transaction.status?.isActive
         ? {
             title: transaction?.project?.price ? tr("pay") : tr("reservation"),
             detailsBtn: true,
@@ -49,7 +49,7 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
               <Feather name="info" size={16} style={{ marginLeft: 8 }} color={theme.colors.white} />
             ),
           },
-      "PAYMENT": transaction.status?.isActive
+      PAYMENT: transaction.status?.isActive
         ? {
             type: "outline",
             color: "secondary",
@@ -61,14 +61,13 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
             detailsBtn: true,
             changeHandler: () => setIsAcceptPaymentVisible(true),
           },
-      "SUCCESSFUL": {
+      SUCCESSFUL: {
         title: tr("rates to the host"),
         detailsBtn: true,
         changeHandler: () => setIsBottomSheetVisible(true),
       },
     };
-
-    if (transaction.status.step?.name in lookup) return lookup[transaction.status.step?.name];
+    return lookup[transaction?.status?.step?.name as string];
   };
 
   return (
@@ -110,9 +109,9 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
         setIsVisible={setIsRejectedVisible}
       />
       <HostRateBottomSheet
+        handleClose={handleClose}
         transaction={transaction}
         isVisible={isBottomSheetVisible}
-        handleClose={handleClose}
       />
     </>
   );

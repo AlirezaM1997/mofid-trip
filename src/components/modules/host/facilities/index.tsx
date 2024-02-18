@@ -6,30 +6,27 @@ import { ProjectFacilityQueryType, SettingDetailType } from "@src/gql/generated"
 import { useSelector } from "react-redux";
 import { RootState } from "@src/store";
 
-type PropsType = {
-  facilities: ProjectFacilityQueryType;
-};
-
-const Item = ({ facilities }: PropsType) => {
-
-  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType);
+const Item = ({ facility }: { facility: ProjectFacilityQueryType }) => {
+  const { language } = useSelector(
+    (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
+  );
 
   const facilitiesLanguage = () => {
     const lookup: Record<string, string> = {
-      "EN_US": "enName",
-      "FA_IR": "faName",
-      "AR": "arName",
+      EN_US: "enName",
+      FA_IR: "faName",
+      AR: "arName",
     };
     return lookup[language];
   };
   return (
     <View style={style.itemContainer}>
-      <Text style={style.itemText}>{facilities[facilitiesLanguage()] }</Text>
+      <Text style={style.itemText}>{facility[facilitiesLanguage()]}</Text>
     </View>
   );
 };
 
-const ProjectFacilities = ({ facilities }: PropsType) => {
+const ProjectFacilities = ({ facilities }: { facilities: ProjectFacilityQueryType[] }) => {
   const { tr } = useTranslation();
 
   if (!facilities || !facilities.length) return;
