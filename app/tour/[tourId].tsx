@@ -62,7 +62,7 @@ export default () => {
     });
   };
 
-  const handleBuy = (p:TourPackageType) => {
+  const handleBuy = (p: TourPackageType) => {
     if (session) {
       handleNavigateToReserve(p);
     } else {
@@ -74,7 +74,6 @@ export default () => {
   const startTime = moment(tour?.startTime).locale("fa").format("D MMMM");
   const endTime = moment(tour?.endTime).locale("fa").format("D MMMM");
 
-
   if (loading && !tour) return <LoadingIndicator />;
   navigation.setOptions({
     title: (data?.tourDetail as TourQueryType)?.title,
@@ -82,7 +81,14 @@ export default () => {
   });
 
   return (
-    <BottomButtonLayout buttons={[<Button disabled={tour.statusStep?.name === "SUSPENSION" ? true : false} onPress={handleBottomSheet}>{tr("Reserve")}</Button>]}>
+    <BottomButtonLayout
+      buttons={[
+        <Button
+          disabled={tour.statusStep?.name === "SUSPENSION" ? true : false}
+          onPress={handleBottomSheet}>
+          {tr("Reserve")}
+        </Button>,
+      ]}>
       <Container>
         <WhiteSpace size={10} />
         <ImageSlider imageList={tour?.avatarS3} />

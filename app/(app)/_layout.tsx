@@ -1,19 +1,17 @@
-import { Redirect, Stack, router, useNavigation, usePathname } from "expo-router";
-
-import { useSession } from "@src/context/auth";
 import { Text } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
-import useDefaultScreenOptions from "@src/hooks/use-default-screen-options";
-import { useURL } from "expo-linking";
 import { useDispatch } from "react-redux";
+import { useSession } from "@src/context/auth";
+import useTranslation from "@src/hooks/translation";
+import { Redirect, Stack, usePathname } from "expo-router";
+import useDefaultScreenOptions from "@src/hooks/use-default-screen-options";
 import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 
 export default function AppLayout() {
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
+  const routeName = usePathname();
   const { session, isLoading } = useSession();
   const defaultScreenOptions = useDefaultScreenOptions();
-  const routeName = usePathname();
-  const dispatch = useDispatch();
 
   // You can keep the splash screen open, or render a loading screen like we do here.
   if (isLoading) {
