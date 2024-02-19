@@ -158,7 +158,7 @@ export default () => {
                     id: "string",
                     position: { lat: tour?.destination?.lat, lng: tour?.destination?.lng },
                     size: [52, 60],
-                    icon: window.location.origin + "/assets/image/marker.png",
+                    icon: window.location.origin + "/assets/assets/image/marker.png",
                     iconAnchor: [-26, 60],
                   },
                 ]}
