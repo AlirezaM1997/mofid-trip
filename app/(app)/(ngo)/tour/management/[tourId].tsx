@@ -1,4 +1,3 @@
-import { MyNgoDetailTourSetQuery, useMyNgoDetailTourSetQuery } from "@src/gql/generated";
 import Stepper from "@modules/stepper";
 import { Linking } from "react-native";
 import { Divider } from "@rneui/themed";
@@ -15,11 +14,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import TourManagementStepBaseButton from "@modules/tour/management/step-base-button";
+import { MyNgoDetailTourSetQuery, useMyNgoDetailTourSetQuery } from "@src/gql/generated";
 
 const TourDetailScreen = () => {
   const isRtl = useIsRtl();
-  const { tr } = useTranslation();
   const { theme } = useTheme();
+  const { tr } = useTranslation();
   const navigation = useNavigation();
   const { tourId } = useLocalSearchParams();
   const steps = [tr("pending"), tr("published"), tr("End Tour")];
@@ -36,6 +36,19 @@ const TourDetailScreen = () => {
     };
     return lookup[tour.statusStep.name];
   };
+  const titleStep = () => {
+    const lookup: Record<string, string> = {
+      REQUEST:
+        "the created tour is under review by the admin, after approval by the admin, your tour will be published.",
+      ACCEPT:
+        "the tour has been successfully published after being reviewed by the admin. your tour is now visible to travelers.",
+      SUSPENSION:
+        "the tour has been successfully published after being reviewed by the admin. your tour is now visible to travelers.",
+      END: "your tour has been completed successfully. to create a tour again, go to the create section and create your tour.",
+    };
+    return lookup[tour.statusStep.name];
+  };
+
   const handleNavigateToRequest = () => {
     router.push("/tour/management/request/" + tour.id);
   };
@@ -83,7 +96,7 @@ const TourDetailScreen = () => {
         <Text subtitle1 bold>
           {tr("At what stage is your application?")}
         </Text>
-        <Text>یه متن سید به ما میده که اینجا نشونش خواهیم داد</Text>
+        <Text>{tr(titleStep())}</Text>
 
         <Stepper
           steps={steps}
