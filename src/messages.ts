@@ -2540,6 +2540,11 @@ export const messages = {
     fa_ir: "تومان",
     en_us: "Tooman",
   },
+  "terms of service": {
+    ar: "شروط الخدمة",
+    fa_ir: "شرایط خدمات",
+    en_us: "terms of service",
+  },
   "the created host is under review by the admin, after approval by the admin, your host will be released.": {
     ar: "المضيف الذي تم إنشاؤه قيد المراجعة من قبل المسؤول، وبعد موافقة المسؤول، سيتم تحرير المضيف الخاص بك.",
     fa_ir: "هاست ایجاد شده در مرحله بررسی توسط ادمین قرار دارد ، بعد از تایید توسط ادمین، هاست شما منتشر خواهد شد.",
