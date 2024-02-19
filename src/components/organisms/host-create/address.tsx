@@ -14,7 +14,7 @@ const TabAddress = () => {
     <>
       <View style={styles.headerTitle}>
         <Text heading2 bold>
-          {tr("Place of movement")}
+          {tr("Host Address")}
         </Text>
         <Text type="grey3">
           {tr(

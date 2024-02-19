@@ -9,6 +9,10 @@ import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import { Pressable, StyleSheet, View, ViewProps } from "react-native";
 
+// این کد رو به هیچ عنوان پاک نکنید
+// اگه این کد پاک بشه مارکر از بیلد ریلیز حذف میشه
+// require("@assets/image/wallet.png")
+
 export type LocationPickerProps = FieldProps & ViewProps;
 
 const MemoizedMapWithoutDragging = memo(
@@ -29,7 +33,7 @@ const MemoizedMapWithoutDragging = memo(
                   id: "string",
                   position: { lat: la, lng: ln },
                   size: [52, 60],
-                  icon: window.location.origin + "/assets/image/marker.png",
+                  icon: window.location.origin + "/assets/assets/image/marker.png",
                   iconAnchor: [-26, 60],
                 },
               ]
@@ -110,7 +114,9 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
     () => (
       <Container
         style={{
-          marginTop: 55,
+          position: 'absolute',
+          top: 55,
+          left: - WIDTH / 2,
           backgroundColor: theme.colors.white,
           width: WIDTH,
           paddingTop: 10,
@@ -223,7 +229,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   }),
   mapMarkerCentered: {
-    backgroundImage: `url(${window.location.origin + "/assets/image/marker.png"})`,
+    backgroundImage: `url(${window.location.origin + "/assets/assets/image/marker.png"})`,
     width: 52,
     height: 60,
     position: "absolute",

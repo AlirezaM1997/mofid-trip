@@ -3327,4 +3327,9 @@ export const messages = {
     fa_ir: "نظر دهید",
     en_us: "Add your comment",
   },
+  "host Address": {
+    ar: "الآدرس الهاست",
+    fa_ir: "آدرس میزبانی",
+    en_us: "Host Address",
+  },
 };
