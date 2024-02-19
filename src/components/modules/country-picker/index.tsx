@@ -5,6 +5,7 @@ import { CountryType, data } from "./data";
 import { Feather } from "@expo/vector-icons";
 import parseText from "@src/helper/number-input";
 import React, { useEffect, useState } from "react";
+import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import { ScrollView } from "react-native-gesture-handler";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -12,7 +13,8 @@ import WhiteSpace from "@src/components/atoms/white-space";
 import { BottomSheet, ListItem, Text } from "@rneui/themed";
 
 const CountryPicker = ({ value, setValue, callingCode, setCallingCode, ...props }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const {tr} = useTranslation();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [country, setCountry] = useState(data[239]);
   const [inputValue, setInputValue] = useState("");
   const [tempData, setTempData] = useState(data);
@@ -59,7 +61,7 @@ const CountryPicker = ({ value, setValue, callingCode, setCallingCode, ...props 
       <BottomSheet containerStyle={styles.bottomSheetContainer} isVisible={isVisible}>
         <Pressable style={styles.close} onPress={() => setIsVisible(false)}>
           <Feather name="x-circle" size={24} color="transparent" />
-          <Text>Select Country</Text>
+          <Text>{tr("select country")}</Text>
           <Feather name="x-circle" size={24} color="black" />
         </Pressable>
         <Divider />
@@ -69,7 +71,7 @@ const CountryPicker = ({ value, setValue, callingCode, setCallingCode, ...props 
             <Input
               onChangeText={setSearchText}
               style={{ outline: "none" }}
-              placeholder="Search Country ..."
+              placeholder={tr("search country")}
             />
           </Container>
           {tempData.map(c => (
@@ -126,8 +128,8 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#fff",
   },
-  scrollView: { height: HEIGHT - 50 },
-  bottomSheetContainer: { backgroundColor: "#fff" },
+  scrollView: { height: HEIGHT - 75 },
+  bottomSheetContainer: { backgroundColor: "#fff" , borderTopRightRadius : 0 , borderTopLeftRadius : 0 },
 });
 
 export default CountryPicker;

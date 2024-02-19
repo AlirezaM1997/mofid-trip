@@ -2059,7 +2059,7 @@ export const messages = {
     fa_ir: "ثبت و ورود",
     en_us: "submit and enter",
   },
-  "by clicking the registration button, you agree to Mofidtrip rules and regulations.": {
+  "by clicking the registration button, you agree to mofidtrip rules and regulations.": {
     ar: "By clicking the registration button, you agree to Mofidtrip rules and regulations.",
     fa_ir: "شما با زدن دکمه ثبت ، موافقت خود را با قوانین و مقررات  مفیدتریپ اعلام می کنید.",
     en_us:
@@ -2540,12 +2540,22 @@ export const messages = {
     fa_ir: "تومان",
     en_us: "Tooman",
   },
+  "search country": {
+    ar: "بحث عن البلد",
+    fa_ir: "جستجوی کشور",
+    en_us: "Search Country",
+  },
+  "select country": {
+    ar: "حدد الدولة",
+    fa_ir: "کشور را انتخاب کنید",
+    en_us: "Select Country",
+  },
   "personal information": {
     ar: "الملف الشخصي الفردي",
     fa_ir: "مشخصات فردی",
     en_us: "personal information",
   },
-  "Please choose a screen name for yourself.": {
+  "please choose a screen name for yourself.": {
     ar: "Please choose a screen name for yourself.",
     fa_ir: "برای ایجاد حساب در مفیدتریپ ، نام نمایشی برای خودتان انتخاب کنید",
     en_us: "Please choose a screen name for yourself.",
@@ -3311,5 +3321,10 @@ export const messages = {
     ar: "نظر دهید",
     fa_ir: "نظر دهید",
     en_us: "Add your comment",
+  },
+  "host Address": {
+    ar: "الآدرس الهاست",
+    fa_ir: "آدرس میزبانی",
+    en_us: "Host Address",
   },
 };

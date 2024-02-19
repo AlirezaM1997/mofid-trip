@@ -25,8 +25,8 @@ const LoginDetailScreen = () => {
   if (loading) return <LoadingIndicator />;
 
   const initialValues = {
-    firstname: data?.userDetail.firstname,
-    lastname: data?.userDetail.lastname,
+    firstname: data?.userDetail?.firstname,
+    lastname: data?.userDetail?.lastname,
   };
 
   const validationSchema = Yup.object().shape({
@@ -34,7 +34,7 @@ const LoginDetailScreen = () => {
     lastname: Yup.string().required(tr("Last name is required")),
   });
 
-  const submitHandler = async ({ firstname, lastname }) => {
+  const submitHandler = async ({ firstname , lastname }:{ firstname: string , lastname: string }) => {
     const { data } = await edit({
       variables: {
         data: {
@@ -44,8 +44,8 @@ const LoginDetailScreen = () => {
       },
     });
 
-    if (data.userEdit.status === "ACCEPTED") {
-      const parsedSession = JSON.parse(session);
+    if (data?.userEdit?.status === "ACCEPTED") {
+      const parsedSession = JSON.parse(session as string);
       signIn({
         ...parsedSession,
         metadata: {
@@ -87,7 +87,7 @@ const LoginDetailScreen = () => {
               <Text heading1>{tr("write a screen name for yourself")}</Text>
               <WhiteSpace size={4} />
               <Text caption>
-                {tr("Please choose a screen name for yourself.")}
+                {tr("please choose a screen name for yourself.")}
               </Text>
               <WhiteSpace size={24} />
               <Input
@@ -108,7 +108,7 @@ const LoginDetailScreen = () => {
           </ScrollView>
           <Text center type="grey2">
             {tr(
-              "by clicking the registration button, you agree to Mofidtrip rules and regulations."
+              "by clicking the registration button, you agree to mofidtrip rules and regulations."
             )}
           </Text>
           <WhiteSpace />
