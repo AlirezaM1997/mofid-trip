@@ -33,7 +33,7 @@ const HostTransactionEditSubmitBottomSheet = ({
             childAccept: values.guests.childAccept,
             guestNumber: +values.guests.guestNumber,
           },
-          status: { step: status.step, isActive: status.isActive },
+          status: { step: status.step.name, isActive: status.isActive },
         },
       },
     });

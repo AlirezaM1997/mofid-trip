@@ -16,8 +16,8 @@ const calendarManagementScreen = () => {
 
   navigation.setOptions({ title: name });
 
-  const start = moment(dateStart).locale("fa").format("YYYY-MM-DD");
-  const end = moment(dateEnd).locale("fa").format("YYYY-MM-DD");
+  const start = moment(dateStart).format("YYYY-MM-DD");
+  const end = moment(dateEnd).format("YYYY-MM-DD");
 
   const { data, loading } = useProjectCapacityListQuery({
     variables: {
@@ -32,7 +32,7 @@ const calendarManagementScreen = () => {
     titleStyle: { color: "#333" },
     containerStyle: { width: 45, borderRadius: 0 },
     buttonStyle: { backgroundColor: "#DADADA", borderRadius: 0 },
-    date: moment(item?.date as string, "jYYYY-jMM-jDD")
+    date: moment(item?.date as string)
       .locale("en")
       .format("YYYY-MM-DD"),
   }));

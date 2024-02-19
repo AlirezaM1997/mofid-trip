@@ -17,20 +17,23 @@ const FilterPrice = () => {
   const { filter } = useSelector((state: RootState) => state.filterSlice);
 
   const [range, setRange] = useState({
-    low: filter?.price?.low.toString() || "0",
-    high: filter?.price?.high.toString() || "50000000",
+    low: filter?.price?.low?.toString() || "0",
+    high: filter?.price?.high?.toString() || "50000000",
   });
 
   const debouncedOnChange = useMemo(
     () =>
       debounce(
-        range => dispatch(setFilter({ ...filter, price: { low: +range.low, high: +range.high } })),
+        (rangeInput: typeof range) =>
+          dispatch(
+            setFilter({ ...filter, price: { low: +rangeInput.low, high: +rangeInput.high } })
+          ),
         800
       ),
-    [filter.price]
+    [filter?.price]
   );
 
-  const changeHandler = (t, item) => {
+  const changeHandler = (t: string, item: string) => {
     setRange({ ...range, [item]: t });
     debouncedOnChange({ ...range, [item]: t });
   };
@@ -40,12 +43,12 @@ const FilterPrice = () => {
       <Input
         value={parseText(range.low)}
         rightIcon={<Text>{tr("from")}</Text>}
-        onChangeText={t => changeHandler(t, "low")}
+        onChangeText={t => changeHandler(parseText(t), "low")}
       />
       <Input
         value={parseText(range.high)}
         rightIcon={<Text>{tr("to")}</Text>}
-        onChangeText={t => changeHandler(t, "high")}
+        onChangeText={t => changeHandler(parseText(t), "high")}
       />
     </Container>
   );
