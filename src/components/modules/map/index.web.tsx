@@ -30,9 +30,11 @@ const a = markerImage;
 const b = locationMarkerImage;
 
 const Map = ({
-  zoom,
-  lat = 28,
-  lng = 54,
+  zoom = 10,
+  // lat = 28,
+  // lng = 54,
+  lat = 34.650773,
+  lng = 50.885006,
   onMoveEnd,
   mapMarkers,
   mapOptions = {},
@@ -54,8 +56,6 @@ const Map = ({
 
   const handleCurrentLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
-
-    // setTimeout(() => setLocation({ lat, lng }), 0);
 
     if (status === Location.PermissionStatus.DENIED) {
       alert("Permission to access location was denied");
@@ -80,7 +80,7 @@ const Map = ({
   // const currentLocationIcon = {
   //   id: "my-location",
   //   size: [60, 60],
-  //   iconAnchor: [-26, 60],
+  //   iconAnchor: [-17, 30],
   //   position: location,
   //   icon: window.location.origin + a,
   // };
@@ -142,8 +142,11 @@ const Map = ({
                 Alert.alert(`Map Touched at:`, `${message.location.lat}, ${message.location.lng}`);
                 break;
               case "onMoveEnd":
-                onMoveEnd?.(message.bounds, message.mapCenter);
+                onMoveEnd?.(message.bounds, message.mapCenter, message.zoom);
                 break;
+              case "onZoom":
+              // console.log(message.zoom);
+
               default:
                 if (["onMove"].includes(message.tag)) {
                   return;

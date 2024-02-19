@@ -7,7 +7,7 @@ import { Text } from "@rneui/themed";
 import { ProjectAddInputType, useCategoryListQuery } from "@src/gql/generated";
 import { useFormikContext } from "formik";
 import { useEffect, useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 const TabHostType = () => {
   const { tr } = useTranslation();
@@ -42,10 +42,8 @@ const TabHostType = () => {
 
   return (
     <>
-    <View style={styles.headerTitle}>
-      <Text heading2 bold>{tr("Host Type")}</Text>
+      <Text heading2>{tr("Host Type")}</Text>
       <Text type="grey3">{tr("Determine the type of space and your hosting environment.")}</Text>
-    </View>
 
       {defaultValues?.map((category, index) => (
         <>
@@ -57,16 +55,17 @@ const TabHostType = () => {
                 : styles.nonSelectedCard
             }>
             <Pressable onPress={() => handlePress(category.id)}>
-              <Container style={styles.CheckBox}>
+              <Container>
+                <WhiteSpace />
                 <CheckBox
                   checked={values.categories?.includes(category.id)}
                   disabled
-                  title={category.name}
+                  title={category.displayName}
                   checkedIcon="dot-circle-o"
                   uncheckedIcon="circle-o"
                   checkedColor={theme.colors.black}
-                  disabledTitleStyle={{color:theme.colors.black}}
                 />
+                <WhiteSpace />
               </Container>
             </Pressable>
           </Card>
@@ -86,7 +85,5 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
     borderWidth: 1,
   },
-  headerTitle:{gap:5},
-  CheckBox:{paddingVertical:10}
 });
 export default TabHostType;
