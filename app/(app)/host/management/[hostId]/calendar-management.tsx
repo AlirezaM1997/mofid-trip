@@ -32,7 +32,7 @@ const calendarManagementScreen = () => {
     titleStyle: { color: "#333" },
     containerStyle: { width: 45, borderRadius: 0 },
     buttonStyle: { backgroundColor: "#DADADA", borderRadius: 0 },
-    date: moment(item?.date as string, "jYYYY-jMM-jDD")
+    date: moment(item?.date as string)
       .locale("en")
       .format("YYYY-MM-DD"),
   }));

@@ -9,12 +9,21 @@ import { MapPropsType } from "@modules/map/index.web";
 import { useDispatch, useSelector } from "react-redux";
 import HostSearchCard from "@modules/host/card/search-card";
 import { useProjectListSearchLazyQuery } from "@src/gql/generated";
-import React, { ReactElement, ReactNode, useEffect, useState } from "react";
+import React, {
+  ReactElement,
+  ReactNode,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
 const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPropsType }) => {
   const { theme } = useTheme();
   const dispatch = useDispatch();
+  // const [mapBounds, setBounds] = useState();
   const [selectedItem, setItem] = useState<ReactElement | null>(null);
 
   const { filterSlice } = useSelector((state: RootState) => state);
@@ -38,28 +47,34 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
     );
   };
 
-  const onMoveHandler = debounce(bounds => {
-    const latHigh = bounds[0][0];
-    const latLow = bounds[1][0];
-    const lngHigh = bounds[0][1];
-    const lngLow = bounds[1][1];
+  const onMoveHandler = useMemo(
+    () =>
+      debounce(bounds => {
+        const latHigh = bounds[0][0];
+        const latLow = bounds[1][0];
+        const lngHigh = bounds[0][1];
+        const lngLow = bounds[1][1];
 
-    const mapBounds = {
-      latHigh,
-      latLow,
-      lngHigh,
-      lngLow,
-    };
+        const mapBounds = {
+          latHigh,
+          latLow,
+          lngHigh,
+          lngLow,
+        };
 
-    dispatch(
-      setFilter({
-        ...filterSlice.filter,
-        destinationGeoLimit: mapBounds,
-      })
-    );
+        dispatch(
+          setFilter({
+            ...filterSlice.filter,
+            destinationGeoLimit: mapBounds,
+          })
+        );
 
-    setItem(null);
-  }, 800);
+        console.log(filterSlice.filter, mapBounds);
+
+        setItem(null);
+      }, 800),
+    [filterSlice]
+  );
 
   return (
     <Map
