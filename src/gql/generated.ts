@@ -85,21 +85,21 @@ export type AccommodationListType = {
 
 /** An enumeration. */
 export enum AccommodationProjectGenderChoices {
-  /** BOTH */
+  /** هر دو */
   Both = 'BOTH',
-  /** FEMALE */
+  /** زن */
   Female = 'FEMALE',
-  /** MALE */
+  /** مرد */
   Male = 'MALE'
 }
 
 /** An enumeration. */
 export enum AccommodationProjectRequestFromChoices {
-  /** BOTH */
+  /** هر دو */
   Both = 'BOTH',
-  /** NGO */
+  /** تشکل */
   Ngo = 'NGO',
-  /** USER */
+  /** کاربر */
   User = 'USER'
 }
 
@@ -120,9 +120,9 @@ export type AccommodationQueryType = {
 
 /** An enumeration. */
 export enum AccommodationTagTypeChoices {
-  /** CAMPAIGN */
+  /** کمپین */
   Campaign = 'CAMPAIGN',
-  /** GENERAL */
+  /** عمومی */
   General = 'GENERAL'
 }
 
@@ -1688,9 +1688,9 @@ export type SortType = {
 /** Input type for specifying status information. */
 export type StatusInputType = {
   /** Whether the status is active. */
-  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  isActive: Scalars['Boolean']['input'];
   /** Transaction status step. */
-  step?: InputMaybe<TransactionStatusEnum>;
+  step: TransactionStatusEnum;
 };
 
 /** Type representing status information. */
@@ -2085,11 +2085,11 @@ export type TourStatusStepQueryType = {
 
 /** An enumeration. */
 export enum TourTourGuestGenderChoices {
-  /** CHILD */
+  /** کودک */
   Child = 'CHILD',
-  /** FEMALE */
+  /** زن */
   Female = 'FEMALE',
-  /** MALE */
+  /** مرد */
   Male = 'MALE'
 }
 
@@ -2312,7 +2312,7 @@ export type UserQueryType = {
   tag?: Maybe<TagQueryType>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -2785,7 +2785,7 @@ export type TourDetailQueryVariables = Exact<{
 }>;
 
 
-export type TourDetailQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'TourQueryType', id: string, title: string, endTime: any, startTime: any, description?: string | null, statusStep?: { __typename?: 'TourStatusStepQueryType', displayName?: string | null, name?: string | null } | null, capacity?: { __typename?: 'TourCapacityType', guestNumber?: number | null, childAccept?: boolean | null, gender?: string | null } | null, NGO: { __typename?: 'NGOQueryType', id: string, isVerify?: boolean | null, verifyDescription?: string | null, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null };
+export type TourDetailQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'TourQueryType', id: string, title: string, endTime: any, startTime: any, description?: string | null, statusStep?: { __typename?: 'TourStatusStepQueryType', displayName?: string | null, name?: string | null } | null, capacity?: { __typename?: 'TourCapacityType', guestNumber?: number | null, childAccept?: boolean | null, gender?: string | null } | null, NGO: { __typename?: 'NGOQueryType', id: string, isVerify?: boolean | null, verifyDescription?: string | null, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number, discount?: number | null }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null };
 
 export type TourListSearchQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
@@ -3823,9 +3823,17 @@ export type CategoryListQueryResult = Apollo.QueryResult<CategoryListQuery, Cate
 export const HostCommentDocument = gql`
     query hostComment($pk: ID!) {
   projectDetail(pk: $pk) {
-    ... on ProjectQueryType {
-      name
-      commentSet {
+    name
+    commentSet {
+      text
+      createdDate
+      dislikeCount
+      likeCount
+      id
+      user {
+        fullname
+      }
+      nestedComment {
         text
         createdDate
         dislikeCount
@@ -3833,16 +3841,6 @@ export const HostCommentDocument = gql`
         id
         user {
           fullname
-        }
-        nestedComment {
-          text
-          createdDate
-          dislikeCount
-          likeCount
-          id
-          user {
-            fullname
-          }
         }
       }
     }
@@ -4875,76 +4873,74 @@ export type ProjectCapacityListQueryResult = Apollo.QueryResult<ProjectCapacityL
 export const ProjectDetailDocument = gql`
     query projectDetail($pk: ID!) {
   projectDetail(pk: $pk) {
-    ... on ProjectQueryType {
+    id
+    name
+    price
+    gender
+    dateEnd
+    discount
+    dateStart
+    statusStep {
+      displayName
+      name
+    }
+    description
+    tags {
       id
       name
-      price
+    }
+    capacity {
+      childAccept
       gender
-      dateEnd
-      discount
-      dateStart
-      statusStep {
-        displayName
-        name
+      guestNumber
+    }
+    facilities {
+      id
+      enName
+      faName
+      arName
+    }
+    categories {
+      name
+      id
+    }
+    creator {
+      id
+      fullname
+      firstname
+      phoneNumber
+      ngo {
+        id
       }
-      description
-      tags {
+      avatarS3 {
+        small
+        medium
+        large
+      }
+      projectSet {
         id
         name
-      }
-      capacity {
-        childAccept
-        gender
-        guestNumber
-      }
-      facilities {
-        id
-        enName
-        faName
-        arName
-      }
-      categories {
-        name
-        id
-      }
-      creator {
-        id
-        fullname
-        firstname
-        phoneNumber
-        ngo {
+        price
+        accommodation {
           id
-        }
-        avatarS3 {
-          small
-          medium
-          large
-        }
-        projectSet {
-          id
-          name
-          price
-          accommodation {
-            id
-            address
-            avatarS3 {
-              large
-              medium
-              small
-            }
+          address
+          avatarS3 {
+            large
+            medium
+            small
           }
         }
       }
-      accommodation {
-        id
-        lat
-        lng
-        address
-        avatarS3 {
-          large
-          medium
-          small
-        }
+    }
+    accommodation {
+      id
+      lat
+      lng
+      address
+      avatarS3 {
+        large
+        medium
+        small
       }
     }
   }
@@ -5391,9 +5387,17 @@ export type TagListQueryResult = Apollo.QueryResult<TagListQuery, TagListQueryVa
 export const TourCommentDocument = gql`
     query tourComment($pk: ID!) {
   tourDetail(pk: $pk) {
-    ... on TourQueryType {
-      title
-      commentSet {
+    title
+    commentSet {
+      text
+      createdDate
+      dislikeCount
+      likeCount
+      id
+      user {
+        fullname
+      }
+      nestedComment {
         text
         createdDate
         dislikeCount
@@ -5401,16 +5405,6 @@ export const TourCommentDocument = gql`
         id
         user {
           fullname
-        }
-        nestedComment {
-          text
-          createdDate
-          dislikeCount
-          likeCount
-          id
-          user {
-            fullname
-          }
         }
       }
     }
@@ -5448,80 +5442,79 @@ export type TourCommentQueryResult = Apollo.QueryResult<TourCommentQuery, TourCo
 export const TourDetailDocument = gql`
     query tourDetail($pk: ID!) {
   tourDetail(pk: $pk) {
-    ... on TourQueryType {
+    id
+    title
+    endTime
+    startTime
+    statusStep {
+      displayName
+      name
+    }
+    description
+    capacity {
+      guestNumber
+      childAccept
+      gender
+    }
+    NGO {
       id
-      title
-      endTime
-      startTime
-      statusStep {
-        displayName
-        name
-      }
-      description
-      capacity {
-        guestNumber
-        childAccept
-        gender
-      }
-      NGO {
+      isVerify
+      verifyDescription
+      user {
         id
-        isVerify
-        verifyDescription
-        user {
-          id
-          fullname
-          phoneNumber
-          avatarS3 {
-            small
-          }
-          ngo {
-            id
-          }
+        fullname
+        phoneNumber
+        avatarS3 {
+          small
         }
-        tourSet {
+        ngo {
+          id
+        }
+      }
+      tourSet {
+        id
+        title
+        packages {
           id
           title
-          packages {
-            id
-            title
-            price
-          }
-          destination {
-            ... on AccommodationQueryType {
-              address
-              avatarS3 {
-                large
-                medium
-                small
-              }
+          price
+        }
+        destination {
+          ... on AccommodationQueryType {
+            address
+            avatarS3 {
+              large
+              medium
+              small
             }
           }
         }
       }
-      facilities {
+    }
+    facilities {
+      id
+      enName
+      faName
+      arName
+    }
+    destination {
+      ... on AccommodationQueryType {
         id
-        enName
-        faName
-        arName
+        address
+        lat
+        lng
       }
-      destination {
-        ... on AccommodationQueryType {
-          id
-          address
-          lat
-          lng
-        }
-      }
-      packages {
-        id
-        title
-        price
-      }
-      avatarS3 {
-        medium
-        large
-        small
-      }
+    }
+    packages {
+      id
+      title
+      price
+      discount
+    }
+    avatarS3 {
+      medium
+      large
+      small
     }
   }
 }

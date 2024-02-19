@@ -1,18 +1,18 @@
 import { Text } from "@rneui/themed";
 import React, { useState } from "react";
 import Container from "@atoms/container";
+import { useDispatch } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
+import { useSession } from "@src/context/auth";
 import Toast from "react-native-toast-message";
 import { BottomSheet, Button } from "@rneui/themed";
 import { ProjectQueryType } from "@src/gql/generated";
 import { useFormatPrice } from "@src/hooks/localization";
 import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, View } from "react-native";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { useSession } from "@src/context/auth";
-import { useDispatch } from "react-redux";
 import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { tr } = useTranslation();
@@ -22,7 +22,6 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisible, setIsVisible] = useState<boolean>();
   const { session } = useSession();
-  const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
   const { formatPrice } = useFormatPrice();
 
   const handlePress = () => {
@@ -66,12 +65,16 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
         <View>
           <Text>{tr("Price")}</Text>
           <View style={style.priceContainer}>
-            {project.price <= 0 ? (
+            {(project?.price as number) <= 0 ? (
               <Text bold>{tr("it is free")}</Text>
             ) : (
               <>
                 <Text body1 style={style.priceNumber}>
-                  {localizeNumber(formatPrice((project.price * (100 - project.discount)) / 100))}
+                  {localizeNumber(
+                    formatPrice(
+                      (project?.price as number) * (1 - (project?.discount as number) / 100)
+                    ) as string
+                  )}
                 </Text>
                 <Text bold> / {tr("Night")}</Text>
               </>
@@ -111,7 +114,10 @@ const style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  priceNumber: { fontWeight: "bold", fontSize: 16 },
+  priceNumber: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   left: {
     flex: 1,
   },
@@ -119,9 +125,9 @@ const style = StyleSheet.create({
     flex: 2,
   },
   rejectIcon: {
-    margin: "auto",
     width: 56,
     height: 56,
+    margin: "auto",
   },
 });
 

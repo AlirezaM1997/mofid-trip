@@ -6,7 +6,6 @@ import { Button, Text, useTheme } from "@rneui/themed";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
 import {
-  TourDetailQuery,
   TourPackageType,
   TourQueryType,
   useTourDetailQuery,

@@ -27,7 +27,7 @@ const TourComment = () => {
 
   if (loading && !data) return null;
 
-  const comment = (data?.tourDetail as TourQueryType)?.commentSet;
+  const comment = data?.tourDetail?.commentSet;
 
   return (
     <>
@@ -36,7 +36,7 @@ const TourComment = () => {
           <Text subtitle1 bold>
             {tr("opinions about the tour")}
           </Text>
-          <Text body2>{localizeNumber(comment.length) + " " + tr("comment")}</Text>
+          <Text body2>{localizeNumber(comment?.length as number) + " " + tr("comment")}</Text>
         </View>
         <Pressable onPress={handleOpen} style={styles.commentAddStyle}>
           <View style={styles.commentAddBox}>
@@ -52,7 +52,7 @@ const TourComment = () => {
             )}
           </Text>
         </Pressable>
-        {comment.length === 0 ? (
+        {comment?.length === 0 ? (
           <View style={styles.noResultStyle}>
             <Feather style={styles.noResultIcon} name="alert-circle" size={16} />
             <Text body2>
@@ -60,16 +60,16 @@ const TourComment = () => {
             </Text>
           </View>
         ) : (
-          (comment.length > 4 ? comment.slice(0, 4) : comment).map(comment => (
+          (comment?.length as number > 4 ? comment?.slice(0, 4) : comment)?.map(comment => (
             <CommentCard
               comment={comment as TourQueryType["commentSet"][0]}
-              key={comment.id}
+              key={comment?.id}
               refetch={refetch}
               push={`tour/${tourId}/comment`}
             />
           ))
         )}
-        {comment.length > 0 && (
+        {comment?.length as number > 0 && (
           <Button onPress={handleNavigateToComment} color="secondary">
             {tr("view more")}
           </Button>
@@ -80,7 +80,7 @@ const TourComment = () => {
         isVisible={isVisible}
         setIsVisible={setIsVisible}
         refetch={refetch}
-        id={tourId.toString()}
+        id={tourId as string}
         name={name}
       />
     </>

@@ -2540,6 +2540,11 @@ export const messages = {
     fa_ir: "تومان",
     en_us: "Tooman",
   },
+  "price per person": {
+    ar: "السعر للشخص الواحد",
+    fa_ir: "قیمت برای هر نفر",
+    en_us: "Price per person",
+  },
   "search country": {
     ar: "بحث عن البلد",
     fa_ir: "جستجوی کشور",
