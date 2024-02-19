@@ -80,7 +80,7 @@ const Map = ({
   // const currentLocationIcon = {
   //   id: "my-location",
   //   size: [60, 60],
-  //   iconAnchor: [-26, 60],
+  //   iconAnchor: [-17, 30],
   //   position: location,
   //   icon: window.location.origin + a,
   // };
