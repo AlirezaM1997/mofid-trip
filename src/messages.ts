@@ -3326,5 +3326,5 @@ export const messages = {
     ar: "الآدرس الهاست",
     fa_ir: "آدرس میزبانی",
     en_us: "Host Address",
-  },
+  }
 };
