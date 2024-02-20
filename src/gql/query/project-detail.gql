@@ -29,6 +29,7 @@ query projectDetail($pk: ID!) {
     }
     categories {
       name
+      displayName
       id
     }
     creator {
