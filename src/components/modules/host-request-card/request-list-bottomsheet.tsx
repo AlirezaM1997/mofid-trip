@@ -48,7 +48,7 @@ const RequestListBottomSheet = ({
   const { localizeNumber } = useLocalizedNumberFormat();
   const [projectTransactionEdit, { loading }] = useProjectTransactionEditMutation();
 
-  const handlePress = num => {
+  const handleSMS = num => {
     if (num) {
       if (Platform.OS === "web") {
         Linking.openURL(`sms:${num}`);
@@ -57,6 +57,17 @@ const RequestListBottomSheet = ({
       }
     }
   };
+
+  const handleCall = num => {
+    if (num) {
+      if (Platform.OS === "web") {
+        Linking.openURL(`phone:${num}`);
+      } else {
+        Alert.alert("coming soon");
+      }
+    }
+  };
+
   const submitHandler = async type => {
     const { data } = await projectTransactionEdit({
       variables: {
@@ -151,7 +162,8 @@ const RequestListBottomSheet = ({
             />
           )}
           <View style={style.bottomSheetHeaderTextBox}>
-            <Text subtitle2>{localizeNumber(transaction?.owner.fullname)}</Text>
+            <Text subtitle1>{localizeNumber(transaction?.owner.fullname)}</Text>
+            <Text body2>{localizeNumber(transaction?.owner.phoneNumber)}</Text>
             <Text caption type={step?.color}>
               {step?.bottomSheetTitle}
             </Text>
@@ -164,7 +176,15 @@ const RequestListBottomSheet = ({
               color="secondary"
               size="sm"
               title={tr("send Message")}
-              onPress={() => handlePress(transaction?.owner?.phoneNumber)}></Button>
+              onPress={() => handleSMS(transaction?.owner?.phoneNumber)}></Button>
+            <Button
+              iconPosition="right"
+              icon={<Ionicons name="chatbubble-ellipses" size={18} color="black" />}
+              type="outline"
+              color="secondary"
+              size="sm"
+              title={tr("Call")}
+              onPress={() => handleCall(transaction?.owner?.phoneNumber)}></Button>
           </View>
           <WhiteSpace />
         </View>

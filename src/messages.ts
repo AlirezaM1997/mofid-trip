@@ -3175,12 +3175,12 @@ export const messages = {
     en_us: "The host is open to children under 12 years old",
   },
   "to easily find the origin and start the host, set the address and the map of the place of departure.":
-    {
-      ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
-      fa_ir: "برای یافتن آسان مبدا و راه اندازی میزبانی، آدرس و نقشه محل عزیمت را تنظیم کنید.",
-      en_us:
-        "To easily find the origin and start the host, set the address and the map of the place of departure.",
-    },
+  {
+    ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
+    fa_ir: "آدرس محل میزبانی خودتان را برای اطلاع مسافران بنویسید.",
+    en_us:
+      "To easily find the origin and start the host, set the address and the map of the place of departure.",
+  },
   "host title and details": {
     ar: "عنوان المضيف والتفاصيل",
     fa_ir: "عنوان میزبانی و جزئیات",
@@ -3333,5 +3333,5 @@ export const messages = {
     ar: "الآدرس الهاست",
     fa_ir: "آدرس میزبانی",
     en_us: "Host Address",
-  },
+  }
 };
