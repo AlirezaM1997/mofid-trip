@@ -3170,7 +3170,7 @@ export const messages = {
   "to easily find the origin and start the host, set the address and the map of the place of departure.":
   {
     ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
-    fa_ir: "برای یافتن آسان مبدا و راه اندازی میزبانی، آدرس و نقشه محل عزیمت را تنظیم کنید.",
+    fa_ir: "آدرس محل میزبانی خودتان را برای اطلاع مسافران بنویسید.",
     en_us:
       "To easily find the origin and start the host, set the address and the map of the place of departure.",
   },
