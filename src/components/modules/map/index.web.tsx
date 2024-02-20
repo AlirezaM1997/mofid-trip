@@ -31,8 +31,10 @@ const b = locationMarkerImage;
 
 const Map = ({
   zoom,
-  lat = 28,
-  lng = 54,
+  // lat = 28,
+  // lng = 54,
+  lat = 34.650773,
+  lng = 50.885006,
   onMoveEnd,
   mapMarkers,
   mapOptions = {},
@@ -50,12 +52,11 @@ const Map = ({
   if (!lat && !lng) return;
 
   const { theme } = useTheme();
+  const [zoomLevel, setZoom] = useState(10);
   const [location, setLocation] = useState<{ lat: number; lng: number }>({ lat, lng });
 
   const handleCurrentLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
-
-    // setTimeout(() => setLocation({ lat, lng }), 0);
 
     if (status === Location.PermissionStatus.DENIED) {
       alert("Permission to access location was denied");
@@ -68,6 +69,7 @@ const Map = ({
         lat: loc?.coords?.latitude,
         lng: loc?.coords?.longitude,
       });
+      setZoom(18);
     } catch (error) {
       console.error(error);
     }
@@ -77,14 +79,17 @@ const Map = ({
     setLocation({ lat, lng });
   }, [lat, lng]);
 
-  // const currentLocationIcon = {
-  //   id: "my-location",
-  //   size: [60, 60],
-  //   iconAnchor: [-26, 60],
-  //   position: location,
-  //   icon: window.location.origin + a,
-  // };
+  useEffect(() => {
+    setZoom(zoom);
+  }, [zoom]);
 
+  const currentLocationIcon = {
+    id: "my-location",
+    size: [60, 60],
+    iconAnchor: [-26, 60],
+    position: location,
+    icon: window.location.origin + "/assets/assets/image/marker.png",
+  };
   return (
     <>
       <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="StyleSheet" />
@@ -117,7 +122,7 @@ const Map = ({
 
       <View style={[style.container, props.style]}>
         <ExpoLeaflet
-          zoom={zoom}
+          zoom={zoomLevel}
           mapCenterPosition={{
             lat: location?.lat,
             lng: location?.lng,
@@ -142,8 +147,11 @@ const Map = ({
                 Alert.alert(`Map Touched at:`, `${message.location.lat}, ${message.location.lng}`);
                 break;
               case "onMoveEnd":
-                onMoveEnd?.(message.bounds, message.mapCenter);
+                onMoveEnd?.(message.bounds, message.mapCenter, message.zoom);
                 break;
+              case "onZoom":
+              // console.log(message.zoom);
+
               default:
                 if (["onMove"].includes(message.tag)) {
                   return;
