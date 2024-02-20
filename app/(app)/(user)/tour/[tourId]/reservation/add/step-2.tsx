@@ -1,36 +1,37 @@
-import BottomButtonLayout from "@components/layout/bottom-button";
-import { Feather } from "@expo/vector-icons";
-import LoadingIndicator from "@modules/Loading-indicator";
-import PressablePreview from "@modules/pressable-preview";
-import { Button, Text, useTheme } from "@rneui/themed";
-import Container from "@src/components/atoms/container";
-import WhiteSpace from "@src/components/atoms/white-space";
 import {
   TourPackageType,
   TourQueryType,
   useTourDetailQuery,
   useTourTransactionAddMutation,
+  useUserDetailProfileQuery,
 } from "@src/gql/generated";
-import useIsRtl from "@src/hooks/localization";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { RootState } from "@src/store";
-import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import moment from "jalali-moment";
 import { StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
+import { Feather } from "@expo/vector-icons";
+import useIsRtl from "@src/hooks/localization";
+import React, { useEffect, useState } from "react";
+import { Button, Text, useTheme } from "@rneui/themed";
+import Container from "@src/components/atoms/container";
+import LoadingIndicator from "@modules/Loading-indicator";
+import PressablePreview from "@modules/pressable-preview";
+import { router, useLocalSearchParams } from "expo-router";
+import WhiteSpace from "@src/components/atoms/white-space";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 export default () => {
   const isRtl = useIsRtl();
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const { userDetail } = useSelector((state: RootState) => state.userSlice);
   const { tourId, guests, tourPackage } = useLocalSearchParams();
   const guestsObj = JSON.parse(guests as string);
   const tourPackageObj: TourPackageType = JSON.parse(tourPackage as string);
   const [tour, setTour] = useState<TourQueryType>();
 
-  const [tourTransactionAdd, {}] = useTourTransactionAddMutation();
+  const [tourTransactionAdd] = useTourTransactionAddMutation();
+
+  const { data: dataUserDetail } = useUserDetailProfileQuery();
 
   const { loading, data } = useTourDetailQuery({
     variables: {
@@ -57,7 +58,7 @@ export default () => {
     }
   }, [loading, data]);
 
-  if (loading || !tour) return <LoadingIndicator />;
+  if (loading || !tour || !dataUserDetail) return <LoadingIndicator />;
 
   return (
     <>
@@ -67,7 +68,7 @@ export default () => {
             {tr("Send Request")}
           </Button>,
         ]}>
-        <Container style={style.root}>
+        <Container>
           <WhiteSpace size={10} />
           <Text heading2 bold>
             {tr("Final Information")}
@@ -78,7 +79,9 @@ export default () => {
           <WhiteSpace size={20} />
           <PressablePreview
             topTitle={tr("Tour")}
-            title={`${tour.title} / ${tour.startTime}-${tour.endTime}`}
+            title={`${tour.title} / ${localizeNumber(
+              moment(tour.startTime).locale("fa").format("YYYY/MM/DD")
+            )}-${localizeNumber(moment(tour.endTime).locale("fa").format("YYYY/MM/DD"))}`}
             icon={<Feather name="home" size={24} color={theme.colors.black} />}
             button={
               <Button
@@ -92,8 +95,7 @@ export default () => {
                       name: tour.title,
                     },
                   })
-                }
-                style={style.btn}>
+                }>
                 {tr("View")}
                 <Feather
                   name={isRtl ? "chevron-left" : "chevron-right"}
@@ -109,12 +111,7 @@ export default () => {
             title={localizeNumber(guestsObj.length.toString())}
             icon={<Feather name="users" size={24} color={theme.colors.black} />}
             button={
-              <Button
-                color="secondary"
-                type="outline"
-                size="sm"
-                onPress={() => router.back()}
-                style={style.btn}>
+              <Button color="secondary" type="outline" size="sm" onPress={() => router.back()}>
                 {tr("Edit")}
                 <Feather
                   name={isRtl ? "chevron-left" : "chevron-right"}
@@ -127,15 +124,10 @@ export default () => {
           <WhiteSpace size={20} />
           <PressablePreview
             topTitle={tr("Group leader information")}
-            title={userDetail.fullname}
+            title={dataUserDetail.userDetail?.fullname as string}
             icon={<Feather name="users" size={24} color={theme.colors.black} />}
             button={
-              <Button
-                color="secondary"
-                type="outline"
-                size="sm"
-                onPress={() => router.back()}
-                style={style.btn}>
+              <Button color="secondary" type="outline" size="sm" onPress={() => router.back()}>
                 {tr("Edit")}
                 <Feather
                   name={isRtl ? "chevron-left" : "chevron-right"}
@@ -152,14 +144,6 @@ export default () => {
 };
 
 const style = StyleSheet.create({
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    marginBottom: 12,
-  },
-  btnItem: {
-    flex: 1,
-  },
   btnItem2: {
     flex: 2,
   },

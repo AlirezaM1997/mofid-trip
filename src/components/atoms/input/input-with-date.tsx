@@ -1,3 +1,4 @@
+import moment from "jalali-moment";
 import { FieldProps } from "formik";
 import { useRef, useState } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
@@ -27,7 +28,7 @@ const InputWithDate = ({ form, field, ...props }: InputWithDateProps) => {
   };
 
   const handleDayPress = day => {
-    form?.setFieldValue(field?.name as string, localizeNumber(day.locale("fa").format("YYYY/MM/DD")));
+    form?.setFieldValue(field?.name as string, day.format("YYYY-MM-DD"));
     setMarkedDays([
       {
         date: day,
@@ -47,7 +48,7 @@ const InputWithDate = ({ form, field, ...props }: InputWithDateProps) => {
         overlayStyle={{ direction: "rtl" }}>
         <JalaliDatePicker onDayPress={handleDayPress} markedDays={markedDays} />
       </Overlay>
-      <NativeInput {...props} ref={inputRef} value={field?.value} onFocus={_onFocus} />
+      <NativeInput {...props} ref={inputRef} value={field?.value && localizeNumber(moment(field?.value).locale("fa").format("YYYY/MM/DD"))} onFocus={_onFocus} />
     </>
   );
 };
