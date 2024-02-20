@@ -66,6 +66,15 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
+          name="mahdieh-iran"
+          options={{
+            title: "رزرو اسکان صلواتی مهدیه ایران",
+            headerShown: true,
+            headerTitleAlign: "left",
+            tabBarItemStyle: { display: "none" },
+          }}
+        />
+        <Tabs.Screen
           name="search-list"
           options={{
             title: tr("map"),

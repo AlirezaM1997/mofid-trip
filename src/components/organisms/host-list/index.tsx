@@ -29,7 +29,7 @@ function HostList() {
           <TitleWithAction
             title={tr("Available hosts")}
             actionTitle={tr("See All")}
-            onActionPress={() => router.push("/search")}
+            onActionPress={() => router.push("/mahdieh-iran")}
           />
         </Container>
         <ScrollView
@@ -39,25 +39,27 @@ function HostList() {
           style={style.listContainer}>
           {loading
             ? [1, 2, 3, 4, 5, 6, 7, 8].map(i => (
-              <Skeleton
-                key={i}
-                animation="pulse"
-                width={328}
-                height={300}
-                style={{ borderRadius: 10 }}
-              />
-            ))
-            : data.projectList.data?.map((project, index) => (
-              <View key={index}>
-                <HostSliderCard
-                  id={project?.id as string}
-                  name={project?.name}
-                  price={((project?.price as number) * (100 - (project?.discount as number))) / 100}
-                  address={project?.accommodation?.address}
-                  avatarS3={project?.accommodation?.avatarS3}
+                <Skeleton
+                  key={i}
+                  animation="pulse"
+                  width={328}
+                  height={300}
+                  style={{ borderRadius: 10 }}
                 />
-              </View>
-            ))}
+              ))
+            : data.projectList.data?.map((project, index) => (
+                <View key={index}>
+                  <HostSliderCard
+                    id={project?.id as string}
+                    name={project?.name}
+                    price={
+                      ((project?.price as number) * (100 - (project?.discount as number))) / 100
+                    }
+                    address={project?.accommodation?.address}
+                    avatarS3={project?.accommodation?.avatarS3}
+                  />
+                </View>
+              ))}
         </ScrollView>
       </View>
     );
@@ -70,7 +72,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
   },
   scrollView: { gap: 20, paddingHorizontal: 24 },
-  gap: { gap: 16 }
+  gap: { gap: 16 },
 });
 
 export default HostList;
