@@ -2,9 +2,10 @@ import { Text } from "@rneui/themed";
 import { useDispatch } from "react-redux";
 import { useSession } from "@src/context/auth";
 import useTranslation from "@src/hooks/translation";
-import { Redirect, Stack, usePathname } from "expo-router";
+import { Redirect, Slot, Stack, usePathname } from "expo-router";
 import useDefaultScreenOptions from "@src/hooks/use-default-screen-options";
 import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
+import { useEffect } from "react";
 
 export default function AppLayout() {
   const dispatch = useDispatch();
@@ -12,6 +13,13 @@ export default function AppLayout() {
   const routeName = usePathname();
   const { session, isLoading } = useSession();
   const defaultScreenOptions = useDefaultScreenOptions();
+
+  useEffect(() => {
+    if (isLoading) {
+      // TODO: use param solution instead redux to handling redirection route name
+      dispatch(setRedirectToScreenAfterLogin(routeName));
+    }
+  }, [isLoading])
 
   // You can keep the splash screen open, or render a loading screen like we do here.
   if (isLoading) {
@@ -23,16 +31,12 @@ export default function AppLayout() {
   if (!session) {
     // On web, static rendering will stop here as the user is not authenticated
     // in the headless Node process that the pages are rendered in.
-    // TODO: use param solution instead redux to handling redirection route name
-    dispatch(setRedirectToScreenAfterLogin(routeName));
     return <Redirect href="/user-login" />;
   } else if (session) {
     const { firstname, lastname, is_ngo, title } = JSON.parse(session).metadata;
     if (is_ngo && !title) {
-      dispatch(setRedirectToScreenAfterLogin(routeName));
       return <Redirect href="/login-details-ngo" />;
     } else if (!is_ngo && !firstname && !lastname) {
-      dispatch(setRedirectToScreenAfterLogin(routeName));
       return <Redirect href="/login-details" />;
     }
   }
