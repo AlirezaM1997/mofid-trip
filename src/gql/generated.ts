@@ -263,6 +263,7 @@ export enum CategoryFilterEnum {
   Apartment = 'Apartment',
   Beachfront = 'Beachfront',
   Hussainiyah = 'Hussainiyah',
+  Mosque = 'Mosque',
   Moukeb = 'Moukeb',
   Room = 'Room'
 }
@@ -943,6 +944,7 @@ export enum ProjectCategoryEnum {
   Apartment = 'Apartment',
   Beachfront = 'Beachfront',
   Hussainiyah = 'Hussainiyah',
+  Mosque = 'Mosque',
   Moukeb = 'Moukeb',
   Room = 'Room'
 }
