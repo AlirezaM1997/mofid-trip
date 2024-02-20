@@ -61,7 +61,7 @@ const RequestListBottomSheet = ({
   const handleCall = num => {
     if (num) {
       if (Platform.OS === "web") {
-        Linking.openURL(`phone:${num}`);
+        Linking.openURL(`tel:${num}`);
       } else {
         Alert.alert("coming soon");
       }
