@@ -58,7 +58,7 @@ const style = StyleSheet.create({
     alignItems: "center",
     // TODO: refactor the size of image
     width: WIDTH - 48,
-    height: ((WIDTH - 48) * 144) / 330,
+    height: ((WIDTH - 48) * 144) / 290,
     overflow: "hidden",
   },
   bannerSize: {
