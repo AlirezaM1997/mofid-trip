@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { BottomSheet, Button, CheckBox, Divider, Input, ListItem, Text } from "@rneui/themed";
-import { FieldArray, Formik } from "formik";
-import * as Yup from "yup";
 import {
   ReportTypeEnum,
   useReportAddMutation,
   useReportCategoryListQuery,
 } from "@src/gql/generated";
+import * as Yup from "yup";
 import { Redirect } from "expo-router";
+import { HEIGHT } from "@src/constants";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import { HEIGHT } from "@src/constants";
-import useTranslation from "@src/hooks/translation";
-import Toast from "react-native-toast-message";
+import { FieldArray, Formik } from "formik";
 import { useSession } from "@src/context/auth";
+import { AntDesign } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
+import React, { useEffect, useState } from "react";
+import useTranslation from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { BottomSheet, Button, CheckBox, Divider, Input, ListItem, Text } from "@rneui/themed";
 
-const ReportComment = ({ closeDropDown, id }) => {
+const ReportComment = ({ closeDropDown, id }: { id: string }) => {
   const { tr } = useTranslation();
   const { session } = useSession();
   const [isVisible, setIsVisible] = useState(false);
@@ -81,7 +81,7 @@ const ReportComment = ({ closeDropDown, id }) => {
         })
       )
       .test("at-least-one-true", tr("choose one of the options above*"), function (value) {
-        return value.some(obj => obj.checked === true);
+        return value?.some(obj => obj.checked === true);
       }),
     textBox: Yup.string().when("checkBoxList", {
       is: checkBoxList => checkBoxList[checkBoxList.length - 1].checked === true,
@@ -102,7 +102,7 @@ const ReportComment = ({ closeDropDown, id }) => {
 
   return (
     <>
-      <ListItem onPress={handleOpen} containerStyle={styles.reportButton}>
+    <ListItem onPress={handleOpen} containerStyle={styles.reportButton}>
         <AntDesign name="warning" size={16} />
         <Text numberOfLines={1} body2>
           {tr("violation report")}

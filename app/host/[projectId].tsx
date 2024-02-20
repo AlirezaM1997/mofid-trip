@@ -66,10 +66,6 @@ const Page: React.FC = ({ ...props }) => {
     accommodation,
   } = data?.projectDetail as ProjectQueryType;
 
-  console.log('====================================');
-  console.log(categories);
-  console.log('====================================');
-
   return (
     <BottomButtonLayout
       buttons={[<BookHostBottomSheet project={data?.projectDetail as ProjectQueryType} />]}>

@@ -44,7 +44,6 @@ const TabFaclities = () => {
     const newValues = values?.facilities?.filter(value => value !== title);
     setFieldValue("facilities", newValues);
   };
-  console.log(values?.facilities);
 
   return (
     <>

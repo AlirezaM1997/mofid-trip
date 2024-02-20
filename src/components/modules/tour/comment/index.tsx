@@ -1,13 +1,13 @@
+import React, { useState } from "react";
 import Container from "@atoms/container";
 import { Button, Text } from "@rneui/themed";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import React, { useState } from "react";
+import CommentCard from "@modules/comment/comment-card";
+import { router, useLocalSearchParams } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { TourQueryType, useTourCommentQuery } from "@src/gql/generated";
-import CommentCard from "@modules/comment/comment-card";
-import { router, useLocalSearchParams } from "expo-router";
 import AddCommentBottomSheet from "@modules/comment/add-comment-bottomsheet";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const TourComment = () => {
   const { tr } = useTranslation();
@@ -77,11 +77,11 @@ const TourComment = () => {
       </Container>
 
       <AddCommentBottomSheet
-        isVisible={isVisible}
+        isVisible={isVisible as boolean}
         setIsVisible={setIsVisible}
         refetch={refetch}
         id={tourId as string}
-        name={name}
+        name={name as string}
       />
     </>
   );

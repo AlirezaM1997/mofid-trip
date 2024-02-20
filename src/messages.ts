@@ -163,6 +163,11 @@ export const messages = {
     fa_ir: "درخواست شما ثبت شد",
     en_us: "your request has been registered",
   },
+  "your request was rejected": {
+    ar: "تم رفض طلبك",
+    fa_ir: "درخواست شما رد شد",
+    en_us: "Your request was rejected",
+  },
   close: {
     ar: "الخروج",
     fa_ir: "بستن",
