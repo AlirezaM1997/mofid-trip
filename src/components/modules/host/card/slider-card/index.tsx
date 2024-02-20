@@ -6,7 +6,7 @@ import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { ProjectQueryType } from "@src/gql/generated";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
-import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native";
+import { View, ImageBackground, StyleSheet, Pressable, Platform, ViewStyle } from "react-native";
 import { WIDTH } from "@src/constants";
 
 type PropsType = {
@@ -15,9 +15,10 @@ type PropsType = {
   price: ProjectQueryType["price"];
   name: ProjectQueryType["name"];
   id: ProjectQueryType["id"];
+  containerStyle?: ViewStyle;
 };
 
-function HostSliderCard({ price, id, name, avatarS3, address }: PropsType) {
+function HostSliderCard({ price, id, name, avatarS3, address, containerStyle }: PropsType) {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
   const { theme } = useTheme();
@@ -38,7 +39,7 @@ function HostSliderCard({ price, id, name, avatarS3, address }: PropsType) {
     avatarS3?.length > 0 ? { uri: avatarS3?.[0].small } : require("@assets/image/defaultHost.svg");
 
   return (
-    <Pressable style={style.container} onPress={handlePress}>
+    <Pressable style={[style.container, containerStyle]} onPress={handlePress}>
       <ImageBackground
         style={style.ImageBackground(isRtl)}
         imageStyle={style.ImageBackgroundImage}
@@ -117,7 +118,7 @@ const style = StyleSheet.create({
   }),
   ImageBackgroundImage: {
     width: "100%",
-    height: '100%',
+    height: "100%",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
