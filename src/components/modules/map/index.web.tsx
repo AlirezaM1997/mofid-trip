@@ -54,7 +54,11 @@ const Map = ({
   if (!lat && !lng) return;
 
   const { theme } = useTheme();
+<<<<<<< HEAD
   const [zoomLevel, setZoom] = useState(zoom || 10);
+=======
+  const [zoomLevel, setZoom] = useState(10);
+>>>>>>> eddf80e (build mahdieh iran page)
   const [location, setLocation] = useState<{ lat: number; lng: number }>({ lat, lng });
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number }>();
 
@@ -87,6 +91,7 @@ const Map = ({
   }, [lat, lng]);
 
   useEffect(() => {
+<<<<<<< HEAD
     zoom && setZoom(zoom);
   }, [zoom]);
 
@@ -97,7 +102,18 @@ const Map = ({
     position: currentLocation,
     icon: window.location.origin + "/assets/assets/image/my-location.png",
   };
+=======
+    setZoom(zoom);
+  }, [zoom]);
+>>>>>>> eddf80e (build mahdieh iran page)
 
+  const currentLocationIcon = {
+    id: "my-location",
+    size: [60, 60],
+    iconAnchor: [-26, 60],
+    position: location,
+    icon: window.location.origin + "/assets/assets/image/marker.png",
+  };
   return (
     <>
       <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="StyleSheet" />
