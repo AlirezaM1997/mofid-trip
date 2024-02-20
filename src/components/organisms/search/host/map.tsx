@@ -1,3 +1,12 @@
+import React, {
+  memo,
+  useMemo,
+  useState,
+  useEffect,
+  ReactNode,
+  useCallback,
+  ReactElement,
+} from "react";
 import Map from "@modules/map";
 import { router } from "expo-router";
 import { RootState } from "@src/store";
@@ -9,7 +18,6 @@ import { MapPropsType } from "@modules/map/index.web";
 import { useDispatch, useSelector } from "react-redux";
 import HostSearchCard from "@modules/host/card/search-card";
 import { useProjectListSearchLazyQuery } from "@src/gql/generated";
-import React, { ReactElement, ReactNode, memo, useEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 
 const MemoizedMap = memo(Map);
@@ -33,38 +41,38 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
 
   const onMarkerClick = useMemo(
     () => (id: number) => {
-      setItem(
-        <Pressable key={id} onPress={() => router.push(`host/${id}`)} style={styles.itemCard}>
-          <HostSearchCard
-            chevron={true}
-            project={data?.projectList?.data?.find(obj => obj?.id === id)}
-          />
-        </Pressable>
-      );
+      data?.projectList?.data &&
+        setItem(
+          <Pressable key={id} onPress={() => router.push(`host/${id}`)} style={styles.itemCard}>
+            <HostSearchCard
+              chevron={true}
+              project={data?.projectList?.data?.find(obj => obj?.id === id)}
+            />
+          </Pressable>
+        );
     },
-    []
+    [data]
   );
 
-  const onMoveHandler = useMemo(
-    () =>
-      debounce(bounds => {
-        const latHigh = bounds[0][0];
-        const latLow = bounds[1][0];
-        const lngHigh = bounds[0][1];
-        const lngLow = bounds[1][1];
+  const onMoveHandler = useCallback(
+    debounce(bounds => {
+      const latHigh = bounds[0][0];
+      const latLow = bounds[1][0];
+      const lngHigh = bounds[0][1];
+      const lngLow = bounds[1][1];
 
-        const mapBounds = {
-          latHigh,
-          latLow,
-          lngHigh,
-          lngLow,
-        };
+      const mapBounds = {
+        latHigh,
+        latLow,
+        lngHigh,
+        lngLow,
+      };
 
-        setBounds(mapBounds);
+      setBounds(mapBounds);
 
-        setItem(null);
-      }, 800),
-    []
+      setItem(null);
+    }, 800),
+    [bounds]
   );
 
   const memoLoading = useMemo(
@@ -79,7 +87,7 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
         {selectedItem}
       </View>
     ),
-    []
+    [selectedItem]
   );
 
   const memoMapMarkers = useMemo(
@@ -102,30 +110,31 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
   );
 
   useEffect(() => {
-    dispatch(
-      setFilter({
-        ...filterSlice.filter,
-        destinationGeoLimit: bounds,
-      })
-    );
+    bounds &&
+      dispatch(
+        setFilter({
+          ...filterSlice.filter,
+          destinationGeoLimit: bounds,
+        })
+      );
   }, [bounds]);
 
   return (
     <MemoizedMap
       style={styles.map}
       onMoveEnd={onMoveHandler}
+      mapMarkers={memoMapMarkers}
       onMarkerClick={onMarkerClick}
       currentLocationVisible={true}
       centerContent={loading && memoLoading}
       bottomCenterContent={memoBottomCenterContent}
-      mapMarkers={memoMapMarkers}
       {...props}
     />
   );
 };
 
 const styles = StyleSheet.create({
-  map: { height: HEIGHT, borderRadius: 0 },
+  map: { height: HEIGHT - 200, borderRadius: 0 },
   bottomContainer: {
     gap: 16,
     width: WIDTH,

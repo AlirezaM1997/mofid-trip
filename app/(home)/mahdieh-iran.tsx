@@ -11,6 +11,7 @@ import NoResult from "@src/components/organisms/no-result";
 import HostSliderCard from "@modules/host/card/slider-card";
 import { ProjectQueryType, useProjectListSearchQuery } from "@src/gql/generated";
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
+import { WIDTH } from "@src/constants";
 
 const MahdiehIranScreen = () => {
   const pageNumber = useRef(1);
@@ -91,7 +92,7 @@ const MahdiehIranScreen = () => {
               key={project?.id}
               name={project?.name}
               id={project?.id as string}
-              containerStyle={{ width: 320 }}
+              containerStyle={{ width: WIDTH, maxWidth: WIDTH - 40 }}
               address={project?.accommodation?.address}
               avatarS3={project?.accommodation?.avatarS3}
               price={((project?.price as number) * (100 - (project?.discount as number))) / 100}
