@@ -17,8 +17,8 @@ const MemoizedMap = memo(Map);
 const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPropsType }) => {
   const { theme } = useTheme();
   const dispatch = useDispatch();
+  const [bounds, setBounds] = useState();
   const [selectedItem, setItem] = useState<ReactElement | null>(null);
-  const [bounds, setBounds] = useState<any>();
 
   const { filterSlice } = useSelector((state: RootState) => state);
 

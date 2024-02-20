@@ -9,17 +9,21 @@ import { MapPropsType } from "@modules/map/index.web";
 import { useDispatch, useSelector } from "react-redux";
 import TourSearchCard from "@modules/tour/card/search-card";
 import { useTourListSearchLazyQuery } from "@src/gql/generated";
-import React, { ReactNode, useEffect, useMemo, useState } from "react";
+import React, { ReactElement, ReactNode, memo, useEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
+
+const MemoizedMap = memo(Map);
 
 const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPropsType }) => {
   const { theme } = useTheme();
   const dispatch = useDispatch();
-  const [selectedItem, setItem] = useState(null);
+  const [bounds, setBounds] = useState();
+  const [selectedItem, setItem] = useState<ReactElement | null>(null);
 
   const { filterSlice } = useSelector((state: RootState) => state);
 
   const [search, { data, loading }] = useTourListSearchLazyQuery();
+  const { category, ...searchVariables } = filterSlice;
 
   useEffect(() => {
     search({
@@ -27,38 +31,64 @@ const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
     });
   }, [filterSlice]);
 
-  const onMarkerClick = id => {
-    setItem(
-      <Pressable key={id} onPress={() => router.push(`tour/${id}`)} style={styles.itemCard}>
-        <TourSearchCard chevron={true} tour={data.tourList.data.find(obj => obj.id === id)} />
-      </Pressable>
-    );
-  };
+  const onMarkerClick = useMemo(
+    () => id => {
+      setItem(
+        <Pressable key={id} onPress={() => router.push(`tour/${id}`)} style={styles.itemCard}>
+          <TourSearchCard chevron={true} tour={data.tourList.data.find(obj => obj.id === id)} />
+        </Pressable>
+      );
+    },
+    []
+  );
 
-  const onMoveHandler = debounce(bounds => {
-    const latHigh = bounds[0][0];
-    const latLow = bounds[1][0];
-    const lngHigh = bounds[0][1];
-    const lngLow = bounds[1][1];
+  const onMoveHandler = useMemo(
+    () =>
+      debounce(bounds => {
+        const latHigh = bounds[0][0];
+        const latLow = bounds[1][0];
+        const lngHigh = bounds[0][1];
+        const lngLow = bounds[1][1];
 
-    const mapBounds = {
-      latHigh,
-      latLow,
-      lngHigh,
-      lngLow,
-    };
+        const mapBounds = {
+          latHigh,
+          latLow,
+          lngHigh,
+          lngLow,
+        };
 
+        setBounds(mapBounds);
+
+        setItem(null);
+      }, 800),
+    []
+  );
+
+  useEffect(() => {
     dispatch(
       setFilter({
         ...filterSlice.filter,
-        destinationGeoLimit: mapBounds,
+        destinationGeoLimit: bounds,
       })
     );
+  }, [bounds]);
 
-    setItem(null);
-  }, 800);
+  const memoLoading = useMemo(
+    () => <ActivityIndicator size="large" color={theme.colors.primary} />,
+    []
+  );
 
-  const markers = useMemo(() => {
+  const memoBottomCenterContent = useMemo(
+    () => (
+      <View style={styles.bottomContainer}>
+        {button}
+        {selectedItem}
+      </View>
+    ),
+    []
+  );
+
+  const memoMapMarkers = useMemo(() => {
     return !loading && data
       ? data.tourList.data.map(tour => ({
           id: tour.id,
@@ -71,24 +101,17 @@ const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
           icon: window.location.origin + "/assets/assets/image/location-marker.png",
         }))
       : [];
-  }, [data, loading]);
-
-  const bottomCenterContent = (
-    <View style={styles.bottomContainer}>
-      {button}
-      {selectedItem}
-    </View>
-  );
+  }, [filterSlice]);
 
   return (
-    <Map
+    <MemoizedMap
       style={styles.map}
-      mapMarkers={markers}
       onMoveEnd={onMoveHandler}
+      mapMarkers={memoMapMarkers}
       onMarkerClick={onMarkerClick}
       currentLocationVisible={true}
-      bottomCenterContent={bottomCenterContent}
-      centerContent={loading && <ActivityIndicator size="large" color={theme.colors.primary} />}
+      centerContent={loading && memoLoading}
+      bottomCenterContent={memoBottomCenterContent}
       {...props}
     />
   );
