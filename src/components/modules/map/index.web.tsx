@@ -33,8 +33,8 @@ const Map = ({
   zoom,
   // lat = 28,
   // lng = 54,
-  lat = 34.650773,
-  lng = 50.885006,
+  lat = 34.600773,
+  lng = 50.867006,
   onMoveEnd,
   mapMarkers,
   mapOptions = {},
@@ -80,7 +80,7 @@ const Map = ({
   }, [lat, lng]);
 
   useEffect(() => {
-    setZoom(zoom);
+    zoom && setZoom(zoom);
   }, [zoom]);
 
   const currentLocationIcon = {
@@ -109,6 +109,7 @@ const Map = ({
               onPress={handleCurrentLocation}
               buttonStyle={{
                 backgroundColor: theme.colors.white,
+                zIndex: 1,
               }}
               icon={
                 <MaterialIcons name="my-location" size={18} color={theme.colors.black} />
@@ -149,9 +150,6 @@ const Map = ({
               case "onMoveEnd":
                 onMoveEnd?.(message.bounds, message.mapCenter, message.zoom);
                 break;
-              case "onZoom":
-              // console.log(message.zoom);
-
               default:
                 if (["onMove"].includes(message.tag)) {
                   return;
@@ -202,7 +200,6 @@ const style = StyleSheet.create({
   bottomLeftContent: {
     right: 24,
     bottom: 24,
-    zIndex: 1000,
     position: "absolute",
   },
 });
