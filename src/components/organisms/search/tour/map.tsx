@@ -63,7 +63,7 @@ const SearchTourMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
       ? data.tourList.data.map(tour => ({
           id: tour.id,
           size: [60, 60],
-          iconAnchor: [-26, 60],
+          iconAnchor: [-17, 30],
           position: {
             lat: tour?.destination?.lat || 33,
             lng: tour?.destination?.lng || 33,

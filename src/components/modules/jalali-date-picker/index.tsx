@@ -44,7 +44,7 @@ const JalaliDatePicker = ({
 
   function findDayData(date: moment.Moment) {
     for (let i = 0; i < (daysData as [])?.length; i++) {
-      if (moment(daysData?.[i]?.date, "jYYYY-jMM-jDD").locale("en").isSame(date)) {
+      if (moment(daysData?.[i]?.date, "YYYY-MM-DD").isSame(date)) {
         return daysData?.[i]; // Return the object if found
       }
     }
@@ -65,11 +65,15 @@ const JalaliDatePicker = ({
 
   useEffect(() => {
     if (markedDays?.length !== 0 && cursor === 0) {
-      let a = ((+moment(markedDays[0]?.date).locale("fa").format("YYYY") - +moment(new Date()).locale("fa").format("YYYY")) * 12) +
-        (+moment(markedDays[0]?.date).locale("fa").format("M") - +moment(new Date()).locale("fa").format("M"));
+      let a =
+        (+moment(markedDays[0]?.date).locale("fa").format("YYYY") -
+          +moment(new Date()).locale("fa").format("YYYY")) *
+          12 +
+        (+moment(markedDays[0]?.date).locale("fa").format("M") -
+          +moment(new Date()).locale("fa").format("M"));
       setCursor(a);
     }
-  }, [markedDays?.[0]?.date])
+  }, [markedDays?.[0]?.date]);
 
   return (
     <CalendarContext.Provider value={{ cursor: cursor, setCursor: setCursor }}>
@@ -94,7 +98,6 @@ const JalaliDatePicker = ({
             const validMatchDays = matchedDays as DaysDataType[number];
 
             const dayData = validMatchDays?.data;
-            console.log(dayData);
 
             return (
               <View style={styles.container}>

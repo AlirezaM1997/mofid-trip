@@ -124,7 +124,7 @@ const Page: React.FC = ({ ...props }) => {
                       position: { lat: accommodation?.lat, lng: accommodation?.lng },
                       size: [52, 60],
                       icon: window.location.origin + "/assets/assets/image/marker.png",
-                      iconAnchor: [-26, 60],
+                      iconAnchor: [-17, 30],
                     },
                   ]}
                 />

@@ -9,10 +9,6 @@ import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import { Pressable, StyleSheet, View, ViewProps } from "react-native";
 
-// این کد رو به هیچ عنوان پاک نکنید
-// اگه این کد پاک بشه مارکر از بیلد ریلیز حذف میشه
-// require("@assets/image/wallet.png")
-
 export type LocationPickerProps = FieldProps & ViewProps;
 
 const MemoizedMapWithoutDragging = memo(
@@ -34,7 +30,7 @@ const MemoizedMapWithoutDragging = memo(
                   position: { lat: la, lng: ln },
                   size: [52, 60],
                   icon: window.location.origin + "/assets/assets/image/marker.png",
-                  iconAnchor: [-26, 60],
+                  iconAnchor: [-17, 30],
                 },
               ]
             : []
@@ -45,13 +41,21 @@ const MemoizedMapWithoutDragging = memo(
 );
 
 const MemoizedMap = memo(
-  ({ style, onMoveEnd, topCenterContent, lat = 35.7429943, lng = 51.3505697 }: MapPropsType) => {
+  ({
+    zoom,
+    style,
+    onMoveEnd,
+    topCenterContent,
+    lat = 35.7429943,
+    lng = 51.3505697,
+  }: MapPropsType) => {
     const la = lat ?? initLocation?.lat;
     const ln = lng ?? initLocation?.lng;
     return (
       <Map
         lat={la}
         lng={ln}
+        zoom={zoom}
         style={style}
         onMoveEnd={onMoveEnd}
         currentLocationVisible={true}
@@ -66,12 +70,13 @@ const MemoizedMap = memo(
 const mapHeight = 200;
 
 const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPickerProps) => {
-  const { tr } = useTranslation();
   const { theme } = useTheme();
+  const { tr } = useTranslation();
   const isMapOpened = useRef<boolean>();
   const [location, setLocation] = useState();
-  const [errorMsg, setErrorMsg] = useState(null);
   const [isVisible, setIsVisible] = useState();
+  const [zoom, setZoom] = useState();
+  const [errorMsg, setErrorMsg] = useState(null);
   const { setFieldValue, touched, errors, getFieldProps } = useFormikContext();
 
   const latFieldProps = getFieldProps(latName);
@@ -114,9 +119,9 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
     () => (
       <Container
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 55,
-          left: - WIDTH / 2,
+          left: -WIDTH / 2,
           backgroundColor: theme.colors.white,
           width: WIDTH,
           paddingTop: 10,
@@ -137,7 +142,10 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
     []
   );
 
-  const moveEndHandler = useCallback((_, mapCenter) => setLocation(mapCenter), []);
+  const moveEndHandler = useCallback((_, mapCenter, zoom) => {
+    setLocation(mapCenter);
+    setZoom(zoom);
+  }, []);
 
   return (
     <>
@@ -175,6 +183,7 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
         </View>
         <View style={styles.mapMarkerCentered} />
         <MemoizedMap
+          zoom={zoom}
           style={styles.root}
           onMoveEnd={moveEndHandler}
           currentLocationVisible={true}
@@ -189,59 +198,60 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
     </>
   );
 };
+
 const styles = StyleSheet.create({
   root: { width: "100%", height: HEIGHT },
   header: {
-    position: "absolute",
     top: 0,
     zIndex: 1,
-    backgroundColor: "#fff",
-    width: "100%",
     height: 55,
+    width: "100%",
     display: "flex",
-    alignItems: "flex-end",
-    justifyContent: "space-between",
+    position: "absolute",
     flexDirection: "row",
+    alignItems: "flex-end",
+    backgroundColor: "#fff",
+    justifyContent: "space-between",
     padding: 12,
   },
   container: theme => ({
-    width: "100%",
-    height: mapHeight,
-    borderColor: theme.colors.black,
-    borderWidth: 2,
-    borderStyle: "dashed",
-    borderRadius: 8,
     padding: 0,
+    width: "100%",
+    borderWidth: 2,
     display: "flex",
+    borderRadius: 8,
+    height: mapHeight,
     alignItems: "center",
+    borderStyle: "dashed",
     justifyContent: "center",
+    borderColor: theme.colors.black,
   }),
   map: {
     width: "100%",
     height: "100%",
   },
   mapMask: theme => ({
+    zIndex: 1,
+    opacity: 0.5,
     width: "100%",
     height: "100%",
-    backgroundColor: theme.colors.white,
-    opacity: 0.5,
-    zIndex: 1,
     position: "absolute",
+    backgroundColor: theme.colors.white,
   }),
   mapMarkerCentered: {
-    backgroundImage: `url(${window.location.origin + "/assets/assets/image/marker.png"})`,
     width: 52,
-    height: 60,
-    position: "absolute",
     zIndex: 2,
+    height: 60,
     left: WIDTH / 2 - 26,
     top: HEIGHT / 2 - 30,
+    position: "absolute",
+    backgroundImage: `url(${window.location.origin + "/assets/assets/image/marker.png"})`,
   },
   selectText: {
-    opacity: 1,
     zIndex: 2,
-    position: "absolute",
     top: "45%",
+    opacity: 1,
+    position: "absolute",
     right: WIDTH / 2 - 90,
   },
   mapContainer: {
@@ -253,9 +263,9 @@ const styles = StyleSheet.create({
   },
   bottomSheetContainerStyle: {
     height: HEIGHT,
+    display: "flex",
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    display: "flex",
     justifyContent: "center",
   },
   bottomLeftContentStyle: { bottom: 74 },

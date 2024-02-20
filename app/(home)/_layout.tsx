@@ -66,6 +66,22 @@ export default function AppLayout() {
           }}
         />
         <Tabs.Screen
+          name="mahdieh-iran"
+          options={{
+            title: "رزرو اسکان صلواتی مهدیه ایران",
+            headerShown: true,
+            headerTitleAlign: "left",
+            tabBarItemStyle: { display: "none" },
+          }}
+        />
+        <Tabs.Screen
+          name="search-list"
+          options={{
+            title: tr("map"),
+            tabBarIcon: ({ color, size }) => <FontAwesome name="map" size={size} color={color} />,
+          }}
+        />
+        <Tabs.Screen
           name="create"
           options={{
             title: tr("Create"),
@@ -86,21 +102,12 @@ export default function AppLayout() {
             tabBarIcon: ({ color, size }) => <Feather name="bookmark" size={size} color={color} />,
           }}
         />
-        <Tabs.Screen
-          name="search-list"
-          options={{
-            title: tr("map"),
-            tabBarIcon: ({ color, size }) => (
-              <FontAwesome name="map" size={size} color={color} />
-            ),
-          }}
-        />
+
         <Tabs.Screen
           name="profile"
           options={{
             title: tr("Profile"),
-            tabBarIcon: ({ color, size }) =>
-              <Feather name="user" size={size} color={color} />,
+            tabBarIcon: ({ color, size }) => <Feather name="user" size={size} color={color} />,
           }}
         />
       </Tabs>
