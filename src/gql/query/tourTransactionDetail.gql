@@ -29,6 +29,7 @@ query tourTransactionDetail($pk: ID!) {
     tourPackage {
       title
       price
+      discount
       id
       tour {
         avatarS3 {

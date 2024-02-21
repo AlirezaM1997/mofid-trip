@@ -87,7 +87,7 @@ const TourTransactionDetailScreen = () => {
 
   return (
     <BottomButtonLayout buttons={bottomButton() ? [bottomButton()] : []}>
-      <TourTransactionDetail transactionDetail={data.tourTransactionDetail} />
+      <TourTransactionDetail transactionDetail={data.tourTransactionDetail as TourTransactionQueryType} />
       <AcceptPayment
         isVisible={isVisible}
         setIsVisible={setIsVisible}

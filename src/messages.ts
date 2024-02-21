@@ -2522,6 +2522,11 @@ export const messages = {
     fa_ir: "پیام",
     en_us: "chat",
   },
+  "original price": {
+    ar: "السعر الأصلي",
+    fa_ir: "قیمت اصلی",
+    en_us: "original price",
+  },
   "making contact": {
     ar: "يجري اتصال",
     fa_ir: "برقراری تماس",
@@ -3102,6 +3107,11 @@ export const messages = {
     ar: "يخلق",
     fa_ir: "ایجاد",
     en_us: "Create",
+  },
+  "percent": {
+    ar: "نسبه مئويه",
+    fa_ir: "درصد",
+    en_us: "Percent",
   },
   "invalid email address": {
     ar: "نداریم",

@@ -1,20 +1,24 @@
 import React from "react";
 import { View } from "react-native";
-import { Text } from "@rneui/themed";
+import { Divider, Text } from "@rneui/themed";
 import { StyleSheet } from "react-native";
+import { totalPrice } from "@src/helper/totalPrice";
 import { useFormatPrice } from "@src/hooks/localization";
 import { ProjectTransactionQueryType } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { totalPrice } from "@src/helper/totalPrice";
 
 const Invoice = ({ transactionDetail }: { transactionDetail: ProjectTransactionQueryType }) => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
   const { formatPrice } = useFormatPrice();
 
+  const project = transactionDetail?.project;
+
   return (
     <View style={styles.container}>
-      <Text body2>{tr("final invoice")}</Text>
+      <Text body2 bold>
+        {tr("final invoice")}
+      </Text>
       <Text caption type="grey2">
         {tr(
           "your final and recorded details for the initial host request. the price is calculated per person."
@@ -22,14 +26,61 @@ const Invoice = ({ transactionDetail }: { transactionDetail: ProjectTransactionQ
       </Text>
 
       <View style={styles.priceContainer}>
-        <Text caption>{tr("base price")}</Text>
-        <Text caption>{localizeNumber(formatPrice(+transactionDetail.project.price))}</Text>
+        <Text type="grey2" caption>
+          {tr("original price")}
+        </Text>
+        <Text caption>{localizeNumber(formatPrice(project?.price as number) as string)}</Text>
+      </View>
+      <View style={styles.priceContainer}>
+        <Text type="grey2" caption>{`${tr("discount")} (${localizeNumber(
+          project?.discount as number
+        )} ${tr("percent")})`}</Text>
+        <Text caption>
+          {localizeNumber(
+            formatPrice(
+              (project?.price as number) * (1 - (project?.discount as number) / 100)
+            ) as string
+          )}
+        </Text>
       </View>
       <View style={styles.priceContainer}>
         <View style={styles.rowTextContainer}>
-          <Text caption>{localizeNumber(transactionDetail.project.price)} x </Text>
-          <Text caption>
-            {localizeNumber(`${transactionDetail.guest.guestNumber} ${tr("person")}`)}
+          <Text type="grey2" caption>
+            {localizeNumber(project?.price as number)} x{" "}
+          </Text>
+          <Text type="grey2" caption>
+            {localizeNumber(`${transactionDetail?.guest?.guestNumber} ${tr("person")}`)}
+          </Text>
+        </View>
+
+        <Text caption>
+          {localizeNumber(
+            formatPrice(
+              (transactionDetail?.guest?.guestNumber as number) *
+                (project?.price as number) *
+                (1 - (project?.discount as number) / 100)
+            ) as string
+          )}
+        </Text>
+      </View>
+      <View style={styles.priceContainer}>
+        <View style={styles.rowTextContainer}>
+          <Text type="grey2" caption>
+            {localizeNumber(
+              (transactionDetail?.guest?.guestNumber as number) *
+                (project?.price as number) *
+                (1 - (project?.discount as number) / 100)
+            )}{" "}
+            x{" "}
+          </Text>
+          <Text type="grey2" caption>
+            {localizeNumber(
+              `${
+                (+new Date(transactionDetail?.dateEnd) - +new Date(transactionDetail?.dateStart)) /
+                  86400000 +
+                1
+              } ${tr("night")}`
+            )}
           </Text>
         </View>
 
@@ -37,27 +88,30 @@ const Invoice = ({ transactionDetail }: { transactionDetail: ProjectTransactionQ
           {localizeNumber(
             formatPrice(
               +totalPrice({
-                price: +transactionDetail?.project?.price,
-                capacity: +transactionDetail?.guest?.guestNumber,
+                price: +((project?.price as number) * (1 - (project?.discount as number) / 100)),
+                capacity: +(transactionDetail?.guest?.guestNumber as number),
                 startDate: transactionDetail?.dateStart,
                 endDate: transactionDetail?.dateEnd,
-              }) as number
+              })
             ) as string
           )}
         </Text>
       </View>
+      <Divider />
       <View style={styles.priceContainer}>
-        <Text caption>{tr("total")}</Text>
-        <Text caption>
+        <Text bold caption>
+          {tr("total")}
+        </Text>
+        <Text bold caption>
           {localizeNumber(
             formatPrice(
               +totalPrice({
-                price: +transactionDetail.project.price,
-                capacity: +transactionDetail.guest.guestNumber,
-                startDate: transactionDetail.dateStart,
-                endDate: transactionDetail.dateEnd,
+                price: +((project?.price as number) * (1 - (project?.discount as number) / 100)),
+                capacity: +(transactionDetail?.guest?.guestNumber as number),
+                startDate: transactionDetail?.dateStart,
+                endDate: transactionDetail?.dateEnd,
               })
-            )
+            ) as string
           )}
         </Text>
       </View>

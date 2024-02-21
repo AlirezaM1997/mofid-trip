@@ -32,6 +32,7 @@ query projectTransactionDetail($pk: ID!) {
       price
       dateEnd
       dateStart
+      discount
       creator {
         id
         firstname
