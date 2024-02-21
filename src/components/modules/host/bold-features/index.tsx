@@ -44,13 +44,13 @@ const ProjectBoldFeatures = ({ capacity, dateStart, dateEnd, category }) => {
       />
       <Divider orientation="vertical" />
 
+      <Item subtitle={category} title={tr("hosting type")} />
+      <Divider orientation="vertical" />
+
       <Item
         title={tr("daily capacity")}
         subtitle={`${localizeNumber(capacity.guestNumber ?? 0)} ${tr("person")} (${gender()})`}
       />
-      <Divider orientation="vertical" />
-
-      <Item subtitle={category} title={tr("hosting type")} />
     </View>
   );
 };
