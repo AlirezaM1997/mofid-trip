@@ -1,8 +1,10 @@
-import JalaliDatePicker from "@modules/jalali-date-picker";
-import { InputProps, Input as NativeInput, Overlay } from "@rneui/themed";
+import moment from "jalali-moment";
 import { FieldProps } from "formik";
 import { useRef, useState } from "react";
-import { View } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
+import JalaliDatePicker from "@modules/jalali-date-picker";
+import { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { InputProps, Input as NativeInput, Overlay, useTheme } from "@rneui/themed";
 
 type InputWithDateProps = InputProps & {
   form?: FieldProps["form"] | undefined;
@@ -11,8 +13,11 @@ type InputWithDateProps = InputProps & {
 };
 
 const InputWithDate = ({ form, field, ...props }: InputWithDateProps) => {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const { theme } = useTheme();
   const inputRef = useRef(null);
+  const [markedDays, setMarkedDays] = useState([]);
+  const { localizeNumber } = useLocalizedNumberFormat();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const toggleOverlay = () => setIsVisible(!isVisible);
 
@@ -23,19 +28,41 @@ const InputWithDate = ({ form, field, ...props }: InputWithDateProps) => {
   };
 
   const handleDayPress = day => {
-    form.setFieldValue(field.name, day.format("YYYY-MM-DD"));
+    form?.setFieldValue(field?.name as string, day.format("YYYY-MM-DD"));
+    setMarkedDays([
+      {
+        date: day,
+        buttonStyle: styles.startAndEndDayButtonStyle(theme),
+        containerStyle: styles.startAndEndDayContainerStyle,
+        titleStyle: styles.startAndEndDayTitleStyle(theme),
+      },
+    ]);
     setIsVisible(false);
   };
 
   return (
-    <View>
-      <Overlay isVisible={isVisible} onBackdropPress={toggleOverlay}>
-        <JalaliDatePicker onDayPress={handleDayPress} />
+    <>
+      <Overlay
+        isVisible={isVisible}
+        onBackdropPress={toggleOverlay}
+        overlayStyle={{ direction: "rtl" }}>
+        <JalaliDatePicker onDayPress={handleDayPress} markedDays={markedDays} />
       </Overlay>
-      <NativeInput {...props} ref={inputRef} value={field.value} onFocus={_onFocus} />
-    </View>
+      <NativeInput {...props} ref={inputRef} value={field?.value && localizeNumber(moment(field?.value).locale("fa").format("YYYY/MM/DD"))} onFocus={_onFocus} />
+    </>
   );
 };
+const styles = StyleSheet.create({
+  startAndEndDayButtonStyle: (theme => ({
+    backgroundColor: theme.colors.black,
+  })) as ViewStyle,
+  startAndEndDayContainerStyle: {
+    width: 45,
+  },
+  startAndEndDayTitleStyle: (theme => ({
+    color: theme.colors.white,
+  })) as ViewStyle,
+});
 
 InputWithDate.defaultProps = {
   form: undefined,

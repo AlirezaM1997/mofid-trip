@@ -1,15 +1,15 @@
-import { useTheme } from "@rneui/themed";
-import { Text } from "@rneui/themed";
 import React from "react";
+import { Text } from "@rneui/themed";
+import { useTheme } from "@rneui/themed";
 import { View, StyleSheet } from "react-native";
 
 const Stepper = ({ steps, activeStep, isActive }) => {
-  const theme = useTheme();
+  const {theme} = useTheme();
 
   const themeStyles = {
-    successColor: { backgroundColor: theme.theme.colors.success },
-    errorColor: { backgroundColor: theme.theme.colors.error },
-    greyColor: { backgroundColor: theme.theme.colors.grey1 },
+    successColor: { backgroundColor: theme.colors.success },
+    errorColor: { backgroundColor: theme.colors.error },
+    greyColor: { backgroundColor: theme.colors.grey1 },
   };
 
   return (
@@ -46,10 +46,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   stepCircle: {
-    width: "100%",
     height: 8,
-    justifyContent: "center",
+    width: "100%",
     alignItems: "center",
+    justifyContent: "center",
   },
 });
 

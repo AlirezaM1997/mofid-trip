@@ -45,7 +45,7 @@ const CommentCard = ({
         },
       },
     });
-    if (data.likeAdd.status === "OK") {
+    if (data?.likeAdd?.status === "OK") {
       refetch();
     }
   };
@@ -59,7 +59,7 @@ const CommentCard = ({
         },
       },
     });
-    if (data.likeAdd.status === "OK") {
+    if (data?.likeAdd?.status === "OK") {
       refetch();
     }
   };
@@ -81,14 +81,14 @@ const CommentCard = ({
             </Text>
           </View>
           <Entypo
-            name="dots-three-vertical"
             size={14}
             color={theme.colors.grey2}
+            name="dots-three-vertical"
             onPress={handleOpen}
           />
           <View style={styles.backDrop(isVisible)}>
             <View style={styles.dropDown}>
-              <ReportComment closeDropDown={handleClose} id={comment.id} />
+              <ReportComment closeDropDown={handleClose} id={comment.id as string} />
             </View>
           </View>
         </View>
@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
   dropDown: {
     position: "absolute",
     left: 15,
+    backgroundColor:'red',
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,

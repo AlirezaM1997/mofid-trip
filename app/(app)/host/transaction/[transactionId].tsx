@@ -3,8 +3,9 @@ import {
   useProjectPurchaseAddMutation,
   useProjectTransactionDetailQuery,
 } from "@src/gql/generated";
-import { Button } from "@rneui/themed";
+import { Button, useTheme } from "@rneui/themed";
 import * as Network from "expo-network";
+import { Feather } from "@expo/vector-icons";
 import { totalPrice } from "@src/helper/totalPrice";
 import useTranslation from "@src/hooks/translation";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
@@ -15,13 +16,16 @@ import HostTransactionDetail from "@modules/host/transaction/detail";
 import HostRateBottomSheet from "@modules/rate/host-rate-bottomSheet";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import AcceptPayment from "@modules/host/transaction/buttons/acceptPayment";
+import RejectedDetails from "@modules/host/transaction/buttons/rejectedDetails";
 
 const TransactionDetailsScreen = () => {
   const { tr } = useTranslation();
+  const { theme } = useTheme();
   const navigation = useNavigation();
   const { transactionId } = useLocalSearchParams();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isBottomSheetVisible, setIsBottomSheetVisible] = useState<boolean>(false);
+  const [isRejectedVisible, setIsRejectedVisible] = useState<boolean>(false);
 
   const handleClose = () => setIsBottomSheetVisible(false);
 
@@ -74,13 +78,23 @@ const TransactionDetailsScreen = () => {
       SUCCESSFUL: (
         <Button onPress={() => setIsBottomSheetVisible(true)}>{tr("rates to the host")}</Button>
       ),
-      ACCEPT: data?.projectTransactionDetail?.project?.price ? (
-        <Button loading={purchaseLoading} onPress={() => setIsVisible(true)}>
-          {tr("pay")}
-        </Button>
+      ACCEPT: data.projectTransactionDetail?.status?.isActive ? (
+        data?.projectTransactionDetail?.project?.price ? (
+          <Button loading={purchaseLoading} onPress={() => setIsVisible(true)}>
+            {tr("pay")}
+          </Button>
+        ) : (
+          <Button loading={purchaseLoading} onPress={purchaseHandler}>
+            {tr("reserve")}
+          </Button>
+        )
       ) : (
-        <Button loading={purchaseLoading} onPress={purchaseHandler}>
-          {tr("reserve")}
+        <Button
+          icon={
+            <Feather name="info" size={16} style={{ marginLeft: 8 }} color={theme.colors.white} />
+          }
+          onPress={() => setIsRejectedVisible(true)}>
+          {tr("reason for rejecting the request")}
         </Button>
       ),
     };
@@ -102,6 +116,11 @@ const TransactionDetailsScreen = () => {
         handleClose={handleClose}
         isVisible={isBottomSheetVisible}
         transaction={data?.projectTransactionDetail as ProjectTransactionQueryType}
+      />
+      <RejectedDetails
+        transaction={data.projectTransactionDetail}
+        isVisible={isRejectedVisible}
+        setIsVisible={setIsRejectedVisible}
       />
     </BottomButtonLayout>
   );

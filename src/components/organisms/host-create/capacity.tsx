@@ -37,9 +37,9 @@ const TabCapacity = () => {
       />
 
       <CheckBox
-        checked={values.capacity.childAccept}
+        checked={values.capacity?.childAccept as boolean}
         title={tr("The host is open to children under 12 years old")}
-        onPress={() => setFieldValue("capacity.childAccept", !values.capacity.childAccept)}
+        onPress={() => setFieldValue("capacity.childAccept", !values?.capacity?.childAccept)}
       />
 
       <WhiteSpace size={10} />
@@ -48,7 +48,7 @@ const TabCapacity = () => {
         <View style={styles.checkboxContainerStyle(theme)}>
           <CheckBox
             containerStyle={styles.checkbox}
-            checked={values.capacity.gender === ProjectGenderEnum.Both}
+            checked={values.capacity?.gender === ProjectGenderEnum.Both}
             title={tr("both")}
             onPress={() => setFieldValue("capacity.gender", ProjectGenderEnum.Both)}
             iconType="material-community"
@@ -59,7 +59,7 @@ const TabCapacity = () => {
         <View style={styles.checkboxContainerStyle(theme)}>
           <CheckBox
             containerStyle={styles.checkbox}
-            checked={values.capacity.gender === ProjectGenderEnum.Male}
+            checked={values.capacity?.gender === ProjectGenderEnum.Male}
             title={tr("male")}
             onPress={() => setFieldValue("capacity.gender", ProjectGenderEnum.Male)}
             iconType="material-community"
@@ -70,7 +70,7 @@ const TabCapacity = () => {
         <View style={styles.checkboxContainerStyle(theme)}>
           <CheckBox
             containerStyle={styles.checkbox}
-            checked={values.capacity.gender === ProjectGenderEnum.Female}
+            checked={values.capacity?.gender === ProjectGenderEnum.Female}
             title={tr("female")}
             onPress={() => setFieldValue("capacity.gender", ProjectGenderEnum.Female)}
             iconType="material-community"
