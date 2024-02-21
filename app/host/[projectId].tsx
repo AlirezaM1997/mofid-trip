@@ -83,7 +83,7 @@ const Page: React.FC = ({ ...props }) => {
           <ProjectBoldFeatures
             dateEnd={dateEnd}
             dateStart={dateStart}
-            capacity={capacity?.guestNumber ?? 0}
+            capacity={capacity}
             category={categories?.[0]?.displayName}
           />
 
