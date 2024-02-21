@@ -56,6 +56,8 @@ const HostTransactionDateTab = () => {
       data: item?.freeCapacity,
     };
   });
+  console.log(markedDays);
+  console.log("daysData", daysData);
 
   return (
     <>

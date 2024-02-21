@@ -2,10 +2,7 @@ import React from "react";
 import { router } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import { Divider, Text, useTheme } from "@rneui/themed";
-import {
-  StatusQueryType,
-  ProjectTransactionQueryType,
-} from "@src/gql/generated";
+import { StatusQueryType, ProjectTransactionQueryType } from "@src/gql/generated";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 import CancelTransaction from "@modules/host/transaction/cancel";
@@ -26,9 +23,11 @@ const StepBaseButtons = ({
     router.push({
       pathname: `/host/transaction/edit`,
       params: {
-        projectId: transaction.project.id,
+        name: project?.name,
         transactionId: transaction.id,
-        name: project.name,
+        projectId: transaction?.project?.id,
+        dateEnd: transaction?.project?.dateEnd,
+        dateStart: transaction?.project?.dateStart,
       },
     });
   };
