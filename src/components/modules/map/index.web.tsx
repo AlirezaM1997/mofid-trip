@@ -54,6 +54,7 @@ const Map = ({
   const { theme } = useTheme();
   const [zoomLevel, setZoom] = useState(zoom || 10);
   const [location, setLocation] = useState<{ lat: number; lng: number }>({ lat, lng });
+  const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number }>();
 
   const handleCurrentLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -65,6 +66,10 @@ const Map = ({
 
     try {
       let loc = await Location.getCurrentPositionAsync({});
+      setCurrentLocation({
+        lat: loc?.coords?.latitude,
+        lng: loc?.coords?.longitude,
+      });
       setLocation({
         lat: loc?.coords?.latitude,
         lng: loc?.coords?.longitude,
@@ -85,11 +90,13 @@ const Map = ({
 
   const currentLocationIcon = {
     id: "my-location",
-    size: [60, 60],
-    iconAnchor: [-26, 60],
-    position: location,
-    icon: window.location.origin + "/assets/assets/image/marker.png",
+    size: [40, 40],
+    iconAnchor: [-26, 40],
+    position: currentLocation,
+    icon: window.location.origin + "/assets/assets/image/my-location.png",
   };
+  console.log(mapMarkers);
+
   return (
     <>
       <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="StyleSheet" />
@@ -104,18 +111,18 @@ const Map = ({
 
       <View style={[style.row, style.bottomRow]}>
         <View style={[style.bottomLeftContent, bottomLeftContentStyle]}>
+          {bottomLeftContent}
           {currentLocationVisible && (
             <Button
               onPress={handleCurrentLocation}
               buttonStyle={{
+                zIndex: 2,
                 backgroundColor: theme.colors.white,
-                zIndex: 1,
               }}
               icon={
                 <MaterialIcons name="my-location" size={18} color={theme.colors.black} />
               }></Button>
           )}
-          {bottomLeftContent}
         </View>
         <View>{bottomCenterContent}</View>
         <View>{bottomRightContent}</View>
@@ -128,8 +135,7 @@ const Map = ({
             lat: location?.lat,
             lng: location?.lng,
           }}
-          // mapMarkers={[currentLocationIcon, ...mapMarkers] || []}
-          mapMarkers={mapMarkers || []}
+          mapMarkers={currentLocation ? [currentLocationIcon, ...mapMarkers] : mapMarkers || []}
           mapLayers={[
             {
               layerType: "TileLayer",
@@ -148,6 +154,8 @@ const Map = ({
                 Alert.alert(`Map Touched at:`, `${message.location.lat}, ${message.location.lng}`);
                 break;
               case "onMoveEnd":
+                setZoom(message.zoom);
+                setLocation(message.mapCenter);
                 onMoveEnd?.(message.bounds, message.mapCenter, message.zoom);
                 break;
               default:

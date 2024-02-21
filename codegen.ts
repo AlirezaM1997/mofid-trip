@@ -3,7 +3,7 @@ import { CodegenConfig } from "@graphql-codegen/cli";
 const config: CodegenConfig = {
   overwrite: true,
   // schema: "https://api.hamafza-startup.ir/graphql/",
-  schema: "http://192.168.100.45:8000/graphql/",
+  schema: "http://192.168.100.45:8000/graphql",
   documents: "./src/gql/**/*.gql",
   ignoreNoDocuments: true,
   generates: {
