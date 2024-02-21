@@ -37,13 +37,13 @@ const HostRateBottomSheet = ({
       variables: {
         data: {
           objectType: RateObjectTypeEnum.Project,
-          objectId: +transaction.project.id,
+          objectId: +(transaction?.project?.id as string),
           value: value,
           description: text,
         },
       },
     });
-    if (data.rateAdd.status === "OK") {
+    if (data?.rateAdd?.status === "OK") {
       Toast.show({
         type: "success",
         text1: tr("Successful"),

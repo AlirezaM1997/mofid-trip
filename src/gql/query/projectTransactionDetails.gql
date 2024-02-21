@@ -30,6 +30,7 @@ query projectTransactionDetail($pk: ID!) {
       name
       tax
       price
+      discount
       creator {
         id
         firstname
