@@ -2,7 +2,7 @@ const date = (startDate: Date, endDate: Date) => {
   if (!endDate || !startDate) return 1;
   if (endDate === startDate) return 1;
 
-  return (+new Date(endDate) - +new Date(startDate)) / 86400000;
+  return (+new Date(endDate) - +new Date(startDate)) / 86400000 +1;
 };
 
 export const totalPrice = ({

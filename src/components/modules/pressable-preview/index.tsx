@@ -16,10 +16,10 @@ export default ({ title, topTitle, icon, style, button }: PropsType) => {
       <View style={styles.title}>
         {icon}
         <View style={styles.titleText}>
-          <Text numberOfLines={1}  caption type="grey2">
+          <Text style={styles.text} numberOfLines={1}  caption type="grey2">
             {topTitle}
           </Text>
-          <Text numberOfLines={1} >
+          <Text style={styles.text} numberOfLines={1} >
             {title}
           </Text>
         </View>
@@ -38,4 +38,5 @@ const styles = StyleSheet.create({
   },
   title: { display: "flex", flexDirection: "row", gap: 10, alignItems: "center" },
   titleText: { display: "flex", flexDirection: "column" },
+  text:{width:200}
 });
