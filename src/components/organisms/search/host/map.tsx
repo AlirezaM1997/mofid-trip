@@ -25,6 +25,7 @@ const MemoizedMap = memo(Map);
 const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPropsType }) => {
   const { theme } = useTheme();
   const dispatch = useDispatch();
+  const [zoom, setZoom] = useState(9);
   const [bounds, setBounds] = useState();
   const [selectedItem, setItem] = useState<ReactElement | null>(null);
 
@@ -38,6 +39,10 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
       variables: searchVariables,
     });
   }, [filterSlice]);
+
+  useEffect(() => {
+    setZoom(10);
+  }, []);
 
   const onMarkerClick = useMemo(
     () => (id: number) => {
@@ -122,6 +127,7 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
   return (
     <MemoizedMap
       style={styles.map}
+      zoom={zoom}
       onMoveEnd={onMoveHandler}
       mapMarkers={memoMapMarkers}
       onMarkerClick={onMarkerClick}

@@ -52,7 +52,7 @@ const Map = ({
   if (!lat && !lng) return;
 
   const { theme } = useTheme();
-  const [zoomLevel, setZoom] = useState(10);
+  const [zoomLevel, setZoom] = useState(zoom || 10);
   const [location, setLocation] = useState<{ lat: number; lng: number }>({ lat, lng });
 
   const handleCurrentLocation = async () => {
