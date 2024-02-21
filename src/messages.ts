@@ -2522,9 +2522,34 @@ export const messages = {
     fa_ir: "پیام",
     en_us: "chat",
   },
+  "making contact": {
+    ar: "يجري اتصال",
+    fa_ir: "برقراری تماس",
+    en_us: "making contact",
+  },
+  "both genders (male and female)": {
+    ar: "كلا الجنسين (ذكر وأنثى)",
+    fa_ir: "هردوجنسیت ( آقا و خانم )",
+    en_us: "Both genders (male and female)",
+  },
+  "gender of passengers": {
+    ar: "جنس الركاب",
+    fa_ir: "جنسیت مسافران",
+    en_us: "Gender of passengers",
+  },
+  "has a child under 12 years old": {
+    ar: "لديه طفل أقل من 12 سنة",
+    fa_ir: "دارای کودک زیر ۱۲ سال",
+    en_us: "Has a child under 12 years old",
+  },
+  "request time": {
+    ar: "طلب الوقت",
+    fa_ir: "زمان درخواست",
+    en_us: "Request time",
+  },
   "final details": {
     ar: "التفاصيل النهائية",
-    fa_ir: "جزئیات نهایی",
+    fa_ir: "ثبت‌نهایی",
     en_us: "final details",
   },
   "final information": {

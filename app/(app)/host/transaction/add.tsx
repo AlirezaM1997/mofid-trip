@@ -20,9 +20,9 @@ const initialValues = {
 
 const Screen = () => {
   const { tr } = useTranslation();
-  const [activeStep, setActiveStep] = useState(1);
-  const [isVisibleFinish, setIsVisibleFinish] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [activeStep, setActiveStep] = useState<number>(1);
+  const [isVisibleFinish, setIsVisibleFinish] = useState<boolean>(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
 
   const validationSchema = Yup.object().shape({
     dateStart: Yup.date().required(tr("Required")),

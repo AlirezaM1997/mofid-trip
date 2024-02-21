@@ -85,21 +85,21 @@ export type AccommodationListType = {
 
 /** An enumeration. */
 export enum AccommodationProjectGenderChoices {
-  /** هر دو */
+  /** BOTH */
   Both = 'BOTH',
-  /** زن */
+  /** FEMALE */
   Female = 'FEMALE',
-  /** مرد */
+  /** MALE */
   Male = 'MALE'
 }
 
 /** An enumeration. */
 export enum AccommodationProjectRequestFromChoices {
-  /** هر دو */
+  /** BOTH */
   Both = 'BOTH',
-  /** تشکل */
+  /** NGO */
   Ngo = 'NGO',
-  /** کاربر */
+  /** USER */
   User = 'USER'
 }
 
@@ -120,9 +120,9 @@ export type AccommodationQueryType = {
 
 /** An enumeration. */
 export enum AccommodationTagTypeChoices {
-  /** کمپین */
+  /** CAMPAIGN */
   Campaign = 'CAMPAIGN',
-  /** عمومی */
+  /** GENERAL */
   General = 'GENERAL'
 }
 
@@ -2087,11 +2087,11 @@ export type TourStatusStepQueryType = {
 
 /** An enumeration. */
 export enum TourTourGuestGenderChoices {
-  /** کودک */
+  /** CHILD */
   Child = 'CHILD',
-  /** زن */
+  /** FEMALE */
   Female = 'FEMALE',
-  /** مرد */
+  /** MALE */
   Male = 'MALE'
 }
 
@@ -2314,7 +2314,7 @@ export type UserQueryType = {
   tag?: Maybe<TagQueryType>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
+  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -2696,7 +2696,7 @@ export type MyUserDetailProjectSetQuery = { __typename?: 'Query', userDetail?: {
 export type MyUserDetailProjectTransactionSetQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyUserDetailProjectTransactionSetQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, projectTransactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', dateEnd?: any | null, dateStart?: any | null, id: string, owner?: { __typename?: 'UserQueryType', phoneNumber?: string | null, fullname?: string | null, id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, guest?: { __typename?: 'ProjectGuestQueryType', guestNumber?: number | null, gender?: string | null, childAccept?: boolean | null } | null, project?: { __typename?: 'ProjectQueryType', name?: string | null, id: string } | null, status?: { __typename?: 'StatusQueryType', isActive?: boolean | null, step?: { __typename?: 'ProjectTransactionStatusStepQueryType', displayName?: string | null, name?: string | null } | null } | null } | null> | null } | null };
+export type MyUserDetailProjectTransactionSetQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, projectTransactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', createdDate?: any | null, dateEnd?: any | null, dateStart?: any | null, id: string, owner?: { __typename?: 'UserQueryType', phoneNumber?: string | null, fullname?: string | null, id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null, guest?: { __typename?: 'ProjectGuestQueryType', guestNumber?: number | null, gender?: string | null, childAccept?: boolean | null } | null, project?: { __typename?: 'ProjectQueryType', name?: string | null, id: string } | null, status?: { __typename?: 'StatusQueryType', isActive?: boolean | null, step?: { __typename?: 'ProjectTransactionStatusStepQueryType', displayName?: string | null, name?: string | null } | null } | null } | null> | null } | null };
 
 export type NgoDetailQueryVariables = Exact<{
   pk?: InputMaybe<Scalars['ID']['input']>;
@@ -4634,6 +4634,7 @@ export const MyUserDetailProjectTransactionSetDocument = gql`
   userDetail {
     id
     projectTransactionSet {
+      createdDate
       dateEnd
       dateStart
       id
