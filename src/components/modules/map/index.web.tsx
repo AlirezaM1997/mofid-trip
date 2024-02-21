@@ -26,8 +26,10 @@ export type MapPropsType = ExpoLeafletProps & {
 // @@@@@@ REMOVING THIS LINE MAKE MAP MARKER HIDDEN @@@@@@
 import markerImage from "@assets/image/marker.png";
 import locationMarkerImage from "@assets/image/location-marker.png";
+import myLocation from "@assets/image/my-location.png";
 const a = markerImage;
 const b = locationMarkerImage;
+const c = myLocation
 
 const Map = ({
   zoom,
