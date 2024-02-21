@@ -25,7 +25,7 @@ const HostCommentScreen = () => {
   if (loading && !data) return <LoadingIndicator />;
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const comment = (data?.projectDetail as ProjectQueryType)?.commentSet;
+  const comment = data?.projectDetail?.commentSet;
   const handleOpen = () => setIsVisible(true);
 
   navigation.setOptions({ title: `${tr("comments of")} ${data?.projectDetail?.name}` });
@@ -52,7 +52,7 @@ const HostCommentScreen = () => {
             <Text subtitle1 bold>
               {tr("comments")}
             </Text>
-            <Text caption type="grey2">{`${localizeNumber(comment?.length)} ${tr(
+            <Text caption type="grey2">{`${localizeNumber(comment?.length as number)} ${tr(
               "comment"
             )}`}</Text>
           </View>
@@ -60,7 +60,7 @@ const HostCommentScreen = () => {
             {comment?.map(comment => (
               <CommentCard
                 comment={comment as ProjectQueryType["commentSet"][0]}
-                key={comment.id}
+                key={comment?.id}
                 refetch={refetch}
                 push={`host/${projectId}/comment`}
               />
@@ -72,7 +72,7 @@ const HostCommentScreen = () => {
         isVisible={isVisible}
         setIsVisible={setIsVisible}
         refetch={refetch}
-        id={projectId.toString()}
+        id={projectId as string}
         name={data?.projectDetail?.name}
       />
     </BottomButtonLayout>

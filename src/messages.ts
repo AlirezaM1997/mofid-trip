@@ -168,6 +168,11 @@ export const messages = {
     fa_ir: "درخواست شما ثبت شد",
     en_us: "your request has been registered",
   },
+  "your request was rejected": {
+    ar: "تم رفض طلبك",
+    fa_ir: "درخواست شما رد شد",
+    en_us: "Your request was rejected",
+  },
   close: {
     ar: "الخروج",
     fa_ir: "بستن",
@@ -2546,6 +2551,41 @@ export const messages = {
     ar: "تومان",
     fa_ir: "تومان",
     en_us: "Tooman",
+  },
+  "terms of service": {
+    ar: "شروط الخدمة",
+    fa_ir: "شرایط خدمات",
+    en_us: "terms of service",
+  },
+  "the created host is under review by the admin, after approval by the admin, your host will be released.": {
+    ar: "المضيف الذي تم إنشاؤه قيد المراجعة من قبل المسؤول، وبعد موافقة المسؤول، سيتم تحرير المضيف الخاص بك.",
+    fa_ir: "هاست ایجاد شده در مرحله بررسی توسط ادمین قرار دارد ، بعد از تایید توسط ادمین، هاست شما منتشر خواهد شد.",
+    en_us: "The created host is under review by the admin, after approval by the admin, your host will be released.",
+  },
+  "the host has been published successfully after being reviewed by the admin. your host is now visible to travelers.": {
+    ar: "تم نشر المضيف بنجاح بعد مراجعته من قبل المشرف. أصبح مضيفك مرئيًا الآن للمسافرين.",
+    fa_ir: "هاست، پس از بررسی توسط ادمین، با موفقیت منتشر شد. هم اکنون هاست شما قابل مشاهده برای مسافران است.",
+    en_us: "The host has been published successfully after being reviewed by the admin. Your host is now visible to travelers.",
+  },
+  "the created tour is under review by the admin, after approval by the admin, your tour will be published.": {
+    ar: "الجولة التي تم إنشاؤها قيد المراجعة من قبل المسؤول، وبعد موافقة المسؤول، سيتم نشر جولتك.",
+    fa_ir: "تور ایجاد شده در مرحله بررسی توسط ادمین قرار دارد ، بعد از تایید توسط ادمین، تور شما منتشر خواهد شد.",
+    en_us: "The created tour is under review by the admin, after approval by the admin, your tour will be published.",
+  },
+  "the tour has been successfully published after being reviewed by the admin. your tour is now visible to travelers.": {
+    ar: "تم نشر الجولة بنجاح بعد مراجعتها من قبل المشرف. جولتك مرئية الآن للمسافرين.",
+    fa_ir: "تور، پس از بررسی توسط ادمین، با موفقیت منتشر شد. هم اکنون تور شما در معرض دید مسافران قرار گرفته است.",
+    en_us: "The tour has been successfully published after being reviewed by the admin. Your tour is now visible to travelers.",
+  },
+  "your tour has been completed successfully. to create a tour again, go to the create section and create your tour.": {
+    ar: "لقد اكتملت جولتك بنجاح. لإنشاء جولة مرة أخرى، انتقل إلى قسم إنشاء وقم بإنشاء جولتك.",
+    fa_ir: "تور شما با موفقیت انجام شد و به اتمام رسید. برای ایجاد دوباره تور، به بخش ایجاد بروید و تورتان را بسازید.",
+    en_us: "Your tour has been completed successfully. To create a tour again, go to the Create section and create your tour.",
+  },
+  "price per person": {
+    ar: "السعر للشخص الواحد",
+    fa_ir: "قیمت برای هر نفر",
+    en_us: "Price per person",
   },
   "search country": {
     ar: "بحث عن البلد",
