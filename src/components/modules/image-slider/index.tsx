@@ -47,8 +47,8 @@ function ImageSlider({ imageList }: ImageSlider) {
             source={
               imageList?.[0]?.medium
                 ? {
-                    uri: imageList?.[0]?.large,
-                  }
+                  uri: imageList?.[0]?.large,
+                }
                 : require("@assets/image/defaultHost.svg")
             }
           />
@@ -102,7 +102,7 @@ function ImageSlider({ imageList }: ImageSlider) {
               position: "absolute",
             }}
             onPress={() => setIsVisible(false)}>
-            <AntDesign name="closecircle" size={24} />
+            <AntDesign name="closecircle" size={24} color={"white"} />
           </Pressable>
           <Entypo
             size={34}
@@ -141,13 +141,19 @@ const style = StyleSheet.create({
     borderRadius: 10,
   },
   bottomSheetContainer: {
-    height: "100%",
     width: WIDTH,
+    height: HEIGHT,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
     justifyContent: "center",
+    backgroundColor: "rgba(0,0,0, .5)",
   },
   bottomSheetBackDrop: {
     width: WIDTH,
-    backgroundColor: "white",
+    height: HEIGHT,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+    backgroundColor: "rgba(0,0,0 , .5)",
   },
   bottomSheetContent: {
     display: "flex",
