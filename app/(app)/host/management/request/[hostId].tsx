@@ -1,29 +1,26 @@
-import { View, StyleSheet, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Text } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
 import {
-  MyUserDetailProjectTransactionSetQuery,
+  ProjectTransactionQueryType,
   useMyUserDetailProjectTransactionSetQuery,
 } from "@src/gql/generated";
-import LoadingIndicator from "@modules/Loading-indicator";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { Text } from "@rneui/themed";
 import Container from "@atoms/container";
 import NoResult from "@organisms/no-result";
-import RequestList from "@modules/host-request-card/RequestList";
-import RequestListBottomSheet from "@modules/host-request-card/request-list-bottomsheet";
+import React, { useEffect, useState } from "react";
+import useTranslation from "@src/hooks/translation";
 import { useIsFocused } from "@react-navigation/native";
+import LoadingIndicator from "@modules/Loading-indicator";
+import { View, StyleSheet, ScrollView } from "react-native";
+import RequestList from "@modules/host-request-card/RequestList";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import RequestListBottomSheet from "@modules/host-request-card/request-list-bottomsheet";
 
 const RequestScreen = () => {
   const { tr } = useTranslation();
-  const { hostId } = useLocalSearchParams();
-  const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const [isVisible, setIsVisible] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] =
-    useState<
-      MyUserDetailProjectTransactionSetQuery["userDetail"]["projectTransactionSet"][number]
-    >();
+  const navigation = useNavigation();
+  const { hostId } = useLocalSearchParams();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [selectedTransaction, setSelectedTransaction] = useState<ProjectTransactionQueryType>();
 
   const handleClose = () => setIsVisible(false);
   const handleOpen = () => setIsVisible(true);
@@ -32,13 +29,9 @@ const RequestScreen = () => {
     notifyOnNetworkStatusChange: true,
   });
 
-  const [transactionSet, setTransactionSet] = useState<
-    MyUserDetailProjectTransactionSetQuery["userDetail"]["projectTransactionSet"]
-  >([]);
+  const [transactionSet, setTransactionSet] = useState<ProjectTransactionQueryType[]>([]);
 
-  const handleRequestPress = (
-    transaction: MyUserDetailProjectTransactionSetQuery["userDetail"]["projectTransactionSet"][number]
-  ) => {
+  const handleRequestPress = (transaction: ProjectTransactionQueryType) => {
     setSelectedTransaction(transaction);
     handleOpen();
   };
@@ -52,7 +45,9 @@ const RequestScreen = () => {
   useEffect(() => {
     if (!loading && data) {
       setTransactionSet(
-        data.userDetail.projectTransactionSet.filter(pr => pr.project.id === hostId)
+        data.userDetail?.projectTransactionSet?.filter(
+          pr => pr?.project?.id === hostId
+        ) as ProjectTransactionQueryType[]
       );
     }
   }, [loading, data]);
@@ -73,25 +68,20 @@ const RequestScreen = () => {
           </Text>
         </View>
         <ScrollView>
-          {transactionSet?.map(
-            (
-              transaction: MyUserDetailProjectTransactionSetQuery["userDetail"]["projectTransactionSet"][number],
-              i
-            ) => (
-              <RequestList
-                key={transaction.id}
-                transaction={transaction}
-                onPress={() => handleRequestPress(transaction)}
-              />
-            )
-          )}
+          {transactionSet?.map((transaction: ProjectTransactionQueryType, i) => (
+            <RequestList
+              key={transaction.id}
+              transaction={transaction}
+              onPress={() => handleRequestPress(transaction)}
+            />
+          ))}
         </ScrollView>
       </Container>
       <RequestListBottomSheet
         isVisible={isVisible}
         onBackdropPress={handleClose}
         handleClose={handleClose}
-        transaction={selectedTransaction}
+        transaction={selectedTransaction as ProjectTransactionQueryType}
         refetch={refetch}
       />
     </>
