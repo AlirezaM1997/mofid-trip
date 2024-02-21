@@ -2517,7 +2517,7 @@ export const messages = {
   },
   "final details": {
     ar: "التفاصيل النهائية",
-    fa_ir: "جزئیات نهایی",
+    fa_ir: "ثبت‌نهایی",
     en_us: "final details",
   },
   "final information": {
