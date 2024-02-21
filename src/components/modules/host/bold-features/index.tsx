@@ -26,6 +26,16 @@ const ProjectBoldFeatures = ({ capacity, dateStart, dateEnd, category }) => {
   const { localizeNumber } = useLocalizedNumberFormat();
   const dateConvertor = date => localizeNumber(moment(date).locale("fa").format("jDD jMMMM"));
 
+  const gender = () => {
+    const obj: Record<string, string> = {
+      BOTH: "خانم و آقا",
+      FEMALE: "خانم",
+      MALE: "آقا",
+    };
+
+    return obj[capacity.gender];
+  };
+
   return (
     <View style={style.container}>
       <Item
@@ -34,14 +44,13 @@ const ProjectBoldFeatures = ({ capacity, dateStart, dateEnd, category }) => {
       />
       <Divider orientation="vertical" />
 
-      <Item subtitle={category} title={tr("hosting type")} />
-
-      <Divider orientation="vertical" />
-
       <Item
         title={tr("daily capacity")}
-        subtitle={`${localizeNumber(capacity)} ${tr("person")}`}
+        subtitle={`${localizeNumber(capacity.guestNumber ?? 0)} ${tr("person")} (${gender()})`}
       />
+      <Divider orientation="vertical" />
+
+      <Item subtitle={category} title={tr("hosting type")} />
     </View>
   );
 };
@@ -50,6 +59,7 @@ const style = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
   },
 });

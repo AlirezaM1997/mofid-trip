@@ -1,31 +1,31 @@
-import BottomButtonLayout from "@components/layout/bottom-button";
-import BookHostBottomSheet from "@modules/host/book/bottomSheet";
-import ImageSlider from "@modules/image-slider";
-import ShareReportDropDown from "@modules/share-report-dropdown";
-import { useIsFocused } from "@react-navigation/native";
-import { Text } from "@rneui/themed";
-import Container from "@src/components/atoms/container";
-import LoadingIndicator from "@src/components/modules/Loading-indicator";
-import ProjectBoldFeatures from "@src/components/modules/host/bold-features";
-import ProjectFacilities from "@src/components/modules/host/facilities";
-import ProjectTags from "@src/components/modules/host/tags";
-import Map from "@src/components/modules/map/index.web";
-import SimilarProjects from "@src/components/modules/similar-projects";
 import {
   AccommodationImageType,
   ProjectFacilityQueryType,
   ProjectQueryType,
   useProjectDetailQuery,
 } from "@src/gql/generated";
-import openMapHandler from "@src/helper/opem-map";
-import useTranslation from "@src/hooks/translation";
-import { setProjectDetail } from "@src/slice/project-slice";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { Text } from "@rneui/themed";
 import React, { useEffect } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import HostComment from "@modules/host/comment";
+import ImageSlider from "@modules/image-slider";
+import openMapHandler from "@src/helper/opem-map";
+import useTranslation from "@src/hooks/translation";
+import { useIsFocused } from "@react-navigation/native";
+import Container from "@src/components/atoms/container";
+import Map from "@src/components/modules/map/index.web";
+import { ScrollView } from "react-native-gesture-handler";
+import { Pressable, StyleSheet, View } from "react-native";
+import ProjectTags from "@src/components/modules/host/tags";
+import { setProjectDetail } from "@src/slice/project-slice";
+import ShareReportDropDown from "@modules/share-report-dropdown";
+import BookHostBottomSheet from "@modules/host/book/bottomSheet";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import SimilarProjects from "@src/components/modules/similar-projects";
+import ProjectFacilities from "@src/components/modules/host/facilities";
+import LoadingIndicator from "@src/components/modules/Loading-indicator";
+import ProjectBoldFeatures from "@src/components/modules/host/bold-features";
 
 const Page: React.FC = ({ ...props }) => {
   const dispatch = useDispatch();
@@ -83,7 +83,7 @@ const Page: React.FC = ({ ...props }) => {
           <ProjectBoldFeatures
             dateEnd={dateEnd}
             dateStart={dateStart}
-            capacity={capacity?.guestNumber ?? 0}
+            capacity={capacity}
             category={categories?.[0]?.name}
           />
 
@@ -121,10 +121,10 @@ const Page: React.FC = ({ ...props }) => {
                   mapMarkers={[
                     {
                       id: "string",
-                      position: { lat: accommodation?.lat, lng: accommodation?.lng },
                       size: [52, 60],
-                      icon: window.location.origin + "/assets/assets/image/marker.png",
                       iconAnchor: [-17, 30],
+                      position: { lat: accommodation?.lat, lng: accommodation?.lng },
+                      icon: window.location.origin + "/assets/assets/image/marker.png",
                     },
                   ]}
                 />
