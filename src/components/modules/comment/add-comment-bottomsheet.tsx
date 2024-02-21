@@ -1,16 +1,16 @@
-import Container from "@atoms/container";
-import { BottomSheet, Button, Divider, Text } from "@rneui/themed";
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { HEIGHT } from "@src/constants";
-import useTranslation from "@src/hooks/translation";
 import Input from "@atoms/input";
-import { CommentObjectEnum, useCommentAddMutation } from "@src/gql/generated";
-import Toast from "react-native-toast-message";
 import { useURL } from "expo-linking";
+import { HEIGHT } from "@src/constants";
+import React, { useState } from "react";
+import Container from "@atoms/container";
+import Toast from "react-native-toast-message";
+import { AntDesign } from "@expo/vector-icons";
+import { StyleSheet, View } from "react-native";
+import useTranslation from "@src/hooks/translation";
+import { BottomSheet, Button, Divider, Text } from "@rneui/themed";
+import { CommentObjectEnum, useCommentAddMutation } from "@src/gql/generated";
 
-const AddCommentBottomSheet = ({ isVisible, setIsVisible, refetch, id, name }) => {
+const AddCommentBottomSheet = ({ isVisible, setIsVisible, refetch, id, name }:{ isVisible: boolean, id: string, name: string }) => {
   const { tr } = useTranslation();
   const [value, setValue] = useState<string>("");
   const url = useURL();
@@ -26,13 +26,13 @@ const AddCommentBottomSheet = ({ isVisible, setIsVisible, refetch, id, name }) =
       variables: {
         data: {
           objectType:
-            url.split("/")[3] === "tour" ? CommentObjectEnum.Tour : CommentObjectEnum.Project,
+            url?.split("/")[3] === "tour" ? CommentObjectEnum.Tour : CommentObjectEnum.Project,
           objectId: id,
           text: value,
         },
       },
     });
-    if (data.commentAdd.status === "OK") {
+    if (data?.commentAdd?.status === "OK") {
       Toast.show({
         type: "success",
         text1: tr("Successful"),
@@ -51,8 +51,8 @@ const AddCommentBottomSheet = ({ isVisible, setIsVisible, refetch, id, name }) =
       containerStyle={styles.bottomSheetStyle}>
       <View style={styles.containerStyle}>
         <Container style={styles.header}>
-          <Text caption type="grey3">
-            {`${tr("about")} ${name}`}
+          <Text numberOfLines={1} caption type="grey3">
+            {`${tr("about")} ${name ? name : ""}`}
           </Text>
           <View style={styles.headerRight}>
             <Text>{tr("your point of view")}</Text>

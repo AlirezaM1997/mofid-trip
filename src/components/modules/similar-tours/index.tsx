@@ -1,12 +1,12 @@
-import { Text, useTheme } from "@rneui/themed";
-import { AccommodationQueryType, ProjectQueryType, TourQueryType } from "@src/gql/generated";
-import { useFormatPrice } from "@src/hooks/localization";
-import { router } from "expo-router";
 import React from "react";
-import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View } from "react-native";
-import { EvilIcons } from "@expo/vector-icons";
-import useTranslation from "@src/hooks/translation";
+import { router } from "expo-router";
 import WhiteSpace from "@atoms/white-space";
+import { EvilIcons } from "@expo/vector-icons";
+import { Text, useTheme } from "@rneui/themed";
+import useTranslation from "@src/hooks/translation";
+import { useFormatPrice } from "@src/hooks/localization";
+import { AccommodationQueryType, ProjectQueryType, TourQueryType } from "@src/gql/generated";
+import { ImageBackground, Platform, Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 type PropsType = {
   tours: TourQueryType[];
@@ -28,7 +28,7 @@ const Item = ({ tour }: ItemPropsType) => {
         style={style.imageContainerStyle}
         imageStyle={style.imageStyle}
         source={
-          (tour?.destination as AccommodationQueryType)?.avatarS3.length > 0
+          (tour?.destination as AccommodationQueryType)?.avatarS3?.length as number > 0
             ? {
                 uri: (tour?.destination as AccommodationQueryType)?.avatarS3?.[0]?.small,
               }

@@ -4,8 +4,9 @@ import {
   useTourPurchaseAddMutation,
   useTourTransactionDetailQuery,
 } from "@src/gql/generated";
-import { Button } from "@rneui/themed";
 import * as Network from "expo-network";
+import { Feather } from "@expo/vector-icons";
+import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
 import { totalPrice } from "@src/helper/totalPrice";
 import React, { ReactElement, useState } from "react";
@@ -16,13 +17,16 @@ import RatingBottomSheet from "@modules/rating-bottom-sheet";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import TourTransactionDetail from "@modules/tour/transaction/detail";
 import AcceptPayment from "@modules/tour/transaction/buttons/acceptPayment";
+import RejectedDetails from "@modules/tour/transaction/buttons/rejectedDetails";
 
 const TourTransactionDetailScreen = () => {
   const { tr } = useTranslation();
+  const { theme } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
   const [ratingValue, setRatingValue] = useState(0);
   const { transactionId } = useLocalSearchParams();
-  const [ratingIsVisible, setRatingIsVisible] = useState(false);
+  const [ratingIsVisible, setRatingIsVisible] = useState<boolean>(false);
+  const [isRejectedVisible, setIsRejectedVisible] = useState<boolean>(false);
 
   const [addPurchase, { loading: purchaseLoading }] = useTourPurchaseAddMutation();
 
@@ -66,7 +70,17 @@ const TourTransactionDetailScreen = () => {
       SUCCESSFUL: (
         <Button onPress={() => setRatingIsVisible(true)}>{tr("rates to the tour")}</Button>
       ),
-      ACCEPT: <Button onPress={() => setIsVisible(true)}>{tr("pay")}</Button>,
+      ACCEPT: status?.isActive ? (
+        <Button onPress={() => setIsVisible(true)}>{tr("pay")}</Button>
+      ) : (
+        <Button
+          icon={
+            <Feather name="info" size={16} style={{ marginLeft: 8 }} color={theme.colors.white} />
+          }
+          onPress={() => setIsRejectedVisible(true)}>
+          {tr("reason for rejecting the request")}
+        </Button>
+      ),
     };
     return lookup[status?.step?.name as string];
   };
@@ -90,6 +104,11 @@ const TourTransactionDetailScreen = () => {
         minimumValue={0}
         step={1}
         allowTouchTrack
+      />
+      <RejectedDetails
+        transaction={data.tourTransactionDetail}
+        isVisible={isRejectedVisible}
+        setIsVisible={setIsRejectedVisible}
       />
     </BottomButtonLayout>
   );

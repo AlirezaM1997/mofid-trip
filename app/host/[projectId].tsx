@@ -16,12 +16,12 @@ import Container from "@src/components/atoms/container";
 import Map from "@src/components/modules/map/index.web";
 import { ScrollView } from "react-native-gesture-handler";
 import { Pressable, StyleSheet, View } from "react-native";
-import ProjectTags from "@src/components/modules/host/tags";
 import { setProjectDetail } from "@src/slice/project-slice";
-import ShareReportDropDown from "@modules/share-report-dropdown";
+import ProjectTags from "@src/components/modules/host/tags";
 import BookHostBottomSheet from "@modules/host/book/bottomSheet";
-import BottomButtonLayout from "@components/layout/bottom-button";
+import ShareReportDropDown from "@modules/share-report-dropdown";
 import { useLocalSearchParams, useNavigation } from "expo-router";
+import BottomButtonLayout from "@components/layout/bottom-button";
 import SimilarProjects from "@src/components/modules/similar-projects";
 import ProjectFacilities from "@src/components/modules/host/facilities";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
@@ -49,7 +49,7 @@ const Page: React.FC = ({ ...props }) => {
   if (loading) return <LoadingIndicator />;
 
   navigation.setOptions({
-    title: (data?.projectDetail as ProjectQueryType)?.name,
+    title: data?.projectDetail?.name,
     headerRight: () => <ShareReportDropDown />,
   });
 
@@ -83,8 +83,8 @@ const Page: React.FC = ({ ...props }) => {
           <ProjectBoldFeatures
             dateEnd={dateEnd}
             dateStart={dateStart}
-            capacity={capacity}
-            category={categories?.[0]?.name}
+            capacity={capacity?.guestNumber ?? 0}
+            category={categories?.[0]?.displayName}
           />
 
           {description && (
@@ -146,11 +146,16 @@ const Page: React.FC = ({ ...props }) => {
 };
 const style = StyleSheet.create({
   scrollView: {
-    paddingBottom: 16,
     flex: 1,
+    paddingBottom: 16,
   },
-  container: { gap: 32, marginVertical: 10 },
-  infoContainer: { gap: 5 },
+  container: {
+    gap: 32,
+    marginVertical: 10,
+  },
+  infoContainer: {
+    gap: 5,
+  },
 });
 
 export default Page;

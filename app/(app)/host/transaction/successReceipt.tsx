@@ -1,21 +1,21 @@
 import React from "react";
 import moment from "jalali-moment";
-import { Chip, Text } from "@rneui/themed";
 import Container from "@atoms/container";
+import { Chip, Text } from "@rneui/themed";
 import * as Clipboard from "expo-clipboard";
+import ButtonRow from "@modules/button-rows";
 import Toast from "react-native-toast-message";
+import ShareButton from "@modules/share-button";
+import { totalPrice } from "@src/helper/totalPrice";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Avatar, Button, useTheme } from "@rneui/themed";
+import { useFormatPrice } from "@src/hooks/localization";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { useProjectTransactionDetailQuery, useUserDetailQuery } from "@src/gql/generated";
-import { ImageSourcePropType, Pressable, StyleSheet, View, ViewStyle } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { useFormatPrice } from "@src/hooks/localization";
-import { totalPrice } from "@src/helper/totalPrice";
-import ShareButton from "@modules/share-button";
-import ButtonRow from "@modules/button-rows";
+import { ImageSourcePropType, Pressable, StyleSheet, View, ViewStyle } from "react-native";
+import { ProjectTransactionQueryType, useProjectTransactionDetailQuery, useUserDetailQuery } from "@src/gql/generated";
 
 const CustomView = ({ children }) => {
   const { theme } = useTheme();
@@ -40,10 +40,10 @@ const Receipt = () => {
 
   const formattedTotalPrice = formatPrice(
     +totalPrice({
-      endDate: data?.projectTransactionDetail.dateEnd,
-      startDate: data?.projectTransactionDetail.dateStart,
-      price: data?.projectTransactionDetail?.project?.price,
-      capacity: data?.projectTransactionDetail.guest.guestNumber,
+      endDate: data?.projectTransactionDetail?.dateEnd,
+      startDate: data?.projectTransactionDetail?.dateStart,
+      price: data?.projectTransactionDetail?.project?.price as number,
+      capacity: data?.projectTransactionDetail?.guest?.guestNumber as number,
     })
   );
 
@@ -51,7 +51,7 @@ const Receipt = () => {
     return <LoadingIndicator />;
   }
 
-  const { invoiceNumber, modifiedDate, project, purchaseRefId } = data?.projectTransactionDetail;
+  const { invoiceNumber, modifiedDate, project, purchaseRefId } = data?.projectTransactionDetail as ProjectTransactionQueryType;
 
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(invoiceNumber);
@@ -79,7 +79,7 @@ const Receipt = () => {
                 rounded
                 size={56}
                 containerStyle={{ backgroundColor: "#0003" }}
-                source={project.accommodation?.avatarS3?.[0]?.small as ImageSourcePropType}
+                source={project?.accommodation?.avatarS3?.[0]?.small as ImageSourcePropType}
               />
               <View style={styles.swapIconContainer}>
                 <AntDesign name="swap" size={10} color="black" />
@@ -93,7 +93,7 @@ const Receipt = () => {
             </View>
 
             <Pressable style={styles.tourTitleContainer} onPress={copyToClipboard}>
-              <Text subtitle2>{project.name}</Text>
+              <Text subtitle2>{project?.name}</Text>
               <View style={styles.subtitle}>
                 <Feather name="copy" size={12} color="black" />
                 <Text subtitle2 style={{ color: theme.colors.grey2 }}>
@@ -104,7 +104,7 @@ const Receipt = () => {
           </View>
 
           <Text heading1 style={styles.price}>
-            {localizeNumber(formattedTotalPrice)}
+            {project?.price === 0 ? tr("it is free") :localizeNumber(formattedTotalPrice as string)}
           </Text>
 
           <Chip
@@ -148,7 +148,7 @@ const Receipt = () => {
 
         <View style={styles.issueTrackingContainer}>
           <Text caption>{tr("issue tracking")}</Text>
-          <Text caption>{localizeNumber(purchaseRefId)}</Text>
+          <Text caption>{localizeNumber(purchaseRefId as number)}</Text>
         </View>
       </Container>
     </BottomButtonLayout>

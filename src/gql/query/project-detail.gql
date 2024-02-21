@@ -1,76 +1,75 @@
 query projectDetail($pk: ID!) {
   projectDetail(pk: $pk) {
-    ... on ProjectQueryType {
+    id
+    name
+    price
+    gender
+    dateEnd
+    discount
+    dateStart
+    statusStep {
+      displayName
+      name
+    }
+    description
+    tags {
       id
       name
-      price
+    }
+    capacity {
+      childAccept
       gender
-      dateEnd
-      discount
-      dateStart
-      statusStep{
-        displayName
-        name
-      }
-      description
-      tags {
-        id
-        name
-      }
-      capacity {
-        childAccept
-        gender
-        guestNumber
-      }
-      facilities {
-        id
-        enName
-        faName
-        arName
-      }
-      categories {
-        name
+      guestNumber
+    }
+    facilities {
+      id
+      enName
+      faName
+      arName
+    }
+    categories {
+      name
+      displayName
+      id
+    }
+    creator {
+      id
+      fullname
+      firstname
+      phoneNumber
+      ngo {
         id
       }
-      creator {
-        id
-        fullname
-        firstname
-        phoneNumber
-        ngo {
-          id
-        }
 
-        avatarS3 {
-          small
-          medium
-          large
-        }
-        projectSet {
+      avatarS3 {
+        small
+        medium
+        large
+      }
+      projectSet {
+        id
+        name
+        price
+        accommodation {
           id
-          name
-          price
-          accommodation {
-            id
-            address
-            avatarS3 {
-              large
-              medium
-              small
-            }
+          address
+          avatarS3 {
+            large
+            medium
+            small
           }
         }
       }
-      accommodation {
-        id
-        lat
-        lng
-        address
-        avatarS3 {
-          large
-          medium
-          small
-        }
+    }
+    accommodation {
+      id
+      lat
+      lng
+      address
+      avatarS3 {
+        large
+        medium
+        small
       }
     }
   }

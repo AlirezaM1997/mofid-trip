@@ -1,79 +1,78 @@
 query tourDetail($pk: ID!) {
   tourDetail(pk: $pk) {
-    ... on TourQueryType {
+    id
+    title
+    endTime
+    startTime
+    statusStep {
+      displayName
+      name
+    }
+    description
+    capacity {
+      guestNumber
+      childAccept
+      gender
+    }
+    NGO {
       id
-      title
-      endTime
-      startTime
-      statusStep{
-        displayName
-        name
-      }
-      description
-      capacity{
-        guestNumber
-        childAccept
-        gender
-      }
-      NGO {
+      isVerify
+      verifyDescription
+      user {
         id
-        isVerify
-        verifyDescription
-        user {
-          id
-          fullname
-          phoneNumber
-          avatarS3 {
-            small
-          }
-          ngo {
-            id
-          }
+        fullname
+        phoneNumber
+        avatarS3 {
+          small
         }
-        tourSet {
+        ngo {
+          id
+        }
+      }
+      tourSet {
+        id
+        title
+        packages {
           id
           title
-          packages {
-            id
-            title
-            price
-          }
-          destination {
-            ... on AccommodationQueryType {
-              address
-              avatarS3 {
-                large
-                medium
-                small
-              }
+          price
+        }
+        destination {
+          ... on AccommodationQueryType {
+            address
+            avatarS3 {
+              large
+              medium
+              small
             }
           }
         }
       }
-      facilities {
+    }
+    facilities {
+      id
+      enName
+      faName
+      arName
+    }
+    destination {
+      ... on AccommodationQueryType {
         id
-        enName
-        faName
-        arName
+        address
+        lat
+        lng
       }
-      destination {
-        ... on AccommodationQueryType {
-          id
-          address
-          lat
-          lng
-        }
-      }
-      packages {
-        id
-        title
-        price
-      }
-      avatarS3 {
-        medium
-        large
-        small
-      }
+    }
+    packages {
+      id
+      title
+      price
+      discount
+    }
+    avatarS3 {
+      medium
+      large
+      small
     }
   }
 }

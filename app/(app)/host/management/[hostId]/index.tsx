@@ -36,7 +36,18 @@ const HostDetailScreen = () => {
     const lookup: Record<string, number> = {
       REQUEST: 1,
       ACCEPT: 2,
-      SUSPENSION: 3,
+      SUSPENSION: 2,
+    };
+    return lookup[host?.statusStep?.name as string];
+  };
+  const titleStep = () => {
+    const lookup: Record<string, string> = {
+      REQUEST:
+        "the created host is under review by the admin, after approval by the admin, your host will be released.",
+      ACCEPT:
+        "the host has been published successfully after being reviewed by the admin. your host is now visible to travelers.",
+      SUSPENSION:
+        "the host has been published successfully after being reviewed by the admin. your host is now visible to travelers.",
     };
     return lookup[host?.statusStep?.name as string];
   };
@@ -101,9 +112,7 @@ const HostDetailScreen = () => {
           {tr("At what stage is your application?")}
         </Text>
         <Text caption type="grey3">
-          {tr(
-            "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list."
-          )}
+          {tr(titleStep())}
         </Text>
 
         <Stepper
