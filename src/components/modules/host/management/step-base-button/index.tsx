@@ -63,7 +63,7 @@ const HostManagementStepBaseButton = ({ host, refetch }: { host: ProjectQueryTyp
             <ListItem
               bottomDivider
               onPress={() => handleNavigate(`host/management/${host.id}/edit`)}>
-              <Feather name="users" size={24} color={theme.colors.black} />
+              <Feather name="edit-2" size={24} color={theme.colors.black} />
               <ListItem.Content>
                 <ListItem.Title>{tr("edit host")}</ListItem.Title>
               </ListItem.Content>

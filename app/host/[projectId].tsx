@@ -83,7 +83,7 @@ const Page: React.FC = ({ ...props }) => {
           <ProjectBoldFeatures
             dateEnd={dateEnd}
             dateStart={dateStart}
-            capacity={capacity?.guestNumber ?? 0}
+            capacity={capacity}
             category={categories?.[0]?.displayName}
           />
 
@@ -121,10 +121,10 @@ const Page: React.FC = ({ ...props }) => {
                   mapMarkers={[
                     {
                       id: "string",
-                      position: { lat: accommodation?.lat, lng: accommodation?.lng },
                       size: [52, 60],
-                      icon: window.location.origin + "/assets/assets/image/marker.png",
                       iconAnchor: [-17, 30],
+                      position: { lat: accommodation?.lat, lng: accommodation?.lng },
+                      icon: window.location.origin + "/assets/assets/image/marker.png",
                     },
                   ]}
                 />

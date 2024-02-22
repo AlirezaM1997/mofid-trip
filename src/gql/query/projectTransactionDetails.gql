@@ -14,7 +14,7 @@ query projectTransactionDetail($pk: ID!) {
       firstname
     }
     status {
-      step{
+      step {
         displayName
         name
       }
@@ -30,6 +30,8 @@ query projectTransactionDetail($pk: ID!) {
       name
       tax
       price
+      dateEnd
+      dateStart
       discount
       creator {
         id

@@ -1,7 +1,7 @@
 import { useTheme } from "@rneui/themed";
 import { NetworkStatus } from "@apollo/client";
 import React, { useRef, useState } from "react";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView } from "react-native-gesture-handler";
@@ -11,11 +11,13 @@ import NoResult from "@src/components/organisms/no-result";
 import HostSliderCard from "@modules/host/card/slider-card";
 import { ProjectQueryType, useProjectListSearchQuery } from "@src/gql/generated";
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
+import { WIDTH } from "@src/constants";
 
 const MahdiehIranScreen = () => {
   const pageNumber = useRef(1);
   const { theme } = useTheme();
   const { tr } = useTranslation();
+  const { localizeNumber } = useLocalizedNumberFormat();
   const [scrollReachedEnd, setScrollReachedEnd] = useState(false);
 
   const { data, networkStatus, fetchMore } = useProjectListSearchQuery({
@@ -77,10 +79,10 @@ const MahdiehIranScreen = () => {
       <Container>
         <WhiteSpace size={24} />
         <TitleWithAction
-          size="caption"
           color="grey3"
-          title={tr("all hosts of")}
-          actionTitle={`${data?.projectList?.count?.toString()} ${tr("host")}`}
+          size="caption"
+          title={tr("all hosts")}
+          actionTitle={`${localizeNumber(data?.projectList?.count?.toString())} ${tr("host")}`}
         />
         <WhiteSpace size={16} />
 
@@ -88,9 +90,9 @@ const MahdiehIranScreen = () => {
           {data?.projectList?.data?.map(project => (
             <HostSliderCard
               key={project?.id}
-              id={project?.id as string}
               name={project?.name}
-              containerStyle={{ width: 325 }}
+              id={project?.id as string}
+              containerStyle={{ width: WIDTH, maxWidth: WIDTH - 40 }}
               address={project?.accommodation?.address}
               avatarS3={project?.accommodation?.avatarS3}
               price={((project?.price as number) * (100 - (project?.discount as number))) / 100}
@@ -108,7 +110,13 @@ const MahdiehIranScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  resultContainer: { gap: 20 },
+  resultContainer: {
+    gap: 20,
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
 });
 
 export default MahdiehIranScreen;
