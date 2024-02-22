@@ -43,8 +43,6 @@ const FilterCapacity = () => {
   };
 
   const plusHandler = gender => {
-    console.log(capacity[gender]);
-
     const value = +capacity[gender] + 1;
     const parsedValue = parseText(value.toString());
 

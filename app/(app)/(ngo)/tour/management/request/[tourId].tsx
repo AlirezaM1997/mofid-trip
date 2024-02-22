@@ -1,27 +1,27 @@
-import { View, StyleSheet, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Text } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
 import {
   TourTransactionQueryType,
   MyNgoDetailTourTransactionSetQuery,
   useMyNgoDetailTourTransactionSetQuery,
 } from "@src/gql/generated";
-import LoadingIndicator from "@modules/Loading-indicator";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { Text } from "@rneui/themed";
 import Container from "@atoms/container";
 import NoResult from "@organisms/no-result";
-import RequestList from "@modules/tour-request-card/RequestList";
-import RequestListBottomSheet from "@modules/tour-request-card/request-list-bottomsheet";
+import React, { useEffect, useState } from "react";
+import useTranslation from "@src/hooks/translation";
 import { useIsFocused } from "@react-navigation/native";
+import LoadingIndicator from "@modules/Loading-indicator";
+import { View, StyleSheet, ScrollView } from "react-native";
+import RequestList from "@modules/tour-request-card/RequestList";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import RequestListBottomSheet from "@modules/tour-request-card/request-list-bottomsheet";
 
 const RequestScreen = () => {
   const { tr } = useTranslation();
-  const { tourId } = useLocalSearchParams();
   const isFocused = useIsFocused();
   const navigation = useNavigation();
+  const { tourId } = useLocalSearchParams();
 
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [selectedTransaction, setSelectedTransaction] = useState<TourTransactionQueryType>();
 
   const handleClose = () => setIsVisible(false);
@@ -48,7 +48,7 @@ const RequestScreen = () => {
   useEffect(() => {
     if (!loading && data) {
       setTransactionSet(
-        data.NGODetail.tourTransactionSet.filter(tr => tr.tourPackage.tour.id === tourId)
+        data?.NGODetail?.tourTransactionSet?.filter(tr => tr?.tourPackage?.tour?.id === tourId)
       );
     }
   }, [loading, data]);

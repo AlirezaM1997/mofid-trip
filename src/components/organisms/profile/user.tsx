@@ -6,7 +6,6 @@ import { APP_VERSION } from "@src/settings";
 import { Feather } from "@expo/vector-icons";
 import { useSession } from "@src/context/auth";
 import useIsRtl from "@src/hooks/localization";
-import { getFullName } from "@src/helper/extra";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "@src/theme";
@@ -23,7 +22,7 @@ const Profile = ({ userDetail }) => {
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
-  const userId = useSelector((state: RootState) => state.userSlice.userDetail.id);
+  const userId = useSelector((state: RootState) => state?.userSlice?.userDetail?.id);
   const [settingEdit] = useSettingEditMutation({
     notifyOnNetworkStatusChange: true,
   });
@@ -46,7 +45,7 @@ const Profile = ({ userDetail }) => {
       },
     }).then(res => {
       setIsVisible(false);
-      const ok = res.data.settingEdit.status === "OK";
+      const ok = res?.data?.settingEdit?.status === "OK";
       if (ok) {
         syncTable({ userId: userId });
       }

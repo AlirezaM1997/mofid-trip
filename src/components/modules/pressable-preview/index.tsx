@@ -1,7 +1,6 @@
-import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { Text, Button } from "@rneui/themed";
+import { Text } from "@rneui/themed";
 import { PressableProps } from "react-native";
+import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
 
 interface PropsType extends PressableProps {
   title: string;
@@ -17,10 +16,10 @@ export default ({ title, topTitle, icon, style, button }: PropsType) => {
       <View style={styles.title}>
         {icon}
         <View style={styles.titleText}>
-          <Text numberOfLines={1} style={styles.text} caption type="grey2">
+          <Text style={styles.text} numberOfLines={1}  caption type="grey2">
             {topTitle}
           </Text>
-          <Text numberOfLines={1} style={styles.text}>
+          <Text style={styles.text} numberOfLines={1} >
             {title}
           </Text>
         </View>
@@ -39,5 +38,5 @@ const styles = StyleSheet.create({
   },
   title: { display: "flex", flexDirection: "row", gap: 10, alignItems: "center" },
   titleText: { display: "flex", flexDirection: "column" },
-  text: { width: 150 },
+  text:{width:200}
 });

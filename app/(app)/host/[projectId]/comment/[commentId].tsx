@@ -9,7 +9,6 @@ import {
   CommentObjectEnum,
   LikeObjectEnum,
   LikeStatusEnum,
-  ProjectQueryType,
   TourQueryType,
   useCommentAddMutation,
   useHostCommentQuery,
@@ -48,19 +47,19 @@ const TourCommentReplay = () => {
 
   navigation.setOptions({ title: `${tr("comments of")} ${data?.projectDetail?.name}` });
 
-  const comment = (data?.projectDetail as ProjectQueryType)?.commentSet.find(comment => comment.id === commentId);
+  const comment = data?.projectDetail?.commentSet?.find(comment => comment?.id === commentId);
 
   const handleLike = async () => {
     const { data } = await likeAdd({
       variables: {
         data: {
           objectType: LikeObjectEnum.Comment,
-          objectId: +commentId,
+          objectId: +(commentId as string),
           status: LikeStatusEnum.Like,
         },
       },
     });
-    if (data.likeAdd.status === "OK") {
+    if (data?.likeAdd?.status === "OK") {
       refetch();
     }
   };
@@ -69,12 +68,12 @@ const TourCommentReplay = () => {
       variables: {
         data: {
           objectType: LikeObjectEnum.Comment,
-          objectId: +commentId,
+          objectId: +(commentId as string),
           status: LikeStatusEnum.Dislike,
         },
       },
     });
-    if (data.likeAdd.status === "OK") {
+    if (data?.likeAdd?.status === "OK") {
       refetch();
     }
   };
@@ -84,12 +83,12 @@ const TourCommentReplay = () => {
       variables: {
         data: {
           objectType: CommentObjectEnum.Comment,
-          objectId: commentId.toString(),
+          objectId: commentId as string,
           text: value,
         },
       },
     });
-    if (data.commentAdd.status === "OK") {
+    if (data?.commentAdd?.status === "OK") {
       Toast.show({
         type: "success",
         text1: tr("Successful"),
@@ -137,7 +136,7 @@ const TourCommentReplay = () => {
               <View style={styles.commentTextInf}>
                 <View style={styles.commentText}>
                   <Text numberOfLines={4} caption>
-                    {comment.text}
+                    {comment?.text}
                   </Text>
                 </View>
                 <Entypo
@@ -148,13 +147,13 @@ const TourCommentReplay = () => {
                 />
                 <View style={styles.backDrop(isVisible)}>
                   <View style={styles.dropDown}>
-                    <ReportComment closeDropDown={handleClose} id={comment.id} />
+                    <ReportComment closeDropDown={handleClose} id={comment?.id} />
                   </View>
                 </View>
               </View>
               <Text caption type="grey3">
-                {localizeNumber(moment(comment.createdDate).locale("fa").format("jD jMMMM jYYYY"))}{" "}
-                . {comment.user.fullname}
+                {localizeNumber(moment(comment?.createdDate).locale("fa").format("jD jMMMM jYYYY"))}{" "}
+                . {comment?.user?.fullname}
               </Text>
             </View>
             <View style={styles.likeInf}>
@@ -164,7 +163,7 @@ const TourCommentReplay = () => {
               <View style={styles.likeBox}>
                 <View style={styles.likeStyle}>
                   <Text caption type="grey2">
-                    {localizeNumber(comment.likeCount)}
+                    {localizeNumber(comment?.likeCount as number)}
                   </Text>
                   <AntDesign
                     name="like2"
@@ -175,7 +174,7 @@ const TourCommentReplay = () => {
                 </View>
                 <View style={styles.likeStyle}>
                   <Text caption type="grey2">
-                    {localizeNumber(comment.dislikeCount)}
+                    {localizeNumber(comment?.dislikeCount as number)}
                   </Text>
                   <AntDesign
                     name="dislike2"
@@ -193,12 +192,12 @@ const TourCommentReplay = () => {
               {tr("the answers")}
             </Text>
             <Text caption type="grey2">
-              {localizeNumber(comment.nestedComment.length)} {tr("replay")}
+              {localizeNumber(comment?.nestedComment?.length as number)} {tr("replay")}
             </Text>
           </View>
         </Container>
         <View style={styles.nestedCommentList}>
-          {comment.nestedComment.map((comment, i) => (
+          {comment?.nestedComment?.map((comment, i) => (
             <CommentCardReplay
               comment={comment as TourQueryType["commentSet"][0]["nestedComment"][0]}
               refetch={refetch}

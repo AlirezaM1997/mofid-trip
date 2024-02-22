@@ -2,6 +2,7 @@ query myUserDetailProjectTransactionSet {
   userDetail {
     id
     projectTransactionSet {
+      createdDate
       dateEnd
       dateStart
       id

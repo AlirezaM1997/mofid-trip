@@ -1,5 +1,3 @@
-import { Alert, Linking, Platform, StyleSheet, View } from "react-native";
-import React, { ReactElement } from "react";
 import {
   Avatar,
   BottomSheet,
@@ -11,20 +9,22 @@ import {
   Text,
   useTheme,
 } from "@rneui/themed";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import {
   MyNgoDetailQuery,
   TourGuestQueryType,
   TransactionStatusEnum,
   useTourTransactionEditMutation,
 } from "@src/gql/generated";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import { HEIGHT } from "@src/constants";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
+import React, { ReactElement } from "react";
 import ButtonRow from "@modules/button-rows";
+import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
-import { HEIGHT } from "@src/constants";
+import { Alert, Linking, Platform, StyleSheet, View } from "react-native";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 export type RequestListBottomSheetProps = BottomSheetProps & {
   isVisible: boolean;
@@ -51,7 +51,7 @@ const RequestListBottomSheet = ({
   const { localizeNumber } = useLocalizedNumberFormat();
   const [tourTransactionEdit, { loading }] = useTourTransactionEditMutation();
 
-  const handlePressPhoneIcon = num => {
+  const handlePressPhoneIcon = (num: string) => {
     if (num) {
       if (Platform.OS === "web") {
         Linking.openURL(`tel:${num}`);
@@ -60,7 +60,7 @@ const RequestListBottomSheet = ({
       }
     }
   };
-  const handlePressTextIcon = num => {
+  const handlePressTextIcon = (num: string) => {
     if (num) {
       if (Platform.OS === "web") {
         Linking.openURL(`sms:${num}`);
@@ -69,7 +69,7 @@ const RequestListBottomSheet = ({
       }
     }
   };
-  const submitHandler = async type => {
+  const submitHandler = async (type: boolean) => {
     const { data } = await tourTransactionEdit({
       variables: {
         data: {
@@ -79,7 +79,7 @@ const RequestListBottomSheet = ({
       },
     });
 
-    if (data.tourTransactionEdit.status === "OK") {
+    if (data?.tourTransactionEdit?.status === "OK") {
       refetch();
       handleClose();
     }
@@ -200,7 +200,7 @@ const RequestListBottomSheet = ({
                   key={guest.id}
                   bottomDivider
                   containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}>
-                  {guest.avatarS3[0]?.small ? (
+                  {guest?.avatarS3?.[0]?.small ? (
                     <Avatar size={40} rounded source={{ uri: guest.avatarS3[0]?.small }} />
                   ) : (
                     <Avatar
@@ -219,7 +219,7 @@ const RequestListBottomSheet = ({
                       {guest.firstname} {guest.lastname}
                     </Text>
                     <Text caption type="grey3">
-                      {localizeNumber(guest.phoneNumber)}
+                      {localizeNumber(guest?.phoneNumber as string)}
                     </Text>
                   </ListItem.Content>
                 </ListItem>
