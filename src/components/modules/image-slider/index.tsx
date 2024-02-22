@@ -18,7 +18,6 @@ function ImageSlider({ imageList }: ImageSlider) {
   const [isVisible, setIsVisible] = useState(false);
 
   const openImage = (index: number) => {
-    console.log(index);
     setActiveSlide(index);
     setIsVisible(true);
   };
@@ -45,10 +44,10 @@ function ImageSlider({ imageList }: ImageSlider) {
             style={style.sliderActiveSlide}
             imageStyle={style.sliderImageActiveSlide}
             source={
-              imageList?.[0]?.medium
+              imageList?.[0]?.large
                 ? {
-                  uri: imageList?.[0]?.large,
-                }
+                    uri: imageList?.[0]?.large,
+                  }
                 : require("@assets/image/defaultHost.svg")
             }
           />
@@ -76,58 +75,61 @@ function ImageSlider({ imageList }: ImageSlider) {
           </View>
         </ScrollView>
       </View>
-
-      <BottomSheet
-        isVisible={isVisible}
-        onBackdropPress={() => setIsVisible(false)}
-        backdropStyle={style.bottomSheetBackDrop}
-        containerStyle={style.bottomSheetContainer}>
-        <View style={style.bottomSheetContent}>
-          {Platform.OS === "web" ? (
-            <img style={style.fullScreenImage} src={imageList?.[activeSlide].large as string} />
-          ) : (
-            <Image
-              style={style.fullScreenImage}
-              source={{
-                uri: imageList?.[activeSlide].large as string,
+      {imageList?.length ? (
+        <BottomSheet
+          isVisible={isVisible}
+          onBackdropPress={() => setIsVisible(false)}
+          backdropStyle={style.bottomSheetBackDrop}
+          containerStyle={style.bottomSheetContainer}>
+          <View style={style.bottomSheetContent}>
+            {Platform.OS === "web" ? (
+              <img style={style.fullScreenImage} src={imageList?.[activeSlide].large as string} />
+            ) : (
+              <Image
+                style={style.fullScreenImage}
+                source={{
+                  uri: imageList?.[activeSlide].large as string,
+                }}
+              />
+            )}
+            <Pressable
+              style={{
+                top: 20,
+                right: 20,
+                width: 30,
+                height: 30,
+                position: "absolute",
+              }}
+              onPress={() => setIsVisible(false)}>
+              <AntDesign name="closecircle" size={24} color={"white"} />
+            </Pressable>
+            <Entypo
+              size={34}
+              name="chevron-left"
+              onPress={handlePrevImage}
+              style={{
+                position: "absolute",
+                left: 10,
+                backgroundColor: theme.colors.grey0,
+                borderRadius: "100%",
               }}
             />
-          )}
-          <Pressable
-            style={{
-              top: 20,
-              right: 20,
-              width: 30,
-              height: 30,
-              position: "absolute",
-            }}
-            onPress={() => setIsVisible(false)}>
-            <AntDesign name="closecircle" size={24} color={"white"} />
-          </Pressable>
-          <Entypo
-            size={34}
-            name="chevron-left"
-            onPress={handlePrevImage}
-            style={{
-              position: "absolute",
-              left: 10,
-              backgroundColor: theme.colors.grey0,
-              borderRadius: "100%",
-            }}
-          />
-          <Entypo
-            size={34}
-            name="chevron-right"
-            onPress={handleNextImage}
-            style={{
-              position: "absolute",
-              right: 10,
-              backgroundColor: theme.colors.grey0,
-              borderRadius: "100%",
-            }}
-          />
-        </View>
-      </BottomSheet>
+            <Entypo
+              size={34}
+              name="chevron-right"
+              onPress={handleNextImage}
+              style={{
+                position: "absolute",
+                right: 10,
+                backgroundColor: theme.colors.grey0,
+                borderRadius: "100%",
+              }}
+            />
+          </View>
+        </BottomSheet>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
@@ -162,7 +164,7 @@ const style = StyleSheet.create({
     justifyContent: "center",
   },
   fullScreenImage: {
-    objectFit: "scale-down",
+    objectFit: "contain",
     height: HEIGHT,
     width: WIDTH,
   },

@@ -29,7 +29,7 @@ import locationMarkerImage from "@assets/image/location-marker.png";
 import myLocation from "@assets/image/my-location.png";
 const a = markerImage;
 const b = locationMarkerImage;
-const c = myLocation
+const c = myLocation;
 
 const Map = ({
   zoom,
@@ -97,7 +97,6 @@ const Map = ({
     position: currentLocation,
     icon: window.location.origin + "/assets/assets/image/my-location.png",
   };
-  console.log(mapMarkers);
 
   return (
     <>
@@ -137,7 +136,9 @@ const Map = ({
             lat: location?.lat,
             lng: location?.lng,
           }}
-          mapMarkers={currentLocation ? [currentLocationIcon, ...mapMarkers] : mapMarkers || []}
+          mapMarkers={
+            currentLocation && mapMarkers ? [currentLocationIcon, ...mapMarkers] : mapMarkers || []
+          }
           mapLayers={[
             {
               layerType: "TileLayer",
