@@ -36,11 +36,11 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
         title: tr("request details"),
         changeHandler: () => pressHandler(`/tour/transaction/detail/${transaction.id}`),
       },
-      "ACCEPT": transaction.status.isActive
+      "ACCEPT": transaction?.status?.isActive
         ? {
-            title: transaction.tourPackage.price ? tr("pay") : tr("reservation"),
+            title: transaction.tourPackage?.price ? tr("pay") : tr("reservation"),
             detailsBtn: true,
-            changeHandler: transaction.tourPackage.price
+            changeHandler: transaction?.tourPackage?.price
               ? () => setIsAcceptPaymentVisible(true)
               : purchaseHandler,
           }
@@ -51,7 +51,7 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
               <Feather name="info" size={16} style={{ marginLeft: 8 }} color={theme.colors.white} />
             ),
           },
-      "PAYMENT": transaction.status.isActive
+      "PAYMENT": transaction?.status?.isActive
         ? {
             type: "outline",
             color: "secondary",
@@ -71,7 +71,7 @@ const TransactionButtons = ({ transaction, purchaseHandler, purchaseLoading }: P
           },
     };
 
-    if (transaction.status.step?.name in lookup) return lookup[transaction.status.step?.name];
+    if (transaction?.status?.step?.name in lookup) return lookup[transaction?.status?.step?.name];
   };
 
   return (

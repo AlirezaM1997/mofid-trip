@@ -75,6 +75,12 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
+          name="terms-of-service"
+          options={{
+            title: tr("terms of service"),
+          }}
+        />
+        <Stack.Screen
           name="login-details-ngo"
           options={{
             title: tr("Basic Info"),

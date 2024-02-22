@@ -1,13 +1,13 @@
+import React, { useState } from "react";
 import Container from "@atoms/container";
 import { Button, Text } from "@rneui/themed";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import React, { useState } from "react";
+import CommentCard from "@modules/comment/comment-card";
+import { router, useLocalSearchParams } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { ProjectQueryType, useHostCommentQuery } from "@src/gql/generated";
-import CommentCard from "@modules/comment/comment-card";
-import { router, useLocalSearchParams } from "expo-router";
 import AddCommentBottomSheet from "@modules/comment/add-comment-bottomsheet";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const HostComment = () => {
   const { tr } = useTranslation();
@@ -26,7 +26,7 @@ const HostComment = () => {
 
   if (loading && !data) return null;
 
-  const comment = (data?.projectDetail as ProjectQueryType)?.commentSet;
+  const comment = data?.projectDetail?.commentSet;
 
   return (
     <>
@@ -35,7 +35,7 @@ const HostComment = () => {
           <Text subtitle1 bold>
             {tr("opinions about the host")}
           </Text>
-          <Text body2>{localizeNumber(comment.length) + " " + tr("comment")}</Text>
+          <Text body2>{localizeNumber(comment?.length as number) + " " + tr("comment")}</Text>
         </View>
         <Pressable onPress={handleOpen} style={styles.commentAddStyle}>
           <View style={styles.commentAddBox}>
@@ -51,7 +51,7 @@ const HostComment = () => {
             )}
           </Text>
         </Pressable>
-        {comment.length === 0 ? (
+        {comment?.length === 0 ? (
           <View style={styles.noResultStyle}>
             <Feather style={styles.noResultIcon} name="alert-circle" size={16} />
             <Text body2>
@@ -59,16 +59,16 @@ const HostComment = () => {
             </Text>
           </View>
         ) : (
-          (comment.length > 4 ? comment.slice(0, 4) : comment).map(comment => (
+          (comment?.length as number > 4 ? comment?.slice(0, 4) : comment)?.map(comment => (
             <CommentCard
               comment={comment as ProjectQueryType["commentSet"][0]}
-              key={comment.id}
+              key={comment?.id}
               refetch={refetch}
               push={`host/${projectId}/comment`}
             />
           ))
         )}
-        {comment.length > 0 && (
+        {comment?.length as number > 0 && (
           <Button onPress={handleNavigateToComment} color="secondary">
             {tr("view more")}
           </Button>
@@ -76,11 +76,11 @@ const HostComment = () => {
       </Container>
 
       <AddCommentBottomSheet
-        isVisible={isVisible}
+        isVisible={isVisible as boolean}
         setIsVisible={setIsVisible}
         refetch={refetch}
-        id={projectId.toString()}
-        name={name}
+        id={projectId as string}
+        name={name as string}
       />
     </>
   );

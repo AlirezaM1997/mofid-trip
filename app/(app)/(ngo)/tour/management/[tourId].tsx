@@ -1,44 +1,54 @@
-import Container from "@atoms/container";
-import WhiteSpace from "@atoms/white-space";
-import ImageSlider from "@modules/image-slider";
 import Stepper from "@modules/stepper";
-import { ListItem, Text, useTheme } from "@rneui/themed";
-import {
-  MyNgoDetailTourSetQuery,
-  useMyNgoDetailTourSetQuery,
-} from "@src/gql/generated";
-import useTranslation from "@src/hooks/translation";
-import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect, useState } from "react";
-import { ScrollView } from "react-native-gesture-handler";
-import { Feather } from "@expo/vector-icons";
-import useIsRtl from "@src/hooks/localization";
-import { Divider } from "@rneui/themed";
-import LoadingIndicator from "@modules/Loading-indicator";
 import { Linking } from "react-native";
+import { Divider } from "@rneui/themed";
+import Container from "@atoms/container";
+import { useEffect, useState } from "react";
+import WhiteSpace from "@atoms/white-space";
+import { Feather } from "@expo/vector-icons";
 import { passedTime } from "@src/helper/date";
+import useIsRtl from "@src/hooks/localization";
+import ImageSlider from "@modules/image-slider";
+import useTranslation from "@src/hooks/translation";
+import { ListItem, Text, useTheme } from "@rneui/themed";
+import { ScrollView } from "react-native-gesture-handler";
+import LoadingIndicator from "@modules/Loading-indicator";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import TourManagementStepBaseButton from "@modules/tour/management/step-base-button";
+import { MyNgoDetailTourSetQuery, useMyNgoDetailTourSetQuery } from "@src/gql/generated";
 
 const TourDetailScreen = () => {
   const isRtl = useIsRtl();
-  const { tr } = useTranslation();
   const { theme } = useTheme();
+  const { tr } = useTranslation();
   const navigation = useNavigation();
   const { tourId } = useLocalSearchParams();
   const steps = [tr("pending"), tr("published"), tr("End Tour")];
   const [tour, setTour] = useState<MyNgoDetailTourSetQuery["NGODetail"]["tourSet"][0]>();
 
-  const { loading, data , refetch } = useMyNgoDetailTourSetQuery();
+  const { loading, data, refetch } = useMyNgoDetailTourSetQuery();
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
       REQUEST: 1,
       ACCEPT: 2,
+      SUSPENSION: 2,
       END: 3,
-      SUSPENSION: 4,
     };
     return lookup[tour.statusStep.name];
   };
+  const titleStep = () => {
+    const lookup: Record<string, string> = {
+      REQUEST:
+        "the created tour is under review by the admin, after approval by the admin, your tour will be published.",
+      ACCEPT:
+        "the tour has been successfully published after being reviewed by the admin. your tour is now visible to travelers.",
+      SUSPENSION:
+        "the tour has been successfully published after being reviewed by the admin. your tour is now visible to travelers.",
+      END: "your tour has been completed successfully. to create a tour again, go to the create section and create your tour.",
+    };
+    return lookup[tour.statusStep.name];
+  };
+
   const handleNavigateToRequest = () => {
     router.push("/tour/management/request/" + tour.id);
   };
@@ -53,13 +63,12 @@ const TourDetailScreen = () => {
 
   useEffect(() => {
     if (!loading && data) {
-      const t = data.NGODetail.tourSet.find(t => t.id === tourId);
+      const t = data?.NGODetail?.tourSet?.find(t => t?.id === tourId);
       setTour(t);
     }
   }, [loading, data]);
 
   if (loading || !tour) return <LoadingIndicator />;
-  console.log(tour);
 
   return (
     <ScrollView>
@@ -87,7 +96,7 @@ const TourDetailScreen = () => {
         <Text subtitle1 bold>
           {tr("At what stage is your application?")}
         </Text>
-        <Text>یه متن سید به ما میده که اینجا نشونش خواهیم داد</Text>
+        <Text>{tr(titleStep())}</Text>
 
         <Stepper
           steps={steps}

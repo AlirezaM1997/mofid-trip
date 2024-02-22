@@ -1,5 +1,3 @@
-import { Alert, Linking, Platform, StyleSheet, View } from "react-native";
-import React, { ReactElement } from "react";
 import {
   Avatar,
   BottomSheet,
@@ -10,22 +8,25 @@ import {
   Text,
   useTheme,
 } from "@rneui/themed";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import {
-  MyNgoDetailQuery,
+  ProjectTransactionQueryType,
   TransactionStatusEnum,
   useProjectTransactionEditMutation,
 } from "@src/gql/generated";
-import { Ionicons } from "@expo/vector-icons";
+import moment from "jalali-moment";
+import { HEIGHT } from "@src/constants";
 import Container from "@atoms/container";
+import React, { ReactElement } from "react";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
-import { HEIGHT } from "@src/constants";
-import moment from "jalali-moment";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Alert, Linking, Platform, StyleSheet, View } from "react-native";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { useSession } from "@src/context/auth";
 
 export type RequestListBottomSheetProps = BottomSheetProps & {
   isVisible: boolean;
-  transaction: MyNgoDetailQuery["NGODetail"]["projectTransactionSet"][number];
+  transaction: ProjectTransactionQueryType;
   refetch: () => void;
   handleClose: () => void;
 };
@@ -42,13 +43,14 @@ const RequestListBottomSheet = ({
   handleClose,
   ...props
 }: RequestListBottomSheetProps) => {
-  const { tr } = useTranslation();
-  const ownerAvatar = transaction?.owner.avatarS3.small;
   const { theme } = useTheme();
+  const { tr } = useTranslation();
+  const { session } = useSession();
+  const ownerAvatar = transaction?.owner?.avatarS3?.small;
   const { localizeNumber } = useLocalizedNumberFormat();
   const [projectTransactionEdit, { loading }] = useProjectTransactionEditMutation();
 
-  const handlePress = num => {
+  const handleSMS = (num: string) => {
     if (num) {
       if (Platform.OS === "web") {
         Linking.openURL(`sms:${num}`);
@@ -57,7 +59,18 @@ const RequestListBottomSheet = ({
       }
     }
   };
-  const submitHandler = async type => {
+
+  const handleCall = (num: string) => {
+    if (num) {
+      if (Platform.OS === "web") {
+        Linking.openURL(`tel:${num}`);
+      } else {
+        Alert.alert("coming soon");
+      }
+    }
+  };
+
+  const submitHandler = async (type: boolean) => {
     const { data } = await projectTransactionEdit({
       variables: {
         data: {
@@ -68,7 +81,7 @@ const RequestListBottomSheet = ({
       },
     });
 
-    if (data.projectTransactionEdit.status === "OK") {
+    if (data?.projectTransactionEdit?.status === "OK") {
       refetch();
       handleClose();
     }
@@ -119,17 +132,31 @@ const RequestListBottomSheet = ({
         ),
       },
     };
-    return lookup[transaction?.status.step.name];
+    return lookup[transaction?.status?.step?.name as string];
+  };
+
+  const setGender = () => {
+    const lookup: Record<string, string> = {
+      MALE: "male",
+      FEMALE: "female",
+      BOTH: "both genders (male and female)",
+    };
+    return lookup[transaction?.guest?.gender as string];
   };
 
   const startDate = localizeNumber(
-    moment(transaction?.dateStart)?.locale("fa")?.format("jDD jMMMM")
+    moment(transaction?.dateStart)?.locale("fa")?.format("jD jMMMM")
   );
   const endDate = localizeNumber(
-    moment(transaction?.dateEnd)?.locale("fa")?.format("jDD jMMMM jYYYY")
+    moment(transaction?.dateEnd)?.locale("fa")?.format("jD jMMMM jYYYY")
+  );
+  const createDate = localizeNumber(
+    moment(transaction?.createdDate).locale("fa").format("jD jMMMM jYYYY . HH:mm")
   );
 
   const step = getCurrentStep();
+
+  const isNgo = JSON.parse(session as string).metadata.is_ngo;
 
   return (
     <BottomSheet isVisible={isVisible} {...props}>
@@ -137,7 +164,11 @@ const RequestListBottomSheet = ({
         <View style={style.bottomSheetHeader}>
           <WhiteSpace />
           {ownerAvatar ? (
-            <Avatar rounded size={56} source={{ uri: transaction?.owner.avatarS3.small }} />
+            <Avatar
+              rounded
+              size={56}
+              source={{ uri: transaction?.owner?.avatarS3?.small as string }}
+            />
           ) : (
             <Avatar
               rounded
@@ -151,7 +182,10 @@ const RequestListBottomSheet = ({
             />
           )}
           <View style={style.bottomSheetHeaderTextBox}>
-            <Text subtitle2>{localizeNumber(transaction?.owner.fullname)}</Text>
+            <Text subtitle1>{localizeNumber(transaction?.owner?.fullname as string)}</Text>
+            {!isNgo && (
+              <Text body2>{localizeNumber(transaction?.owner?.phoneNumber as string)}</Text>
+            )}
             <Text caption type={step?.color}>
               {step?.bottomSheetTitle}
             </Text>
@@ -164,7 +198,19 @@ const RequestListBottomSheet = ({
               color="secondary"
               size="sm"
               title={tr("send Message")}
-              onPress={() => handlePress(transaction?.owner?.phoneNumber)}></Button>
+              onPress={() => handleSMS(transaction?.owner?.phoneNumber as string)}
+            />
+            {!isNgo && (
+              <Button
+                iconPosition="right"
+                icon={<MaterialIcons name="phone-in-talk" size={24} color="black" />}
+                type="outline"
+                color="secondary"
+                size="sm"
+                title={tr("making contact")}
+                onPress={() => handleCall(transaction?.owner?.phoneNumber as string)}
+              />
+            )}
           </View>
           <WhiteSpace />
         </View>
@@ -173,24 +219,45 @@ const RequestListBottomSheet = ({
         <Container>
           <WhiteSpace size={24} />
           <View style={{ gap: 16 }}>
-            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <View style={style.detailBox}>
               <Text body2>{transaction?.project?.name}</Text>
               <Text body2 type="grey2">
                 {tr("on-demand hosting")}
               </Text>
             </View>
             <Divider />
-            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <View style={style.detailBox}>
+              <Text body2>{createDate}</Text>
+              <Text body2 type="grey2">
+                {tr("request time")}
+              </Text>
+            </View>
+            <Divider />
+            <View style={style.detailBox}>
               <Text body2>{`${startDate} - ${endDate}`}</Text>
               <Text body2 type="grey2">
                 {tr("time of travel")}
               </Text>
             </View>
             <Divider />
-            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <Text body2>{localizeNumber(transaction?.guest.guestNumber)}</Text>
+            <View style={style.detailBox}>
+              <Text body2>{localizeNumber(transaction?.guest?.guestNumber as number)}</Text>
               <Text body2 type="grey2">
                 {tr("passengers count")}
+              </Text>
+            </View>
+            <Divider />
+            <View style={style.detailBox}>
+              <Text body2>{tr(setGender())}</Text>
+              <Text body2 type="grey2">
+                {tr("gender of passengers")}
+              </Text>
+            </View>
+            <Divider />
+            <View style={style.detailBox}>
+              <Text body2>{transaction?.guest?.childAccept ? tr("no") : tr("yes")}</Text>
+              <Text body2 type="grey2">
+                {tr("has a child under 12 years old")}
               </Text>
             </View>
           </View>
@@ -203,6 +270,10 @@ const RequestListBottomSheet = ({
 };
 
 const style = StyleSheet.create({
+  detailBox: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   headerButtonBox: {
     flexDirection: "row",
     gap: 16,

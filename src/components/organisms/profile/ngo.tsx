@@ -6,11 +6,9 @@ import { APP_VERSION } from "@src/settings";
 import { Feather } from "@expo/vector-icons";
 import { useSession } from "@src/context/auth";
 import useIsRtl from "@src/hooks/localization";
-import { getFullName } from "@src/helper/extra";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "@src/theme";
-import NgoAuthentication from "@modules/ngo/ngoAuthentication";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
 import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
@@ -48,7 +46,7 @@ const Profile = ({ userDetail }) => {
       },
     }).then(res => {
       setIsVisible(false);
-      const ok = res.data.settingEdit.status === "OK";
+      const ok = res?.data?.settingEdit?.status === "OK";
       if (ok) {
         syncTable({ userId: userId });
       }
@@ -76,9 +74,9 @@ const Profile = ({ userDetail }) => {
 
             <View style={style.userInf}>
               <Text heading2 numberOfLines={1}>
-                {localizeNumber(userDetail.ngo.title) || tr("No Name")}
+                {localizeNumber(userDetail?.ngo?.title) || tr("No Name")}
               </Text>
-              <Text>{localizeNumber(userDetail.username)}</Text>
+              <Text>{localizeNumber(userDetail?.username)}</Text>
             </View>
           </Pressable>
         </Container>

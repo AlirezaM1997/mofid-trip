@@ -1,12 +1,10 @@
 import React from "react";
 import Container from "@atoms/container";
 import { ImageBackground, StyleSheet } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
-import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
+import { BottomSheet, Button, Text } from "@rneui/themed";
 
 const RejectedDetails = ({ isVisible, setIsVisible, transaction }) => {
-  const { theme } = useTheme();
   const { tr } = useTranslation();
 
   return (
@@ -18,7 +16,7 @@ const RejectedDetails = ({ isVisible, setIsVisible, transaction }) => {
           source={require("@assets/image/rejectIcon.svg")}
         />
         <Text heading2 center>
-          {tr("reason for rejecting the request")}
+          {tr("your request was rejected")}
         </Text>
         <Text center>{transaction.description}</Text>
         <Button type="outline" onPress={() => setIsVisible(false)}>
