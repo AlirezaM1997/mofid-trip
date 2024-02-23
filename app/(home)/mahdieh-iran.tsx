@@ -1,7 +1,7 @@
 import { WIDTH } from "@src/constants";
 import { useTheme } from "@rneui/themed";
 import { NetworkStatus } from "@apollo/client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Container from "@src/components/atoms/container";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView } from "react-native-gesture-handler";
@@ -18,10 +18,11 @@ const MahdiehIranScreen = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const [projectList, setProjectList] = useState<ProjectQueryType[]>();
 
   const { data, networkStatus, fetchMore } = useProjectListSearchQuery({
     notifyOnNetworkStatusChange: true,
-    variables: { page: { pageNumber: 1, pageSize: 10 }, sort: { descending: true } },
+    variables: { page: { pageNumber: 1, pageSize: 10 } },
   });
 
   const handleLoadMore = () => {
@@ -61,6 +62,15 @@ const MahdiehIranScreen = () => {
     }
   };
 
+  useEffect(() => {
+    if (data?.projectList?.data) {
+      const sortedList = [...data.projectList.data].sort(
+        (a, b) => new Date(b?.modifiedDate) - new Date(a?.modifiedDate)
+      );
+      setProjectList(sortedList as ProjectQueryType[]);
+    }
+  }, [data]);
+
   if (networkStatus === NetworkStatus.loading || networkStatus === NetworkStatus.refetch)
     return <LoadingIndicator />;
 
@@ -78,12 +88,14 @@ const MahdiehIranScreen = () => {
           color="grey3"
           size="caption"
           title={tr("all hosts")}
-          actionTitle={`${localizeNumber(data?.projectList?.count?.toString())} ${tr("host")}`}
+          actionTitle={`${localizeNumber(data?.projectList?.count?.toString() as string)} ${tr(
+            "host"
+          )}`}
         />
         <WhiteSpace size={16} />
 
         <View style={styles.resultContainer}>
-          {data?.projectList?.data?.map(project => (
+          {projectList?.map(project => (
             <HostSliderCard
               key={project?.id}
               name={project?.name}

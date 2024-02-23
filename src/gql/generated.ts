@@ -85,21 +85,21 @@ export type AccommodationListType = {
 
 /** An enumeration. */
 export enum AccommodationProjectGenderChoices {
-  /** BOTH */
+  /** هر دو */
   Both = 'BOTH',
-  /** FEMALE */
+  /** زن */
   Female = 'FEMALE',
-  /** MALE */
+  /** مرد */
   Male = 'MALE'
 }
 
 /** An enumeration. */
 export enum AccommodationProjectRequestFromChoices {
-  /** BOTH */
+  /** هر دو */
   Both = 'BOTH',
-  /** NGO */
+  /** تشکل */
   Ngo = 'NGO',
-  /** USER */
+  /** کاربر */
   User = 'USER'
 }
 
@@ -120,9 +120,9 @@ export type AccommodationQueryType = {
 
 /** An enumeration. */
 export enum AccommodationTagTypeChoices {
-  /** CAMPAIGN */
+  /** کمپین */
   Campaign = 'CAMPAIGN',
-  /** GENERAL */
+  /** عمومی */
   General = 'GENERAL'
 }
 
@@ -2087,11 +2087,11 @@ export type TourStatusStepQueryType = {
 
 /** An enumeration. */
 export enum TourTourGuestGenderChoices {
-  /** CHILD */
+  /** کودک */
   Child = 'CHILD',
-  /** FEMALE */
+  /** زن */
   Female = 'FEMALE',
-  /** MALE */
+  /** مرد */
   Male = 'MALE'
 }
 
@@ -2314,7 +2314,7 @@ export type UserQueryType = {
   tag?: Maybe<TagQueryType>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -2728,7 +2728,7 @@ export type ProjectListSearchQueryVariables = Exact<{
 }>;
 
 
-export type ProjectListSearchQuery = { __typename?: 'Query', projectList?: { __typename?: 'ProjectListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, discount?: number | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null> | null } | null };
+export type ProjectListSearchQuery = { __typename?: 'Query', projectList?: { __typename?: 'ProjectListType', pageCount?: number | null, count?: number | null, data?: Array<{ __typename?: 'ProjectQueryType', id: string, name?: string | null, price?: number | null, discount?: number | null, modifiedDate?: any | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, lat?: number | null, lng?: number | null, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null } | null> | null } | null } | null> | null } | null };
 
 export type ProjectListQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
@@ -4979,7 +4979,7 @@ export type ProjectDetailQueryHookResult = ReturnType<typeof useProjectDetailQue
 export type ProjectDetailLazyQueryHookResult = ReturnType<typeof useProjectDetailLazyQuery>;
 export type ProjectDetailQueryResult = Apollo.QueryResult<ProjectDetailQuery, ProjectDetailQueryVariables>;
 export const ProjectListSearchDocument = gql`
-    query projectListSearch($search: String, $sort: SortType, $filter: ProjectFilterType, $page: PageType!) {
+    query projectListSearch($search: String, $sort: SortType = {descending: true}, $filter: ProjectFilterType, $page: PageType!) {
   projectList(search: $search, sort: $sort, filter: $filter, page: $page) {
     pageCount
     count
@@ -4988,6 +4988,7 @@ export const ProjectListSearchDocument = gql`
       name
       price
       discount
+      modifiedDate
       accommodation {
         id
         lat
