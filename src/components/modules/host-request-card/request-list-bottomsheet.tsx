@@ -183,9 +183,7 @@ const RequestListBottomSheet = ({
           )}
           <View style={style.bottomSheetHeaderTextBox}>
             <Text subtitle1>{localizeNumber(transaction?.owner?.fullname as string)}</Text>
-            {!isNgo && (
-              <Text body2>{localizeNumber(transaction?.owner?.phoneNumber as string)}</Text>
-            )}
+            <Text body2>{localizeNumber(transaction?.owner?.phoneNumber as string)}</Text>
             <Text caption type={step?.color}>
               {step?.bottomSheetTitle}
             </Text>
@@ -200,7 +198,6 @@ const RequestListBottomSheet = ({
               title={tr("send Message")}
               onPress={() => handleSMS(transaction?.owner?.phoneNumber as string)}
             />
-            {!isNgo && (
               <Button
                 iconPosition="right"
                 icon={<MaterialIcons name="phone-in-talk" size={24} color="black" />}
@@ -210,7 +207,6 @@ const RequestListBottomSheet = ({
                 title={tr("making contact")}
                 onPress={() => handleCall(transaction?.owner?.phoneNumber as string)}
               />
-            )}
           </View>
           <WhiteSpace />
         </View>
@@ -255,7 +251,7 @@ const RequestListBottomSheet = ({
             </View>
             <Divider />
             <View style={style.detailBox}>
-              <Text body2>{transaction?.guest?.childAccept ? tr("no") : tr("yes")}</Text>
+              <Text body2>{transaction?.guest?.childAccept ? tr("yes") : tr("no")}</Text>
               <Text body2 type="grey2">
                 {tr("has a child under 12 years old")}
               </Text>
