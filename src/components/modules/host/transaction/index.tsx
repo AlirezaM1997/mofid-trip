@@ -1,6 +1,6 @@
 import { NetworkStatus } from "@apollo/client";
 import { ScrollView, StyleSheet } from "react-native";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
 import { RefreshControl } from "react-native-gesture-handler";
@@ -10,6 +10,7 @@ import { ProjectTransactionQueryType, useProjectTransactionListQuery } from "@sr
 
 const HostTransaction = () => {
   const isFocused = useIsFocused();
+  const [transactionList, setTransaction1List] = useState<ProjectTransactionQueryType[]>();
   // TODO: make pagination dynamically
   const { data, refetch, networkStatus } = useProjectTransactionListQuery({
     notifyOnNetworkStatusChange: true,
@@ -35,6 +36,15 @@ const HostTransaction = () => {
     }
   }, [isFocused]);
 
+  useEffect(() => {
+    if (data?.projectTransactionList?.data) {
+      const sortedList = [...data.projectTransactionList.data].sort(
+        (a, b) => new Date(b?.modifiedDate) - new Date(a?.modifiedDate)
+      );
+      setTransaction1List(sortedList as ProjectTransactionQueryType[]);
+    }
+  }, [data]);
+
   if (networkStatus === NetworkStatus.loading || !data)
     return (
       <ScrollView contentContainerStyle={styles.container}>
@@ -53,7 +63,7 @@ const HostTransaction = () => {
         <RefreshControl refreshing={networkStatus !== NetworkStatus.ready} onRefresh={onRefresh} />
       }>
       <Container>
-        {data?.projectTransactionList?.data?.map((transaction, index) => (
+        {transactionList?.map((transaction, index) => (
           <ReservationCard
             transaction={transaction as ProjectTransactionQueryType}
             key={transaction?.id}
