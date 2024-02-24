@@ -25,6 +25,17 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
   const { formatPrice } = useFormatPrice();
 
   const handlePress = () => {
+    if (session) {
+      dispatch(
+        setRedirectToScreenAfterLogin({
+          pathname: `host/${projectId}`,
+          params: {
+            projectId: projectId,
+            name: name,
+          },
+        })
+      );
+    }
     if (!session) {
       dispatch(
         setRedirectToScreenAfterLogin({
