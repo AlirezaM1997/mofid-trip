@@ -29,7 +29,8 @@ const JalaliDatePicker = ({
 }: JalaliDatePickerProps) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
-  const [cursor, setCursor] = useState(0);
+  const [cursor, setCursor] = useState<number>(0);
+  const [yearCursor, setYearCursor] = useState<number>(0);
   const { daysArray } = getAllDaysInMonth(cursor);
   const { localizeNumber } = useLocalizedNumberFormat();
 
@@ -66,17 +67,23 @@ const JalaliDatePicker = ({
   useEffect(() => {
     if (markedDays?.length !== 0 && cursor === 0) {
       let a =
-        (+moment(markedDays[0]?.date).locale("fa").format("YYYY") -
+        (+moment(markedDays?.[0]?.date).locale("fa").format("YYYY") -
           +moment(new Date()).locale("fa").format("YYYY")) *
           12 +
-        (+moment(markedDays[0]?.date).locale("fa").format("M") -
+        (+moment(markedDays?.[0]?.date).locale("fa").format("M") -
           +moment(new Date()).locale("fa").format("M"));
       setCursor(a);
     }
   }, [markedDays?.[0]?.date]);
 
   return (
-    <CalendarContext.Provider value={{ cursor: cursor, setCursor: setCursor }}>
+    <CalendarContext.Provider
+      value={{
+        cursor: cursor,
+        setCursor: setCursor,
+        yearCursor: yearCursor,
+        setYearCursor: setYearCursor,
+      }}>
       <View style={styles.root}>
         <Header />
         <WeekDays />
