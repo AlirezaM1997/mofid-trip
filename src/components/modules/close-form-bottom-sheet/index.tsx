@@ -1,5 +1,5 @@
 import Container from "@atoms/container";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BottomSheet } from "@rneui/themed";
 import { useEffect, useState } from "react";
 import WhiteSpace from "@atoms/white-space";
@@ -8,12 +8,14 @@ import ButtonRow from "@modules/button-rows";
 import { ImageBackground, StyleSheet } from "react-native";
 import { router, useNavigation } from "expo-router";
 import useTranslation from "@src/hooks/translation";
+import { RootState } from "@src/store";
 
 const CloseFormBottomSheet = () => {
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const navigation = useNavigation();
   const [isVisibleExit, setIsVisibleExit] = useState(false);
+  const { redirectToScreenAfterLogin } = useSelector((state: RootState) => state.navigationSlice);
 
   const handleOpen = () => setIsVisibleExit(true);
   const handleClose = () => {
@@ -47,10 +49,17 @@ const CloseFormBottomSheet = () => {
         <ButtonRow>
           <Button
             type="outline"
-            onPress={() => {
-              router.replace("/");
-              router.replace("/");
-            }}>
+            onPress={
+              redirectToScreenAfterLogin
+                ? () => {
+                    router.replace(redirectToScreenAfterLogin);
+                    router.replace(redirectToScreenAfterLogin);
+                  }
+                : () => {
+                    router.replace("/");
+                    router.replace("/");
+                  }
+            }>
             خارج شدن
           </Button>
           <Button onPress={handleClose}>{tr("Stay")}</Button>

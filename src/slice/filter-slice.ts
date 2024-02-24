@@ -22,7 +22,7 @@ const initialState: PropsTypes = {
   category: CategoryEnum.HOST,
   page: {
     pageNumber: 1,
-    pageSize: PAGE_SIZE,
+    pageSize: 1000,
   },
   sort: {
     descending: false,

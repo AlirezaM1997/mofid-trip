@@ -13,9 +13,9 @@ const HostTransactionForm = ({ activeStep, setActiveStep, setIsButtonDisabled })
   const { values } = useFormikContext<ProjectTransactionAddInputType>();
 
   useEffect(() => {
-    if (activeStep === 1 && !values.guests.guestNumber) return setIsButtonDisabled(true);
-    if (activeStep === 2 && (!values.dateStart || !values.dateEnd))
+    if (activeStep === 1 && (!values.dateStart || !values.dateEnd))
       return setIsButtonDisabled(true);
+    if (activeStep === 2 && !values.guests.guestNumber) return setIsButtonDisabled(true);
     setIsButtonDisabled(false);
   }, [values, activeStep]);
 
@@ -25,8 +25,8 @@ const HostTransactionForm = ({ activeStep, setActiveStep, setIsButtonDisabled })
       <WhiteSpace />
 
       <Container>
-        {activeStep === 1 && <HostTransactionCapacityTab />}
-        {activeStep === 2 && <HostTransactionDateTab />}
+        {activeStep === 1 && <HostTransactionDateTab />}
+        {activeStep === 2 && <HostTransactionCapacityTab />}
         {activeStep === 3 && <HostTransactionConfirmData setActiveStep={setActiveStep} />}
       </Container>
 
