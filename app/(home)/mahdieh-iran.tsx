@@ -1,7 +1,7 @@
+import { WIDTH } from "@src/constants";
 import { useTheme } from "@rneui/themed";
 import { NetworkStatus } from "@apollo/client";
 import React, { useRef, useState } from "react";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView } from "react-native-gesture-handler";
@@ -10,15 +10,14 @@ import WhiteSpace from "@src/components/atoms/white-space";
 import NoResult from "@src/components/organisms/no-result";
 import HostSliderCard from "@modules/host/card/slider-card";
 import { ProjectQueryType, useProjectListSearchQuery } from "@src/gql/generated";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
-import { WIDTH } from "@src/constants";
 
 const MahdiehIranScreen = () => {
   const pageNumber = useRef(1);
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const [scrollReachedEnd, setScrollReachedEnd] = useState(false);
 
   const { data, networkStatus, fetchMore } = useProjectListSearchQuery({
     notifyOnNetworkStatusChange: true,
@@ -59,9 +58,6 @@ const MahdiehIranScreen = () => {
       ) {
         handleLoadMore();
       }
-      setScrollReachedEnd(true);
-    } else {
-      setScrollReachedEnd(false);
     }
   };
 
