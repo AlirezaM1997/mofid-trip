@@ -36,11 +36,11 @@ const HostTransactionTab = ({ activeStep }) => {
         indicatorStyle={styles.indicatorStyle}>
         <Tab.Item
           style={activeStep >= 1 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
-          title={tr("Capacity")}
-        />
+          title={tr("Date")}
+          />
         <Tab.Item
           style={activeStep >= 2 ? styles.tabItem(theme) : styles.deactiveTabItem(theme)}
-          title={tr("Date")}
+          title={tr("Capacity")}
         />
         <Tab.Item
           titleStyle={styles.titleStyle}
