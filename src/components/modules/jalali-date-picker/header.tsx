@@ -1,16 +1,14 @@
-import { Button, Text, useTheme } from "@rneui/themed";
-import { StyleSheet, View } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { useLocalizedNumberFormat } from "@src/hooks/translation";
-import getAllDaysInMonth from "./helper";
 import { useContext } from "react";
 import { CalendarContext } from "./context";
+import { Feather } from "@expo/vector-icons";
+import { StyleSheet, View } from "react-native";
+import { Button, useTheme } from "@rneui/themed";
+import JalaliYearPicker from "./jalali-year-picker";
+import JalaliMonthPicker from "./jalali-month-picker";
 
 const Header = () => {
-  const { cursor, setCursor } = useContext(CalendarContext);
   const { theme } = useTheme();
-  const { localizeNumber } = useLocalizedNumberFormat();
-  const { firstDayOfMonth } = getAllDaysInMonth(cursor);
+  const { cursor, setCursor } = useContext(CalendarContext);
 
   return (
     <View style={styles.btnContainer}>
@@ -19,7 +17,8 @@ const Header = () => {
         type="clear"
         icon={<Feather name="chevron-right" size={24} color={theme.colors.black} />}
       />
-      <Text>{localizeNumber(firstDayOfMonth.locale("fa").format("jMMMM jYYYY"))}</Text>
+      <JalaliMonthPicker />
+      <JalaliYearPicker />
       <Button
         onPress={() => setCursor(cursor + 1)}
         type="clear"
@@ -31,11 +30,9 @@ const Header = () => {
 
 const styles = StyleSheet.create({
   btnContainer: {
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 20,
   },
 });
 

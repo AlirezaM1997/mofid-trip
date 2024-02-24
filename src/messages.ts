@@ -125,6 +125,11 @@ export const messages = {
     fa_ir: "ظرفیت",
     en_us: "Capacity",
   },
+  "choose the year": {
+    ar: "اختر السنة",
+    fa_ir: "انتخاب سال",
+    en_us: "Choose the year",
+  },
   map: {
     ar: "map",
     fa_ir: "نقشه",
@@ -2352,6 +2357,11 @@ export const messages = {
     fa_ir: "پنجاهم",
     en_us: "Fiftieth",
   },
+  "choose the month": {
+    ar: "اختر الشهر",
+    fa_ir: "انتخاب ماه",
+    en_us: "Choose the month",
+  },
   "passenger info": {
     ar: "معلومات الركاب",
     fa_ir: "اطلاعات مسافر",
@@ -2587,31 +2597,46 @@ export const messages = {
     fa_ir: "شرایط خدمات",
     en_us: "terms of service",
   },
-  "the created host is under review by the admin, after approval by the admin, your host will be released.": {
-    ar: "المضيف الذي تم إنشاؤه قيد المراجعة من قبل المسؤول، وبعد موافقة المسؤول، سيتم تحرير المضيف الخاص بك.",
-    fa_ir: "هاست ایجاد شده در مرحله بررسی توسط ادمین قرار دارد ، بعد از تایید توسط ادمین، هاست شما منتشر خواهد شد.",
-    en_us: "The created host is under review by the admin, after approval by the admin, your host will be released.",
-  },
-  "the host has been published successfully after being reviewed by the admin. your host is now visible to travelers.": {
-    ar: "تم نشر المضيف بنجاح بعد مراجعته من قبل المشرف. أصبح مضيفك مرئيًا الآن للمسافرين.",
-    fa_ir: "هاست، پس از بررسی توسط ادمین، با موفقیت منتشر شد. هم اکنون هاست شما قابل مشاهده برای مسافران است.",
-    en_us: "The host has been published successfully after being reviewed by the admin. Your host is now visible to travelers.",
-  },
-  "the created tour is under review by the admin, after approval by the admin, your tour will be published.": {
-    ar: "الجولة التي تم إنشاؤها قيد المراجعة من قبل المسؤول، وبعد موافقة المسؤول، سيتم نشر جولتك.",
-    fa_ir: "تور ایجاد شده در مرحله بررسی توسط ادمین قرار دارد ، بعد از تایید توسط ادمین، تور شما منتشر خواهد شد.",
-    en_us: "The created tour is under review by the admin, after approval by the admin, your tour will be published.",
-  },
-  "the tour has been successfully published after being reviewed by the admin. your tour is now visible to travelers.": {
-    ar: "تم نشر الجولة بنجاح بعد مراجعتها من قبل المشرف. جولتك مرئية الآن للمسافرين.",
-    fa_ir: "تور، پس از بررسی توسط ادمین، با موفقیت منتشر شد. هم اکنون تور شما در معرض دید مسافران قرار گرفته است.",
-    en_us: "The tour has been successfully published after being reviewed by the admin. Your tour is now visible to travelers.",
-  },
-  "your tour has been completed successfully. to create a tour again, go to the create section and create your tour.": {
-    ar: "لقد اكتملت جولتك بنجاح. لإنشاء جولة مرة أخرى، انتقل إلى قسم إنشاء وقم بإنشاء جولتك.",
-    fa_ir: "تور شما با موفقیت انجام شد و به اتمام رسید. برای ایجاد دوباره تور، به بخش ایجاد بروید و تورتان را بسازید.",
-    en_us: "Your tour has been completed successfully. To create a tour again, go to the Create section and create your tour.",
-  },
+  "the created host is under review by the admin, after approval by the admin, your host will be released.":
+    {
+      ar: "المضيف الذي تم إنشاؤه قيد المراجعة من قبل المسؤول، وبعد موافقة المسؤول، سيتم تحرير المضيف الخاص بك.",
+      fa_ir:
+        "هاست ایجاد شده در مرحله بررسی توسط ادمین قرار دارد ، بعد از تایید توسط ادمین، هاست شما منتشر خواهد شد.",
+      en_us:
+        "The created host is under review by the admin, after approval by the admin, your host will be released.",
+    },
+  "the host has been published successfully after being reviewed by the admin. your host is now visible to travelers.":
+    {
+      ar: "تم نشر المضيف بنجاح بعد مراجعته من قبل المشرف. أصبح مضيفك مرئيًا الآن للمسافرين.",
+      fa_ir:
+        "هاست، پس از بررسی توسط ادمین، با موفقیت منتشر شد. هم اکنون هاست شما قابل مشاهده برای مسافران است.",
+      en_us:
+        "The host has been published successfully after being reviewed by the admin. Your host is now visible to travelers.",
+    },
+  "the created tour is under review by the admin, after approval by the admin, your tour will be published.":
+    {
+      ar: "الجولة التي تم إنشاؤها قيد المراجعة من قبل المسؤول، وبعد موافقة المسؤول، سيتم نشر جولتك.",
+      fa_ir:
+        "تور ایجاد شده در مرحله بررسی توسط ادمین قرار دارد ، بعد از تایید توسط ادمین، تور شما منتشر خواهد شد.",
+      en_us:
+        "The created tour is under review by the admin, after approval by the admin, your tour will be published.",
+    },
+  "the tour has been successfully published after being reviewed by the admin. your tour is now visible to travelers.":
+    {
+      ar: "تم نشر الجولة بنجاح بعد مراجعتها من قبل المشرف. جولتك مرئية الآن للمسافرين.",
+      fa_ir:
+        "تور، پس از بررسی توسط ادمین، با موفقیت منتشر شد. هم اکنون تور شما در معرض دید مسافران قرار گرفته است.",
+      en_us:
+        "The tour has been successfully published after being reviewed by the admin. Your tour is now visible to travelers.",
+    },
+  "your tour has been completed successfully. to create a tour again, go to the create section and create your tour.":
+    {
+      ar: "لقد اكتملت جولتك بنجاح. لإنشاء جولة مرة أخرى، انتقل إلى قسم إنشاء وقم بإنشاء جولتك.",
+      fa_ir:
+        "تور شما با موفقیت انجام شد و به اتمام رسید. برای ایجاد دوباره تور، به بخش ایجاد بروید و تورتان را بسازید.",
+      en_us:
+        "Your tour has been completed successfully. To create a tour again, go to the Create section and create your tour.",
+    },
   "price per person": {
     ar: "السعر للشخص الواحد",
     fa_ir: "قیمت برای هر نفر",
@@ -3108,7 +3133,7 @@ export const messages = {
     fa_ir: "ایجاد",
     en_us: "Create",
   },
-  "percent": {
+  percent: {
     ar: "نسبه مئويه",
     fa_ir: "درصد",
     en_us: "Percent",
@@ -3250,12 +3275,12 @@ export const messages = {
     en_us: "The host is open to children under 12 years old",
   },
   "to easily find the origin and start the host, set the address and the map of the place of departure.":
-  {
-    ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
-    fa_ir: "آدرس محل میزبانی خودتان را برای اطلاع مسافران بنویسید.",
-    en_us:
-      "To easily find the origin and start the host, set the address and the map of the place of departure.",
-  },
+    {
+      ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
+      fa_ir: "آدرس محل میزبانی خودتان را برای اطلاع مسافران بنویسید.",
+      en_us:
+        "To easily find the origin and start the host, set the address and the map of the place of departure.",
+    },
   "host title and details": {
     ar: "عنوان المضيف والتفاصيل",
     fa_ir: "عنوان میزبانی و جزئیات",
@@ -3408,5 +3433,5 @@ export const messages = {
     ar: "الآدرس الهاست",
     fa_ir: "آدرس میزبانی",
     en_us: "Host Address",
-  }
+  },
 };
