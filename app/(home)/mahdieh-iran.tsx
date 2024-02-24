@@ -22,7 +22,8 @@ const MahdiehIranScreen = () => {
   const { data, networkStatus, fetchMore } = useProjectListSearchQuery({
     notifyOnNetworkStatusChange: true,
     variables: {
-      page: { pageNumber: 1, pageSize: 10 },
+      // TODO: add fetch more instead 999 pageSize!!
+      page: { pageNumber: 1, pageSize: 9999 },
       sort: { fieldName: SortFieldEnum.ModifiedDate },
     },
   });
