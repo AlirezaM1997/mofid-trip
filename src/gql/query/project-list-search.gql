@@ -1,4 +1,9 @@
-query projectListSearch($search: String, $sort: SortType, $filter: ProjectFilterType, $page: PageType!) {
+query projectListSearch(
+  $search: String
+  $sort: SortType = { descending: true }
+  $filter: ProjectFilterType
+  $page: PageType!
+) {
   projectList(search: $search, sort: $sort, filter: $filter, page: $page) {
     pageCount
     count
@@ -7,6 +12,7 @@ query projectListSearch($search: String, $sort: SortType, $filter: ProjectFilter
       name
       price
       discount
+      modifiedDate
       accommodation {
         id
         lat

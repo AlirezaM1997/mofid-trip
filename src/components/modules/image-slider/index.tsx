@@ -75,6 +75,7 @@ function ImageSlider({ imageList }: ImageSlider) {
           </View>
         </ScrollView>
       </View>
+
       {imageList?.length ? (
         <BottomSheet
           isVisible={isVisible}
@@ -108,10 +109,10 @@ function ImageSlider({ imageList }: ImageSlider) {
               name="chevron-left"
               onPress={handlePrevImage}
               style={{
-                position: "absolute",
                 left: 10,
-                backgroundColor: theme.colors.grey0,
+                position: "absolute",
                 borderRadius: "100%",
+                backgroundColor: theme.colors.grey0,
               }}
             />
             <Entypo
@@ -119,10 +120,10 @@ function ImageSlider({ imageList }: ImageSlider) {
               name="chevron-right"
               onPress={handleNextImage}
               style={{
-                position: "absolute",
                 right: 10,
-                backgroundColor: theme.colors.grey0,
+                position: "absolute",
                 borderRadius: "100%",
+                backgroundColor: theme.colors.grey0,
               }}
             />
           </View>
@@ -145,44 +146,50 @@ const style = StyleSheet.create({
   bottomSheetContainer: {
     width: WIDTH,
     height: HEIGHT,
-    borderTopRightRadius: 0,
+    margin: "auto",
+    alignItems: "center",
     borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     justifyContent: "center",
     backgroundColor: "rgba(0,0,0, .5)",
   },
   bottomSheetBackDrop: {
     width: WIDTH,
     height: HEIGHT,
-    borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     backgroundColor: "rgba(0,0,0 , .5)",
   },
   bottomSheetContent: {
     display: "flex",
-    flexDirection: "row",
+    width: WIDTH,
+    height: HEIGHT,
     alignItems: "center",
+    flexDirection: "row",
+    margin: "auto",
     justifyContent: "center",
   },
   fullScreenImage: {
-    objectFit: "contain",
-    height: HEIGHT,
     width: WIDTH,
+    margin: "auto",
+    height: HEIGHT,
+    objectFit: "contain",
   },
   sliderThumbnails: {
     display: "flex",
-    flexDirection: "row",
     alignItems: "center",
+    flexDirection: "row",
     justifyContent: "center",
     marginTop: 5,
   },
   sliderSlideThumbnail: {
-    marginRight: 5,
     width: 60,
     height: 60,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
+    marginRight: 5,
     borderRadius: 16,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
   },
   sliderImageSlideThumbnail: {
     borderRadius: 10,
