@@ -9,7 +9,7 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import WhiteSpace from "@src/components/atoms/white-space";
 import NoResult from "@src/components/organisms/no-result";
 import HostSliderCard from "@modules/host/card/slider-card";
-import { ProjectQueryType, useProjectListSearchQuery } from "@src/gql/generated";
+import { ProjectQueryType, SortFieldEnum, useProjectListSearchQuery } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
 
@@ -21,7 +21,11 @@ const MahdiehIranScreen = () => {
 
   const { data, networkStatus, fetchMore } = useProjectListSearchQuery({
     notifyOnNetworkStatusChange: true,
-    variables: { page: { pageNumber: 1, pageSize: 10 } },
+    variables: {
+      // TODO: add fetch more instead 999 pageSize!!
+      page: { pageNumber: 1, pageSize: 9999 },
+      sort: { fieldName: SortFieldEnum.ModifiedDate },
+    },
   });
 
   const handleLoadMore = () => {
@@ -78,7 +82,7 @@ const MahdiehIranScreen = () => {
           color="grey3"
           size="caption"
           title={tr("all hosts")}
-          actionTitle={`${localizeNumber(data?.projectList?.count?.toString())} ${tr("host")}`}
+          actionTitle={`${localizeNumber(data?.projectList?.count as number)} ${tr("host")}`}
         />
         <WhiteSpace size={16} />
 

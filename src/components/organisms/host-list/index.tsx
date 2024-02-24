@@ -4,7 +4,7 @@ import { Skeleton } from "@rneui/themed";
 import Container from "@atoms/container";
 import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
-import { useProjectListQuery } from "@src/gql/generated";
+import { SortFieldEnum, useProjectListQuery } from "@src/gql/generated";
 import { ScrollView, View, StyleSheet } from "react-native";
 import HostSliderCard from "@modules/host/card/slider-card";
 
@@ -14,6 +14,7 @@ function HostList() {
     variables: {
       sort: {
         descending: true,
+        fieldName: SortFieldEnum.ModifiedDate,
       },
       page: {
         pageSize: 8,
