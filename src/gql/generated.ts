@@ -1394,6 +1394,7 @@ export type QueryProjectTransactionListArgs = {
   filter?: InputMaybe<ProjectTransactionFilterType>;
   page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
+  sort?: InputMaybe<SortType>;
 };
 
 
@@ -1461,6 +1462,7 @@ export type QueryTourTransactionListArgs = {
   filter?: InputMaybe<TourTransactionFilterType>;
   page?: InputMaybe<PageType>;
   search?: InputMaybe<Scalars['String']['input']>;
+  sort?: InputMaybe<SortType>;
 };
 
 
@@ -1676,6 +1678,11 @@ export type SettingEditInputType = {
   language?: InputMaybe<LanguageChoiceEnum>;
 };
 
+export enum SortFieldEnum {
+  CreatedDate = 'CREATED_DATE',
+  ModifiedDate = 'MODIFIED_DATE'
+}
+
 /**
  * Represents a sorting type for ordering data.
  *
@@ -1685,6 +1692,8 @@ export type SettingEditInputType = {
 export type SortType = {
   /** A flag indicating if the sorting should be in descending order. Default is False */
   descending?: InputMaybe<Scalars['Boolean']['input']>;
+  /** A field indicating for the sorting. Default is 'created time' */
+  fieldName?: InputMaybe<SortFieldEnum>;
 };
 
 /** Input type for specifying status information. */
