@@ -2,7 +2,7 @@ import * as Location from "expo-location";
 import { ExpoLeaflet } from "expo-leaflet";
 import { Button, useTheme } from "@rneui/themed";
 import { MaterialIcons } from "@expo/vector-icons";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { Alert, StyleSheet, View, ViewStyle } from "react-native";
 import { ExpoLeafletProps } from "expo-leaflet/web/src/ExpoLeaflet.types";
 
@@ -98,18 +98,23 @@ const Map = ({
     icon: window.location.origin + "/assets/assets/image/my-location.png",
   };
 
+  useEffect(() => {
+    const d = document.getElementById("map-container");
+
+    return () => {
+      d && d.remove();
+    };
+  }, []);
+
   return (
     <>
       <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="StyleSheet" />
-
       <View style={[style.row, style.topRow]}>
         <View>{topLeftContent}</View>
         <View>{topCenterContent}</View>
         <View>{topRightContent}</View>
       </View>
-
       <View style={style.center}>{centerContent}</View>
-
       <View style={[style.row, style.bottomRow]}>
         <View style={[style.bottomLeftContent, bottomLeftContentStyle]}>
           {bottomLeftContent}
@@ -128,7 +133,6 @@ const Map = ({
         <View>{bottomCenterContent}</View>
         <View>{bottomRightContent}</View>
       </View>
-
       <View style={[style.container, props.style]}>
         <ExpoLeaflet
           zoom={zoomLevel}

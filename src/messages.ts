@@ -97,6 +97,11 @@ export const messages = {
     fa_ir: "بیوگرافی",
     en_us: "Bio",
   },
+  day: {
+    ar: "day",
+    fa_ir: "روز",
+    en_us: "day",
+  },
   host: {
     ar: "السيرة الذاتية (۲۰۰ حرف)",
     fa_ir: "میزبانی",

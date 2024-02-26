@@ -72,13 +72,13 @@ const TabPrice = () => {
       <WhiteSpace />
 
       <Input
-        value={values.discount?.toString()}
         maxLength={3}
         keyboardType="numeric"
-        onChangeText={text => setFieldValue("discount", parseText(text))}
         onBlur={handleBlur("discount")}
-        errorMessage={(touched.discount && errors.discount) as string}
         label={tr("Discount") + " (%)"}
+        value={values.discount?.toString()}
+        onChangeText={text => setFieldValue("discount", parseText(text))}
+        errorMessage={(touched.discount && errors.discount) as string}
       />
       <View style={styles.badgeRow}>
         {recommendedDiscounts.map(recom => (

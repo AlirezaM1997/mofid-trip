@@ -54,7 +54,7 @@ const EditTourScreen = () => {
     price: Yup.number()
       .required(tr("Required"))
       .typeError(tr("Only number acceptable"))
-      .min(0, tr("Only positive numbers acceptable")),
+      .min(1, tr("Only positive numbers acceptable")),
     discount: Yup.number().max(100, tr("Discount can not be greater than 100")),
   });
 

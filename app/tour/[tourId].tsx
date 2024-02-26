@@ -24,6 +24,7 @@ import ShareReportDropDown from "@modules/share-report-dropdown";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import TourBoldInfo from "@modules/tour/bold-features";
 
 export default () => {
   const { tr } = useTranslation();
@@ -38,9 +39,6 @@ export default () => {
   });
   const tour = data?.tourDetail;
 
-  const startTime = moment(tour?.startTime).locale("fa").format("D MMMM");
-  const endTime = moment(tour?.endTime).locale("fa").format("D MMMM");
-
   if (loading && !tour) return <LoadingIndicator />;
   navigation.setOptions({
     title: data?.tourDetail?.title,
@@ -48,8 +46,7 @@ export default () => {
   });
 
   return (
-    <BottomButtonLayout
-      buttons={[<BookTourBottomSheet tour={tour as TourQueryType}/>]}>
+    <BottomButtonLayout buttons={[<BookTourBottomSheet tour={tour as TourQueryType} />]}>
       <Container>
         <WhiteSpace size={10} />
         <ImageSlider imageList={tour?.avatarS3 as AccommodationImageType[] | TourImageType[]} />
@@ -62,20 +59,11 @@ export default () => {
         <WhiteSpace size={20} />
 
         <WhiteSpace size={10} />
-        <View style={styles.gridRow}>
-          <View style={styles.grid}>
-            <Text type="grey2">{tr("Date")}</Text>
-            <Text bold>{localizeNumber(startTime)}</Text>
-          </View>
-          <View style={styles.grid}>
-            <Text type="grey2">{tr("Duration")}</Text>
-            <Text bold>{localizeNumber(`${startTime} - ${endTime}`)}</Text>
-          </View>
-          <View style={styles.grid}>
-            <Text type="grey2">{tr("Capacity")}</Text>
-            <Text bold>{localizeNumber(tour?.capacity?.guestNumber as number)}</Text>
-          </View>
-        </View>
+        <TourBoldInfo
+          endTime={tour?.endTime}
+          startTime={tour?.startTime}
+          capacity={tour?.capacity}
+        />
 
         <WhiteSpace size={20} />
 
@@ -117,7 +105,7 @@ export default () => {
                 mapMarkers={[
                   {
                     id: "string",
-                    position: { lat: tour?.destination?.lat , lng: tour?.destination?.lng },
+                    position: { lat: tour?.destination?.lat, lng: tour?.destination?.lng },
                     size: [52, 60],
                     icon: window.location.origin + "/assets/assets/image/marker.png",
                     iconAnchor: [-17, 30],
@@ -133,7 +121,10 @@ export default () => {
         </Text>
         <WhiteSpace size={15} />
       </Container>
-      <SimilarTours currentTourId={tour?.id as string} tours={tour?.NGO.tourSet as TourQueryType[]} />
+      <SimilarTours
+        currentTourId={tour?.id as string}
+        tours={tour?.NGO.tourSet as TourQueryType[]}
+      />
       <TourComment />
       <WhiteSpace size={20} />
     </BottomButtonLayout>
