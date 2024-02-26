@@ -1,5 +1,5 @@
 import React from "react";
-import Map from "@modules/map";
+import Map from "@modules/map/index.web";
 import { Divider, Text } from "@rneui/themed";
 import Container from "@atoms/container";
 import { Pressable, View } from "react-native";
@@ -33,7 +33,24 @@ const PaymentStep = ({ status, location, creator }) => {
 
           <Pressable onPress={() => openMapHandler(location.lat, location.lng)}>
             <Container>
-              <Map lat={location.lat} lng={location.lng} />
+            <Map
+                lat={location.lat}
+                lng={location.lng}
+                zoom={12}
+                mapOptions={{
+                  dragging: false,
+                  zoomControl: false
+                }}
+                mapMarkers={[
+                  {
+                    id: "string",
+                    position: { lat: location.lat , lng: location.lng },
+                    size: [52, 60],
+                    icon: window.location.origin + "/assets/assets/image/marker.png",
+                    iconAnchor: [-17, 30],
+                  },
+                ]}
+              />
             </Container>
           </Pressable>
         </>
