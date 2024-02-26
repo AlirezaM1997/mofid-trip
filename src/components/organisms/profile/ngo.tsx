@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { RootState } from "@src/store";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { APP_VERSION } from "@src/settings";
 import { Feather } from "@expo/vector-icons";
 import { useSession } from "@src/context/auth";
@@ -12,15 +12,16 @@ import { PRIMARY_COLOR, SECONDARY_COLOR } from "@src/theme";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
 import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
-import { LanguageChoiceEnum, useSettingEditMutation } from "@src/gql/generated";
+import { LanguageChoiceEnum, UserQueryType, useSettingEditMutation } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 
-const Profile = ({ userDetail }) => {
+const Profile = ({ userDetail}:{ userDetail: UserQueryType }) => {
   const { signOut } = useSession();
   const isRtl = useIsRtl();
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
   const userId = useSelector((state: RootState) => state.userSlice?.userDetail?.id);
@@ -30,10 +31,28 @@ const Profile = ({ userDetail }) => {
   const { syncTable } = useSettingDetailTable();
   const [isVisibleLogout, setIsVisibleLogout] = useState(false);
   const { localizeNumber } = useLocalizedNumberFormat();
+  const dispatch = useDispatch();
 
   const handleNavigateToEditProfile = () => router.push("/edit-ngo");
 
   const handleNavigateToComingSoon = () => router.push("/coming-soon");
+
+  const handleNavigateToCreateHost = () => {
+    router.push("/host/create");
+    dispatch(
+      setRedirectToScreenAfterLogin({
+        pathname: "profile",
+      })
+    );
+  };
+  const handleNavigateToCreateTour = () => {
+    router.push("/tour/create");
+    dispatch(
+      setRedirectToScreenAfterLogin({
+        pathname: "profile",
+      })
+    );
+  };
 
   const openLanguageSetting = () => setIsVisible(true);
 
@@ -124,7 +143,7 @@ const Profile = ({ userDetail }) => {
             <Container>
               <Text type="grey3">{tr("Flows")}</Text>
             </Container>
-            <ListItem bottomDivider onPress={() => router.push("/tour/create")}>
+            <ListItem bottomDivider onPress={handleNavigateToCreateTour}>
               <Feather name="aperture" size={24} />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Create Tour")}</ListItem.Title>
@@ -135,7 +154,7 @@ const Profile = ({ userDetail }) => {
                 color={theme.colors.grey3}
               />
             </ListItem>
-            <ListItem onPress={() => router.push("/host/create")}>
+            <ListItem onPress={handleNavigateToCreateHost}>
               <Feather name="aperture" size={24} />
               <ListItem.Content>
                 <ListItem.Title style={style.label(isRtl)}>{tr("Create Host")}</ListItem.Title>

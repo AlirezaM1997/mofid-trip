@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { router } from "expo-router";
+import { router, useLocalSearchParams, usePathname } from "expo-router";
 import { Tabs } from "expo-router/tabs";
 import useIsRtl from "@src/hooks/localization";
 import useTranslation from "@src/hooks/translation";
@@ -10,6 +10,8 @@ import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
 import ButtonRow from "@modules/button-rows";
 import WhiteSpace from "@atoms/white-space";
 import Container from "@atoms/container";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
+import { useDispatch } from "react-redux";
 
 export default function AppLayout() {
   const isRtl = useIsRtl();
@@ -17,6 +19,9 @@ export default function AppLayout() {
   const { tr } = useTranslation();
   const { syncTable } = useProjectTable();
   const [isVisible, setIsVisible] = useState(false);
+  const dispatch = useDispatch();
+  const routeName = usePathname();
+  const params = useLocalSearchParams();
 
   const handleClose = () => setIsVisible(false);
   const handleOpen = () => setIsVisible(true);
@@ -125,8 +130,14 @@ export default function AppLayout() {
           <ButtonRow>
             <Button
               onPress={() => {
-                handleClose();
                 router.push("/host/create");
+                handleClose();
+                dispatch(
+                  setRedirectToScreenAfterLogin({
+                    pathname: routeName,
+                    params: params,
+                  })
+                );
               }}
               type="outline">
               {tr("Create Host")}
@@ -135,6 +146,12 @@ export default function AppLayout() {
               onPress={() => {
                 handleClose();
                 router.push("/tour/create");
+                dispatch(
+                  setRedirectToScreenAfterLogin({
+                    pathname: routeName,
+                    params: params,
+                  })
+                );
               }}>
               {tr("Create Tour")}
             </Button>
