@@ -16,19 +16,19 @@ import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation
 import { LanguageChoiceEnum, UserQueryType, useSettingEditMutation } from "@src/gql/generated";
 
 const Profile = ({ userDetail }: { userDetail: UserQueryType }) => {
-  const { signOut } = useSession();
   const isRtl = useIsRtl();
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const [isVisible, setIsVisible] = useState(false);
+  const { signOut } = useSession();
+  const { syncTable } = useSettingDetailTable();
+  const { localizeNumber } = useLocalizedNumberFormat();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isVisibleLogout, setIsVisibleLogout] = useState<boolean>(false);
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
   const userId = useSelector((state: RootState) => state?.userSlice?.userDetail?.id);
   const [settingEdit] = useSettingEditMutation({
     notifyOnNetworkStatusChange: true,
   });
-  const { syncTable } = useSettingDetailTable();
-  const [isVisibleLogout, setIsVisibleLogout] = useState(false);
-  const { localizeNumber } = useLocalizedNumberFormat();
 
   const handleNavigateToEditProfile = () => router.push("/edit-profile");
 
@@ -75,7 +75,7 @@ const Profile = ({ userDetail }: { userDetail: UserQueryType }) => {
               <Text heading2 numberOfLines={1}>
                 {localizeNumber(userDetail?.fullname as string) || tr("No Name")}
               </Text>
-              <Text>{localizeNumber(userDetail?.username)}</Text>
+              <Text style={{ direction: "ltr" }}>{localizeNumber(userDetail?.username)}</Text>
             </View>
           </Pressable>
         </Container>

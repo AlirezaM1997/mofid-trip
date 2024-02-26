@@ -1,41 +1,42 @@
 import { router } from "expo-router";
 import { RootState } from "@src/store";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { APP_VERSION } from "@src/settings";
 import { Feather } from "@expo/vector-icons";
 import { useSession } from "@src/context/auth";
 import useIsRtl from "@src/hooks/localization";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "@src/components/atoms/container";
 import WhiteSpace from "@src/components/atoms/white-space";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "@src/theme";
 import useSettingDetailTable from "@src/hooks/db/setting-detail";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
-import { LanguageChoiceEnum, UserQueryType, useSettingEditMutation } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
+import { LanguageChoiceEnum, UserQueryType, useSettingEditMutation } from "@src/gql/generated";
 
 const Profile = ({ userDetail}:{ userDetail: UserQueryType }) => {
   const { signOut } = useSession();
   const isRtl = useIsRtl();
   const { theme } = useTheme();
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
+  const { syncTable } = useSettingDetailTable();
+  const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-
+  const [isVisibleLogout, setIsVisibleLogout] = useState<boolean>(false);
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
   const userId = useSelector((state: RootState) => state.userSlice?.userDetail?.id);
   const [settingEdit] = useSettingEditMutation({
     notifyOnNetworkStatusChange: true,
   });
-  const { syncTable } = useSettingDetailTable();
-  const [isVisibleLogout, setIsVisibleLogout] = useState(false);
-  const { localizeNumber } = useLocalizedNumberFormat();
-  const dispatch = useDispatch();
 
   const handleNavigateToEditProfile = () => router.push("/edit-ngo");
 
   const handleNavigateToComingSoon = () => router.push("/coming-soon");
+
+  const openLanguageSetting = () => setIsVisible(true);
 
   const handleNavigateToCreateHost = () => {
     router.push("/host/create");
@@ -53,8 +54,6 @@ const Profile = ({ userDetail}:{ userDetail: UserQueryType }) => {
       })
     );
   };
-
-  const openLanguageSetting = () => setIsVisible(true);
 
   const handleChangeLang = (lang: LanguageChoiceEnum) => {
     settingEdit({
@@ -93,9 +92,9 @@ const Profile = ({ userDetail}:{ userDetail: UserQueryType }) => {
 
             <View style={style.userInf}>
               <Text heading2 numberOfLines={1}>
-                {localizeNumber(userDetail?.ngo?.title) || tr("No Name")}
+                {localizeNumber(userDetail?.ngo?.title as string) || tr("No Name")}
               </Text>
-              <Text>{localizeNumber(userDetail?.username)}</Text>
+              <Text style={{direction:'ltr'}}>{localizeNumber(userDetail?.username)}</Text>
             </View>
           </Pressable>
         </Container>
