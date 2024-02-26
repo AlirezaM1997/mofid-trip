@@ -1,19 +1,19 @@
-import WhiteSpace from "@atoms/white-space";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { Divider } from "@rneui/base";
-import { Badge, Text } from "@rneui/themed";
+import Input from "@atoms/input";
+import { Button } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import { useFormikContext } from "formik";
+import { Badge, Text } from "@rneui/themed";
+import WhiteSpace from "@atoms/white-space";
 import { StyleSheet, View } from "react-native";
-import { TourAddInputType } from "@src/gql/generated";
-import Input from "@atoms/input";
 import parseText from "@src/helper/number-input";
+import { TourAddInputType } from "@src/gql/generated";
 import { useFormatPrice } from "@src/hooks/localization";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const PriceTab = () => {
   const { tr } = useTranslation();
-  const { localizeNumber } = useLocalizedNumberFormat();
   const { formatPrice } = useFormatPrice();
+  const { localizeNumber } = useLocalizedNumberFormat();
   const { values, errors, touched, handleBlur, setFieldValue } =
     useFormikContext<TourAddInputType>();
 
@@ -35,18 +35,16 @@ const PriceTab = () => {
 
   return (
     <>
-      <WhiteSpace />
-
-      <Text heading2 bold>
-        {tr("Tour Price")}
-      </Text>
-      <Text>
-        {tr(
-          "Choose or write the cost of your tour, you can give a discount to the original price."
-        )}
-      </Text>
-
-      <WhiteSpace />
+      <View style={styles.headerTitle}>
+        <Text heading2 bold>
+          {tr("Tour Price")}
+        </Text>
+        <Text>
+          {tr(
+            "Choose or write the cost of your tour, you can give a discount to the original price."
+          )}
+        </Text>
+      </View>
 
       <Input
         value={values.price?.toString()}
@@ -70,9 +68,7 @@ const PriceTab = () => {
         ))}
       </View>
 
-      <WhiteSpace />
-      <Divider />
-      <WhiteSpace />
+      <WhiteSpace size={20} />
 
       <Input
         maxLength={3}
@@ -98,18 +94,28 @@ const PriceTab = () => {
           />
         ))}
       </View>
-      <WhiteSpace />
+      <WhiteSpace size={40} />
       <View style={styles.row}>
-        <View style={styles.row}>
-          <Text>تخفیف {localizeNumber(values.discount as number)}%</Text>
-          <Text>+</Text>
-          <Text>قیمت پایه {formatPrice(+values.price ?? 0)}</Text>
-        </View>
-        <Text>=</Text>
+        {(values.discount as number) > 0 && (
+          <>
+            {" "}
+            <View style={styles.discount}>
+              <Text style={{ textDecorationLine: "line-through" }}>
+                {localizeNumber(formatPrice(values.price as number) as string)}
+              </Text>
+              <Button color="secondary" size="sm">
+                {`% ${localizeNumber(values.discount as number)}`}
+              </Button>
+            </View>
+            <Text>=</Text>
+          </>
+        )}
         <Text>
-          {values.discount
-            ? formatPrice(values.price - ((values.price || 0) * values.discount) / 100)
-            : formatPrice(+values.price)}
+          {localizeNumber(
+            formatPrice(
+              (values.price as number) * (1 - (values.discount as number) / 100)
+            ) as string
+          )}
         </Text>
       </View>
     </>
@@ -149,10 +155,16 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   row: {
-    display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 3,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 40,
+  },
+  headerTitle: { gap: 5, marginBottom: 20 },
+  discount: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
   },
 });
 
