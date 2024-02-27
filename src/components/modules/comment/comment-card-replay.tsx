@@ -1,16 +1,16 @@
-import { StyleSheet, View } from "react-native";
-import React from "react";
-import { Divider, Text, useTheme } from "@rneui/themed";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import moment from "jalali-moment";
-import { AntDesign } from "@expo/vector-icons";
 import {
   LikeObjectEnum,
   LikeStatusEnum,
   TourQueryType,
   useLikeAddMutation,
 } from "@src/gql/generated";
+import moment from "jalali-moment";
+import React, { useState } from "react";
 import Container from "@atoms/container";
+import { AntDesign } from "@expo/vector-icons";
+import { Divider, Text, useTheme } from "@rneui/themed";
+import { Pressable, StyleSheet, View } from "react-native";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const CommentCardReplay = ({
   comment,
@@ -24,7 +24,9 @@ const CommentCardReplay = ({
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const [showText, setShowText] = useState<boolean>(false);
 
+  const handleShowText = () => setShowText(!showText);
   const [likeAdd] = useLikeAddMutation();
 
   const handleLike = async () => {
@@ -37,7 +39,7 @@ const CommentCardReplay = ({
         },
       },
     });
-    if (data.likeAdd.status === "OK") {
+    if (data?.likeAdd?.status === "OK") {
       refetch();
     }
   };
@@ -51,7 +53,7 @@ const CommentCardReplay = ({
         },
       },
     });
-    if (data.likeAdd.status === "OK") {
+    if (data?.likeAdd?.status === "OK") {
       refetch();
     }
   };
@@ -64,9 +66,11 @@ const CommentCardReplay = ({
             {tr("replay")} {localizeNumber(index + 1)}
           </Text>
           <View style={styles.commentText}>
-            <Text caption numberOfLines={4}>
-              {comment.text}
-            </Text>
+            <Pressable onPress={handleShowText}>
+              <Text caption numberOfLines={(!showText && 4) as number}>
+                {comment.text}
+              </Text>
+            </Pressable>
             <Text caption type="grey3">
               {localizeNumber(moment(comment.createdDate).locale("fa").format("jD jMMMM jYYYY"))} .{" "}
               {comment.user.fullname}
