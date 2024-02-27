@@ -402,18 +402,18 @@ export type EditCardType = {
 
 /** An enumeration. */
 export enum ExtensionReportCategoryNameChoices {
-  /** هرزنامه */
-  Hrznmh = 'HRZNMH',
   /** حساب جعلی */
-  HsbJLy = 'HSB_J_LY',
+  FakeAccount = 'FAKE_ACCOUNT',
   /** محتوای غیراخلاقی */
-  MhtwyGyrkhlqy = 'MHTWY_GYRKHLQY',
-  /** محتوای خشونت آمیز */
-  MhtwyKhshwntAmyz = 'MHTWY_KHSHWNT_AMYZ',
-  /** سرقت اطلاعات خصوصی اشخاص */
-  SrqtTlTKhswsyShkhs = 'SRQT_TL_T_KHSWSY_SHKHS',
+  InappropriateContent = 'INAPPROPRIATE_CONTENT',
   /** سایر */
-  Syr = 'SYR'
+  Other = 'OTHER',
+  /** سرقت اطلاعات خصوصی اشخاص */
+  PrivacyViolation = 'PRIVACY_VIOLATION',
+  /** هرزنامه */
+  Spam = 'SPAM',
+  /** محتوای خشونت آمیز */
+  ViolentContent = 'VIOLENT_CONTENT'
 }
 
 /** Represents the frontend version information. */
@@ -1550,6 +1550,8 @@ export type ReportCategoryListType = {
 /** Graphene DjangoObjectType for ReportCategory model. */
 export type ReportCategoryQueryType = {
   __typename?: 'ReportCategoryQueryType';
+  /** Display name of the report category. */
+  displayName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name: ExtensionReportCategoryNameChoices;
 };
@@ -2767,7 +2769,7 @@ export type ProjectTransactionListQuery = { __typename?: 'Query', projectTransac
 export type ReportCategoryListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ReportCategoryListQuery = { __typename?: 'Query', reportCategoryList?: { __typename?: 'ReportCategoryListType', data?: Array<{ __typename?: 'ReportCategoryQueryType', name: ExtensionReportCategoryNameChoices, id: string } | null> | null } | null };
+export type ReportCategoryListQuery = { __typename?: 'Query', reportCategoryList?: { __typename?: 'ReportCategoryListType', data?: Array<{ __typename?: 'ReportCategoryQueryType', displayName?: string | null, id: string } | null> | null } | null };
 
 export type SettingDetailQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -5292,7 +5294,7 @@ export const ReportCategoryListDocument = gql`
     query ReportCategoryList {
   reportCategoryList {
     data {
-      name
+      displayName
       id
     }
   }
