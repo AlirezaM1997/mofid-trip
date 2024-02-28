@@ -16,7 +16,7 @@ import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { LanguageChoiceEnum, UserQueryType, useSettingEditMutation } from "@src/gql/generated";
 
-const Profile = ({ userDetail}:{ userDetail: UserQueryType }) => {
+const Profile = ({ userDetail }: { userDetail: UserQueryType }) => {
   const { signOut } = useSession();
   const isRtl = useIsRtl();
   const { theme } = useTheme();
@@ -74,6 +74,11 @@ const Profile = ({ userDetail}:{ userDetail: UserQueryType }) => {
   const handleSignOut = () => {
     setIsVisibleLogout(false);
     signOut();
+    dispatch(
+      setRedirectToScreenAfterLogin({
+        pathname: "/",
+      })
+    );
   };
 
   return (
@@ -94,7 +99,7 @@ const Profile = ({ userDetail}:{ userDetail: UserQueryType }) => {
               <Text heading2 numberOfLines={1}>
                 {localizeNumber(userDetail?.ngo?.title as string) || tr("No Name")}
               </Text>
-              <Text style={{direction:'ltr'}}>{localizeNumber(userDetail?.username)}</Text>
+              <Text style={{ direction: "ltr" }}>{localizeNumber(userDetail?.username)}</Text>
             </View>
           </Pressable>
         </Container>
