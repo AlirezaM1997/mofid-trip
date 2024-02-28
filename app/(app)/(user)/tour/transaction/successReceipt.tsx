@@ -1,3 +1,8 @@
+import {
+  TourTransactionQueryType,
+  useTourTransactionDetailQuery,
+  useUserDetailQuery,
+} from "@src/gql/generated";
 import React from "react";
 import moment from "jalali-moment";
 import { Text } from "@rneui/themed";
@@ -5,16 +10,15 @@ import Container from "@atoms/container";
 import * as Clipboard from "expo-clipboard";
 import Toast from "react-native-toast-message";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { useFormatPrice } from "@src/hooks/localization";
 import { Avatar, Button, useTheme } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { ImageSourcePropType, Pressable, StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { useTourTransactionDetailQuery, useUserDetailQuery } from "@src/gql/generated";
-import { useFormatPrice } from "@src/hooks/localization";
 
-const CustomView = ({ children }) => {
+const CustomView = ({ children }: { children: React.JSX.Element[] }) => {
   const { theme } = useTheme();
 
   return (
@@ -35,16 +39,18 @@ const Receipt = () => {
 
   const { data: userDetail } = useUserDetailQuery();
 
-  const totalPrice =
-    data?.tourTransactionDetail?.tourPackage?.price *
-      data?.tourTransactionDetail?.tourGuests?.length || 0;
-  const formattedTotalPrice = formatPrice(totalPrice);
+  const formattedTotalPrice = formatPrice(
+    (data?.tourTransactionDetail?.tourPackage?.price as number) *
+      (1 - (data?.tourTransactionDetail?.tourPackage?.discount as number) / 100) *
+      (data?.tourTransactionDetail?.tourGuests?.length as number)
+  );
 
   if (!data || loading) {
     return <LoadingIndicator />;
   }
 
-  const { invoiceNumber, modifiedDate, tourPackage, purchaseRefId } = data?.tourTransactionDetail;
+  const { invoiceNumber, modifiedDate, tourPackage, purchaseRefId } =
+    data?.tourTransactionDetail as TourTransactionQueryType;
 
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(invoiceNumber);
@@ -75,7 +81,7 @@ const Receipt = () => {
                 rounded
                 size={56}
                 containerStyle={{ backgroundColor: "#0003" }}
-                source={tourPackage.tour?.avatarS3?.[0]?.small as ImageSourcePropType}
+                source={tourPackage?.tour?.avatarS3?.[0]?.small as ImageSourcePropType}
               />
               <View style={styles.swapIconContainer}>
                 <AntDesign name="swap" size={10} color="black" />
@@ -89,7 +95,7 @@ const Receipt = () => {
             </View>
 
             <Pressable style={styles.tourTitleContainer} onPress={copyToClipboard}>
-              <Text subtitle2>{tourPackage.tour.title}</Text>
+              <Text subtitle2>{tourPackage?.tour?.title}</Text>
               <View style={styles.subtitle}>
                 <Feather name="copy" size={12} color="black" />
                 <Text subtitle2 style={{ color: theme.colors.grey2 }}>
@@ -100,7 +106,7 @@ const Receipt = () => {
           </View>
 
           <Text heading1 style={styles.price}>
-            {localizeNumber(formattedTotalPrice)}
+            {localizeNumber(formattedTotalPrice as string)}
           </Text>
 
           <Button
@@ -151,7 +157,7 @@ const Receipt = () => {
 
         <View style={styles.issueTrackingContainer}>
           <Text caption>{tr("issue tracking")}</Text>
-          <Text caption>{localizeNumber(purchaseRefId)}</Text>
+          <Text caption>{localizeNumber(purchaseRefId as number)}</Text>
         </View>
       </Container>
     </BottomButtonLayout>

@@ -21,7 +21,7 @@ import BottomButtonLayout from "@components/layout/bottom-button";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { ImageSourcePropType, Pressable, StyleSheet, View, ViewStyle } from "react-native";
 
-const CustomView = ({ children }) => {
+const CustomView = ({ children }: { children: React.JSX.Element[] }) => {
   const { theme } = useTheme();
 
   return (
@@ -47,6 +47,7 @@ const Receipt = () => {
       endDate: data?.projectTransactionDetail?.dateEnd,
       startDate: data?.projectTransactionDetail?.dateStart,
       price: data?.projectTransactionDetail?.project?.price as number,
+      discount: data?.projectTransactionDetail?.project?.discount as number,
       capacity: data?.projectTransactionDetail?.guest?.guestNumber as number,
     })
   );
@@ -171,7 +172,9 @@ const styles = StyleSheet.create({
     margin: "auto",
   },
   chip: { padding: 8, gap: 8, margin: "auto" },
-  chipTitle: (theme => ({ color: theme.colors.white })) as ViewStyle,
+  chipTitle: ((theme: { colors: { white: string } }) => ({
+    color: theme.colors.white,
+  })) as ViewStyle,
   bottomContent: {
     borderTopWidth: 1,
     marginVertical: 16,

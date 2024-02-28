@@ -9,7 +9,7 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import WhiteSpace from "@src/components/atoms/white-space";
 import NoResult from "@src/components/organisms/no-result";
 import HostSliderCard from "@modules/host/card/slider-card";
-import { ProjectQueryType, SortFieldEnum, useProjectListSearchQuery } from "@src/gql/generated";
+import { AccommodationImageType, ProjectQueryType, SortFieldEnum, useProjectListSearchQuery } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
 

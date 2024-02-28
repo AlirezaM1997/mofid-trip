@@ -1,13 +1,21 @@
+import {
+  View,
+  ImageBackground,
+  StyleSheet,
+  Pressable,
+  Platform,
+  ViewStyle,
+  ImageStyle,
+} from "react-native";
 import React from "react";
 import { router } from "expo-router";
-import { Divider, useTheme } from "@rneui/themed";
 import { Text } from "@rneui/themed";
-import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { ProjectQueryType } from "@src/gql/generated";
-import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
-import { View, ImageBackground, StyleSheet, Pressable, Platform, ViewStyle } from "react-native";
 import { WIDTH } from "@src/constants";
+import { Divider, useTheme } from "@rneui/themed";
+import { ProjectQueryType } from "@src/gql/generated";
+import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
+import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 type PropsType = {
   avatarS3: ProjectQueryType["accommodation"]["avatarS3"];
@@ -42,7 +50,7 @@ function HostSliderCard({ price, id, name, avatarS3, address, containerStyle }: 
     <Pressable style={[style.container, containerStyle]} onPress={handlePress}>
       <ImageBackground
         style={style.ImageBackground(isRtl)}
-        imageStyle={style.ImageBackgroundImage}
+        imageStyle={style.ImageBackgroundImage as ImageStyle}
         source={avatar}
       />
       <View style={style.top}>
@@ -66,7 +74,7 @@ function HostSliderCard({ price, id, name, avatarS3, address, containerStyle }: 
       <Divider />
 
       <View style={style.bottom}>
-        {price <= 0 ? (
+        {(price as number) <= 0 ? (
           <Text body2 bold>
             {tr("it is free")}
           </Text>
@@ -74,7 +82,7 @@ function HostSliderCard({ price, id, name, avatarS3, address, containerStyle }: 
           <>
             <View style={style.bottomStyle}>
               <Text body2 bold>
-                {localizeNumber(formatPrice(price))}
+                {localizeNumber(formatPrice(price as number) as string)}
               </Text>
               <Text body2 bold>
                 / {tr("night")}
@@ -105,7 +113,7 @@ const style = StyleSheet.create({
       web: { boxShadow: "0 0 5px #12121233" },
     }),
   },
-  ImageBackground: isRtl => ({
+  ImageBackground: ((isRtl: boolean) => ({
     marginRight: isRtl ? 0 : 5,
     width: "100%",
     height: (WIDTH - 80) * 0.6116,
@@ -115,7 +123,7 @@ const style = StyleSheet.create({
     backgroundRepeat: "no-repeat",
     borderRadius: 16,
     marginBottom: 10,
-  }),
+  })) as ViewStyle,
   ImageBackgroundImage: {
     width: "100%",
     height: "100%",

@@ -46,7 +46,10 @@ const Invoice = ({ transactionDetail }: { transactionDetail: ProjectTransactionQ
       <View style={styles.priceContainer}>
         <View style={styles.rowTextContainer}>
           <Text type="grey2" caption>
-            {localizeNumber((project?.price as number) * (1 - (project?.discount as number) / 100) as number)} x{" "}
+            {localizeNumber(
+              ((project?.price as number) * (1 - (project?.discount as number) / 100)) as number
+            )}{" "}
+            x{" "}
           </Text>
           <Text type="grey2" caption>
             {localizeNumber(`${transactionDetail?.guest?.guestNumber} ${tr("person")}`)}
@@ -88,7 +91,8 @@ const Invoice = ({ transactionDetail }: { transactionDetail: ProjectTransactionQ
           {localizeNumber(
             formatPrice(
               +totalPrice({
-                price: +((project?.price as number) * (1 - (project?.discount as number) / 100)),
+                price: project?.price as number,
+                discount: project?.discount as number,
                 capacity: +(transactionDetail?.guest?.guestNumber as number),
                 startDate: transactionDetail?.dateStart,
                 endDate: transactionDetail?.dateEnd,
@@ -106,7 +110,8 @@ const Invoice = ({ transactionDetail }: { transactionDetail: ProjectTransactionQ
           {localizeNumber(
             formatPrice(
               +totalPrice({
-                price: +((project?.price as number) * (1 - (project?.discount as number) / 100)),
+                price: project?.price as number,
+                discount: project?.discount as number,
                 capacity: +(transactionDetail?.guest?.guestNumber as number),
                 startDate: transactionDetail?.dateStart,
                 endDate: transactionDetail?.dateEnd,

@@ -5,7 +5,7 @@ import { useLocalSearchParams } from "expo-router";
 import FailedPayment from "@organisms/payment/failed";
 import SuccessPayment from "@organisms/payment/success";
 import LoadingIndicator from "@modules/Loading-indicator";
-import { useWalletTransactionDetailQuery } from "@src/gql/generated";
+import { WalletTransactionQueryType, useWalletTransactionDetailQuery } from "@src/gql/generated";
 import FailedReceiptBottomSheet from "@modules/receipt-bottom-sheet/failed";
 import SuccessReceiptBottomSheet from "@modules/receipt-bottom-sheet/success";
 
@@ -27,18 +27,18 @@ const PaymentStatus = () => {
   return status === "OK" ? (
     <>
       <SuccessReceiptBottomSheet
-        isVisible={isSuccessReceiptVisible}
-        transaction={data.walletTransactionDetail}
-        setIsVisible={setIsSuccessReceiptIsVisible}
+        isVisible={isSuccessReceiptVisible as boolean}
+        transaction={data.walletTransactionDetail as WalletTransactionQueryType}
+        setIsVisible={setIsSuccessReceiptIsVisible as React.Dispatch<React.SetStateAction<boolean>>}
       />
       <SuccessPayment handlePress={() => setIsSuccessReceiptIsVisible(true)} />
     </>
   ) : (
     <>
       <FailedReceiptBottomSheet
-        isVisible={isFailedReceiptVisible}
-        setIsVisible={setIsFailedReceiptIsVisible}
-        transaction={data.walletTransactionDetail}
+        isVisible={isFailedReceiptVisible as boolean}
+        setIsVisible={setIsFailedReceiptIsVisible as React.Dispatch<React.SetStateAction<boolean>>}
+        transaction={data.walletTransactionDetail as WalletTransactionQueryType}
       />
       <FailedPayment handlePress={() => setIsFailedReceiptIsVisible(true)} />
     </>

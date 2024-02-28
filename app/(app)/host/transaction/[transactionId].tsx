@@ -54,6 +54,7 @@ const TransactionDetailsScreen = () => {
             endDate: dateEnd,
             startDate: dateStart,
             price: project?.price as number,
+            discount: project?.discount as number,
             capacity: guest?.guestNumber as number,
           }),
           description: `${tr("buy")} ${project?.name}`,

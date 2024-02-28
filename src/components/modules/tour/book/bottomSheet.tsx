@@ -63,7 +63,7 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
                 {localizeNumber(
                   formatPrice(
                     (+tour?.packages?.[0]?.price as number) *
-                      (1 - +(tour?.packages?.[0]?.discount as number) / 100)
+                      (1 - (tour?.packages?.[0]?.discount as number) / 100)
                   ) as string
                 )}
               </Text>

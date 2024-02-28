@@ -8,7 +8,6 @@ import * as Network from "expo-network";
 import { Feather } from "@expo/vector-icons";
 import { Button, useTheme } from "@rneui/themed";
 import useTranslation from "@src/hooks/translation";
-import { totalPrice } from "@src/helper/totalPrice";
 import React, { ReactElement, useState } from "react";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import LoadingIndicator from "@modules/Loading-indicator";
@@ -47,10 +46,10 @@ const TourTransactionDetailScreen = () => {
       variables: {
         data: {
           ip,
-          price: totalPrice({
-            price: tourPackage?.price as number,
-            capacity: tourGuests?.length as number,
-          }),
+          price:
+            (tourPackage?.price as number) *
+            (1 - (tourPackage?.discount as number) / 100) *
+            (tourGuests?.length as number),
           tourTransactionId: transactionId as string,
           description: `${tr("buy")} ${tourPackage?.tour?.title}`,
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}&type=tour`,
@@ -87,7 +86,9 @@ const TourTransactionDetailScreen = () => {
 
   return (
     <BottomButtonLayout buttons={bottomButton() ? [bottomButton()] : []}>
-      <TourTransactionDetail transactionDetail={data.tourTransactionDetail as TourTransactionQueryType} />
+      <TourTransactionDetail
+        transactionDetail={data.tourTransactionDetail as TourTransactionQueryType}
+      />
       <AcceptPayment
         isVisible={isVisible}
         setIsVisible={setIsVisible}
