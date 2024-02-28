@@ -9,7 +9,15 @@ import HostTransactionTab from "@modules/virtual-tabs/host-transaction-tabs";
 import HostTransactionCapacityTab from "@organisms/host-transaction/capacity";
 import HostTransactionConfirmData from "@organisms/host-transaction/confirm-data";
 
-const HostTransactionForm = ({ activeStep, setActiveStep, setIsButtonDisabled }) => {
+const HostTransactionForm = ({
+  activeStep,
+  setActiveStep,
+  setIsButtonDisabled,
+}: {
+  activeStep: number;
+  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
+  setIsButtonDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { values } = useFormikContext<ProjectTransactionAddInputType>();
 
   useEffect(() => {
@@ -27,7 +35,11 @@ const HostTransactionForm = ({ activeStep, setActiveStep, setIsButtonDisabled })
       <Container>
         {activeStep === 1 && <HostTransactionDateTab />}
         {activeStep === 2 && <HostTransactionCapacityTab />}
-        {activeStep === 3 && <HostTransactionConfirmData setActiveStep={setActiveStep} />}
+        {activeStep === 3 && (
+          <HostTransactionConfirmData
+            setActiveStep={setActiveStep as React.Dispatch<React.SetStateAction<number>>}
+          />
+        )}
       </Container>
 
       <CloseFormBottomSheet />

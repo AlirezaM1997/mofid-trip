@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { BottomSheet, Button, CheckBox, Divider, Input, ListItem, Text } from "@rneui/themed";
-import { useURL } from "expo-linking";
-import { FieldArray, Formik } from "formik";
-import * as Yup from "yup";
 import {
+  ReportCategoryQueryType,
   ReportTypeEnum,
   useReportAddMutation,
   useReportCategoryListQuery,
 } from "@src/gql/generated";
-import LoadingIndicator from "./Loading-indicator";
-import { Redirect, useLocalSearchParams } from "expo-router";
+import * as Yup from "yup";
+import { useURL } from "expo-linking";
+import { HEIGHT } from "@src/constants";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import { HEIGHT } from "@src/constants";
-import useTranslation from "@src/hooks/translation";
+import { FieldArray, Formik } from "formik";
+import { AntDesign } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import { useSession } from "@src/context/auth";
+import LoadingIndicator from "./Loading-indicator";
+import React, { useEffect, useState } from "react";
+import useTranslation from "@src/hooks/translation";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { Redirect, useLocalSearchParams } from "expo-router";
+import { BottomSheet, Button, CheckBox, Divider, Input, ListItem, Text } from "@rneui/themed";
 
 const Report = ({ closeMoreDetails }) => {
   const { name, id } = useLocalSearchParams();
@@ -25,16 +26,8 @@ const Report = ({ closeMoreDetails }) => {
   const { session } = useSession();
   const url = useURL();
   const tour = url?.split("/")[3] === "tour";
-  const [isVisible, setIsVisible] = useState(false);
-  const [categoryList, setCategoryList] = useState([]);
-  const catList = [
-    "هرزنامه",
-    "حساب جعلی",
-    "محتوای خشونت آمیز",
-    "محتوای غیر اخلاقی",
-    "سرقت اطلاعات خصوصی اشخاص",
-    "سایر",
-  ];
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [categoryList, setCategoryList] = useState<ReportCategoryQueryType[]>([]);
 
   const [reportAdd, { loading: loadingReportAdd, error: errorReportAdd }] = useReportAddMutation();
 
@@ -51,9 +44,11 @@ const Report = ({ closeMoreDetails }) => {
     const { data } = await reportAdd({
       variables: {
         data: {
-          objectId: +id,
+          objectId: +(id as string),
           objectType: tour ? ReportTypeEnum.Tour : ReportTypeEnum.Project,
-          types: variables.checkBoxList.filter(item => item.checked === true).map(item => item.id),
+          types: variables.checkBoxList
+            .filter((item: { checked: boolean }) => item.checked === true)
+            .map((item: { id: string }) => item.id),
           description: variables.checkBoxList[variables.checkBoxList.length - 1]
             ? variables.textBox
             : "",
@@ -69,7 +64,7 @@ const Report = ({ closeMoreDetails }) => {
       });
       handleClose();
     }
-    if (!data.reportAdd) {
+    if (!data?.reportAdd) {
       Toast.show({
         type: "error",
         text1: tr("Error"),
@@ -99,7 +94,7 @@ const Report = ({ closeMoreDetails }) => {
         })
       )
       .test("at-least-one-true", tr("choose one of the options above*"), function (value) {
-        return value.some(obj => obj.checked === true);
+        return value?.some(obj => obj.checked === true);
       }),
     textBox: Yup.string().when("checkBoxList", {
       is: checkBoxList => checkBoxList[checkBoxList.length - 1].checked === true,
@@ -110,7 +105,7 @@ const Report = ({ closeMoreDetails }) => {
 
   useEffect(() => {
     if (!loading && data) {
-      setCategoryList(data.reportCategoryList.data);
+      setCategoryList(data?.reportCategoryList?.data as ReportCategoryQueryType[]);
     }
   }, [loading, data]);
 
@@ -173,14 +168,14 @@ const Report = ({ closeMoreDetails }) => {
                       {({ form, replace }) => {
                         const { values } = form;
                         const { checkBoxList } = values;
-                        return checkBoxList?.map((obj, index) => (
+                        return checkBoxList?.map((obj: { checked: boolean; }, index: number) => (
                           <ListItem
                             bottomDivider
                             containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}
                             key={index}>
                             <CheckBox
                               checked={obj.checked}
-                              title={catList[index]}
+                              title={categoryList[index].displayName as string}
                               onPress={() => {
                                 replace(index, {
                                   id: categoryList[index].id,

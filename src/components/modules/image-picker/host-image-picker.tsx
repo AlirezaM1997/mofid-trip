@@ -1,12 +1,12 @@
 import React from "react";
-import { FieldArray, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import { Ionicons } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
 import { Image, Text, useTheme } from "@rneui/themed";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import WhiteSpace from "@atoms/white-space";
-import { ProjectAddInputType, TourAddInputType } from "@src/gql/generated";
+import { ProjectAddInputType } from "@src/gql/generated";
 import handleUploadImage from "@src/helper/image-picker";
 
 const HostImagePicker = () => {

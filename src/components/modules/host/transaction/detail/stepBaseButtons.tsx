@@ -6,6 +6,8 @@ import { StatusQueryType, ProjectTransactionQueryType } from "@src/gql/generated
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 import CancelTransaction from "@modules/host/transaction/cancel";
+import { useDispatch } from "react-redux";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 
 const StepBaseButtons = ({
   status,
@@ -17,6 +19,7 @@ const StepBaseButtons = ({
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
+  const dispatch = useDispatch();
   const { project } = transaction;
 
   const editReservationHandler = async () => {
@@ -30,6 +33,14 @@ const StepBaseButtons = ({
         dateStart: transaction?.project?.dateStart,
       },
     });
+    dispatch(
+      setRedirectToScreenAfterLogin({
+        pathname: `host/transaction/${transaction.id}`,
+        params: {
+          name: project?.name,
+        },
+      })
+    );
   };
 
   return (
