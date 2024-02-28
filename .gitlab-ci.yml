@@ -1,0 +1,44 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  NODE_VERSION: "18.17.1"
+
+before_script:
+  - nvm install $NODE_VERSION
+  - nvm use $NODE_VERSION
+  - npm install
+
+test:
+  stage: test
+  script:
+    - npm run api-test
+
+build:
+  stage: build
+  script:
+    - cp .env.local .env  # Set .env file for local development
+    - npm run build
+
+deploy_staging:
+  stage: deploy
+  script:
+    - cp .env.stage .env  # Set .env file for staging
+    - echo "Deploying to staging..."
+
+deploy_production:
+  stage: deploy
+  script:
+    - cp .env.production .env  # Set .env file for production
+    - echo "Deploying to production..."
+
+# Define rules to run deploy jobs only for specific branches
+rules:
+  - exists:
+      - $CI_COMMIT_BRANCH
+  - if: '$CI_COMMIT_BRANCH == "stage"'
+    when: manual  # Deploy to staging needs manual action
+  - if: '$CI_COMMIT_BRANCH == "production"'
+    when: manual  # Deploy to production needs manual action
