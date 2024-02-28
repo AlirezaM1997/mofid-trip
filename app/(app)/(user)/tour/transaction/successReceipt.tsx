@@ -30,8 +30,8 @@ const Receipt = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { id } = useLocalSearchParams();
-  const { localizeNumber } = useLocalizedNumberFormat();
   const { formatPrice } = useFormatPrice();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { data, loading } = useTourTransactionDetailQuery({
     variables: { pk: id as string },
