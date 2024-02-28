@@ -402,18 +402,18 @@ export type EditCardType = {
 
 /** An enumeration. */
 export enum ExtensionReportCategoryNameChoices {
-  /** هرزنامه */
-  Hrznmh = 'HRZNMH',
   /** حساب جعلی */
-  HsbJLy = 'HSB_J_LY',
+  FakeAccount = 'FAKE_ACCOUNT',
   /** محتوای غیراخلاقی */
-  MhtwyGyrkhlqy = 'MHTWY_GYRKHLQY',
-  /** محتوای خشونت آمیز */
-  MhtwyKhshwntAmyz = 'MHTWY_KHSHWNT_AMYZ',
-  /** سرقت اطلاعات خصوصی اشخاص */
-  SrqtTlTKhswsyShkhs = 'SRQT_TL_T_KHSWSY_SHKHS',
+  InappropriateContent = 'INAPPROPRIATE_CONTENT',
   /** سایر */
-  Syr = 'SYR'
+  Other = 'OTHER',
+  /** سرقت اطلاعات خصوصی اشخاص */
+  PrivacyViolation = 'PRIVACY_VIOLATION',
+  /** هرزنامه */
+  Spam = 'SPAM',
+  /** محتوای خشونت آمیز */
+  ViolentContent = 'VIOLENT_CONTENT'
 }
 
 /** Represents the frontend version information. */
@@ -1550,6 +1550,8 @@ export type ReportCategoryListType = {
 /** Graphene DjangoObjectType for ReportCategory model. */
 export type ReportCategoryQueryType = {
   __typename?: 'ReportCategoryQueryType';
+  /** Display name of the report category. */
+  displayName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name: ExtensionReportCategoryNameChoices;
 };
@@ -2690,7 +2692,7 @@ export type MyNgoDetailVerifyQuery = { __typename?: 'Query', NGODetail?: { __typ
 export type MyNgoDetailQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyNgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, kind?: string | null, title: string, address?: string | null, isVerify?: boolean | null, verifyDescription?: string | null, description?: string | null, contactNumber?: string | null, lat?: number | null, lng?: number | null, user?: { __typename?: 'UserQueryType', id: string, email: string, phoneNumber?: string | null } | null, projectSet?: Array<{ __typename: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusActivation?: boolean | null, createdDate?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, statusStep?: { __typename?: 'ProjectStatusStepQueryType', displayName?: string | null, name?: string | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, transactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string } | null> | null, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null } | null> | null, bannerS3?: { __typename?: 'NGOImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null };
+export type MyNgoDetailQuery = { __typename?: 'Query', NGODetail?: { __typename?: 'NGOQueryType', id: string, kind?: string | null, title: string, address?: string | null, isVerify?: boolean | null, verifyDescription?: string | null, description?: string | null, contactNumber?: string | null, lat?: number | null, lng?: number | null, avatarS3?: { __typename?: 'NGOImageType', small?: string | null, medium?: string | null, large?: string | null } | null, user?: { __typename?: 'UserQueryType', id: string, email: string, phoneNumber?: string | null } | null, projectSet?: Array<{ __typename: 'ProjectQueryType', id: string, name?: string | null, description?: string | null, modifiedDate?: any | null, dateStart?: any | null, dateEnd?: any | null, gender?: AccommodationProjectGenderChoices | null, requestFrom?: AccommodationProjectRequestFromChoices | null, price?: number | null, discount?: number | null, tax?: number | null, statusActivation?: boolean | null, createdDate?: any | null, creator?: { __typename?: 'UserQueryType', id: string } | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, province?: string | null, city?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | null, statusStep?: { __typename?: 'ProjectStatusStepQueryType', displayName?: string | null, name?: string | null } | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string } | null> | null, tags: Array<{ __typename?: 'TagQueryType', id: string }>, categories?: Array<{ __typename?: 'CategoryQueryType', id: string } | null> | null, transactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', id: string } | null> | null, capacityReserved?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null, freeCapacity?: { __typename?: 'CapacityReserveType', male?: number | null, female?: number | null, allCap?: number | null } | null } | null> | null, bannerS3?: { __typename?: 'NGOImageType', large?: string | null, medium?: string | null, small?: string | null } | null } | null };
 
 export type MyUserDetailProjectSetEditQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2754,7 +2756,7 @@ export type ProjectTransactionDetailQueryVariables = Exact<{
 }>;
 
 
-export type ProjectTransactionDetailQuery = { __typename?: 'Query', projectTransactionDetail?: { __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, description?: string | null, modifiedDate?: any | null, invoiceNumber?: any | null, purchaseRefId?: number | null, createdDate?: any | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, firstname?: string | null } | null, status?: { __typename?: 'StatusQueryType', isActive?: boolean | null, step?: { __typename?: 'ProjectTransactionStatusStepQueryType', displayName?: string | null, name?: string | null } | null } | null, guest?: { __typename?: 'ProjectGuestQueryType', guestNumber?: number | null, gender?: string | null, childAccept?: boolean | null } | null, project?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, tax?: number | null, price?: number | null, dateEnd?: any | null, dateStart?: any | null, discount?: number | null, description?: string | null, creator?: { __typename?: 'UserQueryType', id: string, firstname?: string | null, fullname?: string | null, phoneNumber?: string | null } | null, categories?: Array<{ __typename?: 'CategoryQueryType', name?: string | null } | null> | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null, medium?: string | null, large?: string | null } | null> | null } | null } | null } | null };
+export type ProjectTransactionDetailQuery = { __typename?: 'Query', projectTransactionDetail?: { __typename?: 'ProjectTransactionQueryType', id: string, dateEnd?: any | null, dateStart?: any | null, description?: string | null, modifiedDate?: any | null, invoiceNumber?: any | null, purchaseRefId?: number | null, createdDate?: any | null, owner?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, firstname?: string | null } | null, status?: { __typename?: 'StatusQueryType', isActive?: boolean | null, step?: { __typename?: 'ProjectTransactionStatusStepQueryType', displayName?: string | null, name?: string | null } | null } | null, guest?: { __typename?: 'ProjectGuestQueryType', guestNumber?: number | null, gender?: string | null, childAccept?: boolean | null } | null, project?: { __typename?: 'ProjectQueryType', id: string, name?: string | null, tax?: number | null, price?: number | null, dateEnd?: any | null, dateStart?: any | null, discount?: number | null, description?: string | null, creator?: { __typename?: 'UserQueryType', id: string, firstname?: string | null, fullname?: string | null, phoneNumber?: string | null } | null, categories?: Array<{ __typename?: 'CategoryQueryType', name?: string | null, displayName?: string | null } | null> | null, facilities?: Array<{ __typename?: 'ProjectFacilityQueryType', id: string, enName?: string | null } | null> | null, accommodation?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null, medium?: string | null, large?: string | null } | null> | null } | null } | null } | null };
 
 export type ProjectTransactionListQueryVariables = Exact<{
   page?: InputMaybe<PageType>;
@@ -2767,7 +2769,7 @@ export type ProjectTransactionListQuery = { __typename?: 'Query', projectTransac
 export type ReportCategoryListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ReportCategoryListQuery = { __typename?: 'Query', reportCategoryList?: { __typename?: 'ReportCategoryListType', data?: Array<{ __typename?: 'ReportCategoryQueryType', name: ExtensionReportCategoryNameChoices, id: string } | null> | null } | null };
+export type ReportCategoryListQuery = { __typename?: 'Query', reportCategoryList?: { __typename?: 'ReportCategoryListType', data?: Array<{ __typename?: 'ReportCategoryQueryType', displayName?: string | null, id: string } | null> | null } | null };
 
 export type SettingDetailQueryVariables = Exact<{
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -4371,6 +4373,11 @@ export const MyNgoDetailDocument = gql`
     address
     isVerify
     verifyDescription
+    avatarS3 {
+      small
+      medium
+      large
+    }
     description
     contactNumber
     user {
@@ -5150,6 +5157,7 @@ export const ProjectTransactionDetailDocument = gql`
       description
       categories {
         name
+        displayName
       }
       facilities {
         id
@@ -5291,7 +5299,7 @@ export const ReportCategoryListDocument = gql`
     query ReportCategoryList {
   reportCategoryList {
     data {
-      name
+      displayName
       id
     }
   }

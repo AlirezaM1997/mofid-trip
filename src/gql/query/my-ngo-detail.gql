@@ -6,6 +6,11 @@ query myNGODetail {
     address
     isVerify
     verifyDescription
+    avatarS3{
+      small
+      medium
+      large
+    }
     description
     contactNumber
     user {

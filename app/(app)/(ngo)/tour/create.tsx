@@ -2,13 +2,9 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { useState } from "react";
 import { Button } from "@rneui/themed";
-import { RootState } from "@src/store";
-import { StyleSheet } from "react-native";
 import TourCreateForm from "@organisms/tour-create";
 import useTranslation from "@src/hooks/translation";
-import { useDispatch, useSelector } from "react-redux";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { setTourCreateActiveStep } from "@src/slice/tour-create-slice";
 import { TourGenderEnum, useTourAddMutation } from "@src/gql/generated";
 
 const initialValues = {
@@ -100,7 +96,7 @@ const Screen = () => {
         },
       },
     });
-    if (data.tourAdd.status === "OK") {
+    if (data?.tourAdd?.status === "OK") {
       setIsVisibleFinish(true);
     }
   };

@@ -1,20 +1,20 @@
 import Input from "@atoms/input";
-import WhiteSpace from "@atoms/white-space";
-import { Badge, Divider, Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
-import { ProjectAddInputType } from "@src/gql/generated";
+import { useFormikContext } from "formik";
+import WhiteSpace from "@atoms/white-space";
+import { StyleSheet, View } from "react-native";
 import parseText from "@src/helper/number-input";
+import { Badge, Button, Text } from "@rneui/themed";
+import { ProjectAddInputType } from "@src/gql/generated";
 import { useFormatPrice } from "@src/hooks/localization";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { useFormikContext } from "formik";
-import { StyleSheet, View } from "react-native";
 
 const TabPrice = () => {
   const { tr } = useTranslation();
-  const { localizeNumber } = useLocalizedNumberFormat();
-  const { values, errors, touched, setFieldValue, handleChange, handleBlur } =
-    useFormikContext<ProjectAddInputType>();
   const { formatPrice } = useFormatPrice();
+  const { localizeNumber } = useLocalizedNumberFormat();
+  const { values, errors, touched, setFieldValue, handleBlur } =
+    useFormikContext<ProjectAddInputType>();
 
   const recommendedPrices = [
     { title: localizeNumber(tr("Free")), value: 0 },
@@ -67,18 +67,16 @@ const TabPrice = () => {
         ))}
       </View>
 
-      <WhiteSpace />
-      <Divider />
-      <WhiteSpace />
+      <WhiteSpace size={20} />
 
       <Input
-        value={values.discount?.toString()}
         maxLength={3}
         keyboardType="numeric"
-        onChangeText={text => setFieldValue("discount", parseText(text))}
         onBlur={handleBlur("discount")}
-        errorMessage={(touched.discount && errors.discount) as string}
         label={tr("Discount") + " (%)"}
+        value={values.discount?.toString()}
+        onChangeText={text => setFieldValue("discount", parseText(text))}
+        errorMessage={(touched.discount && errors.discount) as string}
       />
       <View style={styles.badgeRow}>
         {recommendedDiscounts.map(recom => (
@@ -95,18 +93,28 @@ const TabPrice = () => {
           />
         ))}
       </View>
-      <WhiteSpace />
+      <WhiteSpace size={40} />
       <View style={styles.row}>
-        <View style={styles.row}>
-          <Text>تخفیف {localizeNumber(values.discount)}%</Text>
-          <Text>+</Text>
-          <Text>قیمت پایه {formatPrice(+values.price ?? 0)}</Text>
-        </View>
-        <Text>=</Text>
+        {(values.discount as number) > 0 && (
+          <>
+            {" "}
+            <View style={styles.discount}>
+              <Text style={{ textDecorationLine: "line-through" }}>
+                {localizeNumber(formatPrice(values.price as number) as string)}
+              </Text>
+              <Button color="secondary" size="sm">
+                {`% ${localizeNumber(values.discount as number)}`}
+              </Button>
+            </View>
+            <Text>=</Text>
+          </>
+        )}
         <Text>
-          {values.discount
-            ? formatPrice(values.price - ((values.price || 0) * values.discount) / 100)
-            : formatPrice(+values.price)}
+          {localizeNumber(
+            formatPrice(
+              (values.price as number) * (1 - (values.discount as number) / 100)
+            ) as string
+          )}
         </Text>
       </View>
     </>
@@ -146,10 +154,15 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   row: {
-    display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 3,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 40,
+  },
+  discount: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
   },
   headerTitle: { gap: 5, marginBottom: 20 },
 });

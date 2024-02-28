@@ -8,20 +8,27 @@ import WhiteSpace from "@src/components/atoms/white-space";
 import { useMyNgoDetailQuery, useNgoEditMutation } from "@src/gql/generated";
 import handleUploadImage from "@src/helper/image-picker";
 import useTranslation from "@src/hooks/translation";
-
-import { Formik } from "formik";
+import { Formik, FormikProps } from "formik";
 import React, { useRef } from "react";
 import { Image, Pressable, StyleSheet } from "react-native";
 import Toast from "react-native-toast-message";
 import * as Yup from "yup";
 
+type PropsType = {
+  title: string;
+  address: string;
+  base64Image: string;
+  description: string;
+  contactNumber: string;
+};
+
 const Index = () => {
   const { tr } = useTranslation();
   const [editProfile, { loading }] = useNgoEditMutation();
   const { loading: loadingNGODetail, data: dataNGODetail } = useMyNgoDetailQuery();
-  const innerRef = useRef(null);
+  const innerRef = useRef<FormikProps<PropsType> | null>(null);
 
-  const onSubmit = async values => {
+  const onSubmit = async (values: PropsType) => {
     const { data, errors } = await editProfile({ variables: { data: values } });
     if (data) {
       Toast.show({
@@ -33,39 +40,35 @@ const Index = () => {
 
   if (loadingNGODetail) return <LoadingIndicator />;
 
-  const detail = dataNGODetail.NGODetail;
+  const detail = dataNGODetail?.NGODetail;
 
   const initialValues = {
-    title: detail.title,
-    address: detail.address,
-    base64Image: detail.avatarS3?.medium ? atob(detail.avatarS3.medium) : null,
-    contactNumber: detail.contactNumber,
-    description: detail.description,
+    title: detail?.title,
+    address: detail?.address,
+    description: detail?.description,
+    contactNumber: detail?.user?.phoneNumber,
+    base64Image: detail?.avatarS3?.medium || null,
   };
-
-  const phoneRegExp = /^\+(?:[0-9] ?){6,14}[0-9]$/;
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required(tr("display name is required")),
-    // contactNumber: Yup.string()
-    //   .matches(phoneRegExp, tr("Phone number is not valid"))
-    //   .required(tr("Phone number is required")),
   });
 
   const handleImagePicker = async () => {
     const imageBase64 = await handleUploadImage();
-    innerRef.current && innerRef.current.setFieldValue("base64Image", `${imageBase64}`);
+    innerRef?.current && innerRef?.current?.setFieldValue("base64Image", `${imageBase64}`);
   };
 
   return (
     <>
       <Formik
         innerRef={innerRef}
-        initialValues={initialValues}
         validationSchema={validationSchema}
+        initialValues={initialValues as PropsType}
         onSubmit={onSubmit}>
         {({ handleSubmit, values, handleChange, touched, errors }) => (
           <>
+            {console.log(values)}
             <BottomButtonLayout
               contentContainerStyle={{
                 alignItems: "center",
@@ -92,28 +95,28 @@ const Index = () => {
                   label={tr("Title")}
                   value={values.title}
                   onChangeText={handleChange("title")}
-                  errorMessage={touched.title && (errors.title as string)}
+                  errorMessage={(touched.title && errors.title) as string}
                 />
                 <Input
                   label={tr("Address")}
-                  value={values.address}
+                  value={values.address as string}
                   onChangeText={handleChange("address")}
-                  errorMessage={touched.address && (errors.address as string)}
+                  errorMessage={(touched.address && errors.address) as string}
                 />
                 <Input
                   disabled={true}
                   keyboardType="phone-pad"
                   label={tr("Contact Number")}
-                  value={values.contactNumber}
+                  value={values.contactNumber as string}
                   onChangeText={handleChange("contactNumber")}
-                  errorMessage={touched.contactNumber && (errors.contactNumber as string)}
+                  errorMessage={(touched.contactNumber && errors.contactNumber) as string}
                 />
                 <Input
-                  label={tr("Description")}
-                  value={values.description}
                   multiline={true}
                   numberOfLines={4}
+                  label={tr("Description")}
                   style={{ textAlignVertical: "top" }}
+                  value={values.description as string}
                   onChangeText={handleChange("description")}
                 />
               </Container>
@@ -127,24 +130,24 @@ const Index = () => {
 
 const style = StyleSheet.create({
   imagePicker: {
-    borderColor: "#ccc",
-    backgroundColor: "#F3F3F3",
     width: 105,
     height: 105,
-    borderRadius: 50,
     borderWidth: 2,
-    borderStyle: "dashed",
     display: "flex",
+    borderRadius: 50,
+    borderColor: "#ccc",
     alignItems: "center",
+    borderStyle: "dashed",
     justifyContent: "center",
+    backgroundColor: "#F3F3F3",
   },
   imageStyle: {
     width: 100,
     height: 100,
-    resizeMode: "contain",
     borderWidth: 1,
-    borderColor: "transparent",
     borderRadius: 50,
+    resizeMode: "contain",
+    borderColor: "transparent",
   },
   containerContainer: { width: "100%" },
 });

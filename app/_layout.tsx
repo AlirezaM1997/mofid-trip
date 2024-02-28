@@ -56,7 +56,6 @@ const MainContent = () => {
 
   // *  if you had an error that you don't know where it is coming from you can turn this on to see error in console
   // if (__DEV__) {
-  //   // Adds messages only in a dev environment
   //   loadDevMessages();
   //   loadErrorMessages();
   // }
@@ -66,6 +65,7 @@ const MainContent = () => {
       <Stack
         screenOptions={({ route }) => ({
           headerShown: !["(home)", "(app)"].includes(route.name),
+
           ...defaultScreenOptions,
         })}>
         <Stack.Screen

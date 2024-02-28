@@ -9,7 +9,11 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { ProjectTransactionAddInputType } from "@src/gql/generated";
 
-const HostTransactionConfirmData = ({ setActiveStep }) => {
+const HostTransactionConfirmData = ({
+  setActiveStep,
+}: {
+  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
+}) => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
   const { projectId, name } = useLocalSearchParams();
@@ -58,7 +62,9 @@ const HostTransactionConfirmData = ({ setActiveStep }) => {
           </Text>
           <Text body2>
             {values?.dateStart &&
-              localizeNumber(moment(values?.dateStart)?.locale("fa")?.format("dddd . jDD jMMMM YYYY"))}
+              localizeNumber(
+                moment(values?.dateStart)?.locale("fa")?.format("dddd . jDD jMMMM YYYY")
+              )}
           </Text>
         </View>
         <Button
@@ -67,7 +73,7 @@ const HostTransactionConfirmData = ({ setActiveStep }) => {
           color="secondary"
           iconPosition="right"
           titleStyle={styles.buttonTitle}
-          onPress={() => setActiveStep(activeStep => activeStep - 1)}
+          onPress={() => setActiveStep(activeStep => activeStep - 2)}
           icon={<AntDesign name="left" size={14} color="black" />}>
           {tr("edit")}
         </Button>
@@ -89,7 +95,7 @@ const HostTransactionConfirmData = ({ setActiveStep }) => {
           color="secondary"
           iconPosition="right"
           titleStyle={styles.buttonTitle}
-          onPress={() => setActiveStep(activeStep => activeStep - 2)}
+          onPress={() => setActiveStep(activeStep => activeStep - 1)}
           icon={<AntDesign name="left" size={14} color="black" />}>
           {tr("edit")}
         </Button>

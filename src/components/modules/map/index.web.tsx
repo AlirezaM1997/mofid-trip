@@ -3,6 +3,7 @@ import { ExpoLeaflet } from "expo-leaflet";
 import { Button, useTheme } from "@rneui/themed";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ReactNode, useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { Alert, StyleSheet, View, ViewStyle } from "react-native";
 import { ExpoLeafletProps } from "expo-leaflet/web/src/ExpoLeaflet.types";
 
@@ -52,8 +53,9 @@ const Map = ({
   ...props
 }: MapPropsType) => {
   if (!lat && !lng) return;
-
   const { theme } = useTheme();
+  const isFocused = useIsFocused();
+  const [key, setKey] = useState(0);
   const [zoomLevel, setZoom] = useState(zoom || 10);
   const [location, setLocation] = useState<{ lat: number; lng: number }>({ lat, lng });
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number }>();
@@ -101,15 +103,13 @@ const Map = ({
   return (
     <>
       <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="StyleSheet" />
-
       <View style={[style.row, style.topRow]}>
         <View>{topLeftContent}</View>
         <View>{topCenterContent}</View>
         <View>{topRightContent}</View>
       </View>
-
+      
       <View style={style.center}>{centerContent}</View>
-
       <View style={[style.row, style.bottomRow]}>
         <View style={[style.bottomLeftContent, bottomLeftContentStyle]}>
           {bottomLeftContent}
@@ -128,8 +128,7 @@ const Map = ({
         <View>{bottomCenterContent}</View>
         <View>{bottomRightContent}</View>
       </View>
-
-      <View style={[style.container, props.style]}>
+      <View key={key} style={[style.container, props.style]}>
         <ExpoLeaflet
           zoom={zoomLevel}
           mapCenterPosition={{

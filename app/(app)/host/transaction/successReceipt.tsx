@@ -1,3 +1,8 @@
+import {
+  ProjectTransactionQueryType,
+  useProjectTransactionDetailQuery,
+  useUserDetailQuery,
+} from "@src/gql/generated";
 import React from "react";
 import moment from "jalali-moment";
 import Container from "@atoms/container";
@@ -15,7 +20,6 @@ import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { ImageSourcePropType, Pressable, StyleSheet, View, ViewStyle } from "react-native";
-import { ProjectTransactionQueryType, useProjectTransactionDetailQuery, useUserDetailQuery } from "@src/gql/generated";
 
 const CustomView = ({ children }) => {
   const { theme } = useTheme();
@@ -51,7 +55,8 @@ const Receipt = () => {
     return <LoadingIndicator />;
   }
 
-  const { invoiceNumber, modifiedDate, project, purchaseRefId } = data?.projectTransactionDetail as ProjectTransactionQueryType;
+  const { invoiceNumber, modifiedDate, project, purchaseRefId } =
+    data?.projectTransactionDetail as ProjectTransactionQueryType;
 
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(invoiceNumber);
@@ -104,7 +109,9 @@ const Receipt = () => {
           </View>
 
           <Text heading1 style={styles.price}>
-            {project?.price === 0 ? tr("it is free") :localizeNumber(formattedTotalPrice as string)}
+            {project?.price === 0
+              ? tr("it is free")
+              : localizeNumber(formattedTotalPrice as string)}
           </Text>
 
           <Chip
@@ -123,17 +130,13 @@ const Receipt = () => {
         <CustomView>
           <Text caption>{tr("time")}</Text>
           <Text caption>
-            {Intl.DateTimeFormat("fa-IR", {
-              dateStyle: "medium",
-              timeStyle: "short",
-              hour12: true,
-            }).format(moment(modifiedDate, "YYYY-M-DTH").toDate())}
+            {localizeNumber(moment(modifiedDate).locale("fa").format("D MMMM YYYY . h:mm a"))}
           </Text>
         </CustomView>
 
         <CustomView>
           <Text caption>{tr("transmitter")}</Text>
-          <Text caption>{userDetail?.userDetail?.firstname}</Text>
+          <Text caption>{userDetail?.userDetail?.fullname}</Text>
         </CustomView>
 
         <CustomView>
@@ -146,10 +149,12 @@ const Receipt = () => {
           <Text caption>کیف پول مفید تریپ</Text>
         </CustomView>
 
-        <View style={styles.issueTrackingContainer}>
-          <Text caption>{tr("issue tracking")}</Text>
-          <Text caption>{localizeNumber(purchaseRefId as number)}</Text>
-        </View>
+        {project?.price !== 0 && (
+          <View style={styles.issueTrackingContainer}>
+            <Text caption>{tr("issue tracking")}</Text>
+            <Text caption>{localizeNumber(purchaseRefId as number)}</Text>
+          </View>
+        )}
       </Container>
     </BottomButtonLayout>
   );
