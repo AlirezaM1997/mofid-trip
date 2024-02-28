@@ -37,6 +37,7 @@ export default function AppLayout() {
         sceneContainerStyle={{ backgroundColor: theme.colors.white }}
         screenOptions={({ navigation }) => ({
           tabBarStyle: style.tabBarStyle,
+          unmountOnBlur: true,
           tabBarActiveTintColor: theme.colors.primary,
           tabBarLabelStyle: style.tabBarLabelStyle(isRtl),
           headerTitleStyle: style.headerTitleStyle(isRtl),
@@ -78,6 +79,7 @@ export default function AppLayout() {
           name="search-list"
           options={{
             title: tr("map"),
+
             tabBarIcon: ({ color, size }) => <FontAwesome name="map" size={size} color={color} />,
           }}
         />

@@ -7,24 +7,23 @@ import React, {
   useCallback,
   ReactElement,
 } from "react";
+import {
+  BBoxRangeType,
+  useProjectListSearchLazyQuery,
+  ProjectListSearchQueryVariables,
+} from "@src/gql/generated";
 import Map from "@modules/map";
-import { router } from "expo-router";
 import { RootState } from "@src/store";
 import { useTheme } from "@rneui/themed";
+import { MapMarker } from "expo-leaflet";
 import { HEIGHT, WIDTH } from "@src/constants";
+import { router, useNavigation } from "expo-router";
 import { setFilter } from "@src/slice/filter-slice";
+import { useIsFocused } from "@react-navigation/core";
 import { MapPropsType } from "@modules/map/index.web";
 import { useDispatch, useSelector } from "react-redux";
 import HostSearchCard from "@modules/host/card/search-card";
-import {
-  useProjectListSearchLazyQuery,
-  ProjectListSearchQueryVariables,
-  BBoxRangeType,
-  ProjectQueryType,
-} from "@src/gql/generated";
-
 import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
-import { MapMarker } from "expo-leaflet";
 
 const MemoizedMap = memo(Map);
 
