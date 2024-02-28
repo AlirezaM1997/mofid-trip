@@ -3,6 +3,7 @@ import { ExpoLeaflet } from "expo-leaflet";
 import { Button, useTheme } from "@rneui/themed";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ReactNode, useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import { Alert, StyleSheet, View, ViewStyle } from "react-native";
 import { ExpoLeafletProps } from "expo-leaflet/web/src/ExpoLeaflet.types";
 
@@ -52,13 +53,10 @@ const Map = ({
   ...props
 }: MapPropsType) => {
   if (!lat && !lng) return;
-
   const { theme } = useTheme();
-<<<<<<< HEAD
+  const isFocused = useIsFocused();
+  const [key, setKey] = useState(0);
   const [zoomLevel, setZoom] = useState(zoom || 10);
-=======
-  const [zoomLevel, setZoom] = useState(10);
->>>>>>> eddf80e (build mahdieh iran page)
   const [location, setLocation] = useState<{ lat: number; lng: number }>({ lat, lng });
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number }>();
 
@@ -91,7 +89,6 @@ const Map = ({
   }, [lat, lng]);
 
   useEffect(() => {
-<<<<<<< HEAD
     zoom && setZoom(zoom);
   }, [zoom]);
 
@@ -102,30 +99,17 @@ const Map = ({
     position: currentLocation,
     icon: window.location.origin + "/assets/assets/image/my-location.png",
   };
-=======
-    setZoom(zoom);
-  }, [zoom]);
->>>>>>> eddf80e (build mahdieh iran page)
 
-  const currentLocationIcon = {
-    id: "my-location",
-    size: [60, 60],
-    iconAnchor: [-26, 60],
-    position: location,
-    icon: window.location.origin + "/assets/assets/image/marker.png",
-  };
   return (
     <>
       <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="StyleSheet" />
-
       <View style={[style.row, style.topRow]}>
         <View>{topLeftContent}</View>
         <View>{topCenterContent}</View>
         <View>{topRightContent}</View>
       </View>
-
+      
       <View style={style.center}>{centerContent}</View>
-
       <View style={[style.row, style.bottomRow]}>
         <View style={[style.bottomLeftContent, bottomLeftContentStyle]}>
           {bottomLeftContent}
@@ -144,8 +128,7 @@ const Map = ({
         <View>{bottomCenterContent}</View>
         <View>{bottomRightContent}</View>
       </View>
-
-      <View style={[style.container, props.style]}>
+      <View key={key} style={[style.container, props.style]}>
         <ExpoLeaflet
           zoom={zoomLevel}
           mapCenterPosition={{
