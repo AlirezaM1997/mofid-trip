@@ -12,16 +12,24 @@ import { ScrollView } from "react-native-gesture-handler";
 import HostManagementCard from "@organisms/host-management-card";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { ProjectQueryType, useMyUserDetailProjectSetQuery } from "@src/gql/generated";
+import { useDispatch } from "react-redux";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 
 const HostManagementScreen = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const [hostSet, setHostSet] = useState<ProjectQueryType[]>([]);
+  const dispatch = useDispatch();
 
   const { loading, data } = useMyUserDetailProjectSetQuery({ fetchPolicy: "network-only" });
 
   const handleNavigateToCreateHost = () => {
     router.push("host/create");
+    dispatch(
+      setRedirectToScreenAfterLogin({
+        pathname: "host/management",
+      })
+    );
   };
   useEffect(() => {
     if (!loading && data) {

@@ -54,7 +54,7 @@ const TransactionDetailCard = ({
             <Text caption type="grey2">
               {tr("hosting type")} .
             </Text>
-            <Text caption>{transactionDetail?.project?.categories?.[0]?.name}</Text>
+            <Text caption>{transactionDetail?.project?.categories?.[0]?.displayName}</Text>
           </View>
 
           <View style={styles.date}>

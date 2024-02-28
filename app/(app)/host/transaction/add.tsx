@@ -62,9 +62,11 @@ const Screen = () => {
             </Button>,
           ]}>
           <HostTransactionForm
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
-            setIsButtonDisabled={setIsButtonDisabled}
+            activeStep={activeStep as number}
+            setActiveStep={setActiveStep as React.Dispatch<React.SetStateAction<number>>}
+            setIsButtonDisabled={
+              setIsButtonDisabled as React.Dispatch<React.SetStateAction<boolean>>
+            }
           />
           <HostTransactionSubmitBottomSheet
             isVisible={isVisibleFinish}
