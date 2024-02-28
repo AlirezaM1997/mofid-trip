@@ -70,13 +70,13 @@ export const messages = {
     en_us: "awaiting confirmation",
   },
   "you can upload images related to your tour, please note that the size of the images should be less than 3 mb. note that this section is optional.":
-    {
-      ar: "يمكنك تحميل الصور المتعلقة بجولتك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
-      fa_ir:
-        "شما می توانید تصاویر مرتبط با تور خودتان را بارگذاری کنید، توجه داشته باشید حجم تصاویر کمتر از ۳ مگابایت باشد. توجه داشته باشید این بخش اختیاری می‌باشد.",
-      en_us:
-        "You can upload images related to your tour, please note that the size of the images should be less than 3 MB. Note that this section is optional.",
-    },
+  {
+    ar: "يمكنك تحميل الصور المتعلقة بجولتك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
+    fa_ir:
+      "شما می توانید تصاویر مرتبط با تور خودتان را بارگذاری کنید، توجه داشته باشید حجم تصاویر کمتر از ۳ مگابایت باشد. توجه داشته باشید این بخش اختیاری می‌باشد.",
+    en_us:
+      "You can upload images related to your tour, please note that the size of the images should be less than 3 MB. Note that this section is optional.",
+  },
   "pictures related to the tour": {
     ar: "صور متعلقة بالرحلة",
     fa_ir: "تصاویر مربوط به تور",
@@ -97,6 +97,11 @@ export const messages = {
     fa_ir: "بیوگرافی",
     en_us: "Bio",
   },
+  day: {
+    ar: "day",
+    fa_ir: "روز",
+    en_us: "day",
+  },
   host: {
     ar: "السيرة الذاتية (۲۰۰ حرف)",
     fa_ir: "میزبانی",
@@ -113,13 +118,13 @@ export const messages = {
     en_us: "Book Now",
   },
   "by using mofidtrip platform services, you implicitly agree to the platform's rules and regulations and are obligated to read updates and comply with them. using any of the mofidtrip platform's products and services implies your acceptance of all its conditions. if changes occur in the stated rules, procedures, and services of the mofidtrip platform, they will be published and updated on this page, and you will be informed of any new changes in the mofidtrip platform's rules. you agree that continuous use of the platform implies reading and accepting any changes. the mofidtrip platform reserves the right to change policies, rules, terms of service, and service prices. services may change over time by adding new features and capabilities. the mofidtrip platform may suspend, stop, or replace services at any time without prior notice as needed. additionally, content may be removed based on discretion. users will be responsible for all activities conducted under their usernames. users commit not to misuse our services for misleading individuals, creating suspicion, engaging in malicious activities, or engaging in other unethical behaviors. the responsibility for any misuse of the platform's features and capabilities by users will not be borne by the mofidtrip platform, and the mofidtrip platform reserves the right to take legal action against any unauthorized use or misuse of the provided information or unauthorized copying whenever discovered.":
-    {
-      ar: "باستخدام خدمات منصة مفید، فإنك توافق ضمنيًا على قواعد وأنظمة المنصة وتلتزم بقراءة التحديثات والامتثال لها. إن استخدام أي من منتجات وخدمات منصة مفید يعني موافقتك على جميع شروطها. إذا حدثت تغييرات في القواعد والإجراءات والخدمات المذكورة لمنصة مفید، فسيتم نشرها وتحديثها على هذه الصفحة، وسيتم إبلاغك بأي تغييرات جديدة في قواعد منصة مفید. أنت توافق على أن الاستخدام المستمر للمنصة يعني قراءة وقبول أي تغييرات. تحتفظ منصة مفید بالحق في تغيير السياسات والقواعد وشروط الخدمة وأسعار الخدمة. قد تتغير الخدمات بمرور الوقت عن طريق إضافة ميزات وإمكانيات جديدة. يجوز لمنصة مفید تعليق الخدمات أو إيقافها أو استبدالها في أي وقت دون إشعار مسبق حسب الحاجة. بالإضافة إلى ذلك، قد تتم إزالة المحتوى بناءً على تقديرك. سيكون المستخدمون مسؤولين عن جميع الأنشطة التي تتم تحت أسماء المستخدمين الخاصة بهم. يلتزم المستخدمون بعدم إساءة استخدام خدماتنا لتضليل الأفراد، أو إثارة الشكوك، أو الانخراط في أنشطة ضارة، أو الانخراط في سلوكيات أخرى غير أخلاقية. لن تتحمل منصة مفید المسؤولية عن أي سوء استخدام لميزات وإمكانيات المنصة من قبل المستخدمين، وتحتفظ منصة مفید بالحق في اتخاذ إجراءات قانونية ضد أي استخدام غير مصرح به أو سوء استخدام للمعلومات المقدمة أو النسخ غير المصرح به عند اكتشافها.",
-      fa_ir:
-        "با استفاده از خدمات پلتفرم مفید تریپ، شما به طور ضمنی با قوانین و مقررات این پلتفرم موافقت کرده و موظف به خواندن به روز رسانی ها و رعایت آنها هستید. استفاده از هر یک از محصولات و خدمات پلتفرم مفید تریپ به منزله پذیرش تمامی شرایط آن توسط شماست. در صورت بروز تغییرات در موارد اعلام شده. قوانین، رویه ها و خدمات پلتفرم مفید تریپ در همین صفحه منتشر و به روز رسانی می شود و هرگونه تغییر جدید در قوانین پلت فرم مفید تریپ به اطلاع شما می رسد و موافقت می کنید که استفاده مستمر از پلت فرم به معنی مطالعه و پذیرش هرگونه تغییر است. . پلتفرم mofidtrip این حق را برای خود محفوظ می دارد که سیاست ها، قوانین، شرایط خدمات و قیمت خدمات را تغییر دهد. خدمات ممکن است در طول زمان با افزودن ویژگی ها و قابلیت های جدید تغییر کنند. پلت فرم mofidtrip ممکن است در هر زمانی بدون اطلاع قبلی سرویس ها را تعلیق، متوقف یا جایگزین کند. در صورت نیاز. علاوه بر این، محتوا ممکن است بر اساس صلاحدید حذف شود. کاربران مسئول تمام فعالیت‌هایی هستند که تحت نام کاربری خود انجام می‌شوند. کاربران متعهد می‌شوند که از خدمات ما برای گمراه کردن افراد، ایجاد سوء ظن، شرکت در فعالیت‌های مخرب یا انجام سایر رفتارهای غیراخلاقی استفاده نکنند. . مسئولیت هرگونه سوء استفاده از ویژگی ها و قابلیت های پلتفرم توسط کاربران بر عهده پلتفرم مفید تریپ نخواهد بود و پلتفرم مفید تریپ این حق را برای خود محفوظ می دارد که در صورت کشف هرگونه استفاده غیرمجاز یا سوء استفاده از اطلاعات ارائه شده یا کپی برداری غیرمجاز اقدام قانونی کند.",
-      en_us:
-        "By Using Mofidtrip Platform Services, You Implicitly Agree To The Platform's Rules And Regulations And Are Obligated To Read Updates And Comply With Them. Using Any Of The Mofidtrip Platform's Products And Services Implies Your Acceptance Of All Its Conditions. If Changes Occur In The Stated Rules, Procedures, And Services Of The Mofidtrip Platform, They Will Be Published And Updated On This Page, And You Will Be Informed Of Any New Changes In The Mofidtrip Platform's Rules. You Agree That Continuous Use Of The Platform Implies Reading And Accepting Any Changes. The Mofidtrip Platform Reserves The Right To Change Policies, Rules, Terms Of Service, And Service Prices. Services May Change Over Time By Adding New Features And Capabilities. The Mofidtrip Platform May Suspend, Stop, Or Replace Services At Any Time Without Prior Notice As Needed. Additionally, Content May Be Removed Based On Discretion. Users Will Be Responsible For All Activities Conducted Under Their Usernames. Users Commit Not To Misuse Our Services For Misleading Individuals, Creating Suspicion, Engaging In Malicious Activities, Or Engaging In Other Unethical Behaviors. The Responsibility For Any Misuse Of The Platform's Features And Capabilities By Users Will Not Be Borne By The Mofidtrip Platform, And The Mofidtrip Platform Reserves The Right To Take Legal Action Against Any Unauthorized Use Or Misuse Of The Provided Information Or Unauthorized Copying Whenever Discovered.",
-    },
+  {
+    ar: "باستخدام خدمات منصة مفید، فإنك توافق ضمنيًا على قواعد وأنظمة المنصة وتلتزم بقراءة التحديثات والامتثال لها. إن استخدام أي من منتجات وخدمات منصة مفید يعني موافقتك على جميع شروطها. إذا حدثت تغييرات في القواعد والإجراءات والخدمات المذكورة لمنصة مفید، فسيتم نشرها وتحديثها على هذه الصفحة، وسيتم إبلاغك بأي تغييرات جديدة في قواعد منصة مفید. أنت توافق على أن الاستخدام المستمر للمنصة يعني قراءة وقبول أي تغييرات. تحتفظ منصة مفید بالحق في تغيير السياسات والقواعد وشروط الخدمة وأسعار الخدمة. قد تتغير الخدمات بمرور الوقت عن طريق إضافة ميزات وإمكانيات جديدة. يجوز لمنصة مفید تعليق الخدمات أو إيقافها أو استبدالها في أي وقت دون إشعار مسبق حسب الحاجة. بالإضافة إلى ذلك، قد تتم إزالة المحتوى بناءً على تقديرك. سيكون المستخدمون مسؤولين عن جميع الأنشطة التي تتم تحت أسماء المستخدمين الخاصة بهم. يلتزم المستخدمون بعدم إساءة استخدام خدماتنا لتضليل الأفراد، أو إثارة الشكوك، أو الانخراط في أنشطة ضارة، أو الانخراط في سلوكيات أخرى غير أخلاقية. لن تتحمل منصة مفید المسؤولية عن أي سوء استخدام لميزات وإمكانيات المنصة من قبل المستخدمين، وتحتفظ منصة مفید بالحق في اتخاذ إجراءات قانونية ضد أي استخدام غير مصرح به أو سوء استخدام للمعلومات المقدمة أو النسخ غير المصرح به عند اكتشافها.",
+    fa_ir:
+      "با استفاده از خدمات پلتفرم مفید تریپ، شما به طور ضمنی با قوانین و مقررات این پلتفرم موافقت کرده و موظف به خواندن به روز رسانی ها و رعایت آنها هستید. استفاده از هر یک از محصولات و خدمات پلتفرم مفید تریپ به منزله پذیرش تمامی شرایط آن توسط شماست. در صورت بروز تغییرات در موارد اعلام شده. قوانین، رویه ها و خدمات پلتفرم مفید تریپ در همین صفحه منتشر و به روز رسانی می شود و هرگونه تغییر جدید در قوانین پلت فرم مفید تریپ به اطلاع شما می رسد و موافقت می کنید که استفاده مستمر از پلت فرم به معنی مطالعه و پذیرش هرگونه تغییر است. . پلتفرم mofidtrip این حق را برای خود محفوظ می دارد که سیاست ها، قوانین، شرایط خدمات و قیمت خدمات را تغییر دهد. خدمات ممکن است در طول زمان با افزودن ویژگی ها و قابلیت های جدید تغییر کنند. پلت فرم mofidtrip ممکن است در هر زمانی بدون اطلاع قبلی سرویس ها را تعلیق، متوقف یا جایگزین کند. در صورت نیاز. علاوه بر این، محتوا ممکن است بر اساس صلاحدید حذف شود. کاربران مسئول تمام فعالیت‌هایی هستند که تحت نام کاربری خود انجام می‌شوند. کاربران متعهد می‌شوند که از خدمات ما برای گمراه کردن افراد، ایجاد سوء ظن، شرکت در فعالیت‌های مخرب یا انجام سایر رفتارهای غیراخلاقی استفاده نکنند. . مسئولیت هرگونه سوء استفاده از ویژگی ها و قابلیت های پلتفرم توسط کاربران بر عهده پلتفرم مفید تریپ نخواهد بود و پلتفرم مفید تریپ این حق را برای خود محفوظ می دارد که در صورت کشف هرگونه استفاده غیرمجاز یا سوء استفاده از اطلاعات ارائه شده یا کپی برداری غیرمجاز اقدام قانونی کند.",
+    en_us:
+      "By Using Mofidtrip Platform Services, You Implicitly Agree To The Platform's Rules And Regulations And Are Obligated To Read Updates And Comply With Them. Using Any Of The Mofidtrip Platform's Products And Services Implies Your Acceptance Of All Its Conditions. If Changes Occur In The Stated Rules, Procedures, And Services Of The Mofidtrip Platform, They Will Be Published And Updated On This Page, And You Will Be Informed Of Any New Changes In The Mofidtrip Platform's Rules. You Agree That Continuous Use Of The Platform Implies Reading And Accepting Any Changes. The Mofidtrip Platform Reserves The Right To Change Policies, Rules, Terms Of Service, And Service Prices. Services May Change Over Time By Adding New Features And Capabilities. The Mofidtrip Platform May Suspend, Stop, Or Replace Services At Any Time Without Prior Notice As Needed. Additionally, Content May Be Removed Based On Discretion. Users Will Be Responsible For All Activities Conducted Under Their Usernames. Users Commit Not To Misuse Our Services For Misleading Individuals, Creating Suspicion, Engaging In Malicious Activities, Or Engaging In Other Unethical Behaviors. The Responsibility For Any Misuse Of The Platform's Features And Capabilities By Users Will Not Be Borne By The Mofidtrip Platform, And The Mofidtrip Platform Reserves The Right To Take Legal Action Against Any Unauthorized Use Or Misuse Of The Provided Information Or Unauthorized Copying Whenever Discovered.",
+  },
   capacity: {
     ar: "سعة",
     fa_ir: "ظرفیت",
@@ -151,13 +156,13 @@ export const messages = {
     en_us: "Accepted",
   },
   "finally, it will be deposited into your selected account within 72 hours. if the deposit is not made, please contact mofidtrip support.":
-    {
-      ar: "وأخيرًا، سيتم إيداعه في حسابك الذي اخترته خلال 72 ساعة. إذا لم يتم الإيداع، يرجى الاتصال بدعم Mofidtrip.",
-      fa_ir:
-        " نهایتا تا ۷۲ ساعت دیگر به حساب انتخاب شده شما واریز می‌شود. در صورت واریز نشدن ، با پشتیبانی مفیدتریپ تماس حاصل بفرمایید.",
-      en_us:
-        "finally, it will be deposited into your selected account within 72 hours. If the deposit is not made, please contact Mofidtrip support.",
-    },
+  {
+    ar: "وأخيرًا، سيتم إيداعه في حسابك الذي اخترته خلال 72 ساعة. إذا لم يتم الإيداع، يرجى الاتصال بدعم Mofidtrip.",
+    fa_ir:
+      " نهایتا تا ۷۲ ساعت دیگر به حساب انتخاب شده شما واریز می‌شود. در صورت واریز نشدن ، با پشتیبانی مفیدتریپ تماس حاصل بفرمایید.",
+    en_us:
+      "finally, it will be deposited into your selected account within 72 hours. If the deposit is not made, please contact Mofidtrip support.",
+  },
   "choose a card please": {
     ar: "اختر بطاقة",
     fa_ir: "لطفا یک کارت را انتخاب کنید",
@@ -212,7 +217,7 @@ export const messages = {
   "by continuing to register, users can register their request to use your hosting as before.": {
     ar: "By continuing to register, users can register their request to use your hosting as before.",
     fa_ir:
-      "با ادامه ثبت نام، کاربران مانند گذشته می‌توانند درخواستشان را برای استفاده ار هاست شما ثبت کنند.",
+      "با ادامه ثبت نام، کاربران مانند گذشته می‌توانند درخواستشان را برای استفاده ار میزبانی شما ثبت کنند.",
     en_us:
       "By continuing to register, users can register their request to use your hosting as before.",
   },
@@ -314,7 +319,7 @@ export const messages = {
   "there are no comments yet. be the first to write your opinion about this host": {
     ar: "لا توجد تعليقات حتى الآن. كن أول من يكتب رأيك حول هذا المضيف",
     fa_ir:
-      "هنوز دیدگاهی ثبت نشده است. شما اولین نفر باشید که نظرتان را درباره این هاست ثبت می‌کنید",
+      "هنوز دیدگاهی ثبت نشده است. شما اولین نفر باشید که نظرتان را درباره این میزبانی ثبت می‌کنید",
     en_us: "There are no comments yet. Be the first to write your opinion about this host",
   },
   "your comment has been successfully registered": {
@@ -353,21 +358,21 @@ export const messages = {
     en_us: "Was this review helpful?",
   },
   "write your comments and questions related to this tour. once approved, your comment will be published.":
-    {
-      ar: "اكتب تعليقاتك وأسئلتك المتعلقة بهذه الجولة. بمجرد الموافقة، سيتم نشر تعليقك.",
-      fa_ir:
-        "دیدگاه و سوالات خودتان را که مربوط به این تور هست را بنویسید. پس از تایید شدن، دیدگاه‌تان منتشر می‌شود.",
-      en_us:
-        "Write your comments and questions related to this tour. Once approved, your comment will be published.",
-    },
+  {
+    ar: "اكتب تعليقاتك وأسئلتك المتعلقة بهذه الجولة. بمجرد الموافقة، سيتم نشر تعليقك.",
+    fa_ir:
+      "دیدگاه و سوالات خودتان را که مربوط به این تور هست را بنویسید. پس از تایید شدن، دیدگاه‌تان منتشر می‌شود.",
+    en_us:
+      "Write your comments and questions related to this tour. Once approved, your comment will be published.",
+  },
   "write your comments and questions related to this host. once approved, your comment will be published.":
-    {
-      ar: "اكتب تعليقاتك وأسئلتك المتعلقة بهذا المضيف. بمجرد الموافقة، سيتم نشر تعليقك.",
-      fa_ir:
-        "دیدگاه و سوالات خودتان را که مربوط به این هاست هست را بنویسید. پس از تایید شدن، دیدگاه‌تان منتشر می‌شود.",
-      en_us:
-        "Write your comments and questions related to this host. Once approved, your comment will be published.",
-    },
+  {
+    ar: "اكتب تعليقاتك وأسئلتك المتعلقة بهذا المضيف. بمجرد الموافقة، سيتم نشر تعليقك.",
+    fa_ir:
+      "دیدگاه و سوالات خودتان را که مربوط به این میزبانی هست را بنویسید. پس از تایید شدن، دیدگاه‌تان منتشر می‌شود.",
+    en_us:
+      "Write your comments and questions related to this host. Once approved, your comment will be published.",
+  },
   "write your opinion about this tour": {
     ar: "اكتب رأيك حول هذه الجولة",
     fa_ir: "دیدگاه خود را درباره این تور بنویسید",
@@ -375,7 +380,7 @@ export const messages = {
   },
   "write your opinion about this host": {
     ar: "اكتب رأيك حول هذا المضيف",
-    fa_ir: "دیدگاه خود را درباره این هاست بنویسید",
+    fa_ir: "دیدگاه خود را درباره این میزبانی بنویسید",
     en_us: "Write your opinion about this host",
   },
   comment: {
@@ -390,7 +395,7 @@ export const messages = {
   },
   "opinions about the host": {
     ar: "آراء حول المضيف",
-    fa_ir: "دیدگاه‌ها درباره هاست",
+    fa_ir: "دیدگاه‌ها درباره میزبانی",
     en_us: "Opinions about the host",
   },
   "phone number": {
@@ -444,13 +449,13 @@ export const messages = {
     en_us: "register card",
   },
   "to create a new card, write the main details of your bank card so that it is registered in this account in mofidtrip":
-    {
-      ar: "لإنشاء بطاقة جديدة، قم بكتابة التفاصيل الرئيسية لبطاقتك المصرفية بحيث يتم تسجيلها في هذا الحساب على مفید تریپ",
-      fa_ir:
-        "برای ایجاد کارت جدید، جزئیات اصلی کارت بانکی‌تان را بنویسید تا در این حساب در مفیدتریپ ثبت شود",
-      en_us:
-        "To create a new card, write the main details of your bank card so that it is registered in this account in Mofidtrip",
-    },
+  {
+    ar: "لإنشاء بطاقة جديدة، قم بكتابة التفاصيل الرئيسية لبطاقتك المصرفية بحيث يتم تسجيلها في هذا الحساب على مفید تریپ",
+    fa_ir:
+      "برای ایجاد کارت جدید، جزئیات اصلی کارت بانکی‌تان را بنویسید تا در این حساب در مفیدتریپ ثبت شود",
+    en_us:
+      "To create a new card, write the main details of your bank card so that it is registered in this account in Mofidtrip",
+  },
   "add a new card": {
     ar: "أضف بطاقة جديدة",
     fa_ir: "افزودن کارت جدید",
@@ -502,21 +507,21 @@ export const messages = {
     en_us: "Or share the link",
   },
   "you can republish the details of this hosting to your friends so that they also know about the existence of this hosting":
-    {
-      ar: "يمكنك إعادة نشر تفاصيل هذه الاستضافة لأصدقائك حتى يعلموا أيضًا بوجود هذه الاستضافة",
-      fa_ir:
-        "شما می توانید جزئیات این میزبانی را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این میزبانی مطلع شوند",
-      en_us:
-        "You can republish the details of this hosting to your friends so that they also know about the existence of this hosting",
-    },
+  {
+    ar: "يمكنك إعادة نشر تفاصيل هذه الاستضافة لأصدقائك حتى يعلموا أيضًا بوجود هذه الاستضافة",
+    fa_ir:
+      "شما می توانید جزئیات این میزبانی را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این میزبانی مطلع شوند",
+    en_us:
+      "You can republish the details of this hosting to your friends so that they also know about the existence of this hosting",
+  },
   "you can republish the details of this tour to your friends so that they also know about the existence of this tour":
-    {
-      ar: "يمكنك إعادة نشر تفاصيل هذه الجولة لأصدقائك حتى يعرفوا أيضًا بوجود هذه الجولة",
-      fa_ir:
-        "شما می توانید جزئیات این تور را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این تور مطلع شوند",
-      en_us:
-        "You can republish the details of this tour to your friends so that they also know about the existence of this tour",
-    },
+  {
+    ar: "يمكنك إعادة نشر تفاصيل هذه الجولة لأصدقائك حتى يعرفوا أيضًا بوجود هذه الجولة",
+    fa_ir:
+      "شما می توانید جزئیات این تور را برای دوستان خودتان بازنشر کنید تا آن ها هم از وجود این تور مطلع شوند",
+    en_us:
+      "You can republish the details of this tour to your friends so that they also know about the existence of this tour",
+  },
   "are you sure about shared hosting?": {
     ar: "هل أنت متأكد من الاستضافة المشتركة؟",
     fa_ir: "آیا مطمئن به اشتراک میزبانی هستید؟",
@@ -629,13 +634,13 @@ export const messages = {
     en_us: "Hosted By",
   },
   "impersonation of the identity of other individuals, including real individuals and legal entities, misuse of users' private information and images, is prohibited. if identified or reported, access by the user in question will be blocked, and legal action will be taken by the mofidtrip platform. the mofidtrip team does not assume any responsibility for activities and submitted requests and does not guarantee their execution; it merely provides a means of communication for voluntary activities in the free space. all payments within the platform are made based on the laws and regulations governing e-commerce. the mofidtrip platform is not responsible for potential disruptions arising from internet accessibility and service quality.":
-    {
-      ar: "يحظر انتحال هوية الأفراد الآخرين، بما في ذلك الأفراد الحقيقيين والكيانات القانونية، وإساءة استخدام المعلومات والصور الخاصة للمستخدمين. إذا تم التعرف عليه أو الإبلاغ عنه، فسيتم حظر وصول المستخدم المعني، وسيتم اتخاذ الإجراء القانوني من خلال منصة ltdn. لا يتحمل فريق ltdn أي مسؤولية عن الأنشطة والطلبات المقدمة ولا يضمن تنفيذها؛ إنه يوفر فقط وسيلة اتصال للأنشطة التطوعية في الفضاء الحر. تتم جميع المدفوعات داخل المنصة بناءً على القوانين واللوائح التي تحكم التجارة الإلكترونية. منصة ltdn ليست مسؤولة عن الاضطرابات المحتملة الناشئة عن إمكانية الوصول إلى الإنترنت وجودة الخدمة.",
-      fa_ir:
-        "جعل هویت سایر افراد اعم از اشخاص حقیقی و حقوقی، سوء استفاده از اطلاعات و تصاویر خصوصی کاربران ممنوع است و در صورت شناسایی یا گزارش، دسترسی کاربر مورد نظر مسدود شده و اقدامات قانونی از سوی کاربر انجام خواهد شد. پلتفرم mofidtrip تیم mofidtrip هیچ گونه مسئولیتی در قبال فعالیت ها و درخواست های ارسالی بر عهده نمی گیرد و اجرای آنها را تضمین نمی کند و صرفاً یک وسیله ارتباطی برای فعالیت های داوطلبانه در فضای آزاد فراهم می کند. کلیه پرداخت های درون پلت فرم بر اساس قوانین انجام می شود. و مقررات حاکم بر تجارت الکترونیکی. پلت فرم mofidtrip در قبال اختلالات احتمالی ناشی از دسترسی به اینترنت و کیفیت خدمات مسئولیتی ندارد.",
-      en_us:
-        "Impersonation Of The Identity Of Other Individuals, Including Real Individuals And Legal Entities, Misuse Of Users' Private Information And Images, Is Prohibited. If Identified Or Reported, Access By The User In Question Will Be Blocked, And Legal Action Will Be Taken By The Mofidtrip Platform. The Mofidtrip Team Does Not Assume Any Responsibility For Activities And Submitted Requests And Does Not Guarantee Their Execution; It Merely Provides A Means Of Communication For Voluntary Activities In The Free Space. All Payments Within The Platform Are Made Based On The Laws And Regulations Governing E-commerce. The Mofidtrip Platform Is Not Responsible For Potential Disruptions Arising From Internet Accessibility And Service Quality.",
-    },
+  {
+    ar: "يحظر انتحال هوية الأفراد الآخرين، بما في ذلك الأفراد الحقيقيين والكيانات القانونية، وإساءة استخدام المعلومات والصور الخاصة للمستخدمين. إذا تم التعرف عليه أو الإبلاغ عنه، فسيتم حظر وصول المستخدم المعني، وسيتم اتخاذ الإجراء القانوني من خلال منصة ltdn. لا يتحمل فريق ltdn أي مسؤولية عن الأنشطة والطلبات المقدمة ولا يضمن تنفيذها؛ إنه يوفر فقط وسيلة اتصال للأنشطة التطوعية في الفضاء الحر. تتم جميع المدفوعات داخل المنصة بناءً على القوانين واللوائح التي تحكم التجارة الإلكترونية. منصة ltdn ليست مسؤولة عن الاضطرابات المحتملة الناشئة عن إمكانية الوصول إلى الإنترنت وجودة الخدمة.",
+    fa_ir:
+      "جعل هویت سایر افراد اعم از اشخاص حقیقی و حقوقی، سوء استفاده از اطلاعات و تصاویر خصوصی کاربران ممنوع است و در صورت شناسایی یا گزارش، دسترسی کاربر مورد نظر مسدود شده و اقدامات قانونی از سوی کاربر انجام خواهد شد. پلتفرم mofidtrip تیم mofidtrip هیچ گونه مسئولیتی در قبال فعالیت ها و درخواست های ارسالی بر عهده نمی گیرد و اجرای آنها را تضمین نمی کند و صرفاً یک وسیله ارتباطی برای فعالیت های داوطلبانه در فضای آزاد فراهم می کند. کلیه پرداخت های درون پلت فرم بر اساس قوانین انجام می شود. و مقررات حاکم بر تجارت الکترونیکی. پلت فرم mofidtrip در قبال اختلالات احتمالی ناشی از دسترسی به اینترنت و کیفیت خدمات مسئولیتی ندارد.",
+    en_us:
+      "Impersonation Of The Identity Of Other Individuals, Including Real Individuals And Legal Entities, Misuse Of Users' Private Information And Images, Is Prohibited. If Identified Or Reported, Access By The User In Question Will Be Blocked, And Legal Action Will Be Taken By The Mofidtrip Platform. The Mofidtrip Team Does Not Assume Any Responsibility For Activities And Submitted Requests And Does Not Guarantee Their Execution; It Merely Provides A Means Of Communication For Voluntary Activities In The Free Space. All Payments Within The Platform Are Made Based On The Laws And Regulations Governing E-commerce. The Mofidtrip Platform Is Not Responsible For Potential Disruptions Arising From Internet Accessibility And Service Quality.",
+  },
   "invite friends": {
     ar: "ادعو أصدقاء",
     fa_ir: "دعوت از دوستان",
@@ -787,13 +792,13 @@ export const messages = {
     en_us: "Increase",
   },
   "privacy and ownership: all intellectual and material rights belong to mofidtrip. safeguarding the privacy of individuals and organizations is a top priority for mofidtrip. the mofidtrip platform is committed to employing the best methods, in collaboration with a specialized technical team, to ensure the protection of individuals' and organizations' secrets. furthermore, efforts are made to develop the necessary technology to enhance the security of your use of the platform.":
-    {
-      ar: "الخصوصية والملكية: جميع الحقوق الفكرية والمادية مملوكة لشركة مفید. يعد حماية خصوصية الأفراد والمنظمات أولوية قصوى بالنسبة لـ مفید. تلتزم منصة مفید بتوظيف أفضل الأساليب بالتعاون مع فريق فني متخصص لضمان حماية أسرار الأفراد والمنظمات. علاوة على ذلك، يتم بذل الجهود لتطوير التكنولوجيا اللازمة لتعزيز أمان استخدامك للمنصة.",
-      fa_ir:
-        "حریم خصوصی و مالکیت: کلیه حقوق معنوی و مادی متعلق به mofidtrip است. حفظ حریم خصوصی افراد و سازمان ها اولویت اصلی mofidtrip است. پلت فرم mofidtrip متعهد به استفاده از بهترین روش ها با همکاری یک تیم فنی تخصصی برای اطمینان از حفاظت از اسرار افراد و سازمان‌ها. علاوه بر این، تلاش‌هایی برای توسعه فناوری لازم برای افزایش امنیت استفاده شما از این پلت‌فرم صورت می‌گیرد.",
-      en_us:
-        "Privacy And Ownership: All Intellectual And Material Rights Belong To Mofidtrip. Safeguarding The Privacy Of Individuals And Organizations Is A Top Priority For Mofidtrip. The Mofidtrip Platform Is Committed To Employing The Best Methods, In Collaboration With A Specialized Technical Team, To Ensure The Protection Of Individuals' And Organizations' Secrets. Furthermore, Efforts Are Made To Develop The Necessary Technology To Enhance The Security Of Your Use Of The Platform.",
-    },
+  {
+    ar: "الخصوصية والملكية: جميع الحقوق الفكرية والمادية مملوكة لشركة مفید. يعد حماية خصوصية الأفراد والمنظمات أولوية قصوى بالنسبة لـ مفید. تلتزم منصة مفید بتوظيف أفضل الأساليب بالتعاون مع فريق فني متخصص لضمان حماية أسرار الأفراد والمنظمات. علاوة على ذلك، يتم بذل الجهود لتطوير التكنولوجيا اللازمة لتعزيز أمان استخدامك للمنصة.",
+    fa_ir:
+      "حریم خصوصی و مالکیت: کلیه حقوق معنوی و مادی متعلق به mofidtrip است. حفظ حریم خصوصی افراد و سازمان ها اولویت اصلی mofidtrip است. پلت فرم mofidtrip متعهد به استفاده از بهترین روش ها با همکاری یک تیم فنی تخصصی برای اطمینان از حفاظت از اسرار افراد و سازمان‌ها. علاوه بر این، تلاش‌هایی برای توسعه فناوری لازم برای افزایش امنیت استفاده شما از این پلت‌فرم صورت می‌گیرد.",
+    en_us:
+      "Privacy And Ownership: All Intellectual And Material Rights Belong To Mofidtrip. Safeguarding The Privacy Of Individuals And Organizations Is A Top Priority For Mofidtrip. The Mofidtrip Platform Is Committed To Employing The Best Methods, In Collaboration With A Specialized Technical Team, To Ensure The Protection Of Individuals' And Organizations' Secrets. Furthermore, Efforts Are Made To Develop The Necessary Technology To Enhance The Security Of Your Use Of The Platform.",
+  },
   profile: {
     ar: "الحساب",
     fa_ir: "پروفایل",
@@ -876,7 +881,7 @@ export const messages = {
   },
   "to access more possibilities to create tours or hosts": {
     ar: "للوصول إلى المزيد من الإمكانيات لإنشاء جولات أو مضيفين",
-    fa_ir: "برای دسترسی به امکانات بیشتر برای ایجاد تور یا هاست",
+    fa_ir: "برای دسترسی به امکانات بیشتر برای ایجاد تور یا میزبانی",
     en_us: "To access more possibilities to create tours or hosts",
   },
   "login or register": {
@@ -910,13 +915,13 @@ export const messages = {
     en_us: "Terms Of Services",
   },
   "the mofidtrip platform does not accept responsibility for reviewing or searching user and institution information for the presence of unlawful or rights-infringing content. however, it may take appropriate actions upon encountering the mentioned cases. users are committed not to upload illegal or false content to the mofidtrip platform. naturally, the mofidtrip platform is authorized to remove illegal content.":
-    {
-      ar: "لا تتحمل منصة mofidtrip المسؤولية عن مراجعة أو البحث في معلومات المستخدم والمؤسسة لوجود محتوى غير قانوني أو ينتهك الحقوق. ومع ذلك، قد تتخذ الإجراءات المناسبة عند مواجهة الحالات المذكورة. يلتزم المستخدمون بعدم تحميل محتوى غير قانوني أو كاذب إلى منصة mofidtrip. وبطبيعة الحال، فإن منصة mofidtrip مخولة بإزالة المحتوى غير القانوني.",
-      fa_ir:
-        "پلتفرم mofidtrip مسئولیتی در قبال بررسی یا جستجوی اطلاعات کاربران و مؤسسات به دلیل وجود محتوای غیرقانونی یا ناقض حقوق نمی پذیرد، اما در صورت برخورد با موارد ذکر شده ممکن است اقدامات مقتضی را انجام دهد. کاربران متعهد هستند که محتوای غیرقانونی یا نادرست را بارگذاری نکنند. به پلتفرم mofidtrip. طبیعتاً پلتفرم mofidtrip مجاز به حذف محتوای غیرقانونی است.",
-      en_us:
-        "The Mofidtrip Platform Does Not Accept Responsibility For Reviewing Or Searching User And Institution Information For The Presence Of Unlawful Or Rights-infringing Content. However, It May Take Appropriate Actions Upon Encountering The Mentioned Cases. Users Are Committed Not To Upload Illegal Or False Content To The Mofidtrip Platform. Naturally, The Mofidtrip Platform Is Authorized To Remove Illegal Content.",
-    },
+  {
+    ar: "لا تتحمل منصة mofidtrip المسؤولية عن مراجعة أو البحث في معلومات المستخدم والمؤسسة لوجود محتوى غير قانوني أو ينتهك الحقوق. ومع ذلك، قد تتخذ الإجراءات المناسبة عند مواجهة الحالات المذكورة. يلتزم المستخدمون بعدم تحميل محتوى غير قانوني أو كاذب إلى منصة mofidtrip. وبطبيعة الحال، فإن منصة mofidtrip مخولة بإزالة المحتوى غير القانوني.",
+    fa_ir:
+      "پلتفرم mofidtrip مسئولیتی در قبال بررسی یا جستجوی اطلاعات کاربران و مؤسسات به دلیل وجود محتوای غیرقانونی یا ناقض حقوق نمی پذیرد، اما در صورت برخورد با موارد ذکر شده ممکن است اقدامات مقتضی را انجام دهد. کاربران متعهد هستند که محتوای غیرقانونی یا نادرست را بارگذاری نکنند. به پلتفرم mofidtrip. طبیعتاً پلتفرم mofidtrip مجاز به حذف محتوای غیرقانونی است.",
+    en_us:
+      "The Mofidtrip Platform Does Not Accept Responsibility For Reviewing Or Searching User And Institution Information For The Presence Of Unlawful Or Rights-infringing Content. However, It May Take Appropriate Actions Upon Encountering The Mentioned Cases. Users Are Committed Not To Upload Illegal Or False Content To The Mofidtrip Platform. Naturally, The Mofidtrip Platform Is Authorized To Remove Illegal Content.",
+  },
   "this section is under development and will be available in the next update.": {
     ar: "هذه الصفحة قيد التطوير وستتم إضافتها إلى ميزات التطبيق في التحديثات القادمة",
     fa_ir: "این بخش در حال توسعه است و در به روز رسانی بعدی در دسترس خواهد بود.",
@@ -1369,25 +1374,25 @@ export const messages = {
     en_us: "Unsuccessful payment",
   },
   "your payment has been successfully completed, to continue the process and view receipt click the return button.":
-    {
-      ar: "لقد تم إتمام عملية الدفع بنجاح، لمواصلة العملية والعرض استلام انقر فوق زر العودة.",
-      fa_ir:
-        "پرداخت شما با موفقیت انجام شد، برای ادامه فرایند و مشاهده رسید روی دکمه مشاهده رسید کلیک کنید.",
-      en_us:
-        "Your payment has been successfully completed, to continue the process and view Receipt Click the Return button.",
-    },
+  {
+    ar: "لقد تم إتمام عملية الدفع بنجاح، لمواصلة العملية والعرض استلام انقر فوق زر العودة.",
+    fa_ir:
+      "پرداخت شما با موفقیت انجام شد، برای ادامه فرایند و مشاهده رسید روی دکمه مشاهده رسید کلیک کنید.",
+    en_us:
+      "Your payment has been successfully completed, to continue the process and view Receipt Click the Return button.",
+  },
   "payment was successful": {
     ar: "تم الدفع بنجاح",
     fa_ir: "پرداخت با موفقیت انجام شد",
     en_us: "Payment Was Successful",
   },
   "your payment has been failed, to continue the process and view receipt click the return button.":
-    {
-      ar: "لقد فشلت عملية الدفع الخاصة بك، لمواصلة العملية وعرض الإيصال انقر فوق زر العودة.",
-      fa_ir: "پرداخت شما انجام نشد، برای ادامه فرآیند و مشاهده رسید، دکمه بازگشت را کلیک کنید.",
-      en_us:
-        "your payment has been failed, to continue the process and view receipt click the return button.",
-    },
+  {
+    ar: "لقد فشلت عملية الدفع الخاصة بك، لمواصلة العملية وعرض الإيصال انقر فوق زر العودة.",
+    fa_ir: "پرداخت شما انجام نشد، برای ادامه فرآیند و مشاهده رسید، دکمه بازگشت را کلیک کنید.",
+    en_us:
+      "your payment has been failed, to continue the process and view receipt click the return button.",
+  },
 
   "payment status": {
     ar: "حالة السداد",
@@ -1573,7 +1578,7 @@ export const messages = {
   },
   "rates to the host": {
     ar: "أسعار الجولة",
-    fa_ir: "امتیاز به هاست",
+    fa_ir: "امتیاز به میزبانی",
     en_us: "Rates to the host",
   },
   rates_to_the: (name : string) => ({
@@ -1643,7 +1648,7 @@ export const messages = {
   },
   "share your opinion about the host with us.": {
     ar: "Share your opinion about the host with us.",
-    fa_ir: "نقطه نظراتتان را درباره هاست، با ما در میان بگذارید.",
+    fa_ir: "نقطه نظراتتان را درباره میزبانی، با ما در میان بگذارید.",
     en_us: "Share your opinion about the host with us.",
   },
   "share your opinion about the tour with us.": {
@@ -1653,7 +1658,7 @@ export const messages = {
   },
   "how satisfied were you with the experience of traveling to these hosts?": {
     ar: "How satisfied were you with the experience of traveling to these hosts?",
-    fa_ir: "چقدر از تجربه سفر به این هاست رضایت داشتید؟",
+    fa_ir: "چقدر از تجربه سفر به این میزبانی رضایت داشتید؟",
     en_us: "How satisfied were you with the experience of traveling to these hosts?",
   },
   "how satisfied were you with the experience of traveling to these tours?": {
@@ -1673,7 +1678,7 @@ export const messages = {
   }),
   "rate the host": {
     ar: "Rate the host",
-    fa_ir: "به هاست امتیاز دهید",
+    fa_ir: "به میزبانی امتیاز دهید",
     en_us: "Rate the host",
   },
   "rate the tour": {
@@ -1717,29 +1722,29 @@ export const messages = {
     en_us: "confirm and send",
   },
   "if you see a problem in the tour, you can report this violation to the admin so that it can be addressed.":
-    {
-      ar: "إذا رأيت مشكلة في الجولة، يمكنك الإبلاغ عن هذا الانتهاك إلى المسؤول حتى يتم معالجته.",
-      fa_ir:
-        "در صورت مشاهده مشکل در تور، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
-      en_us:
-        "If you see a problem in the tour, you can report this violation to the admin so that it can be addressed.",
-    },
+  {
+    ar: "إذا رأيت مشكلة في الجولة، يمكنك الإبلاغ عن هذا الانتهاك إلى المسؤول حتى يتم معالجته.",
+    fa_ir:
+      "در صورت مشاهده مشکل در تور، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
+    en_us:
+      "If you see a problem in the tour, you can report this violation to the admin so that it can be addressed.",
+  },
   "if you see a problem in the comment, you can report this violation to the admin so that it can be addressed.":
-    {
-      ar: "إذا رأيت مشكلة في النظر، يمكنك الإبلاغ عن هذا الانتهاك إلى المسؤول حتى يتم معالجته.",
-      fa_ir:
-        "در صورت مشاهده مشکل در دیدگاه، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
-      en_us:
-        "If you see a problem in the comment, you can report this violation to the admin so that it can be addressed.",
-    },
+  {
+    ar: "إذا رأيت مشكلة في النظر، يمكنك الإبلاغ عن هذا الانتهاك إلى المسؤول حتى يتم معالجته.",
+    fa_ir:
+      "در صورت مشاهده مشکل در دیدگاه، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
+    en_us:
+      "If you see a problem in the comment, you can report this violation to the admin so that it can be addressed.",
+  },
   "if you see a problem in the host, you can report this violation to the admin so that it can be addressed.":
-    {
-      ar: "إذا رأيت مشكلة في الاستضافة، يمكنك الإبلاغ عن هذه المخالفة إلى المسؤول حتى يتم التعامل معها.",
-      fa_ir:
-        "در صورت مشاهده مشکل در میزبانی، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
-      en_us:
-        "If you see a problem in the host, you can report this violation to the admin so that it can be addressed.",
-    },
+  {
+    ar: "إذا رأيت مشكلة في الاستضافة، يمكنك الإبلاغ عن هذه المخالفة إلى المسؤول حتى يتم التعامل معها.",
+    fa_ir:
+      "در صورت مشاهده مشکل در میزبانی، می‌توانید این تخلف را به ادمین گزارش دهید تا به آن رسیدگی شود.",
+    en_us:
+      "If you see a problem in the host, you can report this violation to the admin so that it can be addressed.",
+  },
   copied: {
     ar: "نسخ",
     fa_ir: "کپی شد",
@@ -1751,13 +1756,13 @@ export const messages = {
     en_us: "Let's Start And Login To Mofidtrip",
   },
   "to reserve the places and use the application, you must log in or register in the first step, otherwise you will not be able to do any activity.":
-    {
-      ar: "لحجز القصور واستخدام التطبيق يجب عليك تسجيل الدخول أو التسجيل في الخطوة الأولى، وإلا فلن تتمكن من القيام بأي نشاط.",
-      fa_ir:
-        "برای رزرو کاخ ها و استفاده از اپلیکیشن باید در مرحله اول وارد شوید یا ثبت نام کنید در غیر این صورت هیچ فعالیتی نمی توانید انجام دهید.",
-      en_us:
-        "To Reserve The Places And Use The Application, You Must Log In Or Register In The First Step, Otherwise You Will Not Be Able To Do Any Activity.",
-    },
+  {
+    ar: "لحجز القصور واستخدام التطبيق يجب عليك تسجيل الدخول أو التسجيل في الخطوة الأولى، وإلا فلن تتمكن من القيام بأي نشاط.",
+    fa_ir:
+      "برای رزرو کاخ ها و استفاده از اپلیکیشن باید در مرحله اول وارد شوید یا ثبت نام کنید در غیر این صورت هیچ فعالیتی نمی توانید انجام دهید.",
+    en_us:
+      "To Reserve The Places And Use The Application, You Must Log In Or Register In The First Step, Otherwise You Will Not Be Able To Do Any Activity.",
+  },
   Login: {
     ar: "تسجيل الدخول",
     fa_ir: "وارد شدن",
@@ -1841,21 +1846,21 @@ export const messages = {
     en_us: "Contact",
   },
   "your final and recorded details for the initial tour request. the price is calculated per person.":
-    {
-      ar: "بياناتك النهائية والمسجلة لطلب الجولة الأولية. يتم احتساب السعر للشخص الواحد.",
-      fa_ir:
-        "جزئیات نهایی و ثبت شده شما برای درخواست اولیه به تور. قیمت بر اساس هر نفر محسابه می‌شود.",
-      en_us:
-        "Your final and recorded details for the initial tour request. The price is calculated per person.",
-    },
+  {
+    ar: "بياناتك النهائية والمسجلة لطلب الجولة الأولية. يتم احتساب السعر للشخص الواحد.",
+    fa_ir:
+      "جزئیات نهایی و ثبت شده شما برای درخواست اولیه به تور. قیمت بر اساس هر نفر محسابه می‌شود.",
+    en_us:
+      "Your final and recorded details for the initial tour request. The price is calculated per person.",
+  },
   "your final and recorded details for the initial host request. the price is calculated per person.":
-    {
-      ar: "بياناتك النهائية والمسجلة لطلب الجولة الأولية. يتم احتساب السعر للشخص الواحد.",
-      fa_ir:
-        "جزئیات نهایی و ثبت شده شما برای درخواست اولیه به میزبان. قیمت بر اساس هر نفر محسابه می‌شود.",
-      en_us:
-        "Your final and recorded details for the initial host request. The price is calculated per person.",
-    },
+  {
+    ar: "بياناتك النهائية والمسجلة لطلب الجولة الأولية. يتم احتساب السعر للشخص الواحد.",
+    fa_ir:
+      "جزئیات نهایی و ثبت شده شما برای درخواست اولیه به میزبان. قیمت بر اساس هر نفر محسابه می‌شود.",
+    en_us:
+      "Your final and recorded details for the initial host request. The price is calculated per person.",
+  },
   "final invoice": {
     ar: "الفاتورة النهائية",
     fa_ir: "فاکتور نهایی",
@@ -1939,7 +1944,7 @@ export const messages = {
   "you can communicate with the host owner by calling and texting.": {
     ar: "يمكنك إجراء حجز مع المضيف عن طريق الاتصال والرسائل النصية لقد تواصلت.",
     fa_ir:
-      "شما می‌توانید از طریق تماس و پیامک، با میزبان هاستی که رزرو کرده اید ارتباط برقرار کنید.",
+      "شما می‌توانید از طریق تماس و پیامک، با میزبان میزبانیی که رزرو کرده اید ارتباط برقرار کنید.",
     en_us: "you can communicate with the host owner by calling and texting.",
   },
   "communication with the host": {
@@ -1959,7 +1964,7 @@ export const messages = {
   },
   "host transactions": {
     ar: "طلب استضافةه",
-    fa_ir: "درخواست به هاست",
+    fa_ir: "درخواست به میزبانی",
     en_us: "Host transactions",
   },
   "manage your requests for host": {
@@ -1979,7 +1984,7 @@ export const messages = {
   },
   "view and manage host": {
     ar: "المشاهدة والإدارة",
-    fa_ir: "مشاهده و مدیریت هاست",
+    fa_ir: "مشاهده و مدیریت میزبانی",
     en_us: "view and manage host",
   },
   requests: {
@@ -1993,13 +1998,13 @@ export const messages = {
     en_us: "withdrawal request",
   },
   "to request a withdrawal from the wallet, please enter the desired amount and select one of your previously created bank cards or register a new bank card.":
-    {
-      ar: "لطلب السحب من المحفظة، يرجى إدخال المبلغ المطلوب واختيار إحدى بطاقاتك المصرفية التي تم إنشاؤها مسبقًا أو تسجيل بطاقة مصرفية جديدة.",
-      fa_ir:
-        "جهت درخواست برداشت وجه از کیف پول خواهشمند است مبلغ مورد نظرتان را وارد کرده و یکی از کارت های بانکی از قبل ایجاد شده‌تان را انتخاب کنید یا کارت بانکی جدیدی ثبت کنید.",
-      en_us:
-        "To request a withdrawal from the wallet, please enter the desired amount and select one of your previously created bank cards or register a new bank card.",
-    },
+  {
+    ar: "لطلب السحب من المحفظة، يرجى إدخال المبلغ المطلوب واختيار إحدى بطاقاتك المصرفية التي تم إنشاؤها مسبقًا أو تسجيل بطاقة مصرفية جديدة.",
+    fa_ir:
+      "جهت درخواست برداشت وجه از کیف پول خواهشمند است مبلغ مورد نظرتان را وارد کرده و یکی از کارت های بانکی از قبل ایجاد شده‌تان را انتخاب کنید یا کارت بانکی جدیدی ثبت کنید.",
+    en_us:
+      "To request a withdrawal from the wallet, please enter the desired amount and select one of your previously created bank cards or register a new bank card.",
+  },
   "withdraw from the wallet": {
     ar: "السحب من المحفظة",
     fa_ir: "برداشت از کیف پول",
@@ -2017,7 +2022,7 @@ export const messages = {
   },
   "there is no request for this host": {
     ar: "لا يوجد طلب لهؤلاء المضيفين",
-    fa_ir: "درخواستی برای این هاست وجود نداره",
+    fa_ir: "درخواستی برای این میزبانی وجود نداره",
     en_us: "there is no request for this host",
   },
   "there is no request for this tour": {
@@ -2052,7 +2057,7 @@ export const messages = {
   },
   "after paying the host fee, your reservation will be finalized": {
     ar: "بعد دفع رسوم الجولة، سيتم الانتهاء من حجزك",
-    fa_ir: "شما بعد از پرداخت هزینه هاست، رزروتان نهایی می شود",
+    fa_ir: "شما بعد از پرداخت هزینه میزبانی، رزروتان نهایی می شود",
     en_us: "After paying the host fee, your reservation will be finalized",
   },
   "are you sure about the payment?": {
@@ -2071,12 +2076,12 @@ export const messages = {
     en_us: "Passengers Info",
   },
   "to request and reserve the tour, enter your details and those of your accompanying passengers.":
-    {
-      ar: "لطلب الجولة وحجزها، أدخل بياناتك وبيانات الركاب المرافقين لك.",
-      fa_ir: "برای درخواست و رزرو اولیه تور، مشخصات خودتان  و مسافران همراهتان را وارد کنید.",
-      en_us:
-        "To request and reserve the tour, enter your details and those of your accompanying passengers.",
-    },
+  {
+    ar: "لطلب الجولة وحجزها، أدخل بياناتك وبيانات الركاب المرافقين لك.",
+    fa_ir: "برای درخواست و رزرو اولیه تور، مشخصات خودتان  و مسافران همراهتان را وارد کنید.",
+    en_us:
+      "To request and reserve the tour, enter your details and those of your accompanying passengers.",
+  },
   "add new passenger": {
     ar: "إضافة راكب جديد",
     fa_ir: "افزودن مسافر جدید",
@@ -2525,13 +2530,13 @@ export const messages = {
     en_us: "Authentication",
   },
   "if your collection is not authenticated by the admin, it will not be approved. please authenticate as soon as possible.":
-    {
-      ar: "إذا لم تتم المصادقة على مجموعتك من قبل المسؤول، فلن تتم الموافقة عليها. يرجى المصادقة في أقرب وقت ممكن.",
-      fa_ir:
-        "در صورت احراز نشدن هویت مجموعه شما توسط ادمین ، تایید نخواهد شد. لطفا در سریعترین زمان اقدام به احراز هویت کنید.",
-      en_us:
-        "if your collection is not authenticated by the admin, it will not be approved. please authenticate as soon as possible.",
-    },
+  {
+    ar: "إذا لم تتم المصادقة على مجموعتك من قبل المسؤول، فلن تتم الموافقة عليها. يرجى المصادقة في أقرب وقت ممكن.",
+    fa_ir:
+      "در صورت احراز نشدن هویت مجموعه شما توسط ادمین ، تایید نخواهد شد. لطفا در سریعترین زمان اقدام به احراز هویت کنید.",
+    en_us:
+      "if your collection is not authenticated by the admin, it will not be approved. please authenticate as soon as possible.",
+  },
   "verify your ngo!": {
     ar: "التحقق من مجموعتك!",
     fa_ir: "مجموعه‌تان را احراز کنید!",
@@ -2613,45 +2618,45 @@ export const messages = {
     en_us: "terms of service",
   },
   "the created host is under review by the admin, after approval by the admin, your host will be released.":
-    {
-      ar: "المضيف الذي تم إنشاؤه قيد المراجعة من قبل المسؤول، وبعد موافقة المسؤول، سيتم تحرير المضيف الخاص بك.",
-      fa_ir:
-        "هاست ایجاد شده در مرحله بررسی توسط ادمین قرار دارد ، بعد از تایید توسط ادمین، هاست شما منتشر خواهد شد.",
-      en_us:
-        "The created host is under review by the admin, after approval by the admin, your host will be released.",
-    },
+  {
+    ar: "المضيف الذي تم إنشاؤه قيد المراجعة من قبل المسؤول، وبعد موافقة المسؤول، سيتم تحرير المضيف الخاص بك.",
+    fa_ir:
+      "میزبانی ایجاد شده در مرحله بررسی توسط ادمین قرار دارد ، بعد از تایید توسط ادمین، میزبانی شما منتشر خواهد شد.",
+    en_us:
+      "The created host is under review by the admin, after approval by the admin, your host will be released.",
+  },
   "the host has been published successfully after being reviewed by the admin. your host is now visible to travelers.":
-    {
-      ar: "تم نشر المضيف بنجاح بعد مراجعته من قبل المشرف. أصبح مضيفك مرئيًا الآن للمسافرين.",
-      fa_ir:
-        "هاست، پس از بررسی توسط ادمین، با موفقیت منتشر شد. هم اکنون هاست شما قابل مشاهده برای مسافران است.",
-      en_us:
-        "The host has been published successfully after being reviewed by the admin. Your host is now visible to travelers.",
-    },
+  {
+    ar: "تم نشر المضيف بنجاح بعد مراجعته من قبل المشرف. أصبح مضيفك مرئيًا الآن للمسافرين.",
+    fa_ir:
+      "میزبانی، پس از بررسی توسط ادمین، با موفقیت منتشر شد. هم اکنون میزبانی شما قابل مشاهده برای مسافران است.",
+    en_us:
+      "The host has been published successfully after being reviewed by the admin. Your host is now visible to travelers.",
+  },
   "the created tour is under review by the admin, after approval by the admin, your tour will be published.":
-    {
-      ar: "الجولة التي تم إنشاؤها قيد المراجعة من قبل المسؤول، وبعد موافقة المسؤول، سيتم نشر جولتك.",
-      fa_ir:
-        "تور ایجاد شده در مرحله بررسی توسط ادمین قرار دارد ، بعد از تایید توسط ادمین، تور شما منتشر خواهد شد.",
-      en_us:
-        "The created tour is under review by the admin, after approval by the admin, your tour will be published.",
-    },
+  {
+    ar: "الجولة التي تم إنشاؤها قيد المراجعة من قبل المسؤول، وبعد موافقة المسؤول، سيتم نشر جولتك.",
+    fa_ir:
+      "تور ایجاد شده در مرحله بررسی توسط ادمین قرار دارد ، بعد از تایید توسط ادمین، تور شما منتشر خواهد شد.",
+    en_us:
+      "The created tour is under review by the admin, after approval by the admin, your tour will be published.",
+  },
   "the tour has been successfully published after being reviewed by the admin. your tour is now visible to travelers.":
-    {
-      ar: "تم نشر الجولة بنجاح بعد مراجعتها من قبل المشرف. جولتك مرئية الآن للمسافرين.",
-      fa_ir:
-        "تور، پس از بررسی توسط ادمین، با موفقیت منتشر شد. هم اکنون تور شما در معرض دید مسافران قرار گرفته است.",
-      en_us:
-        "The tour has been successfully published after being reviewed by the admin. Your tour is now visible to travelers.",
-    },
+  {
+    ar: "تم نشر الجولة بنجاح بعد مراجعتها من قبل المشرف. جولتك مرئية الآن للمسافرين.",
+    fa_ir:
+      "تور، پس از بررسی توسط ادمین، با موفقیت منتشر شد. هم اکنون تور شما در معرض دید مسافران قرار گرفته است.",
+    en_us:
+      "The tour has been successfully published after being reviewed by the admin. Your tour is now visible to travelers.",
+  },
   "your tour has been completed successfully. to create a tour again, go to the create section and create your tour.":
-    {
-      ar: "لقد اكتملت جولتك بنجاح. لإنشاء جولة مرة أخرى، انتقل إلى قسم إنشاء وقم بإنشاء جولتك.",
-      fa_ir:
-        "تور شما با موفقیت انجام شد و به اتمام رسید. برای ایجاد دوباره تور، به بخش ایجاد بروید و تورتان را بسازید.",
-      en_us:
-        "Your tour has been completed successfully. To create a tour again, go to the Create section and create your tour.",
-    },
+  {
+    ar: "لقد اكتملت جولتك بنجاح. لإنشاء جولة مرة أخرى، انتقل إلى قسم إنشاء وقم بإنشاء جولتك.",
+    fa_ir:
+      "تور شما با موفقیت انجام شد و به اتمام رسید. برای ایجاد دوباره تور، به بخش ایجاد بروید و تورتان را بسازید.",
+    en_us:
+      "Your tour has been completed successfully. To create a tour again, go to the Create section and create your tour.",
+  },
   "price per person": {
     ar: "السعر للشخص الواحد",
     fa_ir: "قیمت برای هر نفر",
@@ -2708,13 +2713,13 @@ export const messages = {
     en_us: "ngo name is required",
   },
   "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published":
-    {
-      ar: "ندارد",
-      fa_ir:
-        "درخواست شما توسط ادمین در حال بررسی می‌باشد، در صورت تایید هویت، تور شما / هاست شما منتشر خواهد شد",
-      en_us:
-        "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published",
-    },
+  {
+    ar: "ندارد",
+    fa_ir:
+      "درخواست شما توسط ادمین در حال بررسی می‌باشد، در صورت تایید هویت، تور شما / میزبانی شما منتشر خواهد شد",
+    en_us:
+      "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published",
+  },
   "your ngo authentication request has been successfully submitted": {
     ar: "الإسم الأول مطلوب",
     fa_ir: "درخواست احراز هویت مجموعه شما با موفقیت ارسال شد",
@@ -2987,12 +2992,12 @@ export const messages = {
     en_us: "Place of movement",
   },
   "to easily find the origin and start the tour, set the address and the map of the place of departure.":
-    {
-      ar: "للعثور بسهولة على نقطة الانطلاق وبدء الجولة، قم بتعيين العنوان وخريطة مكان المغادرة.",
-      fa_ir: "برای راحت پیدا کردن مبدا و شروع تور، آدرس و نقشه مکان حرکت را قرارر دهید.",
-      en_us:
-        "To easily find the origin and start the tour, set the address and the map of the place of departure.",
-    },
+  {
+    ar: "للعثور بسهولة على نقطة الانطلاق وبدء الجولة، قم بتعيين العنوان وخريطة مكان المغادرة.",
+    fa_ir: "برای راحت پیدا کردن مبدا و شروع تور، آدرس و نقشه مکان حرکت را قرارر دهید.",
+    en_us:
+      "To easily find the origin and start the tour, set the address and the map of the place of departure.",
+  },
   "address is required": {
     ar: "العنوان مطلوب",
     fa_ir: "آدرس اجباری است",
@@ -3220,39 +3225,39 @@ export const messages = {
     en_us: "Your request to create a tour has been successfully registered",
   },
   "wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.":
-    {
-      ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل جولتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
-      fa_ir:
-        "کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
-      en_us:
-        "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.",
-    },
+  {
+    ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل جولتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
+    fa_ir:
+      "کمتر از ۴۸ ساعت منتظر بمانید تا تور شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
+    en_us:
+      "Wait less than 48 hours for your tour to be registered by trip's helpful support and displayed to travelers.",
+  },
   "your hosting creation request has been successfully registered": {
     ar: "لقد تم تسجيل طلب إنشاء الاستضافة الخاص بك بنجاح",
     fa_ir: "درخواست ایجاد میزبانی شما با موفقیت ثبت شد",
     en_us: "Your hosting creation request has been successfully registered",
   },
   "wait less than 48 hours for your hosting to be registered by trip's helpful support and displayed to travelers.":
-    {
-      ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل استضافتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
-      fa_ir:
-        "کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
-      en_us:
-        "Wait less than 48 hours for your hosting to be registered by Trip's helpful support and displayed to travelers.",
-    },
+  {
+    ar: "انتظر أقل من 48 ساعة حتى يتم تسجيل استضافتك من خلال الدعم المفيد للرحلة وعرضها للمسافرين.",
+    fa_ir:
+      "کمتر از ۴۸ ساعت منتظر بمانید تا میزبانی شما توسط پشتیبانی مفید تریپ ثبت شود و به مسافران نمایش داده شود.",
+    en_us:
+      "Wait less than 48 hours for your hosting to be registered by Trip's helpful support and displayed to travelers.",
+  },
   "pictures related to the host": {
     ar: "الصور المتعلقة بالمضيف",
     fa_ir: "تصاویر مربوط به میزبانی",
     en_us: "Pictures related to the host",
   },
   "you can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.":
-    {
-      ar: "يمكنك تحميل الصور المتعلقة بمضيفك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
-      fa_ir:
-        "شما می توانید تصاویر مربوط به هاست خود را آپلود کنید، لطفا توجه داشته باشید که حجم تصاویر باید کمتر از 3 مگابایت باشد. توجه داشته باشید که این بخش اختیاری است.",
-      en_us:
-        "You can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.",
-    },
+  {
+    ar: "يمكنك تحميل الصور المتعلقة بمضيفك، يرجى ملاحظة أن حجم الصور يجب أن يكون أقل من 3 ميغابايت. لاحظ أن هذا القسم اختياري.",
+    fa_ir:
+      "شما می توانید تصاویر مربوط به میزبانی خود را آپلود کنید، لطفا توجه داشته باشید که حجم تصاویر باید کمتر از 3 مگابایت باشد. توجه داشته باشید که این بخش اختیاری است.",
+    en_us:
+      "You can upload images related to your host, please note that the size of the images should be less than 3 mb. note that this section is optional.",
+  },
   "you can write and add your own host features. note that this section is optional.": {
     ar: "يمكنك كتابة وإضافة ميزات المضيف الخاصة بك. لاحظ أن هذا القسم اختياري.",
     fa_ir:
@@ -3290,12 +3295,12 @@ export const messages = {
     en_us: "The host is open to children under 12 years old",
   },
   "to easily find the origin and start the host, set the address and the map of the place of departure.":
-    {
-      ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
-      fa_ir: "آدرس محل میزبانی خودتان را برای اطلاع مسافران بنویسید.",
-      en_us:
-        "To easily find the origin and start the host, set the address and the map of the place of departure.",
-    },
+  {
+    ar: "للعثور بسهولة على الأصل وبدء المضيف، قم بتعيين العنوان وخريطة مكان المغادرة.",
+    fa_ir: "آدرس محل میزبانی خودتان را برای اطلاع مسافران بنویسید.",
+    en_us:
+      "To easily find the origin and start the host, set the address and the map of the place of departure.",
+  },
   "host title and details": {
     ar: "عنوان المضيف والتفاصيل",
     fa_ir: "عنوان میزبانی و جزئیات",
@@ -3327,13 +3332,13 @@ export const messages = {
     en_us: "End Host",
   },
   "the created hosting is under review by support, after approval by the support team, it will be included in mofidtrip's hosting list.":
-    {
-      ar: "الاستضافة التي تم إنشاؤها قيد المراجعة من قبل الدعم، وبعد موافقة فريق الدعم، سيتم إدراجها في قائمة استضافة Mofidtrip.",
-      fa_ir:
-        "میزبانی ایجاد شده در مرحله بررسی توسط پشتیبانی قرار دارد ، بعد از تایید توسط تیم پشتیبانی در لیست میزبانی های مفیدتریپ قرار خواهد گرفت.",
-      en_us:
-        "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
-    },
+  {
+    ar: "الاستضافة التي تم إنشاؤها قيد المراجعة من قبل الدعم، وبعد موافقة فريق الدعم، سيتم إدراجها في قائمة استضافة Mofidtrip.",
+    fa_ir:
+      "میزبانی ایجاد شده در مرحله بررسی توسط پشتیبانی قرار دارد ، بعد از تایید توسط تیم پشتیبانی در لیست میزبانی های مفیدتریپ قرار خواهد گرفت.",
+    en_us:
+      "The created hosting is under review by support, after approval by the support team, it will be included in Mofidtrip's hosting list.",
+  },
   "last modification": {
     ar: "اخر تعديل",
     fa_ir: "آخرین به روز رسانی",
@@ -3383,12 +3388,12 @@ export const messages = {
     en_us: "Access Denied",
   },
   "it appears that you do not have permission to access this page. access the system administrator for access.":
-    {
-      ar: "يبدو أنه ليس لديك إذن للوصول إلى هذه الصفحة. الوصول إلى مسؤول النظام للوصول.",
-      fa_ir: "به نظر می رسد که شما اجازه دسترسی به این صفحه را ندارید.",
-      en_us:
-        "It appears that you do not have permission to access this page. Access the system administrator for access.",
-    },
+  {
+    ar: "يبدو أنه ليس لديك إذن للوصول إلى هذه الصفحة. الوصول إلى مسؤول النظام للوصول.",
+    fa_ir: "به نظر می رسد که شما اجازه دسترسی به این صفحه را ندارید.",
+    en_us:
+      "It appears that you do not have permission to access this page. Access the system administrator for access.",
+  },
   "user login": {
     ar: "ندارد",
     fa_ir: "ورود کاربر",
@@ -3445,7 +3450,7 @@ export const messages = {
     en_us: "Add your comment",
   },
   "host Address": {
-    ar: "الآدرس الهاست",
+    ar: "الآدرس المیزبانی",
     fa_ir: "آدرس میزبانی",
     en_us: "Host Address",
   },

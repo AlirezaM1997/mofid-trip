@@ -110,7 +110,7 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
           <Text heading1 center>
             محدودیت دسترسی
           </Text>
-          <Text center>رزرو هاست تنها برای تشکل ها امکان پذیر است</Text>
+          <Text center>رزرو میزبانی تنها برای تشکل ها امکان پذیر است</Text>
           <WhiteSpace />
           <Button onPress={handleClose}>{tr("Ok")}</Button>
         </Container>

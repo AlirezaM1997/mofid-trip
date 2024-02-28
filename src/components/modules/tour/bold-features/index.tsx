@@ -21,7 +21,7 @@ const Item = ({ title, subtitle }) => {
   );
 };
 
-const ProjectBoldFeatures = ({ capacity, dateStart, dateEnd, category }) => {
+const TourBoldInfo = ({ capacity, startTime, endTime }) => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
   const dateConvertor = date => localizeNumber(moment(date).locale("fa").format("jDD jMMMM"));
@@ -35,16 +35,20 @@ const ProjectBoldFeatures = ({ capacity, dateStart, dateEnd, category }) => {
 
     return obj[capacity.gender];
   };
+  const s = moment(startTime, "YYYY-MM-DDTHH:mm:ssZ");
+  const e = moment(endTime, "YYYY-MM-DDTHH:mm:ssZ");
+
+  const differenceInDays = e.diff(s, "days");
 
   return (
     <View style={style.container}>
       <Item
-        title={tr("hosting date")}
-        subtitle={`${dateConvertor(dateStart)} - ${dateConvertor(dateEnd)}`}
+        title={tr("date")}
+        subtitle={`${dateConvertor(startTime)} - ${dateConvertor(endTime)}`}
       />
       <Divider orientation="vertical" />
 
-      <Item subtitle={category} title={tr("hosting type")} />
+      <Item subtitle={`${differenceInDays} ${tr("day")}`} title={tr("Duration")} />
       <Divider orientation="vertical" />
 
       <Item
@@ -64,4 +68,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default ProjectBoldFeatures;
+export default TourBoldInfo;

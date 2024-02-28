@@ -1,7 +1,7 @@
-import { WIDTH } from "@src/constants";
 import { useTheme } from "@rneui/themed";
 import { NetworkStatus } from "@apollo/client";
 import React, { useRef, useState } from "react";
+import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView } from "react-native-gesture-handler";
@@ -9,23 +9,18 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import WhiteSpace from "@src/components/atoms/white-space";
 import NoResult from "@src/components/organisms/no-result";
 import HostSliderCard from "@modules/host/card/slider-card";
-import { AccommodationImageType, ProjectQueryType, SortFieldEnum, useProjectListSearchQuery } from "@src/gql/generated";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { ProjectQueryType, useProjectListSearchQuery } from "@src/gql/generated";
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
 
 const MahdiehIranScreen = () => {
   const pageNumber = useRef(1);
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { localizeNumber } = useLocalizedNumberFormat();
+  const [scrollReachedEnd, setScrollReachedEnd] = useState(false);
 
   const { data, networkStatus, fetchMore } = useProjectListSearchQuery({
     notifyOnNetworkStatusChange: true,
-    variables: {
-      // TODO: add fetch more instead 999 pageSize!!
-      page: { pageNumber: 1, pageSize: 9999 },
-      sort: { fieldName: SortFieldEnum.ModifiedDate },
-    },
+    variables: { page: { pageNumber: 1, pageSize: 10 } },
   });
 
   const handleLoadMore = () => {
@@ -62,6 +57,9 @@ const MahdiehIranScreen = () => {
       ) {
         handleLoadMore();
       }
+      setScrollReachedEnd(true);
+    } else {
+      setScrollReachedEnd(false);
     }
   };
 
@@ -79,10 +77,10 @@ const MahdiehIranScreen = () => {
       <Container>
         <WhiteSpace size={24} />
         <TitleWithAction
-          color="grey3"
           size="caption"
-          title={tr("all hosts")}
-          actionTitle={`${localizeNumber(data?.projectList?.count as number)} ${tr("host")}`}
+          color="grey3"
+          title={tr("all hosts of")}
+          actionTitle={`${data?.projectList?.count?.toString()} ${tr("host")}`}
         />
         <WhiteSpace size={16} />
 
@@ -90,9 +88,9 @@ const MahdiehIranScreen = () => {
           {data?.projectList?.data?.map(project => (
             <HostSliderCard
               key={project?.id}
-              name={project?.name}
               id={project?.id as string}
-              containerStyle={{ width: WIDTH, maxWidth: WIDTH - 40 }}
+              name={project?.name}
+              containerStyle={{ width: 325 }}
               address={project?.accommodation?.address}
               avatarS3={project?.accommodation?.avatarS3}
               price={((project?.price as number) * (100 - (project?.discount as number))) / 100}
@@ -110,13 +108,7 @@ const MahdiehIranScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  resultContainer: {
-    gap: 20,
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "column",
-    justifyContent: "center",
-  },
+  resultContainer: { gap: 20 },
 });
 
 export default MahdiehIranScreen;
