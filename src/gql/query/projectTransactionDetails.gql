@@ -42,6 +42,7 @@ query projectTransactionDetail($pk: ID!) {
       description
       categories {
         name
+        displayName
       }
       facilities {
         id

@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Button, Divider, Text, useTheme } from "@rneui/themed";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
@@ -29,11 +29,13 @@ const CommentCard = ({
   const { localizeNumber } = useLocalizedNumberFormat();
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [showText, setShowText] = useState<boolean>(false);
 
   const [likeAdd] = useLikeAddMutation();
 
   const handleOpen = () => setIsVisible(!isVisible);
   const handleClose = () => setIsVisible(false);
+  const handleShowText = () => setShowText(!showText);
 
   const handleLike = async () => {
     const { data } = await likeAdd({
@@ -75,11 +77,11 @@ const CommentCard = ({
     <View style={styles.containerStyle(theme)}>
       <View style={styles.cardInf}>
         <View style={styles.commentTextIcon}>
-          <View style={styles.commentText}>
-            <Text numberOfLines={4} caption>
+          <Pressable onPress={handleShowText} style={styles.commentText}>
+            <Text numberOfLines={(!showText && 4) as number} caption>
               {comment.text}
             </Text>
-          </View>
+          </Pressable>
           <Entypo
             size={14}
             color={theme.colors.grey2}
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
   dropDown: {
     position: "absolute",
     left: 15,
-    backgroundColor:'red',
+    backgroundColor: "red",
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,

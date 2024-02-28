@@ -11,15 +11,23 @@ import BottomButtonLayout from "@components/layout/bottom-button";
 import { Button, useTheme } from "@rneui/themed";
 import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useDispatch } from "react-redux";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 
 const TourManagement = () => {
   const { tr } = useTranslation();
   const {theme} = useTheme();
+  const dispatch = useDispatch();
   const { loading, data } = useMyNgoDetailTourSetQuery({
     fetchPolicy: "network-only",
   });
 const handleNavigateToCreateTour = ()=>{
   router.push("tour/create")
+  dispatch(
+    setRedirectToScreenAfterLogin({
+      pathname: "tour/management",
+    })
+  );
 }
   if (loading) return <LoadingIndicator />;
 
@@ -35,7 +43,7 @@ const handleNavigateToCreateTour = ()=>{
         </Button>,
       ]}>
       <ScrollView>
-        {!data?.NGODetail?.tourSet.length && (
+        {!data?.NGODetail?.tourSet?.length && (
           <View style={{ height: HEIGHT / 2 }}>
             <NoResult title={tr("there is no tour")} />
           </View>

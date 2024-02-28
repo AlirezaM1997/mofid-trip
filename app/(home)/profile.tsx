@@ -7,7 +7,7 @@ import { useRootNavigationState } from "expo-router";
 import Authentication from "@modules/authentication";
 import { useIsFocused } from "@react-navigation/core";
 import LoadingIndicator from "@modules/Loading-indicator";
-import { useUserDetailProfileLazyQuery, useUserDetailProfileQuery } from "@src/gql/generated";
+import { UserQueryType, useUserDetailProfileLazyQuery } from "@src/gql/generated";
 
 const Profile: React.FC = () => {
   I18nManager.allowRTL(true);
@@ -33,9 +33,9 @@ const Profile: React.FC = () => {
   const userDetail = data.userDetail;
 
   return userDetail?.isNgo ? (
-    <NGOProfile userDetail={userDetail} />
+    <NGOProfile userDetail={userDetail as UserQueryType} />
   ) : (
-    <UserProfile userDetail={userDetail} />
+    <UserProfile userDetail={userDetail as UserQueryType} />
   );
 };
 

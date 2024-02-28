@@ -8,13 +8,13 @@ import HostTransactionForm from "@organisms/host-transaction";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
-import { useProjectTransactionDetailQuery } from "@src/gql/generated";
+import { ProjectTransactionQueryType, useProjectTransactionDetailQuery } from "@src/gql/generated";
 import HostTransactionEditSubmitBottomSheet from "@organisms/host-transaction/editSubmitBottomSheet";
 
 const HostTransactionEditScreen = () => {
   const { tr } = useTranslation();
   const navigation = useNavigation();
-  const [activeStep, setActiveStep] = useState(3);
+  const [activeStep, setActiveStep] = useState<number>(3);
   const { transactionId, name } = useLocalSearchParams();
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -25,13 +25,13 @@ const HostTransactionEditScreen = () => {
 
   if (!data || loading) return <LoadingIndicator />;
 
-  const { id, status, guest, dateEnd, dateStart } = data.projectTransactionDetail;
+  const { id, status, guest, dateEnd, dateStart } = data?.projectTransactionDetail as ProjectTransactionQueryType;
 
   const initialValues = {
     guests: {
-      gender: guest.gender,
-      guestNumber: guest.guestNumber,
-      childAccept: guest.childAccept,
+      gender: guest?.gender,
+      guestNumber: guest?.guestNumber,
+      childAccept: guest?.childAccept,
     },
     dateStart,
     dateEnd,
