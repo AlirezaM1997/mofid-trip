@@ -2657,7 +2657,7 @@ export type HostCommentQueryVariables = Exact<{
 }>;
 
 
-export type HostCommentQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', name?: string | null, commentSet?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null, nestedComment?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null } | null> | null } | null> | null } | null };
+export type HostCommentQuery = { __typename?: 'Query', projectDetail?: { __typename?: 'ProjectQueryType', name?: string | null, commentSet?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null, displayName?: string | null } | null, nestedComment?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null } | null> | null } | null> | null } | null };
 
 export type MyNgoDetailProjectSetQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2791,7 +2791,7 @@ export type TourCommentQueryVariables = Exact<{
 }>;
 
 
-export type TourCommentQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'TourQueryType', title: string, commentSet?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null, nestedComment?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null } | null> | null } | null> | null } | null };
+export type TourCommentQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'TourQueryType', title: string, commentSet?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null, displayName?: string | null } | null, nestedComment?: Array<{ __typename?: 'CommentType', text: string, createdDate?: any | null, dislikeCount?: number | null, likeCount?: number | null, id: string, user?: { __typename?: 'UserQueryType', fullname?: string | null } | null } | null> | null } | null> | null } | null };
 
 export type TourDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
@@ -3845,6 +3845,7 @@ export const HostCommentDocument = gql`
       id
       user {
         fullname
+        displayName
       }
       nestedComment {
         text
@@ -5422,6 +5423,7 @@ export const TourCommentDocument = gql`
       id
       user {
         fullname
+        displayName
       }
       nestedComment {
         text

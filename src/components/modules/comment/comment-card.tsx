@@ -1,33 +1,23 @@
-import { Platform, Pressable, StyleSheet, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Button, Divider, Text, useTheme } from "@rneui/themed";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import moment from "jalali-moment";
-import { AntDesign, Entypo, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import {
+  CommentType,
   LikeObjectEnum,
   LikeStatusEnum,
-  ProjectQueryType,
-  TourQueryType,
   useLikeAddMutation,
 } from "@src/gql/generated";
+import moment from "jalali-moment";
 import { router } from "expo-router";
-import ReportComment from "@modules/report/report-comment";
 import { HEIGHT, WIDTH } from "@src/constants";
+import React, { useEffect, useState } from "react";
+import ReportComment from "@modules/report/report-comment";
+import { Button, Divider, Text, useTheme } from "@rneui/themed";
+import { Platform, Pressable, StyleSheet, View, ViewStyle } from "react-native";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { AntDesign, Entypo, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 
-const CommentCard = ({
-  comment,
-  refetch,
-  push,
-}: {
-  comment: TourQueryType["commentSet"][0] | ProjectQueryType["commentSet"][0];
-  refetch;
-  push;
-}) => {
+const CommentCard = ({ comment, refetch, push }: { comment: CommentType; refetch; push: string }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
-
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [showText, setShowText] = useState<boolean>(false);
 
@@ -36,7 +26,6 @@ const CommentCard = ({
   const handleOpen = () => setIsVisible(!isVisible);
   const handleClose = () => setIsVisible(false);
   const handleShowText = () => setShowText(!showText);
-
   const handleLike = async () => {
     const { data } = await likeAdd({
       variables: {
@@ -65,7 +54,6 @@ const CommentCard = ({
       refetch();
     }
   };
-
   const closeDropDown = () => window.addEventListener("click", handleClose);
 
   useEffect(() => {
@@ -96,7 +84,7 @@ const CommentCard = ({
         </View>
         <Text caption type="grey3">
           {localizeNumber(moment(comment.createdDate).locale("fa").format("jD jMMMM jYYYY"))} .{" "}
-          {comment.user.fullname}
+          {comment?.user?.displayName}
         </Text>
       </View>
       <View style={styles.footerCard}>
@@ -107,13 +95,13 @@ const CommentCard = ({
           <View style={styles.likeBox}>
             <View style={styles.likeStyle}>
               <Text caption type="grey2">
-                {localizeNumber(comment.likeCount)}
+                {localizeNumber(comment?.likeCount as number)}
               </Text>
               <AntDesign name="like2" size={16} color={theme.colors.grey2} onPress={handleLike} />
             </View>
             <View style={styles.likeStyle}>
               <Text caption type="grey2">
-                {localizeNumber(comment.dislikeCount)}
+                {localizeNumber(comment?.dislikeCount as number)}
               </Text>
               <AntDesign
                 name="dislike2"
@@ -124,7 +112,7 @@ const CommentCard = ({
             </View>
             <View style={styles.likeStyle}>
               <Text caption type="grey2">
-                {localizeNumber(comment.nestedComment.length)}
+                {localizeNumber(comment?.nestedComment?.length as number)}
               </Text>
               <MaterialCommunityIcons
                 onPress={() => router.push(push + `/${comment.id}`)}
@@ -151,14 +139,14 @@ const CommentCard = ({
 };
 
 const styles = StyleSheet.create({
-  backDrop: isVisible => ({
+  backDrop: ((isVisible: boolean) => ({
     display: isVisible ? "flex" : "none",
     position: "absolute",
     width: WIDTH,
     height: HEIGHT,
     top: 25,
     left: -10,
-  }),
+  })) as ViewStyle,
   dropDown: {
     position: "absolute",
     left: 15,
@@ -170,14 +158,14 @@ const styles = StyleSheet.create({
       web: { boxShadow: "0 0 5px #12121227" },
     }),
   },
-  containerStyle: theme => ({
+  containerStyle: ((theme: { colors: { grey0: string } }) => ({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
     borderColor: theme.colors.grey0,
     borderWidth: 1,
     gap: 16,
-  }),
+  })) as ViewStyle,
   cardInf: { gap: 4 },
   commentTextIcon: {
     flexDirection: "row",
