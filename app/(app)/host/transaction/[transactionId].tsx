@@ -22,9 +22,9 @@ const TransactionDetailsScreen = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const navigation = useNavigation();
-  const { transactionId } = useLocalSearchParams();
+  const { transactionId , rate } = useLocalSearchParams();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState<boolean>(false);
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState<boolean>(rate ? true :false);
   const [isRejectedVisible, setIsRejectedVisible] = useState<boolean>(false);
 
   const handleClose = () => setIsBottomSheetVisible(false);
