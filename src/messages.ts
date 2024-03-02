@@ -2716,7 +2716,7 @@ export const messages = {
   {
     ar: "ندارد",
     fa_ir:
-      "درخواست شما توسط ادمین در حال بررسی می‌باشد، در صورت تایید هویت، تور شما / میزبانی شما منتشر خواهد شد",
+      "درخواست شما توسط ادمین در حال بررسی می‌باشد، در صورت تایید هویت، تور / میزبانی شما منتشر خواهد شد",
     en_us:
       "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published",
   },
