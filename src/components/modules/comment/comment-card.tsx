@@ -14,7 +14,15 @@ import { Platform, Pressable, StyleSheet, View, ViewStyle } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { AntDesign, Entypo, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 
-const CommentCard = ({ comment, refetch, push }: { comment: CommentType; refetch; push: string }) => {
+const CommentCard = ({
+  comment,
+  refetch,
+  push,
+}: {
+  comment: CommentType;
+  refetch;
+  push: string;
+}) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
@@ -78,7 +86,7 @@ const CommentCard = ({ comment, refetch, push }: { comment: CommentType; refetch
           />
           <View style={styles.backDrop(isVisible)}>
             <View style={styles.dropDown}>
-              <ReportComment closeDropDown={handleClose} id={comment.id as string} />
+              <ReportComment closeDropDown={handleClose as () => void} id={comment.id as string} />
             </View>
           </View>
         </View>

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { ListItem, Text } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
 import ShareBottomsheet from "./share-bottomsheet";
+import useTranslation from "@src/hooks/translation";
 
-const ShareDropdown = ({ closeMoreDetails }) => {
+const ShareDropdown = ({ closeMoreDetails }:{ closeMoreDetails: ()=> void }) => {
   const { tr } = useTranslation();
 
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const handleOpen = () => {
     setIsVisible(true);
@@ -28,7 +28,7 @@ const ShareDropdown = ({ closeMoreDetails }) => {
         </Text>
       </ListItem>
 
-      <ShareBottomsheet isVisible={isVisible} handleClose={handleClose} />
+      <ShareBottomsheet isVisible={isVisible as boolean} handleClose={handleClose as ()=> void} />
     </>
   );
 };
