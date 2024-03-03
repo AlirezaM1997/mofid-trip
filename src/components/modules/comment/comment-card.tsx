@@ -92,7 +92,7 @@ const CommentCard = ({
         </View>
         <Text caption type="grey3">
           {localizeNumber(moment(comment.createdDate).locale("fa").format("jD jMMMM jYYYY"))} .{" "}
-          {comment?.user?.displayName}
+          {comment?.user?.displayName ? comment?.user?.displayName : tr("no name")}
         </Text>
       </View>
       <View style={styles.footerCard}>
