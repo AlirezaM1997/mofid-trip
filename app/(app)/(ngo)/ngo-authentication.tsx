@@ -30,7 +30,8 @@ const NgoAuthenticationScreen = () => {
 
   if (!data && loading) return <LoadingIndicator />;
 
-  const { address, title, contactNumber, kind, description, user } = data?.NGODetail as NgoQueryType;
+  const { address, title, contactNumber, kind, description, user } =
+    data?.NGODetail as NgoQueryType;
   const initialValues = {
     kind,
     title,
@@ -75,19 +76,22 @@ const NgoAuthenticationScreen = () => {
 
             <Input
               value={values.title}
+              label={tr("ngo name")}
               placeholder={tr("ngo name")}
               onChangeText={handleChange("title")}
-              errorMessage={touched.title && (errors.title as string)}
+              errorMessage={(touched.title && errors.title) as string}
             />
             <Input
               value={values.address as string}
+              label={tr("address")}
               placeholder={tr("address")}
               onChangeText={handleChange("address")}
-              errorMessage={touched.address && (errors.address as string)}
+              errorMessage={(touched.address && errors.address) as string}
             />
             <Input
-              disabled={true}
+              disabled
               value={user?.phoneNumber as string}
+              label={tr("mobile phone number")}
               keyboardType="number-pad"
               leftIcon={
                 <MaterialCommunityIcons
@@ -100,20 +104,23 @@ const NgoAuthenticationScreen = () => {
             <Input
               keyboardType="number-pad"
               value={values.contactNumber as string}
+              label={tr("landline number")}
               placeholder={tr("landline number")}
               onChangeText={t => setFieldValue("contactNumber", parseText(t))}
             />
             <Input
               value={values.email}
+              label={tr("email")}
               placeholder={tr("email")}
               keyboardType="email-address"
               onChangeText={handleChange("email")}
-              errorMessage={touched.email && (errors.email as string)}
+              errorMessage={(touched.email && errors.email) as string}
             />
 
             <View>
               <Input
                 value={values.kind as string}
+                label={tr("ngo type")}
                 placeholder={tr("ngo type")}
                 onChangeText={handleChange("kind")}
               />
