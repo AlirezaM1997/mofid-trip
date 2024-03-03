@@ -1,7 +1,7 @@
 import {
+  CommentType,
   LikeObjectEnum,
   LikeStatusEnum,
-  TourQueryType,
   useLikeAddMutation,
 } from "@src/gql/generated";
 import moment from "jalali-moment";
@@ -17,9 +17,9 @@ const CommentCardReplay = ({
   refetch,
   index,
 }: {
-  comment: TourQueryType["commentSet"][0];
+  comment: CommentType;
   refetch;
-  index;
+  index: number;
 }) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
@@ -73,7 +73,7 @@ const CommentCardReplay = ({
             </Pressable>
             <Text caption type="grey3">
               {localizeNumber(moment(comment.createdDate).locale("fa").format("jD jMMMM jYYYY"))} .{" "}
-              {comment.user.fullname}
+              {comment.user?.displayName}
             </Text>
           </View>
         </View>
@@ -84,13 +84,13 @@ const CommentCardReplay = ({
           <View style={styles.likeBox}>
             <View style={styles.likeStyle}>
               <Text caption type="grey2">
-                {localizeNumber(comment.likeCount)}
+                {localizeNumber(comment?.likeCount as number)}
               </Text>
               <AntDesign name="like2" size={16} color={theme.colors.grey2} onPress={handleLike} />
             </View>
             <View style={styles.likeStyle}>
               <Text caption type="grey2">
-                {localizeNumber(comment.dislikeCount)}
+                {localizeNumber(comment?.dislikeCount as number)}
               </Text>
               <AntDesign
                 name="dislike2"

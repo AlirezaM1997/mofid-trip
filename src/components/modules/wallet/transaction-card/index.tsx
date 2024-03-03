@@ -93,9 +93,9 @@ const WalletTransactionCard = ({ transaction }: { transaction: WalletTransaction
       <WhiteSpace size={8} />
       {transaction.statusStep !== WalletWalletTransactionStatusStepChoices.Request && (
         <SuccessReceiptBottomSheet
-          isVisible={isVisible}
-          transaction={transaction}
-          setIsVisible={setIsVisible}
+          isVisible={isVisible as boolean}
+          transaction={transaction as WalletTransactionQueryType}
+          setIsVisible={setIsVisible as React.Dispatch<React.SetStateAction<boolean>>}
         />
       )}
     </>

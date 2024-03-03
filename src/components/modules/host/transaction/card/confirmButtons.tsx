@@ -26,9 +26,8 @@ const ConfirmButton = ({ transaction }: PropsType) => {
           price: totalPrice({
             endDate: transaction.dateEnd,
             startDate: transaction.dateStart,
-            price:
-              (transaction?.project?.price as number) *
-              ((1 - (transaction?.project?.discount as number)) / 100),
+            price: transaction?.project?.price as number,
+            discount: transaction.project?.discount as number,
             capacity: transaction.guest?.guestNumber as number,
           }),
           description: `${tr("buy")} ${transaction?.project?.name}`,

@@ -1,20 +1,26 @@
-import { Alert, Linking, Platform, Pressable, StyleSheet, View } from "react-native";
 import React from "react";
-import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
+import ButtonRow from "./button-rows";
+import { useURL } from "expo-linking";
+import { WIDTH } from "@src/constants";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import useTranslation from "@src/hooks/translation";
-import ButtonRow from "./button-rows";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
-import { WIDTH } from "@src/constants";
+import { Feather } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
-import { useURL } from "expo-linking";
+import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import useTranslation from "@src/hooks/translation";
+import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
+import { Alert, Linking, Platform, Pressable, StyleSheet, View, ViewStyle } from "react-native";
 
-const ShareBottomsheet = ({ isVisible, handleClose }) => {
+const ShareBottomsheet = ({
+  isVisible,
+  handleClose,
+}: {
+  isVisible: boolean;
+  handleClose: () => void;
+}) => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
 
@@ -57,7 +63,7 @@ const ShareBottomsheet = ({ isVisible, handleClose }) => {
   };
 
   const handlePressCopy = async () => {
-    await Clipboard.setStringAsync(url);
+    await Clipboard.setStringAsync(url as string);
     Toast.show({
       type: "success",
       text1: tr("copied"),
@@ -149,7 +155,7 @@ const style = StyleSheet.create({
     alignItems: "center",
     gap: 5,
   },
-  copyButton: theme => ({
+  copyButton: ((theme: { colors: { grey0: string } }) => ({
     maxWidth: WIDTH - 50,
     borderRadius: 8,
     backgroundColor: theme.colors.grey0,
@@ -159,7 +165,7 @@ const style = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     gap: 10,
-  }),
+  })) as ViewStyle,
 });
 
 export default ShareBottomsheet;

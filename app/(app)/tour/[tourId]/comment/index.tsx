@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
-import { TourQueryType, useTourCommentQuery } from "@src/gql/generated";
+import { CommentType, useTourCommentQuery } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import LoadingIndicator from "@modules/Loading-indicator";
@@ -59,10 +59,10 @@ const TourCommentScreen = () => {
           <View style={styles.commentList}>
             {comment?.map(comment => (
               <CommentCard
-                comment={comment as TourQueryType["commentSet"][0]}
+                comment={comment as CommentType}
                 key={comment?.id}
                 refetch={refetch}
-                push={`tour/${tourId}/comment`}
+                push={`tour/${tourId}/comment` as string}
               />
             ))}
           </View>
@@ -70,10 +70,10 @@ const TourCommentScreen = () => {
       </ScrollView>
       <AddCommentBottomSheet
         isVisible={isVisible}
-        setIsVisible={setIsVisible}
+        setIsVisible={setIsVisible as React.Dispatch<React.SetStateAction<boolean>>}
         refetch={refetch}
         id={tourId as string}
-        name={data?.tourDetail?.title}
+        name={data?.tourDetail?.title as string}
       />
     </BottomButtonLayout>
   );
@@ -81,9 +81,9 @@ const TourCommentScreen = () => {
 
 const styles = StyleSheet.create({
   bottomButtonLayout: { flex: 1 },
-  containerStyle:{ paddingVertical: 24, gap: 24 },
-  commentInf:{ flexDirection: "row", justifyContent: "space-between" },
-  commentList:{ gap: 16 }
-})
+  containerStyle: { paddingVertical: 24, gap: 24 },
+  commentInf: { flexDirection: "row", justifyContent: "space-between" },
+  commentList: { gap: 16 },
+});
 
 export default TourCommentScreen;

@@ -22,9 +22,9 @@ const TransactionDetailsScreen = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const navigation = useNavigation();
-  const { transactionId } = useLocalSearchParams();
+  const { transactionId , rate } = useLocalSearchParams();
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState<boolean>(false);
+  const [isBottomSheetVisible, setIsBottomSheetVisible] = useState<boolean>(rate ? true :false);
   const [isRejectedVisible, setIsRejectedVisible] = useState<boolean>(false);
 
   const handleClose = () => setIsBottomSheetVisible(false);
@@ -54,6 +54,7 @@ const TransactionDetailsScreen = () => {
             endDate: dateEnd,
             startDate: dateStart,
             price: project?.price as number,
+            discount: project?.discount as number,
             capacity: guest?.guestNumber as number,
           }),
           description: `${tr("buy")} ${project?.name}`,
