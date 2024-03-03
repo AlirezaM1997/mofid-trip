@@ -1,4 +1,5 @@
 export const APP_URL = process.env.EXPO_PUBLIC_APP_URL;
+console.log(')))))))))', APP_URL)
 export const ZARINPAL_CALLBACK_URL = process.env.EXPO_PUBLIC_ZARINPAL_CALLBACK_URL;
 export const WALLET_ZARINPAL_CALLBACK_URL = process.env.EXPO_PUBLIC_WALLET_ZARINPAL_CALLBACK_URL;
 export const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
