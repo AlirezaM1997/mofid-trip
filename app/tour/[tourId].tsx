@@ -1,12 +1,11 @@
 import {
+  TourQueryType,
+  TourImageType,
+  useTourDetailQuery,
+  TourFacilityQueryType,
   AccommodationImageType,
   AccommodationQueryType,
-  TourFacilityQueryType,
-  TourImageType,
-  TourQueryType,
-  useTourDetailQuery,
 } from "@src/gql/generated";
-import moment from "jalali-moment";
 import { Text } from "@rneui/themed";
 import Container from "@atoms/container";
 import Map from "@modules/map/index.web";
@@ -16,21 +15,20 @@ import ImageSlider from "@modules/image-slider";
 import TourComment from "@modules/tour/comment";
 import openMapHandler from "@src/helper/opem-map";
 import SimilarTours from "@modules/similar-tours";
+import useTranslation from "@src/hooks/translation";
 import TourFacilities from "@modules/tour/facilities";
+import TourBoldInfo from "@modules/tour/bold-features";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { Pressable, StyleSheet, View } from "react-native";
 import BookTourBottomSheet from "@modules/tour/book/bottomSheet";
 import ShareReportDropDown from "@modules/share-report-dropdown";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import TourBoldInfo from "@modules/tour/bold-features";
 
 export default () => {
   const { tr } = useTranslation();
   const navigation = useNavigation();
   const { tourId } = useLocalSearchParams();
-  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { loading, data } = useTourDetailQuery({
     variables: {

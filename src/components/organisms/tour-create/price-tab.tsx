@@ -8,6 +8,7 @@ import { StyleSheet, View } from "react-native";
 import parseText from "@src/helper/number-input";
 import { TourAddInputType } from "@src/gql/generated";
 import { useFormatPrice } from "@src/hooks/localization";
+import * as persianTools from "@persian-tools/persian-tools";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const PriceTab = () => {
@@ -55,6 +56,11 @@ const PriceTab = () => {
         keyboardType="numeric"
         errorMessage={(touched.price && errors.price) as string}
       />
+      {values?.price && (
+        <Text caption style={{ marginBottom: 12 }}>
+          {persianTools.numberToWords(values.price as number) as string} {tr("Tooman")}
+        </Text>
+      )}
       <View style={styles.badgeRow}>
         {recommendedPrices.map(recom => (
           <Badge

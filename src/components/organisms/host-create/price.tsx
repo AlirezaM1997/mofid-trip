@@ -7,6 +7,7 @@ import parseText from "@src/helper/number-input";
 import { Badge, Button, Text } from "@rneui/themed";
 import { ProjectAddInputType } from "@src/gql/generated";
 import { useFormatPrice } from "@src/hooks/localization";
+import * as persianTools from "@persian-tools/persian-tools";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const TabPrice = () => {
@@ -54,6 +55,11 @@ const TabPrice = () => {
         keyboardType="numeric"
         errorMessage={(touched.price && errors.price) as string}
       />
+      {values?.price && (
+        <Text caption style={{ marginBottom: 12 }}>
+          {persianTools.numberToWords(values.price as number) as string} {tr("Tooman")}
+        </Text>
+      )}
       <View style={styles.badgeRow}>
         {recommendedPrices.map(recom => (
           <Badge
@@ -75,8 +81,8 @@ const TabPrice = () => {
         onBlur={handleBlur("discount")}
         label={tr("Discount") + " (%)"}
         value={values.discount?.toString()}
-        onChangeText={text => setFieldValue("discount", parseText(text))}
         errorMessage={(touched.discount && errors.discount) as string}
+        onChangeText={text => setFieldValue("discount", parseText(text))}
       />
       <View style={styles.badgeRow}>
         {recommendedDiscounts.map(recom => (
