@@ -11,7 +11,11 @@ import { useFormatPrice } from "@src/hooks/localization";
 import { Avatar, Button, useTheme } from "@rneui/themed";
 import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { BackCardQueryType, WalletActionTransactionEnum } from "@src/gql/generated";
+import {
+  BackCardQueryType,
+  WalletActionTransactionEnum,
+  WalletTransactionQueryType,
+} from "@src/gql/generated";
 
 type LookUpType = Record<
   Exclude<WalletActionTransactionEnum, "IN_APP_PURCHASE">,
@@ -23,7 +27,7 @@ type LookUpType = Record<
   }
 >;
 
-const CustomView = ({ children }) => {
+const CustomView = ({ children }: { children: React.JSX.Element[] }) => {
   const { theme } = useTheme();
 
   return (
@@ -31,7 +35,15 @@ const CustomView = ({ children }) => {
   );
 };
 
-const FailedReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => {
+const FailedReceiptBottomSheet = ({
+  transaction,
+  isVisible,
+  setIsVisible,
+}: {
+  transaction: WalletTransactionQueryType;
+  isVisible: boolean;
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { formatPrice } = useFormatPrice();
@@ -47,13 +59,13 @@ const FailedReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => {
       [WalletActionTransactionEnum.Deposit]: {
         title: tr("increase balance"),
         subTitle: tr("payment by card"),
-        card: (source as BackCardQueryType)?.cardPan,
+        card: (source as BackCardQueryType)?.cardPan as string,
         icon: { name: "arrowup", type: "ant-design", color: theme.colors.black, size: 24 },
       },
       [WalletActionTransactionEnum.Withdraw]: {
         title: tr("withdrawal from the wallet"),
         subTitle: tr("deposit to the account"),
-        card: (reference as BackCardQueryType)?.cardPan,
+        card: (reference as BackCardQueryType)?.cardPan as string,
         icon: { name: "arrowdown", type: "ant-design", color: theme.colors.black, size: 24 },
       },
     };
@@ -95,7 +107,7 @@ const FailedReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => {
         <WhiteSpace size={24} />
 
         <Text heading1 style={styles.price}>
-          {localizeNumber(formattedTotalPrice)}
+          {localizeNumber(formattedTotalPrice as string)}
         </Text>
 
         <WhiteSpace size={24} />
@@ -157,8 +169,10 @@ const styles = StyleSheet.create({
     margin: "auto",
   },
   chip: { padding: 8, gap: 8 },
-  chipTitle: (theme => ({ color: theme.colors.white })) as ViewStyle,
-  bottomContent: (theme => ({
+  chipTitle: ((theme: { colors: { white: string } }) => ({
+    color: theme.colors.white,
+  })) as ViewStyle,
+  bottomContent: ((theme: { colors: { grey0: string } }) => ({
     borderTopWidth: 1,
     marginBottom: 16,
     borderStyle: "dashed",
@@ -180,7 +194,7 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
     justifyContent: "space-between",
   },
-  avatar: (theme => ({
+  avatar: ((theme: { colors: { grey0: string } }) => ({
     margin: "auto",
     backgroundColor: theme.colors.grey0,
   })) as ViewStyle,

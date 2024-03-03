@@ -9,6 +9,7 @@ query tourComment($pk: ID!) {
       id
       user {
         fullname
+        displayName
       }
       nestedComment {
         text

@@ -10,7 +10,18 @@ import useTranslation from "@src/hooks/translation";
 import { BottomSheet, Button, Divider, Text } from "@rneui/themed";
 import { CommentObjectEnum, useCommentAddMutation } from "@src/gql/generated";
 
-const AddCommentBottomSheet = ({ isVisible, setIsVisible, refetch, id, name }:{ isVisible: boolean, id: string, name: string }) => {
+const AddCommentBottomSheet = ({
+  isVisible,
+  setIsVisible,
+  refetch,
+  id,
+  name,
+}: {
+  isVisible: boolean;
+  id: string;
+  name: string;
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { tr } = useTranslation();
   const [value, setValue] = useState<string>("");
   const url = useURL();

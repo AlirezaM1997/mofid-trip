@@ -5,7 +5,7 @@ import CommentCard from "@modules/comment/comment-card";
 import { router, useLocalSearchParams } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import { ProjectQueryType, useHostCommentQuery } from "@src/gql/generated";
+import { CommentType, useHostCommentQuery } from "@src/gql/generated";
 import AddCommentBottomSheet from "@modules/comment/add-comment-bottomsheet";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
@@ -59,16 +59,16 @@ const HostComment = () => {
             </Text>
           </View>
         ) : (
-          (comment?.length as number > 4 ? comment?.slice(0, 4) : comment)?.map(comment => (
+          ((comment?.length as number) > 4 ? comment?.slice(0, 4) : comment)?.map(comment => (
             <CommentCard
-              comment={comment as ProjectQueryType["commentSet"][0]}
+              comment={comment as CommentType}
               key={comment?.id}
               refetch={refetch}
-              push={`host/${projectId}/comment`}
+              push={`host/${projectId}/comment` as string}
             />
           ))
         )}
-        {comment?.length as number > 0 && (
+        {(comment?.length as number) > 0 && (
           <Button onPress={handleNavigateToComment} color="secondary">
             {tr("view more")}
           </Button>
@@ -77,7 +77,7 @@ const HostComment = () => {
 
       <AddCommentBottomSheet
         isVisible={isVisible as boolean}
-        setIsVisible={setIsVisible}
+        setIsVisible={setIsVisible as React.Dispatch<React.SetStateAction<boolean>>}
         refetch={refetch}
         id={projectId as string}
         name={name as string}

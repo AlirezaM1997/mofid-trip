@@ -5,7 +5,6 @@ import useTranslation from "@src/hooks/translation";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import TransactionButtons from "@modules/tour/transaction/buttons";
 import { TourTransactionQueryType, useTourPurchaseAddMutation } from "@src/gql/generated";
-import { totalPrice } from "@src/helper/totalPrice";
 
 type PropsType = {
   transaction: TourTransactionQueryType;
@@ -22,16 +21,16 @@ const ConfirmButton = ({ transaction }: PropsType) => {
         data: {
           ip,
           tourTransactionId: transaction.id,
-          price: totalPrice({
-            price: transaction.tourPackage.price,
-            capacity: transaction.tourguestSet.length,
-          }),
+          price:
+            (transaction.tourPackage?.price as unknown as number) *
+            (1 - (transaction.tourPackage?.discount as number) / 100) *
+            (transaction.tourGuests?.length as number),
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transaction.id}&type=tour`,
-          description: `${tr("buy")} ${transaction?.tourPackage?.tour.title}`,
+          description: `${tr("buy")} ${transaction?.tourPackage?.tour?.title}`,
         },
       },
     });
-    router.push(data.tourPurchaseAdd.metadata?.url);
+    router.push(data?.tourPurchaseAdd?.metadata?.url);
   };
 
   return (

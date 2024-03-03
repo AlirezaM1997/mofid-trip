@@ -36,6 +36,7 @@ query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterT
         description
         categories {
           name
+          displayName
         }
         facilities {
           id

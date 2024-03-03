@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { Text, useTheme } from "@rneui/themed";
 import Container from "@atoms/container";
-import { Platform, ScrollView, StyleSheet, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 import moment from "jalali-moment";
 import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
 import {
   CommentObjectEnum,
+  CommentType,
   LikeObjectEnum,
   LikeStatusEnum,
-  TourQueryType,
   useCommentAddMutation,
   useLikeAddMutation,
   useTourCommentQuery,
@@ -151,7 +151,7 @@ const TourCommentReplay = () => {
               </View>
               <Text caption type="grey3">
                 {localizeNumber(moment(comment?.createdDate).locale("fa").format("jD jMMMM jYYYY"))}{" "}
-                . {comment?.user?.fullname}
+                . {comment?.user}
               </Text>
             </View>
             <View style={styles.likeInf}>
@@ -197,10 +197,10 @@ const TourCommentReplay = () => {
         <View style={styles.nestedCommentList}>
           {comment?.nestedComment?.map((comment, i) => (
             <CommentCardReplay
-              comment={comment as TourQueryType["commentSet"][0]["nestedComment"][0]}
+              comment={comment as CommentType}
               refetch={refetch}
               key={i}
-              index={i}
+              index={i as number}
             />
           ))}
         </View>
@@ -214,14 +214,14 @@ const styles = StyleSheet.create({
   sendIcon: { transform: [{ rotateZ: "180deg" }] },
   containerStyle: { gap: 16 },
   headerComment: { paddingVertical: 24, gap: 16 },
-  comment: theme => ({
+  comment: ((theme: { colors: { grey0: string; }; }) => ({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
     borderColor: theme.colors.grey0,
     borderWidth: 1,
     gap: 16,
-  }),
+  })) as ViewStyle,
   headerCommentBox: { gap: 4 },
   commentTextInf: {
     flexDirection: "row",
@@ -237,14 +237,14 @@ const styles = StyleSheet.create({
   likeStyle: { flexDirection: "row", gap: 4, alignItems: "center" },
   nestedCommentInf: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   nestedCommentList: { gap: 40 },
-  backDrop: isVisible => ({
+  backDrop: ((isVisible: boolean) => ({
     display: isVisible ? "flex" : "none",
     position: "absolute",
     width: WIDTH,
     height: HEIGHT,
     top: 25,
     left: -10,
-  }),
+  })) as ViewStyle,
   dropDown: {
     position: "absolute",
     left: 15,
