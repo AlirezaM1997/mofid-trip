@@ -1,3 +1,9 @@
+import {
+  AccommodationQueryType,
+  RateType,
+  TourQueryType,
+  useTourListQuery,
+} from "@src/gql/generated";
 import React from "react";
 import { router } from "expo-router";
 import Container from "@atoms/container";
@@ -6,7 +12,6 @@ import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
 import TourSliderCard from "@modules/tour/card/slider-card";
 import { ScrollView, View, StyleSheet } from "react-native";
-import { AccommodationQueryType, useTourListQuery } from "@src/gql/generated";
 
 function TourList() {
   const { tr } = useTranslation();
@@ -39,28 +44,29 @@ function TourList() {
           style={style.listContainer}>
           {loading
             ? [1, 2, 3, 4, 5, 6, 7, 8].map(i => (
-              <Skeleton
-                key={i}
-                animation="pulse"
-                width={328}
-                height={300}
-                style={{ borderRadius: 10 }}
-              />
-            ))
-            : data.tourList.data?.map((tour, index) => (
-              <View key={index}>
-                <TourSliderCard
-                  key={index}
-                  id={tour?.id as string}
-                  name={tour?.title as string}
-                  avatarS3={tour?.avatarS3}
-                  price={tour?.packages?.[0]?.price as number}
-                  address={
-                    (tour?.destination as AccommodationQueryType)?.address || tr("No Address")
-                  }
+                <Skeleton
+                  key={i}
+                  animation="pulse"
+                  width={328}
+                  height={300}
+                  style={{ borderRadius: 10 }}
                 />
-              </View>
-            ))}
+              ))
+            : data.tourList.data?.map((tour, index) => (
+                <View key={index}>
+                  <TourSliderCard
+                    key={index}
+                    id={tour?.id as string}
+                    name={tour?.title as string}
+                    rate={tour?.rate as RateType}
+                    avatarS3={tour?.avatarS3 as TourQueryType["avatarS3"]}
+                    price={tour?.packages?.[0]?.price as number}
+                    address={
+                      (tour?.destination as AccommodationQueryType)?.address || tr("No Address")
+                    }
+                  />
+                </View>
+              ))}
         </ScrollView>
       </View>
     );

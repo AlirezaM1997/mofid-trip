@@ -8,6 +8,9 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
       startTime
       endTime
       statusActivation
+      rate{
+        avgRate
+      }
       NGO {
         id
         title

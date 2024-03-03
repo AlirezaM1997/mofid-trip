@@ -4,9 +4,9 @@ import { Skeleton } from "@rneui/themed";
 import Container from "@atoms/container";
 import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
-import { SortFieldEnum, useProjectListQuery } from "@src/gql/generated";
 import { ScrollView, View, StyleSheet } from "react-native";
 import HostSliderCard from "@modules/host/card/slider-card";
+import { RateType, SortFieldEnum, useProjectListQuery } from "@src/gql/generated";
 
 function HostList() {
   const { tr } = useTranslation();
@@ -53,6 +53,7 @@ function HostList() {
                   <HostSliderCard
                     id={project?.id as string}
                     name={project?.name}
+                    rate={project?.rate as RateType}
                     price={
                       ((project?.price as number) * (100 - (project?.discount as number))) / 100
                     }

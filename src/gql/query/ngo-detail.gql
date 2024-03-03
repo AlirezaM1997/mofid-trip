@@ -35,6 +35,9 @@ query NGODetail($pk: ID) {
         displayName
         name
       }
+      rate{
+        avgRate
+      }
       createdDate
       capacity {
         childAccept
@@ -64,6 +67,7 @@ query NGODetail($pk: ID) {
       }
       accommodation {
         id
+        address
         avatarS3 {
           large
           medium

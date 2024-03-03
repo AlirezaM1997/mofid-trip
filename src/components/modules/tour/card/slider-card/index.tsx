@@ -1,28 +1,37 @@
-import React from "react";
-import { router } from "expo-router";
-import { Divider, useTheme } from "@rneui/themed";
-import { Text } from "@rneui/themed";
-import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import {
   AccommodationQueryType,
-  TourImageType,
+  RateType,
   TourPackageType,
   TourQueryType,
 } from "@src/gql/generated";
-import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
-import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native";
+import React from "react";
+import { router } from "expo-router";
+import { Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
+import { Divider, useTheme } from "@rneui/themed";
+import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
+import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import {
+  View,
+  ImageBackground,
+  StyleSheet,
+  Pressable,
+  Platform,
+  ImageStyle,
+  ViewStyle,
+} from "react-native";
 
 type PropsType = {
   address: AccommodationQueryType["address"];
   price: TourPackageType["price"];
   name: TourQueryType["title"];
-  avatarS3: TourImageType[];
+  avatarS3: TourQueryType["avatarS3"];
   id: TourQueryType["id"];
+  rate: RateType;
 };
 
-function TourSliderCard({ price, id, name, avatarS3, address }: PropsType) {
+function TourSliderCard({ price, id, name, rate, avatarS3, address }: PropsType) {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
   const { theme } = useTheme();
@@ -40,13 +49,15 @@ function TourSliderCard({ price, id, name, avatarS3, address }: PropsType) {
   };
 
   const avatar =
-    avatarS3?.length > 0 ? { uri: avatarS3?.[0].small } : require("@assets/image/defaultHost.svg");
+    (avatarS3?.length as number) > 0
+      ? { uri: avatarS3?.[0]?.small }
+      : require("@assets/image/defaultHost.svg");
 
   return (
     <Pressable style={style.container} onPress={handlePress}>
       <ImageBackground
         style={style.ImageBackground(isRtl)}
-        imageStyle={style.ImageBackgroundImage}
+        imageStyle={style.ImageBackgroundImage as ImageStyle}
         source={avatar}
       />
       <View style={style.top}>
@@ -56,7 +67,7 @@ function TourSliderCard({ price, id, name, avatarS3, address }: PropsType) {
           </Text>
           <View style={style.rate}>
             <FontAwesome name="star" size={20} color={theme.colors.warning} />
-            <Text body2>{localizeNumber(4.9)}</Text>
+            <Text body2>{localizeNumber((rate.avgRate ? rate.avgRate : 4.9) as string)}</Text>
           </View>
         </View>
         <View style={style.address}>
@@ -78,7 +89,7 @@ function TourSliderCard({ price, id, name, avatarS3, address }: PropsType) {
           <>
             <View style={style.bottomStyle}>
               <Text body2 bold>
-                {localizeNumber(formatPrice(price))}
+                {localizeNumber(formatPrice(price) as string)}
               </Text>
               <Text body2 bold>
                 / {tr("night")}
@@ -109,7 +120,7 @@ const style = StyleSheet.create({
       web: { boxShadow: "0 0 5px #12121233" },
     }),
   },
-  ImageBackground: isRtl => ({
+  ImageBackground: ((isRtl: boolean) => ({
     marginRight: isRtl ? 0 : 5,
     width: "100%",
     height: (WIDTH - 80) * 0.6116,
@@ -119,7 +130,7 @@ const style = StyleSheet.create({
     backgroundRepeat: "no-repeat",
     borderRadius: 16,
     marginBottom: 10,
-  }),
+  })) as ViewStyle,
   ImageBackgroundImage: {
     width: "100%",
     height: "100%",

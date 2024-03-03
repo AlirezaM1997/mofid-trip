@@ -13,6 +13,9 @@ query projectListSearch(
       price
       discount
       modifiedDate
+      rate{
+        avgRate
+      }
       accommodation {
         id
         lat

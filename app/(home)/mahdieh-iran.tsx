@@ -1,6 +1,6 @@
 import { useTheme } from "@rneui/themed";
 import { NetworkStatus } from "@apollo/client";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import TitleWithAction from "@modules/title-with-action";
@@ -9,14 +9,13 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import WhiteSpace from "@src/components/atoms/white-space";
 import NoResult from "@src/components/organisms/no-result";
 import HostSliderCard from "@modules/host/card/slider-card";
-import { ProjectQueryType, useProjectListSearchQuery } from "@src/gql/generated";
+import { ProjectQueryType, RateType, useProjectListSearchQuery } from "@src/gql/generated";
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
 
 const MahdiehIranScreen = () => {
   const pageNumber = useRef(1);
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const [scrollReachedEnd, setScrollReachedEnd] = useState(false);
 
   const { data, networkStatus, fetchMore } = useProjectListSearchQuery({
     notifyOnNetworkStatusChange: true,
@@ -57,9 +56,6 @@ const MahdiehIranScreen = () => {
       ) {
         handleLoadMore();
       }
-      setScrollReachedEnd(true);
-    } else {
-      setScrollReachedEnd(false);
     }
   };
 
@@ -90,6 +86,7 @@ const MahdiehIranScreen = () => {
               key={project?.id}
               id={project?.id as string}
               name={project?.name}
+              rate={project?.rate as RateType}
               containerStyle={{ width: 325 }}
               address={project?.accommodation?.address}
               avatarS3={project?.accommodation?.avatarS3}
