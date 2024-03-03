@@ -51,8 +51,8 @@ const CloseFormBottomSheet = () => {
             onPress={
               redirectToScreenAfterLogin
                 ? () => {
-                    router.replace(redirectToScreenAfterLogin);
-                    router.replace(redirectToScreenAfterLogin);
+                    router.push(redirectToScreenAfterLogin);
+                    router.push(redirectToScreenAfterLogin);
                   }
                 : () => {
                     router.replace("/");
