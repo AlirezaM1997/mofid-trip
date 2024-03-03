@@ -1581,6 +1581,11 @@ export const messages = {
     fa_ir: "امتیاز به میزبانی",
     en_us: "Rates to the host",
   },
+  rates_to_the: (name: string) => ({
+    ar: `Rates to the ${name}`,
+    fa_ir: `امتیاز به ${name}`,
+    en_us: `Rates to the ${name}`,
+  }),
   paypal: {
     ar: "پی پال",
     fa_ir: "پی پال",
@@ -1661,6 +1666,16 @@ export const messages = {
     fa_ir: "چقدر از تجربه سفر به این تور رضایت داشتید؟",
     en_us: "How satisfied were you with the experience of traveling to these tours?",
   },
+  shareـyourـopinionـaboutـtheـhostـwithـus: (name: string) => ({
+    ar: `Share your opinion about the ${name} with us.`,
+    fa_ir: `نقطه نظراتتان را درباره ${name} با ما در میان بگذارید.`,
+    en_us: `Share your opinion about the ${name} with us.`,
+  }),
+  howـsatisfiedـwereـyouـwithـtheـexperienceـofـtravelingـto: (name: string) => ({
+    ar: `How satisfied were you with the experience of traveling to ${name}?`,
+    fa_ir: `چقدر از تجربه سفر به ${name} رضایت داشتید؟`,
+    en_us: `How satisfied were you with the experience of traveling to these ${name}?`,
+  }),
   "rate the host": {
     ar: "Rate the host",
     fa_ir: "به میزبانی امتیاز دهید",
@@ -2701,7 +2716,7 @@ export const messages = {
     {
       ar: "ندارد",
       fa_ir:
-        "درخواست شما توسط ادمین در حال بررسی می‌باشد، در صورت تایید هویت، تور شما / میزبانی شما منتشر خواهد شد",
+        "درخواست شما توسط ادمین در حال بررسی می‌باشد، در صورت تایید هویت، تور / میزبانی شما منتشر خواهد شد",
       en_us:
         "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published",
     },

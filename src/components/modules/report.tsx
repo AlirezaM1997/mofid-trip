@@ -20,7 +20,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Redirect, useLocalSearchParams } from "expo-router";
 import { BottomSheet, Button, CheckBox, Divider, Input, ListItem, Text } from "@rneui/themed";
 
-const Report = ({ closeMoreDetails }) => {
+const Report = ({ closeMoreDetails }: { closeMoreDetails: () => void }) => {
   const { name, id } = useLocalSearchParams();
   const { tr } = useTranslation();
   const { session } = useSession();
@@ -40,7 +40,7 @@ const Report = ({ closeMoreDetails }) => {
 
   const handleClose = () => setIsVisible(false);
 
-  const handleReport = async variables => {
+  const handleReport = async (variables: typeof initialValues) => {
     const { data } = await reportAdd({
       variables: {
         data: {
@@ -97,7 +97,8 @@ const Report = ({ closeMoreDetails }) => {
         return value?.some(obj => obj.checked === true);
       }),
     textBox: Yup.string().when("checkBoxList", {
-      is: checkBoxList => checkBoxList[checkBoxList.length - 1].checked === true,
+      is: (checkBoxList: (typeof initialValues)["checkBoxList"]) =>
+        checkBoxList[checkBoxList.length - 1].checked === true,
       then: () => Yup.string().required(tr("write a comment*")),
       otherwise: () => Yup.string(),
     }),
@@ -168,7 +169,7 @@ const Report = ({ closeMoreDetails }) => {
                       {({ form, replace }) => {
                         const { values } = form;
                         const { checkBoxList } = values;
-                        return checkBoxList?.map((obj: { checked: boolean; }, index: number) => (
+                        return checkBoxList?.map((obj: { checked: boolean }, index: number) => (
                           <ListItem
                             bottomDivider
                             containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}

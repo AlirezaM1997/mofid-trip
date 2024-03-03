@@ -2,9 +2,9 @@ import React from "react";
 import moment from "jalali-moment";
 import { router } from "expo-router";
 import { Image, Text } from "@rneui/themed";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { Pressable, StyleSheet, View } from "react-native";
 import { ProjectTransactionQueryType } from "@src/gql/generated";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const HostTransactionDetailCard = ({
   transactionDetail,
@@ -17,11 +17,13 @@ const HostTransactionDetailCard = ({
   const formattedDate = (date: Date) => moment(date, "YYYY/MM/DD").locale("fa").format("D MMMM");
   const { localizeNumber } = useLocalizedNumberFormat();
 
+  const project = transactionDetail.project;
+
   const handlePress = () => {
     handleClose();
     router.push({
-      pathname: `host/${transactionDetail.project.id}`,
-      params: { projectId: transactionDetail.project.id, name: transactionDetail.project.name },
+      pathname: `host/${project?.id}`,
+      params: { projectId: project?.id, name: project?.name },
     });
   };
 
@@ -31,9 +33,9 @@ const HostTransactionDetailCard = ({
         <Image
           style={styles.hostAvatar}
           source={
-            transactionDetail?.project?.accommodation?.avatarS3.length > 0
+            (project?.accommodation?.avatarS3?.length as number) > 0
               ? {
-                  uri: transactionDetail?.project?.accommodation?.avatarS3?.[0]?.small,
+                  uri: project?.accommodation?.avatarS3?.[0]?.small,
                 }
               : require("@assets/image/defaultHost.svg")
           }
@@ -42,18 +44,18 @@ const HostTransactionDetailCard = ({
 
         <View style={styles.hostDetail}>
           <Text numberOfLines={1} subtitle1>
-            {transactionDetail.project.name}
+            {localizeNumber(project?.name as string)}
           </Text>
 
           <Text numberOfLines={1} caption type="grey2">
-            {transactionDetail.project.accommodation.address}
+            {localizeNumber(project?.accommodation?.address as string)}
           </Text>
 
           <View style={styles.date}>
             <Text caption type="grey2">
               {tr("hosting type")} .
             </Text>
-            <Text caption>{transactionDetail.project.categories[0].name}</Text>
+            <Text caption>{project?.categories?.[0]?.displayName}</Text>
           </View>
 
           <View style={styles.date}>
@@ -69,7 +71,6 @@ const HostTransactionDetailCard = ({
 };
 
 const styles = StyleSheet.create({
-  routeToHostPageContainer: { paddingVertical: 24, direction: "rtl" },
   hostDetailContainer: {
     gap: 12,
     flexDirection: "row",
@@ -89,11 +90,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
-  },
-  showHostPageContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
   },
 });
 

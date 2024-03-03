@@ -1,8 +1,9 @@
 import { CodegenConfig } from "@graphql-codegen/cli";
+import { API_URL } from "@src/settings";
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "https://api.hamafza-startup.ir/graphql/",
+  schema: API_URL,
   documents: "./src/gql/**/*.gql",
   ignoreNoDocuments: true,
   generates: {

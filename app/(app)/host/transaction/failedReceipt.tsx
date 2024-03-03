@@ -1,23 +1,27 @@
+import {
+  ProjectTransactionQueryType,
+  useProjectTransactionDetailQuery,
+  useUserDetailQuery,
+} from "@src/gql/generated";
 import React from "react";
 import moment from "jalali-moment";
-import { Chip, Text } from "@rneui/themed";
 import Container from "@atoms/container";
+import { Chip, Text } from "@rneui/themed";
 import * as Clipboard from "expo-clipboard";
+import ButtonRow from "@modules/button-rows";
 import Toast from "react-native-toast-message";
+import ShareButton from "@modules/share-button";
+import { totalPrice } from "@src/helper/totalPrice";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { useFormatPrice } from "@src/hooks/localization";
 import { Avatar, Button, useTheme } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { router, useLocalSearchParams } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { useProjectTransactionDetailQuery, useUserDetailQuery } from "@src/gql/generated";
-import { ImageSourcePropType, Pressable, StyleSheet, View, ViewStyle } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { useFormatPrice } from "@src/hooks/localization";
-import { totalPrice } from "@src/helper/totalPrice";
-import ButtonRow from "@modules/button-rows";
-import ShareButton from "@modules/share-button";
+import { ImageSourcePropType, Pressable, StyleSheet, View, ViewStyle } from "react-native";
 
-const CustomView = ({ children }) => {
+const CustomView = ({ children }: { children: React.JSX.Element[] }) => {
   const { theme } = useTheme();
 
   return (
@@ -29,8 +33,8 @@ const Receipt = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { id } = useLocalSearchParams();
-  const { localizeNumber } = useLocalizedNumberFormat();
   const { formatPrice } = useFormatPrice();
+  const { localizeNumber } = useLocalizedNumberFormat();
   const { loading: loadingUserDetail, data: dataUserDetail } = useUserDetailQuery();
 
   const { data, loading } = useProjectTransactionDetailQuery({
@@ -39,10 +43,11 @@ const Receipt = () => {
 
   const formattedTotalPrice = formatPrice(
     +totalPrice({
-      endDate: data?.projectTransactionDetail.dateEnd,
-      startDate: data?.projectTransactionDetail.dateStart,
-      price: data?.projectTransactionDetail?.project?.price,
-      capacity: data?.projectTransactionDetail.guest.guestNumber,
+      endDate: data?.projectTransactionDetail?.dateEnd,
+      startDate: data?.projectTransactionDetail?.dateStart,
+      price: data?.projectTransactionDetail?.project?.price as number,
+      discount: data?.projectTransactionDetail?.project?.discount as number,
+      capacity: data?.projectTransactionDetail?.guest?.guestNumber as number,
     })
   );
 
@@ -52,7 +57,8 @@ const Receipt = () => {
 
   const userDetail = dataUserDetail.userDetail;
 
-  const { invoiceNumber, modifiedDate, project } = data.projectTransactionDetail;
+  const { invoiceNumber, modifiedDate, project } =
+    data.projectTransactionDetail as ProjectTransactionQueryType;
 
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(invoiceNumber);
@@ -80,7 +86,7 @@ const Receipt = () => {
                 rounded
                 size={56}
                 containerStyle={{ backgroundColor: "#0003" }}
-                source={project?.accommodation.avatarS3[0].small as ImageSourcePropType}
+                source={project?.accommodation?.avatarS3?.[0]?.small as ImageSourcePropType}
               />
               <View style={styles.swapIconContainer}>
                 <AntDesign name="swap" size={10} color="black" />
@@ -94,7 +100,7 @@ const Receipt = () => {
             </View>
 
             <Pressable style={styles.tourTitleContainer} onPress={copyToClipboard}>
-              <Text subtitle2>{project.name}</Text>
+              <Text subtitle2>{project?.name}</Text>
               <View style={styles.subtitle}>
                 <Feather name="copy" size={12} color="black" />
                 <Text subtitle2 style={{ color: theme.colors.grey2 }}>
@@ -105,7 +111,7 @@ const Receipt = () => {
           </View>
 
           <Text heading1 style={styles.price}>
-            {localizeNumber(formattedTotalPrice)}
+            {localizeNumber(formattedTotalPrice as string)}
           </Text>
 
           <Chip
@@ -135,7 +141,7 @@ const Receipt = () => {
         <CustomView>
           <Text caption>{tr("transmitter")}</Text>
           <Text caption>
-            {userDetail.firstname} {userDetail.lastname}
+            {userDetail?.firstname} {userDetail?.lastname}
           </Text>
         </CustomView>
 
@@ -167,7 +173,9 @@ const styles = StyleSheet.create({
   },
 
   chip: { padding: 8, gap: 8, margin: "auto" },
-  chipTitle: (theme => ({ color: theme.colors.white })) as ViewStyle,
+  chipTitle: ((theme: { colors: { white: string } }) => ({
+    color: theme.colors.white,
+  })) as ViewStyle,
   buttonTitle: { fontSize: 12 },
   issueTrackingContainer: {
     display: "flex",
