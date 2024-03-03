@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from "react";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { Text, useTheme } from "@rneui/themed";
-import Container from "@atoms/container";
-import { ScrollView, StyleSheet, View, Platform } from "react-native";
-import moment from "jalali-moment";
-import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
 import {
   CommentObjectEnum,
+  CommentType,
   LikeObjectEnum,
   LikeStatusEnum,
-  TourQueryType,
   useCommentAddMutation,
   useHostCommentQuery,
   useLikeAddMutation,
 } from "@src/gql/generated";
-import { useLocalSearchParams, useNavigation } from "expo-router";
-import LoadingIndicator from "@modules/Loading-indicator";
-import WhiteSpace from "@atoms/white-space";
-import CommentCardReplay from "@modules/comment/comment-card-replay";
-import BottomButtonLayout from "@components/layout/bottom-button";
 import Input from "@atoms/input";
+import moment from "jalali-moment";
+import Container from "@atoms/container";
+import WhiteSpace from "@atoms/white-space";
+import { Text, useTheme } from "@rneui/themed";
 import Toast from "react-native-toast-message";
-import ReportComment from "@modules/report/report-comment";
 import { HEIGHT, WIDTH } from "@src/constants";
+import React, { useState, useEffect } from "react";
+import LoadingIndicator from "@modules/Loading-indicator";
+import ReportComment from "@modules/report/report-comment";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import CommentCardReplay from "@modules/comment/comment-card-replay";
+import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
+import { ScrollView, StyleSheet, View, Platform, ViewStyle } from "react-native";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const TourCommentReplay = () => {
   const { tr } = useTranslation();
@@ -199,10 +199,10 @@ const TourCommentReplay = () => {
         <View style={styles.nestedCommentList}>
           {comment?.nestedComment?.map((comment, i) => (
             <CommentCardReplay
-              comment={comment as TourQueryType["commentSet"][0]["nestedComment"][0]}
+              comment={comment as CommentType}
               refetch={refetch}
               key={i}
-              index={i}
+              index={i as number}
             />
           ))}
         </View>
@@ -216,14 +216,14 @@ const styles = StyleSheet.create({
   sendIcon: { transform: [{ rotateZ: "180deg" }] },
   containerStyle: { gap: 16 },
   headerComment: { paddingVertical: 24, gap: 16 },
-  comment: theme => ({
+  comment: ((theme: { colors: { grey0: string } }) => ({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
     borderColor: theme.colors.grey0,
     borderWidth: 1,
     gap: 16,
-  }),
+  })) as ViewStyle,
   headerCommentBox: { gap: 4 },
   commentTextInf: {
     flexDirection: "row",
@@ -239,14 +239,14 @@ const styles = StyleSheet.create({
   likeStyle: { flexDirection: "row", gap: 4, alignItems: "center" },
   nestedCommentInf: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   nestedCommentList: { gap: 40 },
-  backDrop: isVisible => ({
+  backDrop: ((isVisible: boolean) => ({
     display: isVisible ? "flex" : "none",
     position: "absolute",
     width: WIDTH,
     height: HEIGHT,
     top: 25,
     left: -10,
-  }),
+  })) as ViewStyle,
   dropDown: {
     position: "absolute",
     left: 15,

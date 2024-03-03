@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import Input from "@atoms/input";
+import React, { useState } from "react";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import { Text, useTheme } from "@rneui/themed";
@@ -11,13 +11,13 @@ import useTranslation from "@src/hooks/translation";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { useMyNgoDetailVerifyQuery, useNgoEditMutation } from "@src/gql/generated";
 import NgoAuthenticationBottomSheet from "@modules/ngo-authentication-bottom-sheet";
+import { NgoQueryType, useMyNgoDetailVerifyQuery, useNgoEditMutation } from "@src/gql/generated";
 
 const NgoAuthenticationScreen = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const { data, loading } = useMyNgoDetailVerifyQuery();
   const [submit, { loading: submitLoading }] = useNgoEditMutation();
@@ -30,14 +30,15 @@ const NgoAuthenticationScreen = () => {
 
   if (!data && loading) return <LoadingIndicator />;
 
-  const { address, title, contactNumber, kind, description, user } = data.NGODetail;
+  const { address, title, contactNumber, kind, description, user } =
+    data?.NGODetail as NgoQueryType;
   const initialValues = {
     kind,
     title,
     address,
     description,
     contactNumber,
-    email: user.email,
+    email: user?.email,
   };
 
   const handleSubmit = async (values, resetForm) => {
@@ -46,7 +47,7 @@ const NgoAuthenticationScreen = () => {
         data: values,
       },
     });
-    if (data.ngoEdit.status === "OK") {
+    if (data?.ngoEdit?.status === "OK") {
       setIsVisible(true);
       resetForm();
     }
@@ -61,9 +62,9 @@ const NgoAuthenticationScreen = () => {
         <BottomButtonLayout
           buttons={[
             <NgoAuthenticationBottomSheet
-              isVisible={isVisible}
-              setIsVisible={setIsVisible}
-              submitLoading={submitLoading}
+              isVisible={isVisible as boolean}
+              setIsVisible={setIsVisible as React.Dispatch<React.SetStateAction<boolean>>}
+              submitLoading={submitLoading as boolean}
             />,
           ]}>
           <WhiteSpace size={24} />
@@ -75,19 +76,22 @@ const NgoAuthenticationScreen = () => {
 
             <Input
               value={values.title}
+              label={tr("ngo name")}
               placeholder={tr("ngo name")}
               onChangeText={handleChange("title")}
-              errorMessage={touched.title && (errors.title as string)}
+              errorMessage={(touched.title && errors.title) as string}
             />
             <Input
-              value={values.address}
+              value={values.address as string}
+              label={tr("address")}
               placeholder={tr("address")}
               onChangeText={handleChange("address")}
-              errorMessage={touched.address && (errors.address as string)}
+              errorMessage={(touched.address && errors.address) as string}
             />
             <Input
-              disabled={true}
-              value={user.phoneNumber}
+              disabled
+              value={user?.phoneNumber as string}
+              label={tr("mobile phone number")}
               keyboardType="number-pad"
               leftIcon={
                 <MaterialCommunityIcons
@@ -99,21 +103,24 @@ const NgoAuthenticationScreen = () => {
             />
             <Input
               keyboardType="number-pad"
-              value={values.contactNumber}
+              value={values.contactNumber as string}
+              label={tr("landline number")}
               placeholder={tr("landline number")}
               onChangeText={t => setFieldValue("contactNumber", parseText(t))}
             />
             <Input
               value={values.email}
+              label={tr("email")}
               placeholder={tr("email")}
               keyboardType="email-address"
               onChangeText={handleChange("email")}
-              errorMessage={touched.email && (errors.email as string)}
+              errorMessage={(touched.email && errors.email) as string}
             />
 
             <View>
               <Input
-                value={values.kind}
+                value={values.kind as string}
+                label={tr("ngo type")}
                 placeholder={tr("ngo type")}
                 onChangeText={handleChange("kind")}
               />
@@ -126,7 +133,7 @@ const NgoAuthenticationScreen = () => {
             <Input
               multiline={true}
               numberOfLines={4}
-              value={values.description}
+              value={values.description as string}
               placeholder={tr("description ...")}
               onChangeText={handleChange("description")}
             />

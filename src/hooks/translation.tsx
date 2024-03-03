@@ -10,7 +10,7 @@ const useTranslation = () => {
       state.settingDetailSlice?.settingDetail?.language || LanguageChoiceEnum.EnUs
   );
 
-  const tr = lang => {
+  const tr = (lang: string) => {
     try {
       return messages[lang.toLowerCase()][language.toLowerCase()];
     } catch (error) {
@@ -21,6 +21,23 @@ const useTranslation = () => {
   return { tr };
 };
 export default useTranslation;
+
+ export const useDynamicTranslation = () => {
+  const language = useSelector(
+    (state: RootState) =>
+      state.settingDetailSlice?.settingDetail?.language || LanguageChoiceEnum.EnUs
+  );
+
+  const dyTr = lang => {
+    try {
+      return lang[language.toLowerCase()];
+    } catch (error) {
+      return messages[LanguageChoiceEnum.EnUs.toLowerCase()][language.toLowerCase()];
+    }
+  };
+
+  return { dyTr };
+};
 
 export const useLocalizedNumberFormat = () => {
   const language = useSelector(

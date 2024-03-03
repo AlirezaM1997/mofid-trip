@@ -16,19 +16,19 @@ import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 
 const TourManagement = () => {
   const { tr } = useTranslation();
-  const {theme} = useTheme();
+  const { theme } = useTheme();
   const dispatch = useDispatch();
   const { loading, data } = useMyNgoDetailTourSetQuery({
     fetchPolicy: "network-only",
   });
-const handleNavigateToCreateTour = ()=>{
-  router.push("tour/create")
-  dispatch(
-    setRedirectToScreenAfterLogin({
-      pathname: "tour/management",
-    })
-  );
-}
+  const handleNavigateToCreateTour = () => {
+    router.push("tour/create");
+    dispatch(
+      setRedirectToScreenAfterLogin({
+        pathname: "tour/management",
+      })
+    );
+  };
   if (loading) return <LoadingIndicator />;
 
   return (

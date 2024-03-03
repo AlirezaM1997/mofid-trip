@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { RootState } from "@src/store";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { APP_VERSION } from "@src/settings";
 import { Feather } from "@expo/vector-icons";
 import { useSession } from "@src/context/auth";
@@ -14,10 +14,12 @@ import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { BottomSheet, Button, ListItem, Text, useTheme } from "@rneui/themed";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { LanguageChoiceEnum, UserQueryType, useSettingEditMutation } from "@src/gql/generated";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 
 const Profile = ({ userDetail }: { userDetail: UserQueryType }) => {
   const isRtl = useIsRtl();
   const { theme } = useTheme();
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
   const { signOut } = useSession();
   const { syncTable } = useSettingDetailTable();
@@ -55,6 +57,11 @@ const Profile = ({ userDetail }: { userDetail: UserQueryType }) => {
   const handleSignOut = () => {
     setIsVisibleLogout(false);
     signOut();
+    dispatch(
+      setRedirectToScreenAfterLogin({
+        pathname: "/",
+      })
+    );
   };
 
   return (

@@ -1,22 +1,22 @@
-import { ScrollView, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
-import { ProjectQueryType, useHostCommentQuery } from "@src/gql/generated";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { useLocalSearchParams, useNavigation } from "expo-router";
-import LoadingIndicator from "@modules/Loading-indicator";
 import Container from "@atoms/container";
 import { Button, Text, useTheme } from "@rneui/themed";
 import CommentCard from "@modules/comment/comment-card";
-import BottomButtonLayout from "@components/layout/bottom-button";
+import LoadingIndicator from "@modules/Loading-indicator";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import { CommentType, useHostCommentQuery } from "@src/gql/generated";
 import AddCommentBottomSheet from "@modules/comment/add-comment-bottomsheet";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const HostCommentScreen = () => {
-  const { projectId } = useLocalSearchParams();
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { localizeNumber } = useLocalizedNumberFormat();
   const navigation = useNavigation();
+  const { projectId } = useLocalSearchParams();
+  const { localizeNumber } = useLocalizedNumberFormat();
   const { loading, data, refetch } = useHostCommentQuery({
     variables: {
       pk: projectId as string,
@@ -59,10 +59,10 @@ const HostCommentScreen = () => {
           <View style={styles.commentList}>
             {comment?.map(comment => (
               <CommentCard
-                comment={comment as ProjectQueryType["commentSet"][0]}
+                comment={comment as CommentType}
                 key={comment?.id}
                 refetch={refetch}
-                push={`host/${projectId}/comment`}
+                push={`host/${projectId}/comment` as string}
               />
             ))}
           </View>
@@ -70,10 +70,10 @@ const HostCommentScreen = () => {
       </ScrollView>
       <AddCommentBottomSheet
         isVisible={isVisible}
-        setIsVisible={setIsVisible}
+        setIsVisible={setIsVisible as React.Dispatch<React.SetStateAction<boolean>>}
         refetch={refetch}
         id={projectId as string}
-        name={data?.projectDetail?.name}
+        name={data?.projectDetail?.name as string}
       />
     </BottomButtonLayout>
   );
@@ -81,9 +81,9 @@ const HostCommentScreen = () => {
 
 const styles = StyleSheet.create({
   bottomButtonLayout: { flex: 1 },
-  containerStyle:{ paddingVertical: 24, gap: 24 },
-  commentInf:{ flexDirection: "row", justifyContent: "space-between" },
-  commentList:{ gap: 16 }
-})
+  containerStyle: { paddingVertical: 24, gap: 24 },
+  commentInf: { flexDirection: "row", justifyContent: "space-between" },
+  commentList: { gap: 16 },
+});
 
 export default HostCommentScreen;

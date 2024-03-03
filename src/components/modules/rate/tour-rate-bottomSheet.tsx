@@ -1,18 +1,22 @@
-import { ScrollView, StyleSheet } from "react-native";
-import React, { useState } from "react";
-import { BottomSheet, Button, Divider, Input, Slider, Text, useTheme } from "@rneui/themed";
 import {
-  TourTransactionQueryType,
   RateObjectTypeEnum,
   useRateAddMutation,
+  TourTransactionQueryType,
 } from "@src/gql/generated";
+import useTranslation, {
+  useDynamicTranslation,
+  useLocalizedNumberFormat,
+} from "@src/hooks/translation";
+import React, { useState } from "react";
 import { HEIGHT } from "@src/constants";
 import Container from "@atoms/container";
-import { AntDesign } from "@expo/vector-icons";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { View } from "react-native";
+import { messages } from "@src/messages";
+import { View, ViewStyle } from "react-native";
 import Toast from "react-native-toast-message";
+import { AntDesign } from "@expo/vector-icons";
+import { ScrollView, StyleSheet } from "react-native";
 import TourTransactionDetailCard from "./tour-transaction-detail-card";
+import { BottomSheet, Button, Divider, Input, Slider, Text, useTheme } from "@rneui/themed";
 
 const TourRateBottomSheet = ({
   transaction,
@@ -24,6 +28,7 @@ const TourRateBottomSheet = ({
   handleClose: () => void;
 }) => {
   const { tr } = useTranslation();
+  const { dyTr } = useDynamicTranslation();
   const { theme } = useTheme();
   const { localizeNumber } = useLocalizedNumberFormat();
 
@@ -37,13 +42,13 @@ const TourRateBottomSheet = ({
       variables: {
         data: {
           objectType: RateObjectTypeEnum.Tour,
-          objectId: +transaction.tourPackage.id,
+          objectId: +(transaction?.tourPackage?.tour?.id as string),
           value: value,
           description: text,
         },
       },
     });
-    if (data.rateAdd.status === "OK") {
+    if (data?.rateAdd?.status === "OK") {
       Toast.show({
         type: "success",
         text1: tr("Successful"),
@@ -61,20 +66,33 @@ const TourRateBottomSheet = ({
       onBackdropPress={handleClose}
       containerStyle={styles.rateBottomSheet}>
       <Container style={styles.headerBar}>
-        <Text>{tr("rates to the tour")}</Text>
+        <Text>
+          {dyTr(
+            messages.rates_to_the(localizeNumber(transaction.tourPackage?.tour?.title as string))
+          )}
+        </Text>
         <AntDesign onPress={handleClose} name="arrowright" size={22} />
       </Container>
       <Divider />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View>
-          <TourTransactionDetailCard tourPackage={transaction} handleClose={handleClose} />
+          <Container>
+            <TourTransactionDetailCard
+              tourPackage={transaction.tourPackage as TourTransactionQueryType["tourPackage"]}
+              handleClose={handleClose as () => void}
+            />
+          </Container>
           <Divider width={6} />
           <Container style={styles.topSection}>
             <Text body2 bold>
               {tr("rate the tour")}
             </Text>
             <Text caption type="grey2">
-              {tr("how satisfied were you with the experience of traveling to these tours?")}
+              {dyTr(
+                messages.howـsatisfiedـwereـyouـwithـtheـexperienceـofـtravelingـto(
+                  localizeNumber(transaction.tourPackage?.tour?.title as string)
+                )
+              )}
             </Text>
             <Slider
               step={1}
@@ -98,7 +116,13 @@ const TourRateBottomSheet = ({
         <View style={styles.bottomSection}>
           {value !== 0 && (
             <Container style={styles.description}>
-              <Text caption>{tr("share your opinion about the tour with us.")}</Text>
+              <Text caption>
+                {dyTr(
+                  messages.shareـyourـopinionـaboutـtheـhostـwithـus(
+                    localizeNumber(transaction.tourPackage?.tour?.title as string)
+                  )
+                )}
+              </Text>
               <Input
                 multiline
                 numberOfLines={4}
@@ -138,12 +162,12 @@ const styles = StyleSheet.create({
   headerBarButton: { flexDirection: "row", gap: 20 },
   scrollView: { height: HEIGHT - 65, justifyContent: "space-between" },
   topSection: { paddingVertical: 24, gap: 5 },
-  thumbStyle: (value, theme) => ({
+  thumbStyle: ((value: number, theme: { colors: { grey2: string; black: string } }) => ({
     width: 20,
     height: 20,
     borderWidth: 5,
     borderColor: value === 0 ? theme.colors.grey2 : theme.colors.black,
-  }),
+  })) as ViewStyle,
   valueOfSlider: {
     flexDirection: "row",
     justifyContent: "space-between",

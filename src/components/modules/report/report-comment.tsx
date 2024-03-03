@@ -1,4 +1,5 @@
 import {
+  ReportCategoryQueryType,
   ReportTypeEnum,
   useReportAddMutation,
   useReportCategoryListQuery,
@@ -18,21 +19,13 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { BottomSheet, Button, CheckBox, Divider, Input, ListItem, Text } from "@rneui/themed";
 
-const ReportComment = ({ closeDropDown, id }: { id: string }) => {
+const ReportComment = ({ closeDropDown, id }: { closeDropDown: () => void; id: string }) => {
   const { tr } = useTranslation();
   const { session } = useSession();
-  const [isVisible, setIsVisible] = useState(false);
-  const [categoryList, setCategoryList] = useState([]);
-  const catList = [
-    "هرزنامه",
-    "حساب جعلی",
-    "محتوای خشونت آمیز",
-    "محتوای غیر اخلاقی",
-    "سرقت اطلاعات خصوصی اشخاص",
-    "سایر",
-  ];
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [categoryList, setCategoryList] = useState<ReportCategoryQueryType[]>([]);
 
-  const [reportAdd, { loading: loadingReportAdd, error: errorReportAdd }] = useReportAddMutation();
+  const [reportAdd, { loading: loadingReportAdd }] = useReportAddMutation();
 
   const { loading, data } = useReportCategoryListQuery();
 
@@ -43,7 +36,7 @@ const ReportComment = ({ closeDropDown, id }: { id: string }) => {
 
   const handleClose = () => setIsVisible(false);
 
-  const handleReport = async variables => {
+  const handleReport = async (variables: typeof initialValues) => {
     const { data } = await reportAdd({
       variables: {
         data: {
@@ -84,7 +77,8 @@ const ReportComment = ({ closeDropDown, id }: { id: string }) => {
         return value?.some(obj => obj.checked === true);
       }),
     textBox: Yup.string().when("checkBoxList", {
-      is: checkBoxList => checkBoxList[checkBoxList.length - 1].checked === true,
+      is: (checkBoxList: (typeof initialValues)["checkBoxList"]) =>
+        checkBoxList[checkBoxList.length - 1].checked === true,
       then: () => Yup.string().required(tr("write a comment*")),
       otherwise: () => Yup.string(),
     }),
@@ -92,7 +86,7 @@ const ReportComment = ({ closeDropDown, id }: { id: string }) => {
 
   useEffect(() => {
     if (!loading && data) {
-      setCategoryList(data.reportCategoryList.data);
+      setCategoryList(data?.reportCategoryList?.data as ReportCategoryQueryType[]);
     }
   }, [loading, data]);
 
@@ -102,7 +96,7 @@ const ReportComment = ({ closeDropDown, id }: { id: string }) => {
 
   return (
     <>
-    <ListItem onPress={handleOpen} containerStyle={styles.reportButton}>
+      <ListItem onPress={handleOpen} containerStyle={styles.reportButton}>
         <AntDesign name="warning" size={16} />
         <Text numberOfLines={1} body2>
           {tr("violation report")}
@@ -151,14 +145,14 @@ const ReportComment = ({ closeDropDown, id }: { id: string }) => {
                       {({ form, replace }) => {
                         const { values } = form;
                         const { checkBoxList } = values;
-                        return checkBoxList?.map((obj, index) => (
+                        return checkBoxList?.map((obj: { checked: boolean }, index: number) => (
                           <ListItem
                             bottomDivider
                             containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}
                             key={index}>
                             <CheckBox
                               checked={obj.checked}
-                              title={catList[index]}
+                              title={categoryList[index].displayName as string}
                               onPress={() => {
                                 replace(index, {
                                   id: categoryList[index].id,
@@ -195,7 +189,7 @@ const ReportComment = ({ closeDropDown, id }: { id: string }) => {
                             multiline={true}
                             numberOfLines={4}
                             errorMessage={
-                              touched.textBox && errors.textBox && errors.textBox.toString()
+                              (touched.textBox && errors.textBox && errors.textBox) as string
                             }
                           />
                         </View>

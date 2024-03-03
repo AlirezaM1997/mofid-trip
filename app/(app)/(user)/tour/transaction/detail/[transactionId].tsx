@@ -7,24 +7,25 @@ import {
 import * as Network from "expo-network";
 import { Feather } from "@expo/vector-icons";
 import { Button, useTheme } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
-import { totalPrice } from "@src/helper/totalPrice";
 import React, { ReactElement, useState } from "react";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import LoadingIndicator from "@modules/Loading-indicator";
-import { router, useLocalSearchParams } from "expo-router";
 import RatingBottomSheet from "@modules/rating-bottom-sheet";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import TourTransactionDetail from "@modules/tour/transaction/detail";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import AcceptPayment from "@modules/tour/transaction/buttons/acceptPayment";
 import RejectedDetails from "@modules/tour/transaction/buttons/rejectedDetails";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const TourTransactionDetailScreen = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
-  const [isVisible, setIsVisible] = useState(false);
-  const [ratingValue, setRatingValue] = useState(0);
+  const navigation = useNavigation();
   const { transactionId } = useLocalSearchParams();
+  const { localizeNumber } = useLocalizedNumberFormat();
+  const [ratingValue, setRatingValue] = useState<number>(0);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [ratingIsVisible, setRatingIsVisible] = useState<boolean>(false);
   const [isRejectedVisible, setIsRejectedVisible] = useState<boolean>(false);
 
@@ -38,6 +39,8 @@ const TourTransactionDetailScreen = () => {
     return <LoadingIndicator />;
   }
 
+  navigation.setOptions({ title: localizeNumber(data.tourTransactionDetail?.tourPackage?.tour?.title as string) });
+
   const { status, tourPackage, tourGuests } =
     data.tourTransactionDetail as TourTransactionQueryType;
 
@@ -47,10 +50,10 @@ const TourTransactionDetailScreen = () => {
       variables: {
         data: {
           ip,
-          price: totalPrice({
-            price: tourPackage?.price as number,
-            capacity: tourGuests?.length as number,
-          }),
+          price:
+            (tourPackage?.price as number) *
+            (1 - (tourPackage?.discount as number) / 100) *
+            (tourGuests?.length as number),
           tourTransactionId: transactionId as string,
           description: `${tr("buy")} ${tourPackage?.tour?.title}`,
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}&type=tour`,
@@ -87,7 +90,9 @@ const TourTransactionDetailScreen = () => {
 
   return (
     <BottomButtonLayout buttons={bottomButton() ? [bottomButton()] : []}>
-      <TourTransactionDetail transactionDetail={data.tourTransactionDetail as TourTransactionQueryType} />
+      <TourTransactionDetail
+        transactionDetail={data.tourTransactionDetail as TourTransactionQueryType}
+      />
       <AcceptPayment
         isVisible={isVisible}
         setIsVisible={setIsVisible}

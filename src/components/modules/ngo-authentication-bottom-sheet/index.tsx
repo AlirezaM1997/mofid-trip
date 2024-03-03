@@ -1,13 +1,21 @@
 import React from "react";
 import { router } from "expo-router";
 import Container from "@atoms/container";
+import { useFormikContext } from "formik";
 import WhiteSpace from "@atoms/white-space";
 import { Image, StyleSheet } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import { BottomSheet, Button, Text } from "@rneui/themed";
-import { useFormikContext } from "formik";
 
-const NgoAuthenticationBottomSheet = ({ submitLoading, isVisible, setIsVisible }) => {
+const NgoAuthenticationBottomSheet = ({
+  submitLoading,
+  isVisible,
+  setIsVisible,
+}: {
+  submitLoading: boolean;
+  isVisible: boolean;
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { tr } = useTranslation();
   const { handleSubmit } = useFormikContext();
 
@@ -38,7 +46,7 @@ const NgoAuthenticationBottomSheet = ({ submitLoading, isVisible, setIsVisible }
 
           <WhiteSpace size={16} />
 
-          <Text body2 type="grey3">
+          <Text body2 center type="grey3">
             {tr(
               "your request is being reviewed by the admin, if your identity is confirmed, your tour/host will be published"
             )}

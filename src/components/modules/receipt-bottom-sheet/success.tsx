@@ -8,9 +8,13 @@ import { BottomSheet, Chip, Text } from "@rneui/themed";
 import { useFormatPrice } from "@src/hooks/localization";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Avatar, Button, useTheme } from "@rneui/themed";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { BackCardQueryType, WalletActionTransactionEnum } from "@src/gql/generated";
+import {
+  BackCardQueryType,
+  WalletActionTransactionEnum,
+  WalletTransactionQueryType,
+} from "@src/gql/generated";
 import ButtonRow from "@modules/button-rows";
 
 type LookUpType = Record<
@@ -24,7 +28,7 @@ type LookUpType = Record<
   }
 >;
 
-const CustomView = ({ children }) => {
+const CustomView = ({ children }: { children: React.JSX.Element[] }) => {
   const { theme } = useTheme();
 
   return (
@@ -32,7 +36,15 @@ const CustomView = ({ children }) => {
   );
 };
 
-const SuccessReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => {
+const SuccessReceiptBottomSheet = ({
+  transaction,
+  isVisible,
+  setIsVisible,
+}: {
+  transaction: WalletTransactionQueryType;
+  isVisible: boolean;
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { theme } = useTheme();
   const { formatPrice } = useFormatPrice();
   const { tr } = useTranslation();
@@ -49,14 +61,14 @@ const SuccessReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => 
         title: tr("increase balance"),
         subTitle: tr("payment by card"),
         chip: tr("successful transfer"),
-        card: (source as BackCardQueryType)?.cardPan,
+        card: (source as BackCardQueryType)?.cardPan as string,
         icon: { name: "arrowup", type: "ant-design", color: theme.colors.black, size: 24 },
       },
       [WalletActionTransactionEnum.Withdraw]: {
         chip: tr("successful withdraw"),
         subTitle: tr("deposit to the account"),
         title: tr("withdrawal from the wallet"),
-        card: (reference as BackCardQueryType)?.cardPan,
+        card: (reference as BackCardQueryType)?.cardPan as string,
         icon: { name: "arrowdown", type: "ant-design", color: theme.colors.black, size: 24 },
       },
     };
@@ -98,7 +110,7 @@ const SuccessReceiptBottomSheet = ({ transaction, isVisible, setIsVisible }) => 
         <WhiteSpace size={24} />
 
         <Text heading1 style={styles.price}>
-          {localizeNumber(formattedTotalPrice)}
+          {localizeNumber(formattedTotalPrice as string)}
         </Text>
 
         <WhiteSpace size={24} />
@@ -160,13 +172,15 @@ const styles = StyleSheet.create({
     margin: "auto",
   },
   chip: { padding: 8, gap: 8 },
-  chipTitle: theme => ({ color: theme.colors.white }),
-  bottomContent: theme => ({
+  chipTitle: ((theme: { colors: { white: string } }) => ({
+    color: theme.colors.white,
+  })) as ViewStyle,
+  bottomContent: ((theme: { colors: { grey0: string } }) => ({
     borderTopWidth: 1,
     marginBottom: 16,
     borderStyle: "dashed",
     borderColor: theme.colors.grey0,
-  }),
+  })) as ViewStyle,
   issueTrackingContainer: {
     display: "flex",
     paddingVertical: 12,
@@ -182,10 +196,10 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
     justifyContent: "space-between",
   },
-  avatar: theme => ({
+  avatar: ((theme: { colors: { grey0: string } }) => ({
     margin: "auto",
     backgroundColor: theme.colors.grey0,
-  }),
+  })) as ViewStyle,
   swapIconContainer: {
     zIndex: 2,
     top: "50%",
