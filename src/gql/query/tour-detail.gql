@@ -18,6 +18,7 @@ query tourDetail($pk: ID!) {
       id
       isVerify
       verifyDescription
+      title
       user {
         id
         fullname

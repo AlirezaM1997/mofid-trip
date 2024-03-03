@@ -62,6 +62,7 @@ const ShareBottomsheet = ({ isVisible, handleClose }) => {
       type: "success",
       text1: tr("copied"),
     });
+    handleClose();
   };
 
   return (

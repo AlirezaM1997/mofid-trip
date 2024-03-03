@@ -28,7 +28,7 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
     if (session) {
       dispatch(
         setRedirectToScreenAfterLogin({
-          pathname: `host/${projectId}`,
+          pathname: `host/${projectId}/`,
           params: {
             projectId: projectId,
             name: name,

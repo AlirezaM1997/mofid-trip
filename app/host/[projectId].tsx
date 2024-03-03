@@ -46,12 +46,12 @@ const Page: React.FC = ({ ...props }) => {
     }
   }, [loading, data]);
 
-  if (loading) return <LoadingIndicator />;
-
   navigation.setOptions({
-    title: data?.projectDetail?.name,
+    title: data?.projectDetail?.name || tr("loading"),
     headerRight: () => <ShareReportDropDown />,
   });
+
+  if (loading) return <LoadingIndicator />;
 
   const {
     name,

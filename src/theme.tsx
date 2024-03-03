@@ -333,9 +333,10 @@ export const theme = isRtl =>
           }),
         },
         inputStyle: {
+          padding: 15,
           borderWidth: 1,
           borderRadius: 12,
-          padding: 15,
+          outlineColor: SECONDARY_COLOR,
           paddingLeft: props.leftIcon ? 35 : WIDTH >= 285 ? 15 : 0,
           paddingRight: props.rightIcon ? 35 : WIDTH >= 285 ? 15 : 0,
           fontSize: WIDTH > 320 ? 16 : 14,
@@ -355,8 +356,8 @@ export const theme = isRtl =>
           textAlign: !isRtl || ["numeric"].includes(props.keyboardType) ? "left" : "right",
         },
         inputContainerStyle: {
-          borderBottomWidth: 0,
           width: "100%",
+          borderBottomWidth: 0,
         },
         containerStyle: {
           paddingHorizontal: 0,

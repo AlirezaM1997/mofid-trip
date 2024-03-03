@@ -54,7 +54,7 @@ const SearchHostMap = ({ button, ...props }: { button?: ReactNode; props?: MapPr
     () => (id: string) => {
       data?.projectList?.data &&
         setItem(
-          <Pressable key={id} onPress={() => router.push(`host/${id}`)} style={styles.itemCard}>
+          <Pressable key={id} onPress={() => router.push(`host/${id}/`)} style={styles.itemCard}>
             <HostSearchCard
               chevron={true}
               project={data?.projectList?.data?.find(obj => obj?.id === id)}

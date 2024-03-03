@@ -39,11 +39,12 @@ export default () => {
   });
   const tour = data?.tourDetail;
 
-  if (loading && !tour) return <LoadingIndicator />;
   navigation.setOptions({
-    title: data?.tourDetail?.title,
+    title: data?.tourDetail?.title || tr("loading"),
     headerRight: () => <ShareReportDropDown />,
   });
+
+  if (loading && !tour) return <LoadingIndicator />;
 
   return (
     <BottomButtonLayout buttons={[<BookTourBottomSheet tour={tour as TourQueryType} />]}>
@@ -78,7 +79,7 @@ export default () => {
 
         <WhiteSpace size={20} />
 
-        <ContactCard user={tour?.NGO.user} />
+        <ContactCard user={tour?.NGO} />
 
         <WhiteSpace size={20} />
 
