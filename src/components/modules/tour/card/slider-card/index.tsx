@@ -11,18 +11,19 @@ import {
   TourQueryType,
 } from "@src/gql/generated";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
-import { View, ImageBackground, StyleSheet, Pressable, Platform } from "react-native";
+import { View, ImageBackground, StyleSheet, Pressable, Platform, ViewStyle } from "react-native";
 import { WIDTH } from "@src/constants";
 
 type PropsType = {
   address: AccommodationQueryType["address"];
   price: TourPackageType["price"];
   name: TourQueryType["title"];
+  containerStyle: ViewStyle;
   avatarS3: TourImageType[];
   id: TourQueryType["id"];
 };
 
-function TourSliderCard({ price, id, name, avatarS3, address }: PropsType) {
+function TourSliderCard({ price, id, name, avatarS3, address, containerStyle }: PropsType) {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
   const { theme } = useTheme();
@@ -43,7 +44,7 @@ function TourSliderCard({ price, id, name, avatarS3, address }: PropsType) {
     avatarS3?.length > 0 ? { uri: avatarS3?.[0].small } : require("@assets/image/defaultHost.svg");
 
   return (
-    <Pressable style={style.container} onPress={handlePress}>
+    <Pressable style={[style.container, containerStyle]} onPress={handlePress}>
       <ImageBackground
         style={style.ImageBackground(isRtl)}
         imageStyle={style.ImageBackgroundImage}

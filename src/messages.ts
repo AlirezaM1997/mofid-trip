@@ -34,6 +34,11 @@ export const messages = {
     fa_ir: "همه میزبانی‌ها",
     en_us: "all hosts",
   },
+  "all tours": {
+    ar: "نداریم",
+    fa_ir: "همه تورها",
+    en_us: "all tours",
+  },
   "ngo details": {
     ar: "الملف الشخصي للمؤدي",
     fa_ir: "مشخصات مجری",

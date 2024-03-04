@@ -4,9 +4,9 @@ import { Skeleton } from "@rneui/themed";
 import Container from "@atoms/container";
 import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
-import { SortFieldEnum, useProjectListQuery } from "@src/gql/generated";
 import { ScrollView, View, StyleSheet } from "react-native";
 import HostSliderCard from "@modules/host/card/slider-card";
+import { SortFieldEnum, useProjectListQuery } from "@src/gql/generated";
 
 function HostList() {
   const { tr } = useTranslation();
@@ -28,23 +28,23 @@ function HostList() {
       <View style={style.gap}>
         <Container>
           <TitleWithAction
-            title={tr("Available hosts")}
             actionTitle={tr("See All")}
+            title={tr("Available hosts")}
             onActionPress={() => router.push("/mahdieh-iran")}
           />
         </Container>
         <ScrollView
           horizontal
+          style={style.listContainer}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={style.scrollView}
-          style={style.listContainer}>
+          contentContainerStyle={style.scrollView}>
           {loading
             ? [1, 2, 3, 4, 5, 6, 7, 8].map(i => (
                 <Skeleton
                   key={i}
-                  animation="pulse"
                   width={328}
                   height={300}
+                  animation="pulse"
                   style={{ borderRadius: 10 }}
                 />
               ))

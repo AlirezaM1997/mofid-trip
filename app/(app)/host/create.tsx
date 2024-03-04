@@ -34,7 +34,7 @@ const initialValues = {
 
 const Screen = () => {
   const { tr } = useTranslation();
-  const [activeStep, setActiveStep] = useState(6);
+  const [activeStep, setActiveStep] = useState(1);
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 

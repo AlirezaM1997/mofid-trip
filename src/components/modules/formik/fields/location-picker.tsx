@@ -82,7 +82,7 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
   const latFieldProps = getFieldProps(latName);
   const lngFieldProps = getFieldProps(lngName);
 
-  const { setFieldTouched } = useFormikContext();
+  const { setFieldTouched, values } = useFormikContext();
 
   const handleOpen = () => setIsVisible(true);
   const handleClose = () => setIsVisible(false);

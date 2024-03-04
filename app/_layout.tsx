@@ -112,6 +112,12 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
+          name="all-tours"
+          options={{
+            title: tr("all tours"),
+          }}
+        />
+        <Stack.Screen
           name="tour-list"
           options={{
             headerShown: false,

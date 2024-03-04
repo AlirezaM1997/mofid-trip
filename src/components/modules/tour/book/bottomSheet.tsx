@@ -8,18 +8,18 @@ import { BottomSheet, Button } from "@rneui/themed";
 import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
-import { TourPackageType, TourQueryType } from "@src/gql/generated";
+import { TourPackageType, TourQueryType, TourStatusEnum } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
+  const { session } = useSession();
+  const { formatPrice } = useFormatPrice();
   const { tourId } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisible, setIsVisible] = useState<boolean>();
-  const { session } = useSession();
   const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
-  const { formatPrice } = useFormatPrice();
 
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
 
@@ -71,7 +71,13 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
           </View>
         </View>
         <Button
-          disabled={tour?.statusStep?.name === "SUSPENSION" ? true : false}
+          disabled={
+            [TourStatusEnum.End, TourStatusEnum.Suspension].includes(
+              tour?.statusStep?.name as TourStatusEnum
+            )
+              ? true
+              : false
+          }
           onPress={handleBottomSheet}>
           {tr("Reserve")}
         </Button>
@@ -81,8 +87,8 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
         {tour?.packages.map((p, index) => (
           <ListItem
             key={index}
-            bottomDivider={index !== tour.packages.length - 1}
-            onPress={() => handleBuy(p)}>
+            onPress={() => handleBuy(p)}
+            bottomDivider={index !== tour.packages.length - 1}>
             <ListItem.Content>
               <View style={style.priceItem(isRtl)}>
                 <View>

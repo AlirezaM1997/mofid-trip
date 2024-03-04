@@ -1,18 +1,18 @@
 import {
+  Text,
   Avatar,
-  BottomSheet,
-  BottomSheetProps,
   Button,
   Colors,
   Divider,
   ListItem,
-  Text,
   useTheme,
+  BottomSheet,
+  BottomSheetProps,
 } from "@rneui/themed";
 import {
-  MyNgoDetailQuery,
   TourGuestQueryType,
   TransactionStatusEnum,
+  TourTransactionQueryType,
   useTourTransactionEditMutation,
 } from "@src/gql/generated";
 import { HEIGHT } from "@src/constants";
@@ -28,9 +28,9 @@ import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation
 
 export type RequestListBottomSheetProps = BottomSheetProps & {
   isVisible: boolean;
-  transaction: MyNgoDetailQuery["NGODetail"]["tourTransactionSet"][0];
   refetch: () => void;
   handleClose: () => void;
+  transaction: TourTransactionQueryType;
 };
 
 type LookupType = Record<
@@ -39,16 +39,16 @@ type LookupType = Record<
 >;
 
 const RequestListBottomSheet = ({
+  refetch,
   isVisible,
   transaction,
-  refetch,
   handleClose,
   ...props
 }: RequestListBottomSheetProps) => {
-  const { tr } = useTranslation();
-  const ownerAvatar = transaction?.owner.avatarS3.small;
   const { theme } = useTheme();
+  const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const ownerAvatar = transaction?.owner?.avatarS3?.small;
   const [tourTransactionEdit, { loading }] = useTourTransactionEditMutation();
 
   const handlePressPhoneIcon = (num: string) => {
@@ -69,6 +69,9 @@ const RequestListBottomSheet = ({
       }
     }
   };
+
+  console.log(transaction.id);
+
   const submitHandler = async (type: boolean) => {
     const { data } = await tourTransactionEdit({
       variables: {
@@ -103,23 +106,23 @@ const RequestListBottomSheet = ({
       },
       ACCEPT: transaction?.status?.isActive
         ? {
-            color: "success",
-            bottomSheetTitle: tr("the request has been approved by you"),
-            buttonBox: (
-              <Button containerStyle={style.button} disabled type="outline">
-                {tr("request rejection")}
-              </Button>
-            ),
-          }
+          color: "success",
+          bottomSheetTitle: tr("the request has been approved by you"),
+          buttonBox: (
+            <Button containerStyle={style.button} disabled type="outline">
+              {tr("request rejection")}
+            </Button>
+          ),
+        }
         : {
-            color: "error",
-            bottomSheetTitle: tr("the request was rejected by you"),
-            buttonBox: (
-              <Button containerStyle={style.button} disabled type="solid">
-                {tr("confirm request")}
-              </Button>
-            ),
-          },
+          color: "error",
+          bottomSheetTitle: tr("the request was rejected by you"),
+          buttonBox: (
+            <Button containerStyle={style.button} disabled type="solid">
+              {tr("confirm request")}
+            </Button>
+          ),
+        },
       PAYMENT: {
         color: "info",
         bottomSheetTitle: tr("the passenger paid and the reservation was finalized"),
@@ -130,7 +133,7 @@ const RequestListBottomSheet = ({
         ),
       },
     };
-    return lookup[transaction?.status.step.name];
+    return lookup[transaction?.status?.step?.name as string];
   };
   const step = getCurrentStep();
 
@@ -140,7 +143,11 @@ const RequestListBottomSheet = ({
         <View style={style.bottomSheetHeader}>
           <WhiteSpace />
           {ownerAvatar ? (
-            <Avatar rounded size={56} source={{ uri: transaction?.owner.avatarS3.small }} />
+            <Avatar
+              rounded
+              size={56}
+              source={{ uri: transaction?.owner?.avatarS3?.small as string }}
+            />
           ) : (
             <Avatar
               rounded
@@ -155,10 +162,10 @@ const RequestListBottomSheet = ({
           )}
           <View style={style.bottomSheetHeaderTextBox}>
             <Text subtitle2>
-              {localizeNumber(transaction?.owner.fullname)} / {tr("team leader")}
+              {localizeNumber(transaction?.owner?.fullname as string)} / {tr("team leader")}
             </Text>
             <Text caption type="grey2">
-              {localizeNumber(transaction?.owner.phoneNumber)}
+              {localizeNumber(transaction?.owner?.phoneNumber as string)}
             </Text>
             <Text caption type={step?.color}>
               {step?.bottomSheetTitle}
@@ -171,7 +178,7 @@ const RequestListBottomSheet = ({
               type="outline"
               color="secondary"
               size="sm"
-              onPress={() => handlePressTextIcon(transaction?.owner?.phoneNumber)}>
+              onPress={() => handlePressTextIcon(transaction?.owner?.phoneNumber as string)}>
               {tr("message")}
             </Button>
             <Button
@@ -180,7 +187,7 @@ const RequestListBottomSheet = ({
               type="outline"
               color="secondary"
               size="sm"
-              onPress={() => handlePressPhoneIcon(transaction?.owner?.phoneNumber)}>
+              onPress={() => handlePressPhoneIcon(transaction?.owner?.phoneNumber as string)}>
               {tr("contact")}
             </Button>
           </View>
@@ -192,39 +199,41 @@ const RequestListBottomSheet = ({
           <Container>
             <WhiteSpace />
             <Text body2 type="grey2">{`${tr("accompanying passengers")} (${localizeNumber(
-              transaction?.tourGuests.length
+              transaction?.tourGuests?.length as number
             )} ${tr("person")})`}</Text>
-            {transaction?.tourGuests.map((guest: TourGuestQueryType, i) => (
-              <>
-                <ListItem
-                  key={guest.id}
-                  bottomDivider
-                  containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}>
-                  {guest?.avatarS3?.[0]?.small ? (
-                    <Avatar size={40} rounded source={{ uri: guest.avatarS3[0]?.small }} />
-                  ) : (
-                    <Avatar
-                      rounded
-                      size={48}
-                      icon={{
-                        name: "user",
-                        type: "feather",
-                        size: 26,
-                      }}
-                      containerStyle={{ backgroundColor: theme.colors.grey2 }}
-                    />
-                  )}
-                  <ListItem.Content>
-                    <Text subtitle2>
-                      {guest.firstname} {guest.lastname}
-                    </Text>
-                    <Text caption type="grey3">
-                      {localizeNumber(guest?.phoneNumber as string)}
-                    </Text>
-                  </ListItem.Content>
-                </ListItem>
-              </>
-            ))}
+            {(transaction?.tourGuests as TourGuestQueryType[])?.map(
+              (guest: TourGuestQueryType, i) => (
+                <>
+                  <ListItem
+                    key={guest.id}
+                    bottomDivider
+                    containerStyle={{ direction: "rtl", paddingHorizontal: 0 }}>
+                    {guest?.avatarS3?.[0]?.small ? (
+                      <Avatar size={40} rounded source={{ uri: guest.avatarS3[0]?.small }} />
+                    ) : (
+                      <Avatar
+                        rounded
+                        size={48}
+                        icon={{
+                          name: "user",
+                          type: "feather",
+                          size: 26,
+                        }}
+                        containerStyle={{ backgroundColor: theme.colors.grey2 }}
+                      />
+                    )}
+                    <ListItem.Content>
+                      <Text subtitle2>
+                        {guest.firstname} {guest.lastname}
+                      </Text>
+                      <Text caption type="grey3">
+                        {localizeNumber(guest?.phoneNumber as string)}
+                      </Text>
+                    </ListItem.Content>
+                  </ListItem>
+                </>
+              )
+            )}
           </Container>
         </ScrollView>
         <WhiteSpace size={24} />
