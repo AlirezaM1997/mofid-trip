@@ -23,7 +23,7 @@ const ReservationCard = ({ transaction, index }: PropsType) => {
       "PAYMENT": 3,
       "SUCCESSFUL": 4,
     };
-    return lookup[transaction.status.step?.name || 0];
+    return lookup[transaction?.status?.step?.name || 0];
   };
 
   return (
@@ -34,7 +34,7 @@ const ReservationCard = ({ transaction, index }: PropsType) => {
         <Stepper
           steps={steps}
           activeStep={activeStep()}
-          isActive={transaction.status.isActive as boolean}
+          isActive={transaction?.status?.isActive as boolean}
         />
         <ConfirmButton transaction={transaction} />
       </View>

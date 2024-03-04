@@ -2,10 +2,10 @@ import React from "react";
 import moment from "jalali-moment";
 import { router } from "expo-router";
 import { Image, Text } from "@rneui/themed";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 import { ProjectTransactionQueryType } from "@src/gql/generated";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const TransactionDetailCard = ({
   transactionDetail,
@@ -13,18 +13,20 @@ const TransactionDetailCard = ({
   transactionDetail: ProjectTransactionQueryType;
 }) => {
   const { tr } = useTranslation();
-  const formattedDate = (date: Date) => moment(date, "YYYY/MM/DD").locale("fa").format("D MMMM");
   const { localizeNumber } = useLocalizedNumberFormat();
+  const formattedDate = (date: Date) => moment(date, "YYYY/MM/DD").locale("fa").format("D MMMM");
+
+  const project = transactionDetail.project;
 
   return (
     <Pressable
       style={styles.routeToHostPageContainer}
       onPress={() =>
         router.push({
-          pathname: `host/${transactionDetail?.project?.id}`,
+          pathname: `host/${project?.id}`,
           params: {
-            projectId: transactionDetail?.project?.id,
-            name: transactionDetail?.project?.name,
+            projectId: project?.id,
+            name: project?.name,
           },
         })
       }>
@@ -32,9 +34,9 @@ const TransactionDetailCard = ({
         <Image
           style={styles.hostAvatar}
           source={
-            (transactionDetail?.project?.accommodation?.avatarS3?.length as number) > 0
+            (project?.accommodation?.avatarS3?.length as number) > 0
               ? {
-                  uri: transactionDetail?.project?.accommodation?.avatarS3?.[0]?.small,
+                  uri: project?.accommodation?.avatarS3?.[0]?.small,
                 }
               : require("@assets/image/defaultHost.svg")
           }
@@ -43,25 +45,28 @@ const TransactionDetailCard = ({
 
         <View style={styles.hostDetail}>
           <Text numberOfLines={1} subtitle1>
-            {transactionDetail?.project?.name}
+            {project?.name}
           </Text>
 
           <Text numberOfLines={1} caption type="grey2">
-            {transactionDetail?.project?.accommodation?.address}
+            {project?.accommodation?.address}
           </Text>
 
           <View style={styles.date}>
             <Text caption type="grey2">
               {tr("hosting type")} .
             </Text>
-            <Text caption>{transactionDetail?.project?.categories?.[0]?.displayName}</Text>
+            <Text caption>{project?.categories?.[0]?.displayName}</Text>
           </View>
 
           <View style={styles.date}>
             <Text caption type="grey2">
-              {tr("date")} .
+              {tr("beginning")} .
             </Text>
-            <Text caption>{localizeNumber(formattedDate(transactionDetail?.dateStart))}</Text>
+            <Text caption>
+              {localizeNumber(formattedDate(transactionDetail?.dateStart))} -{" "}
+              {localizeNumber(formattedDate(transactionDetail?.dateEnd))}
+            </Text>
           </View>
         </View>
       </View>

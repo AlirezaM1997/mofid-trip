@@ -10,29 +10,25 @@ type TransactionDetailPropsType = {
 
 const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
   const handleNavigate = () => {
-    router.push({
-      pathname: `/tour/${transaction.tourPackage.tour.id}`,
-      params: {
-        name: transaction?.tourPackage?.tour?.title,
-      },
-    });
+    router.push(`/tour/transaction/detail/${transaction.id}`);
   };
+  const tour = transaction.tourPackage?.tour;
 
   return (
     <Pressable style={styles.container} onPress={handleNavigate}>
       <Image
         style={styles.image}
         source={{
-          uri: transaction?.tourPackage.tour?.avatarS3?.[0]?.small || "",
+          uri: tour?.avatarS3?.[0]?.small || "",
         }}
         resizeMode="cover"
       />
 
       <View style={styles.infoContainer}>
-        <Text>{transaction?.tourPackage?.tour.title}</Text>
+        <Text>{tour?.title}</Text>
 
         <Text caption type="grey2">
-          {(transaction?.tourPackage.tour?.destination as AccommodationQueryType)?.address}
+          {(tour?.destination as AccommodationQueryType)?.address}
         </Text>
       </View>
     </Pressable>
