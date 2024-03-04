@@ -718,7 +718,7 @@ export const messages = {
   },
   "cancel payment": {
     ar: "الغاء الدفع",
-    fa_ir: "لغو پرداخت",
+    fa_ir: "انصراف",
     en_us: "cancel payment",
   },
   "payment detail": {

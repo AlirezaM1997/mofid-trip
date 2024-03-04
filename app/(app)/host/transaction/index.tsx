@@ -4,6 +4,7 @@ import Container from "@atoms/container";
 import { StyleSheet } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import HostTransaction from "@modules/host/transaction";
+import TourReservation from "@organisms/tour-reservation";
 
 const HostTransactionScreen = () => {
   const { tr } = useTranslation();
@@ -18,6 +19,7 @@ const HostTransactionScreen = () => {
       </Container>
 
       <HostTransaction />
+      <TourReservation />
     </>
   );
 };
