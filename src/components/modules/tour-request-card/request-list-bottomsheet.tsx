@@ -70,8 +70,6 @@ const RequestListBottomSheet = ({
     }
   };
 
-  console.log(transaction.id);
-
   const submitHandler = async (type: boolean) => {
     const { data } = await tourTransactionEdit({
       variables: {
@@ -106,23 +104,23 @@ const RequestListBottomSheet = ({
       },
       ACCEPT: transaction?.status?.isActive
         ? {
-          color: "success",
-          bottomSheetTitle: tr("the request has been approved by you"),
-          buttonBox: (
-            <Button containerStyle={style.button} disabled type="outline">
-              {tr("request rejection")}
-            </Button>
-          ),
-        }
+            color: "success",
+            bottomSheetTitle: tr("the request has been approved by you"),
+            buttonBox: (
+              <Button containerStyle={style.button} disabled type="outline">
+                {tr("request rejection")}
+              </Button>
+            ),
+          }
         : {
-          color: "error",
-          bottomSheetTitle: tr("the request was rejected by you"),
-          buttonBox: (
-            <Button containerStyle={style.button} disabled type="solid">
-              {tr("confirm request")}
-            </Button>
-          ),
-        },
+            color: "error",
+            bottomSheetTitle: tr("the request was rejected by you"),
+            buttonBox: (
+              <Button containerStyle={style.button} disabled type="solid">
+                {tr("confirm request")}
+              </Button>
+            ),
+          },
       PAYMENT: {
         color: "info",
         bottomSheetTitle: tr("the passenger paid and the reservation was finalized"),

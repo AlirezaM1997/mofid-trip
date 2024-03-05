@@ -68,7 +68,6 @@ const Index = () => {
         onSubmit={onSubmit}>
         {({ handleSubmit, values, handleChange, touched, errors }) => (
           <>
-            {console.log(values)}
             <BottomButtonLayout
               contentContainerStyle={{
                 alignItems: "center",

@@ -1,10 +1,10 @@
 import Header from "./header";
-import { useEffect, useState } from "react";
 import { styles } from "./styles";
 import WeekDays from "./week-days";
 import Day, { DayProps } from "./day";
 import getAllDaysInMonth from "./helper";
 import { CalendarContext } from "./context";
+import { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import { Text, useTheme } from "@rneui/themed";
 import moment, { Moment } from "jalali-moment";
@@ -106,6 +106,8 @@ const JalaliDatePicker = ({
 
             const dayData = validMatchDays?.data;
 
+            const isExpiredDate = moment(item.date).isBefore(moment(2, "day"));
+
             return (
               <View style={styles.container}>
                 <Day
@@ -113,7 +115,9 @@ const JalaliDatePicker = ({
                   date={item.date}
                   onPress={e => _onDayPress(item.date)}
                   disabled={
-                    (shouldDisable(item.date as Moment) as boolean) || (daysData && !dayData)
+                    (shouldDisable(item.date as Moment) as boolean) ||
+                    (daysData && !dayData) ||
+                    isExpiredDate
                   }
                   ViewComponent={() =>
                     item.date && (
@@ -122,7 +126,7 @@ const JalaliDatePicker = ({
                           style={[
                             styles.dayText,
                             validMarkedDay?.titleStyle,
-                            daysData && !dayData ? styles.disabledDay : {},
+                            (daysData && !dayData) || isExpiredDate ? styles.disabledDay : {},
                           ]}>
                           {localizeNumber(moment(item.date).locale("fa").format("D"))}
                         </Text>

@@ -13,7 +13,7 @@ import WhiteSpace from "@src/components/atoms/white-space";
 import { BottomSheet, ListItem, Text } from "@rneui/themed";
 
 const CountryPicker = ({ value, setValue, callingCode, setCallingCode, ...props }) => {
-  const {tr} = useTranslation();
+  const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [country, setCountry] = useState(data[239]);
   const [inputValue, setInputValue] = useState("");
@@ -55,7 +55,7 @@ const CountryPicker = ({ value, setValue, callingCode, setCallingCode, ...props 
           inputStyle={[styles.inputStyle, { outline: "none" }]}
           onChangeText={text => setInputValue(parseText(text))}
           value={inputValue}
-          maxLength={20}
+          maxLength={11}
         />
       </View>
       <BottomSheet containerStyle={styles.bottomSheetContainer} isVisible={isVisible}>
@@ -129,7 +129,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   scrollView: { height: HEIGHT - 75 },
-  bottomSheetContainer: { backgroundColor: "#fff" , borderTopRightRadius : 0 , borderTopLeftRadius : 0 },
+  bottomSheetContainer: {
+    backgroundColor: "#fff",
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+  },
 });
 
 export default CountryPicker;

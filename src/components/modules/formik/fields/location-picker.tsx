@@ -89,8 +89,8 @@ const LocationPicker = ({ latName, lngName, field, form, ...props }: LocationPic
 
   const initLocation = useMemo(
     () => ({
-      lat: 35.7219,
-      lng: 51.3347,
+      lat: latFieldProps.value || 35.7219,
+      lng: lngFieldProps.value || 51.3347,
     }),
     []
   );

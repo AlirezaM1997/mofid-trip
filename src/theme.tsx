@@ -249,6 +249,7 @@ export const theme = isRtl =>
             color: SECONDARY_COLOR,
           };
         }
+
         if (type === "outline" && color === "secondary") {
           buttonStyle = {
             ...buttonStyle,
@@ -271,6 +272,29 @@ export const theme = isRtl =>
 
         if (size === "md") {
           containerStyle = { ...buttonStyle, height: Platform.OS === "web" ? "auto" : 39.6 };
+        }
+
+        if (!["outline", "clear"].includes(type as string)) {
+          if (size === "sm") {
+            buttonStyle = {
+              ...buttonStyle,
+              height: 35,
+            };
+          } else if (size === "lg") {
+            buttonStyle = {
+              ...buttonStyle,
+              height: 54,
+            };
+          } else {
+            buttonStyle = {
+              ...buttonStyle,
+              height: 46,
+            };
+          }
+          titleStyle = {
+            ...titleStyle,
+            margin: "auto",
+          };
         }
 
         return {

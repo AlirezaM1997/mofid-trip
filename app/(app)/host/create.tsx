@@ -46,10 +46,7 @@ const Screen = () => {
     dateStart: Yup.date().required(tr("Required")),
     name: Yup.string().required(tr("Title is required")),
 
-    discount: Yup.number()
-      .required(tr("Required"))
-      .max(100, tr("Discount can not be greater than 100")),
-
+    discount: Yup.number().max(100, tr("Discount can not be greater than 100")),
     categories: Yup.array()
       .required("This field is required")
       .min(1, "At least one item is required"),
@@ -58,7 +55,6 @@ const Screen = () => {
       .required(tr("Required"))
       .typeError(tr("Only number acceptable"))
       .min(0, tr("Only positive numbers acceptable")),
-
     accommodation: Yup.object().shape({
       city: Yup.string().required(tr("City is required")),
       address: Yup.string().required(tr("Address is required")),
