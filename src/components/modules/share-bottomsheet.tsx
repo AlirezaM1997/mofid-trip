@@ -2,6 +2,7 @@ import React from "react";
 import ButtonRow from "./button-rows";
 import { useURL } from "expo-linking";
 import { WIDTH } from "@src/constants";
+import { Colors } from "@rneui/themed";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
 import * as Clipboard from "expo-clipboard";
@@ -155,7 +156,7 @@ const style = StyleSheet.create({
     alignItems: "center",
     gap: 5,
   },
-  copyButton: ((theme: { colors: { grey0: string } }) => ({
+  copyButton: ((theme: { colors: { grey0: keyof Colors } }) => ({
     maxWidth: WIDTH - 50,
     borderRadius: 8,
     backgroundColor: theme.colors.grey0,

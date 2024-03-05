@@ -1,16 +1,16 @@
 import {
+  useUserDetailQuery,
   ProjectTransactionQueryType,
   useProjectTransactionDetailQuery,
-  useUserDetailQuery,
 } from "@src/gql/generated";
 import React from "react";
 import moment from "jalali-moment";
 import Container from "@atoms/container";
-import { Chip, Text } from "@rneui/themed";
 import * as Clipboard from "expo-clipboard";
 import ButtonRow from "@modules/button-rows";
 import Toast from "react-native-toast-message";
 import ShareButton from "@modules/share-button";
+import { Chip, Colors, Text } from "@rneui/themed";
 import { totalPrice } from "@src/helper/totalPrice";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Avatar, Button, useTheme } from "@rneui/themed";
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     margin: "auto",
   },
   chip: { padding: 8, gap: 8, margin: "auto" },
-  chipTitle: ((theme: { colors: { white: string } }) => ({
+  chipTitle: ((theme: { colors: { white: keyof Colors } }) => ({
     color: theme.colors.white,
   })) as ViewStyle,
   bottomContent: {

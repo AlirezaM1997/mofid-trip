@@ -1,10 +1,3 @@
-import React, { useEffect, useState } from "react";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { Text, useTheme } from "@rneui/themed";
-import Container from "@atoms/container";
-import { Platform, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
-import moment from "jalali-moment";
-import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
 import {
   CommentObjectEnum,
   CommentType,
@@ -14,22 +7,29 @@ import {
   useLikeAddMutation,
   useTourCommentQuery,
 } from "@src/gql/generated";
-import { useLocalSearchParams, useNavigation } from "expo-router";
-import LoadingIndicator from "@modules/Loading-indicator";
-import WhiteSpace from "@atoms/white-space";
-import CommentCardReplay from "@modules/comment/comment-card-replay";
-import BottomButtonLayout from "@components/layout/bottom-button";
 import Input from "@atoms/input";
+import moment from "jalali-moment";
+import Container from "@atoms/container";
+import WhiteSpace from "@atoms/white-space";
 import Toast from "react-native-toast-message";
-import ReportComment from "@modules/report/report-comment";
 import { HEIGHT, WIDTH } from "@src/constants";
+import React, { useEffect, useState } from "react";
+import { Colors, Text, useTheme } from "@rneui/themed";
+import LoadingIndicator from "@modules/Loading-indicator";
+import ReportComment from "@modules/report/report-comment";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import CommentCardReplay from "@modules/comment/comment-card-replay";
+import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
+import { Platform, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const TourCommentReplay = () => {
-  const { tr } = useTranslation();
   const { theme } = useTheme();
+  const { tr } = useTranslation();
+  const navigation = useNavigation();
   const { localizeNumber } = useLocalizedNumberFormat();
   const { tourId, commentId } = useLocalSearchParams();
-  const navigation = useNavigation();
 
   const [value, setValue] = useState<string>("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -145,13 +145,13 @@ const TourCommentReplay = () => {
                 />
                 <View style={styles.backDrop(isVisible)}>
                   <View style={styles.dropDown}>
-                    <ReportComment closeDropDown={handleClose} id={comment?.id} />
+                    <ReportComment closeDropDown={handleClose} id={comment?.id as string} />
                   </View>
                 </View>
               </View>
               <Text caption type="grey3">
                 {localizeNumber(moment(comment?.createdDate).locale("fa").format("jD jMMMM jYYYY"))}{" "}
-                . {comment?.user}
+                . {comment?.user as string}
               </Text>
             </View>
             <View style={styles.likeInf}>
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   sendIcon: { transform: [{ rotateZ: "180deg" }] },
   containerStyle: { gap: 16 },
   headerComment: { paddingVertical: 24, gap: 16 },
-  comment: ((theme: { colors: { grey0: string; }; }) => ({
+  comment: ((theme: { colors: { grey0: keyof Colors; }; }) => ({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
@@ -233,9 +233,21 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  likeBox: { flexDirection: "row", gap: 16, alignItems: "center" },
-  likeStyle: { flexDirection: "row", gap: 4, alignItems: "center" },
-  nestedCommentInf: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  likeBox: { 
+    flexDirection: "row", 
+    gap: 16, 
+    alignItems: "center" 
+  },
+  likeStyle: { 
+    flexDirection: "row", 
+    gap: 4, 
+    alignItems: "center" 
+  },
+  nestedCommentInf: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    alignItems: "center" 
+  },
   nestedCommentList: { gap: 40 },
   backDrop: ((isVisible: boolean) => ({
     display: isVisible ? "flex" : "none",

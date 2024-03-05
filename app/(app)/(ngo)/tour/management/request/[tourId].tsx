@@ -1,6 +1,5 @@
 import {
   TourTransactionQueryType,
-  MyNgoDetailTourTransactionSetQuery,
   useMyNgoDetailTourTransactionSetQuery,
 } from "@src/gql/generated";
 import { Text } from "@rneui/themed";
@@ -20,19 +19,15 @@ const RequestScreen = () => {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const { tourId } = useLocalSearchParams();
-
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [selectedTransaction, setSelectedTransaction] = useState<TourTransactionQueryType>();
 
   const handleClose = () => setIsVisible(false);
   const handleOpen = () => setIsVisible(true);
 
-  const { loading, data, refetch, networkStatus } = useMyNgoDetailTourTransactionSetQuery({
+  const { loading, data, refetch } = useMyNgoDetailTourTransactionSetQuery({
     notifyOnNetworkStatusChange: true,
   });
-
-  const [transactionSet, setTransactionSet] =
-    useState<MyNgoDetailTourTransactionSetQuery["NGODetail"]["tourTransactionSet"]>();
 
   const handleRequestPress = (transaction: TourTransactionQueryType) => {
     setSelectedTransaction(transaction);
@@ -45,15 +40,11 @@ const RequestScreen = () => {
     }
   }, [isFocused]);
 
-  useEffect(() => {
-    if (!loading && data) {
-      setTransactionSet(
-        data?.NGODetail?.tourTransactionSet?.filter(tr => tr?.tourPackage?.tour?.id === tourId)
-      );
-    }
-  }, [loading, data]);
+  if (loading && !data) return <LoadingIndicator />;
 
-  if (loading || !transactionSet) return <LoadingIndicator />;
+  const transactionSet = data?.NGODetail?.tourTransactionSet?.filter(
+    tr => tr?.tourPackage?.tour?.id === tourId
+  ) as TourTransactionQueryType[];
 
   navigation.setOptions({ title: transactionSet?.[0]?.tourPackage?.tour?.title || tr("requests") });
 
@@ -71,7 +62,7 @@ const RequestScreen = () => {
           </Text>
         </View>
         <ScrollView>
-          {transactionSet.map((transaction: TourTransactionQueryType, i) => (
+          {transactionSet.map((transaction: TourTransactionQueryType) => (
             <RequestList
               key={transaction.id}
               transaction={transaction}

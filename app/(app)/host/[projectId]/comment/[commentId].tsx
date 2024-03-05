@@ -11,10 +11,10 @@ import Input from "@atoms/input";
 import moment from "jalali-moment";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import { Text, useTheme } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 import { HEIGHT, WIDTH } from "@src/constants";
 import React, { useState, useEffect } from "react";
+import { Colors, Text, useTheme } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import ReportComment from "@modules/report/report-comment";
 import { useLocalSearchParams, useNavigation } from "expo-router";
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   sendIcon: { transform: [{ rotateZ: "180deg" }] },
   containerStyle: { gap: 16 },
   headerComment: { paddingVertical: 24, gap: 16 },
-  comment: ((theme: { colors: { grey0: string } }) => ({
+  comment: ((theme: { colors: { grey0: keyof Colors } }) => ({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,

@@ -1,4 +1,4 @@
-import { Text } from "@rneui/themed";
+import { Colors, Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
@@ -19,9 +19,9 @@ export default () => {
   const navigation = useNavigation();
   const { ngoId } = useLocalSearchParams();
   const { loading, data } = useNgoDetailQuery({ variables: { pk: ngoId as string } });
-  
+
   if (loading && !data) return <LoadingIndicator />;
-  
+
   navigation.setOptions({
     title: data?.NGODetail?.title,
   });
@@ -96,7 +96,7 @@ export default () => {
 
 const styles = StyleSheet.create({
   image: { width: WIDTH, height: height },
-  avatarContainerStyle: ((theme: { colors: { white: string } }) => ({
+  avatarContainerStyle: ((theme: { colors: { white: keyof Colors } }) => ({
     position: "absolute",
     top: height - 40,
     left: 20,

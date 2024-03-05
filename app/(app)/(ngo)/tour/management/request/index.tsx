@@ -1,29 +1,25 @@
-import { View, StyleSheet, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Text } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
 import {
   TourTransactionQueryType,
-  MyNgoDetailTourTransactionSetQuery,
   useMyNgoDetailTourTransactionSetQuery,
 } from "@src/gql/generated";
-import LoadingIndicator from "@modules/Loading-indicator";
-import { useNavigation } from "expo-router";
+import { Text } from "@rneui/themed";
 import Container from "@atoms/container";
+import { useNavigation } from "expo-router";
 import NoResult from "@organisms/no-result";
+import React, { useEffect, useState } from "react";
+import useTranslation from "@src/hooks/translation";
+import { useIsFocused } from "@react-navigation/native";
+import LoadingIndicator from "@modules/Loading-indicator";
+import { View, StyleSheet, ScrollView } from "react-native";
 import RequestList from "@modules/tour-request-card/RequestList";
 import RequestListBottomSheet from "@modules/tour-request-card/request-list-bottomsheet";
-import { useIsFocused } from "@react-navigation/native";
 
 const RequestScreen = () => {
   const { tr } = useTranslation();
-  const navigation = useNavigation();
   const isFocused = useIsFocused();
-
-  const [isVisible, setIsVisible] = useState(false);
+  const navigation = useNavigation();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [selectedTransaction, setSelectedTransaction] = useState<TourTransactionQueryType>();
-  const [transactionSet, setTransactionSet] =
-    useState<MyNgoDetailTourTransactionSetQuery["NGODetail"]["tourTransactionSet"]>();
 
   const handleOpen = () => setIsVisible(true);
   const handleClose = () => setIsVisible(false);
@@ -32,7 +28,7 @@ const RequestScreen = () => {
     handleOpen();
   };
 
-  const { loading, data, refetch, networkStatus } = useMyNgoDetailTourTransactionSetQuery({
+  const { loading, data, refetch } = useMyNgoDetailTourTransactionSetQuery({
     notifyOnNetworkStatusChange: true,
   });
 
@@ -42,13 +38,9 @@ const RequestScreen = () => {
     }
   }, [isFocused]);
 
-  useEffect(() => {
-    if (!loading && data) {
-      setTransactionSet(data.NGODetail.tourTransactionSet);
-    }
-  }, [loading, data]);
+  if (loading && !data) return <LoadingIndicator />;
 
-  if (loading || !transactionSet) return <LoadingIndicator />;
+  const transactionSet = data?.NGODetail?.tourTransactionSet as TourTransactionQueryType[];
 
   if (!transactionSet.length) return <NoResult />;
 
@@ -73,7 +65,7 @@ const RequestScreen = () => {
           ))}
         </ScrollView>
       </Container>
-      <RequestListas voidBottomSheet
+      <RequestListBottomSheet
         isVisible={isVisible}
         onBackdropPress={handleClose}
         handleClose={handleClose}

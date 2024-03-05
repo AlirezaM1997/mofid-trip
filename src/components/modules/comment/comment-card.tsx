@@ -6,6 +6,7 @@ import {
 } from "@src/gql/generated";
 import moment from "jalali-moment";
 import { router } from "expo-router";
+import { Colors } from "@rneui/themed";
 import { HEIGHT, WIDTH } from "@src/constants";
 import React, { useEffect, useState } from "react";
 import ReportComment from "@modules/report/report-comment";
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
       web: { boxShadow: "0 0 5px #12121227" },
     }),
   },
-  containerStyle: ((theme: { colors: { grey0: string } }) => ({
+  containerStyle: ((theme: { colors: { grey0: keyof Colors } }) => ({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
@@ -181,9 +182,21 @@ const styles = StyleSheet.create({
   },
   commentText: { width: "80%" },
   footerCard: { gap: 12 },
-  likeInf: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  likeBox: { flexDirection: "row", gap: 16, alignItems: "center" },
-  likeStyle: { flexDirection: "row", gap: 4, alignItems: "center" },
+  likeInf: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    alignItems: "center" 
+  },
+  likeBox: { 
+    flexDirection: "row", 
+    gap: 16, 
+    alignItems: "center" 
+  },
+  likeStyle: { 
+    flexDirection: "row", 
+    gap: 4, 
+    alignItems: "center" 
+  },
   buttonStyle: { marginRight: "auto" },
 });
 
