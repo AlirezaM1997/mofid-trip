@@ -23,11 +23,11 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
 
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
 
-  const handleBottomSheet = () => {
+  const handleBottomSheet = (p: any) => {
     if (isNgo) {
       setIsVisiblePrevent(true);
     } else {
-      setIsVisible(true);
+      handleBuy(p)
     }
   };
 
@@ -72,31 +72,10 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
         </View>
         <Button
           disabled={tour?.statusStep?.name === "SUSPENSION" ? true : false}
-          onPress={handleBottomSheet}>
+          onPress={() => handleBottomSheet(tour?.packages[0])}>
           {tr("Reserve")}
         </Button>
       </ButtonRow>
-
-      <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
-        {tour?.packages.map((p, index) => (
-          <ListItem
-            key={index}
-            bottomDivider={index !== tour.packages.length - 1}
-            onPress={() => handleBuy(p)}>
-            <ListItem.Content>
-              <View style={style.priceItem(isRtl)}>
-                <View>
-                  <Text>{p.title}</Text>
-                  <Text>{localizeNumber(formatPrice(p.price) as string)}</Text>
-                </View>
-                <Button size="sm" type="outline" onPress={() => handleBuy(p)}>
-                  {tr("Buy")}
-                </Button>
-              </View>
-            </ListItem.Content>
-          </ListItem>
-        ))}
-      </BottomSheet>
 
       <BottomSheet isVisible={isVisiblePrevent} onBackdropPress={() => setIsVisiblePrevent(false)}>
         <Container>
