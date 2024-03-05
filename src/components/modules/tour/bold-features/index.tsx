@@ -5,7 +5,7 @@ import WhiteSpace from "@atoms/white-space";
 import { StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
-const Item = ({ title, subtitle }) => {
+const Item = ({ title, subtitle }: { title: string; subtitle: string }) => {
   return (
     <View>
       <Text caption type="grey3">
@@ -52,7 +52,7 @@ const TourBoldInfo = ({ capacity, startTime, endTime }) => {
       <Divider orientation="vertical" />
 
       <Item
-        title={tr("daily capacity")}
+        title={tr("capacity")}
         subtitle={`${localizeNumber(capacity.guestNumber ?? 0)} ${tr("person")} (${gender()})`}
       />
     </View>
