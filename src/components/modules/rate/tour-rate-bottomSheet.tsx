@@ -105,8 +105,8 @@ const TourRateBottomSheet = ({
               onValueChange={v => setValue(v)}
             />
             <View style={styles.valueOfSlider}>
-              {[0, 1, 2, 3, 4, 5].map(n => (
-                <Text caption type={value === 0 ? "grey2" : "black"} style={{ width: 10 }}>
+              {[0, 1, 2, 3, 4, 5].map((i, n) => (
+                <Text key={i} caption type={value === 0 ? "grey2" : "black"} style={{ width: 10 }}>
                   {localizeNumber(n)}
                 </Text>
               ))}

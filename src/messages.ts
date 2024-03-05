@@ -2077,7 +2077,7 @@ export const messages = {
   },
   "passengers info": {
     ar: "معلومات الركاب",
-    fa_ir: "اطلاعات مسافران",
+    fa_ir: "مشخصات مسافران",
     en_us: "Passengers Info",
   },
   "to request and reserve the tour, enter your details and those of your accompanying passengers.":

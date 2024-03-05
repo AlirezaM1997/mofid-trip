@@ -23,11 +23,11 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
 
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
 
-  const handleBottomSheet = () => {
+  const handleBottomSheet = (p: any) => {
     if (isNgo) {
       setIsVisiblePrevent(true);
     } else {
-      setIsVisible(true);
+      handleBuy(p)
     }
   };
 
