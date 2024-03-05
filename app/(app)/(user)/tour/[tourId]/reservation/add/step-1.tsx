@@ -152,9 +152,13 @@ export default () => {
                               <View key={index}>
                                 <View style={style.row}>
                                   <Text heading2>
-                                    {language === AccountSettingLanguageChoices.EnUs
-                                      ? tr(numbers[index]) + " " + tr("passenger info")
-                                      : tr("passenger info") + " " + tr(numbers[index])}
+                                    {index === 0 ? (
+                                      <Text>اطلاعات سرگروه</Text>
+                                    ) : language === AccountSettingLanguageChoices.EnUs ? (
+                                      tr(numbers[index]) + " " + tr("passenger info")
+                                    ) : (
+                                      tr("passenger info") + " " + tr(numbers[index])
+                                    )}
                                   </Text>
                                   <Button
                                     title={tr("delete")}
