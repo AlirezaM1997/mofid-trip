@@ -1,29 +1,64 @@
 import React, { useState } from "react";
 import Container from "@atoms/container";
+import { useDispatch } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
 import { useSession } from "@src/context/auth";
 import { ListItem, Text } from "@rneui/themed";
 import { BottomSheet, Button } from "@rneui/themed";
 import { router, useLocalSearchParams } from "expo-router";
-import { ImageBackground, StyleSheet, View } from "react-native";
 import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import { TourPackageType, TourQueryType } from "@src/gql/generated";
+import { ImageBackground, StyleSheet, View, ViewStyle } from "react-native";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
   const isRtl = useIsRtl();
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
+  const { session } = useSession();
+  const { formatPrice } = useFormatPrice();
   const { tourId } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
   const [isVisible, setIsVisible] = useState<boolean>();
-  const { session } = useSession();
   const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
-  const { formatPrice } = useFormatPrice();
-
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
 
   const handleBottomSheet = () => {
+    if (session) {
+      dispatch(
+        setRedirectToScreenAfterLogin({
+          pathname: `tour/${tourId}`,
+          params: {
+            tourId: tourId,
+            name: tour.title,
+          },
+        })
+      );
+    }
+    if (!session) {
+      isNgo
+        ? dispatch(
+            setRedirectToScreenAfterLogin({
+              pathname: `tour/${tourId}`,
+              params: {
+                tourId: tourId,
+                name: tour.title,
+              },
+            })
+          )
+        : dispatch(
+            setRedirectToScreenAfterLogin({
+              pathname: `tour/${tourId}/reservation/add/step-1`,
+              params: {
+                tourId: tourId,
+                tourPackage: JSON.stringify(tour.packages[0]),
+              },
+            })
+          );
+      return router.push("/user-login");
+    }
     if (isNgo) {
       setIsVisiblePrevent(true);
     } else {
@@ -130,12 +165,12 @@ const style = StyleSheet.create({
   left: {
     flex: 1,
   },
-  priceItem: (isRtl: boolean) => ({
+  priceItem: ((isRtl: boolean) => ({
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
     flexDirection: isRtl ? "row-reverse" : "row",
-  }),
+  })) as ViewStyle,
   rejectIcon: {
     width: 56,
     height: 56,
