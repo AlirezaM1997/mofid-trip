@@ -1,6 +1,6 @@
 import React from "react";
 import { router } from "expo-router";
-import { Divider, useTheme } from "@rneui/themed";
+import { Badge, Divider, useTheme } from "@rneui/themed";
 import { Text } from "@rneui/themed";
 import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
@@ -13,17 +13,27 @@ import {
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
 import { View, ImageBackground, StyleSheet, Pressable, Platform, ViewStyle } from "react-native";
 import { WIDTH } from "@src/constants";
+import WhiteSpace from "@atoms/white-space";
 
 type PropsType = {
   address: AccommodationQueryType["address"];
+  discount: TourPackageType["discount"];
   price: TourPackageType["price"];
   name: TourQueryType["title"];
-  containerStyle: ViewStyle;
+  containerStyle?: ViewStyle;
   avatarS3: TourImageType[];
   id: TourQueryType["id"];
 };
 
-function TourSliderCard({ price, id, name, avatarS3, address, containerStyle }: PropsType) {
+function TourSliderCard({
+  id,
+  name,
+  price,
+  address,
+  avatarS3,
+  discount,
+  containerStyle,
+}: PropsType) {
   const isRtl = useIsRtl();
   const { tr } = useTranslation();
   const { theme } = useTheme();
@@ -50,28 +60,38 @@ function TourSliderCard({ price, id, name, avatarS3, address, containerStyle }: 
         imageStyle={style.ImageBackgroundImage}
         source={avatar}
       />
+
+      {discount ? (
+        <Badge color="primary" value={`%${discount} تخفیف`} badgeStyle={style.badgeStyle} />
+      ) : (
+        ""
+      )}
+
       <View style={style.top}>
-        <View style={style.top2}>
+        <View>
           <Text bold numberOfLines={1}>
             {name}
           </Text>
-          <View style={style.rate}>
-            <FontAwesome name="star" size={20} color={theme.colors.warning} />
-            <Text body2>{localizeNumber(4.9)}</Text>
+          <WhiteSpace size={6} />
+          <View style={style.address}>
+            <EvilIcons name="location" size={18} color={theme.colors.black} />
+            <Text caption numberOfLines={1} type="grey3">
+              {address}
+            </Text>
           </View>
         </View>
-        <View style={style.address}>
-          <EvilIcons name="location" size={18} color={theme.colors.black} />
-          <Text caption numberOfLines={1} type="grey3">
-            {address}
-          </Text>
+
+        <View style={style.rate}>
+          <FontAwesome name="star" size={20} color={theme.colors.warning} />
+          <Text body2>{localizeNumber(4.9)}</Text>
         </View>
       </View>
 
+      <WhiteSpace size={10} />
       <Divider />
 
       <View style={style.bottom}>
-        {price <= 0 ? (
+        {(price as number) <= 0 ? (
           <Text body2 bold>
             {tr("it is free")}
           </Text>
@@ -79,10 +99,16 @@ function TourSliderCard({ price, id, name, avatarS3, address, containerStyle }: 
           <>
             <View style={style.bottomStyle}>
               <Text body2 bold>
-                {localizeNumber(formatPrice(price))}
+                {localizeNumber(
+                  ((price as number) * (1 - (discount as number) / 100)).toLocaleString()
+                )}
               </Text>
-              <Text body2 bold>
-                / {tr("night")}
+              <Text
+                body2
+                bold
+                type="primary"
+                style={discount ? { textDecorationLine: "line-through" } : {}}>
+                {localizeNumber(formatPrice(price as number) as string)}
               </Text>
             </View>
           </>
@@ -127,9 +153,6 @@ const style = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
-  top: {
-    paddingHorizontal: 10,
-  },
   bottom: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -141,22 +164,29 @@ const style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  badgeStyle: {
+    position: "absolute",
+    borderRadius: 100,
+    borderWidth: 0,
+    bottom: 0,
+    left: 10,
+  },
   address: {
     flexDirection: "row",
     gap: 2,
-    marginVertical: 12,
     alignItems: "center",
   },
-  top2: {
+  top: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-end",
     justifyContent: "space-between",
+    paddingHorizontal: 10,
   },
   bottomStyle: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 2,
+    gap: 8,
   },
 });
 

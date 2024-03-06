@@ -136,7 +136,7 @@ export default function AppLayout() {
                 handleClose();
                 dispatch(
                   setRedirectToScreenAfterLogin({
-                    pathname: '/host/create',
+                    pathname: "/host/create",
                   })
                 );
               }}
@@ -149,7 +149,7 @@ export default function AppLayout() {
                 router.push("/tour/create");
                 dispatch(
                   setRedirectToScreenAfterLogin({
-                    pathname: '/tour/create',
+                    pathname: "/tour/create",
                   })
                 );
               }}>

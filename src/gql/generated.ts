@@ -68,6 +68,8 @@ export type AccommodationImageType = {
   large?: Maybe<Scalars['String']['output']>;
   /** URL of the medium image. */
   medium?: Maybe<Scalars['String']['output']>;
+  /** URL of the orginal image. */
+  orginal?: Maybe<Scalars['String']['output']>;
   /** URL of the small image. */
   small?: Maybe<Scalars['String']['output']>;
 };
@@ -85,21 +87,21 @@ export type AccommodationListType = {
 
 /** An enumeration. */
 export enum AccommodationProjectGenderChoices {
-  /** هر دو */
+  /** BOTH */
   Both = 'BOTH',
-  /** زن */
+  /** FEMALE */
   Female = 'FEMALE',
-  /** مرد */
+  /** MALE */
   Male = 'MALE'
 }
 
 /** An enumeration. */
 export enum AccommodationProjectRequestFromChoices {
-  /** هر دو */
+  /** BOTH */
   Both = 'BOTH',
-  /** تشکل */
+  /** NGO */
   Ngo = 'NGO',
-  /** کاربر */
+  /** USER */
   User = 'USER'
 }
 
@@ -120,9 +122,9 @@ export type AccommodationQueryType = {
 
 /** An enumeration. */
 export enum AccommodationTagTypeChoices {
-  /** کمپین */
+  /** CAMPAIGN */
   Campaign = 'CAMPAIGN',
-  /** عمومی */
+  /** GENERAL */
   General = 'GENERAL'
 }
 
@@ -203,6 +205,8 @@ export type BannerImageType = {
   large?: Maybe<Scalars['String']['output']>;
   /** URL of the medium image. */
   medium?: Maybe<Scalars['String']['output']>;
+  /** URL of the orginal image. */
+  orginal?: Maybe<Scalars['String']['output']>;
   /** URL of the small image. */
   small?: Maybe<Scalars['String']['output']>;
 };
@@ -281,6 +285,8 @@ export type CategoryImageType = {
   large?: Maybe<Scalars['String']['output']>;
   /** URL of the medium image. */
   medium?: Maybe<Scalars['String']['output']>;
+  /** URL of the orginal image. */
+  orginal?: Maybe<Scalars['String']['output']>;
   /** URL of the small image. */
   small?: Maybe<Scalars['String']['output']>;
 };
@@ -400,22 +406,6 @@ export type EditCardType = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** An enumeration. */
-export enum ExtensionReportCategoryNameChoices {
-  /** حساب جعلی */
-  FakeAccount = 'FAKE_ACCOUNT',
-  /** محتوای غیراخلاقی */
-  InappropriateContent = 'INAPPROPRIATE_CONTENT',
-  /** سایر */
-  Other = 'OTHER',
-  /** سرقت اطلاعات خصوصی اشخاص */
-  PrivacyViolation = 'PRIVACY_VIOLATION',
-  /** هرزنامه */
-  Spam = 'SPAM',
-  /** محتوای خشونت آمیز */
-  ViolentContent = 'VIOLENT_CONTENT'
-}
-
 /** Represents the frontend version information. */
 export type FrontendVersion = {
   __typename?: 'FrontendVersion';
@@ -446,6 +436,22 @@ export type IntRangeType = {
   /** The lower boundary of the integer range. */
   low?: InputMaybe<Scalars['Int']['input']>;
 };
+
+/** An enumeration. */
+export enum InteractionReportCategoryNameChoices {
+  /** Fake Account */
+  FakeAccount = 'FAKE_ACCOUNT',
+  /** Inappropriate Content */
+  InappropriateContent = 'INAPPROPRIATE_CONTENT',
+  /** Other */
+  Other = 'OTHER',
+  /** Privacy Violation */
+  PrivacyViolation = 'PRIVACY_VIOLATION',
+  /** Spam */
+  Spam = 'SPAM',
+  /** Violent Content */
+  ViolentContent = 'VIOLENT_CONTENT'
+}
 
 export enum LanguageChoiceEnum {
   Ar = 'AR',
@@ -801,6 +807,8 @@ export type NgoImageType = {
   large?: Maybe<Scalars['String']['output']>;
   /** URL of the medium image. */
   medium?: Maybe<Scalars['String']['output']>;
+  /** URL of the orginal image. */
+  orginal?: Maybe<Scalars['String']['output']>;
   /** URL of the small image. */
   small?: Maybe<Scalars['String']['output']>;
 };
@@ -1116,6 +1124,8 @@ export type ProjectQueryType = {
   price?: Maybe<Scalars['Int']['output']>;
   /** The rate of project have minimom and maximom and average rate */
   rate?: Maybe<RateType>;
+  /** List of recommended projects. */
+  recommendedProjects?: Maybe<Array<Maybe<ProjectQueryType>>>;
   requestFrom?: Maybe<AccommodationProjectRequestFromChoices>;
   /** Status activation information associated with the project. */
   statusActivation?: Maybe<Scalars['Boolean']['output']>;
@@ -1519,6 +1529,7 @@ export enum RateObjectTypeEnum {
 export type RateType = {
   __typename?: 'RateType';
   avgRate?: Maybe<Scalars['String']['output']>;
+  count?: Maybe<Scalars['String']['output']>;
   maxRate?: Maybe<Scalars['String']['output']>;
   minRate?: Maybe<Scalars['String']['output']>;
 };
@@ -1553,7 +1564,7 @@ export type ReportCategoryQueryType = {
   /** Display name of the report category. */
   displayName?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  name: ExtensionReportCategoryNameChoices;
+  name: InteractionReportCategoryNameChoices;
 };
 
 /** Input type for creating reports on a objects (comments , project , tour). */
@@ -1641,6 +1652,8 @@ export type SetadImageType = {
   large?: Maybe<Scalars['String']['output']>;
   /** URL of the medium image. */
   medium?: Maybe<Scalars['String']['output']>;
+  /** URL of the orginal image. */
+  orginal?: Maybe<Scalars['String']['output']>;
   /** URL of the small image. */
   small?: Maybe<Scalars['String']['output']>;
 };
@@ -1937,6 +1950,8 @@ export type TourGuestImageType = {
   large?: Maybe<Scalars['String']['output']>;
   /** URL of the medium image. */
   medium?: Maybe<Scalars['String']['output']>;
+  /** URL of the orginal image. */
+  orginal?: Maybe<Scalars['String']['output']>;
   /** URL of the small image. */
   small?: Maybe<Scalars['String']['output']>;
 };
@@ -1981,6 +1996,8 @@ export type TourImageType = {
   large?: Maybe<Scalars['String']['output']>;
   /** URL of the medium image. */
   medium?: Maybe<Scalars['String']['output']>;
+  /** URL of the orginal image. */
+  orginal?: Maybe<Scalars['String']['output']>;
   /** URL of the small image. */
   small?: Maybe<Scalars['String']['output']>;
 };
@@ -2064,6 +2081,8 @@ export type TourQueryType = {
   packages: Array<TourPackageType>;
   /** The rate of project with minimom, maximom and average value */
   rate?: Maybe<RateType>;
+  /** List of recommended tours. */
+  recommendedTours?: Maybe<Array<Maybe<TourQueryType>>>;
   startTime: Scalars['DateTime']['output'];
   statusActivation: Scalars['Boolean']['output'];
   /** Translated status step information associated with the tour. */
@@ -2098,11 +2117,11 @@ export type TourStatusStepQueryType = {
 
 /** An enumeration. */
 export enum TourTourGuestGenderChoices {
-  /** کودک */
+  /** CHILD */
   Child = 'CHILD',
-  /** زن */
+  /** FEMALE */
   Female = 'FEMALE',
-  /** مرد */
+  /** MALE */
   Male = 'MALE'
 }
 
@@ -2170,12 +2189,12 @@ export type TourTransactionQueryType = {
   tourguestSet: Array<TourGuestQueryType>;
 };
 
-/** Input type for specifying status information. */
+/** Input type for updating the status of a tour transaction. */
 export type TourTransactionStatusInputType = {
-  /** Whether the status is active. */
+  /** New active status for the transaction. */
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Transaction status step. */
-  step?: InputMaybe<Array<InputMaybe<TransactionStatusEnum>>>;
+  /** New step/status for the transaction. */
+  step?: InputMaybe<TransactionStatusEnum>;
 };
 
 /** Type representing the status of a tour transaction. */
@@ -2269,6 +2288,8 @@ export type UserImageType = {
   large?: Maybe<Scalars['String']['output']>;
   /** URL of the medium image. */
   medium?: Maybe<Scalars['String']['output']>;
+  /** URL of the orginal image. */
+  orginal?: Maybe<Scalars['String']['output']>;
   /** URL of the small image. */
   small?: Maybe<Scalars['String']['output']>;
 };
@@ -2325,7 +2346,7 @@ export type UserQueryType = {
   tag?: Maybe<TagQueryType>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
+  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;
@@ -2818,7 +2839,7 @@ export type TourListQueryVariables = Exact<{
 }>;
 
 
-export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', count?: number | null, data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusActivation: boolean, NGO: { __typename?: 'NGOQueryType', id: string, title: string, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
+export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', count?: number | null, data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusActivation: boolean, NGO: { __typename?: 'NGOQueryType', id: string, title: string, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number, discount?: number | null }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number, discount?: number | null }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null } | null> | null } | null> | null } | null };
 
 export type TourTransactionDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
@@ -5664,6 +5685,7 @@ export const TourListDocument = gql`
             id
             title
             price
+            discount
           }
           destination {
             ... on AccommodationQueryType {
@@ -5695,6 +5717,7 @@ export const TourListDocument = gql`
         id
         title
         price
+        discount
       }
       avatarS3 {
         medium

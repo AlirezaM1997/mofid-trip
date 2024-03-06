@@ -51,11 +51,10 @@ function HostList() {
             : data.projectList.data?.map((project, index) => (
                 <View key={index}>
                   <HostSliderCard
-                    id={project?.id as string}
                     name={project?.name}
-                    price={
-                      ((project?.price as number) * (100 - (project?.discount as number))) / 100
-                    }
+                    id={project?.id as string}
+                    price={project?.price as number}
+                    discount={project?.discount as number}
                     address={project?.accommodation?.address}
                     avatarS3={project?.accommodation?.avatarS3}
                   />

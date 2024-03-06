@@ -65,7 +65,6 @@ const MainContent = () => {
       <Stack
         screenOptions={({ route }) => ({
           headerShown: !["(home)", "(app)"].includes(route.name),
-
           ...defaultScreenOptions,
         })}>
         <Stack.Screen

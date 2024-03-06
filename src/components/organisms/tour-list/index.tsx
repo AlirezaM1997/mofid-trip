@@ -55,6 +55,7 @@ function TourList() {
                     name={tour?.title as string}
                     avatarS3={tour?.avatarS3 as TourImageType[]}
                     price={tour?.packages?.[0]?.price as number}
+                    discount={tour?.packages?.[0]?.discount as number}
                     address={
                       (tour?.destination as AccommodationQueryType)?.address || tr("No Address")
                     }

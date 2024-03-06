@@ -274,21 +274,21 @@ export const theme = isRtl =>
           containerStyle = { ...buttonStyle, height: Platform.OS === "web" ? "auto" : 39.6 };
         }
 
-        if (!["outline", "clear"].includes(type as string)) {
+        if (["outline", "clear"].includes(type as string)) {
           if (size === "sm") {
             buttonStyle = {
               ...buttonStyle,
-              height: 35,
+              height: 33,
             };
           } else if (size === "lg") {
             buttonStyle = {
               ...buttonStyle,
-              height: 54,
+              height: 52,
             };
           } else {
             buttonStyle = {
               ...buttonStyle,
-              height: 46,
+              height: 44,
             };
           }
           titleStyle = {

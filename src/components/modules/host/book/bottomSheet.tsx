@@ -79,16 +79,23 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
             {(project?.price as number) <= 0 ? (
               <Text bold>{tr("it is free")}</Text>
             ) : (
-              <>
-                <Text body1 style={style.priceNumber}>
+              <View style={style.bottomStyle}>
+                <Text body2 bold>
                   {localizeNumber(
-                    formatPrice(
-                      (project?.price as number) * (1 - (project?.discount as number) / 100)
-                    ) as string
+                    (
+                      (project?.price as number) *
+                      (1 - (project?.discount as number) / 100)
+                    ).toLocaleString()
                   )}
                 </Text>
-                <Text bold> / {tr("Night")}</Text>
-              </>
+                <Text
+                  body2
+                  bold
+                  type="primary"
+                  style={project?.discount ? { textDecorationLine: "line-through" } : {}}>
+                  {localizeNumber(formatPrice(project?.price as number) as string)}
+                </Text>
+              </View>
             )}
           </View>
         </View>
@@ -145,6 +152,11 @@ const style = StyleSheet.create({
     width: 56,
     height: 56,
     margin: "auto",
+  },
+  bottomStyle: {
+    flexDirection: "row",
+    display: "flex",
+    gap: 8,
   },
 });
 

@@ -23,7 +23,7 @@ const ShareReportDropDown = () => {
       <Entypo style={styles.iconStyle} name="dots-three-vertical" size={20} onPress={handleOpen} />
       <View style={styles.backDrop(isVisible)}>
         <View style={styles.dropDown}>
-          <ShareDropdown closeMoreDetails={handleClose as ()=> void} />
+          <ShareDropdown closeMoreDetails={handleClose as () => void} />
           <Report closeMoreDetails={handleClose as () => void} />
         </View>
       </View>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     bottom: -HEIGHT,
   })) as ViewStyle,
   iconStyle: {
-    paddingLeft: 10,
+    paddingLeft: 16,
   },
   dropDown: {
     position: "absolute",

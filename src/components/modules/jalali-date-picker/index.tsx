@@ -106,7 +106,7 @@ const JalaliDatePicker = ({
 
             const dayData = validMatchDays?.data;
 
-            const isExpiredDate = moment(item.date).isBefore(moment(2, "day"));
+            const isExpiredDate = moment(item.date).isBefore(new Date(), "day");
 
             return (
               <View style={styles.container}>

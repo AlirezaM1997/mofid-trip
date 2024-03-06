@@ -27,7 +27,7 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
     if (isNgo) {
       setIsVisiblePrevent(true);
     } else {
-      handleBuy(p)
+      handleBuy(p);
     }
   };
 
@@ -49,6 +49,7 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
       },
     });
   };
+  const tourPackage = tour?.packages?.[0];
 
   return (
     <>
@@ -59,14 +60,23 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
             {tour?.packages?.[0].price <= 0 ? (
               <Text bold>{tr("it is free")}</Text>
             ) : (
-              <Text body1 style={style.priceNumber}>
-                {localizeNumber(
-                  formatPrice(
-                    (+tour?.packages?.[0]?.price as number) *
-                      (1 - (tour?.packages?.[0]?.discount as number) / 100)
-                  ) as string
-                )}
-              </Text>
+              <View style={style.bottomStyle}>
+                <Text body2 bold>
+                  {localizeNumber(
+                    (
+                      (tourPackage?.price as number) *
+                      (1 - (tourPackage?.discount as number) / 100)
+                    ).toLocaleString()
+                  )}
+                </Text>
+                <Text
+                  body2
+                  bold
+                  type="primary"
+                  style={tourPackage?.discount ? { textDecorationLine: "line-through" } : {}}>
+                  {localizeNumber(formatPrice(tourPackage?.price as number) as string)}
+                </Text>
+              </View>
             )}
           </View>
         </View>
@@ -128,6 +138,11 @@ const style = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+  },
+  bottomStyle: {
+    flexDirection: "row",
+    display: "flex",
+    gap: 8,
   },
   priceNumber: {
     fontSize: 16,

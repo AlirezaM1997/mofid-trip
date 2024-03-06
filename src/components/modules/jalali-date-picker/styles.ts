@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   dayText: { textAlign: "center" },
   viewComponent: {
     display: "flex",
-    paddingVertical: 6,
+    paddingVertical: 10,
     textAlign: "center",
     alignItems: "center",
   },

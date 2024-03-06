@@ -6,7 +6,7 @@ import {
   AccommodationImageType,
   AccommodationQueryType,
 } from "@src/gql/generated";
-import { Text } from "@rneui/themed";
+import { Badge, Text } from "@rneui/themed";
 import Container from "@atoms/container";
 import Map from "@modules/map/index.web";
 import WhiteSpace from "@atoms/white-space";
@@ -36,6 +36,7 @@ export default () => {
     },
   });
   const tour = data?.tourDetail;
+  const tourPackage = tour?.packages[0];
 
   navigation.setOptions({
     title: data?.tourDetail?.title || tr("loading"),
@@ -52,8 +53,21 @@ export default () => {
 
         <WhiteSpace size={20} />
 
-        <Text>{tour?.title}</Text>
-        <Text>{(tour?.destination as AccommodationQueryType)?.address}</Text>
+        <View style={styles.titleContainer}>
+          <View style={styles.infoContainer}>
+            <Text>{tour?.title}</Text>
+            <Text>{(tour?.destination as AccommodationQueryType)?.address}</Text>
+          </View>
+          {tourPackage?.discount ? (
+            <Badge
+              color="primary"
+              value={`%${tourPackage.discount} تخفیف`}
+              badgeStyle={styles.badgeStyle}
+            />
+          ) : (
+            ""
+          )}
+        </View>
 
         <WhiteSpace size={20} />
 
@@ -131,6 +145,18 @@ export default () => {
 };
 
 const styles = StyleSheet.create({
+  titleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  infoContainer: {
+    gap: 5,
+  },
+  badgeStyle: {
+    borderRadius: 100,
+    borderWidth: 0,
+  },
   gridRow: {
     display: "flex",
     flexDirection: "row",
