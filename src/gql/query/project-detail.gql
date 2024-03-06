@@ -7,6 +7,9 @@ query projectDetail($pk: ID!) {
     dateEnd
     discount
     dateStart
+    rate{
+      avgRate
+    }
     statusStep {
       displayName
       name

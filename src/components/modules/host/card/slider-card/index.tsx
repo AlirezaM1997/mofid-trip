@@ -12,10 +12,10 @@ import { router } from "expo-router";
 import { Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import { Divider, useTheme } from "@rneui/themed";
-import { AccommodationQueryType, ProjectQueryType, RateType } from "@src/gql/generated";
 import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { AccommodationQueryType, ProjectQueryType, RateType } from "@src/gql/generated";
 
 type PropsType = {
   avatarS3: AccommodationQueryType["avatarS3"];
@@ -61,10 +61,12 @@ function HostSliderCard({ price, id, name, rate, avatarS3, address, containerSty
           <Text bold numberOfLines={1}>
             {name}
           </Text>
-          <View style={style.rate}>
-            <FontAwesome name="star" size={20} color={theme.colors.warning} />
-            <Text body2>{localizeNumber((rate.avgRate ? rate.avgRate : 4.9) as string)}</Text>
-          </View>
+          {rate.avgRate && (
+            <View style={style.rate}>
+              <FontAwesome name="star" size={20} color={theme.colors.warning} />
+              <Text body2>{localizeNumber(rate.avgRate as string)}</Text>
+            </View>
+          )}
         </View>
         <View style={style.address}>
           <EvilIcons name="location" size={18} color={theme.colors.black} />

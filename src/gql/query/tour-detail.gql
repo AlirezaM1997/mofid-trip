@@ -4,6 +4,9 @@ query tourDetail($pk: ID!) {
     title
     endTime
     startTime
+    rate{
+      avgRate
+    }
     statusStep {
       displayName
       name

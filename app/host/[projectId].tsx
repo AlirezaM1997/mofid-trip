@@ -4,13 +4,13 @@ import {
   ProjectQueryType,
   useProjectDetailQuery,
 } from "@src/gql/generated";
-import { Text } from "@rneui/themed";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { Text, useTheme } from "@rneui/themed";
+import { AntDesign } from "@expo/vector-icons";
 import HostComment from "@modules/host/comment";
 import ImageSlider from "@modules/image-slider";
 import openMapHandler from "@src/helper/opem-map";
-import useTranslation from "@src/hooks/translation";
 import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
 import Map from "@src/components/modules/map/index.web";
@@ -26,13 +26,16 @@ import SimilarProjects from "@src/components/modules/similar-projects";
 import ProjectFacilities from "@src/components/modules/host/facilities";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import ProjectBoldFeatures from "@src/components/modules/host/bold-features";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const Page: React.FC = ({ ...props }) => {
+  const { theme } = useTheme();
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const { projectId } = useLocalSearchParams();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { loading, data } = useProjectDetailQuery({
     variables: {
@@ -56,6 +59,7 @@ const Page: React.FC = ({ ...props }) => {
   const {
     name,
     tags,
+    rate,
     creator,
     dateEnd,
     capacity,
@@ -78,6 +82,25 @@ const Page: React.FC = ({ ...props }) => {
           <View style={style.infoContainer}>
             <Text heading2>{name}</Text>
             <Text caption>{accommodation?.address}</Text>
+            {rate?.avgRate && (
+              <View style={style.rateBox}>
+                <Text>{localizeNumber(rate?.avgRate as string)}</Text>
+                <View style={style.rateStars}>
+                  {new Array(5).fill("star").map((item, index) => (
+                    <AntDesign
+                      key={index}
+                      name="star"
+                      size={24}
+                      color={
+                        index < +(rate?.avgRate as string)
+                          ? theme.colors.warning
+                          : theme.colors.grey1
+                      }
+                    />
+                  ))}
+                </View>
+              </View>
+            )}
           </View>
 
           <ProjectBoldFeatures
@@ -155,6 +178,15 @@ const style = StyleSheet.create({
   },
   infoContainer: {
     gap: 5,
+  },
+  rateBox: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center",
+  },
+  rateStars: {
+    flexDirection: "row-reverse",
+    gap: 3,
   },
 });
 

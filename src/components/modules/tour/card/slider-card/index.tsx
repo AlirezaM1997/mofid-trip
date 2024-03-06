@@ -1,4 +1,13 @@
 import {
+  View,
+  ImageBackground,
+  StyleSheet,
+  Pressable,
+  Platform,
+  ImageStyle,
+  ViewStyle,
+} from "react-native";
+import {
   AccommodationQueryType,
   RateType,
   TourPackageType,
@@ -12,15 +21,6 @@ import { Divider, useTheme } from "@rneui/themed";
 import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import {
-  View,
-  ImageBackground,
-  StyleSheet,
-  Pressable,
-  Platform,
-  ImageStyle,
-  ViewStyle,
-} from "react-native";
 
 type PropsType = {
   address: AccommodationQueryType["address"];
@@ -65,10 +65,12 @@ function TourSliderCard({ price, id, name, rate, avatarS3, address }: PropsType)
           <Text bold numberOfLines={1}>
             {name}
           </Text>
-          <View style={style.rate}>
-            <FontAwesome name="star" size={20} color={theme.colors.warning} />
-            <Text body2>{localizeNumber((rate.avgRate ? rate.avgRate : 4.9) as string)}</Text>
-          </View>
+          {rate.avgRate && (
+            <View style={style.rate}>
+              <FontAwesome name="star" size={20} color={theme.colors.warning} />
+              <Text body2>{localizeNumber(rate.avgRate as string)}</Text>
+            </View>
+          )}
         </View>
         <View style={style.address}>
           <EvilIcons name="location" size={18} color={theme.colors.black} />

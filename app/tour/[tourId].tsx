@@ -1,22 +1,23 @@
 import {
-  AccommodationImageType,
-  AccommodationQueryType,
-  TourFacilityQueryType,
   TourImageType,
   TourQueryType,
   useTourDetailQuery,
+  TourFacilityQueryType,
+  AccommodationImageType,
+  AccommodationQueryType,
 } from "@src/gql/generated";
-import moment from "jalali-moment";
-import { Text } from "@rneui/themed";
 import Container from "@atoms/container";
 import Map from "@modules/map/index.web";
 import WhiteSpace from "@atoms/white-space";
+import { Text, useTheme } from "@rneui/themed";
+import { AntDesign } from "@expo/vector-icons";
 import ContactCard from "@modules/contact-card";
 import ImageSlider from "@modules/image-slider";
 import TourComment from "@modules/tour/comment";
 import openMapHandler from "@src/helper/opem-map";
 import SimilarTours from "@modules/similar-tours";
 import TourFacilities from "@modules/tour/facilities";
+import TourBoldInfo from "@modules/tour/bold-features";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { Pressable, StyleSheet, View } from "react-native";
 import BookTourBottomSheet from "@modules/tour/book/bottomSheet";
@@ -24,9 +25,9 @@ import ShareReportDropDown from "@modules/share-report-dropdown";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import TourBoldInfo from "@modules/tour/bold-features";
 
 export default () => {
+  const { theme } = useTheme();
   const { tr } = useTranslation();
   const navigation = useNavigation();
   const { tourId } = useLocalSearchParams();
@@ -55,7 +56,25 @@ export default () => {
 
         <Text>{tour?.title}</Text>
         <Text>{(tour?.destination as AccommodationQueryType)?.address}</Text>
-
+        {tour?.rate?.avgRate && (
+          <View style={styles.rateBox}>
+            <Text>{localizeNumber(tour?.rate?.avgRate as string)}</Text>
+            <View style={styles.rateStars}>
+              {new Array(5).fill("star").map((item, index) => (
+                <AntDesign
+                  key={index}
+                  name="star"
+                  size={24}
+                  color={
+                    index < +(tour?.rate?.avgRate as string)
+                      ? theme.colors.warning
+                      : theme.colors.grey1
+                  }
+                />
+              ))}
+            </View>
+          </View>
+        )}
         <WhiteSpace size={20} />
 
         <WhiteSpace size={10} />
@@ -141,5 +160,14 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
+  },
+  rateBox: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center",
+  },
+  rateStars: {
+    flexDirection: "row-reverse",
+    gap: 3,
   },
 });

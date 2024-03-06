@@ -1,5 +1,4 @@
 import {
-  RateObjectTypeEnum,
   TourTransactionQueryType,
   useTourPurchaseAddMutation,
   useTourTransactionDetailQuery,
@@ -10,13 +9,13 @@ import { Button, useTheme } from "@rneui/themed";
 import React, { ReactElement, useState } from "react";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import LoadingIndicator from "@modules/Loading-indicator";
-import RatingBottomSheet from "@modules/rating-bottom-sheet";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import TourTransactionDetail from "@modules/tour/transaction/detail";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import AcceptPayment from "@modules/tour/transaction/buttons/acceptPayment";
 import RejectedDetails from "@modules/tour/transaction/buttons/rejectedDetails";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import TourRateBottomSheet from "@modules/rate/tour-rate-bottomSheet";
 
 const TourTransactionDetailScreen = () => {
   const { tr } = useTranslation();
@@ -24,7 +23,6 @@ const TourTransactionDetailScreen = () => {
   const navigation = useNavigation();
   const { transactionId } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const [ratingValue, setRatingValue] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [ratingIsVisible, setRatingIsVisible] = useState<boolean>(false);
   const [isRejectedVisible, setIsRejectedVisible] = useState<boolean>(false);
@@ -39,10 +37,14 @@ const TourTransactionDetailScreen = () => {
     return <LoadingIndicator />;
   }
 
-  navigation.setOptions({ title: localizeNumber(data.tourTransactionDetail?.tourPackage?.tour?.title as string) });
+  navigation.setOptions({
+    title: localizeNumber(data.tourTransactionDetail?.tourPackage?.tour?.title as string),
+  });
 
   const { status, tourPackage, tourGuests } =
     data.tourTransactionDetail as TourTransactionQueryType;
+
+  const handleClose = () => setRatingIsVisible(false);
 
   const purchaseHandler = async () => {
     const ip = await Network.getIpAddressAsync();
@@ -99,16 +101,10 @@ const TourTransactionDetailScreen = () => {
         purchaseHandler={purchaseHandler}
         purchaseLoading={purchaseLoading}
       />
-      <RatingBottomSheet
-        objectType={RateObjectTypeEnum.Project}
+      <TourRateBottomSheet
+        transaction={data.tourTransactionDetail as TourTransactionQueryType}
         isVisible={ratingIsVisible}
-        onBackdropPress={() => setRatingIsVisible(false)}
-        value={ratingValue}
-        onValueChange={setRatingValue}
-        maximumValue={10}
-        minimumValue={0}
-        step={1}
-        allowTouchTrack
+        handleClose={handleClose}
       />
       <RejectedDetails
         transaction={data.tourTransactionDetail}
