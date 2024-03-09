@@ -70,34 +70,39 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
     });
   };
 
+  const hostPrice =
+    (project?.price as number) <= 0 ? (
+      <Text bold>{tr("it is free")}</Text>
+    ) : (
+      <View style={style.bottomStyle}>
+        {project.discount ? (
+          <Text body2 bold>
+            {localizeNumber(
+              (
+                (project?.price as number) *
+                (1 - (project?.discount as number) / 100)
+              ).toLocaleString()
+            )}
+          </Text>
+        ) : (
+          ""
+        )}
+        <Text
+          body2
+          bold
+          type={project.discount ? "primary" : "secondary"}
+          style={project?.discount ? { textDecorationLine: "line-through" } : {}}>
+          {localizeNumber(formatPrice(project?.price as number) as string)}
+        </Text>
+      </View>
+    );
+
   return (
     <>
       <ButtonRow>
         <View>
           <Text>{tr("Price")}</Text>
-          <View style={style.priceContainer}>
-            {(project?.price as number) <= 0 ? (
-              <Text bold>{tr("it is free")}</Text>
-            ) : (
-              <View style={style.bottomStyle}>
-                <Text body2 bold>
-                  {localizeNumber(
-                    (
-                      (project?.price as number) *
-                      (1 - (project?.discount as number) / 100)
-                    ).toLocaleString()
-                  )}
-                </Text>
-                <Text
-                  body2
-                  bold
-                  type="primary"
-                  style={project?.discount ? { textDecorationLine: "line-through" } : {}}>
-                  {localizeNumber(formatPrice(project?.price as number) as string)}
-                </Text>
-              </View>
-            )}
-          </View>
+          <View style={style.priceContainer}>{hostPrice}</View>
         </View>
         <Button
           disabled={

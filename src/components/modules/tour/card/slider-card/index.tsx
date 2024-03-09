@@ -50,6 +50,34 @@ function TourSliderCard({
     });
   };
 
+  const tourPrice =
+    (price as number) <= 0 ? (
+      <Text body2 bold>
+        {tr("it is free")}
+      </Text>
+    ) : (
+      <>
+        <View style={style.bottomStyle}>
+          {discount ? (
+            <Text body2 bold>
+              {localizeNumber(
+                ((price as number) * (1 - (discount as number) / 100)).toLocaleString()
+              )}
+            </Text>
+          ) : (
+            ""
+          )}
+          <Text
+            body2
+            bold
+            type={discount ? "primary" : "secondary"}
+            style={discount ? { textDecorationLine: "line-through" } : {}}>
+            {localizeNumber(formatPrice(price as number) as string)}
+          </Text>
+        </View>
+      </>
+    );
+
   const avatar =
     avatarS3?.length > 0 ? { uri: avatarS3?.[0].small } : require("@assets/image/defaultHost.svg");
 
@@ -91,28 +119,7 @@ function TourSliderCard({
       <Divider />
 
       <View style={style.bottom}>
-        {(price as number) <= 0 ? (
-          <Text body2 bold>
-            {tr("it is free")}
-          </Text>
-        ) : (
-          <>
-            <View style={style.bottomStyle}>
-              <Text body2 bold>
-                {localizeNumber(
-                  ((price as number) * (1 - (discount as number) / 100)).toLocaleString()
-                )}
-              </Text>
-              <Text
-                body2
-                bold
-                type="primary"
-                style={discount ? { textDecorationLine: "line-through" } : {}}>
-                {localizeNumber(formatPrice(price as number) as string)}
-              </Text>
-            </View>
-          </>
-        )}
+        {tourPrice}
         <Feather
           name={isRtl ? "chevron-left" : "chevron-right"}
           size={18}

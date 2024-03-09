@@ -15,6 +15,7 @@ type DaysDataType = { date: string; data: number | string }[];
 type JalaliDatePickerProps = {
   markedDays?: DayProps[];
   daysData?: DaysDataType;
+  disablePassedDates?: boolean;
   disableDaysAfter?: moment.Moment; // gregorian based
   disableDaysBefore?: moment.Moment; // gregorian based
   disableDaysIn?: moment.Moment[]; // gregorian based
@@ -25,6 +26,7 @@ const JalaliDatePicker = ({
   daysData,
   onDayPress,
   markedDays,
+  disablePassedDates = false,
   ...props
 }: JalaliDatePickerProps) => {
   const { tr } = useTranslation();
@@ -106,7 +108,8 @@ const JalaliDatePicker = ({
 
             const dayData = validMatchDays?.data;
 
-            const isExpiredDate = moment(item.date).isBefore(new Date(), "day");
+            const isExpiredDate =
+              disablePassedDates && moment(item.date).isBefore(new Date(), "day");
 
             return (
               <View style={styles.container}>

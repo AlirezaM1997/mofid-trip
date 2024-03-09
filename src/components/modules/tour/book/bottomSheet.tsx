@@ -49,36 +49,42 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
       },
     });
   };
+
   const tourPackage = tour?.packages?.[0];
+
+  const tourPrice =
+    tour?.packages?.[0].price <= 0 ? (
+      <Text bold>{tr("it is free")}</Text>
+    ) : (
+      <View style={style.bottomStyle}>
+        {tourPackage.discount ? (
+          <Text body2 bold>
+            {localizeNumber(
+              (
+                (tourPackage?.price as number) *
+                (1 - (tourPackage?.discount as number) / 100)
+              ).toLocaleString()
+            )}
+          </Text>
+        ) : (
+          ""
+        )}
+        <Text
+          body2
+          bold
+          type={tourPackage.discount ? "primary" : "secondary"}
+          style={tourPackage?.discount ? { textDecorationLine: "line-through" } : {}}>
+          {localizeNumber(formatPrice(tourPackage?.price as number) as string)}
+        </Text>
+      </View>
+    );
 
   return (
     <>
       <ButtonRow>
         <View>
           <Text>{tr("price per person")}</Text>
-          <View style={style.priceContainer}>
-            {tour?.packages?.[0].price <= 0 ? (
-              <Text bold>{tr("it is free")}</Text>
-            ) : (
-              <View style={style.bottomStyle}>
-                <Text body2 bold>
-                  {localizeNumber(
-                    (
-                      (tourPackage?.price as number) *
-                      (1 - (tourPackage?.discount as number) / 100)
-                    ).toLocaleString()
-                  )}
-                </Text>
-                <Text
-                  body2
-                  bold
-                  type="primary"
-                  style={tourPackage?.discount ? { textDecorationLine: "line-through" } : {}}>
-                  {localizeNumber(formatPrice(tourPackage?.price as number) as string)}
-                </Text>
-              </View>
-            )}
-          </View>
+          <View style={style.priceContainer}>{tourPrice}</View>
         </View>
         <Button
           disabled={
@@ -88,7 +94,7 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
               ? true
               : false
           }
-          onPress={handleBottomSheet}>
+          onPress={() => handleBottomSheet(tour?.packages[0])}>
           {tr("Reserve")}
         </Button>
       </ButtonRow>

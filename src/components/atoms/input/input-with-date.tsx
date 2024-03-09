@@ -48,7 +48,14 @@ const InputWithDate = ({ form, field, ...props }: InputWithDateProps) => {
         overlayStyle={{ direction: "rtl" }}>
         <JalaliDatePicker onDayPress={handleDayPress} markedDays={markedDays} />
       </Overlay>
-      <NativeInput {...props} ref={inputRef} value={field?.value && localizeNumber(moment(field?.value).locale("fa").format("YYYY/MM/DD"))} onFocus={_onFocus} />
+      <NativeInput
+        {...props}
+        ref={inputRef}
+        value={
+          field?.value && localizeNumber(moment(field?.value).locale("fa").format("YYYY/MM/DD"))
+        }
+        onFocus={_onFocus}
+      />
     </>
   );
 };

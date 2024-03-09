@@ -30,7 +30,7 @@ function HostList() {
           <TitleWithAction
             actionTitle={tr("See All")}
             title={tr("Available hosts")}
-            onActionPress={() => router.push("/mahdieh-iran")}
+            onActionPress={() => router.push("/all-hosts")}
           />
         </Container>
         <ScrollView

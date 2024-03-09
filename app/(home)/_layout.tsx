@@ -71,15 +71,7 @@ export default function AppLayout() {
             tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
           }}
         />
-        <Tabs.Screen
-          name="mahdieh-iran"
-          options={{
-            title: "رزرو اسکان صلواتی مهدیه ایران",
-            headerShown: true,
-            headerTitleAlign: "left",
-            tabBarItemStyle: { display: "none" },
-          }}
-        />
+
         <Tabs.Screen
           name="search-list"
           options={{

@@ -92,6 +92,12 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
+          name="all-hosts"
+          options={{
+            title: tr("all hosts"),
+          }}
+        />
+        <Stack.Screen
           name="ngo-login"
           options={{
             title: tr("NGO Login"),
