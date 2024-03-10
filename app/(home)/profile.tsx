@@ -11,8 +11,8 @@ import { UserQueryType, useUserDetailProfileLazyQuery } from "@src/gql/generated
 
 const Profile: React.FC = () => {
   I18nManager.allowRTL(true);
-  const { session } = useSession();
   const isFocused = useIsFocused();
+  const { session, isLoading, signOut } = useSession();
   const rootNavigationState = useRootNavigationState();
   const [_, { refetch, data }] = useUserDetailProfileLazyQuery({
     fetchPolicy: "network-only",
@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
     session && refetch();
   }, [isFocused, session]);
 
-  if (!session) return <Authentication />;
+  if (!isLoading && !session) return <Authentication />;
   if (!data) return <LoadingIndicator />;
 
   // if you open new tab and enter page url in addressbar and try to open, you see an error. the error described in
@@ -31,7 +31,6 @@ const Profile: React.FC = () => {
   if (!rootNavigationState?.key) return null;
 
   const userDetail = data.userDetail;
-
   return userDetail?.isNgo ? (
     <NGOProfile userDetail={userDetail as UserQueryType} />
   ) : (

@@ -12,9 +12,10 @@ export const styles = StyleSheet.create({
   dayText: { textAlign: "center" },
   viewComponent: {
     display: "flex",
-    paddingVertical: 10,
     textAlign: "center",
     alignItems: "center",
+    justifyContent: "center",
+    minHeight: 45,
   },
   container: {
     display: "flex",
