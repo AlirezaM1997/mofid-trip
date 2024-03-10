@@ -17,16 +17,18 @@ const HostCommentScreen = () => {
   const navigation = useNavigation();
   const { projectId } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const { loading, data, refetch } = useHostCommentQuery({
     variables: {
       pk: projectId as string,
     },
   });
+
+  const handleOpen = () => setIsVisible(true);
+  
   if (loading && !data) return <LoadingIndicator />;
 
-  const [isVisible, setIsVisible] = useState<boolean>(false);
   const comment = data?.projectDetail?.commentSet;
-  const handleOpen = () => setIsVisible(true);
 
   navigation.setOptions({ title: `${tr("comments of")} ${data?.projectDetail?.name}` });
 

@@ -61,6 +61,18 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
+        name="host/[projectId]/comment/[commentId]"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
+        name="host/[projectId]/comment/index"
+        options={{
+          title: tr("loading"),
+        }}
+      />
+      <Stack.Screen
         name="tour/transaction/detail/[transactionId]"
         options={{
           title: tr("loading"),
@@ -85,7 +97,7 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
-        name="tour/[tourId]/comment"
+        name="tour/[tourId]/comment/index"
         options={{
           title: tr("loading"),
         }}

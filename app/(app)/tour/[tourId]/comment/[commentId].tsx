@@ -1,11 +1,11 @@
 import {
-  CommentObjectEnum,
   CommentType,
   LikeObjectEnum,
   LikeStatusEnum,
-  useCommentAddMutation,
+  CommentObjectEnum,
   useLikeAddMutation,
   useTourCommentQuery,
+  useCommentAddMutation,
 } from "@src/gql/generated";
 import Input from "@atoms/input";
 import moment from "jalali-moment";
@@ -28,24 +28,16 @@ const TourCommentReplay = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const navigation = useNavigation();
-  const { localizeNumber } = useLocalizedNumberFormat();
   const { tourId, commentId } = useLocalSearchParams();
-
+  const { localizeNumber } = useLocalizedNumberFormat();
   const [value, setValue] = useState<string>("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
-
-  const handleOpen = () => setIsVisible(!isVisible);
-  const handleClose = () => setIsVisible(false);
-
-  const { loading, data, refetch } = useTourCommentQuery({ variables: { pk: tourId as string } });
   const [likeAdd] = useLikeAddMutation();
   const [commentAdd] = useCommentAddMutation();
-
-  if (loading && !data) return <LoadingIndicator />;
-
-  navigation.setOptions({ title: `${tr("comments of")} ${data?.tourDetail?.title}` });
-
-  const comment = data?.tourDetail?.commentSet?.find(comment => comment?.id === commentId);
+  const { loading, data, refetch } = useTourCommentQuery({ variables: { pk: tourId as string } });
+  
+  const handleOpen = () => setIsVisible(!isVisible);
+  const handleClose = () => setIsVisible(false);
 
   const handleLike = async () => {
     const { data } = await likeAdd({
@@ -96,13 +88,19 @@ const TourCommentReplay = () => {
       setValue("");
     }
   };
-
-  const closeDropDown = () => window.addEventListener("click", handleClose);
+  
+    const closeDropDown = () => window.addEventListener("click", handleClose);
 
   useEffect(() => {
     closeDropDown();
     return () => window.removeEventListener("click", handleClose);
   }, []);
+
+  if (loading && !data) return <LoadingIndicator />;
+
+  navigation.setOptions({ title: `${tr("comments of")} ${data?.tourDetail?.title}` });
+
+  const comment = data?.tourDetail?.commentSet?.find(comment => comment?.id === commentId);
 
   return (
     <BottomButtonLayout
