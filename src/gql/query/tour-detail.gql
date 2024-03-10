@@ -4,7 +4,7 @@ query tourDetail($pk: ID!) {
     title
     endTime
     startTime
-    rate{
+    rate {
       avgRate
     }
     statusStep {
@@ -27,6 +27,9 @@ query tourDetail($pk: ID!) {
         phoneNumber
         avatarS3 {
           small
+          medium
+          large
+          orginal
         }
         ngo {
           id
@@ -47,6 +50,7 @@ query tourDetail($pk: ID!) {
               large
               medium
               small
+              orginal
             }
           }
         }
@@ -76,6 +80,7 @@ query tourDetail($pk: ID!) {
       medium
       large
       small
+      orginal
     }
   }
 }

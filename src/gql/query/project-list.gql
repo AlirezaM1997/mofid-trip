@@ -9,7 +9,7 @@ query projectList($search: String, $sort: SortType, $filter: ProjectFilterType, 
       dateStart
       dateEnd
       discount
-      rate{
+      rate {
         avgRate
       }
       capacity {
@@ -26,6 +26,9 @@ query projectList($search: String, $sort: SortType, $filter: ProjectFilterType, 
         address
         avatarS3 {
           small
+          orginal
+          medium
+          large
         }
       }
     }

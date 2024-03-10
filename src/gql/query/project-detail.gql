@@ -7,7 +7,7 @@ query projectDetail($pk: ID!) {
     dateEnd
     discount
     dateStart
-    rate{
+    rate {
       avgRate
     }
     statusStep {
@@ -47,6 +47,7 @@ query projectDetail($pk: ID!) {
       avatarS3 {
         small
         medium
+        orginal
         large
       }
       projectSet {
@@ -59,6 +60,7 @@ query projectDetail($pk: ID!) {
           avatarS3 {
             large
             medium
+            orginal
             small
           }
         }
@@ -73,6 +75,7 @@ query projectDetail($pk: ID!) {
         large
         medium
         small
+        orginal
       }
     }
   }

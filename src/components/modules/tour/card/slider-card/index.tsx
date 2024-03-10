@@ -50,7 +50,7 @@ function TourSliderCard({ price, id, name, rate, avatarS3, address }: PropsType)
 
   const avatar =
     (avatarS3?.length as number) > 0
-      ? { uri: avatarS3?.[0]?.small }
+      ? { uri: avatarS3?.[0]?.orginal }
       : require("@assets/image/defaultHost.svg");
 
   return (

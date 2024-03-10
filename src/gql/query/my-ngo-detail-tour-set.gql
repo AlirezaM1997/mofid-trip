@@ -9,7 +9,7 @@ query myNGODetailTourSet {
       description
       startTime
       endTime
-      statusStep{
+      statusStep {
         displayName
         name
       }
@@ -28,6 +28,7 @@ query myNGODetailTourSet {
             large
             medium
             small
+            orginal
           }
         }
         ... on ProjectQueryType {
@@ -46,6 +47,7 @@ query myNGODetailTourSet {
             large
             medium
             small
+            orginal
           }
         }
         ... on ProjectQueryType {
@@ -57,6 +59,7 @@ query myNGODetailTourSet {
         large
         medium
         small
+        orginal
       }
       packages {
         id

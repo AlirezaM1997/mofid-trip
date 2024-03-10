@@ -13,7 +13,7 @@ query projectListSearch(
       price
       discount
       modifiedDate
-      rate{
+      rate {
         avgRate
       }
       accommodation {
@@ -23,6 +23,9 @@ query projectListSearch(
         address
         avatarS3 {
           small
+          orginal
+          large
+          medium
         }
       }
     }

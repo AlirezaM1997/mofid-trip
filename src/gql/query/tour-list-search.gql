@@ -20,6 +20,7 @@ query tourListSearch($search: String, $sort: SortType, $filter: TourFilterType, 
         medium
         large
         small
+        orginal
       }
     }
   }
