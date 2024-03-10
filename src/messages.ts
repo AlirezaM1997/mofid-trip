@@ -3444,6 +3444,11 @@ export const messages = {
     fa_ir: "عنوان",
     en_us: "Title",
   },
+  opinion: {
+    ar: "نظر",
+    fa_ir: "نظر",
+    en_us: "Opinion",
+  },
   "add your comment": {
     ar: "نظر دهید",
     fa_ir: "نظر دهید",

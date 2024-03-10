@@ -9,6 +9,7 @@ query projectDetail($pk: ID!) {
     dateStart
     rate {
       avgRate
+      count
     }
     statusStep {
       displayName

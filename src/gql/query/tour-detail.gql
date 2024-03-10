@@ -6,6 +6,7 @@ query tourDetail($pk: ID!) {
     startTime
     rate {
       avgRate
+      count
     }
     statusStep {
       displayName

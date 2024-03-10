@@ -84,7 +84,9 @@ const Page: React.FC = ({ ...props }) => {
             <Text caption>{accommodation?.address}</Text>
             {rate?.avgRate && (
               <View style={style.rateBox}>
-                <Text>{localizeNumber(rate?.avgRate as string)}</Text>
+                <Text>{`(${localizeNumber(rate.count as string)} ${tr("opinion")}) ${localizeNumber(
+                  rate?.avgRate as string
+                )}`}</Text>
                 <View style={style.rateStars}>
                   {new Array(5).fill("star").map((item, index) => (
                     <AntDesign
