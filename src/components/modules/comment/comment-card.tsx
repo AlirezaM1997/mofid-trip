@@ -159,7 +159,6 @@ const styles = StyleSheet.create({
   dropDown: {
     position: "absolute",
     left: 15,
-    backgroundColor: "red",
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
@@ -180,7 +179,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  commentText: { width: "80%" },
+  commentText: { width: "95%" },
   footerCard: { gap: 12 },
   likeInf: { 
     flexDirection: "row", 
