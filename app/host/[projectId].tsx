@@ -27,6 +27,7 @@ import ProjectFacilities from "@src/components/modules/host/facilities";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import ProjectBoldFeatures from "@src/components/modules/host/bold-features";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import WhiteSpace from "@atoms/white-space";
 
 const Page: React.FC = ({ ...props }) => {
   const { theme } = useTheme();
@@ -52,7 +53,7 @@ const Page: React.FC = ({ ...props }) => {
   if (loading) return <LoadingIndicator />;
 
   navigation.setOptions({
-    title: data?.projectDetail?.name,
+    title: localizeNumber(data?.projectDetail?.name as string),
     headerRight: () => <ShareReportDropDown />,
   });
 
@@ -80,8 +81,10 @@ const Page: React.FC = ({ ...props }) => {
           <ProjectTags tags={tags ?? []} />
 
           <View style={style.infoContainer}>
-            <Text heading2>{name}</Text>
-            <Text caption>{accommodation?.address}</Text>
+            <Text heading2 bold>
+              {localizeNumber(name as string)}
+            </Text>
+            <Text>{localizeNumber(accommodation?.address as string)}</Text>
             {rate?.avgRate && (
               <View style={style.rateBox}>
                 <Text>{`(${localizeNumber(rate.count as string)} ${tr("opinion")}) ${localizeNumber(
@@ -114,16 +117,15 @@ const Page: React.FC = ({ ...props }) => {
 
           {description && (
             <View style={style.infoContainer}>
-              <Text subtitle1 bold>
-                {tr("about host")}
-              </Text>
-              <Text caption type="grey3">
-                {description}
-              </Text>
+              <Text bold>{tr("about host")}</Text>
+              <Text type="grey3">{description}</Text>
             </View>
           )}
-
-          <ProjectFacilities facilities={facilities as ProjectFacilityQueryType[]} />
+          <View>
+            <Text bold>{tr("hosting facilities")}</Text>
+            <WhiteSpace />
+            <ProjectFacilities facilities={facilities as ProjectFacilityQueryType[]} />
+          </View>
 
           {/* <ContactCard user={tour.NGO.user} /> */}
 
@@ -132,8 +134,11 @@ const Page: React.FC = ({ ...props }) => {
               {tr("host address")}
             </Text>
             <Text caption type="grey3">
-              {accommodation?.address}
+              {localizeNumber(accommodation?.address as string)}
             </Text>
+
+            <WhiteSpace size={20} />
+
             {isFocused && (
               <Pressable onPress={() => openMapHandler(accommodation?.lat, accommodation?.lng)}>
                 <Map
@@ -156,9 +161,7 @@ const Page: React.FC = ({ ...props }) => {
               </Pressable>
             )}
           </View>
-          <Text subtitle1 bold>
-            پیشنهادی برای شما
-          </Text>
+          {(creator?.projectSet?.length as number) > 1 && <Text bold>پیشنهادی برای شما</Text>}
         </Container>
         <SimilarProjects
           currentProjectId={projectId as string}

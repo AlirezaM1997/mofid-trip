@@ -1,12 +1,13 @@
-import React from "react";
-import { Text } from "@rneui/themed";
-import { StyleSheet, View } from "react-native";
-import useTranslation from "@src/hooks/translation";
-import { ProjectFacilityQueryType, SettingDetailType } from "@src/gql/generated";
-import { useSelector } from "react-redux";
+import { Chip } from "@rneui/themed";
 import { RootState } from "@src/store";
+import { useSelector } from "react-redux";
+import { StyleSheet, View } from "react-native";
+import { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { SettingDetailType, TourFacilityQueryType } from "@src/gql/generated";
 
-const Item = ({ facility }: { facility: ProjectFacilityQueryType }) => {
+const ProjectFacilities = ({ facilities }: { facilities: TourFacilityQueryType[] }) => {
+
+  const { localizeNumber } = useLocalizedNumberFormat();
   const { language } = useSelector(
     (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
   );
@@ -21,45 +22,39 @@ const Item = ({ facility }: { facility: ProjectFacilityQueryType }) => {
   };
 
   return (
-    <View style={style.itemContainer}>
-      <Text style={style.itemText}>{facility[facilitiesLanguage()]}</Text>
-    </View>
-  );
-};
-
-const ProjectFacilities = ({ facilities }: { facilities: ProjectFacilityQueryType[] }) => {
-  const { tr } = useTranslation();
-
-  if (!facilities || !facilities.length) return;
-
-  return (
     <View style={style.container}>
-      <Text subtitle1>{tr("hosting facilities")}</Text>
-      {facilities?.map((facility, index) => (
-        <Item key={index} facility={facility} />
-      ))}
+      {facilities?.map((facility, index) => {
+        return (
+          <Chip
+            key={index}
+            title={localizeNumber(facility[facilitiesLanguage()])}
+            type="outline"
+            buttonStyle={style.buttonStyle}
+            titleStyle={style.titleStyle}
+            containerStyle={style.containerStyle}
+          />
+        );
+      })}
     </View>
   );
 };
 
 const style = StyleSheet.create({
   container: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
     gap: 8,
+    flexWrap: "wrap",
+    flexDirection: "row",
   },
-  itemContainer: {
-    backgroundColor: "#F3F3F3",
-    height: 32,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  buttonStyle: {
+    padding:2,
+    borderWidth: 0,
     borderRadius: 6,
+    backgroundColor: "#F3F3F3",
   },
-  itemText: {
-    color: "#101010",
-    paddingHorizontal: 12,
+  titleStyle: { color: "#101010" },
+  containerStyle: {
+    borderRadius: 0,
   },
 });
+
 export default ProjectFacilities;

@@ -1,21 +1,22 @@
 import { Chip } from "@rneui/themed";
-import { SettingDetailType, TourFacilityQueryType } from "@src/gql/generated";
 import { RootState } from "@src/store";
-import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
+import { StyleSheet, View } from "react-native";
+import { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { SettingDetailType, TourFacilityQueryType } from "@src/gql/generated";
 
-type TourFacilitiesProps = {
-  facilities: TourFacilityQueryType[];
-};
+const TourFacilities = ({ facilities }: { facilities: TourFacilityQueryType[] }) => {
 
-const TourFacilities = ({ facilities, ...props }: TourFacilitiesProps) => {
-  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType);
+  const { localizeNumber } = useLocalizedNumberFormat();
+  const { language } = useSelector(
+    (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
+  );
 
   const facilitiesLanguage = () => {
     const lookup: Record<string, string> = {
-      "EN_US": "enName",
-      "FA_IR": "faName",
-      "AR": "arName",
+      EN_US: "enName",
+      FA_IR: "faName",
+      AR: "arName",
     };
     return lookup[language];
   };
@@ -26,7 +27,7 @@ const TourFacilities = ({ facilities, ...props }: TourFacilitiesProps) => {
         return (
           <Chip
             key={index}
-            title={facility[facilitiesLanguage()]}
+            title={localizeNumber(facility[facilitiesLanguage()] as string)}
             type="outline"
             buttonStyle={style.buttonStyle}
             titleStyle={style.titleStyle}
@@ -40,15 +41,14 @@ const TourFacilities = ({ facilities, ...props }: TourFacilitiesProps) => {
 
 const style = StyleSheet.create({
   container: {
-    display: "flex",
-    flexDirection: "row",
+    gap: 8,
     flexWrap: "wrap",
-    gap: 5,
+    flexDirection: "row",
   },
   buttonStyle: {
-    borderRadius: 5,
-    backgroundColor: "#F3F3F3",
     borderWidth: 0,
+    borderRadius: 6,
+    backgroundColor: "#F3F3F3",
   },
   titleStyle: { color: "#101010" },
   containerStyle: {

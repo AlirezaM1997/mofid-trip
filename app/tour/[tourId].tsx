@@ -42,7 +42,7 @@ export default () => {
 
   if (loading && !tour) return <LoadingIndicator />;
   navigation.setOptions({
-    title: data?.tourDetail?.title,
+    title: localizeNumber(data?.tourDetail?.title as string),
     headerRight: () => <ShareReportDropDown />,
   });
 
@@ -52,30 +52,33 @@ export default () => {
         <WhiteSpace size={10} />
         <ImageSlider imageList={tour?.avatarS3 as AccommodationImageType[] | TourImageType[]} />
 
-        <WhiteSpace size={20} />
-
-        <Text>{tour?.title}</Text>
-        <Text>{(tour?.destination as AccommodationQueryType)?.address}</Text>
-        {tour?.rate?.avgRate && (
-          <View style={styles.rateBox}>
-            <Text>{localizeNumber(tour?.rate?.avgRate as string)}</Text>
-            <View style={styles.rateStars}>
-              {new Array(5).fill("star").map((item, index) => (
-                <AntDesign
-                  key={index}
-                  name="star"
-                  size={24}
-                  color={
-                    index < +(tour?.rate?.avgRate as string)
-                      ? theme.colors.warning
-                      : theme.colors.grey1
-                  }
-                />
-              ))}
+        <View style={styles.tourInf}>
+          <Text heading2 bold>
+            {localizeNumber(tour?.title as string)}
+          </Text>
+          <Text>{(tour?.destination as AccommodationQueryType)?.address}</Text>
+          {tour?.rate?.avgRate && (
+            <View style={styles.rateBox}>
+              <Text>{`(${localizeNumber(tour?.rate.count as string)} ${tr(
+                "opinion"
+              )}) ${localizeNumber(tour?.rate?.avgRate as string)}`}</Text>
+              <View style={styles.rateStars}>
+                {new Array(5).fill("star").map((item, index) => (
+                  <AntDesign
+                    key={index}
+                    name="star"
+                    size={24}
+                    color={
+                      index < +(tour?.rate?.avgRate as string)
+                        ? theme.colors.warning
+                        : theme.colors.grey1
+                    }
+                  />
+                ))}
+              </View>
             </View>
-          </View>
-        )}
-        <WhiteSpace size={20} />
+          )}
+        </View>
 
         <WhiteSpace size={10} />
         <TourBoldInfo
@@ -86,13 +89,14 @@ export default () => {
 
         <WhiteSpace size={20} />
 
-        <Text>{tr("Description")}</Text>
+        <Text bold>{tr("about the tour")}</Text>
+        <WhiteSpace size={4} />
         <Text>{tour?.description}</Text>
 
         <WhiteSpace size={20} />
 
-        <Text subtitle1>{tr("Tour Facilities")}</Text>
-
+        <Text bold>{tr("Tour Facilities")}</Text>
+        <WhiteSpace size={10} />
         <TourFacilities facilities={tour?.facilities as TourFacilityQueryType[]} />
 
         <WhiteSpace size={20} />
@@ -134,11 +138,11 @@ export default () => {
             </Pressable>
           </>
         )}
-        <WhiteSpace size={15} />
-        <Text subtitle1 bold>
-          پیشنهادی برای شما
-        </Text>
-        <WhiteSpace size={15} />
+        {(tour?.NGO.tourSet?.length as number) > 1 && (
+          <View style={{ paddingVertical: 15 }}>
+            <Text bold>پیشنهادی برای شما</Text>
+          </View>
+        )}
       </Container>
       <SimilarTours
         currentTourId={tour?.id as string}
@@ -151,6 +155,10 @@ export default () => {
 };
 
 const styles = StyleSheet.create({
+  tourInf:{ 
+    gap: 4, 
+    marginVertical: 20 
+  },
   gridRow: {
     display: "flex",
     flexDirection: "row",

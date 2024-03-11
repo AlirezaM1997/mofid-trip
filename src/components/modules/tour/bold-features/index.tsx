@@ -1,18 +1,15 @@
 import moment from "jalali-moment";
 import { Text } from "@rneui/themed";
 import { Divider } from "@rneui/base";
-import WhiteSpace from "@atoms/white-space";
 import { StyleSheet, View } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const Item = ({ title, subtitle }: { title: string; subtitle: string }) => {
   return (
-    <View>
+    <View style={{ gap: 6 }}>
       <Text caption type="grey3">
         {title}
       </Text>
-
-      <WhiteSpace size={6} />
 
       <Text body2 bold center>
         {subtitle}
@@ -48,7 +45,7 @@ const TourBoldInfo = ({ capacity, startTime, endTime }) => {
       />
       <Divider orientation="vertical" />
 
-      <Item subtitle={`${differenceInDays} ${tr("day")}`} title={tr("Duration")} />
+      <Item subtitle={`${localizeNumber(differenceInDays)} ${tr("day")}`} title={tr("Duration")} />
       <Divider orientation="vertical" />
 
       <Item
