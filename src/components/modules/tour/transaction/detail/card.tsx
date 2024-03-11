@@ -9,7 +9,7 @@ import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation
 
 const TransactionDetailCard = ({ tour }: { tour: TourQueryType }) => {
   const { tr } = useTranslation();
-  const formattedDate = (date: Date) => moment(date, "YYYY/MM/DD").locale("fa").format("D MMMM");
+  const formattedDate = (date: Date) => moment(date).locale("fa").format("D MMMM");
   const { localizeNumber } = useLocalizedNumberFormat();
   return (
     <Pressable
@@ -25,7 +25,7 @@ const TransactionDetailCard = ({ tour }: { tour: TourQueryType }) => {
 
         <View style={styles.tourDetail}>
           <Text subtitle1 numberOfLines={1}>
-            {tour?.title}
+            {localizeNumber(tour?.title)}
           </Text>
 
           <Text numberOfLines={1} caption type="grey2">
