@@ -14,7 +14,7 @@ const TransactionDetailCard = ({
 }) => {
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const formattedDate = (date: Date) => moment(date, "YYYY/MM/DD").locale("fa").format("D MMMM");
+  const formattedDate = (date: Date) => moment(date).locale("fa").format("D MMMM");
 
   const project = transactionDetail.project;
 
