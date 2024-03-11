@@ -8,6 +8,7 @@ import Authentication from "@modules/authentication";
 import { useIsFocused } from "@react-navigation/core";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { UserQueryType, useUserDetailProfileLazyQuery } from "@src/gql/generated";
+import { Text } from "@rneui/themed";
 
 const Profile: React.FC = () => {
   I18nManager.allowRTL(true);
@@ -19,7 +20,7 @@ const Profile: React.FC = () => {
   });
 
   useEffect(() => {
-    session && refetch();
+    isFocused && session && refetch();
   }, [isFocused, session]);
 
   if (!isLoading && !session) return <Authentication />;
