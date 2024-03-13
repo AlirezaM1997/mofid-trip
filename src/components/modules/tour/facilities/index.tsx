@@ -1,14 +1,12 @@
 import { Chip } from "@rneui/themed";
-import { SettingDetailType, TourFacilityQueryType } from "@src/gql/generated";
 import { RootState } from "@src/store";
-import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
+import { StyleSheet, View } from "react-native";
+import { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { SettingDetailType, TourFacilityQueryType } from "@src/gql/generated";
 
-type TourFacilitiesProps = {
-  facilities: TourFacilityQueryType[];
-};
-
-const TourFacilities = ({ facilities, ...props }: TourFacilitiesProps) => {
+const TourFacilities = ({ facilities }: { facilities: TourFacilityQueryType[] }) => {
+  const { localizeNumber } = useLocalizedNumberFormat();
   const { language } = useSelector(
     (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
   );
@@ -32,7 +30,7 @@ const TourFacilities = ({ facilities, ...props }: TourFacilitiesProps) => {
             titleStyle={style.titleStyle}
             buttonStyle={style.buttonStyle}
             containerStyle={style.containerStyle}
-            title={facility[facilitiesLanguage()]}
+            title={localizeNumber(facility[facilitiesLanguage()] as string)}
           />
         );
       })}
@@ -49,7 +47,7 @@ const style = StyleSheet.create({
   },
   buttonStyle: {
     borderWidth: 0,
-    borderRadius: 5,
+    borderRadius: 6,
     backgroundColor: "#F3F3F3",
   },
   titleStyle: { color: "#101010", textAlign: "right", paddingVertical: 2 },

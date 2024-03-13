@@ -57,6 +57,7 @@ query projectTransactionDetail($pk: ID!) {
           small
           medium
           large
+          orginal
         }
       }
     }

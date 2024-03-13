@@ -1646,6 +1646,11 @@ export const messages = {
     fa_ir: "خطا",
     en_us: "Error",
   },
+  "about the tour": {
+    ar: "حول الجولة",
+    fa_ir: "درباره تور",
+    en_us: "About the tour",
+  },
   "register points": {
     ar: "Register points",
     fa_ir: "ثبت امتیاز",
@@ -3448,6 +3453,11 @@ export const messages = {
     ar: "عنوان",
     fa_ir: "عنوان",
     en_us: "Title",
+  },
+  opinion: {
+    ar: "نظر",
+    fa_ir: "نظر",
+    en_us: "Opinion",
   },
   "add your comment": {
     ar: "نظر دهید",

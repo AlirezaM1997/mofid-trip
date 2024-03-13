@@ -12,24 +12,26 @@ import { router } from "expo-router";
 import { Badge, Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import { Divider, useTheme } from "@rneui/themed";
-import { ProjectQueryType } from "@src/gql/generated";
 import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { AccommodationQueryType, ProjectQueryType, RateType } from "@src/gql/generated";
 import WhiteSpace from "@atoms/white-space";
 
 type PropsType = {
-  avatarS3: ProjectQueryType["accommodation"]["avatarS3"];
-  address: ProjectQueryType["accommodation"]["address"];
+  avatarS3: AccommodationQueryType["avatarS3"];
+  address: AccommodationQueryType["address"];
   discount: ProjectQueryType["discount"];
   price: ProjectQueryType["price"];
   name: ProjectQueryType["name"];
   id: ProjectQueryType["id"];
   containerStyle?: ViewStyle;
+  rate: RateType;
 };
 
 function HostSliderCard({
   id,
+  rate,
   name,
   price,
   address,
@@ -38,10 +40,10 @@ function HostSliderCard({
   containerStyle,
 }: PropsType) {
   const isRtl = useIsRtl();
-  const { tr } = useTranslation();
   const { theme } = useTheme();
-  const { localizeNumber } = useLocalizedNumberFormat();
+  const { tr } = useTranslation();
   const { formatPrice } = useFormatPrice();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const handlePress = () => {
     router.push({
@@ -82,7 +84,9 @@ function HostSliderCard({
     );
 
   const avatar =
-    avatarS3?.length > 0 ? { uri: avatarS3?.[0].small } : require("@assets/image/defaultHost.svg");
+    (avatarS3?.length as number) > 0
+      ? { uri: avatarS3?.[0]?.orginal }
+      : require("@assets/image/defaultHost.svg");
 
   return (
     <Pressable style={[style.container, containerStyle]} onPress={handlePress}>
@@ -111,11 +115,12 @@ function HostSliderCard({
             </Text>
           </View>
         </View>
-
-        <View style={style.rate}>
-          <FontAwesome name="star" size={20} color={theme.colors.warning} />
-          <Text body2>{localizeNumber(4.9)}</Text>
-        </View>
+        {rate.avgRate && (
+          <View style={style.rate}>
+            <FontAwesome name="star" size={20} color={theme.colors.warning} />
+            <Text body2>{localizeNumber(rate.avgRate as string)}</Text>
+          </View>
+        )}
       </View>
 
       <WhiteSpace size={10} />
@@ -151,7 +156,7 @@ const style = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 0,
     bottom: 0,
-    left: 10,
+    left: 8,
   },
   ImageBackground: ((isRtl: boolean) => ({
     marginRight: isRtl ? 0 : 5,

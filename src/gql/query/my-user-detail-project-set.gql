@@ -22,6 +22,7 @@ query myUserDetailProjectSet {
           large
           medium
           small
+          orginal
         }
       }
       name
@@ -34,7 +35,7 @@ query myUserDetailProjectSet {
       price
       discount
       tax
-      statusStep{
+      statusStep {
         displayName
         name
       }

@@ -74,7 +74,7 @@ const SimilarProjects = ({ projects, currentProjectId }: PropsType) => {
           ))}
         <View style={style.dummyContent} />
       </ScrollView>
-      <WhiteSpace size={32} />
+      {projects.length > 1 && <WhiteSpace size={32} />}
     </>
   );
 };

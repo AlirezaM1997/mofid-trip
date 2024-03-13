@@ -6,7 +6,7 @@ import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView, View, StyleSheet } from "react-native";
 import HostSliderCard from "@modules/host/card/slider-card";
-import { SortFieldEnum, useProjectListQuery } from "@src/gql/generated";
+import { RateType, SortFieldEnum, useProjectListQuery } from "@src/gql/generated";
 
 function HostList() {
   const { tr } = useTranslation();
@@ -53,6 +53,7 @@ function HostList() {
                   <HostSliderCard
                     name={project?.name}
                     id={project?.id as string}
+                    rate={project?.rate as RateType}
                     price={project?.price as number}
                     discount={project?.discount as number}
                     address={project?.accommodation?.address}

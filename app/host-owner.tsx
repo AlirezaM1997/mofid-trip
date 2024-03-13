@@ -1,37 +1,30 @@
-import { useEffect } from "react";
-import { View } from "react-native";
-import { Text } from "@rneui/themed";
+import { Colors, Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import Container from "@atoms/container";
-import HostCard from "@modules/host/card";
-import { StyleSheet } from "react-native";
 import WhiteSpace from "@atoms/white-space";
 import useTranslation from "@src/hooks/translation";
-import { useNgoDetailQuery } from "@src/gql/generated";
+import { StyleSheet, ViewStyle } from "react-native";
 import { Avatar, Image, useTheme } from "@rneui/themed";
 import { ScrollView } from "react-native-gesture-handler";
 import LoadingIndicator from "@modules/Loading-indicator";
-import { useLocalSearchParams, useNavigation } from "expo-router";
 import HostSliderCard from "@modules/host/card/slider-card";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import { AccommodationQueryType, RateType, useNgoDetailQuery } from "@src/gql/generated";
 
 const height = 220;
 
 export default () => {
-  const { tr } = useTranslation();
   const { theme } = useTheme();
-  const { ngoId } = useLocalSearchParams();
+  const { tr } = useTranslation();
   const navigation = useNavigation();
+  const { ngoId } = useLocalSearchParams();
   const { loading, data } = useNgoDetailQuery({ variables: { pk: ngoId as string } });
 
-  useEffect(() => {
-    if (!loading && data) {
-      navigation.setOptions({
-        title: data.NGODetail.title,
-      });
-    }
-  }, [loading, data]);
+  if (loading && !data) return <LoadingIndicator />;
 
-  if (loading) return <LoadingIndicator />;
+  navigation.setOptions({
+    title: data?.NGODetail?.title,
+  });
 
   return (
     <ScrollView>
@@ -67,11 +60,11 @@ export default () => {
       <WhiteSpace size={50} />
       <Container>
         <Text heading2 bold>
-          {data.NGODetail.title}
+          {data?.NGODetail?.title}
         </Text>
-        <Text caption>{data.NGODetail.address}</Text>
+        <Text caption>{data?.NGODetail?.address}</Text>
         <WhiteSpace size={10} />
-        <Text>{data.NGODetail.description}</Text>
+        <Text>{data?.NGODetail?.description}</Text>
       </Container>
 
       <WhiteSpace size={20} />
@@ -84,12 +77,13 @@ export default () => {
           contentContainerStyle={styles.row}>
           {data?.NGODetail?.projectSet?.map(p => (
             <HostSliderCard
-              key={p.id}
-              id={p.id}
-              name={p.name}
-              price={p.price}
-              avatarS3={p.accommodation.avatarS3}
-              address={p.accommodation[0]?.address}
+              key={p?.id}
+              id={p?.id as string}
+              name={p?.name}
+              price={p?.price}
+              rate={p?.rate as RateType}
+              avatarS3={p?.accommodation?.avatarS3 as AccommodationQueryType["avatarS3"]}
+              address={p?.accommodation?.address as AccommodationQueryType["address"]}
             />
           ))}
         </ScrollView>
@@ -102,13 +96,13 @@ export default () => {
 
 const styles = StyleSheet.create({
   image: { width: WIDTH, height: height },
-  avatarContainerStyle: theme => ({
+  avatarContainerStyle: ((theme: { colors: { white: keyof Colors } }) => ({
     position: "absolute",
     top: height - 40,
     left: 20,
     borderWidth: 3,
     borderColor: theme.colors.white,
-  }),
+  })) as ViewStyle,
   row: {
     gap: 20,
   },

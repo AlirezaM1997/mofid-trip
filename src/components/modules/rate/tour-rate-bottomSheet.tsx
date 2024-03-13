@@ -17,6 +17,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { ScrollView, StyleSheet } from "react-native";
 import TourTransactionDetailCard from "./tour-transaction-detail-card";
 import { BottomSheet, Button, Divider, Input, Slider, Text, useTheme } from "@rneui/themed";
+import { Colors } from "@rneui/themed";
 
 const TourRateBottomSheet = ({
   transaction,
@@ -162,7 +163,10 @@ const styles = StyleSheet.create({
   headerBarButton: { flexDirection: "row", gap: 20 },
   scrollView: { height: HEIGHT - 65, justifyContent: "space-between" },
   topSection: { paddingVertical: 24, gap: 5 },
-  thumbStyle: ((value: number, theme: { colors: { grey2: string; black: string } }) => ({
+  thumbStyle: ((
+    value: number,
+    theme: { colors: { grey2: keyof Colors; black: keyof Colors } }
+  ) => ({
     width: 20,
     height: 20,
     borderWidth: 5,

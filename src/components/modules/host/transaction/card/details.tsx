@@ -25,7 +25,7 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
         source={
           (transaction?.project?.accommodation?.avatarS3?.length as number) > 0
             ? {
-                uri: transaction?.project?.accommodation?.avatarS3?.[0]?.small,
+                uri: transaction?.project?.accommodation?.avatarS3?.[0]?.orginal,
               }
             : require("@assets/image/defaultHost.svg")
         }

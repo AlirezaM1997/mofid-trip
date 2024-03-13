@@ -1,46 +1,29 @@
+import { ListItem, Text } from "@rneui/themed";
 import React, { useState } from "react";
 import Container from "@atoms/container";
+import { useDispatch } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
 import { useSession } from "@src/context/auth";
-import { ListItem, Text } from "@rneui/themed";
 import { BottomSheet, Button } from "@rneui/themed";
+import { useFormatPrice } from "@src/hooks/localization";
 import { router, useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, View } from "react-native";
-import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import { TourPackageType, TourQueryType, TourStatusEnum } from "@src/gql/generated";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
-  const isRtl = useIsRtl();
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
   const { session } = useSession();
   const { formatPrice } = useFormatPrice();
   const { tourId } = useLocalSearchParams();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const [isVisible, setIsVisible] = useState<boolean>();
   const isNgo = session ? JSON.parse(session)?.metadata?.is_ngo : false;
-
   const [isVisiblePrevent, setIsVisiblePrevent] = useState<boolean>(false);
 
-  const handleBottomSheet = (p: any) => {
-    if (isNgo) {
-      setIsVisiblePrevent(true);
-    } else {
-      handleBuy(p);
-    }
-  };
-
-  const handleBuy = (p: TourPackageType) => {
-    if (session) {
-      handleNavigateToReserve(p);
-    } else {
-      setIsVisiblePrevent(true);
-    }
-  };
-
   const handleNavigateToReserve = (tourPackage: TourPackageType) => {
-    setIsVisible(false);
     router.push({
       pathname: `/tour/${tourId}/reservation/add/step-1`,
       params: {
@@ -50,41 +33,56 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
     });
   };
 
-  const tourPackage = tour?.packages?.[0];
-
-  const tourPrice =
-    tour?.packages?.[0].price <= 0 ? (
-      <Text bold>{tr("it is free")}</Text>
-    ) : (
-      <View style={style.bottomStyle}>
-        {tourPackage.discount ? (
-          <Text body2 bold>
-            {localizeNumber(
-              (
-                (tourPackage?.price as number) *
-                (1 - (tourPackage?.discount as number) / 100)
-              ).toLocaleString()
-            )}
-          </Text>
-        ) : (
-          ""
-        )}
-        <Text
-          body2
-          bold
-          type={tourPackage.discount ? "primary" : "secondary"}
-          style={tourPackage?.discount ? { textDecorationLine: "line-through" } : {}}>
-          {localizeNumber(formatPrice(tourPackage?.price as number) as string)}
-        </Text>
-      </View>
-    );
+  const handleBottomSheet = p => {
+    if (session) {
+      if (isNgo) {
+        setIsVisiblePrevent(true);
+      } else {
+        dispatch(
+          setRedirectToScreenAfterLogin({
+            pathname: `tour/${tourId}`,
+            params: {
+              tourId: tourId,
+              name: tour.title,
+            },
+          })
+        );
+        handleNavigateToReserve(p);
+      }
+    }
+    if (!session) {
+      dispatch(
+        setRedirectToScreenAfterLogin({
+          pathname: `tour/${tourId}`,
+          params: {
+            tourId: tourId,
+            name: tour.title,
+          },
+        })
+      );
+      router.push("/user-login");
+    }
+  };
 
   return (
     <>
       <ButtonRow>
         <View>
           <Text>{tr("price per person")}</Text>
-          <View style={style.priceContainer}>{tourPrice}</View>
+          <View style={style.priceContainer}>
+            {tour?.packages?.[0].price <= 0 ? (
+              <Text bold>{tr("it is free")}</Text>
+            ) : (
+              <Text heading2 bold>
+                {localizeNumber(
+                  formatPrice(
+                    (+tour?.packages?.[0]?.price as number) *
+                      (1 - (tour?.packages?.[0]?.discount as number) / 100)
+                  ) as string
+                )}
+              </Text>
+            )}
+          </View>
         </View>
         <Button
           disabled={
@@ -98,7 +96,7 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
           {tr("Reserve")}
         </Button>
       </ButtonRow>
-
+{/* 
       <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
         {tour?.packages.map((p, index) => (
           <ListItem
@@ -118,7 +116,7 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
             </ListItem.Content>
           </ListItem>
         ))}
-      </BottomSheet>
+      </BottomSheet> */}
 
       <BottomSheet isVisible={isVisiblePrevent} onBackdropPress={() => setIsVisiblePrevent(false)}>
         <Container>
@@ -141,28 +139,9 @@ const BookTourBottomSheet = ({ tour }: { tour: TourQueryType }) => {
 
 const style = StyleSheet.create({
   priceContainer: {
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },
-  bottomStyle: {
-    flexDirection: "row",
-    display: "flex",
-    gap: 8,
-  },
-  priceNumber: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  left: {
-    flex: 1,
-  },
-  priceItem: (isRtl: boolean) => ({
-    width: "100%",
-    display: "flex",
-    justifyContent: "space-between",
-    flexDirection: isRtl ? "row-reverse" : "row",
-  }),
   rejectIcon: {
     width: 56,
     height: 56,

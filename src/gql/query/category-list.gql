@@ -10,6 +10,7 @@ query categoryList($page: PageType, $search: String) {
         large
         medium
         small
+        orginal
       }
     }
   }

@@ -12,6 +12,7 @@ query userDetail {
       large
       medium
       small
+      orginal
     }
     setting {
       language

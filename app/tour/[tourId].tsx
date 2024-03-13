@@ -6,16 +6,17 @@ import {
   AccommodationImageType,
   AccommodationQueryType,
 } from "@src/gql/generated";
-import { Badge, Text } from "@rneui/themed";
+import { Badge } from "@rneui/themed";
 import Container from "@atoms/container";
 import Map from "@modules/map/index.web";
 import WhiteSpace from "@atoms/white-space";
+import { Text, useTheme } from "@rneui/themed";
+import { AntDesign } from "@expo/vector-icons";
 import ContactCard from "@modules/contact-card";
 import ImageSlider from "@modules/image-slider";
 import TourComment from "@modules/tour/comment";
 import openMapHandler from "@src/helper/opem-map";
 import SimilarTours from "@modules/similar-tours";
-import useTranslation from "@src/hooks/translation";
 import TourFacilities from "@modules/tour/facilities";
 import TourBoldInfo from "@modules/tour/bold-features";
 import LoadingIndicator from "@modules/Loading-indicator";
@@ -24,11 +25,14 @@ import BookTourBottomSheet from "@modules/tour/book/bottomSheet";
 import ShareReportDropDown from "@modules/share-report-dropdown";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { useLocalSearchParams, useNavigation } from "expo-router";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 export default () => {
+  const { theme } = useTheme();
   const { tr } = useTranslation();
   const navigation = useNavigation();
   const { tourId } = useLocalSearchParams();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { loading, data } = useTourDetailQuery({
     variables: {
@@ -39,7 +43,7 @@ export default () => {
   const tourPackage = tour?.packages[0];
 
   navigation.setOptions({
-    title: data?.tourDetail?.title || tr("loading"),
+    title: localizeNumber(data?.tourDetail?.title as string),
     headerRight: () => <ShareReportDropDown />,
   });
 
@@ -55,9 +59,31 @@ export default () => {
 
         <View style={styles.titleContainer}>
           <View style={styles.infoContainer}>
-            <Text>{tour?.title}</Text>
+            <Text>{localizeNumber(tour?.title as string)}</Text>
             <Text>{(tour?.destination as AccommodationQueryType)?.address}</Text>
+            {tour?.rate?.avgRate && (
+              <View style={styles.rateBox}>
+                <Text>{`(${localizeNumber(tour?.rate.count as string)} ${tr(
+                  "opinion"
+                )}) ${localizeNumber(tour?.rate?.avgRate as string)}`}</Text>
+                <View style={styles.rateStars}>
+                  {new Array(5).fill("star").map((item, index) => (
+                    <AntDesign
+                      key={index}
+                      name="star"
+                      size={24}
+                      color={
+                        index < +(tour?.rate?.avgRate as string)
+                          ? theme.colors.warning
+                          : theme.colors.grey1
+                      }
+                    />
+                  ))}
+                </View>
+              </View>
+            )}
           </View>
+
           {tourPackage?.discount ? (
             <Badge
               color="primary"
@@ -69,8 +95,6 @@ export default () => {
           )}
         </View>
 
-        <WhiteSpace size={20} />
-
         <WhiteSpace size={10} />
         <TourBoldInfo
           endTime={tour?.endTime}
@@ -80,13 +104,14 @@ export default () => {
 
         <WhiteSpace size={20} />
 
-        <Text>{tr("Description")}</Text>
+        <Text bold>{tr("about the tour")}</Text>
+        <WhiteSpace size={4} />
         <Text>{tour?.description}</Text>
 
         <WhiteSpace size={20} />
 
-        <Text subtitle1>{tr("Tour Facilities")}</Text>
-
+        <Text bold>{tr("Tour Facilities")}</Text>
+        <WhiteSpace size={10} />
         <TourFacilities facilities={tour?.facilities as TourFacilityQueryType[]} />
 
         <WhiteSpace size={20} />
@@ -128,11 +153,11 @@ export default () => {
             </Pressable>
           </>
         )}
-        <WhiteSpace size={15} />
-        <Text subtitle1 bold>
-          پیشنهادی برای شما
-        </Text>
-        <WhiteSpace size={15} />
+        {(tour?.NGO.tourSet?.length as number) > 1 && (
+          <View style={{ paddingVertical: 15 }}>
+            <Text bold>پیشنهادی برای شما</Text>
+          </View>
+        )}
       </Container>
       <SimilarTours
         currentTourId={tour?.id as string}
@@ -157,6 +182,10 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 0,
   },
+  tourInf: {
+    gap: 4,
+    marginVertical: 20,
+  },
   gridRow: {
     display: "flex",
     flexDirection: "row",
@@ -166,5 +195,14 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
+  },
+  rateBox: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center",
+  },
+  rateStars: {
+    flexDirection: "row-reverse",
+    gap: 3,
   },
 });

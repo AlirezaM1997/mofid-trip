@@ -1,5 +1,6 @@
 import { router } from "expo-router";
 import Container from "@atoms/container";
+import { useDispatch } from "react-redux";
 import WhiteSpace from "@atoms/white-space";
 import { Feather } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
@@ -7,12 +8,21 @@ import { Pressable, StyleSheet } from "react-native";
 import { ProjectQueryType } from "@src/gql/generated";
 import { Card, Chip, Text, useTheme } from "@rneui/themed";
 import { getHostRequestStatusBadgeColor } from "@src/helper/host";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
 
 const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
   const { theme } = useTheme();
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
 
-  const navigateToHostDetail = () => router.push(`/host/management/${host.id}`);
+  const navigateToHostDetail = () => {
+    dispatch(
+      setRedirectToScreenAfterLogin({
+        pathname: "/host/management",
+      })
+    );
+    router.push(`/host/management/${host.id}`);
+  };
 
   return (
     <Pressable onPress={navigateToHostDetail}>
@@ -21,7 +31,7 @@ const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
           source={
             (host?.accommodation?.avatarS3?.length as number) > 0
               ? {
-                  uri: host?.accommodation?.avatarS3?.[0]?.medium,
+                  uri: host?.accommodation?.avatarS3?.[0]?.orginal,
                 }
               : require("@assets/image/defaultHost.svg")
           }
@@ -40,6 +50,8 @@ const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
         <Container size={10} style={styles.footer}>
           {host.statusStep?.name === "REQUEST" ? (
             <Chip
+              title={host?.statusStep.displayName as string}
+              color={getHostRequestStatusBadgeColor(host)}
               type="outline"
               color={getHostRequestStatusBadgeColor(host)}
               title={host?.statusStep.displayName as string}
@@ -58,11 +70,9 @@ const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
 };
 
 const styles = StyleSheet.create({
-  footer: { display: "flex", flexDirection: "row", justifyContent: "space-between" },
-  buttonContainer: {
-    display: "flex",
+  footer: {
     flexDirection: "row",
-    gap: 5,
+    justifyContent: "space-between",
   },
 });
 

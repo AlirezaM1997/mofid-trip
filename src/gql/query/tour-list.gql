@@ -8,6 +8,9 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
       startTime
       endTime
       statusActivation
+      rate {
+        avgRate
+      }
       NGO {
         id
         title
@@ -17,6 +20,9 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
           phoneNumber
           avatarS3 {
             small
+            medium
+            large
+            orginal
           }
         }
 
@@ -36,6 +42,7 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
                 large
                 medium
                 small
+                orginal
               }
             }
           }
@@ -71,6 +78,7 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
         medium
         large
         small
+        orginal
       }
     }
   }

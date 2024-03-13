@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import { Avatar, Colors, ListItem, ListItemProps, Text, useTheme } from "@rneui/themed";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { TourTransactionQueryType } from "@src/gql/generated";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { Avatar, Colors, ListItem, ListItemProps, Text, useTheme } from "@rneui/themed";
 
 type PropsType = ListItemProps & {
   transaction: TourTransactionQueryType;
@@ -20,7 +20,7 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
         title: tr("awaiting review"),
         color: "grey3",
       },
-      ACCEPT: transaction.status.isActive
+      ACCEPT: transaction?.status?.isActive
         ? {
             title: tr("accepted"),
             color: "success",
@@ -33,8 +33,12 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
         title: tr("success receipt"),
         color: "info",
       },
+      SUCCESSFUL: {
+        title: tr("finish the trip"),
+        color: "grey3",
+      },
     };
-    return lookup[transaction.status.step?.name];
+    return lookup[transaction?.status?.step?.name as string];
   };
 
   const step = getCurrentStep();
@@ -44,7 +48,7 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
     <>
       <ListItem bottomDivider containerStyle={style.ownerCard} {...props}>
         {avatar ? (
-          <Avatar rounded size={48} source={{ uri: transaction?.owner?.avatarS3?.small }} />
+          <Avatar rounded size={48} source={{ uri: transaction?.owner?.avatarS3?.small as string }} />
         ) : (
           <Avatar
             rounded
@@ -59,7 +63,7 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
         )}
 
         <ListItem.Content style={style.requestCardTextBox}>
-          <Text subtitle2>{localizeNumber(transaction.owner.fullname)}</Text>
+          <Text subtitle2>{localizeNumber(transaction?.owner?.fullname as string)}</Text>
           <Text type={step?.color}>{step?.title}</Text>
         </ListItem.Content>
         <Text caption style={style.moreDetail}>

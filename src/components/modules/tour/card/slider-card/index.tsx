@@ -6,12 +6,20 @@ import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import {
   AccommodationQueryType,
-  TourImageType,
+  RateType,
   TourPackageType,
   TourQueryType,
 } from "@src/gql/generated";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
-import { View, ImageBackground, StyleSheet, Pressable, Platform, ViewStyle } from "react-native";
+import {
+  View,
+  ImageBackground,
+  StyleSheet,
+  Pressable,
+  Platform,
+  ViewStyle,
+  ImageStyle,
+} from "react-native";
 import { WIDTH } from "@src/constants";
 import WhiteSpace from "@atoms/white-space";
 
@@ -21,13 +29,15 @@ type PropsType = {
   price: TourPackageType["price"];
   name: TourQueryType["title"];
   containerStyle?: ViewStyle;
-  avatarS3: TourImageType[];
+  avatarS3: TourQueryType["avatarS3"];
   id: TourQueryType["id"];
+  rate: RateType;
 };
 
 function TourSliderCard({
   id,
   name,
+  rate,
   price,
   address,
   avatarS3,
@@ -79,13 +89,15 @@ function TourSliderCard({
     );
 
   const avatar =
-    avatarS3?.length > 0 ? { uri: avatarS3?.[0].small } : require("@assets/image/defaultHost.svg");
+    (avatarS3?.length as number) > 0
+      ? { uri: avatarS3?.[0]?.orginal }
+      : require("@assets/image/defaultHost.svg");
 
   return (
     <Pressable style={[style.container, containerStyle]} onPress={handlePress}>
       <ImageBackground
         style={style.ImageBackground(isRtl)}
-        imageStyle={style.ImageBackgroundImage}
+        imageStyle={style.ImageBackgroundImage as ImageStyle}
         source={avatar}
       />
 
@@ -108,11 +120,12 @@ function TourSliderCard({
             </Text>
           </View>
         </View>
-
-        <View style={style.rate}>
-          <FontAwesome name="star" size={20} color={theme.colors.warning} />
-          <Text body2>{localizeNumber(4.9)}</Text>
-        </View>
+        {rate.avgRate && (
+          <View style={style.rate}>
+            <FontAwesome name="star" size={20} color={theme.colors.warning} />
+            <Text body2>{localizeNumber(rate.avgRate as string)}</Text>
+          </View>
+        )}
       </View>
 
       <WhiteSpace size={10} />
@@ -143,7 +156,7 @@ const style = StyleSheet.create({
       web: { boxShadow: "0 0 5px #12121233" },
     }),
   },
-  ImageBackground: isRtl => ({
+  ImageBackground: ((isRtl: boolean) => ({
     marginRight: isRtl ? 0 : 5,
     width: "100%",
     height: (WIDTH - 80) * 0.6116,
@@ -153,7 +166,7 @@ const style = StyleSheet.create({
     backgroundRepeat: "no-repeat",
     borderRadius: 16,
     marginBottom: 10,
-  }),
+  })) as ViewStyle,
   ImageBackgroundImage: {
     width: "100%",
     height: "100%",
@@ -176,7 +189,7 @@ const style = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 0,
     bottom: 0,
-    left: 10,
+    left: 8,
   },
   address: {
     flexDirection: "row",

@@ -1,13 +1,12 @@
-import React from "react";
-import { Text } from "@rneui/themed";
+import { Chip } from "@rneui/themed";
 import { RootState } from "@src/store";
 import { useSelector } from "react-redux";
-import WhiteSpace from "@atoms/white-space";
 import { StyleSheet, View } from "react-native";
-import useTranslation from "@src/hooks/translation";
-import { ProjectFacilityQueryType, SettingDetailType } from "@src/gql/generated";
+import { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { SettingDetailType, TourFacilityQueryType } from "@src/gql/generated";
 
-const Item = ({ facility }: { facility: ProjectFacilityQueryType }) => {
+const ProjectFacilities = ({ facilities }: { facilities: TourFacilityQueryType[] }) => {
+  const { localizeNumber } = useLocalizedNumberFormat();
   const { language } = useSelector(
     (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
   );
@@ -22,28 +21,19 @@ const Item = ({ facility }: { facility: ProjectFacilityQueryType }) => {
   };
 
   return (
-    <View style={style.itemContainer}>
-      <Text style={style.itemText}>{facility[facilitiesLanguage()]}</Text>
-    </View>
-  );
-};
-
-const ProjectFacilities = ({ facilities }: { facilities: ProjectFacilityQueryType[] }) => {
-  const { tr } = useTranslation();
-
-  if (!facilities || !facilities.length) return;
-
-  return (
-    <View>
-      <Text subtitle1 bold>
-        {tr("hosting facilities")}
-      </Text>
-      <WhiteSpace />
-      <View style={style.container}>
-        {facilities?.map((facility, index) => (
-          <Item key={index} facility={facility} />
-        ))}
-      </View>
+    <View style={style.container}>
+      {facilities?.map((facility, index) => {
+        return (
+          <Chip
+            key={index}
+            type="outline"
+            titleStyle={style.titleStyle}
+            buttonStyle={style.buttonStyle}
+            containerStyle={style.containerStyle}
+            title={localizeNumber(facility[facilitiesLanguage()])}
+          />
+        );
+      })}
     </View>
   );
 };
@@ -51,23 +41,20 @@ const ProjectFacilities = ({ facilities }: { facilities: ProjectFacilityQueryTyp
 const style = StyleSheet.create({
   container: {
     gap: 8,
-    display: "flex",
     flexWrap: "wrap",
     flexDirection: "row",
   },
-  itemContainer: {
-    minHeight: 32,
+  buttonStyle: {
+    padding: 2,
+    borderWidth: 0,
     borderRadius: 6,
-    display: "flex",
-    maxWidth: "100%",
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#F3F3F3",
   },
-  itemText: {
-    color: "#101010",
-    paddingVertical: 3,
-    paddingHorizontal: 12,
+  titleStyle: {textAlign:'right' ,color: "#101010" },
+  containerStyle: {
+    borderRadius: 0,
+    maxWidth: "100%",
   },
 });
+
 export default ProjectFacilities;

@@ -8,7 +8,7 @@ import StepBaseButtons from "./stepBaseButtons";
 import { useLocalSearchParams } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import { ScrollView } from "react-native-gesture-handler";
-import { TourTransactionQueryType } from "@src/gql/generated";
+import { TourPackageType, TourQueryType, TourTransactionQueryType } from "@src/gql/generated";
 import Invoice from "@modules/tour/transaction/detail/invoice";
 import CancelTransaction from "@modules/tour/transaction/cancle";
 import TransactionDetailCard from "@modules/tour/transaction/detail/card";
@@ -50,7 +50,7 @@ const TourTransactionDetail = ({transactionDetail}:{ transactionDetail:TourTrans
 
         <Stepper activeStep={activeStep()} isActive={status?.isActive as boolean} steps={steps} />
 
-        <TransactionDetailCard tourPackage={tourPackage} />
+        <TransactionDetailCard tour={tourPackage?.tour as TourQueryType} />
       </Container>
 
       <PaymentStep status={status} destination={tourPackage?.tour?.destination} />

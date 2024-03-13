@@ -1,3 +1,9 @@
+import {
+  AccommodationQueryType,
+  RateType,
+  TourQueryType,
+  useTourListQuery,
+} from "@src/gql/generated";
 import React from "react";
 import { router } from "expo-router";
 import Container from "@atoms/container";
@@ -6,7 +12,6 @@ import useTranslation from "@src/hooks/translation";
 import TitleWithAction from "@modules/title-with-action";
 import TourSliderCard from "@modules/tour/card/slider-card";
 import { ScrollView, View, StyleSheet } from "react-native";
-import { AccommodationQueryType, TourImageType, useTourListQuery } from "@src/gql/generated";
 
 function TourList() {
   const { tr } = useTranslation();
@@ -53,9 +58,10 @@ function TourList() {
                     key={index}
                     id={tour?.id as string}
                     name={tour?.title as string}
-                    avatarS3={tour?.avatarS3 as TourImageType[]}
+                    rate={tour?.rate as RateType}
                     price={tour?.packages?.[0]?.price as number}
                     discount={tour?.packages?.[0]?.discount as number}
+                    avatarS3={tour?.avatarS3 as TourQueryType["avatarS3"]}
                     address={
                       (tour?.destination as AccommodationQueryType)?.address || tr("No Address")
                     }

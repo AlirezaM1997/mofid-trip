@@ -11,10 +11,10 @@ import Input from "@atoms/input";
 import moment from "jalali-moment";
 import Container from "@atoms/container";
 import WhiteSpace from "@atoms/white-space";
-import { Text, useTheme } from "@rneui/themed";
 import Toast from "react-native-toast-message";
 import { HEIGHT, WIDTH } from "@src/constants";
 import React, { useState, useEffect } from "react";
+import { Colors, Text, useTheme } from "@rneui/themed";
 import LoadingIndicator from "@modules/Loading-indicator";
 import ReportComment from "@modules/report/report-comment";
 import { useLocalSearchParams, useNavigation } from "expo-router";
@@ -24,30 +24,22 @@ import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
 import { ScrollView, StyleSheet, View, Platform, ViewStyle } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
-const TourCommentReplay = () => {
-  const { tr } = useTranslation();
+const HostCommentReplay = () => {
   const { theme } = useTheme();
+  const { tr } = useTranslation();
+  const navigation = useNavigation();
   const { localizeNumber } = useLocalizedNumberFormat();
   const { projectId, commentId } = useLocalSearchParams();
-  const navigation = useNavigation();
-
   const [value, setValue] = useState<string>("");
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-
-  const handleOpen = () => setIsVisible(!isVisible);
-  const handleClose = () => setIsVisible(false);
-
+  const [isVisible, setIsVisible] = useState<boolean>(false);  
+  const [likeAdd] = useLikeAddMutation();
+  const [commentAdd] = useCommentAddMutation();
   const { loading, data, refetch } = useHostCommentQuery({
     variables: { pk: projectId as string },
   });
-  const [likeAdd] = useLikeAddMutation();
-  const [commentAdd] = useCommentAddMutation();
 
-  if (loading && !data) return <LoadingIndicator />;
-
-  navigation.setOptions({ title: `${tr("comments of")} ${data?.projectDetail?.name}` });
-
-  const comment = data?.projectDetail?.commentSet?.find(comment => comment?.id === commentId);
+  const handleClose = () => setIsVisible(false);
+  const handleOpen = () => setIsVisible(!isVisible);
 
   const handleLike = async () => {
     const { data } = await likeAdd({
@@ -106,6 +98,12 @@ const TourCommentReplay = () => {
     return () => window.removeEventListener("click", handleClose);
   }, []);
 
+  if (loading && !data) return <LoadingIndicator />;
+
+  navigation.setOptions({ title: `${tr("comments of")} ${data?.projectDetail?.name}` });
+
+  const comment = data?.projectDetail?.commentSet?.find(comment => comment?.id === commentId);
+
   return (
     <BottomButtonLayout
       contentContainerStyle={styles.bottomButtonLayout}
@@ -147,7 +145,7 @@ const TourCommentReplay = () => {
                 />
                 <View style={styles.backDrop(isVisible)}>
                   <View style={styles.dropDown}>
-                    <ReportComment closeDropDown={handleClose} id={comment?.id} />
+                    <ReportComment closeDropDown={handleClose} id={comment?.id as string} />
                   </View>
                 </View>
               </View>
@@ -216,7 +214,7 @@ const styles = StyleSheet.create({
   sendIcon: { transform: [{ rotateZ: "180deg" }] },
   containerStyle: { gap: 16 },
   headerComment: { paddingVertical: 24, gap: 16 },
-  comment: ((theme: { colors: { grey0: string } }) => ({
+  comment: ((theme: { colors: { grey0: keyof Colors } }) => ({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
@@ -259,4 +257,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TourCommentReplay;
+export default HostCommentReplay;
