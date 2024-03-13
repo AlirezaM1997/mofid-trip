@@ -26,7 +26,7 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
 
   const handlePress = () => {
     router.push({
-      pathname: `/host/${id}`,
+      pathname: `/host/${id}/`,
       params: {
         id: id,
         name: name,

@@ -4,7 +4,7 @@ import {
   ProjectQueryType,
   useProjectDetailQuery,
 } from "@src/gql/generated";
-import { Text } from "@rneui/themed";
+import { Badge, Text } from "@rneui/themed";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import HostComment from "@modules/host/comment";
@@ -46,12 +46,12 @@ const Page: React.FC = ({ ...props }) => {
     }
   }, [loading, data]);
 
-  if (loading) return <LoadingIndicator />;
-
   navigation.setOptions({
-    title: data?.projectDetail?.name,
+    title: data?.projectDetail?.name || tr("loading"),
     headerRight: () => <ShareReportDropDown />,
   });
+
+  if (loading) return <LoadingIndicator />;
 
   const {
     name,
@@ -59,6 +59,7 @@ const Page: React.FC = ({ ...props }) => {
     creator,
     dateEnd,
     capacity,
+    discount,
     dateStart,
     categories,
     facilities,
@@ -75,9 +76,16 @@ const Page: React.FC = ({ ...props }) => {
 
           <ProjectTags tags={tags ?? []} />
 
-          <View style={style.infoContainer}>
-            <Text heading2>{name}</Text>
-            <Text caption>{accommodation?.address}</Text>
+          <View style={style.titleContainer}>
+            <View style={style.infoContainer}>
+              <Text heading2>{name}</Text>
+              <Text caption>{accommodation?.address}</Text>
+            </View>
+            {discount ? (
+              <Badge color="primary" value={`%${discount} تخفیف`} badgeStyle={style.badgeStyle} />
+            ) : (
+              ""
+            )}
           </View>
 
           <ProjectBoldFeatures
@@ -145,6 +153,15 @@ const Page: React.FC = ({ ...props }) => {
   );
 };
 const style = StyleSheet.create({
+  titleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  badgeStyle: {
+    borderRadius: 100,
+    borderWidth: 0,
+  },
   scrollView: {
     flex: 1,
     paddingBottom: 16,

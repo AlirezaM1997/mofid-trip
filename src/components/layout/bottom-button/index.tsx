@@ -48,11 +48,12 @@ const styles = {
   },
   buttonContainer: theme => ({
     gap: 10,
-    padding: 10,
     width: "100%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 24,
     backgroundColor: theme.colors.white,
   }),
   button: {

@@ -79,7 +79,7 @@ const MahdiehIranScreen = () => {
         <TitleWithAction
           size="caption"
           color="grey3"
-          title={tr("all hosts of")}
+          title={tr("all hosts")}
           actionTitle={`${data?.projectList?.count?.toString()} ${tr("host")}`}
         />
         <WhiteSpace size={16} />
@@ -88,12 +88,13 @@ const MahdiehIranScreen = () => {
           {data?.projectList?.data?.map(project => (
             <HostSliderCard
               key={project?.id}
-              id={project?.id as string}
               name={project?.name}
+              price={project?.price}
+              id={project?.id as string}
+              discount={project?.discount}
               containerStyle={{ width: 325 }}
               address={project?.accommodation?.address}
               avatarS3={project?.accommodation?.avatarS3}
-              price={((project?.price as number) * (100 - (project?.discount as number))) / 100}
             />
           ))}
         </View>

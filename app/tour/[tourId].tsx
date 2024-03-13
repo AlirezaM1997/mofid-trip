@@ -1,13 +1,12 @@
 import {
+  TourQueryType,
+  TourImageType,
+  useTourDetailQuery,
+  TourFacilityQueryType,
   AccommodationImageType,
   AccommodationQueryType,
-  TourFacilityQueryType,
-  TourImageType,
-  TourQueryType,
-  useTourDetailQuery,
 } from "@src/gql/generated";
-import moment from "jalali-moment";
-import { Text } from "@rneui/themed";
+import { Badge, Text } from "@rneui/themed";
 import Container from "@atoms/container";
 import Map from "@modules/map/index.web";
 import WhiteSpace from "@atoms/white-space";
@@ -16,21 +15,20 @@ import ImageSlider from "@modules/image-slider";
 import TourComment from "@modules/tour/comment";
 import openMapHandler from "@src/helper/opem-map";
 import SimilarTours from "@modules/similar-tours";
+import useTranslation from "@src/hooks/translation";
 import TourFacilities from "@modules/tour/facilities";
+import TourBoldInfo from "@modules/tour/bold-features";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { Pressable, StyleSheet, View } from "react-native";
 import BookTourBottomSheet from "@modules/tour/book/bottomSheet";
 import ShareReportDropDown from "@modules/share-report-dropdown";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import TourBoldInfo from "@modules/tour/bold-features";
 
 export default () => {
   const { tr } = useTranslation();
   const navigation = useNavigation();
   const { tourId } = useLocalSearchParams();
-  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { loading, data } = useTourDetailQuery({
     variables: {
@@ -38,12 +36,14 @@ export default () => {
     },
   });
   const tour = data?.tourDetail;
+  const tourPackage = tour?.packages[0];
 
-  if (loading && !tour) return <LoadingIndicator />;
   navigation.setOptions({
-    title: data?.tourDetail?.title,
+    title: data?.tourDetail?.title || tr("loading"),
     headerRight: () => <ShareReportDropDown />,
   });
+
+  if (loading && !tour) return <LoadingIndicator />;
 
   return (
     <BottomButtonLayout buttons={[<BookTourBottomSheet tour={tour as TourQueryType} />]}>
@@ -53,8 +53,21 @@ export default () => {
 
         <WhiteSpace size={20} />
 
-        <Text>{tour?.title}</Text>
-        <Text>{(tour?.destination as AccommodationQueryType)?.address}</Text>
+        <View style={styles.titleContainer}>
+          <View style={styles.infoContainer}>
+            <Text>{tour?.title}</Text>
+            <Text>{(tour?.destination as AccommodationQueryType)?.address}</Text>
+          </View>
+          {tourPackage?.discount ? (
+            <Badge
+              color="primary"
+              value={`%${tourPackage.discount} تخفیف`}
+              badgeStyle={styles.badgeStyle}
+            />
+          ) : (
+            ""
+          )}
+        </View>
 
         <WhiteSpace size={20} />
 
@@ -78,7 +91,7 @@ export default () => {
 
         <WhiteSpace size={20} />
 
-        <ContactCard user={tour?.NGO.user} />
+        <ContactCard user={tour?.NGO} />
 
         <WhiteSpace size={20} />
 
@@ -132,6 +145,18 @@ export default () => {
 };
 
 const styles = StyleSheet.create({
+  titleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  infoContainer: {
+    gap: 5,
+  },
+  badgeStyle: {
+    borderRadius: 100,
+    borderWidth: 0,
+  },
   gridRow: {
     display: "flex",
     flexDirection: "row",

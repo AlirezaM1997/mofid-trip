@@ -28,7 +28,7 @@ const OriginTab = () => {
         onChangeText={handleChange("origin.address")}
         onBlur={handleBlur("origin.address")}
         value={values?.origin?.address}
-        errorMessage={touched?.origin?.address && (errors?.origin?.address as string)}
+        errorMessage={(touched?.origin?.address && errors?.origin?.address) as string}
       />
       <Field latName="origin.lat" lngName="origin.lng" component={LocationPicker} />
     </>

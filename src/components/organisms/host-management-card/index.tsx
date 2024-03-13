@@ -4,9 +4,9 @@ import WhiteSpace from "@atoms/white-space";
 import { Feather } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
 import { Pressable, StyleSheet } from "react-native";
+import { ProjectQueryType } from "@src/gql/generated";
 import { Card, Chip, Text, useTheme } from "@rneui/themed";
 import { getHostRequestStatusBadgeColor } from "@src/helper/host";
-import { ProjectQueryType } from "@src/gql/generated";
 
 const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
   const { theme } = useTheme();
@@ -40,9 +40,9 @@ const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
         <Container size={10} style={styles.footer}>
           {host.statusStep?.name === "REQUEST" ? (
             <Chip
-              title={host?.statusStep.displayName}
-              color={getHostRequestStatusBadgeColor(host)}
               type="outline"
+              color={getHostRequestStatusBadgeColor(host)}
+              title={host?.statusStep.displayName as string}
             />
           ) : (
             <>

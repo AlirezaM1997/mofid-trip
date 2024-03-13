@@ -1,10 +1,11 @@
 import React from "react";
 import { Text } from "@rneui/themed";
+import { RootState } from "@src/store";
+import { useSelector } from "react-redux";
+import WhiteSpace from "@atoms/white-space";
 import { StyleSheet, View } from "react-native";
 import useTranslation from "@src/hooks/translation";
 import { ProjectFacilityQueryType, SettingDetailType } from "@src/gql/generated";
-import { useSelector } from "react-redux";
-import { RootState } from "@src/store";
 
 const Item = ({ facility }: { facility: ProjectFacilityQueryType }) => {
   const { language } = useSelector(
@@ -13,9 +14,9 @@ const Item = ({ facility }: { facility: ProjectFacilityQueryType }) => {
 
   const facilitiesLanguage = () => {
     const lookup: Record<string, string> = {
+      AR: "arName",
       EN_US: "enName",
       FA_IR: "faName",
-      AR: "arName",
     };
     return lookup[language];
   };
@@ -33,32 +34,39 @@ const ProjectFacilities = ({ facilities }: { facilities: ProjectFacilityQueryTyp
   if (!facilities || !facilities.length) return;
 
   return (
-    <View style={style.container}>
-      <Text subtitle1>{tr("hosting facilities")}</Text>
-      {facilities?.map((facility, index) => (
-        <Item key={index} facility={facility} />
-      ))}
+    <View>
+      <Text subtitle1 bold>
+        {tr("hosting facilities")}
+      </Text>
+      <WhiteSpace />
+      <View style={style.container}>
+        {facilities?.map((facility, index) => (
+          <Item key={index} facility={facility} />
+        ))}
+      </View>
     </View>
   );
 };
 
 const style = StyleSheet.create({
   container: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
     gap: 8,
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "row",
   },
   itemContainer: {
-    backgroundColor: "#F3F3F3",
-    height: 32,
+    minHeight: 32,
+    borderRadius: 6,
     display: "flex",
+    maxWidth: "100%",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 6,
+    backgroundColor: "#F3F3F3",
   },
   itemText: {
     color: "#101010",
+    paddingVertical: 3,
     paddingHorizontal: 12,
   },
 });

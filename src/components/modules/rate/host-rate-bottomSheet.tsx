@@ -101,7 +101,7 @@ const HostRateBottomSheet = ({
             />
             <View style={styles.valueOfSlider}>
               {[0, 1, 2, 3, 4, 5].map(n => (
-                <Text caption type={value === 0 ? "grey2" : "black"} style={{ width: 10 }}>
+                <Text key={n} caption type={value === 0 ? "grey2" : "black"} style={{ width: 10 }}>
                   {localizeNumber(n)}
                 </Text>
               ))}

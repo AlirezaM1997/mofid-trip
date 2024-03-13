@@ -68,6 +68,7 @@ const ShareBottomsheet = ({
       type: "success",
       text1: tr("copied"),
     });
+    handleClose();
   };
 
   return (

@@ -36,7 +36,7 @@ const TourCreateForm = ({
 
   const { values } = useFormikContext<TourAddInputType>();
 
-  const { title, description, capacity, startTime, endTime, price } = values;
+  const { title, description, capacity, startTime, endTime, price, discount } = values;
   const { address, city, province, lat, lng } = values.destination;
   const { address: originAddress, lat: originLat, lng: originLng } = values.origin;
 
@@ -48,7 +48,10 @@ const TourCreateForm = ({
     if (activeStep === 4 && (!address || !province || !city || !lat || !lng))
       return setIsButtonDisabled(true);
     if (activeStep === 5 && (!startTime || !endTime)) return setIsButtonDisabled(true);
-    if (activeStep === 6 && ["", null, undefined].includes(price?.toString()))
+    if (
+      (activeStep === 6 && ["", null, undefined].includes(price?.toString())) ||
+      +(discount as number) > 100
+    )
       return setIsButtonDisabled(true);
     return setIsButtonDisabled(false);
   }, [values, activeStep]);
@@ -115,9 +118,9 @@ const TourCreateForm = ({
 
 const styles = StyleSheet.create({
   rejectIcon: {
-    margin: "auto",
     width: 56,
     height: 56,
+    margin: "auto",
   },
 });
 

@@ -1,6 +1,5 @@
 import {
   TourTransactionQueryType,
-  MyNgoDetailTourTransactionSetQuery,
   useMyNgoDetailTourTransactionSetQuery,
 } from "@src/gql/generated";
 import { Text } from "@rneui/themed";
@@ -31,8 +30,7 @@ const RequestScreen = () => {
     notifyOnNetworkStatusChange: true,
   });
 
-  const [transactionSet, setTransactionSet] =
-    useState<MyNgoDetailTourTransactionSetQuery["NGODetail"]["tourTransactionSet"]>();
+  const [transactionSet, setTransactionSet] = useState<TourTransactionQueryType[]>();
 
   const handleRequestPress = (transaction: TourTransactionQueryType) => {
     setSelectedTransaction(transaction);
@@ -48,7 +46,9 @@ const RequestScreen = () => {
   useEffect(() => {
     if (!loading && data) {
       setTransactionSet(
-        data?.NGODetail?.tourTransactionSet?.filter(tr => tr?.tourPackage?.tour?.id === tourId)
+        (data?.NGODetail?.tourTransactionSet as TourTransactionQueryType[])?.filter(
+          tr => tr?.tourPackage?.tour?.id === tourId
+        )
       );
     }
   }, [loading, data]);
@@ -81,11 +81,11 @@ const RequestScreen = () => {
         </ScrollView>
       </Container>
       <RequestListBottomSheet
-        isVisible={isVisible}
-        onBackdropPress={handleClose}
-        handleClose={handleClose}
-        transaction={selectedTransaction}
         refetch={refetch}
+        isVisible={isVisible}
+        handleClose={handleClose}
+        onBackdropPress={handleClose}
+        transaction={selectedTransaction as TourTransactionQueryType}
       />
     </>
   );
