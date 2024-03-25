@@ -6,7 +6,6 @@ import { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { SettingDetailType, TourFacilityQueryType } from "@src/gql/generated";
 
 const ProjectFacilities = ({ facilities }: { facilities: TourFacilityQueryType[] }) => {
-
   const { localizeNumber } = useLocalizedNumberFormat();
   const { language } = useSelector(
     (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
@@ -46,12 +45,18 @@ const style = StyleSheet.create({
     flexDirection: "row",
   },
   buttonStyle: {
-    padding:2,
+    padding: 2,
     borderWidth: 0,
     borderRadius: 6,
     backgroundColor: "#F3F3F3",
   },
-  titleStyle: { color: "#101010" },
+  titleStyle: {
+    color: "#101010",
+    maxWidth: 300,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
   containerStyle: {
     borderRadius: 0,
   },
