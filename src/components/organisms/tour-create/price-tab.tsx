@@ -52,7 +52,7 @@ const PriceTab = () => {
         keyboardType="numeric"
         onBlur={handleBlur("price")}
         label={tr("Price") + " (" + tr("Tooman") + ")"}
-        value={values.price?.toString()}
+        value={parseText(values.price?.toString().replace(/^0+/, ""))}
         errorMessage={(touched.price && errors.price) as string}
         onChangeText={price => setFieldValue("price", parseText(price))}
       />
