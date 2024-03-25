@@ -10,7 +10,7 @@ import {
   TourPackageType,
   TourQueryType,
 } from "@src/gql/generated";
-import { Feather, FontAwesome } from "@expo/vector-icons";
+import { Feather, FontAwesome, EvilIcons } from "@expo/vector-icons";
 import {
   View,
   ImageBackground,
