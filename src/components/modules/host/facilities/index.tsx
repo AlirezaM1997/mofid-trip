@@ -13,9 +13,9 @@ const ProjectFacilities = ({ facilities }: { facilities: TourFacilityQueryType[]
 
   const facilitiesLanguage = () => {
     const lookup: Record<string, string> = {
+      AR: "arName",
       EN_US: "enName",
       FA_IR: "faName",
-      AR: "arName",
     };
     return lookup[language];
   };
@@ -26,11 +26,11 @@ const ProjectFacilities = ({ facilities }: { facilities: TourFacilityQueryType[]
         return (
           <Chip
             key={index}
-            title={localizeNumber(facility[facilitiesLanguage()])}
             type="outline"
-            buttonStyle={style.buttonStyle}
             titleStyle={style.titleStyle}
+            buttonStyle={style.buttonStyle}
             containerStyle={style.containerStyle}
+            title={localizeNumber(facility[facilitiesLanguage()])}
           />
         );
       })}
@@ -50,15 +50,10 @@ const style = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: "#F3F3F3",
   },
-  titleStyle: {
-    color: "#101010",
-    maxWidth: 300,
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  },
+  titleStyle: {textAlign:'right' ,color: "#101010" },
   containerStyle: {
     borderRadius: 0,
+    maxWidth: "100%",
   },
 });
 

@@ -59,7 +59,7 @@ const Item = ({ project }: ItemPropsType) => {
 
 const SimilarProjects = ({ projects, currentProjectId }: PropsType) => {
   const handlePress = (project: ProjectQueryType) =>
-    router.push({ pathname: `/host/${project.id}`, params: { name: project.name } });
+    router.push({ pathname: `/host/${project.id}/`, params: { name: project.name } });
 
   return (
     <>

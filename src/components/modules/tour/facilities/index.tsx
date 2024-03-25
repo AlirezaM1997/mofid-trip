@@ -6,7 +6,6 @@ import { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { SettingDetailType, TourFacilityQueryType } from "@src/gql/generated";
 
 const TourFacilities = ({ facilities }: { facilities: TourFacilityQueryType[] }) => {
-
   const { localizeNumber } = useLocalizedNumberFormat();
   const { language } = useSelector(
     (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
@@ -27,11 +26,11 @@ const TourFacilities = ({ facilities }: { facilities: TourFacilityQueryType[] })
         return (
           <Chip
             key={index}
-            title={localizeNumber(facility[facilitiesLanguage()] as string)}
             type="outline"
-            buttonStyle={style.buttonStyle}
             titleStyle={style.titleStyle}
+            buttonStyle={style.buttonStyle}
             containerStyle={style.containerStyle}
+            title={localizeNumber(facility[facilitiesLanguage()] as string)}
           />
         );
       })}
@@ -41,7 +40,8 @@ const TourFacilities = ({ facilities }: { facilities: TourFacilityQueryType[] })
 
 const style = StyleSheet.create({
   container: {
-    gap: 8,
+    gap: 5,
+    display: "flex",
     flexWrap: "wrap",
     flexDirection: "row",
   },
@@ -50,9 +50,10 @@ const style = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: "#F3F3F3",
   },
-  titleStyle: { color: "#101010" },
+  titleStyle: { color: "#101010", textAlign: "right", paddingVertical: 2 },
   containerStyle: {
     borderRadius: 0,
+    maxWidth: "100%",
   },
 });
 

@@ -9,25 +9,36 @@ import {
 } from "react-native";
 import React from "react";
 import { router } from "expo-router";
-import { Text } from "@rneui/themed";
+import { Badge, Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import { Divider, useTheme } from "@rneui/themed";
 import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import { EvilIcons, Feather, FontAwesome } from "@expo/vector-icons";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { AccommodationQueryType, ProjectQueryType, RateType } from "@src/gql/generated";
+import WhiteSpace from "@atoms/white-space";
 
 type PropsType = {
   avatarS3: AccommodationQueryType["avatarS3"];
   address: AccommodationQueryType["address"];
+  discount: ProjectQueryType["discount"];
   price: ProjectQueryType["price"];
   name: ProjectQueryType["name"];
   id: ProjectQueryType["id"];
-  rate: RateType;
   containerStyle?: ViewStyle;
+  rate: RateType;
 };
 
-function HostSliderCard({ price, id, name, rate, avatarS3, address, containerStyle }: PropsType) {
+function HostSliderCard({
+  id,
+  rate,
+  name,
+  price,
+  address,
+  avatarS3,
+  discount,
+  containerStyle,
+}: PropsType) {
   const isRtl = useIsRtl();
   const { theme } = useTheme();
   const { tr } = useTranslation();
@@ -36,13 +47,41 @@ function HostSliderCard({ price, id, name, rate, avatarS3, address, containerSty
 
   const handlePress = () => {
     router.push({
-      pathname: `/host/${id}`,
+      pathname: `/host/${id}/`,
       params: {
         id: id,
         name: name,
       },
     });
   };
+
+  const hostPrice =
+    (price as number) <= 0 ? (
+      <Text body2 bold>
+        {tr("it is free")}
+      </Text>
+    ) : (
+      <>
+        <View style={style.bottomStyle}>
+          {discount ? (
+            <Text body2 bold>
+              {localizeNumber(
+                ((price as number) * (1 - (discount as number) / 100)).toLocaleString()
+              )}
+            </Text>
+          ) : (
+            ""
+          )}
+          <Text
+            body2
+            bold
+            type={discount ? "primary" : "secondary"}
+            style={discount ? { textDecorationLine: "line-through" } : {}}>
+            {localizeNumber(formatPrice(price as number) as string)}
+          </Text>
+        </View>
+      </>
+    );
 
   const avatar =
     (avatarS3?.length as number) > 0
@@ -56,45 +95,39 @@ function HostSliderCard({ price, id, name, rate, avatarS3, address, containerSty
         imageStyle={style.ImageBackgroundImage as ImageStyle}
         source={avatar}
       />
+
+      {discount ? (
+        <Badge color="primary" value={`%${discount} تخفیف`} badgeStyle={style.badgeStyle} />
+      ) : (
+        ""
+      )}
+
       <View style={style.top}>
-        <View style={style.top2}>
+        <View>
           <Text bold numberOfLines={1}>
             {name}
           </Text>
-          {rate.avgRate && (
-            <View style={style.rate}>
-              <FontAwesome name="star" size={20} color={theme.colors.warning} />
-              <Text body2>{localizeNumber(rate.avgRate as string)}</Text>
-            </View>
-          )}
+          <WhiteSpace size={6} />
+          <View style={style.address}>
+            <EvilIcons name="location" size={18} color={theme.colors.black} />
+            <Text caption numberOfLines={1} type="grey3">
+              {address}
+            </Text>
+          </View>
         </View>
-        <View style={style.address}>
-          <EvilIcons name="location" size={18} color={theme.colors.black} />
-          <Text caption numberOfLines={1} type="grey3">
-            {address}
-          </Text>
-        </View>
+        {rate.avgRate && (
+          <View style={style.rate}>
+            <FontAwesome name="star" size={20} color={theme.colors.warning} />
+            <Text body2>{localizeNumber(rate.avgRate as string)}</Text>
+          </View>
+        )}
       </View>
 
+      <WhiteSpace size={10} />
       <Divider />
 
       <View style={style.bottom}>
-        {(price as number) <= 0 ? (
-          <Text body2 bold>
-            {tr("it is free")}
-          </Text>
-        ) : (
-          <>
-            <View style={style.bottomStyle}>
-              <Text body2 bold>
-                {localizeNumber(formatPrice(price as number) as string)}
-              </Text>
-              <Text body2 bold>
-                / {tr("night")}
-              </Text>
-            </View>
-          </>
-        )}
+        {hostPrice}
         <Feather
           name={isRtl ? "chevron-left" : "chevron-right"}
           size={18}
@@ -118,6 +151,13 @@ const style = StyleSheet.create({
       web: { boxShadow: "0 0 5px #12121233" },
     }),
   },
+  badgeStyle: {
+    position: "absolute",
+    borderRadius: 100,
+    borderWidth: 0,
+    bottom: 0,
+    left: 8,
+  },
   ImageBackground: ((isRtl: boolean) => ({
     marginRight: isRtl ? 0 : 5,
     width: "100%",
@@ -135,9 +175,6 @@ const style = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
-  top: {
-    paddingHorizontal: 10,
-  },
   bottom: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -150,21 +187,22 @@ const style = StyleSheet.create({
     alignItems: "center",
   },
   address: {
-    flexDirection: "row",
     gap: 2,
-    marginVertical: 12,
+    width: 204,
+    flexDirection: "row",
     alignItems: "center",
   },
-  top2: {
+  top: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-end",
     justifyContent: "space-between",
+    paddingHorizontal: 10,
   },
   bottomStyle: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 2,
+    gap: 8,
   },
 });
 

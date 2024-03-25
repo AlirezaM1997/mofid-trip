@@ -53,6 +53,8 @@ const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
               title={host?.statusStep.displayName as string}
               color={getHostRequestStatusBadgeColor(host)}
               type="outline"
+              color={getHostRequestStatusBadgeColor(host)}
+              title={host?.statusStep.displayName as string}
             />
           ) : (
             <>

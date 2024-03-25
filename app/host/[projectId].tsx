@@ -4,6 +4,7 @@ import {
   ProjectQueryType,
   useProjectDetailQuery,
 } from "@src/gql/generated";
+import { Badge } from "@rneui/themed";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Text, useTheme } from "@rneui/themed";
@@ -50,12 +51,12 @@ const Page: React.FC = ({ ...props }) => {
     }
   }, [loading, data]);
 
-  if (loading) return <LoadingIndicator />;
-
   navigation.setOptions({
     title: localizeNumber(data?.projectDetail?.name as string),
     headerRight: () => <ShareReportDropDown />,
   });
+
+  if (loading) return <LoadingIndicator />;
 
   const {
     name,
@@ -64,6 +65,7 @@ const Page: React.FC = ({ ...props }) => {
     creator,
     dateEnd,
     capacity,
+    discount,
     dateStart,
     categories,
     facilities,
@@ -80,31 +82,36 @@ const Page: React.FC = ({ ...props }) => {
 
           <ProjectTags tags={tags ?? []} />
 
-          <View style={style.infoContainer}>
-            <Text heading2 bold>
-              {localizeNumber(name as string)}
-            </Text>
-            <Text>{localizeNumber(accommodation?.address as string)}</Text>
-            {rate?.avgRate && (
-              <View style={style.rateBox}>
-                <Text>{`(${localizeNumber(rate.count as string)} ${tr("opinion")}) ${localizeNumber(
-                  rate?.avgRate as string
-                )}`}</Text>
-                <View style={style.rateStars}>
-                  {new Array(5).fill("star").map((item, index) => (
-                    <AntDesign
-                      key={index}
-                      name="star"
-                      size={24}
-                      color={
-                        index < +(rate?.avgRate as string)
-                          ? theme.colors.warning
-                          : theme.colors.grey1
-                      }
-                    />
-                  ))}
+          <View style={style.titleContainer}>
+            <View style={style.infoContainer}>
+              <Text heading2> {localizeNumber(name as string)}</Text>
+              <Text caption>{localizeNumber(accommodation?.address as string)}</Text>
+              {rate?.avgRate && (
+                <View style={style.rateBox}>
+                  <Text>{`(${localizeNumber(rate.count as string)} ${tr(
+                    "opinion"
+                  )}) ${localizeNumber(rate?.avgRate as string)}`}</Text>
+                  <View style={style.rateStars}>
+                    {new Array(5).fill("star").map((item, index) => (
+                      <AntDesign
+                        key={index}
+                        name="star"
+                        size={24}
+                        color={
+                          index < +(rate?.avgRate as string)
+                            ? theme.colors.warning
+                            : theme.colors.grey1
+                        }
+                      />
+                    ))}
+                  </View>
                 </View>
-              </View>
+              )}
+            </View>
+            {discount ? (
+              <Badge color="primary" value={`%${discount} تخفیف`} badgeStyle={style.badgeStyle} />
+            ) : (
+              ""
             )}
           </View>
 
@@ -173,6 +180,15 @@ const Page: React.FC = ({ ...props }) => {
   );
 };
 const style = StyleSheet.create({
+  titleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  badgeStyle: {
+    borderRadius: 100,
+    borderWidth: 0,
+  },
   scrollView: {
     flex: 1,
     paddingBottom: 16,

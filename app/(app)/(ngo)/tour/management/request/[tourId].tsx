@@ -72,11 +72,11 @@ const RequestScreen = () => {
         </ScrollView>
       </Container>
       <RequestListBottomSheet
-        isVisible={isVisible}
-        onBackdropPress={handleClose}
-        handleClose={handleClose}
-        transaction={selectedTransaction}
         refetch={refetch}
+        isVisible={isVisible}
+        handleClose={handleClose}
+        onBackdropPress={handleClose}
+        transaction={selectedTransaction as TourTransactionQueryType}
       />
     </>
   );

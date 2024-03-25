@@ -79,9 +79,7 @@ export default () => {
           <WhiteSpace size={20} />
           <PressablePreview
             topTitle={tr("Tour")}
-            title={`${tour.title} / ${localizeNumber(
-              moment(tour.startTime).locale("fa").format("YYYY/MM/DD")
-            )}-${localizeNumber(moment(tour.endTime).locale("fa").format("YYYY/MM/DD"))}`}
+            title={tour.title}
             icon={<Feather name="home" size={24} color={theme.colors.black} />}
             button={
               <Button

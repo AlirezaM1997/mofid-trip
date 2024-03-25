@@ -33,6 +33,7 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
             id
             title
             price
+            discount
           }
           destination {
             ... on AccommodationQueryType {
@@ -71,6 +72,7 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
         id
         title
         price
+        discount
       }
       avatarS3 {
         medium

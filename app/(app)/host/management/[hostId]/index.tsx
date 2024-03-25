@@ -17,7 +17,6 @@ import useTranslation from "@src/hooks/translation";
 import { ListItem, Text, useTheme } from "@rneui/themed";
 import { ScrollView } from "react-native-gesture-handler";
 import LoadingIndicator from "@modules/Loading-indicator";
-import NgoAuthentication from "@modules/ngo/ngoAuthentication";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import HostManagementStepBaseButton from "@modules/host/management/step-base-button";
 
@@ -104,7 +103,7 @@ const HostDetailScreen = () => {
           {host?.name}
         </Text>
         <Text caption type="grey3">
-          {tr("last modification")}
+          {tr("last modification")}&nbsp;
           {passedTime(host.modifiedDate)}
         </Text>
         <WhiteSpace size={20} />

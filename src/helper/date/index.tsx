@@ -55,12 +55,12 @@ export const passedTime = date => {
 
   let relativeTimeString;
 
-  if (diffSeconds < 60) relativeTimeString = `${diffSeconds}  ثانیه قبل`;
-  else if (diffMinutes < 60) relativeTimeString = `${diffMinutes}  دقیقه قبل`;
-  else if (diffHours < 24) relativeTimeString = `${diffHours}  ساعت قبل`;
-  else if (diffDays < 7) relativeTimeString = `${diffDays}  روز قبل`;
-  else if (diffWeeks < 4) relativeTimeString = `${diffWeeks}  هفته قبل`;
-  else if (diffMonths < 12) relativeTimeString = `${diffMonths}  ماه قبل`;
+  if (diffSeconds < 60) relativeTimeString = `${diffSeconds} ثانیه قبل`;
+  else if (diffMinutes < 60) relativeTimeString = `${diffMinutes} دقیقه قبل`;
+  else if (diffHours < 24) relativeTimeString = `${diffHours} ساعت قبل`;
+  else if (diffDays < 7) relativeTimeString = `${diffDays} روز قبل`;
+  else if (diffWeeks < 4) relativeTimeString = `${diffWeeks} هفته قبل`;
+  else if (diffMonths < 12) relativeTimeString = `${diffMonths} ماه قبل`;
   else relativeTimeString = `${diffYears} سال`;
 
   return relativeTimeString;

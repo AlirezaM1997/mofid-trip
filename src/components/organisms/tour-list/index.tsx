@@ -34,7 +34,7 @@ function TourList() {
           <TitleWithAction
             title={tr("available tours")}
             actionTitle={tr("See All")}
-            onActionPress={() => router.push("/search")}
+            onActionPress={() => router.push("/all-tours")}
           />
         </Container>
         <ScrollView
@@ -59,8 +59,9 @@ function TourList() {
                     id={tour?.id as string}
                     name={tour?.title as string}
                     rate={tour?.rate as RateType}
-                    avatarS3={tour?.avatarS3 as TourQueryType["avatarS3"]}
                     price={tour?.packages?.[0]?.price as number}
+                    discount={tour?.packages?.[0]?.discount as number}
+                    avatarS3={tour?.avatarS3 as TourQueryType["avatarS3"]}
                     address={
                       (tour?.destination as AccommodationQueryType)?.address || tr("No Address")
                     }

@@ -100,6 +100,11 @@ const Map = ({
     icon: window.location.origin + "/assets/assets/image/my-location.png",
   };
 
+  // this code is because of map will not remount on routing
+  useEffect(() => {
+    setKey(prevKey => prevKey + 1);
+  }, [isFocused]);
+
   return (
     <>
       <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="StyleSheet" />
@@ -108,7 +113,6 @@ const Map = ({
         <View>{topCenterContent}</View>
         <View>{topRightContent}</View>
       </View>
-      
       <View style={style.center}>{centerContent}</View>
       <View style={[style.row, style.bottomRow]}>
         <View style={[style.bottomLeftContent, bottomLeftContentStyle]}>

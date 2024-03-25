@@ -1,11 +1,12 @@
 import {
-  TourImageType,
   TourQueryType,
+  TourImageType,
   useTourDetailQuery,
   TourFacilityQueryType,
   AccommodationImageType,
   AccommodationQueryType,
 } from "@src/gql/generated";
+import { Badge } from "@rneui/themed";
 import Container from "@atoms/container";
 import Map from "@modules/map/index.web";
 import WhiteSpace from "@atoms/white-space";
@@ -39,12 +40,14 @@ export default () => {
     },
   });
   const tour = data?.tourDetail;
+  const tourPackage = tour?.packages[0];
 
-  if (loading && !tour) return <LoadingIndicator />;
   navigation.setOptions({
     title: localizeNumber(data?.tourDetail?.title as string),
     headerRight: () => <ShareReportDropDown />,
   });
+
+  if (loading && !tour) return <LoadingIndicator />;
 
   return (
     <BottomButtonLayout buttons={[<BookTourBottomSheet tour={tour as TourQueryType} />]}>
@@ -52,31 +55,43 @@ export default () => {
         <WhiteSpace size={10} />
         <ImageSlider imageList={tour?.avatarS3 as AccommodationImageType[] | TourImageType[]} />
 
-        <View style={styles.tourInf}>
-          <Text heading2 bold>
-            {localizeNumber(tour?.title as string)}
-          </Text>
-          <Text>{(tour?.destination as AccommodationQueryType)?.address}</Text>
-          {tour?.rate?.avgRate && (
-            <View style={styles.rateBox}>
-              <Text>{`(${localizeNumber(tour?.rate.count as string)} ${tr(
-                "opinion"
-              )}) ${localizeNumber(tour?.rate?.avgRate as string)}`}</Text>
-              <View style={styles.rateStars}>
-                {new Array(5).fill("star").map((item, index) => (
-                  <AntDesign
-                    key={index}
-                    name="star"
-                    size={24}
-                    color={
-                      index < +(tour?.rate?.avgRate as string)
-                        ? theme.colors.warning
-                        : theme.colors.grey1
-                    }
-                  />
-                ))}
+        <WhiteSpace size={20} />
+
+        <View style={styles.titleContainer}>
+          <View style={styles.infoContainer}>
+            <Text>{localizeNumber(tour?.title as string)}</Text>
+            <Text>{(tour?.destination as AccommodationQueryType)?.address}</Text>
+            {tour?.rate?.avgRate && (
+              <View style={styles.rateBox}>
+                <Text>{`(${localizeNumber(tour?.rate.count as string)} ${tr(
+                  "opinion"
+                )}) ${localizeNumber(tour?.rate?.avgRate as string)}`}</Text>
+                <View style={styles.rateStars}>
+                  {new Array(5).fill("star").map((item, index) => (
+                    <AntDesign
+                      key={index}
+                      name="star"
+                      size={24}
+                      color={
+                        index < +(tour?.rate?.avgRate as string)
+                          ? theme.colors.warning
+                          : theme.colors.grey1
+                      }
+                    />
+                  ))}
+                </View>
               </View>
-            </View>
+            )}
+          </View>
+
+          {tourPackage?.discount ? (
+            <Badge
+              color="primary"
+              value={`%${tourPackage.discount} تخفیف`}
+              badgeStyle={styles.badgeStyle}
+            />
+          ) : (
+            ""
           )}
         </View>
 
@@ -101,7 +116,7 @@ export default () => {
 
         <WhiteSpace size={20} />
 
-        <ContactCard user={tour?.NGO.user} />
+        <ContactCard user={tour?.NGO} />
 
         <WhiteSpace size={20} />
 
@@ -155,9 +170,21 @@ export default () => {
 };
 
 const styles = StyleSheet.create({
-  tourInf:{ 
-    gap: 4, 
-    marginVertical: 20 
+  titleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  infoContainer: {
+    gap: 5,
+  },
+  badgeStyle: {
+    borderRadius: 100,
+    borderWidth: 0,
+  },
+  tourInf: {
+    gap: 4,
+    marginVertical: 20,
   },
   gridRow: {
     display: "flex",
