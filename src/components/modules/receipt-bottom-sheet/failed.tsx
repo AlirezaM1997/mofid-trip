@@ -1,3 +1,9 @@
+import {
+  BackCardQueryType,
+  WalletActionTransactionEnum,
+  WalletTransactionQueryType,
+  WalletWalletTransactionActionChoices,
+} from "@src/gql/generated";
 import React from "react";
 import moment from "jalali-moment";
 import Container from "@atoms/container";
@@ -6,16 +12,11 @@ import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
 import Toast from "react-native-toast-message";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import { BottomSheet, Chip, Text } from "@rneui/themed";
 import { useFormatPrice } from "@src/hooks/localization";
 import { Avatar, Button, useTheme } from "@rneui/themed";
+import { BottomSheet, Chip, Colors, Text } from "@rneui/themed";
 import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import {
-  BackCardQueryType,
-  WalletActionTransactionEnum,
-  WalletTransactionQueryType,
-} from "@src/gql/generated";
 
 type LookUpType = Record<
   Exclude<WalletActionTransactionEnum, "IN_APP_PURCHASE">,
@@ -69,7 +70,10 @@ const FailedReceiptBottomSheet = ({
         icon: { name: "arrowdown", type: "ant-design", color: theme.colors.black, size: 24 },
       },
     };
-    return lookup[action];
+    return lookup[
+      (action as WalletWalletTransactionActionChoices.Deposit) ||
+        WalletWalletTransactionActionChoices.Withdraw
+    ];
   };
 
   const transactionActionHolder: LookUpType["DEPOSIT"] = transactionAction();
@@ -143,7 +147,7 @@ const FailedReceiptBottomSheet = ({
 
         <View style={styles.issueTrackingContainer}>
           <Text caption>{tr("issue tracking")}</Text>
-          <Text caption>{localizeNumber(purchaseRefId)}</Text>
+          <Text caption>{localizeNumber(purchaseRefId as number)}</Text>
         </View>
       </Container>
 
@@ -169,10 +173,10 @@ const styles = StyleSheet.create({
     margin: "auto",
   },
   chip: { padding: 8, gap: 8 },
-  chipTitle: ((theme: { colors: { white: string } }) => ({
+  chipTitle: ((theme: { colors: { white: keyof Colors } }) => ({
     color: theme.colors.white,
   })) as ViewStyle,
-  bottomContent: ((theme: { colors: { grey0: string } }) => ({
+  bottomContent: ((theme: { colors: { grey0: keyof Colors } }) => ({
     borderTopWidth: 1,
     marginBottom: 16,
     borderStyle: "dashed",
@@ -194,7 +198,7 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
     justifyContent: "space-between",
   },
-  avatar: ((theme: { colors: { grey0: string } }) => ({
+  avatar: ((theme: { colors: { grey0: keyof Colors } }) => ({
     margin: "auto",
     backgroundColor: theme.colors.grey0,
   })) as ViewStyle,

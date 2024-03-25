@@ -8,21 +8,22 @@ import Authentication from "@modules/authentication";
 import { useIsFocused } from "@react-navigation/core";
 import LoadingIndicator from "@modules/Loading-indicator";
 import { UserQueryType, useUserDetailProfileLazyQuery } from "@src/gql/generated";
+import { Text } from "@rneui/themed";
 
 const Profile: React.FC = () => {
   I18nManager.allowRTL(true);
-  const { session } = useSession();
   const isFocused = useIsFocused();
+  const { session, isLoading, signOut } = useSession();
   const rootNavigationState = useRootNavigationState();
   const [_, { refetch, data }] = useUserDetailProfileLazyQuery({
     fetchPolicy: "network-only",
   });
 
   useEffect(() => {
-    session && refetch();
+    isFocused && session && refetch();
   }, [isFocused, session]);
 
-  if (!session) return <Authentication />;
+  if (!isLoading && !session) return <Authentication />;
   if (!data) return <LoadingIndicator />;
 
   // if you open new tab and enter page url in addressbar and try to open, you see an error. the error described in
@@ -31,7 +32,6 @@ const Profile: React.FC = () => {
   if (!rootNavigationState?.key) return null;
 
   const userDetail = data.userDetail;
-
   return userDetail?.isNgo ? (
     <NGOProfile userDetail={userDetail as UserQueryType} />
   ) : (

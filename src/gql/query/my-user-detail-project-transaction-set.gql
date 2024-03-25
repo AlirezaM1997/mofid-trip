@@ -14,6 +14,7 @@ query myUserDetailProjectTransactionSet {
           large
           medium
           small
+          orginal
         }
       }
       guest {
@@ -27,10 +28,10 @@ query myUserDetailProjectTransactionSet {
       }
       status {
         isActive
-        step{
-        displayName
-        name
-      }
+        step {
+          displayName
+          name
+        }
       }
     }
   }

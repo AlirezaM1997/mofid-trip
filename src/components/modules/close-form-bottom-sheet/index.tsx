@@ -59,6 +59,7 @@ const CloseFormBottomSheet = () => {
                 : () => {
                     router.replace("/");
                     router.replace("/");
+                    setIsVisibleExit(false);
                   }
             }>
             خارج شدن

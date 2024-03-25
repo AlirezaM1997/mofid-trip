@@ -21,7 +21,7 @@ query tourTransactionDetail($pk: ID!) {
     }
     status {
       isActive
-      step{
+      step {
         displayName
         name
       }
@@ -35,6 +35,8 @@ query tourTransactionDetail($pk: ID!) {
         avatarS3 {
           small
           medium
+          orginal
+          large
         }
         id
         title
@@ -50,6 +52,7 @@ query tourTransactionDetail($pk: ID!) {
               small
               medium
               large
+              orginal
             }
           }
         }

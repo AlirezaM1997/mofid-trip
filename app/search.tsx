@@ -35,7 +35,7 @@ const SearchScreen: React.FC = () => {
   });
 
   const routerHandler = (category: CategoryEnum) => {
-    router.push("/search-list");
+    router.push("/search-list?isShowMap=false");
     dispatch(setCategory(category));
   };
 

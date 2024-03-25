@@ -15,7 +15,6 @@ import TabHostType from "@organisms/host-create/host-type";
 import { ImageBackground, StyleSheet } from "react-native";
 import TabDetails from "@organisms/host-create/details-tab";
 import TabFaclities from "@organisms/host-create/facilities";
-import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
 import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
 import { AccommodationAddInputType, ProjectAddInputType } from "@src/gql/generated";
 
@@ -36,17 +35,21 @@ const HostCreateForm = ({
 
   const { values } = useFormikContext<ProjectAddInputType>();
 
-  const { name, description, categories, capacity, dateStart, dateEnd, price } = values;
+  const { name, description, categories, capacity, dateStart, dateEnd, price, discount } = values;
   const { address, city, lat, lng, province } = values.accommodation as AccommodationAddInputType;
 
   useEffect(() => {
+    console.log(discount);
     if (activeStep === 1 && (!name || !description)) return setIsButtonDisabled(true);
     if (activeStep === 2 && !categories?.length) return setIsButtonDisabled(true);
     if (activeStep === 3 && (!address || !city || !province || !lat || !lng))
       return setIsButtonDisabled(true);
     if (activeStep === 4 && !capacity?.capacityNumber) return setIsButtonDisabled(true);
     if (activeStep === 5 && (!dateStart || !dateEnd)) return setIsButtonDisabled(true);
-    if (activeStep === 6 && ["", null, undefined].includes(price?.toString()))
+    if (
+      (activeStep === 6 && ["", null, undefined].includes(price?.toString())) ||
+      +(discount as number) > 100
+    )
       return setIsButtonDisabled(true);
     return setIsButtonDisabled(false);
   }, [values, activeStep]);

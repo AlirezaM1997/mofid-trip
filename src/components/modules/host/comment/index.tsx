@@ -88,11 +88,25 @@ const HostComment = () => {
 
 const styles = StyleSheet.create({
   containerStyle: { gap: 16 },
-  commentInf: { flexDirection: "row", justifyContent: "space-between" },
+  commentInf: { 
+    flexDirection: "row", 
+    justifyContent: "space-between" 
+  },
   commentAddStyle: { gap: 4 },
-  commentAddBox: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  commentAddText: { flexDirection: "row", gap: 8, alignItems: "center" },
-  noResultStyle: { flexDirection: "row", gap: 4 },
+  commentAddBox: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    alignItems: "center" 
+  },
+  commentAddText: { 
+    flexDirection: "row", 
+    gap: 8, 
+    alignItems: "center" 
+  },
+  noResultStyle: { 
+    flexDirection: "row", 
+    gap: 4 
+  },
   noResultIcon: { paddingTop: 10 },
 });
 

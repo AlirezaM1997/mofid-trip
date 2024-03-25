@@ -1,18 +1,20 @@
-import Input from "@atoms/input";
-import BottomButtonLayout from "@components/layout/bottom-button";
-import { Feather } from "@expo/vector-icons";
-import LoadingIndicator from "@modules/Loading-indicator";
-import { Button } from "@rneui/themed";
-import Container from "@src/components/atoms/container";
-import WhiteSpace from "@src/components/atoms/white-space";
-import { useMyNgoDetailQuery, useNgoEditMutation } from "@src/gql/generated";
-import handleUploadImage from "@src/helper/image-picker";
-import useTranslation from "@src/hooks/translation";
-import { Formik, FormikProps } from "formik";
-import React, { useRef } from "react";
-import { Image, Pressable, StyleSheet } from "react-native";
-import Toast from "react-native-toast-message";
 import * as Yup from "yup";
+import Input from "@atoms/input";
+import { router } from "expo-router";
+import React, { useRef } from "react";
+import { Button } from "@rneui/themed";
+import { isBase64 } from "@src/helper/extra";
+import { Feather } from "@expo/vector-icons";
+import { Formik, FormikProps } from "formik";
+import Toast from "react-native-toast-message";
+import useTranslation from "@src/hooks/translation";
+import Container from "@src/components/atoms/container";
+import handleUploadImage from "@src/helper/image-picker";
+import LoadingIndicator from "@modules/Loading-indicator";
+import WhiteSpace from "@src/components/atoms/white-space";
+import { Image, Pressable, StyleSheet } from "react-native";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import { useMyNgoDetailQuery, useNgoEditMutation } from "@src/gql/generated";
 
 type PropsType = {
   title: string;
@@ -25,16 +27,29 @@ type PropsType = {
 const Index = () => {
   const { tr } = useTranslation();
   const [editProfile, { loading }] = useNgoEditMutation();
-  const { loading: loadingNGODetail, data: dataNGODetail } = useMyNgoDetailQuery();
   const innerRef = useRef<FormikProps<PropsType> | null>(null);
+  const { loading: loadingNGODetail, data: dataNGODetail } = useMyNgoDetailQuery();
 
   const onSubmit = async (values: PropsType) => {
-    const { data, errors } = await editProfile({ variables: { data: values } });
+    let tempData = {
+      title: values.title,
+      address: values.address,
+      description: values.description,
+      contactNumber: values.contactNumber,
+    };
+    if (values?.base64Image && isBase64(values.base64Image)) {
+      tempData = {
+        ...tempData,
+        base64Image: values.base64Image ?? "",
+      };
+    }
+    const { data } = await editProfile({ variables: { data: tempData } });
     if (data) {
       Toast.show({
         type: "success",
         text1: tr("Successful"),
       });
+      router.back();
     }
   };
 
@@ -68,17 +83,12 @@ const Index = () => {
         onSubmit={onSubmit}>
         {({ handleSubmit, values, handleChange, touched, errors }) => (
           <>
-            {console.log(values)}
             <BottomButtonLayout
               contentContainerStyle={{
                 alignItems: "center",
               }}
               buttons={[
-                <Button
-                  onPress={() => handleSubmit()}
-                  size="lg"
-                  disabled={loading}
-                  loading={loading}>
+                <Button onPress={handleSubmit} size="lg" disabled={loading} loading={loading}>
                   {tr("confirm")}
                 </Button>,
               ]}>

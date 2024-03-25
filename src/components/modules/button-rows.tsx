@@ -1,14 +1,15 @@
 import { StyleSheet, View, ViewProps } from "react-native";
 import { ButtonProps } from "@rneui/themed";
+import { ReactNode } from "react";
 
 export type ButtonRowProps = ViewProps & {
-  children: ButtonProps[];
+  children: ReactNode[];
 };
 
 const ButtonRow = ({ children, ...props }: ButtonRowProps) => {
   return (
-    <View style={styles.row}>
-      {children.map((button, i) => (
+    <View style={[styles.row, props.style]}>
+      {children.map((button: ReactNode, i) => (
         <View key={i} style={styles.child}>
           {button}
         </View>
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   child: {
-    flexGrow: 1,
+    flex: 1,
   },
 });
 

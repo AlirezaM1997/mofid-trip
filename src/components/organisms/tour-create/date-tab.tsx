@@ -23,20 +23,24 @@ const DateTab = () => {
 
   const getLastDayFormatted = () => {
     if (markedDays.length) {
-      return markedDays.length === 1 ?
-        localizeNumber(moment(markedDays[0].date).format("jYYYY/jMM/jDD"))
-        :
-        localizeNumber(moment(markedDays.slice(-1)[0].date).format("jYYYY/jMM/jDD"))
+      return markedDays.length === 1
+        ? localizeNumber(moment(markedDays[0].date).format("jYYYY/jMM/jDD"))
+        : localizeNumber(moment(markedDays.slice(-1)[0].date).format("jYYYY/jMM/jDD"));
     }
   };
 
-  const handleDayPressed = dayPressed => handleDayPress(dayPressed, markedDays, setMarkedDays, "startTime", "endTime")
+  const handleDayPressed = dayPressed =>
+    handleDayPress(dayPressed, markedDays, setMarkedDays, "startTime", "endTime");
 
   useEffect(() => handleSaveChanges("startTime", "endTime", setMarkedDays), []);
 
   return (
     <>
-      <JalaliDatePicker onDayPress={handleDayPressed} markedDays={markedDays} />
+      <JalaliDatePicker
+        markedDays={markedDays}
+        disablePassedDates={true}
+        onDayPress={handleDayPressed}
+      />
 
       <View style={styles.showDateContainer}>
         <View style={styles.timeContainer}>

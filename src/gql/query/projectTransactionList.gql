@@ -51,6 +51,7 @@ query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterT
             small
             medium
             large
+            orginal
           }
         }
       }

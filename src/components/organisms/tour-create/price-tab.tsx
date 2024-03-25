@@ -8,6 +8,7 @@ import { StyleSheet, View } from "react-native";
 import parseText from "@src/helper/number-input";
 import { TourAddInputType } from "@src/gql/generated";
 import { useFormatPrice } from "@src/hooks/localization";
+import * as persianTools from "@persian-tools/persian-tools";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const PriceTab = () => {
@@ -47,14 +48,21 @@ const PriceTab = () => {
       </View>
 
       <Input
-        value={values.price?.toString()}
         maxLength={8}
-        label={tr("Price") + " (" + tr("Tooman") + ")"}
-        onChangeText={price => setFieldValue("price", parseText(price))}
-        onBlur={handleBlur("price")}
         keyboardType="numeric"
+        onBlur={handleBlur("price")}
+        label={tr("Price") + " (" + tr("Tooman") + ")"}
+        value={parseText(values.price?.toString().replace(/^0+/, ""))}
         errorMessage={(touched.price && errors.price) as string}
+        onChangeText={price => setFieldValue("price", parseText(price))}
       />
+      {values?.price ? (
+        <Text caption style={{ marginBottom: 12 }}>
+          {persianTools.numberToWords(values.price as number) as string} {tr("Tooman")}
+        </Text>
+      ) : (
+        ""
+      )}
       <View style={styles.badgeRow}>
         {recommendedPrices.map(recom => (
           <Badge
@@ -75,7 +83,7 @@ const PriceTab = () => {
         keyboardType="numeric"
         onBlur={handleBlur("discount")}
         label={tr("Discount") + " (%)"}
-        value={parseText(values.discount?.toString())}
+        value={parseText(values.discount?.toString().replace(/^0+/, ""))}
         errorMessage={(touched.discount && errors.discount) as string}
         onChangeText={text => setFieldValue("discount", parseText(text))}
       />

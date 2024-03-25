@@ -4,13 +4,14 @@ import {
   ProjectQueryType,
   useProjectDetailQuery,
 } from "@src/gql/generated";
-import { Text } from "@rneui/themed";
+import { Badge } from "@rneui/themed";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { Text, useTheme } from "@rneui/themed";
+import { AntDesign } from "@expo/vector-icons";
 import HostComment from "@modules/host/comment";
 import ImageSlider from "@modules/image-slider";
 import openMapHandler from "@src/helper/opem-map";
-import useTranslation from "@src/hooks/translation";
 import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
 import Map from "@src/components/modules/map/index.web";
@@ -26,13 +27,17 @@ import SimilarProjects from "@src/components/modules/similar-projects";
 import ProjectFacilities from "@src/components/modules/host/facilities";
 import LoadingIndicator from "@src/components/modules/Loading-indicator";
 import ProjectBoldFeatures from "@src/components/modules/host/bold-features";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import WhiteSpace from "@atoms/white-space";
 
 const Page: React.FC = ({ ...props }) => {
+  const { theme } = useTheme();
   const dispatch = useDispatch();
   const { tr } = useTranslation();
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const { projectId } = useLocalSearchParams();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { loading, data } = useProjectDetailQuery({
     variables: {
@@ -46,19 +51,21 @@ const Page: React.FC = ({ ...props }) => {
     }
   }, [loading, data]);
 
-  if (loading) return <LoadingIndicator />;
-
   navigation.setOptions({
-    title: data?.projectDetail?.name,
+    title: localizeNumber(data?.projectDetail?.name as string),
     headerRight: () => <ShareReportDropDown />,
   });
+
+  if (loading) return <LoadingIndicator />;
 
   const {
     name,
     tags,
+    rate,
     creator,
     dateEnd,
     capacity,
+    discount,
     dateStart,
     categories,
     facilities,
@@ -75,9 +82,37 @@ const Page: React.FC = ({ ...props }) => {
 
           <ProjectTags tags={tags ?? []} />
 
-          <View style={style.infoContainer}>
-            <Text heading2>{name}</Text>
-            <Text caption>{accommodation?.address}</Text>
+          <View style={style.titleContainer}>
+            <View style={style.infoContainer}>
+              <Text heading2> {localizeNumber(name as string)}</Text>
+              <Text caption>{localizeNumber(accommodation?.address as string)}</Text>
+              {rate?.avgRate && (
+                <View style={style.rateBox}>
+                  <Text>{`(${localizeNumber(rate.count as string)} ${tr(
+                    "opinion"
+                  )}) ${localizeNumber(rate?.avgRate as string)}`}</Text>
+                  <View style={style.rateStars}>
+                    {new Array(5).fill("star").map((item, index) => (
+                      <AntDesign
+                        key={index}
+                        name="star"
+                        size={24}
+                        color={
+                          index < +(rate?.avgRate as string)
+                            ? theme.colors.warning
+                            : theme.colors.grey1
+                        }
+                      />
+                    ))}
+                  </View>
+                </View>
+              )}
+            </View>
+            {discount ? (
+              <Badge color="primary" value={`%${discount} تخفیف`} badgeStyle={style.badgeStyle} />
+            ) : (
+              ""
+            )}
           </View>
 
           <ProjectBoldFeatures
@@ -89,16 +124,15 @@ const Page: React.FC = ({ ...props }) => {
 
           {description && (
             <View style={style.infoContainer}>
-              <Text subtitle1 bold>
-                {tr("about host")}
-              </Text>
-              <Text caption type="grey3">
-                {description}
-              </Text>
+              <Text bold>{tr("about host")}</Text>
+              <Text type="grey3">{description}</Text>
             </View>
           )}
-
-          <ProjectFacilities facilities={facilities as ProjectFacilityQueryType[]} />
+          <View>
+            <Text bold>{tr("hosting facilities")}</Text>
+            <WhiteSpace />
+            <ProjectFacilities facilities={facilities as ProjectFacilityQueryType[]} />
+          </View>
 
           {/* <ContactCard user={tour.NGO.user} /> */}
 
@@ -107,8 +141,11 @@ const Page: React.FC = ({ ...props }) => {
               {tr("host address")}
             </Text>
             <Text caption type="grey3">
-              {accommodation?.address}
+              {localizeNumber(accommodation?.address as string)}
             </Text>
+
+            <WhiteSpace size={20} />
+
             {isFocused && (
               <Pressable onPress={() => openMapHandler(accommodation?.lat, accommodation?.lng)}>
                 <Map
@@ -131,9 +168,7 @@ const Page: React.FC = ({ ...props }) => {
               </Pressable>
             )}
           </View>
-          <Text subtitle1 bold>
-            پیشنهادی برای شما
-          </Text>
+          {(creator?.projectSet?.length as number) > 1 && <Text bold>پیشنهادی برای شما</Text>}
         </Container>
         <SimilarProjects
           currentProjectId={projectId as string}
@@ -145,6 +180,15 @@ const Page: React.FC = ({ ...props }) => {
   );
 };
 const style = StyleSheet.create({
+  titleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  badgeStyle: {
+    borderRadius: 100,
+    borderWidth: 0,
+  },
   scrollView: {
     flex: 1,
     paddingBottom: 16,
@@ -155,6 +199,15 @@ const style = StyleSheet.create({
   },
   infoContainer: {
     gap: 5,
+  },
+  rateBox: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center",
+  },
+  rateStars: {
+    flexDirection: "row-reverse",
+    gap: 3,
   },
 });
 

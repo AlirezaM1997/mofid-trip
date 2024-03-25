@@ -1,5 +1,5 @@
-query tourTransactionList ($page: PageType) {
-  tourTransactionList (page: $page) {
+query tourTransactionList($page: PageType) {
+  tourTransactionList(page: $page) {
     count
     data {
       id
@@ -10,10 +10,10 @@ query tourTransactionList ($page: PageType) {
       }
       status {
         isActive
-        step{
-        displayName
-        name
-      }
+        step {
+          displayName
+          name
+        }
       }
       tourPackage {
         price
@@ -25,6 +25,7 @@ query tourTransactionList ($page: PageType) {
             large
             medium
             small
+            orginal
           }
           destination {
             ... on AccommodationQueryType {
@@ -32,6 +33,9 @@ query tourTransactionList ($page: PageType) {
               address
               avatarS3 {
                 small
+                medium
+                large
+                orginal
               }
             }
           }

@@ -1,21 +1,21 @@
 import { Chip } from "@rneui/themed";
-import { SettingDetailType, TourFacilityQueryType } from "@src/gql/generated";
 import { RootState } from "@src/store";
-import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
+import { StyleSheet, View } from "react-native";
+import { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { SettingDetailType, TourFacilityQueryType } from "@src/gql/generated";
 
-type TourFacilitiesProps = {
-  facilities: TourFacilityQueryType[];
-};
-
-const TourFacilities = ({ facilities, ...props }: TourFacilitiesProps) => {
-  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType);
+const TourFacilities = ({ facilities }: { facilities: TourFacilityQueryType[] }) => {
+  const { localizeNumber } = useLocalizedNumberFormat();
+  const { language } = useSelector(
+    (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
+  );
 
   const facilitiesLanguage = () => {
     const lookup: Record<string, string> = {
-      "EN_US": "enName",
-      "FA_IR": "faName",
-      "AR": "arName",
+      EN_US: "enName",
+      FA_IR: "faName",
+      AR: "arName",
     };
     return lookup[language];
   };
@@ -26,11 +26,11 @@ const TourFacilities = ({ facilities, ...props }: TourFacilitiesProps) => {
         return (
           <Chip
             key={index}
-            title={facility[facilitiesLanguage()]}
             type="outline"
-            buttonStyle={style.buttonStyle}
             titleStyle={style.titleStyle}
+            buttonStyle={style.buttonStyle}
             containerStyle={style.containerStyle}
+            title={localizeNumber(facility[facilitiesLanguage()] as string)}
           />
         );
       })}
@@ -40,19 +40,20 @@ const TourFacilities = ({ facilities, ...props }: TourFacilitiesProps) => {
 
 const style = StyleSheet.create({
   container: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
     gap: 5,
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "row",
   },
   buttonStyle: {
-    borderRadius: 5,
-    backgroundColor: "#F3F3F3",
     borderWidth: 0,
+    borderRadius: 6,
+    backgroundColor: "#F3F3F3",
   },
-  titleStyle: { color: "#101010" },
+  titleStyle: { color: "#101010", textAlign: "right", paddingVertical: 2 },
   containerStyle: {
     borderRadius: 0,
+    maxWidth: "100%",
   },
 });
 

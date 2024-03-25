@@ -6,6 +6,7 @@ import {
 } from "@src/gql/generated";
 import moment from "jalali-moment";
 import { router } from "expo-router";
+import { Colors } from "@rneui/themed";
 import { HEIGHT, WIDTH } from "@src/constants";
 import React, { useEffect, useState } from "react";
 import ReportComment from "@modules/report/report-comment";
@@ -92,7 +93,7 @@ const CommentCard = ({
         </View>
         <Text caption type="grey3">
           {localizeNumber(moment(comment.createdDate).locale("fa").format("jD jMMMM jYYYY"))} .{" "}
-          {comment?.user?.displayName}
+          {comment?.user?.displayName ? comment?.user?.displayName : tr("no name")}
         </Text>
       </View>
       <View style={styles.footerCard}>
@@ -158,7 +159,6 @@ const styles = StyleSheet.create({
   dropDown: {
     position: "absolute",
     left: 15,
-    backgroundColor: "red",
     borderTopRightRadius: 8,
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
       web: { boxShadow: "0 0 5px #12121227" },
     }),
   },
-  containerStyle: ((theme: { colors: { grey0: string } }) => ({
+  containerStyle: ((theme: { colors: { grey0: keyof Colors } }) => ({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
@@ -179,11 +179,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  commentText: { width: "80%" },
+  commentText: { width: "95%" },
   footerCard: { gap: 12 },
-  likeInf: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  likeBox: { flexDirection: "row", gap: 16, alignItems: "center" },
-  likeStyle: { flexDirection: "row", gap: 4, alignItems: "center" },
+  likeInf: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    alignItems: "center" 
+  },
+  likeBox: { 
+    flexDirection: "row", 
+    gap: 16, 
+    alignItems: "center" 
+  },
+  likeStyle: { 
+    flexDirection: "row", 
+    gap: 4, 
+    alignItems: "center" 
+  },
   buttonStyle: { marginRight: "auto" },
 });
 

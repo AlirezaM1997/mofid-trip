@@ -8,8 +8,8 @@ import moment from "jalali-moment";
 import React, { useState } from "react";
 import Container from "@atoms/container";
 import { AntDesign } from "@expo/vector-icons";
-import { Divider, Text, useTheme } from "@rneui/themed";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Colors, Divider, Text, useTheme } from "@rneui/themed";
+import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const CommentCardReplay = ({
@@ -73,7 +73,7 @@ const CommentCardReplay = ({
             </Pressable>
             <Text caption type="grey3">
               {localizeNumber(moment(comment.createdDate).locale("fa").format("jD jMMMM jYYYY"))} .{" "}
-              {comment.user?.displayName}
+              {comment?.user?.displayName ? comment?.user?.displayName : tr("no name")}
             </Text>
           </View>
         </View>
@@ -110,17 +110,25 @@ const CommentCardReplay = ({
 const styles = StyleSheet.create({
   containerStyle: { gap: 16 },
   cardInf: { flexDirection: "row", gap: 16 },
-  commentText: { gap: 4, width: "80%" },
-  likeInf: theme => ({
+  commentText: { gap: 4, width: "95%" },
+  likeInf: ((theme: { colors: { grey0: keyof Colors } }) => ({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingBottom: 12,
     borderBottomWidth: 1,
     borderColor: theme.colors.grey0,
-  }),
-  likeBox: { flexDirection: "row", gap: 16, alignItems: "center" },
-  likeStyle: { flexDirection: "row", gap: 4, alignItems: "center" },
+  })) as ViewStyle,
+  likeBox: {
+    flexDirection: "row",
+    gap: 16,
+    alignItems: "center",
+  },
+  likeStyle: {
+    flexDirection: "row",
+    gap: 4,
+    alignItems: "center",
+  },
 });
 
 export default CommentCardReplay;

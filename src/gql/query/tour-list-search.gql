@@ -15,11 +15,13 @@ query tourListSearch($search: String, $sort: SortType, $filter: TourFilterType, 
       packages {
         id
         price
+        discount
       }
       avatarS3 {
         medium
         large
         small
+        orginal
       }
     }
   }

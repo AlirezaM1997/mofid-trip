@@ -55,7 +55,7 @@ const TourReservation = () => {
         {data?.tourTransactionList?.data?.map((transaction, index) => (
           <ReservationCard
             transaction={transaction as TourTransactionQueryType}
-            key={transaction.id}
+            key={transaction?.id}
             index={index}
           />
         ))}

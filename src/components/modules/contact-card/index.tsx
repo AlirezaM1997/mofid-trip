@@ -45,7 +45,7 @@ const ContactCard = ({ user }) => {
               <Text caption type="grey3">
                 {tr("ngo details")}
               </Text>
-              <Text subtitle2>{localizeNumber(user.fullname)}</Text>
+              <Text subtitle2>{localizeNumber(user.title)}</Text>
             </View>
           </View>
         </Pressable>
