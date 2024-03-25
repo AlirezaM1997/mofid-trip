@@ -19,16 +19,17 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
   GenericScalar: { input: any; output: any; }
   UUID: { input: any; output: any; }
+  Upload: { input: any; output: any; }
 };
 
 /** Input type for adding accommodation for the tour. */
 export type AccommodationAddInputType = {
   /** Address of the accommodation. */
   address: Scalars['String']['input'];
-  /** List of base64-encoded images. */
-  base64Images?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** The city of the accommodation. */
   city?: InputMaybe<Scalars['String']['input']>;
+  /** List of image files for the accommodation. */
+  images?: InputMaybe<Array<InputMaybe<Scalars['Upload']['input']>>>;
   /** Latitude of the accommodation. */
   lat: Scalars['Float']['input'];
   /** Longitude of the accommodation. */
@@ -41,10 +42,10 @@ export type AccommodationAddInputType = {
 export type AccommodationEditInputType = {
   /** New address of the accommodation. */
   address?: InputMaybe<Scalars['String']['input']>;
-  /** List of new base64-encoded images. */
-  base64Images?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** New description of the accommodation. */
   description?: InputMaybe<Scalars['String']['input']>;
+  /** List of image files for the accommodation. */
+  images?: InputMaybe<Array<InputMaybe<Scalars['Upload']['input']>>>;
   /** New latitude of the accommodation. */
   lat?: InputMaybe<Scalars['Float']['input']>;
   /** New longitude of the accommodation. */
@@ -439,7 +440,6 @@ export type IntRangeType = {
 
 /** An enumeration. */
 export enum InteractionReportCategoryNameChoices {
-<<<<<<< HEAD
   /** Fake Account */
   FakeAccount = 'FAKE_ACCOUNT',
   /** Inappropriate Content */
@@ -451,19 +451,6 @@ export enum InteractionReportCategoryNameChoices {
   /** Spam */
   Spam = 'SPAM',
   /** Violent Content */
-=======
-  /** حساب جعلی */
-  FakeAccount = 'FAKE_ACCOUNT',
-  /** محتوای غیراخلاقی */
-  InappropriateContent = 'INAPPROPRIATE_CONTENT',
-  /** سایر */
-  Other = 'OTHER',
-  /** سرقت اطلاعات خصوصی اشخاص */
-  PrivacyViolation = 'PRIVACY_VIOLATION',
-  /** هرزنامه */
-  Spam = 'SPAM',
-  /** محتوای خشونت آمیز */
->>>>>>> develop
   ViolentContent = 'VIOLENT_CONTENT'
 }
 
@@ -800,14 +787,14 @@ export type MutationWalletWithdrawArgs = {
 export type NgoEditInputType = {
   /** Address of the NGO. */
   address?: InputMaybe<Scalars['String']['input']>;
-  /** Base64-encoded image. */
-  base64Image?: InputMaybe<Scalars['String']['input']>;
   /** contact number of the NGO. */
   contactNumber?: InputMaybe<Scalars['String']['input']>;
   /** Description of the NGO. */
   description?: InputMaybe<Scalars['String']['input']>;
   /** Email address of the NGO. */
   email?: InputMaybe<Scalars['String']['input']>;
+  /** image file. */
+  image?: InputMaybe<Scalars['Upload']['input']>;
   /** Type of the NGO. */
   kind?: InputMaybe<Scalars['String']['input']>;
   /** Title of the NGO. */
@@ -1051,7 +1038,7 @@ export type ProjectFilterType = {
   /** Price range. */
   price?: InputMaybe<IntRangeType>;
   /** Filter by project status. */
-  status?: InputMaybe<Array<InputMaybe<ProjectStatusEnum>>>;
+  status?: InputMaybe<Array<InputMaybe<ProjectStatusFilterType>>>;
   /** Filter by project tag ids. */
   tags?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** filter by visibility of projects. */
@@ -1158,6 +1145,14 @@ export enum ProjectStatusEnum {
   Suspension = 'SUSPENSION'
 }
 
+/** Input type for filtering projects status. */
+export type ProjectStatusFilterType = {
+  /** Filter by project status activation. */
+  statusActivation?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by project status step. */
+  statusStep?: InputMaybe<ProjectStatusEnum>;
+};
+
 /** Input type for updating the status of a tour. */
 export type ProjectStatusInputType = {
   /** New active status for the project. */
@@ -1213,8 +1208,8 @@ export type ProjectTransactionFilterType = {
   dateRange?: InputMaybe<DateRangeType>;
   /** Filter by project owner. */
   projectOwner?: InputMaybe<Array<InputMaybe<ProjectOwnerEnum>>>;
-  /** Filter by transaction status step. */
-  statusStep?: InputMaybe<TransactionStatusEnum>;
+  /** Filter by transaction status. */
+  status?: InputMaybe<ProjectTransactionStatusFilterType>;
   /** Filter by transaction owner. */
   transactionOwner?: InputMaybe<Array<InputMaybe<TransactionOwnerEnum>>>;
 };
@@ -1256,6 +1251,14 @@ export type ProjectTransactionQueryType = {
   purchaseRefId?: Maybe<Scalars['Int']['output']>;
   /** Transaction status information. */
   status?: Maybe<StatusQueryType>;
+};
+
+/** Input type for filtering project transactions by status step ans status activation. */
+export type ProjectTransactionStatusFilterType = {
+  /** Filter by transaction status activation. Default is True. */
+  statusActivation?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by transaction status step. */
+  statusStep?: InputMaybe<TransactionStatusEnum>;
 };
 
 /** Type representing for project status step . */
@@ -1790,8 +1793,6 @@ export enum TagTypeEnum {
 
 /** Input type for adding a new tour. */
 export type TourAddInputType = {
-  /** List of base64-encoded images associated with the tour. */
-  base64Images?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Details regarding the tour capacity. */
   capacity: TourCapacityAddType;
   /** Description of the tour. */
@@ -1804,6 +1805,8 @@ export type TourAddInputType = {
   endTime: Scalars['String']['input'];
   /** List of associated facility names for the tour. */
   facilities: Array<InputMaybe<TourFacilityAddInputType>>;
+  /** List of image files associated with the tour. */
+  images?: InputMaybe<Array<InputMaybe<Scalars['Upload']['input']>>>;
   /** Details of the origin for the tour. */
   origin: AccommodationAddInputType;
   /** Price of the tour. */
@@ -1869,8 +1872,6 @@ export type TourDestOrigUnion = AccommodationQueryType | ProjectQueryType;
 
 /** Input type for editing the tour. */
 export type TourEditInputType = {
-  /** List of New base64-encoded images associated with the tour. */
-  base64Images?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** New Details regarding the tour capacity. */
   capacity?: InputMaybe<TourCapacityAddType>;
   /** New Description of the tour. */
@@ -1883,6 +1884,8 @@ export type TourEditInputType = {
   endTime?: InputMaybe<Scalars['String']['input']>;
   /** List of New associated facility names for the tour. */
   facilities?: InputMaybe<Array<InputMaybe<TourFacilityAddInputType>>>;
+  /** List of image files associated with the tour. */
+  images?: InputMaybe<Array<InputMaybe<Scalars['Upload']['input']>>>;
   /** New Details of the origin for the tour. */
   origin?: InputMaybe<AccommodationAddInputType>;
   /** ID of the tour to edit. */
@@ -1980,8 +1983,8 @@ export type TourGuestInputType = {
   gender: GuestGenderEnum;
   /** Identification number of the guest. */
   identifyNumber: Scalars['String']['input'];
-  /** Base64-encoded image of the guest's identification. */
-  identifyPicture?: InputMaybe<Scalars['String']['input']>;
+  /** image of the guest's identification. */
+  identifyPicture?: InputMaybe<Scalars['Upload']['input']>;
   /** Lastname of the guest. */
   lastname: Scalars['String']['input'];
   /** Phone number of the guest. */
@@ -2165,8 +2168,8 @@ export type TourTransactionEditInputType = {
 
 /** Input type for filtering tour transactions by status step. */
 export type TourTransactionFilterType = {
-  /** Filter by status step. */
-  statusStep?: InputMaybe<TransactionStatusEnum>;
+  /** Filter by status. */
+  status?: InputMaybe<TourTransactionStatusFilterType>;
   /** Filter by tour owner. */
   tourOwner?: InputMaybe<Array<InputMaybe<TourOwnerEnum>>>;
   /** Filter by transaction owner. */
@@ -2201,6 +2204,14 @@ export type TourTransactionQueryType = {
   /** Tour Package associated with the transaction. */
   tourPackage?: Maybe<TourPackageType>;
   tourguestSet: Array<TourGuestQueryType>;
+};
+
+/** Input type for filtering project transactions by status step ans status activation. */
+export type TourTransactionStatusFilterType = {
+  /** Filter by transaction status activation. Default is True. */
+  statusActivation?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by transaction status step. */
+  statusStep?: InputMaybe<TransactionStatusEnum>;
 };
 
 /** Input type for updating the status of a tour transaction. */
@@ -2283,14 +2294,14 @@ export enum TripleChoiceEnum {
 
 /** Input type for editing user information. */
 export type UserEditInputType = {
-  /** Base64-encoded image. */
-  base64Image?: InputMaybe<Scalars['String']['input']>;
   /** User's biography. */
   bio?: InputMaybe<Scalars['String']['input']>;
   /** Display name of the user. */
   displayName?: InputMaybe<Scalars['String']['input']>;
   /** First name of the user. */
   firstname?: InputMaybe<Scalars['String']['input']>;
+  /** image file. */
+  image?: InputMaybe<Scalars['Upload']['input']>;
   /** Last name of the user. */
   lastname?: InputMaybe<Scalars['String']['input']>;
 };
@@ -2833,11 +2844,7 @@ export type TourDetailQueryVariables = Exact<{
 }>;
 
 
-<<<<<<< HEAD
-export type TourDetailQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'TourQueryType', id: string, title: string, endTime: any, startTime: any, description?: string | null, rate?: { __typename?: 'RateType', avgRate?: string | null, count?: string | null } | null, statusStep?: { __typename?: 'TourStatusStepQueryType', displayName?: string | null, name?: string | null } | null, capacity?: { __typename?: 'TourCapacityType', guestNumber?: number | null, childAccept?: boolean | null, gender?: string | null } | null, NGO: { __typename?: 'NGOQueryType', id: string, isVerify?: boolean | null, verifyDescription?: string | null, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null, medium?: string | null, large?: string | null, orginal?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null, orginal?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number, discount?: number | null }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null, orginal?: string | null } | null> | null } | null };
-=======
 export type TourDetailQuery = { __typename?: 'Query', tourDetail?: { __typename?: 'TourQueryType', id: string, title: string, endTime: any, startTime: any, description?: string | null, rate?: { __typename?: 'RateType', avgRate?: string | null, count?: string | null } | null, statusStep?: { __typename?: 'TourStatusStepQueryType', displayName?: string | null, name?: string | null } | null, capacity?: { __typename?: 'TourCapacityType', guestNumber?: number | null, childAccept?: boolean | null, gender?: string | null } | null, NGO: { __typename?: 'NGOQueryType', id: string, isVerify?: boolean | null, verifyDescription?: string | null, title: string, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null, medium?: string | null, large?: string | null, orginal?: string | null } | null, ngo?: { __typename?: 'NGOQueryType', id: string } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null, orginal?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number, discount?: number | null }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null, orginal?: string | null } | null> | null } | null };
->>>>>>> develop
 
 export type TourListSearchQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
@@ -2847,11 +2854,7 @@ export type TourListSearchQueryVariables = Exact<{
 }>;
 
 
-<<<<<<< HEAD
-export type TourListSearchQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', count?: number | null, data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null, orginal?: string | null } | null> | null } | null> | null } | null };
-=======
 export type TourListSearchQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', count?: number | null, data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, price: number, discount?: number | null }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null, orginal?: string | null } | null> | null } | null> | null } | null };
->>>>>>> develop
 
 export type TourListQueryVariables = Exact<{
   search?: InputMaybe<Scalars['String']['input']>;
@@ -2861,11 +2864,7 @@ export type TourListQueryVariables = Exact<{
 }>;
 
 
-<<<<<<< HEAD
-export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', count?: number | null, data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusActivation: boolean, rate?: { __typename?: 'RateType', avgRate?: string | null } | null, NGO: { __typename?: 'NGOQueryType', id: string, title: string, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null, medium?: string | null, large?: string | null, orginal?: string | null } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null, orginal?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null, orginal?: string | null } | null> | null } | null> | null } | null };
-=======
 export type TourListQuery = { __typename?: 'Query', tourList?: { __typename?: 'TourListType', count?: number | null, data?: Array<{ __typename?: 'TourQueryType', id: string, title: string, description?: string | null, startTime: any, endTime: any, statusActivation: boolean, rate?: { __typename?: 'RateType', avgRate?: string | null } | null, NGO: { __typename?: 'NGOQueryType', id: string, title: string, user?: { __typename?: 'UserQueryType', id: string, fullname?: string | null, phoneNumber?: string | null, avatarS3?: { __typename?: 'UserImageType', small?: string | null, medium?: string | null, large?: string | null, orginal?: string | null } | null } | null, tourSet?: Array<{ __typename?: 'TourQueryType', id: string, title: string, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number, discount?: number | null }>, destination?: { __typename?: 'AccommodationQueryType', address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', large?: string | null, medium?: string | null, small?: string | null, orginal?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null> | null }, facilities?: Array<{ __typename?: 'TourFacilityQueryType', id: string, enName?: string | null, faName?: string | null, arName?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, lat?: number | null, lng?: number | null } | { __typename?: 'ProjectQueryType' } | null, packages: Array<{ __typename?: 'TourPackageType', id: string, title?: string | null, price: number, discount?: number | null }>, avatarS3?: Array<{ __typename?: 'TourImageType', medium?: string | null, large?: string | null, small?: string | null, orginal?: string | null } | null> | null } | null> | null } | null };
->>>>>>> develop
 
 export type TourTransactionDetailQueryVariables = Exact<{
   pk: Scalars['ID']['input'];
@@ -3831,8 +3830,13 @@ export function useBannerListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<BannerListQuery, BannerListQueryVariables>(BannerListDocument, options);
         }
+export function useBannerListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<BannerListQuery, BannerListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<BannerListQuery, BannerListQueryVariables>(BannerListDocument, options);
+        }
 export type BannerListQueryHookResult = ReturnType<typeof useBannerListQuery>;
 export type BannerListLazyQueryHookResult = ReturnType<typeof useBannerListLazyQuery>;
+export type BannerListSuspenseQueryHookResult = ReturnType<typeof useBannerListSuspenseQuery>;
 export type BannerListQueryResult = Apollo.QueryResult<BannerListQuery, BannerListQueryVariables>;
 export const CategoryListDocument = gql`
     query categoryList($page: PageType, $search: String) {
@@ -3879,8 +3883,13 @@ export function useCategoryListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<CategoryListQuery, CategoryListQueryVariables>(CategoryListDocument, options);
         }
+export function useCategoryListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CategoryListQuery, CategoryListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CategoryListQuery, CategoryListQueryVariables>(CategoryListDocument, options);
+        }
 export type CategoryListQueryHookResult = ReturnType<typeof useCategoryListQuery>;
 export type CategoryListLazyQueryHookResult = ReturnType<typeof useCategoryListLazyQuery>;
+export type CategoryListSuspenseQueryHookResult = ReturnType<typeof useCategoryListSuspenseQuery>;
 export type CategoryListQueryResult = Apollo.QueryResult<CategoryListQuery, CategoryListQueryVariables>;
 export const HostCommentDocument = gql`
     query hostComment($pk: ID!) {
@@ -3927,7 +3936,7 @@ export const HostCommentDocument = gql`
  *   },
  * });
  */
-export function useHostCommentQuery(baseOptions: Apollo.QueryHookOptions<HostCommentQuery, HostCommentQueryVariables>) {
+export function useHostCommentQuery(baseOptions: Apollo.QueryHookOptions<HostCommentQuery, HostCommentQueryVariables> & ({ variables: HostCommentQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<HostCommentQuery, HostCommentQueryVariables>(HostCommentDocument, options);
       }
@@ -3935,8 +3944,13 @@ export function useHostCommentLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<HostCommentQuery, HostCommentQueryVariables>(HostCommentDocument, options);
         }
+export function useHostCommentSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<HostCommentQuery, HostCommentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<HostCommentQuery, HostCommentQueryVariables>(HostCommentDocument, options);
+        }
 export type HostCommentQueryHookResult = ReturnType<typeof useHostCommentQuery>;
 export type HostCommentLazyQueryHookResult = ReturnType<typeof useHostCommentLazyQuery>;
+export type HostCommentSuspenseQueryHookResult = ReturnType<typeof useHostCommentSuspenseQuery>;
 export type HostCommentQueryResult = Apollo.QueryResult<HostCommentQuery, HostCommentQueryVariables>;
 export const MyNgoDetailProjectSetDocument = gql`
     query myNGODetailProjectSet {
@@ -4028,8 +4042,13 @@ export function useMyNgoDetailProjectSetLazyQuery(baseOptions?: Apollo.LazyQuery
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MyNgoDetailProjectSetQuery, MyNgoDetailProjectSetQueryVariables>(MyNgoDetailProjectSetDocument, options);
         }
+export function useMyNgoDetailProjectSetSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyNgoDetailProjectSetQuery, MyNgoDetailProjectSetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyNgoDetailProjectSetQuery, MyNgoDetailProjectSetQueryVariables>(MyNgoDetailProjectSetDocument, options);
+        }
 export type MyNgoDetailProjectSetQueryHookResult = ReturnType<typeof useMyNgoDetailProjectSetQuery>;
 export type MyNgoDetailProjectSetLazyQueryHookResult = ReturnType<typeof useMyNgoDetailProjectSetLazyQuery>;
+export type MyNgoDetailProjectSetSuspenseQueryHookResult = ReturnType<typeof useMyNgoDetailProjectSetSuspenseQuery>;
 export type MyNgoDetailProjectSetQueryResult = Apollo.QueryResult<MyNgoDetailProjectSetQuery, MyNgoDetailProjectSetQueryVariables>;
 export const MyNgoDetailProjectTransactionSetDocument = gql`
     query myNGODetailProjectTransactionSet {
@@ -4094,8 +4113,13 @@ export function useMyNgoDetailProjectTransactionSetLazyQuery(baseOptions?: Apoll
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MyNgoDetailProjectTransactionSetQuery, MyNgoDetailProjectTransactionSetQueryVariables>(MyNgoDetailProjectTransactionSetDocument, options);
         }
+export function useMyNgoDetailProjectTransactionSetSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyNgoDetailProjectTransactionSetQuery, MyNgoDetailProjectTransactionSetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyNgoDetailProjectTransactionSetQuery, MyNgoDetailProjectTransactionSetQueryVariables>(MyNgoDetailProjectTransactionSetDocument, options);
+        }
 export type MyNgoDetailProjectTransactionSetQueryHookResult = ReturnType<typeof useMyNgoDetailProjectTransactionSetQuery>;
 export type MyNgoDetailProjectTransactionSetLazyQueryHookResult = ReturnType<typeof useMyNgoDetailProjectTransactionSetLazyQuery>;
+export type MyNgoDetailProjectTransactionSetSuspenseQueryHookResult = ReturnType<typeof useMyNgoDetailProjectTransactionSetSuspenseQuery>;
 export type MyNgoDetailProjectTransactionSetQueryResult = Apollo.QueryResult<MyNgoDetailProjectTransactionSetQuery, MyNgoDetailProjectTransactionSetQueryVariables>;
 export const MyNgoDetailTourSetEditDocument = gql`
     query myNGODetailTourSetEdit {
@@ -4192,8 +4216,13 @@ export function useMyNgoDetailTourSetEditLazyQuery(baseOptions?: Apollo.LazyQuer
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MyNgoDetailTourSetEditQuery, MyNgoDetailTourSetEditQueryVariables>(MyNgoDetailTourSetEditDocument, options);
         }
+export function useMyNgoDetailTourSetEditSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyNgoDetailTourSetEditQuery, MyNgoDetailTourSetEditQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyNgoDetailTourSetEditQuery, MyNgoDetailTourSetEditQueryVariables>(MyNgoDetailTourSetEditDocument, options);
+        }
 export type MyNgoDetailTourSetEditQueryHookResult = ReturnType<typeof useMyNgoDetailTourSetEditQuery>;
 export type MyNgoDetailTourSetEditLazyQueryHookResult = ReturnType<typeof useMyNgoDetailTourSetEditLazyQuery>;
+export type MyNgoDetailTourSetEditSuspenseQueryHookResult = ReturnType<typeof useMyNgoDetailTourSetEditSuspenseQuery>;
 export type MyNgoDetailTourSetEditQueryResult = Apollo.QueryResult<MyNgoDetailTourSetEditQuery, MyNgoDetailTourSetEditQueryVariables>;
 export const MyNgoDetailTourSetDocument = gql`
     query myNGODetailTourSet {
@@ -4304,8 +4333,13 @@ export function useMyNgoDetailTourSetLazyQuery(baseOptions?: Apollo.LazyQueryHoo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MyNgoDetailTourSetQuery, MyNgoDetailTourSetQueryVariables>(MyNgoDetailTourSetDocument, options);
         }
+export function useMyNgoDetailTourSetSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyNgoDetailTourSetQuery, MyNgoDetailTourSetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyNgoDetailTourSetQuery, MyNgoDetailTourSetQueryVariables>(MyNgoDetailTourSetDocument, options);
+        }
 export type MyNgoDetailTourSetQueryHookResult = ReturnType<typeof useMyNgoDetailTourSetQuery>;
 export type MyNgoDetailTourSetLazyQueryHookResult = ReturnType<typeof useMyNgoDetailTourSetLazyQuery>;
+export type MyNgoDetailTourSetSuspenseQueryHookResult = ReturnType<typeof useMyNgoDetailTourSetSuspenseQuery>;
 export type MyNgoDetailTourSetQueryResult = Apollo.QueryResult<MyNgoDetailTourSetQuery, MyNgoDetailTourSetQueryVariables>;
 export const MyNgoDetailTourTransactionSetDocument = gql`
     query myNGODetailTourTransactionSet {
@@ -4377,8 +4411,13 @@ export function useMyNgoDetailTourTransactionSetLazyQuery(baseOptions?: Apollo.L
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MyNgoDetailTourTransactionSetQuery, MyNgoDetailTourTransactionSetQueryVariables>(MyNgoDetailTourTransactionSetDocument, options);
         }
+export function useMyNgoDetailTourTransactionSetSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyNgoDetailTourTransactionSetQuery, MyNgoDetailTourTransactionSetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyNgoDetailTourTransactionSetQuery, MyNgoDetailTourTransactionSetQueryVariables>(MyNgoDetailTourTransactionSetDocument, options);
+        }
 export type MyNgoDetailTourTransactionSetQueryHookResult = ReturnType<typeof useMyNgoDetailTourTransactionSetQuery>;
 export type MyNgoDetailTourTransactionSetLazyQueryHookResult = ReturnType<typeof useMyNgoDetailTourTransactionSetLazyQuery>;
+export type MyNgoDetailTourTransactionSetSuspenseQueryHookResult = ReturnType<typeof useMyNgoDetailTourTransactionSetSuspenseQuery>;
 export type MyNgoDetailTourTransactionSetQueryResult = Apollo.QueryResult<MyNgoDetailTourTransactionSetQuery, MyNgoDetailTourTransactionSetQueryVariables>;
 export const MyNgoDetailVerifyDocument = gql`
     query myNGODetailVerify {
@@ -4421,8 +4460,13 @@ export function useMyNgoDetailVerifyLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MyNgoDetailVerifyQuery, MyNgoDetailVerifyQueryVariables>(MyNgoDetailVerifyDocument, options);
         }
+export function useMyNgoDetailVerifySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyNgoDetailVerifyQuery, MyNgoDetailVerifyQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyNgoDetailVerifyQuery, MyNgoDetailVerifyQueryVariables>(MyNgoDetailVerifyDocument, options);
+        }
 export type MyNgoDetailVerifyQueryHookResult = ReturnType<typeof useMyNgoDetailVerifyQuery>;
 export type MyNgoDetailVerifyLazyQueryHookResult = ReturnType<typeof useMyNgoDetailVerifyLazyQuery>;
+export type MyNgoDetailVerifySuspenseQueryHookResult = ReturnType<typeof useMyNgoDetailVerifySuspenseQuery>;
 export type MyNgoDetailVerifyQueryResult = Apollo.QueryResult<MyNgoDetailVerifyQuery, MyNgoDetailVerifyQueryVariables>;
 export const MyNgoDetailDocument = gql`
     query myNGODetail {
@@ -4540,8 +4584,13 @@ export function useMyNgoDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MyNgoDetailQuery, MyNgoDetailQueryVariables>(MyNgoDetailDocument, options);
         }
+export function useMyNgoDetailSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyNgoDetailQuery, MyNgoDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyNgoDetailQuery, MyNgoDetailQueryVariables>(MyNgoDetailDocument, options);
+        }
 export type MyNgoDetailQueryHookResult = ReturnType<typeof useMyNgoDetailQuery>;
 export type MyNgoDetailLazyQueryHookResult = ReturnType<typeof useMyNgoDetailLazyQuery>;
+export type MyNgoDetailSuspenseQueryHookResult = ReturnType<typeof useMyNgoDetailSuspenseQuery>;
 export type MyNgoDetailQueryResult = Apollo.QueryResult<MyNgoDetailQuery, MyNgoDetailQueryVariables>;
 export const MyUserDetailProjectSetEditDocument = gql`
     query myUserDetailProjectSetEdit {
@@ -4608,8 +4657,13 @@ export function useMyUserDetailProjectSetEditLazyQuery(baseOptions?: Apollo.Lazy
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MyUserDetailProjectSetEditQuery, MyUserDetailProjectSetEditQueryVariables>(MyUserDetailProjectSetEditDocument, options);
         }
+export function useMyUserDetailProjectSetEditSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyUserDetailProjectSetEditQuery, MyUserDetailProjectSetEditQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyUserDetailProjectSetEditQuery, MyUserDetailProjectSetEditQueryVariables>(MyUserDetailProjectSetEditDocument, options);
+        }
 export type MyUserDetailProjectSetEditQueryHookResult = ReturnType<typeof useMyUserDetailProjectSetEditQuery>;
 export type MyUserDetailProjectSetEditLazyQueryHookResult = ReturnType<typeof useMyUserDetailProjectSetEditLazyQuery>;
+export type MyUserDetailProjectSetEditSuspenseQueryHookResult = ReturnType<typeof useMyUserDetailProjectSetEditSuspenseQuery>;
 export type MyUserDetailProjectSetEditQueryResult = Apollo.QueryResult<MyUserDetailProjectSetEditQuery, MyUserDetailProjectSetEditQueryVariables>;
 export const MyUserDetailProjectSetDocument = gql`
     query myUserDetailProjectSet {
@@ -4707,8 +4761,13 @@ export function useMyUserDetailProjectSetLazyQuery(baseOptions?: Apollo.LazyQuer
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MyUserDetailProjectSetQuery, MyUserDetailProjectSetQueryVariables>(MyUserDetailProjectSetDocument, options);
         }
+export function useMyUserDetailProjectSetSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyUserDetailProjectSetQuery, MyUserDetailProjectSetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyUserDetailProjectSetQuery, MyUserDetailProjectSetQueryVariables>(MyUserDetailProjectSetDocument, options);
+        }
 export type MyUserDetailProjectSetQueryHookResult = ReturnType<typeof useMyUserDetailProjectSetQuery>;
 export type MyUserDetailProjectSetLazyQueryHookResult = ReturnType<typeof useMyUserDetailProjectSetLazyQuery>;
+export type MyUserDetailProjectSetSuspenseQueryHookResult = ReturnType<typeof useMyUserDetailProjectSetSuspenseQuery>;
 export type MyUserDetailProjectSetQueryResult = Apollo.QueryResult<MyUserDetailProjectSetQuery, MyUserDetailProjectSetQueryVariables>;
 export const MyUserDetailProjectTransactionSetDocument = gql`
     query myUserDetailProjectTransactionSet {
@@ -4774,8 +4833,13 @@ export function useMyUserDetailProjectTransactionSetLazyQuery(baseOptions?: Apol
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MyUserDetailProjectTransactionSetQuery, MyUserDetailProjectTransactionSetQueryVariables>(MyUserDetailProjectTransactionSetDocument, options);
         }
+export function useMyUserDetailProjectTransactionSetSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MyUserDetailProjectTransactionSetQuery, MyUserDetailProjectTransactionSetQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<MyUserDetailProjectTransactionSetQuery, MyUserDetailProjectTransactionSetQueryVariables>(MyUserDetailProjectTransactionSetDocument, options);
+        }
 export type MyUserDetailProjectTransactionSetQueryHookResult = ReturnType<typeof useMyUserDetailProjectTransactionSetQuery>;
 export type MyUserDetailProjectTransactionSetLazyQueryHookResult = ReturnType<typeof useMyUserDetailProjectTransactionSetLazyQuery>;
+export type MyUserDetailProjectTransactionSetSuspenseQueryHookResult = ReturnType<typeof useMyUserDetailProjectTransactionSetSuspenseQuery>;
 export type MyUserDetailProjectTransactionSetQueryResult = Apollo.QueryResult<MyUserDetailProjectTransactionSetQuery, MyUserDetailProjectTransactionSetQueryVariables>;
 export const NgoDetailDocument = gql`
     query NGODetail($pk: ID) {
@@ -4924,8 +4988,13 @@ export function useNgoDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<NgoDetailQuery, NgoDetailQueryVariables>(NgoDetailDocument, options);
         }
+export function useNgoDetailSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<NgoDetailQuery, NgoDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<NgoDetailQuery, NgoDetailQueryVariables>(NgoDetailDocument, options);
+        }
 export type NgoDetailQueryHookResult = ReturnType<typeof useNgoDetailQuery>;
 export type NgoDetailLazyQueryHookResult = ReturnType<typeof useNgoDetailLazyQuery>;
+export type NgoDetailSuspenseQueryHookResult = ReturnType<typeof useNgoDetailSuspenseQuery>;
 export type NgoDetailQueryResult = Apollo.QueryResult<NgoDetailQuery, NgoDetailQueryVariables>;
 export const ProjectCapacityListDocument = gql`
     query projectCapacityList($pk: ID!, $filter: ProjectCapacityListFilterType!) {
@@ -4954,7 +5023,7 @@ export const ProjectCapacityListDocument = gql`
  *   },
  * });
  */
-export function useProjectCapacityListQuery(baseOptions: Apollo.QueryHookOptions<ProjectCapacityListQuery, ProjectCapacityListQueryVariables>) {
+export function useProjectCapacityListQuery(baseOptions: Apollo.QueryHookOptions<ProjectCapacityListQuery, ProjectCapacityListQueryVariables> & ({ variables: ProjectCapacityListQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ProjectCapacityListQuery, ProjectCapacityListQueryVariables>(ProjectCapacityListDocument, options);
       }
@@ -4962,8 +5031,13 @@ export function useProjectCapacityListLazyQuery(baseOptions?: Apollo.LazyQueryHo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ProjectCapacityListQuery, ProjectCapacityListQueryVariables>(ProjectCapacityListDocument, options);
         }
+export function useProjectCapacityListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ProjectCapacityListQuery, ProjectCapacityListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ProjectCapacityListQuery, ProjectCapacityListQueryVariables>(ProjectCapacityListDocument, options);
+        }
 export type ProjectCapacityListQueryHookResult = ReturnType<typeof useProjectCapacityListQuery>;
 export type ProjectCapacityListLazyQueryHookResult = ReturnType<typeof useProjectCapacityListLazyQuery>;
+export type ProjectCapacityListSuspenseQueryHookResult = ReturnType<typeof useProjectCapacityListSuspenseQuery>;
 export type ProjectCapacityListQueryResult = Apollo.QueryResult<ProjectCapacityListQuery, ProjectCapacityListQueryVariables>;
 export const ProjectDetailDocument = gql`
     query projectDetail($pk: ID!) {
@@ -5066,7 +5140,7 @@ export const ProjectDetailDocument = gql`
  *   },
  * });
  */
-export function useProjectDetailQuery(baseOptions: Apollo.QueryHookOptions<ProjectDetailQuery, ProjectDetailQueryVariables>) {
+export function useProjectDetailQuery(baseOptions: Apollo.QueryHookOptions<ProjectDetailQuery, ProjectDetailQueryVariables> & ({ variables: ProjectDetailQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ProjectDetailQuery, ProjectDetailQueryVariables>(ProjectDetailDocument, options);
       }
@@ -5074,8 +5148,13 @@ export function useProjectDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ProjectDetailQuery, ProjectDetailQueryVariables>(ProjectDetailDocument, options);
         }
+export function useProjectDetailSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ProjectDetailQuery, ProjectDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ProjectDetailQuery, ProjectDetailQueryVariables>(ProjectDetailDocument, options);
+        }
 export type ProjectDetailQueryHookResult = ReturnType<typeof useProjectDetailQuery>;
 export type ProjectDetailLazyQueryHookResult = ReturnType<typeof useProjectDetailLazyQuery>;
+export type ProjectDetailSuspenseQueryHookResult = ReturnType<typeof useProjectDetailSuspenseQuery>;
 export type ProjectDetailQueryResult = Apollo.QueryResult<ProjectDetailQuery, ProjectDetailQueryVariables>;
 export const ProjectListSearchDocument = gql`
     query projectListSearch($search: String, $sort: SortType = {descending: true}, $filter: ProjectFilterType, $page: PageType!) {
@@ -5127,7 +5206,7 @@ export const ProjectListSearchDocument = gql`
  *   },
  * });
  */
-export function useProjectListSearchQuery(baseOptions: Apollo.QueryHookOptions<ProjectListSearchQuery, ProjectListSearchQueryVariables>) {
+export function useProjectListSearchQuery(baseOptions: Apollo.QueryHookOptions<ProjectListSearchQuery, ProjectListSearchQueryVariables> & ({ variables: ProjectListSearchQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ProjectListSearchQuery, ProjectListSearchQueryVariables>(ProjectListSearchDocument, options);
       }
@@ -5135,8 +5214,13 @@ export function useProjectListSearchLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ProjectListSearchQuery, ProjectListSearchQueryVariables>(ProjectListSearchDocument, options);
         }
+export function useProjectListSearchSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ProjectListSearchQuery, ProjectListSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ProjectListSearchQuery, ProjectListSearchQueryVariables>(ProjectListSearchDocument, options);
+        }
 export type ProjectListSearchQueryHookResult = ReturnType<typeof useProjectListSearchQuery>;
 export type ProjectListSearchLazyQueryHookResult = ReturnType<typeof useProjectListSearchLazyQuery>;
+export type ProjectListSearchSuspenseQueryHookResult = ReturnType<typeof useProjectListSearchSuspenseQuery>;
 export type ProjectListSearchQueryResult = Apollo.QueryResult<ProjectListSearchQuery, ProjectListSearchQueryVariables>;
 export const ProjectListDocument = gql`
     query projectList($search: String, $sort: SortType, $filter: ProjectFilterType, $page: PageType!) {
@@ -5196,7 +5280,7 @@ export const ProjectListDocument = gql`
  *   },
  * });
  */
-export function useProjectListQuery(baseOptions: Apollo.QueryHookOptions<ProjectListQuery, ProjectListQueryVariables>) {
+export function useProjectListQuery(baseOptions: Apollo.QueryHookOptions<ProjectListQuery, ProjectListQueryVariables> & ({ variables: ProjectListQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ProjectListQuery, ProjectListQueryVariables>(ProjectListDocument, options);
       }
@@ -5204,8 +5288,13 @@ export function useProjectListLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ProjectListQuery, ProjectListQueryVariables>(ProjectListDocument, options);
         }
+export function useProjectListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ProjectListQuery, ProjectListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ProjectListQuery, ProjectListQueryVariables>(ProjectListDocument, options);
+        }
 export type ProjectListQueryHookResult = ReturnType<typeof useProjectListQuery>;
 export type ProjectListLazyQueryHookResult = ReturnType<typeof useProjectListLazyQuery>;
+export type ProjectListSuspenseQueryHookResult = ReturnType<typeof useProjectListSuspenseQuery>;
 export type ProjectListQueryResult = Apollo.QueryResult<ProjectListQuery, ProjectListQueryVariables>;
 export const ProjectTransactionDetailDocument = gql`
     query projectTransactionDetail($pk: ID!) {
@@ -5291,7 +5380,7 @@ export const ProjectTransactionDetailDocument = gql`
  *   },
  * });
  */
-export function useProjectTransactionDetailQuery(baseOptions: Apollo.QueryHookOptions<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables>) {
+export function useProjectTransactionDetailQuery(baseOptions: Apollo.QueryHookOptions<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables> & ({ variables: ProjectTransactionDetailQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables>(ProjectTransactionDetailDocument, options);
       }
@@ -5299,8 +5388,13 @@ export function useProjectTransactionDetailLazyQuery(baseOptions?: Apollo.LazyQu
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables>(ProjectTransactionDetailDocument, options);
         }
+export function useProjectTransactionDetailSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables>(ProjectTransactionDetailDocument, options);
+        }
 export type ProjectTransactionDetailQueryHookResult = ReturnType<typeof useProjectTransactionDetailQuery>;
 export type ProjectTransactionDetailLazyQueryHookResult = ReturnType<typeof useProjectTransactionDetailLazyQuery>;
+export type ProjectTransactionDetailSuspenseQueryHookResult = ReturnType<typeof useProjectTransactionDetailSuspenseQuery>;
 export type ProjectTransactionDetailQueryResult = Apollo.QueryResult<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables>;
 export const ProjectTransactionListDocument = gql`
     query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterType) {
@@ -5390,8 +5484,13 @@ export function useProjectTransactionListLazyQuery(baseOptions?: Apollo.LazyQuer
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ProjectTransactionListQuery, ProjectTransactionListQueryVariables>(ProjectTransactionListDocument, options);
         }
+export function useProjectTransactionListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ProjectTransactionListQuery, ProjectTransactionListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ProjectTransactionListQuery, ProjectTransactionListQueryVariables>(ProjectTransactionListDocument, options);
+        }
 export type ProjectTransactionListQueryHookResult = ReturnType<typeof useProjectTransactionListQuery>;
 export type ProjectTransactionListLazyQueryHookResult = ReturnType<typeof useProjectTransactionListLazyQuery>;
+export type ProjectTransactionListSuspenseQueryHookResult = ReturnType<typeof useProjectTransactionListSuspenseQuery>;
 export type ProjectTransactionListQueryResult = Apollo.QueryResult<ProjectTransactionListQuery, ProjectTransactionListQueryVariables>;
 export const ReportCategoryListDocument = gql`
     query ReportCategoryList {
@@ -5427,8 +5526,13 @@ export function useReportCategoryListLazyQuery(baseOptions?: Apollo.LazyQueryHoo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ReportCategoryListQuery, ReportCategoryListQueryVariables>(ReportCategoryListDocument, options);
         }
+export function useReportCategoryListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ReportCategoryListQuery, ReportCategoryListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ReportCategoryListQuery, ReportCategoryListQueryVariables>(ReportCategoryListDocument, options);
+        }
 export type ReportCategoryListQueryHookResult = ReturnType<typeof useReportCategoryListQuery>;
 export type ReportCategoryListLazyQueryHookResult = ReturnType<typeof useReportCategoryListLazyQuery>;
+export type ReportCategoryListSuspenseQueryHookResult = ReturnType<typeof useReportCategoryListSuspenseQuery>;
 export type ReportCategoryListQueryResult = Apollo.QueryResult<ReportCategoryListQuery, ReportCategoryListQueryVariables>;
 export const SettingDetailDocument = gql`
     query settingDetail($userId: ID) {
@@ -5462,8 +5566,13 @@ export function useSettingDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SettingDetailQuery, SettingDetailQueryVariables>(SettingDetailDocument, options);
         }
+export function useSettingDetailSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SettingDetailQuery, SettingDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SettingDetailQuery, SettingDetailQueryVariables>(SettingDetailDocument, options);
+        }
 export type SettingDetailQueryHookResult = ReturnType<typeof useSettingDetailQuery>;
 export type SettingDetailLazyQueryHookResult = ReturnType<typeof useSettingDetailLazyQuery>;
+export type SettingDetailSuspenseQueryHookResult = ReturnType<typeof useSettingDetailSuspenseQuery>;
 export type SettingDetailQueryResult = Apollo.QueryResult<SettingDetailQuery, SettingDetailQueryVariables>;
 export const TagListDocument = gql`
     query TagList($search: String, $page: PageType) {
@@ -5504,8 +5613,13 @@ export function useTagListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ta
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TagListQuery, TagListQueryVariables>(TagListDocument, options);
         }
+export function useTagListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TagListQuery, TagListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TagListQuery, TagListQueryVariables>(TagListDocument, options);
+        }
 export type TagListQueryHookResult = ReturnType<typeof useTagListQuery>;
 export type TagListLazyQueryHookResult = ReturnType<typeof useTagListLazyQuery>;
+export type TagListSuspenseQueryHookResult = ReturnType<typeof useTagListSuspenseQuery>;
 export type TagListQueryResult = Apollo.QueryResult<TagListQuery, TagListQueryVariables>;
 export const TourCommentDocument = gql`
     query tourComment($pk: ID!) {
@@ -5552,7 +5666,7 @@ export const TourCommentDocument = gql`
  *   },
  * });
  */
-export function useTourCommentQuery(baseOptions: Apollo.QueryHookOptions<TourCommentQuery, TourCommentQueryVariables>) {
+export function useTourCommentQuery(baseOptions: Apollo.QueryHookOptions<TourCommentQuery, TourCommentQueryVariables> & ({ variables: TourCommentQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<TourCommentQuery, TourCommentQueryVariables>(TourCommentDocument, options);
       }
@@ -5560,8 +5674,13 @@ export function useTourCommentLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TourCommentQuery, TourCommentQueryVariables>(TourCommentDocument, options);
         }
+export function useTourCommentSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TourCommentQuery, TourCommentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TourCommentQuery, TourCommentQueryVariables>(TourCommentDocument, options);
+        }
 export type TourCommentQueryHookResult = ReturnType<typeof useTourCommentQuery>;
 export type TourCommentLazyQueryHookResult = ReturnType<typeof useTourCommentLazyQuery>;
+export type TourCommentSuspenseQueryHookResult = ReturnType<typeof useTourCommentSuspenseQuery>;
 export type TourCommentQueryResult = Apollo.QueryResult<TourCommentQuery, TourCommentQueryVariables>;
 export const TourDetailDocument = gql`
     query tourDetail($pk: ID!) {
@@ -5670,7 +5789,7 @@ export const TourDetailDocument = gql`
  *   },
  * });
  */
-export function useTourDetailQuery(baseOptions: Apollo.QueryHookOptions<TourDetailQuery, TourDetailQueryVariables>) {
+export function useTourDetailQuery(baseOptions: Apollo.QueryHookOptions<TourDetailQuery, TourDetailQueryVariables> & ({ variables: TourDetailQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<TourDetailQuery, TourDetailQueryVariables>(TourDetailDocument, options);
       }
@@ -5678,8 +5797,13 @@ export function useTourDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TourDetailQuery, TourDetailQueryVariables>(TourDetailDocument, options);
         }
+export function useTourDetailSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TourDetailQuery, TourDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TourDetailQuery, TourDetailQueryVariables>(TourDetailDocument, options);
+        }
 export type TourDetailQueryHookResult = ReturnType<typeof useTourDetailQuery>;
 export type TourDetailLazyQueryHookResult = ReturnType<typeof useTourDetailLazyQuery>;
+export type TourDetailSuspenseQueryHookResult = ReturnType<typeof useTourDetailSuspenseQuery>;
 export type TourDetailQueryResult = Apollo.QueryResult<TourDetailQuery, TourDetailQueryVariables>;
 export const TourListSearchDocument = gql`
     query tourListSearch($search: String, $sort: SortType, $filter: TourFilterType, $page: PageType!) {
@@ -5731,7 +5855,7 @@ export const TourListSearchDocument = gql`
  *   },
  * });
  */
-export function useTourListSearchQuery(baseOptions: Apollo.QueryHookOptions<TourListSearchQuery, TourListSearchQueryVariables>) {
+export function useTourListSearchQuery(baseOptions: Apollo.QueryHookOptions<TourListSearchQuery, TourListSearchQueryVariables> & ({ variables: TourListSearchQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<TourListSearchQuery, TourListSearchQueryVariables>(TourListSearchDocument, options);
       }
@@ -5739,8 +5863,13 @@ export function useTourListSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TourListSearchQuery, TourListSearchQueryVariables>(TourListSearchDocument, options);
         }
+export function useTourListSearchSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TourListSearchQuery, TourListSearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TourListSearchQuery, TourListSearchQueryVariables>(TourListSearchDocument, options);
+        }
 export type TourListSearchQueryHookResult = ReturnType<typeof useTourListSearchQuery>;
 export type TourListSearchLazyQueryHookResult = ReturnType<typeof useTourListSearchLazyQuery>;
+export type TourListSearchSuspenseQueryHookResult = ReturnType<typeof useTourListSearchSuspenseQuery>;
 export type TourListSearchQueryResult = Apollo.QueryResult<TourListSearchQuery, TourListSearchQueryVariables>;
 export const TourListDocument = gql`
     query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page: PageType!) {
@@ -5842,7 +5971,7 @@ export const TourListDocument = gql`
  *   },
  * });
  */
-export function useTourListQuery(baseOptions: Apollo.QueryHookOptions<TourListQuery, TourListQueryVariables>) {
+export function useTourListQuery(baseOptions: Apollo.QueryHookOptions<TourListQuery, TourListQueryVariables> & ({ variables: TourListQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<TourListQuery, TourListQueryVariables>(TourListDocument, options);
       }
@@ -5850,8 +5979,13 @@ export function useTourListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<T
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TourListQuery, TourListQueryVariables>(TourListDocument, options);
         }
+export function useTourListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TourListQuery, TourListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TourListQuery, TourListQueryVariables>(TourListDocument, options);
+        }
 export type TourListQueryHookResult = ReturnType<typeof useTourListQuery>;
 export type TourListLazyQueryHookResult = ReturnType<typeof useTourListLazyQuery>;
+export type TourListSuspenseQueryHookResult = ReturnType<typeof useTourListSuspenseQuery>;
 export type TourListQueryResult = Apollo.QueryResult<TourListQuery, TourListQueryVariables>;
 export const TourTransactionDetailDocument = gql`
     query tourTransactionDetail($pk: ID!) {
@@ -5933,7 +6067,7 @@ export const TourTransactionDetailDocument = gql`
  *   },
  * });
  */
-export function useTourTransactionDetailQuery(baseOptions: Apollo.QueryHookOptions<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>) {
+export function useTourTransactionDetailQuery(baseOptions: Apollo.QueryHookOptions<TourTransactionDetailQuery, TourTransactionDetailQueryVariables> & ({ variables: TourTransactionDetailQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>(TourTransactionDetailDocument, options);
       }
@@ -5941,8 +6075,13 @@ export function useTourTransactionDetailLazyQuery(baseOptions?: Apollo.LazyQuery
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>(TourTransactionDetailDocument, options);
         }
+export function useTourTransactionDetailSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>(TourTransactionDetailDocument, options);
+        }
 export type TourTransactionDetailQueryHookResult = ReturnType<typeof useTourTransactionDetailQuery>;
 export type TourTransactionDetailLazyQueryHookResult = ReturnType<typeof useTourTransactionDetailLazyQuery>;
+export type TourTransactionDetailSuspenseQueryHookResult = ReturnType<typeof useTourTransactionDetailSuspenseQuery>;
 export type TourTransactionDetailQueryResult = Apollo.QueryResult<TourTransactionDetailQuery, TourTransactionDetailQueryVariables>;
 export const TourTransactionListDocument = gql`
     query tourTransactionList($page: PageType) {
@@ -6018,8 +6157,13 @@ export function useTourTransactionListLazyQuery(baseOptions?: Apollo.LazyQueryHo
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<TourTransactionListQuery, TourTransactionListQueryVariables>(TourTransactionListDocument, options);
         }
+export function useTourTransactionListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TourTransactionListQuery, TourTransactionListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<TourTransactionListQuery, TourTransactionListQueryVariables>(TourTransactionListDocument, options);
+        }
 export type TourTransactionListQueryHookResult = ReturnType<typeof useTourTransactionListQuery>;
 export type TourTransactionListLazyQueryHookResult = ReturnType<typeof useTourTransactionListLazyQuery>;
+export type TourTransactionListSuspenseQueryHookResult = ReturnType<typeof useTourTransactionListSuspenseQuery>;
 export type TourTransactionListQueryResult = Apollo.QueryResult<TourTransactionListQuery, TourTransactionListQueryVariables>;
 export const UserDetailProfileDocument = gql`
     query userDetailProfile {
@@ -6076,8 +6220,13 @@ export function useUserDetailProfileLazyQuery(baseOptions?: Apollo.LazyQueryHook
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<UserDetailProfileQuery, UserDetailProfileQueryVariables>(UserDetailProfileDocument, options);
         }
+export function useUserDetailProfileSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<UserDetailProfileQuery, UserDetailProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UserDetailProfileQuery, UserDetailProfileQueryVariables>(UserDetailProfileDocument, options);
+        }
 export type UserDetailProfileQueryHookResult = ReturnType<typeof useUserDetailProfileQuery>;
 export type UserDetailProfileLazyQueryHookResult = ReturnType<typeof useUserDetailProfileLazyQuery>;
+export type UserDetailProfileSuspenseQueryHookResult = ReturnType<typeof useUserDetailProfileSuspenseQuery>;
 export type UserDetailProfileQueryResult = Apollo.QueryResult<UserDetailProfileQuery, UserDetailProfileQueryVariables>;
 export const UserDetailDocument = gql`
     query userDetail {
@@ -6175,8 +6324,13 @@ export function useUserDetailLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<UserDetailQuery, UserDetailQueryVariables>(UserDetailDocument, options);
         }
+export function useUserDetailSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<UserDetailQuery, UserDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<UserDetailQuery, UserDetailQueryVariables>(UserDetailDocument, options);
+        }
 export type UserDetailQueryHookResult = ReturnType<typeof useUserDetailQuery>;
 export type UserDetailLazyQueryHookResult = ReturnType<typeof useUserDetailLazyQuery>;
+export type UserDetailSuspenseQueryHookResult = ReturnType<typeof useUserDetailSuspenseQuery>;
 export type UserDetailQueryResult = Apollo.QueryResult<UserDetailQuery, UserDetailQueryVariables>;
 export const WalletTransactionListDocument = gql`
     query walletTransactionList {
@@ -6239,8 +6393,13 @@ export function useWalletTransactionListLazyQuery(baseOptions?: Apollo.LazyQuery
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<WalletTransactionListQuery, WalletTransactionListQueryVariables>(WalletTransactionListDocument, options);
         }
+export function useWalletTransactionListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<WalletTransactionListQuery, WalletTransactionListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<WalletTransactionListQuery, WalletTransactionListQueryVariables>(WalletTransactionListDocument, options);
+        }
 export type WalletTransactionListQueryHookResult = ReturnType<typeof useWalletTransactionListQuery>;
 export type WalletTransactionListLazyQueryHookResult = ReturnType<typeof useWalletTransactionListLazyQuery>;
+export type WalletTransactionListSuspenseQueryHookResult = ReturnType<typeof useWalletTransactionListSuspenseQuery>;
 export type WalletTransactionListQueryResult = Apollo.QueryResult<WalletTransactionListQuery, WalletTransactionListQueryVariables>;
 export const WalletTransactionDetailDocument = gql`
     query walletTransactionDetail($pk: ID!) {
@@ -6294,7 +6453,7 @@ export const WalletTransactionDetailDocument = gql`
  *   },
  * });
  */
-export function useWalletTransactionDetailQuery(baseOptions: Apollo.QueryHookOptions<WalletTransactionDetailQuery, WalletTransactionDetailQueryVariables>) {
+export function useWalletTransactionDetailQuery(baseOptions: Apollo.QueryHookOptions<WalletTransactionDetailQuery, WalletTransactionDetailQueryVariables> & ({ variables: WalletTransactionDetailQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<WalletTransactionDetailQuery, WalletTransactionDetailQueryVariables>(WalletTransactionDetailDocument, options);
       }
@@ -6302,6 +6461,11 @@ export function useWalletTransactionDetailLazyQuery(baseOptions?: Apollo.LazyQue
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<WalletTransactionDetailQuery, WalletTransactionDetailQueryVariables>(WalletTransactionDetailDocument, options);
         }
+export function useWalletTransactionDetailSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<WalletTransactionDetailQuery, WalletTransactionDetailQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<WalletTransactionDetailQuery, WalletTransactionDetailQueryVariables>(WalletTransactionDetailDocument, options);
+        }
 export type WalletTransactionDetailQueryHookResult = ReturnType<typeof useWalletTransactionDetailQuery>;
 export type WalletTransactionDetailLazyQueryHookResult = ReturnType<typeof useWalletTransactionDetailLazyQuery>;
+export type WalletTransactionDetailSuspenseQueryHookResult = ReturnType<typeof useWalletTransactionDetailSuspenseQuery>;
 export type WalletTransactionDetailQueryResult = Apollo.QueryResult<WalletTransactionDetailQuery, WalletTransactionDetailQueryVariables>;
