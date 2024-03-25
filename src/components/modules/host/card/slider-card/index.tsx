@@ -115,7 +115,7 @@ function HostSliderCard({
             </Text>
           </View>
         </View>
-        {rate.avgRate && (
+        {rate?.avgRate && (
           <View style={style.rate}>
             <FontAwesome name="star" size={20} color={theme.colors.warning} />
             <Text body2>{localizeNumber(rate.avgRate as string)}</Text>
