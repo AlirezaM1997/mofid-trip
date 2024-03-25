@@ -1,15 +1,17 @@
 import { Colors } from "@rneui/themed";
-import { MyNgoDetailQuery } from "@src/gql/generated";
+import { MyNgoDetailQuery, ProjectQueryType, ProjectStatusEnum } from "@src/gql/generated";
 
 export const getHostRequestStatusBadgeColor: (
-  project: MyNgoDetailQuery["NGODetail"]["projectSet"][0]
+  project: ProjectQueryType
 ) => keyof Colors = project => {
-  if (project.statusStep.name === "REQUEST") {
+  if (project?.statusStep?.name === ProjectStatusEnum.Request) {
     return project.statusActivation ? "warning" : "error";
-  } else if (project.statusStep.name === "ACCEPT") {
+  } else if (
+    [ProjectStatusEnum.End, ProjectStatusEnum.Accept].includes(
+      project?.statusStep?.name as ProjectStatusEnum
+    )
+  ) {
     return project.statusActivation ? "primary" : "error";
-  } else if (project.statusStep.name === "END") {
-    return project.statusActivation ? "success" : "error";
   }
   return "error";
 };

@@ -249,6 +249,7 @@ export const theme = isRtl =>
             color: SECONDARY_COLOR,
           };
         }
+
         if (type === "outline" && color === "secondary") {
           buttonStyle = {
             ...buttonStyle,
@@ -271,6 +272,29 @@ export const theme = isRtl =>
 
         if (size === "md") {
           containerStyle = { ...buttonStyle, height: Platform.OS === "web" ? "auto" : 39.6 };
+        }
+
+        if (["outline", "clear"].includes(type as string)) {
+          if (size === "sm") {
+            buttonStyle = {
+              ...buttonStyle,
+              height: 33,
+            };
+          } else if (size === "lg") {
+            buttonStyle = {
+              ...buttonStyle,
+              height: 52,
+            };
+          } else {
+            buttonStyle = {
+              ...buttonStyle,
+              height: 44,
+            };
+          }
+          titleStyle = {
+            ...titleStyle,
+            margin: "auto",
+          };
         }
 
         return {
@@ -333,9 +357,10 @@ export const theme = isRtl =>
           }),
         },
         inputStyle: {
+          padding: 15,
           borderWidth: 1,
           borderRadius: 12,
-          padding: 15,
+          outlineColor: SECONDARY_COLOR,
           paddingLeft: props.leftIcon ? 35 : WIDTH >= 285 ? 15 : 0,
           paddingRight: props.rightIcon ? 35 : WIDTH >= 285 ? 15 : 0,
           fontSize: WIDTH > 320 ? 16 : 14,
@@ -355,8 +380,8 @@ export const theme = isRtl =>
           textAlign: !isRtl || ["numeric"].includes(props.keyboardType) ? "left" : "right",
         },
         inputContainerStyle: {
-          borderBottomWidth: 0,
           width: "100%",
+          borderBottomWidth: 0,
         },
         containerStyle: {
           paddingHorizontal: 0,

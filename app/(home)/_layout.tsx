@@ -1,30 +1,28 @@
-import { useEffect, useState } from "react";
-import { router, useLocalSearchParams, usePathname } from "expo-router";
+import { router } from "expo-router";
 import { Tabs } from "expo-router/tabs";
+import Container from "@atoms/container";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import WhiteSpace from "@atoms/white-space";
+import ButtonRow from "@modules/button-rows";
 import useIsRtl from "@src/hooks/localization";
 import useTranslation from "@src/hooks/translation";
 import useProjectTable from "@src/hooks/db/project";
 import { Platform, StyleSheet } from "react-native";
 import { Feather, FontAwesome } from "@expo/vector-icons";
 import { BottomSheet, Button, Text, useTheme } from "@rneui/themed";
-import ButtonRow from "@modules/button-rows";
-import WhiteSpace from "@atoms/white-space";
-import Container from "@atoms/container";
 import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
-import { useDispatch } from "react-redux";
 
 export default function AppLayout() {
   const isRtl = useIsRtl();
   const { theme } = useTheme();
+  const dispatch = useDispatch();
   const { tr } = useTranslation();
   const { syncTable } = useProjectTable();
   const [isVisible, setIsVisible] = useState(false);
-  const dispatch = useDispatch();
-  const routeName = usePathname();
-  const params = useLocalSearchParams();
 
-  const handleClose = () => setIsVisible(false);
   const handleOpen = () => setIsVisible(true);
+  const handleClose = () => setIsVisible(false);
 
   useEffect(() => {
     syncTable({
@@ -41,12 +39,13 @@ export default function AppLayout() {
         initialRouteName="index"
         sceneContainerStyle={{ backgroundColor: theme.colors.white }}
         screenOptions={({ navigation }) => ({
+          headerShown: false,
+          unmountOnBlur: true,
+          headerTitleAlign: "center",
           tabBarStyle: style.tabBarStyle,
           tabBarActiveTintColor: theme.colors.primary,
           tabBarLabelStyle: style.tabBarLabelStyle(isRtl),
           headerTitleStyle: style.headerTitleStyle(isRtl),
-          headerTitleAlign: "center",
-          headerShown: false,
           headerLeft: () => (
             <Button
               type="clear"
@@ -55,8 +54,8 @@ export default function AppLayout() {
               icon={
                 <Feather
                   size={24}
-                  name={isRtl ? "arrow-right" : "arrow-left"}
                   color={theme.colors.grey5}
+                  name={isRtl ? "arrow-right" : "arrow-left"}
                 />
               }
             />
@@ -70,17 +69,15 @@ export default function AppLayout() {
             tabBarIcon: ({ color, size }) => <Feather name="home" size={size} color={color} />,
           }}
         />
-        <Tabs.Screen
-          name="mahdieh-iran"
-          options={{
-            title: "رزرو اسکان صلواتی مهدیه ایران",
-            headerShown: true,
-            headerTitleAlign: "left",
-            tabBarItemStyle: { display: "none" },
-          }}
-        />
+
         <Tabs.Screen
           name="search-list"
+          listeners={() => ({
+            tabPress: e => {
+              e.preventDefault();
+              router.push("/search-list?isShowMap=true");
+            },
+          })}
           options={{
             title: tr("map"),
             tabBarIcon: ({ color, size }) => <FontAwesome name="map" size={size} color={color} />,
@@ -134,8 +131,7 @@ export default function AppLayout() {
                 handleClose();
                 dispatch(
                   setRedirectToScreenAfterLogin({
-                    pathname: routeName,
-                    params: params,
+                    pathname: "/host/create",
                   })
                 );
               }}
@@ -148,8 +144,7 @@ export default function AppLayout() {
                 router.push("/tour/create");
                 dispatch(
                   setRedirectToScreenAfterLogin({
-                    pathname: routeName,
-                    params: params,
+                    pathname: "/tour/create",
                   })
                 );
               }}>

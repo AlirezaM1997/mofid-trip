@@ -24,6 +24,9 @@ query myUserDetailProjectSetEdit {
         province
         avatarS3 {
           small
+          medium
+          large
+          orginal
         }
       }
       capacity {

@@ -19,7 +19,7 @@ const HostTransactionConfirmData = ({
   const { projectId, name } = useLocalSearchParams();
 
   const handleNavigation = () => {
-    router.push({ pathname: `host/${projectId}`, params: { projectId: projectId, name: name } });
+    router.push({ pathname: `host/${projectId}/`, params: { projectId: projectId, name: name } });
   };
 
   const { values } = useFormikContext<ProjectTransactionAddInputType>();

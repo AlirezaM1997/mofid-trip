@@ -17,6 +17,7 @@ query myNGODetailProjectSet {
           large
           medium
           small
+          orginal
         }
       }
       name
@@ -29,7 +30,7 @@ query myNGODetailProjectSet {
       price
       discount
       tax
-      statusStep{
+      statusStep {
         displayName
         name
       }

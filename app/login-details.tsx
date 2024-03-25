@@ -14,6 +14,7 @@ import { useSession } from "@src/context/auth";
 import { useSelector } from "react-redux";
 import { Button, Text } from "@rneui/themed";
 import { useUserDetailQuery, useUserEditMutation } from "@src/gql/generated";
+import Toast from "react-native-toast-message";
 
 const LoginDetailScreen = () => {
   const { tr } = useTranslation();
@@ -34,7 +35,13 @@ const LoginDetailScreen = () => {
     lastname: Yup.string().required(tr("Last name is required")),
   });
 
-  const submitHandler = async ({ firstname , lastname }:{ firstname: string , lastname: string }) => {
+  const submitHandler = async ({
+    firstname,
+    lastname,
+  }: {
+    firstname: string;
+    lastname: string;
+  }) => {
     const { data } = await edit({
       variables: {
         data: {
@@ -53,6 +60,12 @@ const LoginDetailScreen = () => {
           firstname: firstname,
           lastname: lastname,
         },
+      });
+    } else {
+      Toast.show({
+        type: "error",
+        text1: "خطا",
+        text2: data?.userEdit?.message,
       });
     }
   };
@@ -86,9 +99,7 @@ const LoginDetailScreen = () => {
               <WhiteSpace size={32} />
               <Text heading1>{tr("write a screen name for yourself")}</Text>
               <WhiteSpace size={4} />
-              <Text caption>
-                {tr("please choose a screen name for yourself.")}
-              </Text>
+              <Text caption>{tr("please choose a screen name for yourself.")}</Text>
               <WhiteSpace size={24} />
               <Input
                 name="firstname"

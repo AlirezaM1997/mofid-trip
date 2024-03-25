@@ -4,6 +4,10 @@ query tourDetail($pk: ID!) {
     title
     endTime
     startTime
+    rate {
+      avgRate
+      count
+    }
     statusStep {
       displayName
       name
@@ -18,12 +22,16 @@ query tourDetail($pk: ID!) {
       id
       isVerify
       verifyDescription
+      title
       user {
         id
         fullname
         phoneNumber
         avatarS3 {
           small
+          medium
+          large
+          orginal
         }
         ngo {
           id
@@ -44,6 +52,7 @@ query tourDetail($pk: ID!) {
               large
               medium
               small
+              orginal
             }
           }
         }
@@ -73,6 +82,7 @@ query tourDetail($pk: ID!) {
       medium
       large
       small
+      orginal
     }
   }
 }

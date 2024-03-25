@@ -8,6 +8,9 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
       startTime
       endTime
       statusActivation
+      rate {
+        avgRate
+      }
       NGO {
         id
         title
@@ -17,6 +20,9 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
           phoneNumber
           avatarS3 {
             small
+            medium
+            large
+            orginal
           }
         }
 
@@ -27,6 +33,7 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
             id
             title
             price
+            discount
           }
           destination {
             ... on AccommodationQueryType {
@@ -35,6 +42,7 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
                 large
                 medium
                 small
+                orginal
               }
             }
           }
@@ -64,11 +72,13 @@ query tourList($search: String, $sort: SortType, $filter: TourFilterType, $page:
         id
         title
         price
+        discount
       }
       avatarS3 {
         medium
         large
         small
+        orginal
       }
     }
   }

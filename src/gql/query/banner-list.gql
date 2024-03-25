@@ -10,6 +10,7 @@ query bannerList($page: PageType, $search: String) {
         large
         medium
         small
+        orginal
       }
     }
   }

@@ -37,7 +37,11 @@ const TabDate = () => {
 
   return (
     <>
-      <JalaliDatePicker onDayPress={handleDayPressed} markedDays={markedDays} />
+      <JalaliDatePicker
+        markedDays={markedDays}
+        disablePassedDates={true}
+        onDayPress={handleDayPressed}
+      />
 
       <View style={styles.showDateContainer}>
         <View style={styles.timeContainer}>

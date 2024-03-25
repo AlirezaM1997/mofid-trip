@@ -48,9 +48,7 @@ const Screen = () => {
       .required(tr("Required"))
       .typeError(tr("Only number acceptable"))
       .min(0, tr("Only positive numbers acceptable")),
-    discount: Yup.number()
-      .required(tr("Required"))
-      .max(100, tr("Discount can not be greater than 100")),
+    discount: Yup.number().max(100, tr("Discount can not be greater than 100")),
   });
 
   const handleNext = () => setActiveStep(activeStep + 1);

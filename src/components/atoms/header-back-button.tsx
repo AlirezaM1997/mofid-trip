@@ -2,27 +2,29 @@ import { Feather } from "@expo/vector-icons";
 import { useTheme } from "@rneui/themed";
 import useIsRtl from "@src/hooks/localization";
 import { router } from "expo-router";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
 const HeaderBackButton = ({ canGoBack, ...props }) => {
   const { theme } = useTheme();
   const isRtl = useIsRtl();
 
-  return canGoBack ? (
+  return (
     <Feather
       style={style.icon}
       name={isRtl ? "arrow-right" : "arrow-left"}
       size={24}
       color={theme.colors.black}
-      onPress={() => router.back()}
+      onPress={() => (canGoBack ? router.back() : Platform.OS === "web" ? history.go(-1) : "")}
     />
-  ) : null;
+  );
 };
 
 const style = StyleSheet.create({
   icon: {
-    marginHorizontal: 10,
+    marginRight: 24,
   },
 });
 
 export default HeaderBackButton;
+// if (isWeb) { // if user can't go back and in web side, call history API to let user back
+//   history.go(-1);

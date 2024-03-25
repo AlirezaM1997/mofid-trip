@@ -5,16 +5,17 @@ query myNGODetailTourTransactionSet {
       id
       status {
         isActive
-        step{
-        displayName
-        name
-      }
+        step {
+          displayName
+          name
+        }
       }
       owner {
         avatarS3 {
           large
           medium
           small
+          orginal
         }
         id
         fullname
@@ -27,10 +28,11 @@ query myNGODetailTourTransactionSet {
         }
       }
       tourGuests {
-        avatarS3{
+        avatarS3 {
           large
           medium
           small
+          orginal
         }
         id
         firstname

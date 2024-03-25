@@ -13,6 +13,9 @@ query projectListSearch(
       price
       discount
       modifiedDate
+      rate {
+        avgRate
+      }
       accommodation {
         id
         lat
@@ -20,6 +23,9 @@ query projectListSearch(
         address
         avatarS3 {
           small
+          orginal
+          large
+          medium
         }
       }
     }
