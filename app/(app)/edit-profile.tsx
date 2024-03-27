@@ -17,6 +17,7 @@ const Page = () => {
   const { tr } = useTranslation();
   const [editProfile] = useUserEditMutation();
   const { loading, data } = useUserDetailProfileQuery();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [userDetailTemp, setUserDetailTemp] = useState({
     firstname: "",
     lastname: "",
@@ -33,18 +34,14 @@ const Page = () => {
   };
 
   const handleSave = async () => {
-    let tempData = {
+    console.log('typeof', typeof selectedFile, selectedFile)
+
+    const { data } = await editProfile({ variables: { data: {
       firstname: userDetailTemp?.firstname ?? "",
       lastname: userDetailTemp?.lastname ?? "",
       bio: userDetailTemp?.bio ?? "",
-    };
-    if (userDetailTemp?.base64Image && isBase64(userDetailTemp.base64Image)) {
-      tempData = {
-        ...tempData,
-        base64Image: userDetailTemp.base64Image ?? "",
-      };
-    }
-    const { data } = await editProfile({ variables: { data: tempData } });
+      image: selectedFile
+    } } });
     if (data?.userEdit?.status === "ACCEPTED") {
       Toast.show({
         type: "success",
@@ -54,6 +51,17 @@ const Page = () => {
       router.push("/profile");
     }
   };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
+  useEffect(() => {
+    console.log('@@', selectedFile)
+  }, [selectedFile])
 
   useEffect(
     () =>
@@ -82,6 +90,8 @@ const Page = () => {
 
         <View style={style.containerContainer}>
           <Container>
+            <input type="file" onChange={handleFileChange} />
+
             <Input
               label={tr("First Name")}
               value={userDetailTemp.firstname}
