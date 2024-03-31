@@ -6,6 +6,7 @@ import TourCreateForm from "@organisms/tour-create";
 import useTranslation from "@src/hooks/translation";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { TourAddInputType, TourGenderEnum, useTourAddMutation } from "@src/gql/generated";
+import { FilesContext } from "@modules/image-picker/context";
 
 const initialValues: TourAddInputType = {
   title: "",
@@ -32,7 +33,7 @@ const initialValues: TourAddInputType = {
   endTime: "",
   startTime: "",
   facilities: [],
-  base64Images: [],
+  images: [],
 };
 
 const Screen = () => {
@@ -40,6 +41,7 @@ const Screen = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const [submit, { loading }] = useTourAddMutation();
 
@@ -88,6 +90,7 @@ const Screen = () => {
         data: {
           ...values,
           price: +values.price,
+          images: selectedFiles,
           discount: +(values.discount as number),
           capacity: { ...values.capacity, capacityNumber: +values.capacity.capacityNumber },
         },
@@ -105,29 +108,35 @@ const Screen = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}>
         {({ handleSubmit }) => (
-          <BottomButtonLayout
-            buttons={[
-              <Button
-                loading={loading}
-                disabled={loading || isButtonDisabled}
-                onPress={activeStep === 8 ? handleSubmit : handleNext}>
-                {activeStep === 8 ? tr("Submit") : tr("Next")}
-              </Button>,
-              <Button
-                type="outline"
-                color="secondary"
-                onPress={handlePrev}
-                disabled={activeStep === 1}>
-                {tr("Previous")}
-              </Button>,
-            ]}>
-            <TourCreateForm
-              activeStep={activeStep}
-              isVisibleFinish={isVisibleFinish}
-              setIsVisibleFinish={setIsVisibleFinish}
-              setIsButtonDisabled={setIsButtonDisabled}
-            />
-          </BottomButtonLayout>
+          <FilesContext.Provider
+            value={{
+              selectedFiles: selectedFiles,
+              setSelectedFiles: setSelectedFiles,
+            }}>
+            <BottomButtonLayout
+              buttons={[
+                <Button
+                  loading={loading}
+                  disabled={loading || isButtonDisabled}
+                  onPress={activeStep === 8 ? handleSubmit : handleNext}>
+                  {activeStep === 8 ? tr("Submit") : tr("Next")}
+                </Button>,
+                <Button
+                  type="outline"
+                  color="secondary"
+                  onPress={handlePrev}
+                  disabled={activeStep === 1}>
+                  {tr("Previous")}
+                </Button>,
+              ]}>
+              <TourCreateForm
+                activeStep={activeStep}
+                isVisibleFinish={isVisibleFinish}
+                setIsVisibleFinish={setIsVisibleFinish}
+                setIsButtonDisabled={setIsButtonDisabled}
+              />
+            </BottomButtonLayout>
+          </FilesContext.Provider>
         )}
       </Formik>
     </>

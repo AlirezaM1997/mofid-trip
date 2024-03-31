@@ -39,7 +39,6 @@ const HostCreateForm = ({
   const { address, city, lat, lng, province } = values.accommodation as AccommodationAddInputType;
 
   useEffect(() => {
-    console.log(discount);
     if (activeStep === 1 && (!name || !description)) return setIsButtonDisabled(true);
     if (activeStep === 2 && !categories?.length) return setIsButtonDisabled(true);
     if (activeStep === 3 && (!address || !city || !province || !lat || !lng))
