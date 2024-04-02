@@ -4,9 +4,10 @@ import { useState } from "react";
 import { Button } from "@rneui/themed";
 import HostCreateForm from "@organisms/host-create";
 import useTranslation from "@src/hooks/translation";
+import { FilesContext } from "@modules/image-picker/context";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { ProjectGenderEnum, useProjectAddMutation } from "@src/gql/generated";
 import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
+import { ProjectGenderEnum, useProjectAddMutation } from "@src/gql/generated";
 
 const initialValues = {
   name: "",
@@ -19,7 +20,7 @@ const initialValues = {
     city: null,
     address: null,
     province: null,
-    base64Images: [],
+    images: [],
   },
   capacity: {
     childAccept: false,
@@ -37,6 +38,7 @@ const Screen = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const [submit, { loading }] = useProjectAddMutation();
 
@@ -46,10 +48,7 @@ const Screen = () => {
     dateStart: Yup.date().required(tr("Required")),
     name: Yup.string().required(tr("Title is required")),
 
-    discount: Yup.number()
-      .required(tr("Required"))
-      .max(100, tr("Discount can not be greater than 100")),
-
+    discount: Yup.number().max(100, tr("Discount can not be greater than 100")),
     categories: Yup.array()
       .required("This field is required")
       .min(1, "At least one item is required"),
@@ -58,7 +57,6 @@ const Screen = () => {
       .required(tr("Required"))
       .typeError(tr("Only number acceptable"))
       .min(0, tr("Only positive numbers acceptable")),
-
     accommodation: Yup.object().shape({
       city: Yup.string().required(tr("City is required")),
       address: Yup.string().required(tr("Address is required")),
@@ -86,6 +84,7 @@ const Screen = () => {
           ...values,
           price: +values.price,
           discount: +values.discount,
+          accommodation: { ...values.accommodation, images: selectedFiles },
           capacity: { ...values.capacity, capacityNumber: +values.capacity.capacityNumber },
         },
       },
@@ -101,30 +100,36 @@ const Screen = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}>
       {({ handleSubmit }) => (
-        <BottomButtonLayout
-          buttons={[
-            <Button
-              loading={loading}
-              disabled={loading || isButtonDisabled}
-              onPress={activeStep === 8 ? handleSubmit : handleNext}>
-              {activeStep === 8 ? tr("Submit") : tr("Next")}
-            </Button>,
-            <Button
-              type="outline"
-              color="secondary"
-              disabled={activeStep === 1}
-              onPress={handlePrev}>
-              {tr("Previous")}
-            </Button>,
-          ]}>
-          <HostCreateTabs activeStep={activeStep} />
-          <HostCreateForm
-            activeStep={activeStep}
-            isVisibleFinish={isVisibleFinish}
-            setIsVisibleFinish={setIsVisibleFinish}
-            setIsButtonDisabled={setIsButtonDisabled}
-          />
-        </BottomButtonLayout>
+        <FilesContext.Provider
+          value={{
+            selectedFiles: selectedFiles,
+            setSelectedFiles: setSelectedFiles,
+          }}>
+          <BottomButtonLayout
+            buttons={[
+              <Button
+                loading={loading}
+                disabled={loading || isButtonDisabled}
+                onPress={activeStep === 8 ? handleSubmit : handleNext}>
+                {activeStep === 8 ? tr("Submit") : tr("Next")}
+              </Button>,
+              <Button
+                type="outline"
+                color="secondary"
+                disabled={activeStep === 1}
+                onPress={handlePrev}>
+                {tr("Previous")}
+              </Button>,
+            ]}>
+            <HostCreateTabs activeStep={activeStep} />
+            <HostCreateForm
+              activeStep={activeStep}
+              isVisibleFinish={isVisibleFinish}
+              setIsVisibleFinish={setIsVisibleFinish}
+              setIsButtonDisabled={setIsButtonDisabled}
+            />
+          </BottomButtonLayout>
+        </FilesContext.Provider>
       )}
     </Formik>
   );

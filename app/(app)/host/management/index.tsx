@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { View } from "react-native";
 import { HEIGHT } from "@src/constants";
-import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import NoResult from "@organisms/no-result";
 import WhiteSpace from "@atoms/white-space";
 import { AntDesign } from "@expo/vector-icons";
@@ -11,14 +11,12 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import { ScrollView } from "react-native-gesture-handler";
 import HostManagementCard from "@organisms/host-management-card";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { ProjectQueryType, useMyUserDetailProjectSetQuery } from "@src/gql/generated";
-import { useDispatch } from "react-redux";
 import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
+import { ProjectQueryType, useMyUserDetailProjectSetQuery } from "@src/gql/generated";
 
 const HostManagementScreen = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
-  const [hostSet, setHostSet] = useState<ProjectQueryType[]>([]);
   const dispatch = useDispatch();
 
   const { loading, data } = useMyUserDetailProjectSetQuery({ fetchPolicy: "network-only" });
@@ -31,13 +29,10 @@ const HostManagementScreen = () => {
       })
     );
   };
-  useEffect(() => {
-    if (!loading && data) {
-      setHostSet(data?.userDetail?.projectSet as ProjectQueryType[]);
-    }
-  }, [loading, data]);
 
   if (loading || !data) return <LoadingIndicator />;
+
+  const hostSet = data?.userDetail?.projectSet as ProjectQueryType[];
 
   return (
     <BottomButtonLayout

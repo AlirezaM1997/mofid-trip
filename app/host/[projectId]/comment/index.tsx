@@ -1,34 +1,36 @@
-import { ScrollView, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
-import { CommentType, useTourCommentQuery } from "@src/gql/generated";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { useLocalSearchParams, useNavigation } from "expo-router";
-import LoadingIndicator from "@modules/Loading-indicator";
 import Container from "@atoms/container";
 import { Button, Text, useTheme } from "@rneui/themed";
 import CommentCard from "@modules/comment/comment-card";
-import BottomButtonLayout from "@components/layout/bottom-button";
+import LoadingIndicator from "@modules/Loading-indicator";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import { CommentType, useHostCommentQuery } from "@src/gql/generated";
 import AddCommentBottomSheet from "@modules/comment/add-comment-bottomsheet";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
-const TourCommentScreen = () => {
-  const { tourId } = useLocalSearchParams();
+const HostCommentScreen = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const { localizeNumber } = useLocalizedNumberFormat();
   const navigation = useNavigation();
-  const { loading, data, refetch } = useTourCommentQuery({
+  const { projectId } = useLocalSearchParams();
+  const { localizeNumber } = useLocalizedNumberFormat();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const { loading, data, refetch } = useHostCommentQuery({
     variables: {
-      pk: tourId as string,
+      pk: projectId as string,
     },
   });
+
+  const handleOpen = () => setIsVisible(true);
+  
   if (loading && !data) return <LoadingIndicator />;
 
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-  const comment = data?.tourDetail?.commentSet;
-  const handleOpen = () => setIsVisible(true);
+  const comment = data?.projectDetail?.commentSet;
 
-  navigation.setOptions({ title: `${tr("comments of")} ${data?.tourDetail?.title}` });
+  navigation.setOptions({ title: `${tr("comments of")} ${data?.projectDetail?.name}` });
 
   return (
     <BottomButtonLayout
@@ -62,7 +64,7 @@ const TourCommentScreen = () => {
                 comment={comment as CommentType}
                 key={comment?.id}
                 refetch={refetch}
-                push={`tour/${tourId}/comment` as string}
+                push={`host/${projectId}/comment` as string}
               />
             ))}
           </View>
@@ -72,8 +74,8 @@ const TourCommentScreen = () => {
         isVisible={isVisible}
         setIsVisible={setIsVisible as React.Dispatch<React.SetStateAction<boolean>>}
         refetch={refetch}
-        id={tourId as string}
-        name={data?.tourDetail?.title as string}
+        id={projectId as string}
+        name={data?.projectDetail?.name as string}
       />
     </BottomButtonLayout>
   );
@@ -86,4 +88,4 @@ const styles = StyleSheet.create({
   commentList: { gap: 16 },
 });
 
-export default TourCommentScreen;
+export default HostCommentScreen;

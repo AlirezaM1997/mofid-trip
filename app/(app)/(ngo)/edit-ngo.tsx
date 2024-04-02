@@ -1,40 +1,70 @@
-import Input from "@atoms/input";
-import BottomButtonLayout from "@components/layout/bottom-button";
-import { Feather } from "@expo/vector-icons";
-import LoadingIndicator from "@modules/Loading-indicator";
-import { Button } from "@rneui/themed";
-import Container from "@src/components/atoms/container";
-import WhiteSpace from "@src/components/atoms/white-space";
-import { useMyNgoDetailQuery, useNgoEditMutation } from "@src/gql/generated";
-import handleUploadImage from "@src/helper/image-picker";
-import useTranslation from "@src/hooks/translation";
-import { Formik, FormikProps } from "formik";
-import React, { useRef } from "react";
-import { Image, Pressable, StyleSheet } from "react-native";
-import Toast from "react-native-toast-message";
 import * as Yup from "yup";
+import Input from "@atoms/input";
+import { router } from "expo-router";
+import { Feather } from "@expo/vector-icons";
+import { Formik, FormikProps } from "formik";
+import Toast from "react-native-toast-message";
+import React, { useRef, useState } from "react";
+import useTranslation from "@src/hooks/translation";
+import Container from "@src/components/atoms/container";
+import handleUploadImage from "@src/helper/image-picker";
+import { Button, Colors, useTheme } from "@rneui/themed";
+import LoadingIndicator from "@modules/Loading-indicator";
+import WhiteSpace from "@src/components/atoms/white-space";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import { Image, Pressable, StyleSheet, ViewStyle } from "react-native";
+import { useMyNgoDetailQuery, useNgoEditMutation } from "@src/gql/generated";
+import convertImageURIToFile from "@src/helper/image-picker/convert-uri-to-file";
 
 type PropsType = {
   title: string;
   address: string;
-  base64Image: string;
+  image: string;
   description: string;
   contactNumber: string;
 };
 
 const Index = () => {
+  const { theme } = useTheme();
   const { tr } = useTranslation();
-  const [editProfile, { loading }] = useNgoEditMutation();
-  const { loading: loadingNGODetail, data: dataNGODetail } = useMyNgoDetailQuery();
+  const [editNgo, { loading }] = useNgoEditMutation();
   const innerRef = useRef<FormikProps<PropsType> | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const { loading: loadingNGODetail, data: dataNGODetail } = useMyNgoDetailQuery();
+
+  const handleImagePicker = async () => {
+    const image = await handleUploadImage();
+    convertImageURIToFile(image as string)
+      .then(file => {
+        setSelectedFile(file);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+    innerRef?.current && innerRef?.current?.setFieldValue("image", image);
+  };
 
   const onSubmit = async (values: PropsType) => {
-    const { data, errors } = await editProfile({ variables: { data: values } });
+    let tempData = {
+      title: values.title,
+      address: values.address,
+      description: values.description,
+      contactNumber: values.contactNumber,
+    };
+    if (selectedFile !== null) {
+      tempData = { ...tempData, image: selectedFile };
+    }
+    const { data } = await editNgo({
+      variables: {
+        data: tempData,
+      },
+    });
     if (data) {
       Toast.show({
         type: "success",
         text1: tr("Successful"),
       });
+      router.push("/profile");
     }
   };
 
@@ -47,17 +77,12 @@ const Index = () => {
     address: detail?.address,
     description: detail?.description,
     contactNumber: detail?.user?.phoneNumber,
-    base64Image: detail?.avatarS3?.medium || null,
+    image: detail?.avatarS3?.medium || null,
   };
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required(tr("display name is required")),
   });
-
-  const handleImagePicker = async () => {
-    const imageBase64 = await handleUploadImage();
-    innerRef?.current && innerRef?.current?.setFieldValue("base64Image", `${imageBase64}`);
-  };
 
   return (
     <>
@@ -68,26 +93,19 @@ const Index = () => {
         onSubmit={onSubmit}>
         {({ handleSubmit, values, handleChange, touched, errors }) => (
           <>
-            {console.log(values)}
             <BottomButtonLayout
-              contentContainerStyle={{
-                alignItems: "center",
-              }}
+              contentContainerStyle={style.contentContainer}
               buttons={[
-                <Button
-                  onPress={() => handleSubmit()}
-                  size="lg"
-                  disabled={loading}
-                  loading={loading}>
+                <Button onPress={handleSubmit} size="lg" disabled={loading} loading={loading}>
                   {tr("confirm")}
                 </Button>,
               ]}>
               <WhiteSpace />
-              <Pressable style={style.imagePicker} onPress={handleImagePicker}>
-                {values?.base64Image ? (
-                  <Image style={style.imageStyle} source={{ uri: values?.base64Image }} />
+              <Pressable style={style.imagePicker(theme)} onPress={handleImagePicker}>
+                {values?.image ? (
+                  <Image style={style.imageStyle} source={{ uri: values?.image }} />
                 ) : (
-                  <Feather name="camera" size={45} color="#ccc" />
+                  <Feather name="camera" size={45} color={theme.colors.grey2} />
                 )}
               </Pressable>
               <Container style={{ width: "100%" }}>
@@ -129,18 +147,19 @@ const Index = () => {
 };
 
 const style = StyleSheet.create({
-  imagePicker: {
+  contentContainer: { alignItems: "center" },
+  imagePicker: ((theme: { colors: { grey2: keyof Colors; grey0: keyof Colors } }) => ({
     width: 105,
     height: 105,
     borderWidth: 2,
     display: "flex",
     borderRadius: 50,
-    borderColor: "#ccc",
+    borderColor: theme.colors.grey2,
     alignItems: "center",
     borderStyle: "dashed",
     justifyContent: "center",
-    backgroundColor: "#F3F3F3",
-  },
+    backgroundColor: theme.colors.grey0,
+  })) as ViewStyle,
   imageStyle: {
     width: 100,
     height: 100,

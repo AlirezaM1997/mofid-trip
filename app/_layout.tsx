@@ -65,7 +65,6 @@ const MainContent = () => {
       <Stack
         screenOptions={({ route }) => ({
           headerShown: !["(home)", "(app)"].includes(route.name),
-
           ...defaultScreenOptions,
         })}>
         <Stack.Screen
@@ -93,6 +92,12 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
+          name="all-hosts"
+          options={{
+            title: tr("all hosts"),
+          }}
+        />
+        <Stack.Screen
           name="ngo-login"
           options={{
             title: tr("NGO Login"),
@@ -112,6 +117,12 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
+          name="all-tours"
+          options={{
+            title: tr("all tours"),
+          }}
+        />
+        <Stack.Screen
           name="tour-list"
           options={{
             headerShown: false,
@@ -119,13 +130,13 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
-          name="tour/[tourId]"
+          name="tour/[tourId]/"
           options={{
             title: tr("loading"),
           }}
         />
         <Stack.Screen
-          name="host/[projectId]"
+          name="host/[projectId]/"
           options={{
             title: tr("loading"),
           }}

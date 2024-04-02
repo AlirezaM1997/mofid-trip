@@ -8,6 +8,8 @@ import { RootState } from "@src/store";
 import { LanguageChoiceEnum } from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
 import { useSession } from "@src/context/auth";
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
+
 
 const languageCodes = {
   [LanguageChoiceEnum.FaIr]: "fa",
@@ -79,7 +81,7 @@ const customUseApolloClient = () => {
     }
   });
 
-  const httpLink = createHttpLink({
+  const httpLink = createUploadLink({
     uri: API_URL,
   });
 

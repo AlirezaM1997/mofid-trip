@@ -13,6 +13,7 @@ query myNGODetailProjectTransactionSet {
           large
           medium
           small
+          orginal
         }
       }
       guest {
@@ -26,10 +27,10 @@ query myNGODetailProjectTransactionSet {
       }
       status {
         isActive
-        step{
-        displayName
-        name
-      }
+        step {
+          displayName
+          name
+        }
       }
     }
   }

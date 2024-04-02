@@ -6,7 +6,7 @@ query myNGODetail {
     address
     isVerify
     verifyDescription
-    avatarS3{
+    avatarS3 {
       small
       medium
       large
@@ -32,6 +32,7 @@ query myNGODetail {
           large
           medium
           small
+          orginal
         }
       }
       name
@@ -44,7 +45,7 @@ query myNGODetail {
       price
       discount
       tax
-      statusStep{
+      statusStep {
         displayName
         name
       }

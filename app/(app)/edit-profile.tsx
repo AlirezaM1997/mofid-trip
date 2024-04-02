@@ -1,35 +1,41 @@
-import { Feather } from "@expo/vector-icons";
-import LoadingIndicator from "@modules/Loading-indicator";
-import { Button, Divider, Input } from "@rneui/themed";
-import Container from "@src/components/atoms/container";
-import WhiteSpace from "@src/components/atoms/white-space";
-import { useUserDetailProfileQuery, useUserEditMutation } from "@src/gql/generated";
-import { isBase64 } from "@src/helper/extra";
-import handleUploadImage from "@src/helper/image-picker";
-import useTranslation from "@src/hooks/translation";
-import { SECONDARY_COLOR } from "@src/theme";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
+import React, { useEffect, useState } from "react";
+import useTranslation from "@src/hooks/translation";
+import Container from "@src/components/atoms/container";
+import handleUploadImage from "@src/helper/image-picker";
+import LoadingIndicator from "@modules/Loading-indicator";
+import WhiteSpace from "@src/components/atoms/white-space";
+import { Button, Colors, Divider, Input, useTheme } from "@rneui/themed";
+import convertImageURIToFile from "@src/helper/image-picker/convert-uri-to-file";
+import { useUserDetailProfileQuery, useUserEditMutation } from "@src/gql/generated";
+import { Image, Pressable, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 
 const Page = () => {
+  const { theme } = useTheme();
   const { tr } = useTranslation();
   const [editProfile] = useUserEditMutation();
   const { loading, data } = useUserDetailProfileQuery();
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [userDetailTemp, setUserDetailTemp] = useState({
-    firstname: "",
-    lastname: "",
     bio: "",
-    base64Image: "",
+    lastname: "",
+    firstname: "",
+    image: "",
   });
 
   const handleImagePicker = async () => {
-    const imageBase64 = await handleUploadImage();
-    setUserDetailTemp({
-      ...userDetailTemp,
-      base64Image: imageBase64 as string,
-    });
+    const image = await handleUploadImage();
+
+    convertImageURIToFile(image as string)
+      .then(file => {
+        setSelectedFile(file);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+    setUserDetailTemp({ ...userDetailTemp, image: image as string });
   };
 
   const handleSave = async () => {
@@ -38,13 +44,14 @@ const Page = () => {
       lastname: userDetailTemp?.lastname ?? "",
       bio: userDetailTemp?.bio ?? "",
     };
-    if (userDetailTemp?.base64Image && isBase64(userDetailTemp.base64Image)) {
-      tempData = {
-        ...tempData,
-        base64Image: userDetailTemp.base64Image ?? "",
-      };
+    if (selectedFile !== null) {
+      tempData = { ...tempData, image: selectedFile };
     }
-    const { data } = await editProfile({ variables: { data: tempData } });
+    const { data } = await editProfile({
+      variables: {
+        data: tempData,
+      },
+    });
     if (data?.userEdit?.status === "ACCEPTED") {
       Toast.show({
         type: "success",
@@ -61,7 +68,7 @@ const Page = () => {
         firstname: data?.userDetail?.firstname ?? "",
         lastname: data?.userDetail?.lastname ?? "",
         bio: data?.userDetail?.bio ?? "",
-        base64Image: data?.userDetail?.avatarS3?.small ?? "",
+        image: data?.userDetail?.avatarS3?.small ?? "",
       }),
     [data]
   );
@@ -72,51 +79,49 @@ const Page = () => {
     <>
       <WhiteSpace size={20} />
       <ScrollView contentContainerStyle={style.container}>
-        <Pressable style={style.imagePicker} onPress={handleImagePicker}>
-          {userDetailTemp?.base64Image ? (
-            <Image style={style.imageStyle} source={{ uri: userDetailTemp?.base64Image }} />
+        <Pressable style={style.imagePicker(theme)} onPress={handleImagePicker}>
+          {userDetailTemp?.image ? (
+            <Image style={style.imageStyle} source={{ uri: userDetailTemp?.image }} />
           ) : (
-            <Feather name="camera" size={45} color="#ccc" />
+            <Feather name="camera" size={45} color={theme.colors.grey2} />
           )}
         </Pressable>
 
-        <View style={style.containerContainer}>
-          <Container>
-            <Input
-              label={tr("First Name")}
-              value={userDetailTemp.firstname}
-              onChangeText={t => {
-                setUserDetailTemp({
-                  ...userDetailTemp,
-                  firstname: t,
-                });
-              }}
-            />
-            <Input
-              label={tr("Last Name")}
-              value={userDetailTemp.lastname}
-              onChangeText={t =>
-                setUserDetailTemp({
-                  ...userDetailTemp,
-                  lastname: t,
-                })
-              }
-            />
-            <Input
-              label={tr("Bio")}
-              value={userDetailTemp.bio}
-              multiline={true}
-              numberOfLines={4}
-              style={{ textAlignVertical: "top" }}
-              onChangeText={t =>
-                setUserDetailTemp({
-                  ...userDetailTemp,
-                  bio: t,
-                })
-              }
-            />
-          </Container>
-        </View>
+        <Container style={style.containerContainer}>
+          <Input
+            label={tr("First Name")}
+            value={userDetailTemp.firstname}
+            onChangeText={t => {
+              setUserDetailTemp({
+                ...userDetailTemp,
+                firstname: t,
+              });
+            }}
+          />
+          <Input
+            label={tr("Last Name")}
+            value={userDetailTemp.lastname}
+            onChangeText={t =>
+              setUserDetailTemp({
+                ...userDetailTemp,
+                lastname: t,
+              })
+            }
+          />
+          <Input
+            label={tr("Bio")}
+            value={userDetailTemp.bio}
+            multiline={true}
+            numberOfLines={4}
+            style={{ textAlignVertical: "top" }}
+            onChangeText={t =>
+              setUserDetailTemp({
+                ...userDetailTemp,
+                bio: t,
+              })
+            }
+          />
+        </Container>
       </ScrollView>
       <Divider />
       <View style={style.btnContainer}>
@@ -150,10 +155,9 @@ const style = StyleSheet.create({
     flex: 1,
     gap: 20,
   },
-  textStyle: { color: SECONDARY_COLOR },
-  imagePicker: {
-    borderColor: "#ccc",
-    backgroundColor: "#F3F3F3",
+  imagePicker: ((theme: { colors: { grey2: keyof Colors; grey0: keyof Colors } }) => ({
+    borderColor: theme.colors.grey2,
+    backgroundColor: theme.colors.grey0,
     width: 105,
     height: 105,
     borderRadius: 50,
@@ -162,10 +166,7 @@ const style = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  },
-  uploadText: {
-    color: "#ccc",
-  },
+  })) as ViewStyle,
   imageStyle: {
     width: 100,
     height: 100,

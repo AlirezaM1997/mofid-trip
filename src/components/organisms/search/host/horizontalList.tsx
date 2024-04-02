@@ -24,7 +24,7 @@ const SearchHostHorizontalList = ({ data, loading }: { data: ProjectListSearchQu
         <Pressable
           style={styles.card}
           key={project?.id}
-          onPress={() => router.push(`host/${project?.id}`)}>
+          onPress={() => router.push(`host/${project?.id}/`)}>
           <HostSearchCard project={project} />
         </Pressable>
       ))}

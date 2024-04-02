@@ -5,34 +5,35 @@ import { Button } from "@rneui/themed";
 import TourCreateForm from "@organisms/tour-create";
 import useTranslation from "@src/hooks/translation";
 import BottomButtonLayout from "@components/layout/bottom-button";
-import { TourGenderEnum, useTourAddMutation } from "@src/gql/generated";
+import { TourAddInputType, TourGenderEnum, useTourAddMutation } from "@src/gql/generated";
+import { FilesContext } from "@modules/image-picker/context";
 
-const initialValues = {
-  title: null,
+const initialValues: TourAddInputType = {
+  title: "",
   description: null,
   capacity: {
+    childAccept: false,
     capacityNumber: null,
     gender: TourGenderEnum.Both,
-    childAccept: false,
   },
   origin: {
-    address: "",
     lat: null,
     lng: null,
+    address: "",
   },
   destination: {
-    address: "",
     lat: null,
     lng: null,
-    province: "",
     city: "",
+    address: "",
+    province: "",
   },
-  startTime: null,
-  endTime: null,
-  price: null,
   discount: 0,
-  base64Images: [],
+  price: null,
+  endTime: "",
+  startTime: "",
   facilities: [],
+  images: [],
 };
 
 const Screen = () => {
@@ -40,6 +41,7 @@ const Screen = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const [submit, { loading }] = useTourAddMutation();
 
@@ -52,13 +54,13 @@ const Screen = () => {
       childAccept: Yup.boolean(),
     }),
 
-    startTime: Yup.date().required(tr("Required")),
     endTime: Yup.date().required(tr("Required")),
+    startTime: Yup.date().required(tr("Required")),
 
     destination: Yup.object().shape({
-      province: Yup.string().required(tr("Province is required")),
       city: Yup.string().required(tr("City is required")),
       address: Yup.string().required(tr("Address is required")),
+      province: Yup.string().required(tr("Province is required")),
       lat: Yup.string().required(tr("Select location on the map")),
       lng: Yup.string().required(tr("Select location on the map")),
     }),
@@ -73,25 +75,23 @@ const Screen = () => {
     }),
 
     price: Yup.number()
-      .min(0, tr("Only positive numbers acceptable"))
+      .required(tr("Required"))
       .typeError(tr("Only number acceptable"))
-      .required(tr("Required")),
-    discount: Yup.number()
-      .min(0, tr("Only positive numbers acceptable"))
-      .max(100, tr("Discount can not be greater than 100"))
-      .required(tr("Required")),
+      .min(0, tr("Only positive numbers acceptable")),
+    discount: Yup.number().max(100, tr("Discount can not be greater than 100")),
   });
 
   const handleNext = () => setActiveStep(activeStep + 1);
   const handlePrev = () => setActiveStep(activeStep - 1);
 
-  const handleSubmit = async values => {
+  const handleSubmit = async (values: TourAddInputType) => {
     const { data } = await submit({
       variables: {
         data: {
           ...values,
           price: +values.price,
-          discount: +values.discount,
+          images: selectedFiles,
+          discount: +(values.discount as number),
           capacity: { ...values.capacity, capacityNumber: +values.capacity.capacityNumber },
         },
       },
@@ -108,29 +108,35 @@ const Screen = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}>
         {({ handleSubmit }) => (
-          <BottomButtonLayout
-            buttons={[
-              <Button
-                onPress={activeStep === 8 ? handleSubmit : handleNext}
-                disabled={loading || isButtonDisabled}
-                loading={loading}>
-                {activeStep === 8 ? tr("Submit") : tr("Next")}
-              </Button>,
-              <Button
-                type="outline"
-                color="secondary"
-                disabled={activeStep === 1}
-                onPress={handlePrev}>
-                {tr("Previous")}
-              </Button>,
-            ]}>
-            <TourCreateForm
-              activeStep={activeStep}
-              isVisibleFinish={isVisibleFinish}
-              setIsVisibleFinish={setIsVisibleFinish}
-              setIsButtonDisabled={setIsButtonDisabled}
-            />
-          </BottomButtonLayout>
+          <FilesContext.Provider
+            value={{
+              selectedFiles: selectedFiles,
+              setSelectedFiles: setSelectedFiles,
+            }}>
+            <BottomButtonLayout
+              buttons={[
+                <Button
+                  loading={loading}
+                  disabled={loading || isButtonDisabled}
+                  onPress={activeStep === 8 ? handleSubmit : handleNext}>
+                  {activeStep === 8 ? tr("Submit") : tr("Next")}
+                </Button>,
+                <Button
+                  type="outline"
+                  color="secondary"
+                  onPress={handlePrev}
+                  disabled={activeStep === 1}>
+                  {tr("Previous")}
+                </Button>,
+              ]}>
+              <TourCreateForm
+                activeStep={activeStep}
+                isVisibleFinish={isVisibleFinish}
+                setIsVisibleFinish={setIsVisibleFinish}
+                setIsButtonDisabled={setIsButtonDisabled}
+              />
+            </BottomButtonLayout>
+          </FilesContext.Provider>
         )}
       </Formik>
     </>

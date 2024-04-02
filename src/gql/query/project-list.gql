@@ -9,6 +9,9 @@ query projectList($search: String, $sort: SortType, $filter: ProjectFilterType, 
       dateStart
       dateEnd
       discount
+      rate {
+        avgRate
+      }
       capacity {
         childAccept
         gender
@@ -23,6 +26,9 @@ query projectList($search: String, $sort: SortType, $filter: ProjectFilterType, 
         address
         avatarS3 {
           small
+          orginal
+          medium
+          large
         }
       }
     }

@@ -1,12 +1,11 @@
-import { BottomSheet, Image, Text, useTheme } from "@rneui/themed";
-import { HEIGHT, WIDTH } from "@src/constants";
-import { AccommodationImageType, TourImageType } from "@src/gql/generated";
 import React, { useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-
-import { ImageBackground, Platform, Pressable, StyleSheet, View } from "react-native";
+import { HEIGHT, WIDTH } from "@src/constants";
 import { ScrollView } from "react-native-gesture-handler";
+import { BottomSheet, Colors, Image, useTheme } from "@rneui/themed";
+import { AccommodationImageType, TourImageType } from "@src/gql/generated";
+import { ImageBackground, Platform, Pressable, StyleSheet, View, ViewStyle } from "react-native";
 
 type ImageSlider = {
   imageList?: (AccommodationImageType | TourImageType)[];
@@ -14,8 +13,8 @@ type ImageSlider = {
 
 function ImageSlider({ imageList }: ImageSlider) {
   const { theme } = useTheme();
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+  const [activeSlide, setActiveSlide] = useState<number>(0);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const openImage = (index: number) => {
     setActiveSlide(index);
@@ -44,9 +43,9 @@ function ImageSlider({ imageList }: ImageSlider) {
             style={style.sliderActiveSlide}
             imageStyle={style.sliderImageActiveSlide}
             source={
-              imageList?.[0]?.large
+              imageList?.[0]?.orginal
                 ? {
-                    uri: imageList?.[0]?.large,
+                    uri: imageList?.[0]?.orginal,
                   }
                 : require("@assets/image/defaultHost.svg")
             }
@@ -67,7 +66,7 @@ function ImageSlider({ imageList }: ImageSlider) {
                   style={style.sliderSlideThumbnail}
                   imageStyle={style.sliderImageSlideThumbnail}
                   source={{
-                    uri: img.medium,
+                    uri: img.medium as string,
                   }}
                 />
               </Pressable>
@@ -84,47 +83,33 @@ function ImageSlider({ imageList }: ImageSlider) {
           containerStyle={style.bottomSheetContainer}>
           <View style={style.bottomSheetContent}>
             {Platform.OS === "web" ? (
-              <img style={style.fullScreenImage} src={imageList?.[activeSlide].large as string} />
+              <img style={style.fullScreenImage} src={imageList?.[activeSlide].orginal as string} />
             ) : (
               <Image
                 style={style.fullScreenImage}
                 source={{
-                  uri: imageList?.[activeSlide].large as string,
+                  uri: imageList?.[activeSlide].orginal as string,
                 }}
               />
             )}
-            <Pressable
-              style={{
-                top: 20,
-                right: 20,
-                width: 30,
-                height: 30,
-                position: "absolute",
-              }}
-              onPress={() => setIsVisible(false)}>
-              <AntDesign name="closecircle" size={24} color={"white"} />
-            </Pressable>
+            <AntDesign
+              name="closecircle"
+              size={24}
+              color={"white"}
+              style={style.closeCircleIcon}
+              onPress={() => setIsVisible(false)}
+            />
             <Entypo
               size={34}
               name="chevron-left"
               onPress={handlePrevImage}
-              style={{
-                left: 10,
-                position: "absolute",
-                borderRadius: "100%",
-                backgroundColor: theme.colors.grey0,
-              }}
+              style={style.chevronLeftIcon(theme)}
             />
             <Entypo
               size={34}
               name="chevron-right"
               onPress={handleNextImage}
-              style={{
-                right: 10,
-                position: "absolute",
-                borderRadius: "100%",
-                backgroundColor: theme.colors.grey0,
-              }}
+              style={style.chevronRightIcon(theme)}
             />
           </View>
         </BottomSheet>
@@ -193,6 +178,25 @@ const style = StyleSheet.create({
   },
   sliderImageSlideThumbnail: {
     borderRadius: 10,
+  },
+  chevronLeftIcon: ((theme: { colors: { grey0: keyof Colors } }) => ({
+    left: 10,
+    position: "absolute",
+    borderRadius: "100%",
+    backgroundColor: theme.colors.grey0,
+  })) as ViewStyle,
+  chevronRightIcon: ((theme: { colors: { grey0: keyof Colors } }) => ({
+    right: 10,
+    position: "absolute",
+    borderRadius: "100%",
+    backgroundColor: theme.colors.grey0,
+  })) as ViewStyle,
+  closeCircleIcon: {
+    top: 20,
+    right: 20,
+    width: 30,
+    height: 30,
+    position: "absolute",
   },
 });
 

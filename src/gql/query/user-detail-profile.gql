@@ -9,6 +9,9 @@ query userDetailProfile {
     fullname
     avatarS3 {
       small
+      medium
+      large
+      orginal
     }
     ngo {
       id
@@ -17,6 +20,9 @@ query userDetailProfile {
       verifyDescription
       avatarS3 {
         small
+        medium
+        large
+        orginal
       }
     }
   }

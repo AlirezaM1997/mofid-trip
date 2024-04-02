@@ -16,7 +16,7 @@ import Toast from "react-native-toast-message";
 import { AntDesign } from "@expo/vector-icons";
 import { ScrollView, StyleSheet } from "react-native";
 import HostTransactionDetailCard from "./host-transaction-detail-card";
-import { BottomSheet, Button, Divider, Input, Slider, Text, useTheme } from "@rneui/themed";
+import { BottomSheet, Button, Colors, Divider, Input, Slider, Text, useTheme } from "@rneui/themed";
 
 const HostRateBottomSheet = ({
   transaction,
@@ -101,7 +101,7 @@ const HostRateBottomSheet = ({
             />
             <View style={styles.valueOfSlider}>
               {[0, 1, 2, 3, 4, 5].map(n => (
-                <Text caption type={value === 0 ? "grey2" : "black"} style={{ width: 10 }}>
+                <Text key={n} caption type={value === 0 ? "grey2" : "black"} style={{ width: 10 }}>
                   {localizeNumber(n)}
                 </Text>
               ))}
@@ -154,10 +154,19 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     alignItems: "center",
   },
-  headerBarButton: { flexDirection: "row", gap: 20 },
-  scrollView: { height: HEIGHT - 65, justifyContent: "space-between" },
+  headerBarButton: { 
+    flexDirection: "row", 
+    gap: 20 
+  },
+  scrollView: { 
+    height: HEIGHT - 65, 
+    justifyContent: "space-between" 
+  },
   topSection: { paddingVertical: 24, gap: 5 },
-  thumbStyle: ((value: number, theme: { colors: { grey2: string; black: string } }) => ({
+  thumbStyle: ((
+    value: number,
+    theme: { colors: { grey2: keyof Colors; black: keyof Colors } }
+  ) => ({
     width: 20,
     height: 20,
     borderWidth: 5,

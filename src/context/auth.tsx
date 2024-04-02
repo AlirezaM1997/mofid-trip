@@ -1,10 +1,11 @@
 import React from "react";
 import { useStorageState } from "@src/hooks/auth/storage-state";
+import { router } from "expo-router";
 
 type AuthTokenType = {
   token: string;
   refreshToken: string;
-  metadata: any
+  metadata: any;
 };
 
 const AuthContext = React.createContext<{
@@ -42,6 +43,7 @@ export function SessionProvider(props: React.PropsWithChildren) {
           setSession(JSON.stringify(authToken));
         },
         signOut: () => {
+          router.push("/");
           setSession(null);
           setReduxPersist(null);
         },

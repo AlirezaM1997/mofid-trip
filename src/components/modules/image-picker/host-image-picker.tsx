@@ -1,46 +1,45 @@
-import React from "react";
+import { FilesContext } from "./context";
+import React, { useContext } from "react";
 import { useFormikContext } from "formik";
+import WhiteSpace from "@atoms/white-space";
 import { Ionicons } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
-import { Image, Text, useTheme } from "@rneui/themed";
-import { Pressable, StyleSheet, View } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import WhiteSpace from "@atoms/white-space";
 import { ProjectAddInputType } from "@src/gql/generated";
 import handleUploadImage from "@src/helper/image-picker";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Colors, Image, Text, useTheme } from "@rneui/themed";
+import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
+import convertImageURIToFile from "@src/helper/image-picker/convert-uri-to-file";
 
 const HostImagePicker = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
+  const { selectedFiles, setSelectedFiles } = useContext(FilesContext);
   const { values, setFieldValue } = useFormikContext<ProjectAddInputType>();
 
   const handleImagePicker = async () => {
-    const imageBase64 = await handleUploadImage();
-    setFieldValue("accommodation.base64Images", [
-      ...values.accommodation.base64Images,
-      imageBase64,
-    ]);
+    const image = await handleUploadImage();
+    setFieldValue("accommodation.images", [...values.accommodation.images, image]);
+    convertImageURIToFile(image as string).then(file => {
+      setSelectedFiles([...selectedFiles, file]);
+    });
   };
 
   const removeHandler = (targetIndex: string) => {
     setFieldValue(
-      "accommodation.base64Images",
-      values.accommodation.base64Images.filter((i, index) => index.toString() !== targetIndex)
+      "accommodation.images",
+      values?.accommodation?.images?.filter((i, index) => index.toString() !== targetIndex)
     );
+    setSelectedFiles(selectedFiles.filter((i, index) => index.toString() !== targetIndex));
   };
 
   return (
     <>
-      <Pressable
-        onPress={handleImagePicker}
-        style={[
-          styles.imageContainer(values.accommodation.base64Images?.[0]),
-          styles.mainImageSize,
-        ]}>
-        {values.accommodation.base64Images?.[0] ? (
+      <Pressable onPress={handleImagePicker} style={[styles.imageContainer, styles.mainImageSize]}>
+        {values?.accommodation?.images?.[0] ? (
           <>
             <Image
-              source={{ uri: values.accommodation.base64Images?.[0] }}
+              source={{ uri: values?.accommodation?.images?.[0] }}
               style={{ width: 330, height: 160 }}
               resizeMode="cover"
             />
@@ -67,11 +66,11 @@ const HostImagePicker = () => {
           <Pressable
             key={item}
             onPress={handleImagePicker}
-            style={[styles.imageContainer(true), styles.subImageSize]}>
-            {values.accommodation.base64Images?.[item] ? (
+            style={[styles.imageContainer, styles.subImageSize]}>
+            {values?.accommodation?.images?.[+item] ? (
               <>
                 <Image
-                  source={{ uri: values.accommodation.base64Images?.[item] }}
+                  source={{ uri: values?.accommodation?.images?.[+item] }}
                   style={{ width: 100, height: 100 }}
                   resizeMode="cover"
                 />
@@ -97,7 +96,7 @@ const HostImagePicker = () => {
 };
 
 const styles = StyleSheet.create({
-  imageContainer: image => ({
+  imageContainer: {
     borderRadius: 12,
     overflow: "hidden",
     position: "relative",
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
     borderStyle: "dashed",
     justifyContent: "center",
     borderWidth: 2,
-  }),
+  },
 
   mainImageSize: {
     height: 160,
@@ -128,12 +127,12 @@ const styles = StyleSheet.create({
     gap: 8,
     alignItems: "center",
   },
-  deleteIcon: theme => ({
+  deleteIcon: ((theme: { colors: { white: keyof Colors } }) => ({
     padding: 4,
     borderRadius: 8,
     position: "absolute",
     backgroundColor: theme.colors.white,
-  }),
+  })) as ViewStyle,
   mainDeleteIconPosition: {
     right: 8,
     bottom: 8,
