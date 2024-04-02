@@ -88,21 +88,21 @@ export type AccommodationListType = {
 
 /** An enumeration. */
 export enum AccommodationProjectGenderChoices {
-  /** BOTH */
+  /** هر دو */
   Both = 'BOTH',
-  /** FEMALE */
+  /** زن */
   Female = 'FEMALE',
-  /** MALE */
+  /** مرد */
   Male = 'MALE'
 }
 
 /** An enumeration. */
 export enum AccommodationProjectRequestFromChoices {
-  /** BOTH */
+  /** هر دو */
   Both = 'BOTH',
-  /** NGO */
+  /** تشکل */
   Ngo = 'NGO',
-  /** USER */
+  /** کاربر */
   User = 'USER'
 }
 
@@ -123,9 +123,9 @@ export type AccommodationQueryType = {
 
 /** An enumeration. */
 export enum AccommodationTagTypeChoices {
-  /** CAMPAIGN */
+  /** کمپین */
   Campaign = 'CAMPAIGN',
-  /** GENERAL */
+  /** عمومی */
   General = 'GENERAL'
 }
 
@@ -440,17 +440,17 @@ export type IntRangeType = {
 
 /** An enumeration. */
 export enum InteractionReportCategoryNameChoices {
-  /** Fake Account */
+  /** حساب جعلی */
   FakeAccount = 'FAKE_ACCOUNT',
-  /** Inappropriate Content */
+  /** محتوای غیراخلاقی */
   InappropriateContent = 'INAPPROPRIATE_CONTENT',
-  /** Other */
+  /** سایر */
   Other = 'OTHER',
-  /** Privacy Violation */
+  /** سرقت اطلاعات خصوصی اشخاص */
   PrivacyViolation = 'PRIVACY_VIOLATION',
-  /** Spam */
+  /** هرزنامه */
   Spam = 'SPAM',
-  /** Violent Content */
+  /** محتوای خشونت آمیز */
   ViolentContent = 'VIOLENT_CONTENT'
 }
 
@@ -2134,11 +2134,11 @@ export type TourStatusStepQueryType = {
 
 /** An enumeration. */
 export enum TourTourGuestGenderChoices {
-  /** CHILD */
+  /** کودک */
   Child = 'CHILD',
-  /** FEMALE */
+  /** زن */
   Female = 'FEMALE',
-  /** MALE */
+  /** مرد */
   Male = 'MALE'
 }
 
@@ -2371,7 +2371,7 @@ export type UserQueryType = {
   tag?: Maybe<TagQueryType>;
   tourtransactionSet: Array<TourTransactionQueryType>;
   transactionSet: Array<ProjectTransactionQueryType>;
-  /** Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+  /** الزامی. 150 کاراکتر یا کمتر. فقط شامل حروف، اعداد، و علامات @/./+/-/_ */
   username: Scalars['String']['output'];
   /** Wallet field related to the User */
   wallet?: Maybe<UserWalletType>;

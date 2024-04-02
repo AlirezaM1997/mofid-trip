@@ -1,40 +1,45 @@
-import React from "react";
-import { FieldArray, useFormikContext } from "formik";
+import { FilesContext } from "./context";
+import React, { useContext } from "react";
+import { useFormikContext } from "formik";
+import WhiteSpace from "@atoms/white-space";
 import { Ionicons } from "@expo/vector-icons";
 import useTranslation from "@src/hooks/translation";
-import { Image, Text, useTheme } from "@rneui/themed";
-import { Pressable, StyleSheet, View } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import WhiteSpace from "@atoms/white-space";
 import { TourAddInputType } from "@src/gql/generated";
 import handleUploadImage from "@src/helper/image-picker";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Colors, Image, Text, useTheme } from "@rneui/themed";
+import { Pressable, StyleSheet, View, ViewStyle } from "react-native";
+import convertImageURIToFile from "@src/helper/image-picker/convert-uri-to-file";
 
 const CustomImagePicker = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
+  const { selectedFiles, setSelectedFiles } = useContext(FilesContext);
   const { values, setFieldValue } = useFormikContext<TourAddInputType>();
 
   const handleImagePicker = async () => {
-    const imageBase64 = await handleUploadImage();
-    setFieldValue("base64Images", [...values.base64Images, imageBase64]);
+    const image = await handleUploadImage();
+    setFieldValue("images", [...values.images, image]);
+    convertImageURIToFile(image as string).then(file => {
+      setSelectedFiles([...selectedFiles, file]);
+    });
   };
 
   const removeHandler = (targetIndex: string) => {
     setFieldValue(
-      "base64Images",
-      values.base64Images.filter((i, index) => index.toString() !== targetIndex)
+      "images",
+      values?.images?.filter((i, index) => index.toString() !== targetIndex)
     );
+    setSelectedFiles(selectedFiles.filter((i, index) => index.toString() !== targetIndex));
   };
 
   return (
     <>
-      <Pressable
-        onPress={handleImagePicker}
-        style={[styles.imageContainer(values.base64Images?.[0]), styles.mainImageSize]}>
-        {values.base64Images?.[0] ? (
+      <Pressable onPress={handleImagePicker} style={[styles.imageContainer, styles.mainImageSize]}>
+        {values.images?.[0] ? (
           <>
             <Image
-              source={{ uri: values.base64Images?.[0] }}
+              source={{ uri: values.images?.[0] }}
               style={{ width: 330, height: 160 }}
               resizeMode="cover"
             />
@@ -61,11 +66,11 @@ const CustomImagePicker = () => {
           <Pressable
             key={item}
             onPress={handleImagePicker}
-            style={[styles.imageContainer(true), styles.subImageSize]}>
-            {values.base64Images?.[item] ? (
+            style={[styles.imageContainer, styles.subImageSize]}>
+            {values.images?.[+item] ? (
               <>
                 <Image
-                  source={{ uri: values.base64Images?.[item] }}
+                  source={{ uri: values.images?.[+item] }}
                   style={{ width: 100, height: 100 }}
                   resizeMode="cover"
                 />
@@ -91,7 +96,7 @@ const CustomImagePicker = () => {
 };
 
 const styles = StyleSheet.create({
-  imageContainer: image => ({
+  imageContainer: {
     borderRadius: 12,
     overflow: "hidden",
     position: "relative",
@@ -99,7 +104,7 @@ const styles = StyleSheet.create({
     borderStyle: "dashed",
     justifyContent: "center",
     borderWidth: 2,
-  }),
+  },
 
   mainImageSize: {
     height: 160,
@@ -122,12 +127,12 @@ const styles = StyleSheet.create({
     gap: 8,
     alignItems: "center",
   },
-  deleteIcon: theme => ({
+  deleteIcon: ((theme: { colors: { white: keyof Colors } }) => ({
     padding: 4,
     borderRadius: 8,
     position: "absolute",
     backgroundColor: theme.colors.white,
-  }),
+  })) as ViewStyle,
   mainDeleteIconPosition: {
     right: 8,
     bottom: 8,

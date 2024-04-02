@@ -18,7 +18,7 @@ const TabImage = () => {
         </Text>
       </View>
 
-      <Field name="accommodation.base64Images" component={HostImagePicker} />
+      <Field name="accommodation.images" component={HostImagePicker} />
     </>
   );
 };
