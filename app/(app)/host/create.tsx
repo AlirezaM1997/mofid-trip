@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@rneui/themed";
 import HostCreateForm from "@organisms/host-create";
 import useTranslation from "@src/hooks/translation";
+import { FilesContext } from "@modules/image-picker/context";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import HostCreateTabs from "@modules/virtual-tabs/host-create-tabs";
 import { ProjectGenderEnum, useProjectAddMutation } from "@src/gql/generated";
@@ -19,7 +20,7 @@ const initialValues = {
     city: null,
     address: null,
     province: null,
-    base64Images: [],
+    images: [],
   },
   capacity: {
     childAccept: false,
@@ -37,6 +38,7 @@ const Screen = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const [submit, { loading }] = useProjectAddMutation();
 
@@ -82,6 +84,7 @@ const Screen = () => {
           ...values,
           price: +values.price,
           discount: +values.discount,
+          accommodation: { ...values.accommodation, images: selectedFiles },
           capacity: { ...values.capacity, capacityNumber: +values.capacity.capacityNumber },
         },
       },
@@ -97,30 +100,36 @@ const Screen = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}>
       {({ handleSubmit }) => (
-        <BottomButtonLayout
-          buttons={[
-            <Button
-              loading={loading}
-              disabled={loading || isButtonDisabled}
-              onPress={activeStep === 8 ? handleSubmit : handleNext}>
-              {activeStep === 8 ? tr("Submit") : tr("Next")}
-            </Button>,
-            <Button
-              type="outline"
-              color="secondary"
-              disabled={activeStep === 1}
-              onPress={handlePrev}>
-              {tr("Previous")}
-            </Button>,
-          ]}>
-          <HostCreateTabs activeStep={activeStep} />
-          <HostCreateForm
-            activeStep={activeStep}
-            isVisibleFinish={isVisibleFinish}
-            setIsVisibleFinish={setIsVisibleFinish}
-            setIsButtonDisabled={setIsButtonDisabled}
-          />
-        </BottomButtonLayout>
+        <FilesContext.Provider
+          value={{
+            selectedFiles: selectedFiles,
+            setSelectedFiles: setSelectedFiles,
+          }}>
+          <BottomButtonLayout
+            buttons={[
+              <Button
+                loading={loading}
+                disabled={loading || isButtonDisabled}
+                onPress={activeStep === 8 ? handleSubmit : handleNext}>
+                {activeStep === 8 ? tr("Submit") : tr("Next")}
+              </Button>,
+              <Button
+                type="outline"
+                color="secondary"
+                disabled={activeStep === 1}
+                onPress={handlePrev}>
+                {tr("Previous")}
+              </Button>,
+            ]}>
+            <HostCreateTabs activeStep={activeStep} />
+            <HostCreateForm
+              activeStep={activeStep}
+              isVisibleFinish={isVisibleFinish}
+              setIsVisibleFinish={setIsVisibleFinish}
+              setIsButtonDisabled={setIsButtonDisabled}
+            />
+          </BottomButtonLayout>
+        </FilesContext.Provider>
       )}
     </Formik>
   );
