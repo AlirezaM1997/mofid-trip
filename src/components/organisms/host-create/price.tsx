@@ -51,7 +51,7 @@ const TabPrice = () => {
         keyboardType="numeric"
         onBlur={handleBlur("price")}
         label={tr("Price") + " (" + tr("Tooman") + ")"}
-        value={values.price?.toString()}
+        value={values.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         errorMessage={(touched.price && errors.price) as string}
         onChangeText={text => setFieldValue("price", parseText(text))}
       />

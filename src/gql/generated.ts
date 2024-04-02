@@ -5303,7 +5303,11 @@ export type ProjectTransactionDetailLazyQueryHookResult = ReturnType<typeof useP
 export type ProjectTransactionDetailQueryResult = Apollo.QueryResult<ProjectTransactionDetailQuery, ProjectTransactionDetailQueryVariables>;
 export const ProjectTransactionListDocument = gql`
     query ProjectTransactionList($page: PageType, $filter: ProjectTransactionFilterType) {
-  projectTransactionList(page: $page, filter: $filter) {
+  projectTransactionList(
+    page: $page
+    filter: $filter
+    sort: {fieldName: CREATED_DATE, descending: true}
+  ) {
     count
     pageCount
     data {
