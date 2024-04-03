@@ -9,6 +9,8 @@ query hostComment($pk: ID!) {
       id
       user {
         fullname
+        firstname
+        lastname
         displayName
       }
       nestedComment {
