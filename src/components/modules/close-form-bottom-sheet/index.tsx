@@ -9,7 +9,7 @@ import ButtonRow from "@modules/button-rows";
 import { router, useNavigation } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import { ImageBackground, StyleSheet } from "react-native";
-import { useRoute } from '@react-navigation/native';
+import { useRoute } from "@react-navigation/native";
 
 const CloseFormBottomSheet = () => {
   const route = useRoute();
@@ -51,12 +51,14 @@ const CloseFormBottomSheet = () => {
           <Button
             type="outline"
             onPress={
-              redirectToScreenAfterLogin && redirectToScreenAfterLogin.pathname !== '/' + route.name
+              redirectToScreenAfterLogin && redirectToScreenAfterLogin.pathname !== "/" + route.name
                 ? () => {
+                    console.log("1", redirectToScreenAfterLogin);
                     router.push(redirectToScreenAfterLogin);
                     router.push(redirectToScreenAfterLogin);
                   }
                 : () => {
+                    console.log("2");
                     router.replace("/");
                     router.replace("/");
                     setIsVisibleExit(false);
