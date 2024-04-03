@@ -17,8 +17,11 @@ import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation
 import Toast from "react-native-toast-message";
 import { useSession } from "@src/context/auth";
 import { HEIGHT } from "@src/constants";
+import { setRedirectToScreenAfterLogin } from "@src/slice/navigation-slice";
+import { useDispatch } from "react-redux";
 
 const SMSVerificationScreen = () => {
+  const dispatch = useDispatch();
   const { signIn, session } = useSession();
   const { tr } = useTranslation();
   const { phone } = useLocalSearchParams();
@@ -91,13 +94,16 @@ const SMSVerificationScreen = () => {
     }
   }, [loading, data]);
 
-  if (session) {
-    return redirectToScreenAfterLogin ? (
-      <Redirect href={redirectToScreenAfterLogin} />
-    ) : (
-      <Redirect href="/" />
-    );
-  }
+  useEffect(() => {
+    if (session) {
+      if (redirectToScreenAfterLogin) {
+        dispatch(setRedirectToScreenAfterLogin(""));
+        router.replace(redirectToScreenAfterLogin);
+      } else {
+        router.replace("/");
+      }
+    }
+  }, [session]);
 
   return (
     <>
