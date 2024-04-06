@@ -35,7 +35,7 @@ const HostTransactionDetailCard = ({
           source={
             (project?.accommodation?.avatarS3?.length as number) > 0
               ? {
-                  uri: project?.accommodation?.avatarS3?.[0]?.small,
+                  uri: project?.accommodation?.avatarS3?.[0]?.large,
                 }
               : require("@assets/image/defaultHost.svg")
           }
@@ -76,7 +76,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  hostDetail: { width: 164, gap: 8, justifyContent: "center" },
+  hostDetail: {
+    width: 164,
+    gap: 8,
+    justifyContent: "center",
+  },
   hostAvatar: {
     width: 154,
     height: 104,

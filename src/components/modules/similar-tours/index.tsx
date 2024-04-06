@@ -30,7 +30,7 @@ const Item = ({ tour }: ItemPropsType) => {
         source={
           (tour?.destination as AccommodationQueryType)?.avatarS3?.length as number > 0
             ? {
-                uri: (tour?.destination as AccommodationQueryType)?.avatarS3?.[0]?.small,
+                uri: (tour?.destination as AccommodationQueryType)?.avatarS3?.[0]?.medium,
               }
             : require("@assets/image/defaultHost.svg")
         }

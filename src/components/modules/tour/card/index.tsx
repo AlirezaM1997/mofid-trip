@@ -3,11 +3,11 @@ import { Text } from "@rneui/themed";
 import { router } from "expo-router";
 import { useTheme } from "@rneui/themed";
 import WhiteSpace from "@atoms/white-space";
-import { AccommodationAddInputType, TourPackageType, TourQueryType } from "@src/gql/generated";
 import { EvilIcons, Feather } from "@expo/vector-icons";
 import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
 import { View, ImageBackground, StyleSheet, Pressable } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import { AccommodationAddInputType, TourPackageType, TourQueryType } from "@src/gql/generated";
 
 type PropsType = {
   address: AccommodationAddInputType["address"];
@@ -29,7 +29,7 @@ function TourCard({ price, id, title, avatarS3, address }: PropsType) {
   };
 
   const avatar =
-    avatarS3?.length > 0 ? { uri: avatarS3?.[0].small } : require("@assets/image/defaultHost.svg");
+    avatarS3?.length as number > 0 ? { uri: avatarS3?.[0]?.small } : require("@assets/image/defaultHost.svg");
 
   return (
     <Pressable onPress={handlePress} style={style.container}>

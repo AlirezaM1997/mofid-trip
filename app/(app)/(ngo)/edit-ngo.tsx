@@ -77,7 +77,7 @@ const Index = () => {
     address: detail?.address,
     description: detail?.description,
     contactNumber: detail?.user?.phoneNumber,
-    image: detail?.avatarS3?.medium || null,
+    image: detail?.avatarS3?.small || null,
   };
 
   const validationSchema = Yup.object().shape({

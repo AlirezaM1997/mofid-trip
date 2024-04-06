@@ -1,8 +1,8 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import ActiveTourCard from "@src/components/modules/active-tour-card";
 import SuggestionPlaceCardSkeleton from "@src/components/modules/suggestion-place-card-skeleton";
-import { TourTypes, useTourListQuery } from "@src/gql/generated";
+import { TourQueryType, useTourListQuery } from "@src/gql/generated";
 
 const ActiveTourList = () => {
   const { loading, data } = useTourListQuery({
@@ -29,10 +29,9 @@ const ActiveTourList = () => {
       horizontal
       style={style.suggestions}
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{ gap: 10 }}
-    >
+      contentContainerStyle={{ gap: 10 }}>
       {data?.tourList?.data?.map((tour, index) => (
-        <ActiveTourCard key={index} tour={tour as TourTypes} />
+        <ActiveTourCard key={index} tour={tour as TourQueryType} />
       ))}
     </ScrollView>
   );

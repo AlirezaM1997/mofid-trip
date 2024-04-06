@@ -17,7 +17,7 @@ const Banner = ({ name }) => {
     },
   });
 
-  const handlePress = url => {
+  const handlePress = (url: string) => {
     if (url) {
       if (Platform.OS === "web") {
         router.push(url);
@@ -39,10 +39,10 @@ const Banner = ({ name }) => {
   const banner = data?.bannerList?.data?.[0];
 
   return (
-    <Pressable style={style.bannerStyle} onPress={() => handlePress(banner.url)}>
+    <Pressable style={style.bannerStyle} onPress={() => handlePress(banner?.url as string)}>
       {banner?.avatarS3 ? (
         <Image
-          source={{ uri: banner?.avatarS3.large }}
+          source={{ uri: banner?.avatarS3?.large as string }}
           resizeMode="stretch"
           style={style.bannerSize}
         />

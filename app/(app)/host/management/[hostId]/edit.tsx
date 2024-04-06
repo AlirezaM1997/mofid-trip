@@ -84,7 +84,7 @@ const Screen = () => {
     },
     accommodation: {
       ...hostDetail?.accommodation,
-      base64Images: hostDetail?.accommodation?.avatarS3?.map(item => item?.small),
+      base64Images: hostDetail?.accommodation?.avatarS3?.map(item => item?.large),
     },
   };
 

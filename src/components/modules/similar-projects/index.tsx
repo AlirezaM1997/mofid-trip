@@ -28,7 +28,7 @@ const Item = ({ project }: ItemPropsType) => {
         source={
           (project?.accommodation?.avatarS3?.length as number) > 0
             ? {
-                uri: project?.accommodation?.avatarS3?.[0]?.large,
+                uri: project?.accommodation?.avatarS3?.[0]?.medium,
               }
             : require("@assets/image/defaultHost.svg")
         }

@@ -1,7 +1,7 @@
 import React from "react"
 import { Ionicons, FontAwesome } from "@expo/vector-icons"
 import { Text } from "@rneui/themed"
-import { TourTypes } from "@src/gql/generated"
+import { TourQueryType } from "@src/gql/generated"
 import { Pressable, StyleSheet, View } from "react-native"
 import { Image } from "@rneui/themed"
 import { useNavigation } from "@react-navigation/native"
@@ -10,7 +10,7 @@ import { period } from "@src/helper/date"
 import useTranslation from "@src/hooks/translation"
 
 type PropsType = {
-  tour: TourTypes
+  tour: TourQueryType
 }
 
 function ActiveTourCard({ tour }: PropsType) {
@@ -30,7 +30,7 @@ function ActiveTourCard({ tour }: PropsType) {
     <>
       <View style={{ display: "flex", flexDirection: "column" }}>
         <Pressable style={style.tour} onPress={handleClick}>
-          <Image source={{ uri: tour?.avatarS3?.[0]?.small || "" }} style={style.tourImage} />
+          <Image source={{ uri: tour?.avatarS3?.[0]?.medium || "" }} style={style.tourImage} />
           <View style={style.tourDetailContainer}>
             <View>
               <Text style={style.tourName}>{tour.title}</Text>

@@ -81,7 +81,7 @@ const EditTourScreen = () => {
 
   const copyOfHostDetail = {
     ...tourDetail,
-    base64Images: tourDetail?.avatarS3?.map(item => item?.small),
+    base64Images: tourDetail?.avatarS3?.map(item => item?.large),
     price: tourDetail?.packages[0].price,
     discount: tourDetail?.packages[0].discount,
     capacity: {
