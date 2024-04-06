@@ -1,27 +1,27 @@
-import React from "react";
-import { router } from "expo-router";
-import { Badge, Divider, useTheme } from "@rneui/themed";
-import { Text } from "@rneui/themed";
-import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import {
-  AccommodationQueryType,
-  RateType,
-  TourPackageType,
-  TourQueryType,
-} from "@src/gql/generated";
-import { Feather, FontAwesome, EvilIcons } from "@expo/vector-icons";
 import {
   View,
-  ImageBackground,
-  StyleSheet,
-  Pressable,
   Platform,
   ViewStyle,
+  Pressable,
+  StyleSheet,
   ImageStyle,
+  ImageBackground,
 } from "react-native";
+import {
+  RateType,
+  TourQueryType,
+  TourPackageType,
+  AccommodationQueryType,
+} from "@src/gql/generated";
+import React from "react";
+import { router } from "expo-router";
+import { Text } from "@rneui/themed";
 import { WIDTH } from "@src/constants";
 import WhiteSpace from "@atoms/white-space";
+import { Badge, Divider, useTheme } from "@rneui/themed";
+import useIsRtl, { useFormatPrice } from "@src/hooks/localization";
+import { Feather, FontAwesome, EvilIcons } from "@expo/vector-icons";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 type PropsType = {
   address: AccommodationQueryType["address"];
@@ -45,10 +45,10 @@ function TourSliderCard({
   containerStyle,
 }: PropsType) {
   const isRtl = useIsRtl();
-  const { tr } = useTranslation();
   const { theme } = useTheme();
-  const { localizeNumber } = useLocalizedNumberFormat();
+  const { tr } = useTranslation();
   const { formatPrice } = useFormatPrice();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const handlePress = () => {
     router.push({
@@ -146,7 +146,6 @@ function TourSliderCard({
 const style = StyleSheet.create({
   container: {
     width: WIDTH - 80,
-    maxWidth: 350,
     overflow: "hidden",
     backgroundColor: "#fff",
     elevation: 5,

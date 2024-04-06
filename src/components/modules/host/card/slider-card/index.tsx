@@ -141,7 +141,6 @@ function HostSliderCard({
 const style = StyleSheet.create({
   container: {
     width: WIDTH - 80,
-    maxWidth: 350,
     overflow: "hidden",
     backgroundColor: "#fff",
     elevation: 5,

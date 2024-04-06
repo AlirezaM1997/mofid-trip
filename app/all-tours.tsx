@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import TourCard from "@modules/tour/card";
 import { NetworkStatus } from "@apollo/client";
 import { Divider, useTheme } from "@rneui/themed";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView } from "react-native-gesture-handler";
@@ -24,6 +24,7 @@ const AllToursScreen = () => {
   const pageNumber = useRef(1);
   const { theme } = useTheme();
   const { tr } = useTranslation();
+  const {localizeNumber} = useLocalizedNumberFormat();
 
   const { data, networkStatus, fetchMore } = useTourListSearchQuery({
     notifyOnNetworkStatusChange: true,
@@ -83,7 +84,7 @@ const AllToursScreen = () => {
           size="caption"
           color="grey3"
           title={`${tr("all tours")}`}
-          actionTitle={`${(data?.tourList?.count as number).toString()} ${tr("tour")}`}
+          actionTitle={`${localizeNumber(data?.tourList?.count as number)} ${tr("tour")}`}
         />
         <WhiteSpace size={16} />
 
@@ -93,7 +94,7 @@ const AllToursScreen = () => {
               key={tour?.id}
               id={tour?.id as string}
               name={tour?.title as string}
-              containerStyle={{ width: 325 }}
+              containerStyle={{ width: "100%" }}
               discount={tour?.packages[0].discount}
               avatarS3={tour?.avatarS3 as TourImageType[]}
               price={tour?.packages?.[0]?.price as number}
@@ -112,7 +113,7 @@ const AllToursScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  resultContainer: { gap: 20 },
+  resultContainer: { gap: 20},
 });
 
 export default AllToursScreen;
