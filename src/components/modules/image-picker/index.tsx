@@ -19,7 +19,7 @@ const CustomImagePicker = () => {
 
   const handleImagePicker = async () => {
     const image = await handleUploadImage();
-    setFieldValue("images", [...values.images, image]);
+    setFieldValue("images", values?.images?.length ? [...values.images, image] : [image]);
     convertImageURIToFile(image as string).then(file => {
       setSelectedFiles([...selectedFiles, file]);
     });
