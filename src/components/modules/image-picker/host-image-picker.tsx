@@ -1,5 +1,5 @@
 import { FilesContext } from "./context";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useFormikContext } from "formik";
 import WhiteSpace from "@atoms/white-space";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,19 +19,25 @@ const HostImagePicker = () => {
 
   const handleImagePicker = async () => {
     const image = await handleUploadImage();
-    setFieldValue("accommodation.images", [...values.accommodation.images, image]);
+    setFieldValue("accommodation.images", values?.accommodation?.images?.length ? [...values?.accommodation?.images, image] : [image]);
     convertImageURIToFile(image as string).then(file => {
-      setSelectedFiles([...selectedFiles, file]);
+      console.log('@1', selectedFiles?.length, selectedFiles?.length ? [...selectedFiles, file] : [file])
+      setSelectedFiles(selectedFiles?.length ? [...selectedFiles, file] : [file]);
     });
   };
 
   const removeHandler = (targetIndex: string) => {
+    console.log('@2')
     setFieldValue(
       "accommodation.images",
       values?.accommodation?.images?.filter((i, index) => index.toString() !== targetIndex)
     );
-    setSelectedFiles(selectedFiles.filter((i, index) => index.toString() !== targetIndex));
+    setSelectedFiles(selectedFiles?.filter((i, index) => index.toString() !== targetIndex));
   };
+
+  useEffect(() => {
+    console.log('##', selectedFiles);
+  }, [selectedFiles])
 
   return (
     <>
