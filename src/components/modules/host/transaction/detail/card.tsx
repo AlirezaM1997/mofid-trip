@@ -45,11 +45,11 @@ const TransactionDetailCard = ({
 
         <View style={styles.hostDetail}>
           <Text numberOfLines={1} subtitle1>
-            {project?.name}
+            {localizeNumber(project?.name as string)}
           </Text>
 
           <Text numberOfLines={1} caption type="grey2">
-            {project?.accommodation?.address}
+            {localizeNumber(project?.accommodation?.address as string)}
           </Text>
 
           <View style={styles.date}>
@@ -61,7 +61,7 @@ const TransactionDetailCard = ({
 
           <View style={styles.date}>
             <Text caption type="grey2">
-              {tr("beginning")} .
+              {tr("date")} .
             </Text>
             <Text caption>
               {localizeNumber(formattedDate(transactionDetail?.dateStart))} -{" "}
@@ -90,7 +90,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  hostDetail: { width: 164, gap: 8, justifyContent: "center" },
+  hostDetail: {
+    width: 164,
+    gap: 8,
+    justifyContent: "center",
+  },
   hostAvatar: {
     width: 154,
     height: 104,
