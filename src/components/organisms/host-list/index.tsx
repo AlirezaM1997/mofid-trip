@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { router } from "expo-router";
 import { Skeleton } from "@rneui/themed";
 import Container from "@atoms/container";
