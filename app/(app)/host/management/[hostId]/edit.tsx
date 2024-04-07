@@ -87,7 +87,7 @@ const Screen = () => {
       }
     }
     fetchData().then(res => setSelectedFiles(res))
-  }, [])
+  }, [data])
 
   if (!data || loading) return <LoadingIndicator />;
 
