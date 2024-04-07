@@ -23,29 +23,6 @@ const Profile: React.FC = () => {
     isFocused && session && refetch();
   }, [isFocused, session]);
 
-  useEffect(() => {
-    fetch(
-      "https://mofidtripst.s3.ir-thr-at1.arvanstorage.ir/static/images/005f18a5-4b8e-44d4-bff3-bf03a5aaaa84_large.png",
-      {
-        headers: {
-          accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-          "accept-language": "en,fa;q=0.9,en-US;q=0.8,ar;q=0.7",
-          "sec-fetch-dest": "image",
-          "sec-fetch-mode": "no-cors",
-          "sec-fetch-site": "cross-site",
-          "Cache-Control": "no-cache", // Disable caching
-          "Pragma": "no-cache", // Additional header for older HTTP/1.0 caches
-        },
-        referrer: "http://localhost:8081/",
-        referrerPolicy: "strict-origin-when-cross-origin",
-        body: null,
-        method: "GET",
-        mode: "cors",
-        credentials: "omit",
-      }
-    );
-  }, []);
-
   if (!isLoading && !session) return <Authentication />;
   if (!data) return <LoadingIndicator />;
 

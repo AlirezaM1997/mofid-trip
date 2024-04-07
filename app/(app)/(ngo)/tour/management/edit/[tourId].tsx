@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@rneui/themed";
 import { useLocalSearchParams } from "expo-router";
 import useTranslation from "@src/hooks/translation";
@@ -9,6 +9,7 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { useMyNgoDetailTourSetEditQuery, useTourEditMutation } from "@src/gql/generated";
 import { FilesContext } from "@modules/image-picker/context";
+import convertImageURIToFile from "@src/helper/image-picker/convert-uri-to-file";
 
 const EditTourScreen = () => {
   const { tr } = useTranslation();
@@ -77,6 +78,20 @@ const EditTourScreen = () => {
       setIsVisibleFinish(true);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (copyOfHostDetail && copyOfHostDetail?.images && copyOfHostDetail?.images) {
+        const promises = copyOfHostDetail.images?.map(async img => {
+          const file = await convertImageURIToFile(img as string)
+          return file
+        })
+        const bb = await Promise.all(promises)
+        return bb
+      }
+    }
+    fetchData().then(res => setSelectedFiles(res))
+  }, [])
 
   if (loading && !data) return <LoadingIndicator />;
 
