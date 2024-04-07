@@ -57,14 +57,14 @@ function HostCard({ price, id, name, avatarS3, address }: PropsType) {
 
         <WhiteSpace size={6} />
 
-        {price <= 0 ? (
+        {(price as number) <= 0 ? (
           <Text body2 bold>
             {tr("it is free")}
           </Text>
         ) : (
           <>
             <Text body2 bold>
-              {localizeNumber(formatPrice(price))}
+              {localizeNumber(formatPrice(price as number) as string)}
               <Text body2> / {tr("night")}</Text>
             </Text>
           </>

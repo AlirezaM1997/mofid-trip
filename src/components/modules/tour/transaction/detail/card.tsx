@@ -19,7 +19,7 @@ const TransactionDetailCard = ({ tour }: { tour: TourQueryType }) => {
         <Image
           style={styles.tourAvatar}
           source={{
-            uri: tour?.avatarS3?.[0]?.small as string,
+            uri: tour?.avatarS3?.[0]?.large as string,
           }}
         />
 

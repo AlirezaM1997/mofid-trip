@@ -38,7 +38,7 @@ const SearchHostList = ({ button }) => {
           ...prev,
           projectList: {
             ...prev.projectList,
-            data: [...prev.projectList.data, ...fetchMoreResult.projectList.data],
+            data: [...prev.projectList.data, ...fetchMoreResult?.projectList?.data],
           },
         };
       },
@@ -53,7 +53,7 @@ const SearchHostList = ({ button }) => {
 
     if (isCloseToBottom(nativeEvent)) {
       if (
-        data?.projectList?.data?.length < data?.projectList?.count &&
+        (data?.projectList?.data?.length as number) < (data?.projectList?.count as number) &&
         networkStatus === NetworkStatus.ready
       ) {
         handleLoadMore();
@@ -81,19 +81,19 @@ const SearchHostList = ({ button }) => {
           size="caption"
           color="grey3"
           title={`${tr("all hosts of")} ${filterSlice.search}`}
-          actionTitle={`${data?.projectList?.count.toString()} ${tr("host")}`}
+          actionTitle={`${data?.projectList?.count?.toString()} ${tr("host")}`}
         />
         <WhiteSpace size={16} />
 
         <View style={styles.resultContainer}>
           {data?.projectList?.data?.map(project => (
-            <Fragment key={project.id}>
+            <Fragment key={project?.id}>
               <HostCard
-                id={project.id}
-                name={project.name}
-                address={project.accommodation.address}
-                avatarS3={project.accommodation.avatarS3}
-                price={(project.price * (100 - project.discount)) / 100}
+                id={project?.id as string}
+                name={project?.name}
+                address={project?.accommodation?.address}
+                avatarS3={project?.accommodation?.avatarS3}
+                price={((project?.price as number) * (100 - (project?.discount as number))) / 100}
               />
               <Divider />
             </Fragment>

@@ -19,7 +19,7 @@ const TransactionDetail = ({ transaction }: TransactionDetailPropsType) => {
       <Image
         style={styles.image}
         source={{
-          uri: tour?.avatarS3?.[0]?.orginal || "",
+          uri: tour?.avatarS3?.[0]?.large || "",
         }}
         resizeMode="cover"
       />

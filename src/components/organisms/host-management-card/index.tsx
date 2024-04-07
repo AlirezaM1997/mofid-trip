@@ -31,7 +31,7 @@ const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
           source={
             (host?.accommodation?.avatarS3?.length as number) > 0
               ? {
-                  uri: host?.accommodation?.avatarS3?.[0]?.orginal,
+                  uri: host?.accommodation?.avatarS3?.[0]?.large,
                 }
               : require("@assets/image/defaultHost.svg")
           }
@@ -53,8 +53,6 @@ const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
               title={host?.statusStep.displayName as string}
               color={getHostRequestStatusBadgeColor(host)}
               type="outline"
-              color={getHostRequestStatusBadgeColor(host)}
-              title={host?.statusStep.displayName as string}
             />
           ) : (
             <>

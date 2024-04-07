@@ -43,9 +43,9 @@ function ImageSlider({ imageList }: ImageSlider) {
             style={style.sliderActiveSlide}
             imageStyle={style.sliderImageActiveSlide}
             source={
-              imageList?.[0]?.orginal
+              imageList?.[0]?.large
                 ? {
-                    uri: imageList?.[0]?.orginal,
+                    uri: imageList?.[0]?.large,
                   }
                 : require("@assets/image/defaultHost.svg")
             }
@@ -66,7 +66,7 @@ function ImageSlider({ imageList }: ImageSlider) {
                   style={style.sliderSlideThumbnail}
                   imageStyle={style.sliderImageSlideThumbnail}
                   source={{
-                    uri: img.medium as string,
+                    uri: img.small as string,
                   }}
                 />
               </Pressable>

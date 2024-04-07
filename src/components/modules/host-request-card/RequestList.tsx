@@ -33,6 +33,10 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
         title: tr("success receipt"),
         color: "info",
       },
+      SUCCESSFUL: {
+        title: tr("finish the trip"),
+        color: "grey3",
+      },
     };
     return lookup[transaction.status.step.name];
   };

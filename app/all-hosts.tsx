@@ -1,7 +1,7 @@
+import React, { useRef } from "react";
 import { useTheme } from "@rneui/themed";
 import { NetworkStatus } from "@apollo/client";
-import React, { useRef } from "react";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import TitleWithAction from "@modules/title-with-action";
 import { ScrollView } from "react-native-gesture-handler";
@@ -9,13 +9,18 @@ import LoadingIndicator from "@modules/Loading-indicator";
 import WhiteSpace from "@src/components/atoms/white-space";
 import NoResult from "@src/components/organisms/no-result";
 import HostSliderCard from "@modules/host/card/slider-card";
-import { ProjectQueryType, RateType, useProjectListSearchQuery } from "@src/gql/generated";
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from "react-native";
+import {
+  ProjectQueryType,
+  RateType,
+  useProjectListSearchQuery,
+} from "@src/gql/generated";
 
 const MahdiehIranScreen = () => {
   const pageNumber = useRef(1);
   const { theme } = useTheme();
   const { tr } = useTranslation();
+  const {localizeNumber} = useLocalizedNumberFormat();
 
   const { data, networkStatus, fetchMore } = useProjectListSearchQuery({
     notifyOnNetworkStatusChange: true,
@@ -76,7 +81,7 @@ const MahdiehIranScreen = () => {
           size="caption"
           color="grey3"
           title={tr("all hosts")}
-          actionTitle={`${data?.projectList?.count?.toString()} ${tr("host")}`}
+          actionTitle={`${localizeNumber(data?.projectList?.count as number)} ${tr("host")}`}
         />
         <WhiteSpace size={16} />
 
@@ -89,7 +94,7 @@ const MahdiehIranScreen = () => {
               id={project?.id as string}
               discount={project?.discount}
               rate={project?.rate as RateType}
-              containerStyle={{ width: 325 }}
+              containerStyle={{ width: "100%" }}
               address={project?.accommodation?.address}
               avatarS3={project?.accommodation?.avatarS3}
             />

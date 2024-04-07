@@ -85,7 +85,7 @@ function HostSliderCard({
 
   const avatar =
     (avatarS3?.length as number) > 0
-      ? { uri: avatarS3?.[0]?.orginal }
+      ? { uri: avatarS3?.[0]?.large }
       : require("@assets/image/defaultHost.svg");
 
   return (
@@ -141,7 +141,6 @@ function HostSliderCard({
 const style = StyleSheet.create({
   container: {
     width: WIDTH - 80,
-    maxWidth: 350,
     overflow: "hidden",
     backgroundColor: "#fff",
     elevation: 5,
