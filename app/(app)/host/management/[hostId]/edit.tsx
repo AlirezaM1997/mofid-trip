@@ -1,13 +1,15 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@rneui/themed";
 import { useLocalSearchParams } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import HostCreateForm from "@organisms/host-create";
 import LoadingIndicator from "@modules/Loading-indicator";
 import BottomButtonLayout from "@components/layout/bottom-button";
+import { FilesContext } from "@modules/image-picker/context";
 import { useMyUserDetailProjectSetEditQuery, useProjectEditMutation } from "@src/gql/generated";
+import convertImageURIToFile from "@src/helper/image-picker/convert-uri-to-file";
 
 const Screen = () => {
   const { tr } = useTranslation();
@@ -15,6 +17,7 @@ const Screen = () => {
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [activeStep, setActiveStep] = useState(1);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const { loading, data } = useMyUserDetailProjectSetEditQuery();
 
@@ -62,6 +65,7 @@ const Screen = () => {
           pk: hostId as string,
           price: +values.price,
           discount: +values.discount,
+          accommodation: { ...values.accommodation, images: selectedFiles },
           capacity: { ...values.capacity, capacityNumber: +values.capacity.capacityNumber },
         },
       },
@@ -70,6 +74,20 @@ const Screen = () => {
       setIsVisibleFinish(true);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (copyOfHostDetail && copyOfHostDetail.accommodation && copyOfHostDetail.accommodation.images) {
+        const promises = copyOfHostDetail.accommodation.images.map(async img => {
+          const file = await convertImageURIToFile(img as string)
+          return file
+        })
+        const bb = await Promise.all(promises)
+        return bb
+      }
+    }
+    fetchData().then(res => setSelectedFiles(res))
+  }, [])
 
   if (!data || loading) return <LoadingIndicator />;
 
@@ -84,7 +102,7 @@ const Screen = () => {
     },
     accommodation: {
       ...hostDetail?.accommodation,
-      base64Images: hostDetail?.accommodation?.avatarS3?.map(item => item?.large),
+      images: hostDetail?.accommodation?.avatarS3?.map(item => item?.small),
     },
   };
 
@@ -100,29 +118,35 @@ const Screen = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}>
       {({ handleSubmit }) => (
-        <BottomButtonLayout
-          buttons={[
-            <Button
-              onPress={activeStep === 8 ? handleSubmit : handleNext}
-              disabled={submitLoading || isButtonDisabled}
-              loading={submitLoading}>
-              {activeStep === 8 ? tr("Submit") : tr("Next")}
-            </Button>,
-            <Button
-              type="outline"
-              color="secondary"
-              disabled={activeStep === 1}
-              onPress={handlePrev}>
-              {tr("Previous")}
-            </Button>,
-          ]}>
-          <HostCreateForm
-            activeStep={activeStep}
-            isVisibleFinish={isVisibleFinish}
-            setIsVisibleFinish={setIsVisibleFinish}
-            setIsButtonDisabled={setIsButtonDisabled}
-          />
-        </BottomButtonLayout>
+        <FilesContext.Provider
+          value={{
+            selectedFiles: selectedFiles,
+            setSelectedFiles: setSelectedFiles,
+          }}>
+          <BottomButtonLayout
+            buttons={[
+              <Button
+                onPress={activeStep === 8 ? handleSubmit : handleNext}
+                disabled={submitLoading || isButtonDisabled}
+                loading={submitLoading}>
+                {activeStep === 8 ? tr("Submit") : tr("Next")}
+              </Button>,
+              <Button
+                type="outline"
+                color="secondary"
+                disabled={activeStep === 1}
+                onPress={handlePrev}>
+                {tr("Previous")}
+              </Button>,
+            ]}>
+            <HostCreateForm
+              activeStep={activeStep}
+              isVisibleFinish={isVisibleFinish}
+              setIsVisibleFinish={setIsVisibleFinish}
+              setIsButtonDisabled={setIsButtonDisabled}
+            />
+          </BottomButtonLayout>
+        </FilesContext.Provider>
       )}
     </Formik>
   );

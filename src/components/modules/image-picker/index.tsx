@@ -1,5 +1,5 @@
 import { FilesContext } from "./context";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useFormikContext } from "formik";
 import WhiteSpace from "@atoms/white-space";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,9 +19,9 @@ const CustomImagePicker = () => {
 
   const handleImagePicker = async () => {
     const image = await handleUploadImage();
-    setFieldValue("images", [...values.images, image]);
+    setFieldValue("images", values?.images?.length ? [...values.images, image] : [image]);
     convertImageURIToFile(image as string).then(file => {
-      setSelectedFiles([...selectedFiles, file]);
+      selectedFiles ? setSelectedFiles([...selectedFiles, file]) : setSelectedFiles([file])
     });
   };
 
@@ -30,7 +30,7 @@ const CustomImagePicker = () => {
       "images",
       values?.images?.filter((i, index) => index.toString() !== targetIndex)
     );
-    setSelectedFiles(selectedFiles.filter((i, index) => index.toString() !== targetIndex));
+    setSelectedFiles(selectedFiles?.filter((i, index) => index.toString() !== targetIndex));
   };
 
   return (
