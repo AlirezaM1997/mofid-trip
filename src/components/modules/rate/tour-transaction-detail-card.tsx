@@ -28,7 +28,7 @@ const TourTransactionDetailCard = ({
           style={styles.tourAvatar}
           source={
             {
-              uri: tourPackage?.tour?.avatarS3?.[0]?.small,
+              uri: tourPackage?.tour?.avatarS3?.[0]?.large,
             } as ImageSourcePropType
           }
         />
@@ -68,7 +68,11 @@ const styles = StyleSheet.create({
     gap: 12,
     flexDirection: "row",
   },
-  tourDetail: { width: 164, gap: 8, justifyContent: "center" },
+  tourDetail: {
+    width: 164,
+    gap: 8,
+    justifyContent: "center",
+  },
   tourAvatar: {
     width: 154,
     height: 104,

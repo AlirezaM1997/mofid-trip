@@ -38,7 +38,7 @@ const SearchTourList = ({ button }) => {
           ...prev,
           tourList: {
             ...prev.tourList,
-            data: [...prev.tourList.data, ...fetchMoreResult.tourList.data],
+            data: [...prev.tourList.data, ...fetchMoreResult?.tourList?.data],
           },
         };
       },
@@ -53,7 +53,7 @@ const SearchTourList = ({ button }) => {
 
     if (isCloseToBottom(nativeEvent)) {
       if (
-        data?.tourList?.data?.length < data?.tourList?.count &&
+        data?.tourList?.data?.length as number < (data?.tourList?.count as number) &&
         networkStatus === NetworkStatus.ready
       ) {
         handleLoadMore();
@@ -80,19 +80,19 @@ const SearchTourList = ({ button }) => {
           size="caption"
           color="grey3"
           title={`${tr("all tours of")} ${filterSlice.search}`}
-          actionTitle={`${data?.tourList?.count.toString()} ${tr("tour")}`}
+          actionTitle={`${data?.tourList?.count?.toString()} ${tr("tour")}`}
         />
         <WhiteSpace size={16} />
 
         <View style={styles.resultContainer}>
           {data?.tourList?.data?.map(tour => (
-            <Fragment key={tour.id}>
+            <Fragment key={tour?.id}>
               <TourCard
-                id={tour.id}
-                title={tour.title}
+                id={tour?.id as string}
+                title={tour?.title as string}
                 avatarS3={tour?.avatarS3}
-                price={tour?.packages?.[0]?.price}
-                address={(tour.destination as AccommodationQueryType)?.address}
+                price={tour?.packages?.[0]?.price as number}
+                address={(tour?.destination as AccommodationQueryType)?.address as string}
               />
               <Divider />
             </Fragment>

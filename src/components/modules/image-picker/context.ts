@@ -1,3 +1,6 @@
 import { createContext } from "react";
 
-export const FilesContext = createContext(null);
+export const FilesContext = createContext({
+    selectedFiles: [],
+    setSelectedFiles: ([]) => {}
+});

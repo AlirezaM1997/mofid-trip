@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@rneui/themed";
 import { useLocalSearchParams } from "expo-router";
 import useTranslation from "@src/hooks/translation";
@@ -8,6 +8,8 @@ import TourCreateForm from "@organisms/tour-create";
 import LoadingIndicator from "@modules/Loading-indicator";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import { useMyNgoDetailTourSetEditQuery, useTourEditMutation } from "@src/gql/generated";
+import { FilesContext } from "@modules/image-picker/context";
+import convertImageURIToFile from "@src/helper/image-picker/convert-uri-to-file";
 
 const EditTourScreen = () => {
   const { tr } = useTranslation();
@@ -15,6 +17,7 @@ const EditTourScreen = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [isVisibleFinish, setIsVisibleFinish] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const [submit, { loading: submitLoading }] = useTourEditMutation();
 
@@ -65,6 +68,7 @@ const EditTourScreen = () => {
           ...values,
           pk: tourId,
           price: +values.price,
+          images: selectedFiles,
           discount: +values.discount,
           capacity: { ...values.capacity, capacityNumber: +values.capacity.capacityNumber },
         },
@@ -75,13 +79,27 @@ const EditTourScreen = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (copyOfHostDetail && copyOfHostDetail?.images && copyOfHostDetail?.images) {
+        const promises = copyOfHostDetail.images?.map(async img => {
+          const file = await convertImageURIToFile(img as string)
+          return file
+        })
+        const bb = await Promise.all(promises)
+        return bb
+      }
+    }
+    fetchData().then(res => setSelectedFiles(res))
+  }, [])
+
   if (loading && !data) return <LoadingIndicator />;
 
   const tourDetail = data?.NGODetail?.tourSet?.find(tour => tour?.id === tourId);
 
   const copyOfHostDetail = {
     ...tourDetail,
-    base64Images: tourDetail?.avatarS3?.map(item => item?.small),
+    images: tourDetail?.avatarS3?.map(item => item?.small),
     price: tourDetail?.packages[0].price,
     discount: tourDetail?.packages[0].discount,
     capacity: {
@@ -103,29 +121,35 @@ const EditTourScreen = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}>
         {({ handleSubmit }) => (
-          <BottomButtonLayout
-            buttons={[
-              <Button
-                onPress={activeStep === 8 ? handleSubmit : handleNext}
-                disabled={submitLoading || isButtonDisabled}
-                loading={submitLoading}>
-                {activeStep === 8 ? tr("Submit") : tr("Next")}
-              </Button>,
-              <Button
-                type="outline"
-                color="secondary"
-                disabled={activeStep === 1}
-                onPress={handlePrev}>
-                {tr("Previous")}
-              </Button>,
-            ]}>
-            <TourCreateForm
-              activeStep={activeStep}
-              isVisibleFinish={isVisibleFinish}
-              setIsVisibleFinish={setIsVisibleFinish}
-              setIsButtonDisabled={setIsButtonDisabled}
-            />
-          </BottomButtonLayout>
+          <FilesContext.Provider
+            value={{
+              selectedFiles: selectedFiles,
+              setSelectedFiles: setSelectedFiles,
+            }}>
+            <BottomButtonLayout
+              buttons={[
+                <Button
+                  onPress={activeStep === 8 ? handleSubmit : handleNext}
+                  disabled={submitLoading || isButtonDisabled}
+                  loading={submitLoading}>
+                  {activeStep === 8 ? tr("Submit") : tr("Next")}
+                </Button>,
+                <Button
+                  type="outline"
+                  color="secondary"
+                  disabled={activeStep === 1}
+                  onPress={handlePrev}>
+                  {tr("Previous")}
+                </Button>,
+              ]}>
+              <TourCreateForm
+                activeStep={activeStep}
+                isVisibleFinish={isVisibleFinish}
+                setIsVisibleFinish={setIsVisibleFinish}
+                setIsButtonDisabled={setIsButtonDisabled}
+              />
+            </BottomButtonLayout>
+          </FilesContext.Provider>
         )}
       </Formik>
     </>
