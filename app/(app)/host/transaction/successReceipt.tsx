@@ -11,7 +11,7 @@ import ButtonRow from "@modules/button-rows";
 import Toast from "react-native-toast-message";
 import ShareButton from "@modules/share-button";
 import { Chip, Colors, Text } from "@rneui/themed";
-import { totalPrice } from "@src/helper/totalPrice";
+import { totalPrice } from "@src/helper/total-price";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Avatar, Button, useTheme } from "@rneui/themed";
 import { useFormatPrice } from "@src/hooks/localization";

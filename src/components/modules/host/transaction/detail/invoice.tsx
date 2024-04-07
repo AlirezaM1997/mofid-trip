@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { Divider, Text } from "@rneui/themed";
 import { StyleSheet } from "react-native";
-import { totalPrice } from "@src/helper/totalPrice";
+import { totalPrice } from "@src/helper/total-price";
 import { useFormatPrice } from "@src/hooks/localization";
 import { ProjectTransactionQueryType } from "@src/gql/generated";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
