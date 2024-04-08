@@ -24,11 +24,11 @@ const AllToursScreen = () => {
   const pageNumber = useRef(1);
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const {localizeNumber} = useLocalizedNumberFormat();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { data, networkStatus, fetchMore } = useTourListSearchQuery({
     notifyOnNetworkStatusChange: true,
-    variables: { page: { pageNumber: 1, pageSize: 10 } },
+    variables: { page: { pageNumber: 1, pageSize: 10 }, sort: { descending: true } },
   });
 
   const handleLoadMore = () => {
@@ -113,7 +113,7 @@ const AllToursScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  resultContainer: { gap: 20},
+  resultContainer: { gap: 20 },
 });
 
 export default AllToursScreen;

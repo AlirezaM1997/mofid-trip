@@ -58,6 +58,15 @@ const BookHostBottomSheet = ({ project }: { project: ProjectQueryType }) => {
       });
       return;
     }
+    router.push({
+      pathname: "host/transaction/add",
+      params: {
+        name: name,
+        projectId: projectId,
+        dateEnd: project.dateEnd,
+        dateStart: project.dateStart,
+      },
+    });
   };
 
   const hostPrice =
