@@ -1646,6 +1646,11 @@ export const messages = {
     fa_ir: "خطا",
     en_us: "Error",
   },
+  "a maximum of sixty characters is allowed for features": {
+    ar: "يُسمح بستين حرفًا كحد أقصى للميزات",
+    fa_ir: "حداکثر شصت کاراکتر برای امکانات مجاز است",
+    en_us: "A maximum of sixty characters is allowed for features",
+  },
   "about the tour": {
     ar: "حول الجولة",
     fa_ir: "درباره تور",

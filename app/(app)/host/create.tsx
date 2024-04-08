@@ -72,6 +72,14 @@ const Screen = () => {
         .positive(tr("Capacity is required"))
         .required(tr("Capacity is required")),
     }),
+    
+    facilities: Yup.array().of(
+      Yup.object().shape({
+        faName: Yup.string().max(60, "String must be at most 60 characters long"),
+        enName: Yup.string().max(60, "String must be at most 60 characters long"),
+        arName: Yup.string().max(60, "String must be at most 60 characters long"),
+      })
+    ),
   });
 
   const handleNext = () => setActiveStep(activeStep + 1);
