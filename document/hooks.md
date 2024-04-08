@@ -8,17 +8,23 @@
 در این فایل هوک های مربوط به اعتبارسنجی کاربر وجود دارد که از داکیومنت موجود در لینک زیر یا اندکی کاستوم کردن استخراج شده است
 (https://docs.expo.dev/router/reference/authentication/)
 <br/>
+و با فولدر context در ارتباط است
 <br/>
-<h1>db/project</h1>
 <br/>
-<br/>
-<h1>db/setting-detail</h1>
+<h1>db</h1>
+محتویات این فولدر برای موقعی است که بخواهیم اپ به صورت offline-first باشد
 <br/>
 <br/>
 <h1>localization</h1>
 1- useIsRtl : برای مشخص کردن چپ چین یا راست چین بودن
 <br/>
 2- useFormatPrice : برای مشخص کردن فرمت قیمت با توجه به زبان کاربر
+<br/>
+<br/>
+<h1>jalali-date-picker</h1>
+از آنجایی که دیت پیکر موجود در اپ به صورت دستی نوشته شده است برای هندل کردن اکشن های مختلف مربوط به آن هوک هایی تعریف شده است
+<br/>
+تفاوت فولدر formik و state در این است که هوک های مربوط به فولدر state علاوه بر هندل کردن ui مربوط به دیت پیکر، state آن را نیز هندل می کند
 <br/>
 <br/>
 <h1>calendar-theme</h1>
@@ -28,9 +34,9 @@
 <h1>translation</h1>
 1- useTranslation : هوک مربوط به زبان
 <br/>
-2- useDynamicTranslation 
+2- useDynamicTranslation : برای ترجمه متن هایی که نیاز به دریافت یک متغیر دارند تا براساس آن متغیر به صورت داینامیک تغییر کنند
 <br/>
-3- useLocalizedNumberFormat 
+3- useLocalizedNumberFormat : برای نمایش صحیح اعداد بر اساس زبان کاربر بهتر است که از این هوک استفاده شود
 <br/>
 <br/>
 <h1>use-default-screen-options</h1>
