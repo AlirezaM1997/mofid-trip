@@ -3363,7 +3363,7 @@ export const messages = {
   "verification code has been sent, enter it. if you do not receive the code, hit send again": {
     ar: "تم إرسال رمز التحقق، أدخله. إذا لم تستلم الرمز، اضغط على إرسال مرة أخرى",
     fa_ir:
-      "کد تأیید ارسال شده است، آن را وارد کنید. اگر کد را دریافت نکردید، دوباره ارسال را بزنید",
+      "کد تأیید ارسال شده است، آن را وارد کنید. اگر کد را دریافت نکردید، ارسال مجدد کد را بزنید",
     en_us:
       "Verification code has been sent, enter it. If you do not receive the code, hit send again",
   },
