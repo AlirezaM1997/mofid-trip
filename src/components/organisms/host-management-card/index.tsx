@@ -18,7 +18,7 @@ const HostManagementCard = ({ host }: { host: ProjectQueryType }) => {
   const navigateToHostDetail = () => {
     dispatch(
       setRedirectToScreenAfterLogin({
-        pathname: "/host/management",
+        pathname: `/host/management/${host.id}`,
       })
     );
     router.push(`/host/management/${host.id}`);
