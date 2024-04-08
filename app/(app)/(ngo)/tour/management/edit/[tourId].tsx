@@ -90,8 +90,9 @@ const EditTourScreen = () => {
         return bb
       }
     }
-    fetchData().then(res => setSelectedFiles(res))
-  }, [])
+    fetchData().then(res => {
+      setSelectedFiles(res)})
+  }, [data])
 
   if (loading && !data) return <LoadingIndicator />;
 
