@@ -21,16 +21,17 @@ const ConfirmButton = ({ transaction }: PropsType) => {
         data: {
           ip,
           tourTransactionId: transaction.id,
-          price:
-            (transaction.tourPackage?.price as unknown as number) *
-            (1 - (transaction.tourPackage?.discount as number) / 100) *
-            (transaction.tourGuests?.length as number),
+          price: (
+            (transaction?.tourPackage?.price as number) *
+            (1 - (transaction?.tourPackage?.discount as number) / 100) *
+            (transaction?.tourGuests?.length as number)
+          ).toString(),
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transaction.id}&type=tour`,
           description: `${tr("buy")} ${transaction?.tourPackage?.tour?.title}`,
         },
       },
     });
-    router.push(data?.tourPurchaseAdd?.metadata?.url);
+    router.push(data?.tourPurchaseAdd?.metadata?.url?.url);
   };
 
   return (
