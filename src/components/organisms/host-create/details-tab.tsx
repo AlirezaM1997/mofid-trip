@@ -27,15 +27,15 @@ const TabDetails = () => {
         onChangeText={handleChange("name")}
         onBlur={handleBlur("name")}
         value={values.name}
-        errorMessage={touched.name && (errors.name as string)}
+        errorMessage={(touched.name && errors.name) as string}
       />
       <Input
         name="description"
         placeholder={tr("Host Details")}
         onChangeText={handleChange("description")}
         onBlur={handleBlur("description")}
-        value={values.description}
-        errorMessage={touched.description && (errors.description as string)}
+        value={values.description as string}
+        errorMessage={(touched.description && errors.description) as string}
         textAlignVertical="top"
         multiline={true}
         numberOfLines={4}

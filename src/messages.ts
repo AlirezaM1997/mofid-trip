@@ -3195,7 +3195,7 @@ export const messages = {
   },
   "host details": {
     ar: "تفاصيل المضيف",
-    fa_ir: "جزئیات میزبان",
+    fa_ir: "جزئیات میزبانی",
     en_us: "Host Details",
   },
 
@@ -3328,7 +3328,7 @@ export const messages = {
   },
   "host title": {
     ar: "عنوان المضيف",
-    fa_ir: "عنوان میزبان",
+    fa_ir: "عنوان میزبانی",
     en_us: "Host Title",
   },
   "determine the type of space and your hosting environment.": {
