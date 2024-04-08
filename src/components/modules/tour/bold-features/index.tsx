@@ -35,7 +35,7 @@ const TourBoldInfo = ({ capacity, startTime, endTime }) => {
   const s = moment(startTime, "YYYY-MM-DDTHH:mm:ssZ");
   const e = moment(endTime, "YYYY-MM-DDTHH:mm:ssZ");
 
-  const differenceInDays = e.diff(s, "days");
+  const differenceInDays = e.diff(s, "days") + 1;
 
   return (
     <View style={style.container}>
