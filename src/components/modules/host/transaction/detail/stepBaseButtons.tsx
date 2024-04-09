@@ -51,7 +51,7 @@ const StepBaseButtons = ({
           <Pressable style={styles.buttonContainer} onPress={editReservationHandler}>
             <View style={styles.buttonContent}>
               <Feather name="circle" size={13} color="black" />
-              <Text>{tr("edit reservation information")}</Text>
+              <Text>{tr("edit reservation information")}</Text>  
             </View>
 
             <MaterialIcons name="keyboard-arrow-left" size={24} color="black" />
