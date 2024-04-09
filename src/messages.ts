@@ -2617,6 +2617,11 @@ export const messages = {
     fa_ir: "پکیج انتخابی شما",
     en_us: "Your selected package",
   },
+  "first passenger info": {
+    ar: "معلومات الراكب الأول (المجموعة الرئيسية)",
+    fa_ir: "مشخصات مسافر اول (سرگروه)",
+    en_us: "Info of the first passenger (head group)",
+  },
   reserve: {
     ar: "ذخيرة",
     fa_ir: "رزرو",
