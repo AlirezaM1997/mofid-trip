@@ -52,17 +52,18 @@ const TourTransactionDetailScreen = () => {
       variables: {
         data: {
           ip,
-          price:
+          price: (
             (tourPackage?.price as number) *
             (1 - (tourPackage?.discount as number) / 100) *
-            (tourGuests?.length as number),
+            (tourGuests?.length as number)
+          ).toString(),
           tourTransactionId: transactionId as string,
           description: `${tr("buy")} ${tourPackage?.tour?.title}`,
           appLink: `${ZARINPAL_CALLBACK_URL}?id=${transactionId}&type=tour`,
         },
       },
     });
-    router.push(data?.tourPurchaseAdd?.metadata?.url);
+    router.push(data?.tourPurchaseAdd?.metadata?.url?.url);
   };
 
   const bottomButton = () => {

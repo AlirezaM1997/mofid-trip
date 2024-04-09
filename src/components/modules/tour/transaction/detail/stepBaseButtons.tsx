@@ -1,18 +1,27 @@
 import React from "react";
+import { router } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import { Divider, Text, useTheme } from "@rneui/themed";
 import { Pressable, StyleSheet, View } from "react-native";
-import CancelTransaction from "@modules/tour/transaction/cancle";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
-import { router } from "expo-router";
+import CancelTransaction from "@modules/tour/transaction/cancle";
+import { StatusQueryType, TourPackageType } from "@src/gql/generated";
 
-const StepBaseButtons = ({ status, transactionId, tourPackage }) => {
+const StepBaseButtons = ({
+  status,
+  transactionId,
+  tourPackage,
+}: {
+  status: StatusQueryType;
+  transactionId: string;
+  tourPackage: TourPackageType;
+}) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
 
   const editReservationHandler = () => {
     router.push({
-      pathname: `/tour/${tourPackage.tour.id}/reservation/edit/step-1`,
+      pathname: `/tour/${tourPackage?.tour?.id}/reservation/edit/step-1`,
       params: {
         transactionId,
         tourPackage: JSON.stringify(tourPackage),
@@ -22,7 +31,7 @@ const StepBaseButtons = ({ status, transactionId, tourPackage }) => {
 
   return (
     <>
-      {status.step === "REQUEST" && status.isActive && (
+      {(status.step?.name as string) === "REQUEST" && status.isActive && (
         <>
           <Divider />
           <Pressable style={styles.buttonContainer} onPress={editReservationHandler}>
@@ -49,7 +58,7 @@ const StepBaseButtons = ({ status, transactionId, tourPackage }) => {
         </>
       )}
 
-      {status.step === "SUCCESSFUL" && (
+      {(status?.step?.name as string) === "SUCCESSFUL" && (
         <>
           <Divider />
           <Pressable

@@ -15,8 +15,12 @@ query tourTransactionList($page: PageType) {
           name
         }
       }
+       tourGuests {
+        id
+      }
       tourPackage {
         price
+        discount
         tour {
           id
           startTime
