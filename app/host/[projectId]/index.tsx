@@ -11,7 +11,7 @@ import { Text, useTheme } from "@rneui/themed";
 import { AntDesign } from "@expo/vector-icons";
 import HostComment from "@modules/host/comment";
 import ImageSlider from "@modules/image-slider";
-import openMapHandler from "@src/helper/opem-map";
+import openMapHandler from "@src/helper/open-map";
 import { useIsFocused } from "@react-navigation/native";
 import Container from "@src/components/atoms/container";
 import Map from "@src/components/modules/map/index.web";
