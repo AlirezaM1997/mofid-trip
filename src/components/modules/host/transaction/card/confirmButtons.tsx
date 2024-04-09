@@ -44,7 +44,7 @@ const ConfirmButton = ({ transaction }: PropsType) => {
         text2: error,
       });
     } else {
-      router.push(data?.projectPurchaseAdd?.metadata?.url);
+      router.push(data?.projectPurchaseAdd?.metadata?.url?.url);
     }
   };
 

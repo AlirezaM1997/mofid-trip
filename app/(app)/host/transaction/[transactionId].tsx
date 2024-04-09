@@ -53,7 +53,7 @@ const TransactionDetailsScreen = () => {
           price: totalPrice({
             endDate: dateEnd,
             startDate: dateStart,
-            price: project?.price as number,
+            price: (project?.price as number),
             discount: project?.discount as number,
             capacity: guest?.guestNumber as number,
           }),
@@ -65,7 +65,7 @@ const TransactionDetailsScreen = () => {
     });
 
     if (data?.projectPurchaseAdd?.status === "OK") {
-      router.push(data.projectPurchaseAdd.metadata?.url);
+      router.push(data.projectPurchaseAdd.metadata?.url?.url);
     }
   };
 

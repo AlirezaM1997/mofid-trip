@@ -2878,7 +2878,7 @@ export type TourTransactionListQueryVariables = Exact<{
 }>;
 
 
-export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionList?: { __typename?: 'TourTransactionListType', count?: number | null, data?: Array<{ __typename?: 'TourTransactionQueryType', id: string, description?: string | null, invoiceNumber?: any | null, tourguestSet: Array<{ __typename?: 'TourGuestQueryType', id: string }>, status?: { __typename?: 'TourTransactionStatusQueryType', isActive?: boolean | null, step?: { __typename?: 'TourTransactionStatusStepQueryType', displayName?: string | null, name?: string | null } | null } | null, tourPackage?: { __typename?: 'TourPackageType', price: number, tour?: { __typename?: 'TourQueryType', id: string, startTime: any, endTime: any, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null, orginal?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null, medium?: string | null, large?: string | null, orginal?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null> | null } | null };
+export type TourTransactionListQuery = { __typename?: 'Query', tourTransactionList?: { __typename?: 'TourTransactionListType', count?: number | null, data?: Array<{ __typename?: 'TourTransactionQueryType', id: string, description?: string | null, invoiceNumber?: any | null, tourguestSet: Array<{ __typename?: 'TourGuestQueryType', id: string }>, status?: { __typename?: 'TourTransactionStatusQueryType', isActive?: boolean | null, step?: { __typename?: 'TourTransactionStatusStepQueryType', displayName?: string | null, name?: string | null } | null } | null, tourGuests?: Array<{ __typename?: 'TourGuestQueryType', id: string } | null> | null, tourPackage?: { __typename?: 'TourPackageType', price: number, discount?: number | null, tour?: { __typename?: 'TourQueryType', id: string, startTime: any, endTime: any, title: string, avatarS3?: Array<{ __typename?: 'TourImageType', large?: string | null, medium?: string | null, small?: string | null, orginal?: string | null } | null> | null, destination?: { __typename?: 'AccommodationQueryType', id: string, address?: string | null, avatarS3?: Array<{ __typename?: 'AccommodationImageType', small?: string | null, medium?: string | null, large?: string | null, orginal?: string | null } | null> | null } | { __typename?: 'ProjectQueryType' } | null } | null } | null } | null> | null } | null };
 
 export type UserDetailProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5967,8 +5967,12 @@ export const TourTransactionListDocument = gql`
           name
         }
       }
+      tourGuests {
+        id
+      }
       tourPackage {
         price
+        discount
         tour {
           id
           startTime

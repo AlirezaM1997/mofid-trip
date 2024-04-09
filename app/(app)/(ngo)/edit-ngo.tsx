@@ -4,7 +4,7 @@ import { router } from "expo-router";
 import { Feather } from "@expo/vector-icons";
 import { Formik, FormikProps } from "formik";
 import Toast from "react-native-toast-message";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useTranslation from "@src/hooks/translation";
 import Container from "@src/components/atoms/container";
 import handleUploadImage from "@src/helper/image-picker";
@@ -30,17 +30,13 @@ const Index = () => {
   const [editNgo, { loading }] = useNgoEditMutation();
   const innerRef = useRef<FormikProps<PropsType> | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const { loading: loadingNGODetail, data: dataNGODetail } = useMyNgoDetailQuery();
+  const { loading: loadingNGODetail, data: dataNGODetail, refetch } = useMyNgoDetailQuery();
 
   const handleImagePicker = async () => {
     const image = await handleUploadImage();
-    convertImageURIToFile(image as string)
-      .then(file => {
-        setSelectedFile(file);
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
+    convertImageURIToFile(image as string).then(file => {
+      setSelectedFile(file);
+    });
     innerRef?.current && innerRef?.current?.setFieldValue("image", image);
   };
 
@@ -64,7 +60,8 @@ const Index = () => {
         type: "success",
         text1: tr("Successful"),
       });
-      router.push("/profile");
+      refetch();
+      router.back();
     }
   };
 
