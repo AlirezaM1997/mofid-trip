@@ -1,24 +1,24 @@
-import Input from "@atoms/input";
-import { Feather } from "@expo/vector-icons";
-import LoadingIndicator from "@modules/Loading-indicator";
-import { Button, Divider, Text, useTheme } from "@rneui/themed";
-import Container from "@src/components/atoms/container";
-import WhiteSpace from "@src/components/atoms/white-space";
 import {
   AccountSettingLanguageChoices,
   GuestGenderEnum,
   TourPackageType,
-  useTourTransactionDetailQuery
+  useTourTransactionDetailQuery,
 } from "@src/gql/generated";
-import { useFormatPrice } from "@src/hooks/localization";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { RootState } from "@src/store";
-import { router, useLocalSearchParams } from "expo-router";
-import { Field, FieldArray, Formik } from "formik";
 import React from "react";
-import { Platform, ScrollView, StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
 import * as Yup from "yup";
+import Input from "@atoms/input";
+import { RootState } from "@src/store";
+import { useSelector } from "react-redux";
+import { Feather } from "@expo/vector-icons";
+import { Field, FieldArray, Formik } from "formik";
+import Container from "@src/components/atoms/container";
+import { useFormatPrice } from "@src/hooks/localization";
+import LoadingIndicator from "@modules/Loading-indicator";
+import WhiteSpace from "@src/components/atoms/white-space";
+import { router, useLocalSearchParams } from "expo-router";
+import { Button, Colors, Divider, Text, useTheme } from "@rneui/themed";
+import { Platform, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 const numbers = [
   "First",
@@ -88,9 +88,7 @@ export default () => {
 
   if (!data || loading) return <LoadingIndicator />;
 
-  const {} = data.tourTransactionDetail.tourguestSet;
-
-  const tourGuests = data.tourTransactionDetail.tourguestSet.map(
+  const tourGuests = data?.tourTransactionDetail?.tourguestSet.map(
     ({ __typename, id, ...tourguestSet }) => tourguestSet
   );
 
@@ -152,7 +150,9 @@ export default () => {
                 <Text bold>{tr("Your selected package")}</Text>
                 <View style={style.row}>
                   <Text>{tourPackageObj?.title}</Text>
-                  <Text>{localizeNumber(formatPrice(tourPackageObj?.price))}</Text>
+                  <Text>
+                    {localizeNumber(formatPrice(tourPackageObj?.price as number) as string)}
+                  </Text>
                 </View>
 
                 <View>
@@ -287,7 +287,7 @@ const style = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-  container: theme => ({
+  container: ((theme: { colors: { white: keyof Colors } }) => ({
     backgroundColor: theme.colors.white,
     flex: 1,
     ...Platform.select({
@@ -297,7 +297,7 @@ const style = StyleSheet.create({
         width: "100%",
       },
     }),
-  }),
+  })) as ViewStyle,
   row: {
     display: "flex",
     flexDirection: "row",

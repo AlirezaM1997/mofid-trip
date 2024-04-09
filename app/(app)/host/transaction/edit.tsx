@@ -8,7 +8,11 @@ import HostTransactionForm from "@organisms/host-transaction";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import BottomButtonLayout from "@components/layout/bottom-button";
 import CloseFormBottomSheet from "@modules/close-form-bottom-sheet";
-import { ProjectTransactionQueryType, useProjectTransactionDetailQuery } from "@src/gql/generated";
+import {
+  ProjectTransactionQueryType,
+  StatusQueryType,
+  useProjectTransactionDetailQuery,
+} from "@src/gql/generated";
 import HostTransactionEditSubmitBottomSheet from "@organisms/host-transaction/editSubmitBottomSheet";
 
 const HostTransactionEditScreen = () => {
@@ -25,7 +29,8 @@ const HostTransactionEditScreen = () => {
 
   if (!data || loading) return <LoadingIndicator />;
 
-  const { id, status, guest, dateEnd, dateStart } = data?.projectTransactionDetail as ProjectTransactionQueryType;
+  const { id, status, guest, dateEnd, dateStart } =
+    data?.projectTransactionDetail as ProjectTransactionQueryType;
 
   const initialValues = {
     guests: {
@@ -86,10 +91,10 @@ const HostTransactionEditScreen = () => {
             setIsButtonDisabled={setIsButtonDisabled}
           />
           <HostTransactionEditSubmitBottomSheet
-            status={status}
-            transactionId={id}
-            isVisible={isVisibleFinish}
-            setIsVisible={setIsVisibleFinish}
+            status={status as StatusQueryType}
+            transactionId={id as string}
+            isVisible={isVisibleFinish as boolean}
+            setIsVisible={setIsVisibleFinish as (item: boolean) => void}
           />
           <CloseFormBottomSheet />
         </BottomButtonLayout>
