@@ -2901,6 +2901,11 @@ export const messages = {
     fa_ir: "امکانات",
     en_us: "Facilities",
   },
+  "choose the final destination of your tour": {
+    ar: "اختر الوجهة النهائية لجولتك",
+    fa_ir: "مقصد نهایی تورتان را انتخاب کنید",
+    en_us: "Choose the final destination of your tour",
+  },
   "tour origin": {
     ar: "أصل الجولة",
     fa_ir: "مبدا تور",
