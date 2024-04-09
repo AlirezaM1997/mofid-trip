@@ -6,7 +6,7 @@ import { Pressable, View } from "react-native";
 import ContactCard from "@modules/contact-card";
 import useTranslation from "@src/hooks/translation";
 import WhiteSpace from "@atoms/white-space";
-import openMapHandler from "@src/helper/opem-map";
+import openMapHandler from "@src/helper/open-map";
 
 const PaymentStep = ({ status, location, creator }) => {
   const { tr } = useTranslation();

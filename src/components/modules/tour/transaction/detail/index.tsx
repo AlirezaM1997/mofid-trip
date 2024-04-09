@@ -1,3 +1,9 @@
+import {
+  TourQueryType,
+  StatusQueryType,
+  TourPackageType,
+  TourTransactionQueryType,
+} from "@src/gql/generated";
 import React from "react";
 import Stepper from "@modules/stepper";
 import PaymentStep from "./paymentStep";
@@ -8,12 +14,15 @@ import StepBaseButtons from "./stepBaseButtons";
 import { useLocalSearchParams } from "expo-router";
 import useTranslation from "@src/hooks/translation";
 import { ScrollView } from "react-native-gesture-handler";
-import { TourPackageType, TourQueryType, TourTransactionQueryType } from "@src/gql/generated";
 import Invoice from "@modules/tour/transaction/detail/invoice";
 import CancelTransaction from "@modules/tour/transaction/cancle";
 import TransactionDetailCard from "@modules/tour/transaction/detail/card";
 
-const TourTransactionDetail = ({transactionDetail}:{ transactionDetail:TourTransactionQueryType }) => {
+const TourTransactionDetail = ({
+  transactionDetail,
+}: {
+  transactionDetail: TourTransactionQueryType;
+}) => {
   const { tr } = useTranslation();
   const { transactionId } = useLocalSearchParams();
   const steps = [tr("pending"), tr("accepting"), tr("payment"), tr("finish the trip")];
@@ -22,10 +31,10 @@ const TourTransactionDetail = ({transactionDetail}:{ transactionDetail:TourTrans
 
   const activeStep = () => {
     const lookup: Record<string, number> = {
-      "REQUEST": 1,
-      "ACCEPT": 2,
-      "PAYMENT": 3,
-      "SUCCESSFUL": 4,
+      REQUEST: 1,
+      ACCEPT: 2,
+      PAYMENT: 3,
+      SUCCESSFUL: 4,
     };
     return lookup[status?.step?.name || 0];
   };
@@ -60,7 +69,11 @@ const TourTransactionDetail = ({transactionDetail}:{ transactionDetail:TourTrans
       <Container style={styles.container}>
         <Invoice transactionDetail={transactionDetail} />
 
-        <StepBaseButtons status={status} tourPackage={tourPackage} transactionId={transactionId} />
+        <StepBaseButtons
+          status={status as StatusQueryType}
+          tourPackage={tourPackage as TourPackageType}
+          transactionId={transactionId as string}
+        />
       </Container>
     </ScrollView>
   );

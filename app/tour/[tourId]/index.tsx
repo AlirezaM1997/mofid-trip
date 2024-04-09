@@ -15,7 +15,7 @@ import { AntDesign } from "@expo/vector-icons";
 import ContactCard from "@modules/contact-card";
 import ImageSlider from "@modules/image-slider";
 import TourComment from "@modules/tour/comment";
-import openMapHandler from "@src/helper/opem-map";
+import openMapHandler from "@src/helper/open-map";
 import SimilarTours from "@modules/similar-tours";
 import TourFacilities from "@modules/tour/facilities";
 import TourBoldInfo from "@modules/tour/bold-features";

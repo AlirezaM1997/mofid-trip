@@ -2,7 +2,7 @@ import React from "react";
 import { router } from "expo-router";
 import * as Network from "expo-network";
 import Toast from "react-native-toast-message";
-import { totalPrice } from "@src/helper/totalPrice";
+import { totalPrice } from "@src/helper/total-price";
 import useTranslation from "@src/hooks/translation";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import TransactionButtons from "@modules/host/transaction/buttons";
@@ -44,7 +44,7 @@ const ConfirmButton = ({ transaction }: PropsType) => {
         text2: error,
       });
     } else {
-      router.push(data?.projectPurchaseAdd?.metadata?.url);
+      router.push(data?.projectPurchaseAdd?.metadata?.url?.url);
     }
   };
 

@@ -18,7 +18,7 @@ const TourManagementCard = ({ tour }: { tour: TourQueryType }) => {
     router.push(`/tour/management/${tour.id}`);
     dispatch(
       setRedirectToScreenAfterLogin({
-        pathname: "tour/management",
+        pathname: `tour/management/${tour.id}`,
       })
     );
   };

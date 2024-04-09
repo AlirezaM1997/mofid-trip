@@ -15,7 +15,7 @@ import { Image, Pressable, ScrollView, StyleSheet, View, ViewStyle } from "react
 const Page = () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
-  const [editProfile] = useUserEditMutation();
+  const [editProfile, { loading: loadingEditProfile }] = useUserEditMutation();
   const { loading, data } = useUserDetailProfileQuery();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [userDetailTemp, setUserDetailTemp] = useState({
@@ -28,13 +28,9 @@ const Page = () => {
   const handleImagePicker = async () => {
     const image = await handleUploadImage();
 
-    convertImageURIToFile(image as string)
-      .then(file => {
-        setSelectedFile(file);
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
+    convertImageURIToFile(image as string).then(file => {
+      setSelectedFile(file);
+    });
     setUserDetailTemp({ ...userDetailTemp, image: image as string });
   };
 
@@ -58,7 +54,7 @@ const Page = () => {
         text1: tr("Successful"),
         text2: tr("Profile saved successfully"),
       });
-      router.push("/profile");
+      router.back();
     }
   };
 
@@ -130,8 +126,8 @@ const Page = () => {
           buttonStyle={style.btnContainerStyle}
           containerStyle={style.btnContainerStyle}
           size="lg"
-          disabled={loading || !userDetailTemp.firstname || !userDetailTemp.lastname}
-          loading={loading}>
+          disabled={loadingEditProfile || !userDetailTemp.firstname || !userDetailTemp.lastname}
+          loading={loadingEditProfile}>
           {tr("confirm")}
         </Button>
       </View>

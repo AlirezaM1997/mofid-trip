@@ -79,6 +79,14 @@ const Screen = () => {
       .typeError(tr("Only number acceptable"))
       .min(0, tr("Only positive numbers acceptable")),
     discount: Yup.number().max(100, tr("Discount can not be greater than 100")),
+
+    facilities: Yup.array().of(
+      Yup.object().shape({
+        faName: Yup.string().max(60, "String must be at most 60 characters long"),
+        enName: Yup.string().max(60, "String must be at most 60 characters long"),
+        arName: Yup.string().max(60, "String must be at most 60 characters long"),
+      })
+    ),
   });
 
   const handleNext = () => setActiveStep(activeStep + 1);

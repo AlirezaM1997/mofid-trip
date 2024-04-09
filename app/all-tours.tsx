@@ -95,7 +95,7 @@ const AllToursScreen = () => {
               id={tour?.id as string}
               name={tour?.title as string}
               containerStyle={{ width: "100%" }}
-              discount={tour?.packages[0].discount}
+              discount={tour?.packages[0]?.discount}
               avatarS3={tour?.avatarS3 as TourImageType[]}
               price={tour?.packages?.[0]?.price as number}
               address={(tour?.destination as AccommodationQueryType)?.address as string}

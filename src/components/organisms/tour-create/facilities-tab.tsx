@@ -13,7 +13,7 @@ const FacilitiesTab = () => {
   const { tr } = useTranslation();
   const { theme } = useTheme();
   const [value, setValue] = useState<string | null>();
-  const { values, setFieldValue } = useFormikContext<TourAddInputType>();
+  const { values, setFieldValue, errors } = useFormikContext<TourAddInputType>();
   const { language } = useSelector(
     (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
   );
@@ -69,6 +69,14 @@ const FacilitiesTab = () => {
           />
         }
       />
+      {errors.facilities && (
+        <>
+          <Text error type="error">
+            {tr("a maximum of sixty characters is allowed for features")}
+          </Text>
+          <WhiteSpace />
+        </>
+      )}
       <View style={styles.chipsContainer}>
         {values.facilities.map(value => (
           <Chip

@@ -6,7 +6,7 @@ import {
 import * as Network from "expo-network";
 import { Feather } from "@expo/vector-icons";
 import { Button, useTheme } from "@rneui/themed";
-import { totalPrice } from "@src/helper/totalPrice";
+import { totalPrice } from "@src/helper/total-price";
 import useTranslation from "@src/hooks/translation";
 import { ZARINPAL_CALLBACK_URL } from "@src/settings";
 import React, { ReactElement, useState } from "react";
@@ -53,7 +53,7 @@ const TransactionDetailsScreen = () => {
           price: totalPrice({
             endDate: dateEnd,
             startDate: dateStart,
-            price: project?.price as number,
+            price: (project?.price as number),
             discount: project?.discount as number,
             capacity: guest?.guestNumber as number,
           }),
@@ -65,7 +65,7 @@ const TransactionDetailsScreen = () => {
     });
 
     if (data?.projectPurchaseAdd?.status === "OK") {
-      router.push(data.projectPurchaseAdd.metadata?.url);
+      router.push(data.projectPurchaseAdd.metadata?.url?.url);
     }
   };
 

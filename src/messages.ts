@@ -1646,6 +1646,11 @@ export const messages = {
     fa_ir: "خطا",
     en_us: "Error",
   },
+  "a maximum of sixty characters is allowed for features": {
+    ar: "يُسمح بستين حرفًا كحد أقصى للميزات",
+    fa_ir: "حداکثر شصت کاراکتر برای امکانات مجاز است",
+    en_us: "A maximum of sixty characters is allowed for features",
+  },
   "about the tour": {
     ar: "حول الجولة",
     fa_ir: "درباره تور",
@@ -3190,7 +3195,7 @@ export const messages = {
   },
   "host details": {
     ar: "تفاصيل المضيف",
-    fa_ir: "جزئیات میزبان",
+    fa_ir: "جزئیات میزبانی",
     en_us: "Host Details",
   },
 
@@ -3323,7 +3328,7 @@ export const messages = {
   },
   "host title": {
     ar: "عنوان المضيف",
-    fa_ir: "عنوان میزبان",
+    fa_ir: "عنوان میزبانی",
     en_us: "Host Title",
   },
   "determine the type of space and your hosting environment.": {
@@ -3363,7 +3368,7 @@ export const messages = {
   "verification code has been sent, enter it. if you do not receive the code, hit send again": {
     ar: "تم إرسال رمز التحقق، أدخله. إذا لم تستلم الرمز، اضغط على إرسال مرة أخرى",
     fa_ir:
-      "کد تأیید ارسال شده است، آن را وارد کنید. اگر کد را دریافت نکردید، دوباره ارسال را بزنید",
+      "کد تأیید ارسال شده است، آن را وارد کنید. اگر کد را دریافت نکردید، ارسال مجدد کد را بزنید",
     en_us:
       "Verification code has been sent, enter it. If you do not receive the code, hit send again",
   },
