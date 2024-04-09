@@ -1,4 +1,4 @@
-export const APP_URL = `https://pwa.vercel.app`
+export const APP_URL = `https://pwa.hamafza-startup.ir`
 export const BASE_URL = `https://api.hamafza-startup.ir`
 export const ZARINPAL_CALLBACK_URL = `${APP_URL}/transactionPaymentStatus`
 export const WALLET_ZARINPAL_CALLBACK_URL = `${APP_URL}/wallet/receipt/paymentStatus?`
