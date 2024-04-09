@@ -1,3 +1,10 @@
+import {
+  StatusQueryType,
+  TransactionStatusEnum,
+  ProjectTransactionAddInputType,
+  useProjectTransactionEditMutation,
+} from "@src/gql/generated";
+import { router } from "expo-router";
 import Container from "@atoms/container";
 import { useFormikContext } from "formik";
 import { BottomSheet } from "@rneui/themed";
@@ -5,18 +12,18 @@ import WhiteSpace from "@atoms/white-space";
 import ButtonRow from "@modules/button-rows";
 import { Button, Text } from "@rneui/themed";
 import Toast from "react-native-toast-message";
-import {
-  ProjectTransactionAddInputType,
-  useProjectTransactionEditMutation,
-} from "@src/gql/generated";
 import useTranslation from "@src/hooks/translation";
-import { router } from "expo-router";
 
 const HostTransactionEditSubmitBottomSheet = ({
   status,
   isVisible,
   setIsVisible,
   transactionId,
+}: {
+  status: StatusQueryType;
+  isVisible: boolean;
+  setIsVisible: (item: boolean) => void;
+  transactionId: string;
 }) => {
   const { tr } = useTranslation();
   const [submit, { loading }] = useProjectTransactionEditMutation();
@@ -33,12 +40,15 @@ const HostTransactionEditSubmitBottomSheet = ({
             childAccept: values.guests.childAccept,
             guestNumber: +values.guests.guestNumber,
           },
-          status: { step: status.step.name, isActive: status.isActive },
+          status: {
+            step: status?.step?.name as TransactionStatusEnum,
+            isActive: status.isActive as boolean,
+          },
         },
       },
     });
 
-    if (data.projectTransactionEdit.status === "OK") {
+    if (data?.projectTransactionEdit?.status === "OK") {
       Toast.show({
         type: "success",
         text1: tr("Your request has been successfully submitted"),

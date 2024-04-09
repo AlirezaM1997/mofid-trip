@@ -1,22 +1,24 @@
-import BottomButtonLayout from "@components/layout/bottom-button";
-import { Feather } from "@expo/vector-icons";
-import LoadingIndicator from "@modules/Loading-indicator";
-import PressablePreview from "@modules/pressable-preview";
-import { Button, Text, useTheme } from "@rneui/themed";
-import Container from "@src/components/atoms/container";
-import WhiteSpace from "@src/components/atoms/white-space";
 import {
-  TourTransactionStatusInputType,
+  TransactionStatusEnum,
+  TourTransactionQueryType,
   useTourTransactionDetailQuery,
   useTourTransactionEditMutation,
 } from "@src/gql/generated";
-import useIsRtl from "@src/hooks/localization";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
-import { RootState } from "@src/store";
-import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
+import { RootState } from "@src/store";
 import { StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
+import { Feather } from "@expo/vector-icons";
+import useIsRtl from "@src/hooks/localization";
+import Toast from "react-native-toast-message";
+import { Button, Text, useTheme } from "@rneui/themed";
+import Container from "@src/components/atoms/container";
+import LoadingIndicator from "@modules/Loading-indicator";
+import PressablePreview from "@modules/pressable-preview";
+import WhiteSpace from "@src/components/atoms/white-space";
+import { router, useLocalSearchParams } from "expo-router";
+import BottomButtonLayout from "@components/layout/bottom-button";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 
 export default () => {
   const isRtl = useIsRtl();
@@ -38,22 +40,29 @@ export default () => {
 
   if (loading || !data) return <LoadingIndicator />;
 
-  const { status: transactionStatus, tourPackage } = data.tourTransactionDetail;
+  const { status: transactionStatus, tourPackage } =
+    data.tourTransactionDetail as TourTransactionQueryType;
 
-  const { __typename, ...currentStatus } = transactionStatus;
-
-  const handleSubmit = () => {
-    tourTransactionEdit({
+  const handleSubmit = async () => {
+    const { data: submitData } = await tourTransactionEdit({
       variables: {
         data: {
-          status: currentStatus as TourTransactionStatusInputType,
+          status: {
+            step: transactionStatus?.step?.name as TransactionStatusEnum,
+            isActive: transactionStatus?.isActive,
+          },
           guests: guestsObj,
           transactionId: transactionId as string,
         },
       },
-    }).then(({ data, errors }) => {
-      if (!errors?.length) router.push("/reservation");
     });
+    if (submitData?.tourTransactionEdit?.status === "OK") {
+      Toast.show({
+        type: "success",
+        text1: tr("Your request has been successfully submitted"),
+      });
+      router.push("/reservation");
+    }
   };
 
   return (
@@ -75,7 +84,7 @@ export default () => {
           <WhiteSpace size={20} />
           <PressablePreview
             topTitle={tr("Tour")}
-            title={`${tourPackage.tour.title} / ${tourPackage.tour.startTime}-${tourPackage.tour.endTime}`}
+            title={`${tourPackage?.tour?.title} / ${tourPackage?.tour?.startTime}-${tourPackage?.tour?.endTime}`}
             icon={<Feather name="home" size={24} color={theme.colors.black} />}
             button={
               <Button
@@ -86,7 +95,7 @@ export default () => {
                   router.push({
                     pathname: `/tour/${tourId}`,
                     params: {
-                      name: tourPackage.tour.title,
+                      name: tourPackage?.tour?.title,
                     },
                   })
                 }
@@ -124,7 +133,7 @@ export default () => {
           <WhiteSpace size={20} />
           <PressablePreview
             topTitle={tr("Group leader information")}
-            title={userDetail.fullname}
+            title={userDetail?.fullname as string}
             icon={<Feather name="users" size={24} color={theme.colors.black} />}
             button={
               <Button
