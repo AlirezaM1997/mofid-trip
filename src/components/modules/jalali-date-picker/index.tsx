@@ -29,9 +29,16 @@ const JalaliDatePicker = ({
   disablePassedDates = false,
   ...props
 }: JalaliDatePickerProps) => {
+  const defaultCursor = daysData
+    ? (+moment(daysData?.[0].date).locale("fa").format("YYYY") -
+        +moment(new Date()).locale("fa").format("YYYY")) *
+        12 +
+      +moment(daysData?.[0].date).locale("fa").format("M") -
+      +moment(new Date()).locale("fa").format("M")
+    : 0;
   const { tr } = useTranslation();
   const { theme } = useTheme();
-  const [cursor, setCursor] = useState<number>(0);
+  const [cursor, setCursor] = useState<number>(defaultCursor);
   const [yearCursor, setYearCursor] = useState<number>(0);
   const { daysArray } = getAllDaysInMonth(cursor);
   const { localizeNumber } = useLocalizedNumberFormat();
