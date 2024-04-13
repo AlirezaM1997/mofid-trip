@@ -1,14 +1,13 @@
 import WhiteSpace from "@atoms/white-space";
 import { Input, Text } from "@rneui/themed";
 import { TourAddInputType } from "@src/gql/generated";
-import { useFormatNumberInText } from "@src/hooks/localization";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormikContext } from "formik";
 import { StyleSheet } from "react-native";
 
 const DetailsTab = () => {
   const { tr } = useTranslation();
-  const { formatText } = useFormatNumberInText();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const { values, setFieldValue, errors, touched, handleBlur } =
     useFormikContext<TourAddInputType>();
@@ -28,7 +27,7 @@ const DetailsTab = () => {
         placeholder={tr("Tour Title")}
         textAlignVertical="top"
         onChangeText={txt => {
-          setFieldValue("title", formatText(txt));
+          setFieldValue("title", localizeNumber(txt));
         }}
         onBlur={handleBlur("title")}
         value={values.title?.toString()}
@@ -40,7 +39,7 @@ const DetailsTab = () => {
         placeholder={tr("Tour Details")}
         textAlignVertical="top"
         onChangeText={txt => {
-          setFieldValue("description", formatText(txt));
+          setFieldValue("description", localizeNumber(txt));
         }}
         onBlur={handleBlur("description")}
         value={values?.description}

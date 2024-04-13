@@ -46,16 +46,3 @@ export const useFormatPrice = () => {
   };
   return { formatPrice };
 };
-
-export const useFormatNumberInText = () => {
-  const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
-
-  const formatText = (txt: string) => {
-    if (language === AccountSettingLanguageChoices.FaIr) {
-      return convertToPersianNumbers(txt);
-    } else if (language === AccountSettingLanguageChoices.Ar) {
-      return convertToArabicNumbers(txt);
-    } else return txt;
-  };
-  return { formatText };
-};

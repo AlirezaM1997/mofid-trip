@@ -3,12 +3,11 @@ import { Button, Chip, Input, Text, useTheme } from "@rneui/themed";
 import { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormikContext } from "formik";
 import { SettingDetailType, TourAddInputType } from "@src/gql/generated";
 import { RootState } from "@src/store";
 import { useSelector } from "react-redux";
-import { useFormatNumberInText } from "@src/hooks/localization";
 
 const FacilitiesTab = () => {
   const { tr } = useTranslation();
@@ -18,7 +17,7 @@ const FacilitiesTab = () => {
   const { language } = useSelector(
     (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
   );
-  const { formatText } = useFormatNumberInText();
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const facilitiesLng: () => string = () => {
     const obj: Record<string, string> = {
@@ -31,7 +30,7 @@ const FacilitiesTab = () => {
   };
 
   const handleChangeInput = e => {
-    setValue(formatText(e.target.value));
+    setValue(localizeNumber(e.target.value));
   };
 
   const handleAddPress = () => {
