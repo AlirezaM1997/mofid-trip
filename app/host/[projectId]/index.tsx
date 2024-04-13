@@ -1,11 +1,11 @@
 import {
-  AccommodationImageType,
-  ProjectFacilityQueryType,
   ProjectQueryType,
   useProjectDetailQuery,
+  AccommodationImageType,
+  ProjectFacilityQueryType,
 } from "@src/gql/generated";
+import React from "react";
 import { Badge } from "@rneui/themed";
-import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Text, useTheme } from "@rneui/themed";
 import { AntDesign } from "@expo/vector-icons";
@@ -44,19 +44,16 @@ const Page: React.FC = ({ ...props }) => {
       pk: projectId as string,
     },
   });
-
-  useEffect(() => {
-    if (!loading && data) {
-      dispatch(setProjectDetail(data?.projectDetail as ProjectQueryType));
-    }
-  }, [loading, data]);
-
-  navigation.setOptions({
-    title: localizeNumber(data?.projectDetail?.name as string),
-    headerRight: () => <ShareReportDropDown />,
-  });
-
+  
   if (loading) return <LoadingIndicator />;
+  
+    navigation.setOptions({
+      title: localizeNumber(data?.projectDetail?.name as string),
+      // title: data ? localizeNumber(data?.projectDetail?.name as string): tr("loading"),
+      headerRight: () => <ShareReportDropDown />,
+    });
+
+  dispatch(setProjectDetail(data?.projectDetail as ProjectQueryType));
 
   const {
     name,
