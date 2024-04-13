@@ -41,13 +41,13 @@ export default () => {
   });
   const tour = data?.tourDetail;
   const tourPackage = tour?.packages[0];
-
-  navigation.setOptions({
-    title: localizeNumber(data?.tourDetail?.title as string),
-    headerRight: () => <ShareReportDropDown />,
-  });
-
+  
   if (loading && !tour) return <LoadingIndicator />;
+  
+    navigation.setOptions({
+      title: localizeNumber(data?.tourDetail?.title as string),
+      headerRight: () => <ShareReportDropDown />,
+    });
 
   return (
     <BottomButtonLayout buttons={[<BookTourBottomSheet tour={tour as TourQueryType} />]}>
