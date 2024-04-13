@@ -26,7 +26,7 @@ const PaymentStep = ({ status, location, creator }) => {
               </Text>
             </View>
             <WhiteSpace size={16} />
-            <ContactCard user={creator ?? {}} />
+            <ContactCard user={creator ?? {}} isTour={false}/>
           </Container>
 
           <Divider bgColor="grey0" thickness={6} />
