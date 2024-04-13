@@ -3,11 +3,10 @@ import {
   TourTransactionQueryType,
   useTourTransactionDetailQuery,
   useTourTransactionEditMutation,
+  useUserDetailProfileQuery,
 } from "@src/gql/generated";
 import React from "react";
-import { RootState } from "@src/store";
 import { StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
 import { Feather } from "@expo/vector-icons";
 import useIsRtl from "@src/hooks/localization";
 import Toast from "react-native-toast-message";
@@ -25,12 +24,13 @@ export default () => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const { localizeNumber } = useLocalizedNumberFormat();
-  const { userDetail } = useSelector((state: RootState) => state.userSlice);
   const { tourId, transactionId, guests } = useLocalSearchParams();
 
   const guestsObj = JSON.parse(guests as string);
 
   const [tourTransactionEdit, {}] = useTourTransactionEditMutation();
+
+  const { data: dataUserDetail } = useUserDetailProfileQuery();
 
   const { loading, data } = useTourTransactionDetailQuery({
     variables: {
@@ -38,7 +38,7 @@ export default () => {
     },
   });
 
-  if (loading || !data) return <LoadingIndicator />;
+  if (loading || !data || !dataUserDetail) return <LoadingIndicator />;
 
   const { status: transactionStatus, tourPackage } =
     data.tourTransactionDetail as TourTransactionQueryType;
@@ -84,7 +84,7 @@ export default () => {
           <WhiteSpace size={20} />
           <PressablePreview
             topTitle={tr("Tour")}
-            title={`${tourPackage?.tour?.title} / ${tourPackage?.tour?.startTime}-${tourPackage?.tour?.endTime}`}
+            title={tourPackage?.tour?.title as string}
             icon={<Feather name="home" size={24} color={theme.colors.black} />}
             button={
               <Button
@@ -133,7 +133,7 @@ export default () => {
           <WhiteSpace size={20} />
           <PressablePreview
             topTitle={tr("Group leader information")}
-            title={userDetail?.fullname as string}
+            title={dataUserDetail?.userDetail?.fullname as string}
             icon={<Feather name="users" size={24} color={theme.colors.black} />}
             button={
               <Button
