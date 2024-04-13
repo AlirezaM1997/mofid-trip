@@ -4,10 +4,13 @@ import useTranslation from "@src/hooks/translation";
 import { Input, Text } from "@rneui/themed";
 import { TourAddInputType } from "@src/gql/generated";
 import { Field, useFormikContext } from "formik";
+import { useFormatNumberInText } from "@src/hooks/localization";
 
 const OriginTab = () => {
   const { tr } = useTranslation();
-  const { values, handleChange, handleBlur, touched, errors } =
+  const { formatText } = useFormatNumberInText();
+
+  const { values, setFieldValue, handleBlur, touched, errors } =
     useFormikContext<TourAddInputType>();
 
   return (
@@ -25,7 +28,9 @@ const OriginTab = () => {
         name="address"
         placeholder={tr("Address")}
         textAlignVertical="top"
-        onChangeText={handleChange("origin.address")}
+        onChangeText={txt => {
+          setFieldValue("origin.address", formatText(txt));
+        }}
         onBlur={handleBlur("origin.address")}
         value={values?.origin?.address}
         errorMessage={(touched?.origin?.address && errors?.origin?.address) as string}

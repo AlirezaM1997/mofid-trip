@@ -8,6 +8,7 @@ import { useFormikContext } from "formik";
 import { SettingDetailType, TourAddInputType } from "@src/gql/generated";
 import { RootState } from "@src/store";
 import { useSelector } from "react-redux";
+import { useFormatNumberInText } from "@src/hooks/localization";
 
 const FacilitiesTab = () => {
   const { tr } = useTranslation();
@@ -17,6 +18,7 @@ const FacilitiesTab = () => {
   const { language } = useSelector(
     (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
   );
+  const { formatText } = useFormatNumberInText();
 
   const facilitiesLng: () => string = () => {
     const obj: Record<string, string> = {
@@ -29,7 +31,7 @@ const FacilitiesTab = () => {
   };
 
   const handleChangeInput = e => {
-    setValue(e.target.value);
+    setValue(formatText(e.target.value));
   };
 
   const handleAddPress = () => {
