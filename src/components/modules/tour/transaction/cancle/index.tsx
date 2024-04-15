@@ -26,6 +26,7 @@ const CancelTransaction = ({ button }) => {
     });
 
     if (data?.tourTransactionEdit.statusCode === 200) {
+      setIsVisible(false);
       Toast.show({
         type: "success",
         text1: tr("Successful"),
