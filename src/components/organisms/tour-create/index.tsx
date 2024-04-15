@@ -50,7 +50,7 @@ const TourCreateForm = ({
     if (activeStep === 5 && (!startTime || !endTime)) return setIsButtonDisabled(true);
     if (
       (activeStep === 6 && ["", null, undefined].includes(price?.toString())) ||
-      +(discount as number) > 100
+      +(discount as number) > 100 || Number(price) > 5000000
     )
       return setIsButtonDisabled(true);
     return setIsButtonDisabled(false);

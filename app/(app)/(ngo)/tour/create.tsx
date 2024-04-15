@@ -77,7 +77,8 @@ const Screen = () => {
     price: Yup.number()
       .required(tr("Required"))
       .typeError(tr("Only number acceptable"))
-      .min(0, tr("Only positive numbers acceptable")),
+      .min(0, tr("Only positive numbers acceptable"))
+      .max(5000000, tr("price can not be greater than 5000000 toman")),
     discount: Yup.number().max(100, tr("Discount can not be greater than 100")),
 
     facilities: Yup.array().of(
