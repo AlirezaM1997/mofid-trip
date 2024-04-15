@@ -184,6 +184,7 @@ export default () => {
                                 <Field
                                   component={Input}
                                   required
+                                type="email"
                                   value={guest.lastname}
                                   name={`guests[${index}].lastname`}
                                   placeholder={tr("Last Name")}
@@ -197,11 +198,17 @@ export default () => {
                                 <Field
                                   component={Input}
                                   required
+                                  maxLength={11}
                                   value={guest.phoneNumber}
                                   name={`guests[${index}].phoneNumber`}
                                   placeholder={tr("Phone Number")}
                                   onChangeText={handleChange(`guests[${index}].phoneNumber`)}
                                   onBlur={handleBlur(`guests[${index}].phoneNumber`)}
+                                  onKeyPress={(event) => {
+                                    if (!(Number(event.key) >= 0 && Number(event.key) <= 9) && event.key != 'Backspace') {
+                                      event.preventDefault();
+                                    }
+                                  }}
                                   errorMessage={
                                     touched?.guests?.[index]?.phoneNumber &&
                                     errors?.guests?.[index]?.phoneNumber
@@ -210,11 +217,17 @@ export default () => {
                                 <Field
                                   component={Input}
                                   required
+                                  maxLength={10}
                                   value={guest.identifyNumber}
                                   name={`guests[${index}].identifyNumber`}
                                   placeholder={tr("Identify Number")}
                                   onChangeText={handleChange(`guests[${index}].identifyNumber`)}
                                   onBlur={handleBlur(`guests[${index}].identifyNumber`)}
+                                  onKeyPress={(event) => {
+                                    if (!(Number(event.key) >= 0 && Number(event.key) <= 9) && event.key != 'Backspace') {
+                                      event.preventDefault();
+                                    }
+                                  }}
                                   errorMessage={
                                     touched?.guests?.[index]?.identifyNumber &&
                                     errors?.guests?.[index]?.identifyNumber
