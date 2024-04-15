@@ -73,7 +73,7 @@ const CommentCardReplay = ({
             </Pressable>
             <Text caption type="grey3">
               {localizeNumber(moment(comment.createdDate).locale("fa").format("jD jMMMM jYYYY"))} .{" "}
-              {comment?.user?.displayName ? comment?.user?.displayName : tr("no name")}
+              {comment?.user?.displayName || comment?.user?.fullname || tr("no name")}
             </Text>
           </View>
         </View>
