@@ -48,7 +48,8 @@ export default () => {
         },
       },
     }).then(({ data, errors }) => {
-      if (!errors?.length) router.push("/reservation");
+      if (!errors?.length)
+        router.replace(`tour/transaction/detail/${data?.tourTransactionAdd?.metadata.object_id}`);
     });
   };
 
