@@ -40,11 +40,11 @@ const Screen = () => {
       lat: Yup.string().required(tr("Select location on the map")),
       lng: Yup.string().required(tr("Select location on the map")),
     }),
-
+ 
     capacity: Yup.object().shape({
       gender: Yup.string(),
       childAccept: Yup.boolean(),
-      capacityNumber: Yup.number().positive().required(tr("Capacity is required")),
+      capacityNumber: Yup.number().positive(tr("Capacity is required")).required(tr("Capacity is required")),
     }),
 
     price: Yup.number()

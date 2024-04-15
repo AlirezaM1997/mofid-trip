@@ -2,13 +2,16 @@ stages:
   - build
   - deploy
 
-variables:
-  NODE_VERSION: "18.17.1"
-
 before_script:
-  - nvm install $NODE_VERSION
-  - nvm use $NODE_VERSION
-  - npm install
+  # Install nvm if not already installed
+  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+  # Source nvm
+  - export NVM_DIR="$HOME/.nvm"
+  - source ~/.bashrc
+  - nvm install 18.17.1
+  - nvm use 18.17.1
+  - npm i -f
+  - npm i -g pm2
 
 build:
   stage: build
@@ -18,6 +21,9 @@ build:
 deploy:
   stage: deploy
   script:
+    # Attempt to delete the 'stage' process, and ignore error if it doesn't exist
+    - pm2 delete stage || true
+    # Start a new process with name 'stage'
     - pm2 start npx --name stage -- serve -l 3005 -s dist
   only:
     - stage

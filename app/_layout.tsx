@@ -130,13 +130,13 @@ const MainContent = () => {
           }}
         />
         <Stack.Screen
-          name="tour/[tourId]/"
+          name="tour/[tourId]/index"
           options={{
             title: tr("loading"),
           }}
         />
         <Stack.Screen
-          name="host/[projectId]/"
+          name="host/[projectId]/index"
           options={{
             title: tr("loading"),
           }}
