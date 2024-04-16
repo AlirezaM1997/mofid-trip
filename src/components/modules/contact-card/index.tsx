@@ -2,7 +2,10 @@ import { StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { Avatar, BottomSheet, Text, useTheme } from "@rneui/themed";
 import { Ionicons } from "@expo/vector-icons";
-import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
+import useTranslation, {
+  useDynamicTranslation,
+  useLocalizedNumberFormat,
+} from "@src/hooks/translation";
 import { Pressable } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -10,12 +13,19 @@ import { Linking } from "react-native";
 import { SECONDARY_COLOR } from "@src/theme";
 import WhiteSpace from "@atoms/white-space";
 import { router } from "expo-router";
+import { messages } from "@src/messages";
 
-const ContactCard = ({ user }) => {
+type PropsType = {
+  user: any;
+  isTour: boolean;
+};
+
+const ContactCard = ({ user, isTour }: PropsType) => {
   const { theme } = useTheme();
   const { tr } = useTranslation();
   const [isVisible, setIsVisible] = useState<boolean>();
   const { localizeNumber } = useLocalizedNumberFormat();
+  const { dyTr } = useDynamicTranslation();
 
   return (
     <>
@@ -59,13 +69,17 @@ const ContactCard = ({ user }) => {
       <BottomSheet isVisible={isVisible} onBackdropPress={() => setIsVisible(false)}>
         <Pressable style={style.closer} onPress={() => setIsVisible(false)}>
           <Feather name="x-circle" size={24} color="transparent" />
-          <Text heading1>{tr("Contact the place")}</Text>
+          <Text heading1>
+            {dyTr(messages.contact_the_place(isTour ? tr("tour executer") : tr("host owner")))}
+          </Text>
           <Feather name="x-circle" size={24} color={theme.colors.black} />
         </Pressable>
         <View style={style.socialContainer}>
           <Text body2 color="grey3" style={style.contactText}>
-            {tr(
-              "You can contact the owner of the place through the following social networks or directly"
+            {dyTr(
+              messages.you_can_contact_the_owner_of_the_place_through_the_following_social_networks_or_directly(
+                isTour ? tr("tour executer") : tr("host owner")
+              )
             )}
           </Text>
           <View style={style.socialIconsContainer}>
