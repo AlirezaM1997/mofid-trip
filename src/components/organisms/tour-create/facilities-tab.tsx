@@ -3,7 +3,7 @@ import { Button, Chip, Input, Text, useTheme } from "@rneui/themed";
 import { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { StyleSheet, View } from "react-native";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { useFormikContext } from "formik";
 import { SettingDetailType, TourAddInputType } from "@src/gql/generated";
 import { RootState } from "@src/store";
@@ -17,6 +17,7 @@ const FacilitiesTab = () => {
   const { language } = useSelector(
     (state: RootState) => state.settingDetailSlice.settingDetail as SettingDetailType
   );
+  const { localizeNumber } = useLocalizedNumberFormat();
 
   const facilitiesLng: () => string = () => {
     const obj: Record<string, string> = {
@@ -29,7 +30,7 @@ const FacilitiesTab = () => {
   };
 
   const handleChangeInput = e => {
-    setValue(e.target.value);
+    setValue(localizeNumber(e.target.value));
   };
 
   const handleAddPress = () => {

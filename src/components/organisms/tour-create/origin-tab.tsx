@@ -1,13 +1,16 @@
 import WhiteSpace from "@atoms/white-space";
 import LocationPicker from "@modules/formik/fields/location-picker";
-import useTranslation from "@src/hooks/translation";
+import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { Input, Text } from "@rneui/themed";
 import { TourAddInputType } from "@src/gql/generated";
 import { Field, useFormikContext } from "formik";
 
+
 const OriginTab = () => {
   const { tr } = useTranslation();
-  const { values, handleChange, handleBlur, touched, errors } =
+  const { localizeNumber } = useLocalizedNumberFormat();
+
+  const { values, setFieldValue, handleBlur, touched, errors } =
     useFormikContext<TourAddInputType>();
 
   return (
@@ -25,7 +28,9 @@ const OriginTab = () => {
         name="address"
         placeholder={tr("Address")}
         textAlignVertical="top"
-        onChangeText={handleChange("origin.address")}
+        onChangeText={txt => {
+          setFieldValue("origin.address", localizeNumber(txt));
+        }}
         onBlur={handleBlur("origin.address")}
         value={values?.origin?.address}
         errorMessage={(touched?.origin?.address && errors?.origin?.address) as string}
