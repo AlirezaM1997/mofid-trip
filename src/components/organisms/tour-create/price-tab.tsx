@@ -48,7 +48,7 @@ const PriceTab = () => {
       </View>
 
       <Input
-        maxLength={8}
+        maxLength={7}
         keyboardType="numeric"
         onBlur={handleBlur("price")}
         label={tr("Price") + " (" + tr("Tooman") + ")"}

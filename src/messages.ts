@@ -3126,6 +3126,11 @@ export const messages = {
     fa_ir: "تخفیف نمی‌تواند از ۱۰۰ درصد بیشتر باشد",
     en_us: "Discount can not be greater than 100",
   },
+  "price can not be greater than 5000000 toman": {
+    ar: "ولا يمكن أن يتجاوز السعر 5 مليون تومان",
+    fa_ir: "قیمت نمی‌تواند از 5 میلیون تومان بیشتر باشد",
+    en_us: "The price cannot exceed 5 million tomans",
+  },
   "only number acceptable": {
     ar: "الرقم الوحيد هو المقبول",
     fa_ir: "فقط عدد قابل قبول است",
