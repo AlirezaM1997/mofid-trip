@@ -12,7 +12,23 @@ const PaymentStep = ({ status, destination }) => {
           <Divider bgColor="grey0" thickness={6} />
 
           <Container style={styles.container}>
-            <Map lat={destination.lat} lng={destination.lng} />
+            <Map
+              lat={destination.lat}
+              lng={destination.lng}
+              mapOptions={{
+                dragging: false,
+                zoomControl: false,
+              }}
+              mapMarkers={[
+                {
+                  id: "string",
+                  size: [52, 60],
+                  iconAnchor: [-17, 30],
+                  position: { lat: destination?.lat, lng: destination?.lng },
+                  icon: window.location.origin + "/assets/assets/image/marker.png",
+                },
+              ]}
+            />
           </Container>
         </>
       )}

@@ -4,7 +4,7 @@ import {
   TourPackageType,
   useTourTransactionDetailQuery,
 } from "@src/gql/generated";
-import React from "react";
+import React, { KeyboardEvent } from "react";
 import * as Yup from "yup";
 import Input from "@atoms/input";
 import { RootState } from "@src/store";
@@ -111,9 +111,13 @@ export default () => {
             Yup.object().shape({
               firstname: Yup.string().required(tr("First name is required")),
               lastname: Yup.string().required(tr("Last name is required")),
-              phoneNumber: Yup.string().required(tr("Phone number name is required")),
+              phoneNumber: Yup.string()
+                .min(11, tr("Phone number name is required"))
+                .required(tr("Phone number name is required")),
+              identifyNumber: Yup.string()
+                .min(10, tr("Identify number day is required"))
+                .required(tr("Identify number day is required")),
               birthday: Yup.string().required(tr("Birth day is required")),
-              identifyNumber: Yup.string().required(tr("Identify number day is required")),
             })
           ),
         })}
@@ -211,6 +215,17 @@ export default () => {
                                   placeholder={tr("Phone Number")}
                                   onChangeText={handleChange(`guests[${index}].phoneNumber`)}
                                   onBlur={handleBlur(`guests[${index}].phoneNumber`)}
+                                  maxLength={11}
+                                  onKeyPress={(event: KeyboardEvent) => {
+                                    if (
+                                      !(Number(event.key) >= 0 && Number(event.key) <= 9) &&
+                                      event.key != "Backspace" &&
+                                      event.key != "ArrowLeft" &&
+                                      event.key != "ArrowRight"
+                                    ) {
+                                      event.preventDefault();
+                                    }
+                                  }}
                                   errorMessage={
                                     touched?.guests?.[index]?.phoneNumber &&
                                     errors?.guests?.[index]?.phoneNumber
@@ -224,6 +239,17 @@ export default () => {
                                   placeholder={tr("Identify Number")}
                                   onChangeText={handleChange(`guests[${index}].identifyNumber`)}
                                   onBlur={handleBlur(`guests[${index}].identifyNumber`)}
+                                  maxLength={10}
+                                  onKeyPress={(event: KeyboardEvent) => {
+                                    if (
+                                      !(Number(event.key) >= 0 && Number(event.key) <= 9) &&
+                                      event.key != "Backspace" &&
+                                      event.key != "ArrowLeft" &&
+                                      event.key != "ArrowRight"
+                                    ) {
+                                      event.preventDefault();
+                                    }
+                                  }}
                                   errorMessage={
                                     touched?.guests?.[index]?.identifyNumber &&
                                     errors?.guests?.[index]?.identifyNumber

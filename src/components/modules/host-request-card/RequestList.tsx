@@ -63,7 +63,13 @@ const RequestList = ({ transaction, ...props }: PropsType) => {
         )}
 
         <ListItem.Content style={style.requestCardTextBox}>
-          <Text subtitle2>{localizeNumber(transaction.owner.fullname)}</Text>
+          <Text subtitle2>
+            {localizeNumber(
+              !!transaction.owner.isNgo && transaction.owner.isNgo
+                ? transaction.owner.ngo.title
+                : transaction.owner.fullname
+            )}
+          </Text>
           <Text type={step?.color}>{step?.title}</Text>
         </ListItem.Content>
         <Text caption style={style.moreDetail}>

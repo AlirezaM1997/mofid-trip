@@ -34,8 +34,6 @@ const c = myLocation;
 
 const Map = ({
   zoom,
-  // lat = 28,
-  // lng = 54,
   lat = 34.600773,
   lng = 50.867006,
   onMoveEnd,

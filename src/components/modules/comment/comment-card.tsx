@@ -14,7 +14,6 @@ import { Button, Divider, Text, useTheme } from "@rneui/themed";
 import { Platform, Pressable, StyleSheet, View, ViewStyle } from "react-native";
 import useTranslation, { useLocalizedNumberFormat } from "@src/hooks/translation";
 import { AntDesign, Entypo, MaterialCommunityIcons, Feather } from "@expo/vector-icons";
-import { getFullName } from "@src/helper/extra";
 
 const CommentCard = ({
   comment,
@@ -94,7 +93,7 @@ const CommentCard = ({
         </View>
         <Text caption type="grey3">
           {localizeNumber(moment(comment.createdDate).locale("fa").format("jD jMMMM jYYYY"))} .{" "}
-          {getFullName(comment?.user)}
+          {comment?.user?.displayName || comment.user?.fullname}
         </Text>
       </View>
       <View style={styles.footerCard}>
@@ -135,7 +134,7 @@ const CommentCard = ({
         </View>
         <Divider />
         <Button
-          onPress={() => router.push(push + `/${comment.id}`)}
+          onPress={() => router.push(`/${push}/${comment.id}`)}
           buttonStyle={styles.buttonStyle}
           type="clear"
           size="sm"
