@@ -138,13 +138,7 @@ export default () => {
                   )}
                 </Text>
 
-                <WhiteSpace size={10} />
-
-                <Text bold>{tr("Your selected package")}</Text>
-                <View style={style.row}>
-                  <Text>{tourPackageObj?.title}</Text>
-                  <Text>{localizeNumber(formatPrice(tourPackageObj?.price) as string)}</Text>
-                </View>
+                <WhiteSpace size={20} />
 
                 <View>
                   <FieldArray
@@ -157,7 +151,7 @@ export default () => {
                                 <View style={style.row}>
                                   <Text heading2>
                                     {index === 0 ? (
-                                      <Text>اطلاعات سرگروه</Text>
+                                      <Text>{tr("first passenger info")}</Text>
                                     ) : language === AccountSettingLanguageChoices.EnUs ? (
                                       tr(numbers[index]) + " " + tr("passenger info")
                                     ) : (

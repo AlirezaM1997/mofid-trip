@@ -2753,7 +2753,7 @@ export type MyUserDetailProjectSetQuery = { __typename?: 'Query', userDetail?: {
 export type MyUserDetailProjectTransactionSetQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyUserDetailProjectTransactionSetQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, projectTransactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', createdDate?: any | null, dateEnd?: any | null, dateStart?: any | null, id: string, owner?: { __typename?: 'UserQueryType', phoneNumber?: string | null, fullname?: string | null, id: string, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null, orginal?: string | null } | null } | null, guest?: { __typename?: 'ProjectGuestQueryType', guestNumber?: number | null, gender?: string | null, childAccept?: boolean | null } | null, project?: { __typename?: 'ProjectQueryType', name?: string | null, id: string } | null, status?: { __typename?: 'StatusQueryType', isActive?: boolean | null, step?: { __typename?: 'ProjectTransactionStatusStepQueryType', displayName?: string | null, name?: string | null } | null } | null } | null> | null } | null };
+export type MyUserDetailProjectTransactionSetQuery = { __typename?: 'Query', userDetail?: { __typename?: 'UserQueryType', id: string, projectTransactionSet?: Array<{ __typename?: 'ProjectTransactionQueryType', createdDate?: any | null, dateEnd?: any | null, dateStart?: any | null, id: string, owner?: { __typename?: 'UserQueryType', isNgo?: boolean | null, phoneNumber?: string | null, fullname?: string | null, id: string, ngo?: { __typename?: 'NGOQueryType', title: string } | null, avatarS3?: { __typename?: 'UserImageType', large?: string | null, medium?: string | null, small?: string | null, orginal?: string | null } | null } | null, guest?: { __typename?: 'ProjectGuestQueryType', guestNumber?: number | null, gender?: string | null, childAccept?: boolean | null } | null, project?: { __typename?: 'ProjectQueryType', name?: string | null, id: string } | null, status?: { __typename?: 'StatusQueryType', isActive?: boolean | null, step?: { __typename?: 'ProjectTransactionStatusStepQueryType', displayName?: string | null, name?: string | null } | null } | null } | null> | null } | null };
 
 export type NgoDetailQueryVariables = Exact<{
   pk?: InputMaybe<Scalars['ID']['input']>;
@@ -4721,6 +4721,10 @@ export const MyUserDetailProjectTransactionSetDocument = gql`
       dateStart
       id
       owner {
+        isNgo
+        ngo {
+          title
+        }
         phoneNumber
         fullname
         id

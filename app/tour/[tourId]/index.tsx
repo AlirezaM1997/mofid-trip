@@ -116,7 +116,7 @@ export default () => {
 
         <WhiteSpace size={20} />
 
-        <ContactCard user={tour?.NGO} />
+        <ContactCard user={tour?.NGO} isTour={true}/>
 
         <WhiteSpace size={20} />
 

@@ -11,15 +11,17 @@ import HostTransaction from "@modules/host/transaction";
 const Page = () => {
   const { session } = useSession();
   const { tr } = useTranslation();
+  const isNgo = JSON.parse(session).metadata.is_ngo;
 
   if (!session) return <Authentication />;
+
 
   return (
     <>
       <Container style={styles.container}>
         <Text heading2>{tr("my requests")}</Text>
         <Text caption type="grey2">
-          {tr("manage your requests for host")}
+          {isNgo ? tr("manage your requests for host"):tr('manage your requests for hosting and trips')}
         </Text>
       </Container>
       <ScrollView style={styles.viewContainer}>

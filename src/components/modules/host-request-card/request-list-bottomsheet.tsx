@@ -182,7 +182,13 @@ const RequestListBottomSheet = ({
             />
           )}
           <View style={style.bottomSheetHeaderTextBox}>
-            <Text subtitle1>{localizeNumber(transaction?.owner?.fullname as string)}</Text>
+            <Text subtitle1>
+              {localizeNumber(
+                !!transaction?.owner?.isNgo && transaction?.owner.isNgo
+                  ? (transaction?.owner?.ngo?.title as string)
+                  : (transaction?.owner?.fullname as string)
+              )}
+            </Text>
             <Text body2>{localizeNumber(transaction?.owner?.phoneNumber as string)}</Text>
             <Text caption type={step?.color}>
               {step?.bottomSheetTitle}
@@ -198,15 +204,15 @@ const RequestListBottomSheet = ({
               title={tr("send Message")}
               onPress={() => handleSMS(transaction?.owner?.phoneNumber as string)}
             />
-              <Button
-                iconPosition="right"
-                icon={<MaterialIcons name="phone-in-talk" size={24} color="black" />}
-                type="outline"
-                color="secondary"
-                size="sm"
-                title={tr("making contact")}
-                onPress={() => handleCall(transaction?.owner?.phoneNumber as string)}
-              />
+            <Button
+              iconPosition="right"
+              icon={<MaterialIcons name="phone-in-talk" size={24} color="black" />}
+              type="outline"
+              color="secondary"
+              size="sm"
+              title={tr("making contact")}
+              onPress={() => handleCall(transaction?.owner?.phoneNumber as string)}
+            />
           </View>
           <WhiteSpace />
         </View>

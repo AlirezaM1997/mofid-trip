@@ -1,8 +1,8 @@
-import React from "react";
 import { RootState } from "@src/store";
 import { useSelector } from "react-redux";
 import { AccountSettingLanguageChoices, LanguageChoiceEnum } from "@src/gql/generated";
 import useTranslation from "../translation";
+import { convertToArabicNumbers, convertToPersianNumbers } from "@src/helper/extra";
 
 const useIsRtl = () => {
   const { language } = useSelector((state: RootState) => state.settingDetailSlice.settingDetail);
