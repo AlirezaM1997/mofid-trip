@@ -149,7 +149,7 @@ const TourCommentReplay = () => {
               </View>
               <Text caption type="grey3">
                 {localizeNumber(moment(comment?.createdDate).locale("fa").format("jD jMMMM jYYYY"))}{" "}
-                . {comment?.user as string}
+                . {comment?.user?.displayName || comment?.user?.fullname as string}
               </Text>
             </View>
             <View style={styles.likeInf}>
